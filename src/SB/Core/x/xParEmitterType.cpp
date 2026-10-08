@@ -115,7 +115,7 @@ void xParEmitterEmitCircle(xPar* p, xParEmitterAsset* a, F32 dt)
         xVec2 dir = { 0.0f, 1.0f };
         F32 rad = xurand();
 
-        rad = -((rad * rad) - 1.0f);
+        rad = 1.0f - rad * rad;
 
         dir.y = rad * a->e_circle.radius;
 
@@ -213,7 +213,7 @@ void xParEmitterEmitLine(xPar* p, xParEmitterAsset* a, F32 dt)
         xVec3 off = { -sy, cy * sp, cy * cp };
 
         rad = xurand();
-        rad = -((rad * (rad * rad)) - 1.0f);
+        rad = 1.0f - rad * (rad * rad);
 
         p->m_pos += off * (a->e_line.radius * rad);
     }
@@ -450,7 +450,7 @@ namespace
 void xParEmitterEmitOCircle(xPar* p, xParEmitterAsset* a, F32 dt)
 {
     F32 rr = xurand();
-    F32 scale = -((rr * rr) - 1.0f);
+    F32 scale = 1.0f - rr * rr;
 
     scale *= a->e_circle.radius;
 
@@ -591,7 +591,7 @@ namespace
             F32 rad;
             F32 ang = 6.2831855f * xurand();
             F32 z = 2.0f * xurand() - 1.0f;
-            F32 up = xsqrt(-((z * z) - 1.0f));
+            F32 up = xsqrt(1.0f - z * z);
             F32 rr = xurand();
 
             rad = -((rr * (rr * rr)) - 1.0f);
@@ -638,7 +638,7 @@ namespace
         {
             F32 ang = 6.2831855f * xurand();
             F32 z = 2.0f * xurand() - 1.0f;
-            F32 sc = eb.radius * xsqrt(-((z * z) - 1.0f));
+            F32 sc = eb.radius * xsqrt(1.0f - z * z);
 
             off.assign(sc * icos(ang), sc * isin(ang), z * eb.radius);
             break;
@@ -732,10 +732,10 @@ namespace
             F32 rad;
             F32 ang = 6.2831855f * xurand();
             F32 z = 2.0f * xurand() - 1.0f;
-            F32 up = xsqrt(-((z * z) - 1.0f));
+            F32 up = xsqrt(1.0f - z * z);
             F32 rr = xurand();
 
-            rad = -((rr * (rr * rr)) - 1.0f);
+            rad = 1.0f - rr * (rr * rr);
             rad *= b.sph.r + expand;
 
             sc = rad * up;

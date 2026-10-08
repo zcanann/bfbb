@@ -62,6 +62,8 @@ void zAssetShutdown();
 
 #if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
 enum { MAIN_SCREEN_HEIGHT = 528, MAIN_VBLANKS_PER_SECOND = 50 };
+#elif defined(PS2)
+enum { MAIN_SCREEN_HEIGHT = 448, MAIN_VBLANKS_PER_SECOND = 60 };
 #else
 enum { MAIN_SCREEN_HEIGHT = 480, MAIN_VBLANKS_PER_SECOND = 60 };
 #endif
@@ -104,6 +106,15 @@ void zGameInit(U32 theSceneID);
 void zGameSetup();
 void zGameLoop();
 void zGameExit();
+#if defined(PS2)
+// SB/Core/p2/iException.cpp; declared in no header this unit includes.
+void iExceptionInit();
+void iExceptionRwDMAInit();
+// SB/Core/p2/iSystem.cpp, SB/Core/x/xModelBucket.cpp and zEntPickup.cpp.
+void iSystem_GapTrackReport();
+void xModelBucket_PreAllocModelPipe(RpAtomic* m);
+void zEntPickup_ShinySparklyInit(RpAtomic* data);
+#endif
 
 void main(S32 argc, char** argv)
 {
@@ -111,9 +122,40 @@ void main(S32 argc, char** argv)
     S32 i;
     char* tmpStr;
 
+#if defined(PS2)
+    iExceptionInit();
+#endif
     memset(&globals, 0, sizeof(globals));
     globals.firstStartPressed = TRUE;
+#if defined(PS2)
+    options = 0;
+    options |= 2;
+    for (i = 1; i < argc; i++)
+    {
+        if (!strcmp(argv[i], "-hostio"))
+        {
+            options |= 1;
+        }
+        else if (!strcmp(argv[i], "-cdrom"))
+        {
+            options &= ~1;
+        }
+        else if (!strcmp(argv[i], "-rebootiop"))
+        {
+            options |= 2;
+        }
+        else if (!strcmp(argv[i], "-norebootiop"))
+        {
+            options &= ~2;
+        }
+    }
+    iRenderWareInit();
+    zMainFirstScreen(1);
+    iExceptionRwDMAInit();
+    iSystemInit(options);
+#else
     iSystemInit(FALSE); // 0x6d2
+#endif
     zMainOutputMgrSetup();
     xMemRegisterBaseNotifyFunc(zMainMemLvlChkCB);
     zMainInitGlobals();
@@ -121,7 +163,9 @@ void main(S32 argc, char** argv)
     zAssetStartup();
     zMainLoadFontHIP();
     xfont::init();
+#if !defined(PS2)
     zMainFirstScreen(1);
+#endif
     zMainShowProgressBar();
     xTRCInit();
     zMainReadINI();
@@ -705,6 +749,12 @@ void zMainLoop()
     RpAtomic* modl;
     U32 newGameSceneID;
 
+#if defined(PS2)
+    static U32 preinit_ADC_models[] = { 0x11949923, 0xafcd6aa4, 0x83a6fc77, 0x0f952b9e, 0x26d24cde,
+                                        0x5c009d14, 0x2dc4fe5a, 0xe3f5a64c, 0xc35d47e3, 0x00000000 };
+    static U32 preinit_shiny_models[] = { 0x567cd99a, 0xc74af06a, 0x814e75dd, 0x644e22ac,
+                                          0xf6b5f5a8, 0x73316a84, 0xb34862e7, 0x00000000 };
+#endif
     static U32 preinit_bubble_matfx[] = { 0xdbd033bc, 0x452279a2, 0xc17f4bcc,
                                           0x0cf9267a, 0x5c009d14, 0x00000000 };
 
@@ -789,6 +839,26 @@ void zMainLoop()
     xModelPoolInit(0x28, 8);
     xModelPoolInit(0x38, 1);
 
+#if defined(PS2)
+    for (preinit = preinit_ADC_models; *preinit != 0; preinit++)
+    {
+        modl = (RpAtomic*)xSTFindAsset(*preinit, NULL);
+        if (modl)
+        {
+            xModelBucket_PreAllocModelPipe(modl);
+        }
+    }
+
+    for (preinit = preinit_shiny_models; *preinit != 0; preinit++)
+    {
+        modl = (RpAtomic*)xSTFindAsset(*preinit, NULL);
+        if (modl)
+        {
+            zEntPickup_ShinySparklyInit(modl);
+        }
+    }
+#endif
+
     for (preinit = preinit_bubble_matfx; *preinit != 0; preinit++)
     {
         modl = (RpAtomic*)xSTFindAsset(*preinit, NULL);
@@ -808,6 +878,17 @@ void zMainLoop()
         xUtil_idtag2string(gameSceneID, 0);
         xMemPushBase();
         zMainShowProgressBar();
+#if defined(PS2)
+        {
+            U32 iconDataSize = 0;
+            void* iconData = xSTFindAsset(xStrHash("SpongeIcon"), &iconDataSize);
+            if (iconData)
+            {
+                iSGIconInit(iconData, iconDataSize);
+            }
+        }
+        iSystem_GapTrackReport();
+#endif
         zMainMemCardSpaceQuery();
 
         while (1)
@@ -1295,6 +1376,8 @@ void zMainLoadFontHIP()
     iTimeDiffSec(time);
 }
 
+#if !defined(PS2)
 void iEnvStartup()
 {
 }
+#endif

@@ -115,7 +115,9 @@ struct xFXRibbon
 
 // Specialized in xFX.cpp. The declaration has to precede the first
 // instantiation, which is xFXRibbon::clear() below.
+#if !defined(PS2)
 template <> void tier_queue<xFXRibbon::joint_data>::clear();
+#endif
 
 inline void xFXRibbon::clear()
 {

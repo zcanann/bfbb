@@ -233,31 +233,32 @@ namespace cruise_bubble
 
         void stop_sound(S32 which, U32 handle)
         {
-            sound_config* s = &sounds[which];
+            sound_config& s = sounds[which];
 
-            if (s->id == 0)
+            if (s.id == 0)
             {
-                if (s->streamed == 0)
+                if (s.streamed == 0)
                 {
-                    for (S32 i = s->first; i <= s->last; ++i)
+                    for (S32 i = s.first; i <= s.last; ++i)
                     {
                         zEntPlayer_SNDStop((_tagePlayerSnd)i);
                     }
                 }
-                return;
             }
-
-            if (handle == 0)
+            else
             {
-                handle = s->handle;
-            }
+                if (handle == 0)
+                {
+                    handle = s.handle;
+                }
 
-            if (handle != 0)
-            {
-                xSndStop(handle);
-            }
+                if (handle != 0)
+                {
+                    xSndStop(handle);
+                }
 
-            s->handle = 0;
+                s.handle = 0;
+            }
         }
 
         U32 play_sound(S32 which, F32 volFactor)
@@ -4120,6 +4121,9 @@ namespace cruise_bubble
             this->start_sp = shared.sp;
         }
 
+#if defined(PS2)
+        inline
+#endif
         void cruise_bubble::state_camera_survey::move()
         {
             F32 s = xSCurve(this->time / current_tweak->camera.survey.duration,

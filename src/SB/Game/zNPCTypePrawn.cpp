@@ -533,6 +533,9 @@ namespace
             return TRUE;
         }
 
+#if defined(PS2)
+        inline
+#endif
         void destroy();
         void set_background(iColor_tag);
 #if defined(PS2)

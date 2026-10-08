@@ -19,6 +19,37 @@
 #include <stdio.h>
 #if defined(PS2)
 #include <stdlib.h>
+#include <rwplcore.h>
+#include <rpworld.h>
+// rppds.h
+extern "C" RxPipeline* RpPDSGetPipe(RwUInt32 pipeID);
+// The retail PS2 executable draws the queued disco floor clones through a
+// symbol-less RenderWare-side routine (0x297CF0 in SLUS-20680): one atomic,
+// drawn once per frame/colour pair. Its original name is not recoverable;
+// this declaration names it descriptively.
+extern "C" void RpAtomicRenderClones(RpAtomic* atomic, RwFrame** frames, RwInt32 count,
+                                           RwRGBAReal* colors);
+
+template <class T> T range_limit(T v, T minv, T maxv)
+{
+    if (v <= minv)
+    {
+        return minv;
+    }
+
+    if (v >= maxv)
+    {
+        return maxv;
+    }
+
+    return v;
+}
+
+// PS2 DWARF places this inline in xMathInlines.h; it is emitted out of line here.
+inline void xmax3fast(F32& o, F32 a, F32 b, F32 c)
+{
+    o = MAX(a, MAX(b, c));
+}
 #else
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\stdlib.h>
 #endif
@@ -69,7 +100,7 @@ namespace
 
         if (namelen)
         {
-            for (long i = namelen - 1; i >= 0; i--)
+            for (S32 i = namelen - 1; i >= 0; i--)
             {
                 U8 c = (U8)(name[i]);
                 if (c < '0' || c > '9')
@@ -144,35 +175,33 @@ namespace
 
     U32 get_tile(const U8* a, size_t b)
     {
-        static volatile S32 bit_index;
-        static S8 init;
-        static S32 r;
+        size_t bit = b << 1;
+        U32 t = (a[bit >> 3] >> (bit & 7)) & 3;
 
-        U32 uVar1 = a[(b >> 2) & 0x1fffffff] >> ((b & 3) << 1) & 3;
-        if (uVar1 == 2)
+        if (t == 2)
         {
-            if (init == 0)
-            {
-                bit_index = 0x20;
-                init = 1;
-            }
+            static volatile S32 bit_index = 32;
+            static U32 r;
+
             bit_index++;
-            if (bit_index >= 0x20)
+
+            if (bit_index >= 32)
             {
                 bit_index = 0;
                 r = xrand();
             }
-            uVar1 = r & 1 << bit_index;
-            uVar1 = (-uVar1 | uVar1) >> 0x1f;
+
+            return (r & (1 << bit_index)) ? 1 : 0;
         }
-        return uVar1;
+
+        return t;
     }
 
-    void set_tile(U8* r3, size_t r4, U32 r5)
+    void set_tile(U8* a, size_t b, U32 t)
     {
-        U32 uVar1 = (r4 >> 2) & 0x1fffffff;
-        int iVar2 = (r4 & 3) << 1;
-        r3[uVar1] = r3[uVar1] & ~(3 << iVar2) | (r5 << iVar2);
+        size_t i = (b << 1) >> 3;
+        S32 shift = (b & 3) << 1;
+        a[i] = (a[i] & ~(3 << shift)) | (t << shift);
     }
 
     void translate_mask(U8* r3, const U8* r4, size_t r5)
@@ -232,6 +261,9 @@ namespace
     // non-matching: scheduling. The target interleaves all nine `lbzx` of the
     // flag tables into the first block; we emit each one at its use site
     // because our scheduler will not move a load across a store.
+#ifdef PS2
+    inline
+#endif
     void set_object_state(const z_disco_floor& df, size_t index, S32 state)
     {
         xEnt* off = df.tiles[0][index].ent;
@@ -514,6 +546,30 @@ namespace
         U16 used;
     };
 
+#ifdef PS2
+    RpAtomic* clone_atomic(RpAtomic* atomic)
+    {
+        RwMemory mem = {};
+        RwStream* stream = RwStreamOpen(rwSTREAMMEMORY, rwSTREAMWRITE, &mem);
+        RpAtomicStreamWrite(atomic, stream);
+        RwStreamClose(stream, &mem);
+
+        stream = RwStreamOpen(rwSTREAMMEMORY, rwSTREAMREAD, &mem);
+        RwStreamFindChunk(stream, rwID_ATOMIC, NULL, NULL);
+        RpAtomic* clone = RpAtomicStreamRead(stream);
+        RwStreamClose(stream, &mem);
+
+        RxPipeline* atomic_pipe = RpPDSGetPipe(0x50018);
+        RxPipeline* material_pipe = RpPDSGetPipe(0x50017);
+        RpMaterial* material = clone->geometry->matList.materials[0];
+        clone->pipeline = atomic_pipe;
+        material->pipeline = material_pipe;
+
+        RwFree(mem.start);
+        return clone;
+    }
+#endif
+
     struct clone_pipe_data
     {
         // this struct is likely ps2 (and maybe xbox) only,
@@ -529,6 +585,15 @@ namespace
         void init();
         void post_setup();
         void destroy();
+#ifdef PS2
+        void insert_atomic(xModelInstance* model);
+        static S32 compare_buckets(const void* e1, const void* e2);
+        bucket_data& find_bucket(RpAtomic* atomic);
+        void render(bucket_data& bucket, xModelInstance& model, iColor_tag color, F32 yoffset);
+        void render_buckets();
+        bool sphere_hits_screen(const xSphere& o);
+        void clip_render(RpAtomic* atomic, xMat4x3& mat, const xSphere& bound, iColor_tag color);
+#endif
     };
 
     clone_pipe_data clone_pipe;
@@ -548,7 +613,38 @@ namespace
 {
     void clone_pipe_data::init()
     {
+#ifdef PS2
+        buckets_size = 0;
+#endif
     }
+
+#ifdef PS2
+    void clone_pipe_data::insert_atomic(xModelInstance* model)
+    {
+        RpAtomic* atomic = model->Data;
+        bucket_data* it = buckets;
+        bucket_data* end = it + buckets_size;
+
+        for (; it != end; ++it)
+        {
+            if (it->atomic == atomic)
+            {
+                ++it->size;
+                return;
+            }
+        }
+
+        it->atomic = atomic;
+        it->size = 1;
+        ++buckets_size;
+        it->atomic_clone = clone_atomic(it->atomic);
+    }
+
+    S32 clone_pipe_data::compare_buckets(const void* e1, const void* e2)
+    {
+        return (S32)((const bucket_data*)e1)->atomic - (S32)((const bucket_data*)e2)->atomic;
+    }
+#endif
 
     void add_global_tweaks()
     {
@@ -562,8 +658,74 @@ void z_disco_floor::post_setup()
 
 namespace
 {
+#ifdef PS2
+    inline
+#endif
     void clone_pipe_data::post_setup()
     {
+#ifdef PS2
+        zScene& s = *globals.sceneCur;
+        z_disco_floor* begin_floor = (z_disco_floor*)s.baseList[eBaseTypeDiscoFloor];
+        z_disco_floor* end_floor = begin_floor + s.baseCount[eBaseTypeDiscoFloor];
+
+        buckets = (bucket_data*)xMemPushTemp(100 * sizeof(bucket_data));
+        buckets_size = 0;
+
+        U32 total = 0;
+
+        for (z_disco_floor* floor = begin_floor; floor != end_floor; ++floor)
+        {
+            for (S32 group = 0; group < 3; ++group)
+            {
+                z_disco_floor::tile_data* tile = floor->tiles[group];
+                z_disco_floor::tile_data* end_tile = tile + floor->tiles_size;
+
+                for (; tile != end_tile; ++tile)
+                {
+                    if (tile->ent && tile->ent->model)
+                    {
+                        insert_atomic(tile->ent->model);
+                        ++total;
+                    }
+                }
+            }
+        }
+
+        if (buckets_size == 0)
+        {
+            xMemPopTemp(buckets);
+            return;
+        }
+
+        bucket_data* temp_buckets = buckets;
+        buckets = (bucket_data*)xMemAllocSize(buckets_size * sizeof(bucket_data));
+        memcpy(buckets, temp_buckets, buckets_size * sizeof(bucket_data));
+        xMemPopTemp(temp_buckets);
+
+        render_context* rc = (render_context*)xMemAllocSize(total * 2 * sizeof(render_context));
+        bucket_data* it = buckets;
+        bucket_data* end = it + buckets_size;
+
+        for (; it != end; ++it)
+        {
+            it->rc = rc;
+            rc += it->size * 2;
+            it->used = 0;
+        }
+
+        colors = (RwRGBAReal*)xMemAllocSize(48 * sizeof(RwRGBAReal));
+        frames = (RwFrame**)xMemAllocSize(48 * sizeof(RwFrame*));
+
+        RwFrame** frame = frames;
+        RwFrame** end_frame = frame + 48;
+
+        for (; frame != end_frame; ++frame)
+        {
+            *frame = RwFrameCreate();
+        }
+
+        qsort(buckets, buckets_size, sizeof(bucket_data), compare_buckets);
+#endif
     }
 } // namespace
 
@@ -575,13 +737,214 @@ void z_disco_floor::destroy()
 
 namespace
 {
+#ifdef PS2
+    inline
+#endif
     void clone_pipe_data::destroy()
     {
+#ifdef PS2
+        if (buckets_size == 0)
+        {
+            return;
+        }
+
+        RwFrame** frame = frames;
+        RwFrame** end_frame = frame + 48;
+
+        for (; frame != end_frame; ++frame)
+        {
+            RwFrameDestroy(*frame);
+        }
+
+        bucket_data* it = buckets;
+        bucket_data* end = it + buckets_size;
+
+        for (; it != end; ++it)
+        {
+            _rwFrameSyncDirty();
+            RwFrame* clone_frame = RpAtomicGetFrame(it->atomic_clone);
+
+            if (clone_frame)
+            {
+                RpAtomicSetFrame(it->atomic_clone, NULL);
+                RwFrameDestroy(clone_frame);
+            }
+
+            RpAtomicDestroy(it->atomic_clone);
+        }
+
+        buckets_size = 0;
+#endif
     }
 } // namespace
 
+#ifdef PS2
+namespace
+{
+    inline bucket_data& clone_pipe_data::find_bucket(RpAtomic* atomic)
+    {
+        S32 lo = 0;
+        S32 hi = buckets_size;
+
+        while (lo != hi)
+        {
+            S32 mid = (lo + hi) / 2;
+            bucket_data& bucket = buckets[mid];
+
+            if (atomic < bucket.atomic)
+            {
+                hi = mid;
+            }
+            else if (bucket.atomic < atomic)
+            {
+                lo = mid + 1;
+            }
+            else
+            {
+                return bucket;
+            }
+        }
+
+        return buckets[0];
+    }
+
+    inline void clone_pipe_data::render(bucket_data& bucket, xModelInstance& model,
+                                        iColor_tag color, F32 yoffset)
+    {
+        xSphere bound;
+        const RwSphere& sphere = *RpAtomicGetBoundingSphere(model.Data);
+        bound.r = sphere.radius;
+
+        render_context& rc = bucket.rc[bucket.used];
+        rc.color = color;
+        rc.mat = *(xMat4x3*)model.Mat;
+        rc.mat.pos.y += yoffset;
+
+        if (0.0f != model.Scale.x)
+        {
+            rc.mat.right *= model.Scale.x;
+            rc.mat.up *= model.Scale.y;
+            rc.mat.at *= model.Scale.z;
+
+            F32 scale;
+            xmax3fast(scale, model.Scale.x, model.Scale.y, model.Scale.z);
+            bound.r *= scale;
+        }
+
+        xMat4x3Toworld(&bound.center, &rc.mat, (const xVec3*)&sphere.center);
+
+        if (sphere_hits_screen(bound))
+        {
+            clip_render(bucket.atomic, rc.mat, bound, color);
+        }
+        else
+        {
+            ++bucket.used;
+        }
+    }
+
+    inline void clone_pipe_data::render_buckets()
+    {
+        bucket_data* it = buckets;
+        bucket_data* end = it + buckets_size;
+
+        for (; it != end; ++it)
+        {
+            S32 remaining = it->used;
+            it->used = 0;
+
+            render_context* rc = it->rc;
+            render_context* end_rc = rc + remaining;
+
+            while (rc != end_rc)
+            {
+                S32 count = 48;
+
+                if (remaining < 48)
+                {
+                    count = remaining;
+                }
+                RwFrame** frame = frames;
+                RwFrame** end_frame = frame + count;
+                RwRGBAReal* color = colors;
+
+                for (; frame != end_frame; ++frame, ++rc, ++color)
+                {
+                    RwFrame* f = *frame;
+                    *(xMat4x3*)&f->ltm = rc->mat;
+                    RwMatrixUpdate(&f->ltm);
+                    color->red = rc->color.r * (1.0f / 255.0f);
+                    color->green = rc->color.g * (1.0f / 255.0f);
+                    color->blue = rc->color.b * (1.0f / 255.0f);
+                    color->alpha = rc->color.a * (1.0f / 255.0f);
+                }
+
+                RpAtomicRenderClones(it->atomic_clone, frames, count, colors);
+                remaining -= count;
+            }
+        }
+    }
+} // namespace
+#endif
+
 void z_disco_floor::render_all()
 {
+#ifdef PS2
+    iColor_tag color = { 255, 255, 255, 255 };
+
+    xLightKit_Enable(&glow_light.kit, globals.currWorld);
+
+    zScene& s = *globals.sceneCur;
+    z_disco_floor* begin_floor = (z_disco_floor*)s.baseList[eBaseTypeDiscoFloor];
+    z_disco_floor* end_floor = begin_floor + s.baseCount[eBaseTypeDiscoFloor];
+    RpAtomic* atomic;
+    bucket_data* bucket;
+    z_disco_floor* floor;
+    S32 group;
+    tile_data* tile;
+    tile_data* end_tile;
+    xModelInstance* model;
+
+    atomic = NULL;
+    bucket = NULL;
+
+    for (floor = begin_floor; floor != end_floor; ++floor)
+    {
+        floor->flag.culled = floor->flag.culled || iModelSphereCull(&floor->bound);
+
+        if (floor->flag.culled)
+        {
+            continue;
+        }
+
+        for (group = 0; group < 3; ++group)
+        {
+            tile = floor->tiles[group];
+            end_tile = tile + floor->tiles_size;
+
+            for (; tile != end_tile; ++tile)
+            {
+                if (!(tile->ent->flags & 0x1))
+                {
+                    tile->culled = true;
+                    continue;
+                }
+
+                model = tile->ent->model;
+
+                if (atomic != model->Data)
+                {
+                    atomic = model->Data;
+                    bucket = &clone_pipe.find_bucket(atomic);
+                }
+
+                clone_pipe.render(*bucket, *model, color, 0.0f);
+            }
+        }
+    }
+
+    clone_pipe.render_buckets();
+#else
     iColor_tag color; // unused
     zScene& s = *globals.sceneCur;
     z_disco_floor* begin_floor = (z_disco_floor*)s.baseList[eBaseTypeDiscoFloor];
@@ -618,10 +981,157 @@ void z_disco_floor::render_all()
             floor++;
         }
     }
+#endif
 }
+
+#ifdef PS2
+namespace
+{
+    bool clone_pipe_data::sphere_hits_screen(const xSphere& o)
+    {
+        RwCamera* camera = RwCameraGetCurrentCamera();
+        xMat4x3& cammat = *(xMat4x3*)RwFrameGetMatrix(RwCameraGetFrame(camera));
+        xVec3 offset = { o.center.x - cammat.pos.x, o.center.y - cammat.pos.y,
+                         o.center.z - cammat.pos.z };
+        F32 radius = 1.5f * (0.2f + o.r);
+        F32 near_dist = cammat.at.dot(offset);
+
+        if (xabs(near_dist - camera->nearPlane) > radius)
+        {
+            return false;
+        }
+
+        xVec2& window = *(xVec2*)&camera->viewWindow;
+
+        if (xabs(xVec3Dot(&cammat.right, &offset)) > radius + window.x)
+        {
+            return false;
+        }
+
+        if (xabs(xVec3Dot(&cammat.up, &offset)) > radius + window.y)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    void clone_pipe_data::clip_render(RpAtomic* atomic, xMat4x3& mat, const xSphere& bound,
+                                      iColor_tag color)
+    {
+        RpGeometry* geom = atomic->geometry;
+        U32 flags = geom->flags;
+
+        if (*(U32*)&color == 0xFFFFFFFF)
+        {
+            geom->flags = flags & ~rpGEOMETRYMODULATEMATERIALCOLOR;
+        }
+        else
+        {
+            geom->flags = flags | rpGEOMETRYMODULATEMATERIALCOLOR;
+
+            S32 materials = geom->matList.numMaterials;
+
+            for (S32 i = 0; i < materials; ++i)
+            {
+                geom->matList.materials[i]->color = *(RwRGBA*)&color;
+            }
+        }
+
+        atomic->worldBoundingSphere.center = *(RwV3d*)&bound.center;
+        atomic->worldBoundingSphere.radius = bound.r;
+        RwMatrix* ltm = RwFrameGetLTM(RpAtomicGetFrame(atomic));
+        *ltm = *(RwMatrix*)&mat;
+        RwMatrixUpdate(ltm);
+        RpAtomicRender(atomic);
+    }
+} // namespace
+#endif
 
 void z_disco_floor::effects_render_all()
 {
+#ifdef PS2
+    iColor_tag color = { 255, 255, 255, 255 };
+
+    zRenderState(SDRS_DiscoFloorGlow);
+    xLightKit_Enable(&glow_light.kit, globals.currWorld);
+
+    zScene& s = *globals.sceneCur;
+    z_disco_floor* begin_floor = (z_disco_floor*)s.baseList[eBaseTypeDiscoFloor];
+    z_disco_floor* end_floor = begin_floor + s.baseCount[eBaseTypeDiscoFloor];
+    RpAtomic* atomic;
+    bucket_data* bucket;
+    z_disco_floor* floor;
+    S32 group;
+    F32 glow;
+    F32 dalpha;
+    F32 dyoffset;
+    tile_data* tile;
+    tile_data* end_tile;
+    xModelInstance* model;
+    F32 alpha;
+    F32 yoffset;
+    S32 i;
+
+    atomic = NULL;
+    bucket = NULL;
+
+    for (floor = begin_floor; floor != end_floor; ++floor)
+    {
+        floor->flag.culled = floor->flag.culled || iModelSphereCull(&floor->bound);
+
+        if (floor->flag.culled)
+        {
+            continue;
+        }
+
+        for (group = 0; group < 3; ++group)
+        {
+            glow = floor->pulse_glow[group];
+
+            if (0.0f == glow)
+            {
+                continue;
+            }
+
+            dalpha = 0.35f * -glow;
+            dyoffset = 0.1f * glow;
+
+            tile = floor->tiles[group];
+            end_tile = tile + floor->tiles_size;
+
+            for (; tile != end_tile; ++tile)
+            {
+                if (!(tile->ent->flags & 0x1))
+                {
+                    tile->culled = true;
+                    continue;
+                }
+
+                model = tile->ent->model;
+
+                if (atomic != model->Data)
+                {
+                    atomic = model->Data;
+                    bucket = &clone_pipe.find_bucket(atomic);
+                }
+
+                alpha = 0.7f * glow;
+                yoffset = dyoffset;
+
+                for (i = 0; i < 2; ++i)
+                {
+                    color.a = 255.0f * alpha + 0.5f;
+                    clone_pipe.render(*bucket, *model, color, yoffset);
+                    alpha += dalpha;
+                    yoffset += dyoffset;
+                }
+            }
+        }
+    }
+
+    clone_pipe.render_buckets();
+#else
     iColor_tag color; // unused
     zScene& s = *globals.sceneCur;
     z_disco_floor* begin_floor = (z_disco_floor*)s.baseList[eBaseTypeDiscoFloor];
@@ -665,6 +1175,7 @@ void z_disco_floor::effects_render_all()
             floor++;
         }
     }
+#endif
 }
 
 void z_disco_floor::init(void* ent, void* asset)
@@ -680,7 +1191,7 @@ void z_disco_floor::load(z_disco_floor_asset& asset)
     this->asset = &asset;
     eventFunc = event_handler;
 
-    if (linkCount != 0)
+    if (linkCount > 0)
     {
         link = (xLinkAsset*)(&asset + 1);
     }
@@ -1249,6 +1760,7 @@ S32 z_disco_floor::event_handler(xBase*, xBase* to, U32 event, const F32* argf, 
     return 1;
 }
 
+#ifndef PS2
 template <> size_t range_limit(size_t v, size_t minv, size_t maxv)
 {
     if (v <= minv)
@@ -1278,3 +1790,4 @@ template <> S32 range_limit(S32 v, S32 minv, S32 maxv)
 
     return v;
 }
+#endif

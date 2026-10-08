@@ -78,8 +78,14 @@ void zEntHangable_Init(zEntHangable* ent, xEntAsset* asset)
 
     if (ent->linkCount)
     {
+#if defined(PS2)
+        // PS2 assets put the links straight after the 0x20-byte hangable asset
+        // (link table at asset + 0x74; the GameCube table sits at asset + 0x88).
+        ent->link = (xLinkAsset*)((xEntHangableAsset*)(ent->asset + 1) + 1);
+#else
         xEnt* next = (xEnt*)&((xEntMotion*)(ent->asset))[1];
         ent->link = (xLinkAsset*)(&next->link);
+#endif
     }
     else
     {
@@ -179,18 +185,18 @@ void zEntHangable_Update(zEntHangable* ent, xScene*, F32 dt)
     xVec3Normalize(&sub, &sub);
 
     dot = xVec3Dot(&sub, &unitHang);
-    unitHang.x = -((dot * sub.x) - unitHang.x);
-    unitHang.y = -((dot * sub.y) - unitHang.y);
-    unitHang.z = -((dot * sub.z) - unitHang.z);
+    unitHang.x -= dot * sub.x;
+    unitHang.y -= dot * sub.y;
+    unitHang.z -= dot * sub.z;
 
     ent->vel.x = (unitHang.x * dt) + ent->vel.x;
     ent->vel.y = (unitHang.y * dt) + ent->vel.y;
     ent->vel.z = (unitHang.z * dt) + ent->vel.z;
 
     dot = xVec3Dot(&sub, &ent->vel);
-    ent->vel.x = -((dot * sub.x) - ent->vel.x);
-    ent->vel.y = -((dot * sub.y) - ent->vel.y);
-    ent->vel.z = -((dot * sub.z) - ent->vel.z);
+    ent->vel.x -= dot * sub.x;
+    ent->vel.y -= dot * sub.y;
+    ent->vel.z -= dot * sub.z;
 
     xVec3SMul(&ent->vel, &ent->vel, 0.97f);
 
@@ -320,40 +326,39 @@ static S32 HangableIsMovingTooMuch(xVec3* a, xVec3* b, xVec3* c, xVec3* d)
 // Equivalent: scheduling.
 void zEntHangable_SetMatrix(zEntHangable* ent, F32 dt)
 {
-    xMat4x3 spinMat;
-    xMat3x3 tmpMat;
+    xMat4x3 tmpMat;
+    xMat3x3 spinMat;
     S32 moving;
     xVec3* opos;
     xVec3* pos;
     xVec3* orot;
     xVec3 rot;
 
-    xVec3Sub(&spinMat.up, &ent->pivot, &ent->endpos);
-    xVec3Normalize(&spinMat.up, &spinMat.up);
+    xVec3Sub(&tmpMat.up, &ent->pivot, &ent->endpos);
+    xVec3Normalize(&tmpMat.up, &tmpMat.up);
 
-    opos = &spinMat.at;
-    opos->x = 0.0f;
-    opos->y = 0.0f;
-    opos->z = 1.0f;
+    tmpMat.at.x = 0.0f;
+    tmpMat.at.y = 0.0f;
+    tmpMat.at.z = 1.0f;
 
-    xVec3Cross(&spinMat.right, &spinMat.up, opos);
-    xVec3Normalize(&spinMat.right, &spinMat.right);
-    xMat3x3RotC(&tmpMat, spinMat.up.x, spinMat.up.y, spinMat.up.z, ent->spin);
-    xMat3x3RMulVec(&spinMat.right, &tmpMat, &spinMat.right);
-    xVec3Cross(opos, &spinMat.right, &spinMat.up);
+    xVec3Cross(&tmpMat.right, &tmpMat.up, &tmpMat.at);
+    xVec3Normalize(&tmpMat.right, &tmpMat.right);
+    xMat3x3RotC(&spinMat, tmpMat.up.x, tmpMat.up.y, tmpMat.up.z, ent->spin);
+    xMat3x3RMulVec(&tmpMat.right, &spinMat, &tmpMat.right);
+    xVec3Cross(&tmpMat.at, &tmpMat.right, &tmpMat.up);
 
-    spinMat.pos.x = 0.0f;
-    spinMat.pos.y = -ent->hangInfo->pivotOffset;
-    spinMat.pos.z = 0.0f;
+    tmpMat.pos.x = 0.0f;
+    tmpMat.pos.y = -ent->hangInfo->pivotOffset;
+    tmpMat.pos.z = 0.0f;
 
-    xMat3x3RMulVec(&spinMat.pos, &spinMat, &spinMat.pos);
+    xMat3x3RMulVec(&tmpMat.pos, &tmpMat, &tmpMat.pos);
 
-    spinMat.pos.x += ent->pivot.x;
-    spinMat.pos.y += ent->pivot.y;
-    spinMat.pos.z += ent->pivot.z;
-    spinMat.flags = 0;
+    tmpMat.pos.x += ent->pivot.x;
+    tmpMat.pos.y += ent->pivot.y;
+    tmpMat.pos.z += ent->pivot.z;
+    tmpMat.flags = 0;
 
-    *(xMat4x3*)(ent->model->Mat) = *(xMat4x3*)(&spinMat);
+    *(xMat4x3*)(ent->model->Mat) = tmpMat;
 
     opos = &ent->frame->oldmat.pos;
     orot = &ent->frame->oldrot.axis;

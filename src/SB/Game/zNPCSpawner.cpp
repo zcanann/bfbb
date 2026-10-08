@@ -44,21 +44,23 @@ void zNPCSpawner_SceneFinish()
 
 zNPCSpawner* zNPCSpawner_GetInstance()
 {
+    zNPCSpawner* sm = NULL;
+    zNPCSpawner* sm_tmp;
     SMDepot* depot = &g_smdepot;
-    zNPCSpawner* found = NULL;
+    S32 i;
 
-    for (S32 i = 0; i < depot->spawners.cnt; i++)
+    for (i = 0; i < depot->spawners.cnt; i++)
     {
-        zNPCSpawner* sm = (zNPCSpawner*)depot->spawners.list[i];
-        if (!(sm->flg_spawner & 1))
+        sm_tmp = (zNPCSpawner*)depot->spawners.list[i];
+        if (!(sm_tmp->flg_spawner & 1))
         {
-            found = sm;
-            sm->flg_spawner |= 1;
+            sm = sm_tmp;
+            sm_tmp->flg_spawner |= 1;
             break;
         }
     }
 
-    return found;
+    return sm;
 }
 
 void zNPCSpawner::Subscribe(zNPCCommon* owner)
@@ -80,10 +82,12 @@ void zNPCSpawner::SetWaveMode(en_SM_WAVE_MODE mode, F32 delay, S32 lifemax)
 
 S32 zNPCSpawner::AddSpawnPoint(zMovePoint* sp)
 {
+    SMSPStatus* sp_stat;
     S32 ack = 0;
-    for (S32 i = 0; i < 0x10; i++)
+    S32 i;
+    for (i = 0; i < 0x10; i++)
     {
-        SMSPStatus* sp_stat = &this->sppool[i];
+        sp_stat = &this->sppool[i];
         if (sp_stat->sp == NULL)
         {
             sp_stat->sp = sp;
@@ -527,13 +531,13 @@ SMSPStatus* zNPCSpawner::SelectSP(const SMNPCStatus* npcstat)
             }
         }
 
-        if (!cnt)
+        if (cnt)
         {
-            sp_stat = NULL;
+            sp_stat = xUtil_select<SMSPStatus>(splist, cnt, NULL);
         }
         else
         {
-            sp_stat = xUtil_select<SMSPStatus>(splist, cnt, NULL);
+            sp_stat = NULL;
         }
     }
 

@@ -60,8 +60,25 @@ void clamp_bone_index(NCINEntry* fxrec, RpAtomic* model);
 // belongs in xDebug.h next to the other xDebugAddTweak overloads
 void xDebugAddTweak(const char*, xVec3*, const tweak_callback*, void*, U32);
 
+#ifdef PS2
+// PS2 retail inlines this into the NCIN callbacks (zNPCHazard.cpp carries
+// the same local inline definition).
+inline xVec3* LERP(F32 t, xVec3* dst, const xVec3* a, const xVec3* b)
+{
+    dst->x = LERP(t, a->x, b->x);
+    dst->y = LERP(t, a->y, b->y);
+    dst->z = LERP(t, a->z, b->z);
+    return dst;
+}
+
+inline xVec3* SMOOTH(F32 t, xVec3* dst, const xVec3* a, const xVec3* b)
+{
+    return LERP(EASE(t), dst, a, b);
+}
+#else
 xVec3* LERP(F32 t, xVec3* dst, const xVec3* a, const xVec3* b);
 xVec3* SMOOTH(F32 t, xVec3* dst, const xVec3* a, const xVec3* b);
+#endif
 
 void EmitFreezeBreath(xVec3* pos, xVec3* vel, F32 dt, F32 elapsed, F32 total);
 void NPAR_EmitTubeSpiralCin(const xVec3* pos, const xVec3* vel, F32 dt);
@@ -2247,6 +2264,7 @@ static void NCIN_HazProjShoot(const zCutsceneMgr*, NCINEntry* fxrec, S32 killit)
         haz->SetNPCOwner(NULL);
         haz->custdata.collide.flg_collide = 0;
 
+        HAZTarTar* tartar = &haz->custdata.tartar;
         xVec3 pos_beg = fxrec->pos_A[0];
         xVec3 pos_end = fxrec->pos_A[1];
         xVec3 dir_shoot = pos_beg - pos_end;
@@ -2259,7 +2277,7 @@ static void NCIN_HazProjShoot(const zCutsceneMgr*, NCINEntry* fxrec, S32 killit)
             tym = 0.25f;
         }
 
-        haz->custdata.tartar.pos_tgt = pos_end;
+        tartar->pos_tgt = pos_end;
         haz->Start(&fxrec->pos_A[0], tym);
         fxrec->fxdata.hazdata.npchaz = haz;
     }
@@ -2332,27 +2350,29 @@ static void NCIN_HazTTSteam_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic*,
         return;
     }
 
+    idx_boneSign = fxrec->pos_A[1].y;
+
     xVec3 vec_offset = fxrec->pos_A[0];
     xVec3 pos;
 
-    idx_boneSign = fxrec->pos_A[1].y;
+    xMat4x3* mat_root = (xMat4x3*)animMat;
 
     if (idx_boneSign > 0)
     {
-        RwMatrixTag* mat_bone = &animMat[idx_boneSign];
+        xMat4x3* mat_bone = (xMat4x3*)&animMat[idx_boneSign];
 
-        pos = *(const xVec3*)&mat_bone->pos;
-        pos += *(const xVec3*)&mat_bone->right * vec_offset.x;
-        pos += *(const xVec3*)&mat_bone->up * vec_offset.y;
-        pos += *(const xVec3*)&mat_bone->at * vec_offset.z;
-        pos += *(const xVec3*)&animMat->pos;
+        pos = mat_bone->pos;
+        pos += mat_bone->right * vec_offset.x;
+        pos += mat_bone->up * vec_offset.y;
+        pos += mat_bone->at * vec_offset.z;
+        pos += mat_root->pos;
     }
     else
     {
-        pos = *(const xVec3*)&animMat->pos;
-        pos += *(const xVec3*)&animMat->right * vec_offset.x;
-        pos += *(const xVec3*)&animMat->up * vec_offset.y;
-        pos += *(const xVec3*)&animMat->at * vec_offset.z;
+        pos = mat_root->pos;
+        pos += mat_root->right * vec_offset.x;
+        pos += mat_root->up * vec_offset.y;
+        pos += mat_root->at * vec_offset.z;
     }
 
     NPCHazard* haz = fxrec->fxdata.hazdata.npchaz;
@@ -2473,10 +2493,10 @@ static void NCIN_SleepyLamp_AR(const zCutsceneMgr* csnmgr, NCINEntry* fxrec, RpA
 {
     if (animIndex == 2)
     {
-        xVec3* pos_robo = &fxrec->fxdata.lampdata.pos_robo;
+        NCINLamp* lampdat = &fxrec->fxdata.lampdata;
 
-        *pos_robo = *(const xVec3*)&animMat->pos;
-        pos_robo->y += -2.0f;
+        lampdat->pos_robo = *(const xVec3*)&animMat->pos;
+        lampdat->pos_robo.y += -2.0f;
         return;
     }
 
@@ -2485,45 +2505,45 @@ static void NCIN_SleepyLamp_AR(const zCutsceneMgr* csnmgr, NCINEntry* fxrec, RpA
         return;
     }
 
-    xVec3* pos_robo = &fxrec->fxdata.lampdata.pos_robo;
+    xMat4x3* mat_root = (xMat4x3*)animMat;
+    NCINLamp* lampdat = &fxrec->fxdata.lampdata;
 
-    NPCCone cone;
-    xVec3 pos_lamp = *(const xVec3*)&animMat->pos;
+    NPCCone conedata;
+    xVec3 pos_lamp = mat_root->pos;
     xVec3 rgb_peace = { 1.0f, 1.0f, 0.63f };
     xVec3 rgb_anger = { 0.5f, 0.0f, 0.0f };
     xVec3 rgb_current;
     RwRGBA rgba_top;
     RwRGBA rgba_bot;
-    F32 pct;
+    F32 rat;
 
     static const F32 tym_anger[4] = { 4.8333335f, 5.3333335f, 11.000001f, 11.666667f };
 
-    F32 tym = csnmgr->csn->Time;
-
-    if (tym < tym_anger[0])
+    if (csnmgr->csn->Time < tym_anger[0])
     {
         rgb_current = rgb_peace;
     }
-    else if (tym > tym_anger[3])
+    else if (csnmgr->csn->Time > tym_anger[3])
     {
         rgb_current = rgb_peace;
     }
-    else if (tym > tym_anger[1] && tym < tym_anger[2])
+    else if (csnmgr->csn->Time > tym_anger[1] && csnmgr->csn->Time < tym_anger[2])
     {
         rgb_current = rgb_anger;
     }
     else
     {
-        if (tym < tym_anger[1])
+        if (csnmgr->csn->Time < tym_anger[1])
         {
-            pct = (tym - tym_anger[0]) / (tym_anger[1] - tym_anger[0]);
+            rat = (csnmgr->csn->Time - tym_anger[0]) / (tym_anger[1] - tym_anger[0]);
         }
         else
         {
-            pct = 1.0f - (tym - tym_anger[2]) / (tym_anger[3] - tym_anger[2]);
+            rat = 1.0f - (csnmgr->csn->Time - tym_anger[2]) / (tym_anger[3] - tym_anger[2]);
         }
 
-        SMOOTH(CLAMP(pct, 0.0f, 1.0f), &rgb_current, &rgb_peace, &rgb_anger);
+        rat = CLAMP(rat, 0.0f, 1.0f);
+        SMOOTH(rat, &rgb_current, &rgb_peace, &rgb_anger);
     }
 
     rgba_top.red = (U8)(255.0f * rgb_current.x);
@@ -2536,14 +2556,14 @@ static void NCIN_SleepyLamp_AR(const zCutsceneMgr* csnmgr, NCINEntry* fxrec, RpA
     rgba_bot.blue = rgba_top.blue;
     rgba_bot.alpha = 16;
 
-    memset(&cone, 0, sizeof(NPCCone));
+    memset(&conedata, 0, sizeof(NPCCone));
 
-    cone.RadiusSet(3.5f);
-    cone.ColorSet(rgba_top, rgba_bot);
-    cone.UVBaseSet(0.5f, 0.0f);
-    cone.UVSliceSet(1.0f, 1.0f);
-    cone.TextureSet(NULL);
-    cone.RenderCone(&pos_lamp, pos_robo);
+    conedata.RadiusSet(3.5f);
+    conedata.ColorSet(rgba_top, rgba_bot);
+    conedata.UVBaseSet(0.5f, 0.0f);
+    conedata.UVSliceSet(1.0f, 1.0f);
+    conedata.TextureSet(NULL);
+    conedata.RenderCone(&pos_lamp, &lampdat->pos_robo);
 }
 
 static void NCIN_SleepyDRay_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 killit)
@@ -2677,11 +2697,12 @@ static void NCIN_FireSpiral_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic*,
         return;
     }
 
-    xVec3 pos_emit = *(const xVec3*)&animMat[26].pos;
+    xMat4x3* mat_root = (xMat4x3*)animMat;
+    xVec3 pos_emit = mat_root[26].pos;
 
-    pos_emit += *(const xVec3*)&animMat->pos;
+    pos_emit += mat_root->pos;
 
-    xVec3 dir_emit = pos_emit - *(const xVec3*)&animMat->pos;
+    xVec3 dir_emit = pos_emit - mat_root->pos;
 
     dir_emit.y = 0.0f;
     dir_emit.normalize();
@@ -3050,10 +3071,11 @@ static void NCIN_HookRecoil_AR(const zCutsceneMgr* csnmgr, NCINEntry*, RpAtomic*
     }
 
     U32 num_bones = iModelNumBones(model);
+    xMat4x3* mat_root = (xMat4x3*)animMat;
 
     for (U32 i = 1; i < num_bones; i++)
     {
-        xVec3 pos_emit = *(const xVec3*)&animMat[i].pos + *(const xVec3*)&animMat->pos;
+        xVec3 pos_emit = mat_root[i].pos + mat_root->pos;
         zFX_SpawnBubbleTrail(&pos_emit, 1);
     }
 }
@@ -3217,9 +3239,8 @@ static void NCIN_LightninBone_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic
     }
 
     S32 boneIndex = fxrec->pos_A[1].y;
-    const xMat3x3* bone = (const xMat3x3*)&animMat[boneIndex];
 
-    xMat3x3RMulVec(&pnt1, bone, &fxrec->pos_A[0]);
+    xMat3x3RMulVec(&pnt1, (const xMat3x3*)&animMat[boneIndex], &fxrec->pos_A[0]);
     xVec3AddTo(&pnt1, (const xVec3*)&animMat[boneIndex].pos);
 
     if (boneIndex != 0)
@@ -3227,7 +3248,7 @@ static void NCIN_LightninBone_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic
         xVec3AddTo(&pnt1, (const xVec3*)&animMat->pos);
     }
 
-    xMat3x3RMulVec(&pnt2, bone, &fxrec->fxdata.arcdata.endPos);
+    xMat3x3RMulVec(&pnt2, (const xMat3x3*)&animMat[boneIndex], &fxrec->fxdata.arcdata.endPos);
     xVec3AddTo(&pnt2, &pnt1);
     zLightningModifyEndpoints(fxrec->fxdata.arcdata.lightning, &pnt1, &pnt2);
 }
@@ -3303,9 +3324,8 @@ static void NCIN_FreezeBreath_AR(const zCutsceneMgr* csnmgr, NCINEntry* fxrec, R
     }
 
     S32 boneIndex = fxrec->pos_A[1].y;
-    const xMat3x3* bone = (const xMat3x3*)&animMat[boneIndex];
 
-    xMat3x3RMulVec(&pnt1, bone, &fxrec->pos_A[0]);
+    xMat3x3RMulVec(&pnt1, (const xMat3x3*)&animMat[boneIndex], &fxrec->pos_A[0]);
     xVec3AddTo(&pnt1, (const xVec3*)&animMat[boneIndex].pos);
 
     if (boneIndex != 0)
@@ -3313,7 +3333,7 @@ static void NCIN_FreezeBreath_AR(const zCutsceneMgr* csnmgr, NCINEntry* fxrec, R
         xVec3AddTo(&pnt1, (const xVec3*)&animMat->pos);
     }
 
-    xMat3x3RMulVec(&pnt2, bone, &fxrec->pos_B[0]);
+    xMat3x3RMulVec(&pnt2, (const xMat3x3*)&animMat[boneIndex], &fxrec->pos_B[0]);
 
     EmitFreezeBreath(&pnt1, &pnt2, globals.update_dt,
                      csnmgr->csn->Time - fxrec->tym_beg, fxrec->tym_end - fxrec->tym_beg);

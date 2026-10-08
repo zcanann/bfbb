@@ -21,7 +21,7 @@ void zEGenerator_Init(zEGenerator* egen, xEntAsset* asset)
     zEntInit((zEnt*)egen, (xEntAsset*)asset, 'EGEN');
     zEGenAsset* zasset = (zEGenAsset*)asset;
     egen->zasset = zasset;
-    if (egen->linkCount != 0)
+    if (egen->linkCount > 0)
     {
         egen->link = (xLinkAsset*)((U8*)asset + sizeof(zEGenAsset));
     }

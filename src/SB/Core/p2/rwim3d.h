@@ -77,6 +77,7 @@ RwBool RwRenderStateSet(RwRenderState state, void* value);
 void* RwIm3DTransform(RwIm3DVertex* vertices, RwUInt32 count, RwMatrix* matrix, RwUInt32 flags);
 RwBool RwIm3DEnd(void);
 RwBool RwIm3DRenderPrimitive(RwPrimitiveType primitive);
+RwBool RwIm3DRenderIndexedPrimitive(RwPrimitiveType primType, RwImVertexIndex* indices, RwInt32 numIndices);
 }
 
 #endif

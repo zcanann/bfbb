@@ -395,27 +395,24 @@ void SweptSphereHitsCameraEnt(xScene*, xRay3* ray, xQCData* qcd, xEnt* ent, void
     {
         if (!xEntIsVisible(ent))
         {
-            if (ent->model->Data != sInvisWallHack)
+            if (ent->model->Data == sInvisWallHack)
+            {
+                if (ent->collLev != 5)
+                {
+                    if (ent->bound.type == XBOUND_TYPE_BOX)
+                    {
+                        xSweptSphereToBox(sws, &ent->bound.box.box, NULL);
+                    }
+                    else if (ent->bound.type == XBOUND_TYPE_OBB)
+                    {
+                        xSweptSphereToBox(sws, &ent->bound.box.box, ent->bound.mat);
+                    }
+                    return;
+                }
+            }
+            else
             {
                 return;
-            }
-
-            if (ent->collLev != 5)
-            {
-                if (ent->bound.type == XBOUND_TYPE_BOX)
-                {
-                    xSweptSphereToBox(sws, &ent->bound.box.box, NULL);
-                    return;
-                }
-                else if (ent->bound.type == XBOUND_TYPE_OBB)
-                {
-                    xSweptSphereToBox(sws, &ent->bound.box.box, ent->bound.mat);
-                    return;
-                }
-                else
-                {
-                    return;
-                }
             }
         }
 
@@ -476,6 +473,8 @@ void SweptSphereHitsCameraEnt(xScene*, xRay3* ray, xQCData* qcd, xEnt* ent, void
 
             break;
         }
+        case XBOUND_TYPE_CYL:
+            break;
         }
 
         if (result)
@@ -1456,7 +1455,7 @@ void xCameraRotate(xCamera* cam, const xVec3& v, F32 roll, F32 time, F32 accel, 
     cam->yaw_epv = cam->pitch_epv = cam->roll_epv = 0.0f;
 }
 
-#if !defined(XBOX)
+#if !defined(XBOX) && !defined(PS2)
 F32 xasin(F32 x)
 {
     return std::asinf(x);

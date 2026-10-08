@@ -34,4 +34,6 @@ U8 iGetMonth();
 U32 iGetCurrFormattedDate(char* str);
 U32 iGetCurrFormattedTime(char* str);
 
+void iLoadModule(const char* moduleName, const char* arguments);
+
 #endif

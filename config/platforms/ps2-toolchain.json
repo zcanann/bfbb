@@ -210215,6 +210215,402 @@
       },
       "calls": [],
       "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/p2/iTime.cpp",
+      "target_unit": "SB/Core/p2/iTime.cpp",
+      "object": "source/iTime.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "TimerHandler__FiPvPv": "TimerHandler__FiPvPv",
+        "iFuncProfileDump__Fv": "iFuncProfileDump__Fv",
+        "iFuncProfileParse__FPci": "iFuncProfileParse__FPci",
+        "iProfileClear__FUi": "iProfileClear__FUi",
+        "iTimeDiffSec__Fl": "iTimeDiffSec__Fl",
+        "iTimeDiffSec__Fll": "iTimeDiffSec__Fll",
+        "iTimeExit__Fv": "iTimeExit__Fv",
+        "iTimeGameAdvance__Ff": "iTimeGameAdvance__Ff",
+        "iTimeGet__Fv": "iTimeGet__Fv",
+        "iTimeInit__Fv": "iTimeInit__Fv",
+        "iTimeSetGame__Ff": "iTimeSetGame__Ff"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/p2/iSystem.cpp",
+      "target_unit": "SB/Core/p2/iSystem.cpp",
+      "object": "source/iSystem.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "RWAttachPlugins__Fv": "RWAttachPlugins__Fv",
+        "TextureRead__FPCcPCc": "TextureRead__FPCcPCc",
+        "iGetCurrFormattedDate__FPc": "iGetCurrFormattedDate__FPc",
+        "iGetCurrFormattedTime__FPc": "iGetCurrFormattedTime__FPc",
+        "iGetDay__Fv": "iGetDay__Fv",
+        "iGetHour__Fv": "iGetHour__Fv",
+        "iGetMinute__Fv": "iGetMinute__Fv",
+        "iGetMonth__Fv": "iGetMonth__Fv",
+        "iLoadModule__FPCcPCc": "iLoadModule__FPCcPCc",
+        "iRenderWareInit__Fv": "iRenderWareInit__Fv",
+        "iSystemExit__Fv": "iSystemExit__Fv",
+        "iSystemInit__FUi": "iSystemInit__FUi",
+        "iSystem_GapTrackReport__Fv": "iSystem_GapTrackReport__Fv",
+        "iVSync__Fv": "iVSync__Fv",
+        "psSelectDevice__Fv": "psSelectDevice__Fv",
+        "vsyncCounterHandler__Fi": "vsyncCounterHandler__Fi"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/p2/iParMgr.cpp",
+      "target_unit": "SB/Core/p2/iParMgr.cpp",
+      "object": "source/iParMgr.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "iParMgrInit__Fv": "iParMgrInit__Fv",
+        "iParMgrRenderParSys_Flat__FPvP9xParGroup": "iParMgrRenderParSys_Flat__FPvP9xParGroup",
+        "iParMgrRenderParSys_Ground__FPvP9xParGroup": "iParMgrRenderParSys_Ground__FPvP9xParGroup",
+        "iParMgrRenderParSys_InvStreak__FPvP9xParGroup": "iParMgrRenderParSys_InvStreak__FPvP9xParGroup",
+        "iParMgrRenderParSys_QuadStreak__FPvP9xParGroup": "iParMgrRenderParSys_QuadStreak__FPvP9xParGroup",
+        "iParMgrRenderParSys_Sprite__FPvP9xParGroup": "iParMgrRenderParSys_Sprite__FPvP9xParGroup",
+        "iParMgrRenderParSys_Static__FPvP9xParGroup": "iParMgrRenderParSys_Static__FPvP9xParGroup",
+        "iParMgrRenderParSys_Streak__FPvP9xParGroup": "iParMgrRenderParSys_Streak__FPvP9xParGroup",
+        "iParMgrRender__Fv": "iParMgrRender__Fv",
+        "iParMgrUpdate__Ff": "iParMgrUpdate__Ff",
+        "iRenderPushFlat__FP4xParP10xParCmdTex": "iRenderPushFlat__FP4xParP10xParCmdTex",
+        "iRenderPushQuadStreak__FP4xParP10xParCmdTex": "iRenderPushQuadStreak__FP4xParP10xParCmdTex",
+        "iRenderSetCameraViewMatrix__FP7xMat4x3": "iRenderSetCameraViewMatrix__FP7xMat4x3"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/p2/iSnd.cpp",
+      "target_unit": "SB/Core/p2/iSnd.cpp",
+      "object": "source/iSnd.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "iSndCalcVol__FP13xSndVoiceInfo": "iSndCalcVol__FP13xSndVoiceInfo",
+        "iSndExit__Fv": "iSndExit__Fv",
+        "iSndFindFreeVoice__FUiUiUi": "iSndFindFreeVoice__FUiUiUi",
+        "iSndGetVol__FUi": "iSndGetVol__FUi",
+        "iSndInitSceneLoaded__Fv": "iSndInitSceneLoaded__Fv",
+        "iSndInit__Fv": "iSndInit__Fv",
+        "iSndIsPlayingByHandle__FUi": "iSndIsPlayingByHandle__FUi",
+        "iSndIsPlaying__FUi": "iSndIsPlaying__FUi",
+        "iSndIsPlaying__FUiUi": "iSndIsPlaying__FUiUi",
+        "iSndIsReady__FUi": "iSndIsReady__FUi",
+        "iSndLoadExternalData__FUiPCvi": "iSndLoadExternalData__FUiPCvi",
+        "iSndLoadFasterer__Fv": "iSndLoadFasterer__Fv",
+        "iSndLookup__FUi": "iSndLookup__FUi",
+        "iSndPause__FUiUi": "iSndPause__FUiUi",
+        "iSndPlay__FP13xSndVoiceInfo": "iSndPlay__FP13xSndVoiceInfo",
+        "iSndSetEnvironmentalEffect__F13isound_effect": "iSndSetEnvironmentalEffect__F13isound_effect",
+        "iSndSetExternalCallback__FPFUib_v": "iSndSetExternalCallback__FPFUib_v",
+        "iSndSetPitch__FUif": "iSndSetPitch__FUif",
+        "iSndSetVol__FUif": "iSndSetVol__FUif",
+        "iSndStartStereo__FUiUif": "iSndStartStereo__FUiUif",
+        "iSndStereo__FUi": "iSndStereo__FUi",
+        "iSndStop__FUi": "iSndStop__FUi",
+        "iSndSuspendCD__FUi": "iSndSuspendCD__FUi",
+        "iSndUpdate__Fv": "iSndUpdate__Fv",
+        "iSndWaitForDeadSounds__Fv": "iSndWaitForDeadSounds__Fv"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/p2/isavegame.cpp",
+      "target_unit": "SB/Core/p2/isavegame.cpp",
+      "object": "source/isavegame.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "SQUIB_init_st_iconsys__FP12sceMcIconSys": "SQUIB_init_st_iconsys__FP12sceMcIconSys",
+        "iSGAutoSave_Connect__FiPvPFPv10en_CHGCODE_v": "iSGAutoSave_Connect__FiPvPFPv10en_CHGCODE_v",
+        "iSGAutoSave_Disconnect__FP13st_ISGSESSION": "iSGAutoSave_Disconnect__FP13st_ISGSESSION",
+        "iSGAutoSave_Monitor__FP13st_ISGSESSIONi": "iSGAutoSave_Monitor__FP13st_ISGSESSIONi",
+        "iSGAutoSave_Startup__Fv": "iSGAutoSave_Startup__Fv",
+        "iSGCheckForGameFiles__Fi": "iSGCheckForGameFiles__Fi",
+        "iSGCheckMemoryCard__FP13st_ISGSESSIONi": "iSGCheckMemoryCard__FP13st_ISGSESSIONi",
+        "iSGFileModDate__FP13st_ISGSESSIONPCc": "iSGFileModDate__FP13st_ISGSESSIONPCc",
+        "iSGFileModDate__FP13st_ISGSESSIONPCcPiPiPiPiPiPi": "iSGFileModDate__FP13st_ISGSESSIONPCcPiPiPiPiPiPi",
+        "iSGFileSize__FP13st_ISGSESSIONPCc": "iSGFileSize__FP13st_ISGSESSIONPCc",
+        "iSGGameExists__FP13st_ISGSESSIONPCc": "iSGGameExists__FP13st_ISGSESSIONPCc",
+        "iSGIconInit__FPvUi": "iSGIconInit__FPvUi",
+        "iSGIsGameCorrupt__FP13st_ISGSESSIONi": "iSGIsGameCorrupt__FP13st_ISGSESSIONi",
+        "iSGLoadFile__FP13st_ISGSESSIONPCcPci": "iSGLoadFile__FP13st_ISGSESSIONPCcPci",
+        "iSGMakeName__F15en_NAMEGEN_TYPEPCci": "iSGMakeName__F15en_NAMEGEN_TYPEPCci",
+        "iSGMakeTimeStamp__FPc": "iSGMakeTimeStamp__FPc",
+        "iSGOpError__FP13st_ISGSESSIONPc": "iSGOpError__FP13st_ISGSESSIONPc",
+        "iSGPollStatus__FP13st_ISGSESSIONP15en_ASYNC_OPCODEi": "iSGPollStatus__FP13st_ISGSESSIONP15en_ASYNC_OPCODEi",
+        "iSGReadLeader__FP13st_ISGSESSIONPCcPcii": "iSGReadLeader__FP13st_ISGSESSIONPCcPcii",
+        "iSGSaveFile__FP13st_ISGSESSIONPCcPciiPc": "iSGSaveFile__FP13st_ISGSESSIONPCcPciiPc",
+        "iSGSelectGameDir__FP13st_ISGSESSIONPCc": "iSGSelectGameDir__FP13st_ISGSESSIONPCc",
+        "iSGSessionBegin__FPvPFPv10en_CHGCODE_vi": "iSGSessionBegin__FPvPFPv10en_CHGCODE_vi",
+        "iSGSessionEnd__FP13st_ISGSESSION": "iSGSessionEnd__FP13st_ISGSESSION",
+        "iSGSetupGameDir__FP13st_ISGSESSIONPCci": "iSGSetupGameDir__FP13st_ISGSESSIONPCci",
+        "iSGShutdown__Fv": "iSGShutdown__Fv",
+        "iSGStartup__Fv": "iSGStartup__Fv",
+        "iSGTgtCount__FP13st_ISGSESSIONPi": "iSGTgtCount__FP13st_ISGSESSIONPi",
+        "iSGTgtFormat__FP13st_ISGSESSIONiiPi": "iSGTgtFormat__FP13st_ISGSESSIONiiPi",
+        "iSGTgtHaveRoomStartup__FP13st_ISGSESSIONiiPCcPCcPiPiPi": "iSGTgtHaveRoomStartup__FP13st_ISGSESSIONiiPCcPCcPiPiPi",
+        "iSGTgtHaveRoom__FP13st_ISGSESSIONiiPCcPCcPiPiPi": "iSGTgtHaveRoom__FP13st_ISGSESSIONiiPCcPCcPiPiPi",
+        "iSGTgtPhysSlotIdx__FP13st_ISGSESSIONi": "iSGTgtPhysSlotIdx__FP13st_ISGSESSIONi",
+        "iSGTgtSetActive__FP13st_ISGSESSIONi": "iSGTgtSetActive__FP13st_ISGSESSIONi",
+        "iSGTgtState__FP13st_ISGSESSIONiPCc": "iSGTgtState__FP13st_ISGSESSIONiPCc",
+        "iSG_add_cfgholder__FP19st_ISG_MEMCARD_DATA": "iSG_add_cfgholder__FP19st_ISG_MEMCARD_DATA",
+        "iSG_add_sysicons__FP19st_ISG_MEMCARD_DATA": "iSG_add_sysicons__FP19st_ISG_MEMCARD_DATA",
+        "iSG_get_finfo__FP19st_ISG_MEMCARD_DATAPCcPCc": "iSG_get_finfo__FP19st_ISG_MEMCARD_DATAPCcPCc",
+        "iSG_get_fmoddate__FP19st_ISG_MEMCARD_DATAPCcPiPiPiPiPiPi": "iSG_get_fmoddate__FP19st_ISG_MEMCARD_DATAPCcPiPiPiPiPiPi",
+        "iSG_isSpaceForFile__FP19st_ISG_MEMCARD_DATAiiPCcPCcPiPi": "iSG_isSpaceForFile__FP19st_ISG_MEMCARD_DATAiiPCcPCcPiPi",
+        "iSG_is_MCOP_realerr__Fii": "iSG_is_MCOP_realerr__Fii",
+        "iSG_is_synccode_realerr__FiiP19st_ISG_MEMCARD_DATA": "iSG_is_synccode_realerr__FiiP19st_ISG_MEMCARD_DATA",
+        "iSG_mc_availDirEnt__FP19st_ISG_MEMCARD_DATAiPCc": "iSG_mc_availDirEnt__FP19st_ISG_MEMCARD_DATAiPCc",
+        "iSG_mc_availclust__FP19st_ISG_MEMCARD_DATAi": "iSG_mc_availclust__FP19st_ISG_MEMCARD_DATAi",
+        "iSG_mc_exists__FP19st_ISG_MEMCARD_DATAi": "iSG_mc_exists__FP19st_ISG_MEMCARD_DATAi",
+        "iSG_mc_isPSIIcard__FP19st_ISG_MEMCARD_DATAi": "iSG_mc_isPSIIcard__FP19st_ISG_MEMCARD_DATAi",
+        "iSG_mc_isformatted__FP19st_ISG_MEMCARD_DATAi": "iSG_mc_isformatted__FP19st_ISG_MEMCARD_DATAi",
+        "iSG_mca_fmt__FP19st_ISG_MEMCARD_DATAi": "iSG_mca_fmt__FP19st_ISG_MEMCARD_DATAi",
+        "iSG_mca_fopen__FP19st_ISG_MEMCARD_DATAPCc13en_ISG_IOMODE": "iSG_mca_fopen__FP19st_ISG_MEMCARD_DATAPCc13en_ISG_IOMODE",
+        "iSG_mca_fread__FP19st_ISG_MEMCARD_DATAPci": "iSG_mca_fread__FP19st_ISG_MEMCARD_DATAPci",
+        "iSG_mca_fwrite__FP19st_ISG_MEMCARD_DATAPci": "iSG_mca_fwrite__FP19st_ISG_MEMCARD_DATAPci",
+        "iSG_mca_unfmt__FP19st_ISG_MEMCARD_DATA": "iSG_mca_unfmt__FP19st_ISG_MEMCARD_DATA",
+        "iSG_mcasync_chkop__FP19st_ISG_MEMCARD_DATAiPi": "iSG_mcasync_chkop__FP19st_ISG_MEMCARD_DATAiPi",
+        "iSG_mcidx_portslot__FiPiPiPi": "iSG_mcidx_portslot__FiPiPiPi",
+        "iSG_start_your_engines__Fv": "iSG_start_your_engines__Fv"
+      },
+      "calls": [],
+      "gp_relocations": [],
+      "inline": "auto,bottomup"
+    },
+    {
+      "source": "src/SB/Core/p2/iException.cpp",
+      "target_unit": "SB/Core/p2/iException.cpp",
+      "object": "source/iException.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "iExceptionInit__Fv": "iExceptionInit__Fv",
+        "iExceptionRwDMAInit__Fv": "iExceptionRwDMAInit__Fv"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/p2/iCollideFast.cpp",
+      "target_unit": "SB/Core/p2/iCollideFast.cpp",
+      "object": "source/iCollideFast.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "iCollideFastInit__FP6xScene": "iCollideFastInit__FP6xScene"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/p2/p2im3dhack.cpp",
+      "target_unit": "SB/Core/p2/p2im3dhack.cpp",
+      "object": "source/p2im3dhack.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "p2EnableFastIm3D__Fv": "p2EnableFastIm3D__Fv"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/p2/iFMV.cpp",
+      "target_unit": "SB/Core/p2/iFMV.cpp",
+      "object": "source/iFMV.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "iFMVPlay__FPcUifbb": "iFMVPlay__FPcUifbb"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/p2/iMemMgr.cpp",
+      "target_unit": "SB/Core/p2/iMemMgr.cpp",
+      "object": "source/iMemMgr.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "iMemExit__Fv": "iMemExit__Fv",
+        "iMemInit__Fv": "iMemInit__Fv"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/p2/iLight.cpp",
+      "target_unit": "SB/Core/p2/iLight.cpp",
+      "object": "source/iLight.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "iLightCreate__FP6iLightUi": "iLightCreate__FP6iLightUi",
+        "iLightDestroy__FP6iLight": "iLightDestroy__FP6iLight",
+        "iLightEnv__FP6iLighti": "iLightEnv__FP6iLighti",
+        "iLightInit__FP7RpWorld": "iLightInit__FP7RpWorld",
+        "iLightModify__FP6iLightUi": "iLightModify__FP6iLightUi",
+        "iLightSetColor__FP6iLightP8_xFColor": "iLightSetColor__FP6iLightP8_xFColor",
+        "iLightSetPos__FP6iLightP5xVec3": "iLightSetPos__FP6iLightP5xVec3"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/p2/iFile.cpp",
+      "target_unit": "SB/Core/p2/iFile.cpp",
+      "object": "source/iFile.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "iFileAsyncService__Fv": "iFileAsyncService__Fv",
+        "iFileClose__FP9tag_xFile": "iFileClose__FP9tag_xFile",
+        "iFileDebugMode__19@unnamed@iFile_cpp@Fv": "iFileDebugMode__19@unnamed@iFile_cpp@Fv",
+        "iFileExit__Fv": "iFileExit__Fv",
+        "iFileFullPath__FPCcPc": "iFileFullPath__FPCcPc",
+        "iFileGetSize__FP9tag_xFile": "iFileGetSize__FP9tag_xFile",
+        "iFileInit__Fv": "iFileInit__Fv",
+        "iFileLoad__FPcPUiPUi": "iFileLoad__FPcPUiPUi",
+        "iFileOpen__FPCciP9tag_xFile": "iFileOpen__FPCciP9tag_xFile",
+        "iFileReadAsyncStatus__FiPi": "iFileReadAsyncStatus__FiPi",
+        "iFileReadAsync__FP9tag_xFilePvUiPFP9tag_xFile_vi": "iFileReadAsync__FP9tag_xFilePvUiPFP9tag_xFile_vi",
+        "iFileReadStop__Fv": "iFileReadStop__Fv",
+        "iFileRead__FP9tag_xFilePvUi": "iFileRead__FP9tag_xFilePvUi",
+        "iFileSeek__FP9tag_xFileii": "iFileSeek__FP9tag_xFileii",
+        "iFileSetPath__FPCc": "iFileSetPath__FPCc"
+      },
+      "calls": [],
+      "gp_relocations": [],
+      "inline": "deferred"
+    },
+    {
+      "source": "src/SB/Core/p2/iPad.cpp",
+      "target_unit": "SB/Core/p2/iPad.cpp",
+      "object": "source/iPad.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "iPadEnableGuts__FP8_tagxPadP11_tagPadInit": "iPadEnableGuts__FP8_tagxPadP11_tagPadInit",
+        "iPadEnable__FP8_tagxPads": "iPadEnable__FP8_tagxPads",
+        "iPadInit__Fv": "iPadInit__Fv",
+        "iPadKill__Fv": "iPadKill__Fv",
+        "iPadRumbleFx__FP8_tagxPadP11_tagxRumblef": "iPadRumbleFx__FP8_tagxPadP11_tagxRumblef",
+        "iPadStartRumble__FP8_tagxPadP11_tagxRumble": "iPadStartRumble__FP8_tagxPadP11_tagxRumble",
+        "iPadStopRumble__FP8_tagxPad": "iPadStopRumble__FP8_tagxPad",
+        "iPadTRCUpdate__FP8_tagxPad": "iPadTRCUpdate__FP8_tagxPad",
+        "iPadUpdate__FP8_tagxPadPUi": "iPadUpdate__FP8_tagxPadPUi"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/p2/iCutscene.cpp",
+      "target_unit": "SB/Core/p2/iCutscene.cpp",
+      "object": "source/iCutscene.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "FastPipeAtomicCB__FP8RpAtomicPv": "FastPipeAtomicCB__FP8RpAtomicPv",
+        "iCSAsyncReadCB__FP9tag_xFile": "iCSAsyncReadCB__FP9tag_xFile",
+        "iCSFileAsyncRead__FP9xCutscenePvUi": "iCSFileAsyncRead__FP9xCutscenePvUi",
+        "iCSFileClose__FP9xCutscene": "iCSFileClose__FP9xCutscene",
+        "iCSFileOpen__FP9xCutscene": "iCSFileOpen__FP9xCutscene",
+        "iCSLoadStep__FP9xCutscene": "iCSLoadStep__FP9xCutscene",
+        "iCSSoundCutsceneCB__FUib": "iCSSoundCutsceneCB__FUib",
+        "iCSSoundGetData__FP9xCutsceneUiUi": "iCSSoundGetData__FP9xCutsceneUiUi"
+      },
+      "calls": [],
+      "gp_relocations": []
+    },
+    {
+      "source": "src/SB/Core/p2/iAnim.cpp",
+      "target_unit": "SB/Core/p2/iAnim.cpp",
+      "object": "source/iAnim.o",
+      "selector": "linkage_name",
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ],
+      "symbols": {
+        "iAnimBlend__FffPUsPfUiP5xVec3P5xQuatP5xVec3P5xQuatP5xVec3P5xQuat": "iAnimBlend__FffPUsPfUiP5xVec3P5xQuatP5xVec3P5xQuatP5xVec3P5xQuat",
+        "iAnimBoneCount__FPv": "iAnimBoneCount__FPv",
+        "iAnimDuration__FPv": "iAnimDuration__FPv",
+        "iAnimEval__FPvfUiP5xVec3P5xQuat": "iAnimEval__FPvfUiP5xVec3P5xQuat",
+        "iAnimInit__Fv": "iAnimInit__Fv"
+      },
+      "calls": [],
+      "gp_relocations": []
     }
   ]
 }

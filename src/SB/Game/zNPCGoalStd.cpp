@@ -1126,7 +1126,7 @@ S32 zNPCGoalWander::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene
 
     xVec3 delta;
 
-    if (tmr_minwalk < 0.0f)
+    if ((tmr_minwalk < 0.0f) ? 1 : 0)
     {
         xVec3Sub(&delta, &pos_home, xEntGetPos(npc));
 
@@ -1136,7 +1136,7 @@ S32 zNPCGoalWander::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene
         {
             needdir = 1;
         }
-        else if (tmr_newdir < 0.0f)
+        else if ((tmr_newdir < 0.0f) ? 1 : 0)
         {
             needdir = 1;
         }
@@ -1147,7 +1147,7 @@ S32 zNPCGoalWander::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene
         }
     }
 
-    if (tmr_remain < 0.0f)
+    if ((tmr_remain < 0.0f) ? 1 : 0)
     {
         zMovePoint* nav = npc->nav_curr;
         if (nav == NULL)
@@ -1165,12 +1165,12 @@ S32 zNPCGoalWander::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene
         }
     }
 
-    if (tmr_remain < 0.0f)
+    if ((tmr_remain < 0.0f) ? 1 : 0)
     {
         nextgoal = 1;
         *trantype = GOAL_TRAN_POP;
     }
-    else if (!(flg_wand & (1 << 0)) && npc->tmr_fidget < 0.0f)
+    else if (!(flg_wand & (1 << 0)) && ((npc->tmr_fidget < 0.0f) ? 1 : 0))
     {
         *trantype = GOAL_TRAN_PUSH;
         nextgoal = NPC_GOAL_FIDGET;

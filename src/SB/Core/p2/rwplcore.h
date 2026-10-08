@@ -371,4 +371,31 @@ void* RwMemNative32(void* mem, RwUInt32 size);
 RwError* RwErrorGet(RwError* code);
 }
 
+// RenderWare 3.5 engine start-up API used by the PS2 platform layer.
+struct RwMemoryFunctions;
+
+struct RwEngineOpenParams
+{
+    void* displayID;
+};
+
+enum RwEngineInitFlag
+{
+    rwENGINEINITFREELISTS = 0,
+    rwENGINEINITNOFREELISTS = 0x1,
+    rwENGINEINITFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
+extern "C" {
+RwBool RwEngineInit(const RwMemoryFunctions* memFuncs, RwUInt32 initFlags, RwUInt32 resArenaSize);
+RwBool RwEngineOpen(RwEngineOpenParams* initParams);
+RwBool RwEngineStart(void);
+RwBool RwEngineStop(void);
+RwBool RwEngineClose(void);
+RwBool RwEngineTerm(void);
+RwInt32 RwEngineGetNumVideoModes(void);
+RwBool RwEngineSetVideoMode(RwInt32 modeIndex);
+RwBool RwResourcesSetArenaSize(RwUInt32 size);
+}
+
 #endif

@@ -56,13 +56,7 @@ U32 xhud::font_meter_widget::type() const
 
 bool xhud::font_meter_widget::is(U32 id) const
 {
-    bool val = false;
-
-    if (id == xhud::font_meter_widget::type() || xhud::meter_widget::is(id))
-    {
-        val = true;
-    }
-    return val;
+    return id == xhud::font_meter_widget::type() || xhud::meter_widget::is(id);
 }
 
 void xhud::font_meter_widget::update(F32 dt)
@@ -84,10 +78,10 @@ void xhud::font_meter_widget::update(F32 dt)
     this->xf.height = a;
 
     a = this->rc.a * (F32)this->start_font.c.a + 0.5f;
-    this->font.c.a = (a <= 0.0f) ? 0 : ((a >= 255.0f) ? 255 : (U8)(S32)a);
+    this->font.c.a = (a <= 0.0f) ? 0 : ((a >= 255.0f) ? 255 : (U8)a);
 
     a = this->rc.a * (F32)this->start_font.drop_c.a + 0.5f;
-    this->font.drop_c.a = (a <= 0.0f) ? 0 : ((a >= 255.0f) ? 255 : (U8)(S32)a);
+    this->font.drop_c.a = (a <= 0.0f) ? 0 : ((a >= 255.0f) ? 255 : (U8)a);
 
     new_value = (S32)(this->value + 0.5f);
     if (this->last_value != new_value)
@@ -110,22 +104,16 @@ void xhud::font_meter_widget::update(F32 dt)
 void xhud::font_meter_widget::render()
 
 {
-    F32 x;
-    F32 temp_x;
-    F32 y;
-
-    temp_x = this->offset.x + this->rc.loc.x;
-    y = this->offset.y + this->rc.loc.y;
-    if (this->font.drop_c.a != 0)
+    F32 x = this->offset.x + this->rc.loc.x;
+    F32 y = this->offset.y + this->rc.loc.y;
+    if (this->font.drop_c.a > 0)
     {
         this->xf.color = this->font.drop_c;
-        x = temp_x + this->font.drop_x;
-        this->xf.render(this->buffer, x, y + this->font.drop_y);
+        this->xf.render(this->buffer, x + this->font.drop_x, y + this->font.drop_y);
     }
-    if (this->font.c.a != 0)
+    if (this->font.c.a > 0)
     {
         this->xf.color = this->font.c;
-        this->xf.render(this->buffer, temp_x, y);
+        this->xf.render(this->buffer, x, y);
     }
-    return;
 }

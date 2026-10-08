@@ -1168,13 +1168,13 @@ void xEntApplyPhysics(xEnt* ent, xScene* sc, F32 dt)
 
     if (ent->pflags & 0x10 && sc->flags & 0x2)
     {
-        F32 tfric = -(sc->friction * dt - 1.0f);
+        F32 tfric = 1.0f - sc->friction * dt;
         xVec3SMulBy(&ent->frame->vel, tfric);
     }
 
     if (ent->pflags & 0x8 && sc->flags & 0x4)
     {
-        F32 tdrag = -(sc->drag * dt - 1.0f);
+        F32 tdrag = 1.0f - sc->drag * dt;
         xVec3SMulBy(&ent->frame->vel, tdrag);
     }
 

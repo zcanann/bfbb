@@ -48,17 +48,33 @@ static F32 SHADOW_BOTH;
 static RxObjSpace3DVertex* Im3DBuffer;
 static U32 Im3DBufferPos;
 RwCamera* ShadowCamera;
+#if defined(PS2)
+RwRaster* ShadowCameraRaster;
+#else
 RwRaster* volatile ShadowCameraRaster;
+#endif
 static RwRaster* ShadowRenderRaster;
 U32 gShadowFlags;
 F32 gShadowObjectRadius;
 static S32 shadow_ent_count;
 static S32 sShadowCollJSP;
+#if defined(PS2)
+static U32 skyOldTest;
+static U32 shadvolquad_idx[6][4] = { { 3, 2, 1, 0 }, { 4, 5, 6, 7 }, { 0, 1, 5, 4 },
+                                     { 1, 2, 6, 5 }, { 2, 3, 7, 6 }, { 3, 0, 4, 7 } };
+#else
 static RwRaster* gc_saveraster;
+#endif
 static xEnt* sEntSelf;
 static xShadowMgr* sMgrList;
 static S32 sMgrCount;
 static S32 sMgrTotal;
+#if defined(PS2)
+static RxPipeline* adlSkinPipe;
+static RxPipeline* a4dSkinPipe;
+static RxPipeline* adlSkinPipeADC;
+static RxPipeline* a4dSkinPipeADC;
+#endif
 static xShadowCache sCacheList[6];
 
 struct _ProjectionParam
@@ -72,6 +88,28 @@ struct _ProjectionParam
 };
 
 extern U8 xClumpColl_FilterFlags;
+
+#if defined(PS2)
+extern "C" RwBool RpSkyTexCacheRasterLock(RwRaster* raster, RwBool bLocked);
+extern "C" RxPipeline* RpPDSGetPipe(RwUInt32 pipeID);
+void iDrawSetFBA1(S32 value);
+void iDrawSetTEST2(S32 value);
+void iDrawSetFBMSK(U32 abgr);
+
+enum RpSkyRenderState
+{
+    rpSKYRENDERSTATEATEST_1 = 3
+};
+
+extern "C" RwBool RpSkyRenderStateGet(RpSkyRenderState nState, void* pParam);
+extern "C" RwBool RpSkyRenderStateSet(RpSkyRenderState nState, void* pParam);
+S32 ShadowMapCreatePipelines();
+
+// PS2 projects receiver triangles in a separate VU0 inline-asm routine; its body
+// is not recovered as C.
+static void xShadowReceiveShadowFastPS2(xEnt* ent, F32 shadowFactor, S32 shadowMode,
+                                        RwMatrixTag* shadowMat, RwRaster* shadowRast);
+#endif
 
 RpCollBSPTree* _rpCollBSPTreeForAllCapsuleLeafNodeIntersections(
     RpCollBSPTree* tree, RwLine* line, RwReal radius, RpV3dGradient* grad,
@@ -95,8 +133,8 @@ int Im2DRenderQuad(float x1, float y1, float x2, float y2, float z, float recipC
 
 static RwCamera* ShadowCameraUpdate(RwCamera* shadowCamera, void* model, void (*renderCB)(void*),
                                     xVec3* center, F32 radius, S32 shadowMode);
-static void InvertRaster(RwCamera* shadowCamera);
 #if !defined(PS2)
+static void InvertRaster(RwCamera* shadowCamera);
 static void GCRestoreFrameBuffer();
 #endif
 
@@ -113,7 +151,10 @@ void __deadstripped_xShadow_draw(const xVec3* center, F32 radius, U32 flags)
 void xShadowInit()
 {
     xShadowCameraCreate();
-#if !defined(PS2)
+#if defined(PS2)
+    RpSkyTexCacheRasterLock(ShadowCameraRaster, TRUE);
+    ShadowMapCreatePipelines();
+#else
     gc_saveraster = RwRasterCreate(256, 256, 32, 0x504);
 #endif
     shadow_ent_count = 0;
@@ -136,7 +177,9 @@ static S32 SetupShadow()
     // equal to either display width or height.
     // On GCN, this routine normally won't happen,
     // as we're already below both dimensions.
-#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+#if defined(PS2)
+    for (; (res > 640) || (res > 448); res >>= 1);
+#elif defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
     for (; (res > 640) || (res > 528); res >>= 1);
 #else
     for (; (res > 640) || (res > 480); res >>= 1);
@@ -354,6 +397,7 @@ void xShadowReceiveShadow(xEnt* ent, F32 shadowFactor, S32 shadowMode, RwMatrixT
                           RwRaster* shadowRast)
 {
     RwMatrixTag oldroot;
+#if !defined(PS2)
     RwMatrixTag invMatrix;
     RwV3d vShadOut[3];
     RwV3d vShad[3];
@@ -362,6 +406,7 @@ void xShadowReceiveShadow(xEnt* ent, F32 shadowFactor, S32 shadowMode, RwMatrixT
     RwV3d tr;
     RwV3d normal;
     S32 fogstate;
+#endif
 
     if (ent->model->Scale.x)
     {
@@ -378,6 +423,9 @@ void xShadowReceiveShadow(xEnt* ent, F32 shadowFactor, S32 shadowMode, RwMatrixT
         ent->model->Mat->at.z *= ent->model->Scale.z;
     }
 
+#if defined(PS2)
+    xShadowReceiveShadowFastPS2(ent, shadowFactor, shadowMode, shadowMat, shadowRast);
+#else
     RwCamera* shadowCamera = ShadowCamera;
 
     if (shadowRast != NULL)
@@ -613,6 +661,7 @@ void xShadowReceiveShadow(xEnt* ent, F32 shadowFactor, S32 shadowMode, RwMatrixT
         RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)fogstate);
         RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)1);
     }
+#endif
 
     if (ent->model->Scale.x)
     {
@@ -681,6 +730,7 @@ void __deadstripped_xShadow_conversion(F32* values, S32 value)
     values[1] = (F32)value;
 }
 
+#if !defined(PS2)
 static void InvertRaster(RwCamera* shadowCamera)
 {
     RwIm2DVertex vx[4];
@@ -728,6 +778,7 @@ static void InvertRaster(RwCamera* shadowCamera)
     RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCALPHA);
     RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
 }
+#endif
 
 F32 __deadstripped_xShadow_square(F32 value)
 {
@@ -778,20 +829,29 @@ static RwCamera* ShadowCameraUpdate(RwCamera* shadowCamera, void* model, void (*
     RwRenderStateGet(rwRENDERSTATEFOGENABLE, &fogstate);
     RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)0);
 
+#if defined(PS2)
+    if (camera != NULL)
+    {
+        iDrawSetFBA1(0);
+    }
+#endif
+
     if (camera != NULL)
     {
         RwCameraEndUpdate(camera);
     }
 
-#if !defined(PS2)
+#if defined(PS2)
+    RwCameraClear(shadowCamera, &bgColor, rwCAMERACLEARIMAGE);
+#else
     GCSaveFrameBuffer();
-#endif
 
     shadowCamera->frameBuffer->width--;
     shadowCamera->frameBuffer->height--;
     RwCameraClear(shadowCamera, &bgColor, rwCAMERACLEARIMAGE);
     shadowCamera->frameBuffer->width++;
     shadowCamera->frameBuffer->height++;
+#endif
 
     RwFrameOrthoNormalize((RwFrame*)shadowCamera->object.object.parent);
 
@@ -804,12 +864,19 @@ static RwCamera* ShadowCameraUpdate(RwCamera* shadowCamera, void* model, void (*
         RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)0);
         RwRenderStateSet(rwRENDERSTATEVERTEXALPHAENABLE, (void*)1);
 
+#if defined(PS2)
+        iDrawSetFBA1(1);
+        iDrawSetTEST2(0);
+        renderCB(model);
+        iDrawSetFBA1(0);
+#else
         renderCB(model);
 
         if (shadowMode == 0)
         {
             InvertRaster(shadowCamera);
         }
+#endif
 
         RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)1);
         RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)1);
@@ -836,7 +903,11 @@ static RwCamera* ShadowCameraUpdate(RwCamera* shadowCamera, void* model, void (*
 
 static RwRaster* ShadowRasterCreate(S32 res)
 {
+#if defined(PS2)
+    return RwRasterCreate(res, res, 16, 5);
+#else
     return RwRasterCreate(res, res, 0, 5);
+#endif
 }
 
 static RpCollisionTriangle* ShadowRenderTriangleCB(RpIntersection* isx, RpWorldSector* sector,
@@ -924,7 +995,9 @@ static S32 ShadowRender(RwCamera* shadowCamera, RwRaster* shadowRast, RpIntersec
     RwV3d tr;
     xVec3 A;
     xVec3 B;
+#if !defined(PS2)
     S32 fogstate;
+#endif
 
     RwRenderStateSet(rwRENDERSTATETEXTURERASTER, shadowCamera->frameBuffer);
     RwRenderStateSet(rwRENDERSTATETEXTUREADDRESS, (void*)rwTEXTUREADDRESSCLAMP);
@@ -934,11 +1007,19 @@ static S32 ShadowRender(RwCamera* shadowCamera, RwRaster* shadowRast, RpIntersec
     if (shadowFactor < 0.0f)
     {
         shadowFactor = -shadowFactor;
+#if defined(PS2)
+        RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDSRCALPHA);
+#else
         RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDSRCCOLOR);
+#endif
     }
     else
     {
+#if defined(PS2)
+        RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCALPHA);
+#else
         RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCCOLOR);
+#endif
     }
 
     RwMatrixTag* shadowMatrix = &((RwFrame*)shadowCamera->object.object.parent)->modelling;
@@ -971,8 +1052,13 @@ static S32 ShadowRender(RwCamera* shadowCamera, RwRaster* shadowRast, RpIntersec
     tr.z = 0.0f;
     RwMatrixTranslate(&param.invMatrix, &tr, rwCOMBINEPOSTCONCAT);
 
+#if defined(PS2)
+    // Retail loads param.invMatrix into VU0 vf28-vf31 here with inline asm for
+    // ShadowRenderTriangleCB; not recovered as C.
+#else
     RwRenderStateGet(rwRENDERSTATEFOGENABLE, &fogstate);
     RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)0);
+#endif
 
     if (globals.sceneCur->env->geom->jsp != NULL)
     {
@@ -998,7 +1084,9 @@ static S32 ShadowRender(RwCamera* shadowCamera, RwRaster* shadowRast, RpIntersec
         Im3DBufferPos = 0;
     }
 
+#if !defined(PS2)
     RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)fogstate);
+#endif
     RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCALPHA);
     RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
 
@@ -1085,6 +1173,227 @@ static RwCamera* ShadowCameraSetSpherePersp(RwCamera* camera, RwV3d* center, F32
 
     return camera;
 }
+
+#if defined(PS2)
+static U8 ShadowInsideBoxAdjust(xVec3* volume)
+{
+    xVec3* v0;
+    xVec3* v1;
+    xVec3* v2;
+    xVec3* v3;
+    xVec3 normal[6];
+    U32 i;
+    RwCamera* mainCamera = *(RwCamera**)RwEngineInstance;
+    RwMatrixTag* mainMatrix = &((RwFrame*)mainCamera->object.object.parent)->modelling;
+    F32 nearclip;
+
+    nearclip = 1.05f * xVec3Dist((xVec3*)&mainMatrix->pos, (xVec3*)&mainCamera->frustumCorners[0]);
+
+    for (i = 0; i < 6; i++)
+    {
+        v0 = &volume[shadvolquad_idx[i][0]];
+        v1 = &volume[shadvolquad_idx[i][1]];
+        v2 = &volume[shadvolquad_idx[i][2]];
+
+        F32 dx = mainMatrix->pos.x - v0->x;
+        F32 dy = mainMatrix->pos.y - v0->y;
+        F32 dz = mainMatrix->pos.z - v0->z;
+        F32 ax = v1->x - v0->x;
+        F32 ay = v1->y - v0->y;
+        F32 az = v1->z - v0->z;
+        F32 bx = v2->x - v0->x;
+        F32 by = v2->y - v0->y;
+        F32 bz = v2->z - v0->z;
+        normal[i].x = ay * bz - by * az;
+        normal[i].y = az * bx - bz * ax;
+        normal[i].z = ax * by - bx * ay;
+        xVec3Normalize(&normal[i], &normal[i]);
+
+        if (!(dx * normal[i].x + dy * normal[i].y + dz * normal[i].z >= nearclip))
+        {
+            continue;
+        }
+
+        return 0;
+    }
+
+    for (i = 0; i < 6; i++)
+    {
+        v0 = &volume[shadvolquad_idx[i][0]];
+        v1 = &volume[shadvolquad_idx[i][1]];
+        v2 = &volume[shadvolquad_idx[i][2]];
+        v3 = &volume[shadvolquad_idx[i][3]];
+
+        v0->x += 2.0f * nearclip * normal[i].x;
+        v0->y += 2.0f * nearclip * normal[i].y;
+        v0->z += 2.0f * nearclip * normal[i].z;
+        v1->x += 2.0f * nearclip * normal[i].x;
+        v1->y += 2.0f * nearclip * normal[i].y;
+        v1->z += 2.0f * nearclip * normal[i].z;
+        v2->x += 2.0f * nearclip * normal[i].x;
+        v2->y += 2.0f * nearclip * normal[i].y;
+        v2->z += 2.0f * nearclip * normal[i].z;
+        v3->x += 2.0f * nearclip * normal[i].x;
+        v3->y += 2.0f * nearclip * normal[i].y;
+        v3->z += 2.0f * nearclip * normal[i].z;
+    }
+
+    return 1;
+}
+
+static void DrawAlphaBox(xVec3* volume, S32 frontface, U8 alpha)
+{
+    U32 i;
+    U32 numV;
+    RxObjSpace3DVertex boxV[36];
+    RxObjSpace3DVertex* v3d;
+    RwMatrixTag* mainMatrix;
+    xVec3 normal;
+    xVec3* v0;
+    xVec3* v1;
+    xVec3* v2;
+    xVec3* v3;
+
+    mainMatrix = &((RwFrame*)(*(RwCamera**)RwEngineInstance)->object.object.parent)->modelling;
+    numV = 0;
+    v3d = boxV;
+
+    for (i = 0; i < 6; i++)
+    {
+        v0 = &volume[shadvolquad_idx[i][0]];
+        v1 = &volume[shadvolquad_idx[i][1]];
+        v2 = &volume[shadvolquad_idx[i][2]];
+        v3 = &volume[shadvolquad_idx[i][3]];
+
+        F32 dx = mainMatrix->pos.x - v0->x;
+        F32 dy = mainMatrix->pos.y - v0->y;
+        F32 dz = mainMatrix->pos.z - v0->z;
+        F32 ax = v1->x - v0->x;
+        F32 ay = v1->y - v0->y;
+        F32 az = v1->z - v0->z;
+        F32 bx = v2->x - v0->x;
+        F32 by = v2->y - v0->y;
+        F32 bz = v2->z - v0->z;
+        normal.x = ay * bz - by * az;
+        normal.y = az * bx - bz * ax;
+        normal.z = ax * by - bx * ay;
+        xVec3Normalize(&normal, &normal);
+
+        F32 dot = dx * normal.x + dy * normal.y + dz * normal.z;
+
+        if (frontface && dot < 0.0f)
+        {
+            continue;
+        }
+
+        if (!frontface && dot > 0.0f)
+        {
+            continue;
+        }
+
+        RwIm3DVertexSetPos(&v3d[0], v0->x, v0->y, v0->z);
+        RwIm3DVertexSetPos(&v3d[1], v1->x, v1->y, v1->z);
+        RwIm3DVertexSetPos(&v3d[2], v2->x, v2->y, v2->z);
+        RwIm3DVertexSetPos(&v3d[3], v0->x, v0->y, v0->z);
+        RwIm3DVertexSetPos(&v3d[4], v2->x, v2->y, v2->z);
+        RwIm3DVertexSetPos(&v3d[5], v3->x, v3->y, v3->z);
+
+        RwIm3DVertexSetRGBA(&v3d[0], alpha, 0, 0, alpha);
+        RwIm3DVertexSetRGBA(&v3d[1], alpha, 0, 0, alpha);
+        RwIm3DVertexSetRGBA(&v3d[2], alpha, 0, 0, alpha);
+        RwIm3DVertexSetRGBA(&v3d[3], alpha, 0, 0, alpha);
+        RwIm3DVertexSetRGBA(&v3d[4], alpha, 0, 0, alpha);
+        RwIm3DVertexSetRGBA(&v3d[5], alpha, 0, 0, alpha);
+
+        numV += 6;
+        v3d += 6;
+    }
+
+    if (RwIm3DTransform(boxV, numV, NULL, rwIM3D_VERTEXXYZ | rwIM3D_VERTEXRGBA))
+    {
+        RwIm3DRenderPrimitive(rwPRIMTYPETRILIST);
+    }
+    RwIm3DEnd();
+}
+
+static void xShadowSetVolume(RwCamera* shadowCamera, xVec3* pos, F32 depth)
+{
+    S32 i;
+    xVec3 volume[8];
+    F32 invNearFar;
+    F32 lerp;
+    RwMatrixTag* camMatrix = &((RwFrame*)shadowCamera->object.object.parent)->modelling;
+    S32 cullstate;
+    S32 ztest;
+    S32 zwrite;
+    S32 srcblend;
+    S32 destblend;
+
+    F32 atx = camMatrix->at.x;
+    F32 aty = camMatrix->at.y;
+    F32 atz = camMatrix->at.z;
+
+    for (i = 0; i < 4; i++)
+    {
+        xVec3* cnear = (xVec3*)&shadowCamera->frustumCorners[i];
+        xVec3* cfar = (xVec3*)&shadowCamera->frustumCorners[i + 4];
+        F32 dnear = atx * cnear->x + aty * cnear->y + atz * cnear->z;
+        F32 dpos = atx * pos->x + aty * pos->y + atz * pos->z;
+        F32 dfar = atx * cfar->x + aty * cfar->y + atz * cfar->z;
+
+        invNearFar = 1.0f / (dfar - dnear);
+
+        lerp = invNearFar * (dpos - dnear);
+        volume[i].x = xlerp(cnear->x, cfar->x, lerp);
+        volume[i].y = xlerp(cnear->y, cfar->y, lerp);
+        volume[i].z = xlerp(cnear->z, cfar->z, lerp);
+
+        lerp = invNearFar * (dpos + depth - dnear);
+        volume[i + 4].x = xlerp(cnear->x, cfar->x, lerp);
+        volume[i + 4].y = xlerp(cnear->y, cfar->y, lerp);
+        volume[i + 4].z = xlerp(cnear->z, cfar->z, lerp);
+    }
+
+    RwRenderStateGet(rwRENDERSTATECULLMODE, &cullstate);
+    RwRenderStateGet(rwRENDERSTATEZTESTENABLE, &ztest);
+    RwRenderStateGet(rwRENDERSTATEZWRITEENABLE, &zwrite);
+    RwRenderStateGet(rwRENDERSTATESRCBLEND, &srcblend);
+    RwRenderStateGet(rwRENDERSTATEDESTBLEND, &destblend);
+
+    RwRenderStateSet(rwRENDERSTATECULLMODE, (void*)rwCULLMODECULLNONE);
+    RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)1);
+    RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)0);
+    RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDONE);
+    RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDZERO);
+    RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)0);
+    RwRenderStateSet(rwRENDERSTATEVERTEXALPHAENABLE, (void*)1);
+
+    iDrawSetFBMSK(0xffffff);
+
+    RpSkyRenderStateGet(rpSKYRENDERSTATEATEST_1, &skyOldTest);
+    RpSkyRenderStateSet(rpSKYRENDERSTATEATEST_1, (void*)(skyOldTest & ~0x1));
+
+    if (ShadowInsideBoxAdjust(volume))
+    {
+        DrawAlphaBox(volume, 0, 0);
+        RpSkyRenderStateSet(rpSKYRENDERSTATEATEST_1, (void*)((skyOldTest & ~0xC001) | 0xC001));
+    }
+    else
+    {
+        DrawAlphaBox(volume, 1, 0);
+        DrawAlphaBox(volume, 0, 0xFF);
+        RpSkyRenderStateSet(rpSKYRENDERSTATEATEST_1, (void*)((skyOldTest & ~0xC001) | 0x4001));
+    }
+
+    RwRenderStateSet(rwRENDERSTATECULLMODE, (void*)cullstate);
+    RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)ztest);
+    RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)zwrite);
+    RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)srcblend);
+    RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)destblend);
+
+    iDrawSetFBMSK(0);
+}
+#endif
 
 struct ShadowCacheContext
 {
@@ -1566,7 +1875,9 @@ void xShadowVertical_DrawCache(xShadowCache* cache, F32 shadowFactor, F32 fadeDi
     RwV3d tr;
     xVec3 A;
     xVec3 B;
+#if !defined(PS2)
     S32 fogstate;
+#endif
 
     if (shadowRast != NULL)
     {
@@ -1603,7 +1914,11 @@ void xShadowVertical_DrawCache(xShadowCache* cache, F32 shadowFactor, F32 fadeDi
             break;
         case 0:
         default:
+#if defined(PS2)
+            RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDSRCALPHA);
+#else
             RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDSRCCOLOR);
+#endif
             break;
         }
     }
@@ -1616,7 +1931,11 @@ void xShadowVertical_DrawCache(xShadowCache* cache, F32 shadowFactor, F32 fadeDi
             break;
         case 0:
         default:
+#if defined(PS2)
+            RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCALPHA);
+#else
             RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCCOLOR);
+#endif
             break;
         }
     }
@@ -1659,8 +1978,13 @@ void xShadowVertical_DrawCache(xShadowCache* cache, F32 shadowFactor, F32 fadeDi
     tr.z = 0.0f;
     RwMatrixTranslate(&param.invMatrix, &tr, rwCOMBINEPOSTCONCAT);
 
+#if defined(PS2)
+    // Retail loads param.invMatrix into VU0 vf28-vf31 here with inline asm for
+    // ShadowRenderTriangleCB; not recovered as C.
+#else
     RwRenderStateGet(rwRENDERSTATEFOGENABLE, &fogstate);
     RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)0);
+#endif
 
     for (U32 i = 0; i < cache->polyCount; i++)
     {
@@ -1683,7 +2007,9 @@ void xShadowVertical_DrawCache(xShadowCache* cache, F32 shadowFactor, F32 fadeDi
         Im3DBufferPos = 0;
     }
 
+#if !defined(PS2)
     RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)fogstate);
+#endif
     RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCALPHA);
     RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
 }
@@ -1693,6 +2019,12 @@ void xShadowManager_Init(S32 numEnts)
     sMgrList = (xShadowMgr*)xMemAlloc(gActiveHeap, numEnts << 4, 0);
     sMgrTotal = numEnts;
     sMgrCount = 0; // Scheduling off
+#if defined(PS2)
+    a4dSkinPipe = RpPDSGetPipe(0x5000e);
+    adlSkinPipe = RpPDSGetPipe(0x5000d);
+    a4dSkinPipeADC = RpPDSGetPipe(0x5003e);
+    adlSkinPipeADC = RpPDSGetPipe(0x5003d);
+#endif
 }
 
 void xShadowManager_Reset()

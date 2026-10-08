@@ -92,6 +92,20 @@ inline void tier_queue_allocator::init(u32 unit_size, u32 block_size, u32 max_bl
     clear();
 }
 
+#if defined(PS2)
+inline void tier_queue_allocator::free_block(U8 index)
+{
+    block_data& block = blocks[index];
+
+    block.next = head;
+    block.prev = blocks[head].prev;
+    blocks[block.prev].next = index;
+    blocks[block.next].prev = index;
+
+    head = index;
+}
+#endif
+
 inline void tier_queue_allocator::clear()
 {
     head = 0;
@@ -301,7 +315,24 @@ template <class T> struct tier_queue
         }
     }
 
+#if defined(PS2)
+    void clear()
+    {
+        u32 i = get_block(first);
+        u32 end = wrap_block(i + get_block(_size + alloc->block_size() - 1));
+
+        while (i != end)
+        {
+            alloc->free_block(blocks[i]);
+            i = wrap_block(i + 1);
+        }
+
+        _size = 0;
+        first = 0;
+    }
+#else
     void clear();
+#endif
 };
 
 template <class T> struct static_queue

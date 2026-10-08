@@ -145,7 +145,14 @@ void zNPCTiki_InitFX(zScene* scene)
     // clang-format on
 
     RwTexture* tex = (RwTexture*)xSTFindAsset(xStrHash("target"), 0);
-    sHelmetRast = (tex) ? tex->raster : NULL;
+    if (tex)
+    {
+        sHelmetRast = tex->raster;
+    }
+    else
+    {
+        sHelmetRast = NULL;
+    }
 
     NPCC_MakeLightningInfo(NPC_LYT_TIKITHUNDER, &sThunderLightningInfo);
     sThunderLightningInfo.time = 0.3f;
@@ -237,14 +244,10 @@ static void zNPCTiki_PickTikisToAnimate()
         {
             currOrphan->tikiFlag &= ~0xC0;
         }
-        zNPCTiki* next = currOrphan->nextOrphan;
-        if (next != NULL && next == next->nextOrphan)
+        currOrphan = currOrphan->nextOrphan;
+        if (currOrphan != NULL && currOrphan == currOrphan->nextOrphan)
         {
             currOrphan = NULL;
-        }
-        else
-        {
-            currOrphan = next;
         }
     }
 
@@ -257,7 +260,14 @@ static void zNPCTiki_PickTikisToAnimate()
         }
     }
 
-    whichTikiToAnimate = (xrand() & 0x3F) ? -1 : (S32)(numTikisOnScreen * xurand()) + 1;
+    if (!(xrand() & 0x3F))
+    {
+        whichTikiToAnimate = (S32)(numTikisOnScreen * xurand()) + 1;
+    }
+    else
+    {
+        whichTikiToAnimate = -1;
+    }
     numTikisOnScreen = 0;
 }
 
@@ -362,25 +372,23 @@ void zNPCTiki::Reset()
 
     timeToLive = 0.0f;
     tikiFlag = 0;
-    for (S32 i = 0; i < ARRAY_SIZE(parents); i++)
-    {
-        parents[i] = NULL;
-    }
+    parents[0] = NULL;
+    parents[1] = NULL;
+    parents[2] = NULL;
+    parents[3] = NULL;
     numParents = 0;
     contactParent = ~0x0;
 
-    for (S32 i = 0; i < ARRAY_SIZE(children); i++)
-    {
-        children[i] = NULL;
-    }
+    children[0] = NULL;
+    children[1] = NULL;
+    children[2] = NULL;
+    children[3] = NULL;
     numChildren = 0;
     vel = 0.0f;
     nonTikiParent = NULL;
 
     switch (this->myNPCType)
     {
-    case NPC_TYPE_TIKI_QUIET:
-        break;
     case NPC_TYPE_TIKI_LOVEY:
         t1 = 0.0f;
         t2 = -0.25f;
@@ -529,6 +537,9 @@ S32 zNPCTiki::SetCarryState(en_NPC_CARRY_STATE cs)
         RemoveFromFamily();
         return 1;
 
+    case zNPCCARRY_THROW:
+        break;
+
     case zNPCCARRY_NONE:
         if ((this->tikiFlag & 0x10))
         {
@@ -558,9 +569,6 @@ S32 zNPCTiki::SetCarryState(en_NPC_CARRY_STATE cs)
             return 1;
         }
         return 0;
-
-    case zNPCCARRY_THROW:
-        break;
     }
 
     return 0;
@@ -862,7 +870,8 @@ void zNPCTiki::Process(xScene* xscn, F32 dt)
                 xVec3AddScaled((xVec3*)&(this->model->Mat->at), &playerDist, 0.2f / offset);
                 xVec3Normalize((xVec3*)&(this->model->Mat->at), (xVec3*)&(this->model->Mat->at));
             }
-            if (offset < 100.0f && g_tmr_talkytiki < 0.0f && (this->tikiFlag & 0x300) == 0)
+            if (offset < 100.0f && ((g_tmr_talkytiki < 0.0f) ? 1 : 0) &&
+                (this->tikiFlag & 0x300) == 0)
             {
                 this->ISeePlayer();
                 g_tmr_talkytiki = 90.0f + 90.0f * ((xurand() - 0.5f) * 0.25f);
@@ -1058,7 +1067,7 @@ void zNPCTiki::RemoveChild(zNPCTiki* child)
     if (this->numChildren == 0)
         return;
 
-    while (this->children[i] != child && i < ARRAY_SIZE(this->children))
+    while (this->children[i] != child && i < NUM_CHILDREN)
     {
         i++;
     }
@@ -1077,7 +1086,7 @@ void zNPCTiki::RemoveParent(zNPCTiki* parent)
     if (this->numParents == 0)
         return;
 
-    while (this->parents[i] != parent && i < ARRAY_SIZE(this->parents))
+    while (this->parents[i] != parent && i < NUM_PARENTS)
     {
         i++;
     }
@@ -1099,6 +1108,7 @@ void zNPCTiki::RemoveParent(zNPCTiki* parent)
 
 void zNPCTiki::FindParents(zScene* zsc)
 {
+    xRay3 ray;
     xCollis c = { 0b100000000,
                   0,
                   NULL,
@@ -1109,7 +1119,6 @@ void zNPCTiki::FindParents(zScene* zsc)
                   { 0.0f, 0.0f, 0.0f },
                   { 0.0f, 0.0f, 0.0f },
                   { 0.0f, 0.0f, 0.0f } };
-    xRay3 ray;
     xVec3Copy(&ray.origin, (xVec3*)&this->model->Mat->pos);
     ray.origin.y = this->bound.box.box.upper.y;
 
@@ -1215,33 +1224,35 @@ void zNPCTiki::FindParents(zScene* zsc)
               0.75f * this->bound.box.box.lower.y + 0.25f * this->bound.box.box.upper.y + 0.00001f))
             continue;
 
-        bool couldBe = true;
+        U8 couldBe = TRUE;
+        U8 i;
 
-        for (U8 i = 0; i < 4; ++i)
+        for (i = 0; i < 4; ++i)
         {
-            zNPCTiki* p = this->parents[i];
-            if (tiki == p)
+            if (tiki == this->parents[i])
             {
-                couldBe = false;
+                couldBe = FALSE;
                 break;
             }
-            if (p != NULL)
+            if (this->parents[i] != NULL)
             {
-                if (!(p->bound.box.box.upper.x > tiki->bound.box.box.lower.x + 0.1f))
+                if (!(this->parents[i]->bound.box.box.upper.x > tiki->bound.box.box.lower.x + 0.1f))
                     continue;
-                if (!(tiki->bound.box.box.upper.x > p->bound.box.box.lower.x + 0.1f))
+                if (!(tiki->bound.box.box.upper.x > this->parents[i]->bound.box.box.lower.x + 0.1f))
                     continue;
-                if (!(p->bound.box.box.upper.z > tiki->bound.box.box.lower.z + 0.1f))
+                if (!(this->parents[i]->bound.box.box.upper.z > tiki->bound.box.box.lower.z + 0.1f))
                     continue;
-                if (!(tiki->bound.box.box.upper.z > p->bound.box.box.lower.z + 0.1f))
+                if (!(tiki->bound.box.box.upper.z > this->parents[i]->bound.box.box.lower.z + 0.1f))
                     continue;
 
-                if (p->bound.box.box.upper.y * 0.75f + p->bound.box.box.lower.y * 0.25f <
+                if (this->parents[i]->bound.box.box.upper.y * 0.75f +
+                            this->parents[i]->bound.box.box.lower.y * 0.25f <
                         tiki->bound.box.box.lower.y + 0.00001f &&
-                    p->bound.box.box.upper.y < 0.75f * tiki->bound.box.box.lower.y +
-                                                   0.25f * tiki->bound.box.box.upper.y + 0.00001f)
+                    this->parents[i]->bound.box.box.upper.y <
+                        0.75f * tiki->bound.box.box.lower.y + 0.25f * tiki->bound.box.box.upper.y +
+                            0.00001f)
                 {
-                    p->RemoveChild(this);
+                    this->parents[i]->RemoveChild(this);
                     this->parents[i] = NULL;
                     this->numParents--;
                     if (i == this->contactParent)
@@ -1254,12 +1265,12 @@ void zNPCTiki::FindParents(zScene* zsc)
                 {
                     // else condition -- swapped 0.75/0.25 coefficients
                     if (tiki->bound.box.box.upper.y * 0.75f + tiki->bound.box.box.lower.y * 0.25f <
-                            p->bound.box.box.lower.y + 0.00001f &&
-                        tiki->bound.box.box.upper.y < 0.75f * p->bound.box.box.lower.y +
-                                                          0.25f * p->bound.box.box.upper.y +
-                                                          0.00001f)
+                            this->parents[i]->bound.box.box.lower.y + 0.00001f &&
+                        tiki->bound.box.box.upper.y <
+                            0.75f * this->parents[i]->bound.box.box.lower.y +
+                                0.25f * this->parents[i]->bound.box.box.upper.y + 0.00001f)
                     {
-                        couldBe = false;
+                        couldBe = FALSE;
                     }
                 }
             }
@@ -1267,7 +1278,7 @@ void zNPCTiki::FindParents(zScene* zsc)
 
         if (couldBe && tiki->numChildren < 4 && this->numParents < 4)
         {
-            U8 i = 0;
+            i = 0;
             while (this->parents[i] != NULL)
                 i++;
 
@@ -1297,7 +1308,7 @@ void zNPCTiki::FindParents(zScene* zsc)
 
 void zNPCTiki::ParentUpdated(zNPCTiki* parent)
 {
-    for (S32 i = 0; i < 4; i++)
+    for (U32 i = 0; i < 4; i++)
     {
         if (parent == this->parents[i])
         {
@@ -1312,10 +1323,9 @@ void zNPCTiki::RemoveFromFamily()
     U8 i;
     for (i = 0; i < NUM_PARENTS; i++)
     {
-        zNPCTiki* temp = this->parents[i];
-        if (temp != NULL)
+        if (this->parents[i] != NULL)
         {
-            temp->RemoveChild(this);
+            this->parents[i]->RemoveChild(this);
             this->parents[i] = NULL;
         }
     }
@@ -1324,10 +1334,9 @@ void zNPCTiki::RemoveFromFamily()
 
     for (i = 0; i < NUM_CHILDREN; i++)
     {
-        zNPCTiki* temp = this->children[i];
-        if (temp != NULL)
+        if (this->children[i] != NULL)
         {
-            temp->RemoveParent(this);
+            this->children[i]->RemoveParent(this);
             this->children[i] = NULL;
         }
     }
@@ -1368,15 +1377,16 @@ static void loveyFloat(zNPCTiki* tiki, F32 dt)
 
 static S32 loveyIdleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 {
-    zNPCTiki* tiki = (zNPCTiki*)rawgoal->GetOwner();
     zNPCGoalTikiIdle* goal = (zNPCGoalTikiIdle*)rawgoal;
+    zNPCTiki* tiki = (zNPCTiki*)rawgoal->GetOwner();
     S32 nextgoal = 0;
 
     if (tiki->nav_curr != NULL)
     {
         goal->tmr_wait = MAX(-1.0f, goal->tmr_wait - dt);
 
-        if (tiki->npcset.allowPatrol != 0 && (goal->tmr_wait < 0.0f || tiki->nav_curr->on == NULL))
+        if (tiki->npcset.allowPatrol != 0 &&
+            (((goal->tmr_wait < 0.0f) ? 1 : 0) || tiki->nav_curr->on == NULL))
         {
             tiki->MvptCycle();
 
@@ -1399,20 +1409,18 @@ static S32 loveyIdleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, voi
 
 static S32 loveyPatrolCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 {
-    zNPCTiki* tiki;
-    S32 nextgoal;
+    zNPCGoalTikiPatrol* goal = (zNPCGoalTikiPatrol*)rawgoal;
+    zNPCTiki* tiki = (zNPCTiki*)rawgoal->GetOwner();
+    S32 nextgoal = 0;
     xVec3 delta; // not in dwarf
 
-    tiki = (zNPCTiki*)rawgoal->GetOwner();
-    zNPCGoalTikiPatrol* goal = (zNPCGoalTikiPatrol*)rawgoal;
-    nextgoal = 0;
     xVec3AddScaled(&(tiki->v1), &goal->vel, dt);
     xVec3Sub(&delta, &goal->dest_pos, &(tiki->v1));
     if (xVec3Dot(&delta, &goal->vel) < 0.0f)
     {
         xVec3Copy(&(tiki->v1), &goal->dest_pos);
-        *trantype = GOAL_TRAN_SET;
         nextgoal = NPC_GOAL_TIKIIDLE;
+        *trantype = GOAL_TRAN_SET;
     }
     loveyFloat(tiki, dt);
     return nextgoal;
@@ -1445,7 +1453,7 @@ static S32 quietIdleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, voi
         }
         if (tiki->model->Scale.x)
         {
-            scale = 0.75f * dt + tiki->model->Scale.x;
+            scale = tiki->model->Scale.x + 0.75f * dt;
             xEntShow(tiki);
             tiki->RestoreColFlags();
             if (scale > 1.0f)
@@ -1473,8 +1481,8 @@ static S32 quietHideCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, voi
 
     if (scale > 25.0f)
     {
-        *trantype = GOAL_TRAN_SET;
         nextgoal = NPC_GOAL_TIKIIDLE;
+        *trantype = GOAL_TRAN_SET;
     }
     else
     {
@@ -1499,12 +1507,12 @@ static S32 quietHideCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, voi
 
 static S32 thunderIdleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 {
-    zNPCTiki* tiki = (zNPCTiki*)rawgoal->GetOwner();
     zNPCGoalTikiIdle* goal = (zNPCGoalTikiIdle*)rawgoal;
+    zNPCTiki* tiki = (zNPCTiki*)rawgoal->GetOwner();
     S32 nextgoal = 0;
     F32 factor;
 
-    tiki->t1 = -(0.75f * dt - tiki->t1);
+    tiki->t1 = tiki->t1 - 0.75f * dt;
     if (tiki->t1 < 0.0f)
     {
         tiki->t1 += 1.0f;
@@ -1557,17 +1565,17 @@ static S32 thunderCountCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, 
     xVec3 ePos;
     F32 hght;
 
-    tiki = (zNPCTiki*)rawgoal->GetOwner();
     goal = (zNPCGoalTikiCount*)rawgoal;
+    tiki = (zNPCTiki*)rawgoal->GetOwner();
 
     nextgoal = 0;
 
     goal->tmr_count = MAX(-1.0f, goal->tmr_count - dt);
 
-    if (goal->tmr_count < 0.0f)
+    if ((goal->tmr_count < 0.0f) ? 1 : 0)
     {
-        *trantype = GOAL_TRAN_SET;
         nextgoal = NPC_GOAL_TIKIDYING;
+        *trantype = GOAL_TRAN_SET;
     }
 
     if (!goal->beingCarried && globals.player.carry.grabbed == tiki)
@@ -1596,8 +1604,7 @@ static S32 thunderCountCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, 
 
     if (tiki->t1 < 0.0f)
     {
-        factor = xurand();
-        tiki->t1 = factor * 0.5f + 0.9f;
+        tiki->t1 = xurand() * 0.5f + 0.9f;
 
         if ((xrand() & 7) == 0)
         {
@@ -1614,8 +1621,7 @@ static S32 thunderCountCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, 
         gfactor = xurand();
         ePos.y += gfactor;
 
-        factor = xurand() - 0.5f;
-        ePos.x += (1.0f - gfactor) * factor;
+        ePos.x += (1.0f - gfactor) * (xurand() - 0.5f);
 
         hght = xurand();
         ePos.z += (1.0f - gfactor) * (hght - 0.5f);
@@ -1650,16 +1656,16 @@ static S32 thunderCountCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, 
 
 static S32 tikiDyingCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 {
-    rawgoal->GetOwner();
     zNPCGoalTikiDying* goal = (zNPCGoalTikiDying*)rawgoal;
+    rawgoal->GetOwner();
     S32 nextgoal = 0;
 
     goal->tmr_dying = (-1.0f > goal->tmr_dying - dt) ? -1.0f : goal->tmr_dying - dt;
 
-    if (goal->tmr_dying < 0.0f)
+    if ((goal->tmr_dying < 0.0f) ? 1 : 0)
     {
-        *trantype = GOAL_TRAN_SET;
         nextgoal = NPC_GOAL_TIKIDEAD;
+        *trantype = GOAL_TRAN_SET;
     }
 
     return nextgoal;

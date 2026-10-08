@@ -23,8 +23,16 @@
 #endif
 
 #if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+#define FONT_SCREEN_WIDTH 640.0f
 #define FONT_SCREEN_HEIGHT 528.0f
+#elif defined(VERSION_SLES_51968) || defined(VERSION_SLES_51970)
+#define FONT_SCREEN_WIDTH 512.0f
+#define FONT_SCREEN_HEIGHT 512.0f
+#elif defined(PS2)
+#define FONT_SCREEN_WIDTH 640.0f
+#define FONT_SCREEN_HEIGHT 448.0f
 #else
+#define FONT_SCREEN_WIDTH 640.0f
 #define FONT_SCREEN_HEIGHT 480.0f
 #endif
 
@@ -458,7 +466,7 @@ namespace
 
         RwIm2DVertex* vert = &vert_buffer[vert_buffer_used];
 
-        r.scale(640.0f, FONT_SCREEN_HEIGHT);
+        r.scale(FONT_SCREEN_WIDTH, FONT_SCREEN_HEIGHT);
 
         set_vert(vert[0], r.x, r.y, rt.x, rt.y, color);
         set_vert(vert[1], r.x, r.y + r.h, rt.x, rt.y + rt.h, color);
@@ -1571,18 +1579,11 @@ xtextbox::tag_entry* xtextbox::find_entry(const tag_entry_list& el, const substr
 
 size_t xtextbox::read_list(const tag_entry& e, F32* v, size_t vsize)
 {
-    size_t total = e.args_size;
-
-    if (vsize < total)
-    {
-        total = vsize;
-    }
-
-    const substr* args = e.args;
+    size_t total = (vsize < e.args_size) ? vsize : e.args_size;
 
     for (size_t i = 0; i < total; i++)
     {
-        v[i] = xatof(args[i].text);
+        v[i] = xatof(e.args[i].text);
     }
 
     return total;
@@ -1590,18 +1591,11 @@ size_t xtextbox::read_list(const tag_entry& e, F32* v, size_t vsize)
 
 size_t xtextbox::read_list(const tag_entry& e, S32* v, size_t vsize)
 {
-    size_t total = e.args_size;
-
-    if (vsize < total)
-    {
-        total = vsize;
-    }
-
-    const substr* args = e.args;
+    size_t total = (vsize < e.args_size) ? vsize : e.args_size;
 
     for (size_t i = 0; i < total; i++)
     {
-        v[i] = atoi(args[i].text);
+        v[i] = atoi(e.args[i].text);
     }
 
     return total;
@@ -2953,12 +2947,13 @@ namespace
                          const xtextbox::split_tag& ti)
     {
         static const xtextbox::callback cb = { NULL, update_tag_color, update_tag_color };
-        iColor_tag& color = (iColor_tag&)a.context;
 
         if (ti.value.size < 6 || ti.action.size == 0)
         {
             return;
         }
+
+        iColor_tag& color = (iColor_tag&)a.context;
 
         size_t v = atox(ti.value);
 
@@ -2982,16 +2977,16 @@ namespace
             U32 temp;
 
             temp = (v >> 24 & 0xff) + tb.font.color.a;
-            color.a = (temp <= 255) ? temp : 255;
+            color.a = (temp > 255) ? 255 : temp;
 
             temp = (v >> 16 & 0xff) + tb.font.color.r;
-            color.r = (temp <= 255) ? temp : 255;
+            color.r = (temp > 255) ? 255 : temp;
 
             temp = (v >> 8 & 0xff) + tb.font.color.g;
-            color.g = (temp <= 255) ? temp : 255;
+            color.g = (temp > 255) ? 255 : temp;
 
             temp = (v & 0xff) + tb.font.color.b;
-            color.b = (temp <= 255) ? temp : 255;
+            color.b = (temp > 255) ? 255 : temp;
 
             break;
         }
@@ -3034,13 +3029,13 @@ namespace
                         const xtextbox::split_tag& ti)
     {
         static const xtextbox::callback cb = { NULL, update_tag_font, update_tag_font };
-        U32& id = (U32&)a.context;
 
         if (ti.action.size < 1 || ti.action.text[0] != '=' || ti.value.size == 0)
         {
             return;
         }
 
+        U32& id = (U32&)a.context;
         id = atoi(ti.value.text);
 
         if (id < active_fonts_size)
@@ -3724,7 +3719,7 @@ void render_fill_rect(const basic_rect<F32>& bounds, iColor_tag color)
         RwIm2DVertex vert[4];
         basic_rect<F32> r = bounds;
 
-        r.scale(640.0f, FONT_SCREEN_HEIGHT);
+        r.scale(FONT_SCREEN_WIDTH, FONT_SCREEN_HEIGHT);
 
         set_rect_verts(vert, r.x, r.y, r.w, r.h, color, rcz, nsz);
         RwIm2DRenderPrimitive(rwPRIMTYPETRISTRIP, vert, 4);
@@ -3748,8 +3743,8 @@ namespace
         RwIm2DVertexSetScreenX(&vert, x);
         RwIm2DVertexSetScreenY(&vert, y);
         RwIm2DVertexSetScreenZ(&vert, z);
-        RwIm2DVertexSetIntRGBA(&vert, c.r, c.g, c.b, c.a);
         RwIm2DVertexSetRecipCameraZ(&vert, rcz);
+        RwIm2DVertexSetIntRGBA(&vert, c.r, c.g, c.b, c.a);
     }
 } // namespace
 

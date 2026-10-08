@@ -58,21 +58,21 @@ void zNPCMsg_SceneReset()
 
 void zNPCMsg_Timestep(xScene*, F32 dt)
 {
-    NPCPSData* office = NPCPS_postOffice();
+    NPCPSData* npcps = NPCPS_postOffice();
 
-    for (S32 i = office->quelist.cnt - 1; i >= 0; i--)
+    for (S32 i = npcps->quelist.cnt - 1; i >= 0; i--)
     {
-        NPCMsg* inmsg = (NPCMsg*)office->quelist.list[i];
+        NPCMsg* msg = (NPCMsg*)npcps->quelist.list[i];
 
-        inmsg->tmr_delay = MAX(-1.0f, inmsg->tmr_delay - dt);
+        msg->tmr_delay = MAX(-1.0f, msg->tmr_delay - dt);
 
-        if (inmsg->tmr_delay < 0.0f)
+        if (msg->tmr_delay < 0.0f)
         {
-            zNPCMsg_SendMsg(inmsg, -1.0f, 0);
+            zNPCMsg_SendMsg(msg, -1.0f, 0);
 
-            XOrdRemove(&office->quelist, 0, i);
+            XOrdRemove(&npcps->quelist, 0, i);
 
-            NPCPS_freeMsg(inmsg);
+            NPCPS_freeMsg(msg);
         }
     }
 }
@@ -275,70 +275,69 @@ void zNPCMsg_AreaNotify(zNPCCommon* sender, en_NPC_MSG_ID msgid, F32 rad, S32 fi
 void zNPCMsg_AreaNotify(zNPCCommon* sender, NPCMsg* msg, F32 radius, S32 filter,
                         en_NPCTYPES* npcTypeList)
 {
-    F32 radiusSq = SQ(radius);
+    S32 i;
+    F32 sq_rad = SQ(radius);
     st_XORDEREDARRAY* npclist = zNPCMgr_GetNPCList();
-    xVec3 checkPos;
+    xVec3 from;
 
     if (filter & 0x100)
     {
-        xVec3Copy(&checkPos, xEntGetPos(&globals.player.ent));
+        xVec3Copy(&from, xEntGetPos(&globals.player.ent));
     }
     else if (sender != NULL)
     {
-        xVec3Copy(&checkPos, sender->Pos());
+        xVec3Copy(&from, sender->Pos());
     }
     else
     {
-        xVec3Copy(&checkPos, &g_O3);
+        xVec3Copy(&from, &g_O3);
     }
 
     if (msg->infotype == 0)
     {
-        xVec3Copy(&msg->target.pos_tgt, &checkPos);
+        xVec3Copy(&msg->target.pos_tgt, &from);
         msg->target.bas_tgt = sender;
         msg->infotype = NPC_MDAT_AREANOTIFY;
     }
 
-    for (S32 i = 0; i < npclist->cnt; i++)
+    for (i = 0; i < npclist->cnt; i++)
     {
-        zNPCCommon* targetNPC = ((zNPCCommon**)npclist->list)[i];
+        zNPCCommon* npc = ((zNPCCommon**)npclist->list)[i];
 
         if (!(filter & 0x800))
         {
-            if ((targetNPC->baseFlags & 0x40))
+            if ((npc->baseFlags & 0x40))
             {
                 continue;
             }
         }
 
-        if (sender != NULL && !(filter & 0x8) && targetNPC == (zNPCCommon*)sender)
+        if (sender != NULL && !(filter & 0x8) && npc == (zNPCCommon*)sender)
         {
             continue;
         }
 
-        S32 targetNPCType = targetNPC->SelfType();
+        S32 ntyp = npc->SelfType();
 
-        if (sender != NULL && (filter & 0x200) && (targetNPCType != sender->SelfType()))
+        if (sender != NULL && (filter & 0x200) && (ntyp != sender->SelfType()))
         {
             continue;
         }
 
         if (npcTypeList != NULL && *npcTypeList != NPC_TYPE_UNKNOWN)
         {
-            en_NPCTYPES* typePtr = npcTypeList;
-            S32 inList = TRUE;
+            S32 skipit = TRUE;
 
-            while (*typePtr != NPC_TYPE_UNKNOWN)
+            for (S32 k = 0; npcTypeList[k] != NPC_TYPE_UNKNOWN; k++)
             {
-                if (targetNPCType == *typePtr)
+                if (ntyp == npcTypeList[k])
                 {
-                    inList = FALSE;
+                    skipit = FALSE;
                     break;
                 }
-                typePtr++;
             }
 
-            if (inList)
+            if (skipit)
             {
                 continue;
             }
@@ -346,42 +345,41 @@ void zNPCMsg_AreaNotify(zNPCCommon* sender, NPCMsg* msg, F32 radius, S32 filter,
 
         if ((filter & 0x10) == 0)
         {
-            U32 typePrefix = targetNPCType & 0xffffff00;
-
-            if (typePrefix != 'NTT\0' && typePrefix != 'NTR\0' && typePrefix != 'NTF\0')
+            if ((ntyp & 0xffffff00) != 'NTT\0' && (ntyp & 0xffffff00) != 'NTR\0' &&
+                (ntyp & 0xffffff00) != 'NTF\0')
             {
                 continue;
             }
 
-            if ((typePrefix == 'NTT\0' && !(filter & 0x1)) ||
-                (typePrefix == 'NTR\0' && !(filter & 0x2)) ||
-                (typePrefix == 'NTF\0' && !(filter & 0x4)))
+            if (((ntyp & 0xffffff00) == 'NTT\0' && !(filter & 0x1)) ||
+                ((ntyp & 0xffffff00) == 'NTR\0' && !(filter & 0x2)) ||
+                ((ntyp & 0xffffff00) == 'NTF\0' && !(filter & 0x4)))
             {
                 continue;
             }
         }
 
-        if (!(filter & 0x400) && !targetNPC->IsAlive())
+        if (!(filter & 0x400) && !npc->IsAlive())
         {
             continue;
         }
 
-        xVec3 vecDiff;
-        xVec3Sub(&vecDiff, xEntGetPos((xEnt*)targetNPC), &checkPos);
+        xVec3 diff;
+        xVec3Sub(&diff, xEntGetPos((xEnt*)npc), &from);
 
-        if (xabs(vecDiff.y) > 2.0f)
+        if (xabs(diff.y) > 2.0f)
         {
             continue;
         }
 
-        vecDiff.y = 0.0f;
-        if (xVec3Length2(&vecDiff) > radiusSq)
+        diff.y = 0.0f;
+        if (xVec3Length2(&diff) > sq_rad)
         {
             continue;
         }
 
-        msg->sendto = targetNPC->id;
-        targetNPC->NPCMessage(msg);
+        msg->sendto = npc->id;
+        npc->NPCMessage(msg);
     }
 }
 

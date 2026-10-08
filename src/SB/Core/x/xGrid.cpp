@@ -67,30 +67,34 @@ void xGridKill(xGrid* grid)
 
 void xGridEmpty(xGrid* grid)
 {
+    xGridBound** head;
+    xGridBound* curr;
+
     for (S32 x = 0; x < grid->nx; ++x)
     {
         for (S32 z = 0; z < grid->nz; ++z)
         {
-            xGridBound** head = &grid->cells[z * grid->nx];
-            xGridBound* curr = head[x];
+            head = &grid->cells[z * grid->nx] + x;
+            curr = *head;
             while (curr)
             {
                 xGridBound* currnext = curr->next;
                 xGridBoundInit(curr, curr->data);
                 curr = currnext;
             }
-            head[x] = NULL;
+            *head = NULL;
         }
     }
 
-    xGridBound* curr = grid->other;
+    head = &grid->other;
+    curr = *head;
     while (curr)
     {
-        xGridBound* nextnext = curr->next;
+        xGridBound* currnext = curr->next;
         xGridBoundInit(curr, curr->data);
-        curr = nextnext;
+        curr = currnext;
     }
-    grid->other = NULL;
+    *head = NULL;
 }
 
 S32 xGridAddToCell(xGridBound** boundList, xGridBound* bound)

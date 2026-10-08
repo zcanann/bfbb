@@ -31,12 +31,6 @@ void zEntSimpleObj_MgrInit(zEntSimpleObj** entList, U32 entCount)
     u32 custEntCount;
     u32 trailerHash;
     zSimpleMgr* smgr;
-    s32 custIndex;
-    s32 sflags;
-    u8 moreFlags;
-    zEntSimpleObj* ent;
-    zEntSimpleObj* ent3;
-    zEntSimpleObj* ent2;
 
     sMgrCount = 0;
     sMgrList = NULL;
@@ -48,44 +42,38 @@ void zEntSimpleObj_MgrInit(zEntSimpleObj** entList, U32 entCount)
         tempEntCount = 0;
         custEntCount = 0;
         trailerHash = xStrHash("trailer_hitch\0xEntAutoEventSimple");
-        i = 0U;
-        while (i < entCount)
+        for (i = 0; i < entCount; i++)
         {
-            ent = entList[i];
-            sflags = ent->sflags;
-            if (!(sflags & 0x10))
+            if (entList[i]->sflags & 0x10)
             {
-                if ((ent->update != (xEntUpdateCallback)zEntSimpleObj_Update) ||
-                    (ent->render != zEntSimpleObj_Render) ||
-                    (ent->eventFunc != (xBaseEventCB)zEntSimpleObjEventCB) ||
-                    (ent->move != NULL) ||
-                    (moreFlags = ent->moreFlags, (((moreFlags & 8) == 0) == 0)) ||
-                    (moreFlags & 0x20) || (ent->miscflags & 1) || (ent->atbl != NULL) ||
-                    (sflags & 4) || (sflags & 8) || (trailerHash == ent->asset->modelInfoID) ||
-                    (ent->baseType == eBaseTypeTrackPhysics) || (ent->driver != NULL))
+                continue;
+            }
+
+            if (entList[i]->update != (xEntUpdateCallback)zEntSimpleObj_Update ||
+                entList[i]->render != zEntSimpleObj_Render ||
+                entList[i]->eventFunc != (xBaseEventCB)zEntSimpleObjEventCB ||
+                entList[i]->move != NULL || (entList[i]->moreFlags & 8) ||
+                (entList[i]->moreFlags & 0x20) || (entList[i]->miscflags & 1) ||
+                entList[i]->atbl != NULL || (entList[i]->sflags & 4) ||
+                (entList[i]->sflags & 8) || trailerHash == entList[i]->asset->modelInfoID ||
+                entList[i]->baseType == eBaseTypeTrackPhysics || entList[i]->driver != NULL)
+            {
+                tempEntList[(entCount - 1) - (S32)custEntCount] = entList[i];
+                custEntCount++;
+
+                if (entList[i]->driver != NULL && entList[i]->move == NULL)
                 {
-                    custIndex = entCount;
-                    custIndex -= 1;
-                    custIndex -= custEntCount;
-                    custEntCount += 1;
-                    tempEntList[custIndex] = ent;
-                    ent2 = entList[i];
-                    if ((ent2->driver != NULL) && (ent2->move == NULL))
-                    {
-                        ent2->move = zEntSimpleObj_Move;
-                        ent3 = entList[i];
-                        ent3->pflags |= 1;
-                        entList[i]->frame = (xEntFrame*)xMemAlloc(gActiveHeap, sizeof(xEntFrame), 0);
-                    }
-                }
-                else
-                {
-                    ent->baseFlags |= 0x80;
-                    tempEntList[tempEntCount] = entList[i];
-                    tempEntCount += 1;
+                    entList[i]->move = zEntSimpleObj_Move;
+                    entList[i]->pflags |= 1;
+                    entList[i]->frame = (xEntFrame*)xMemAlloc(gActiveHeap, sizeof(xEntFrame), 0);
                 }
             }
-            i += 1;
+            else
+            {
+                entList[i]->baseFlags |= 0x80;
+                tempEntList[tempEntCount] = entList[i];
+                tempEntCount++;
+            }
         }
 
         if (custEntCount != 0)
@@ -219,13 +207,13 @@ void zEntSimpleObj_MgrUpdateRender(RpWorld* world, F32 dt)
                 picklod = 0;
                 if (camdist2 > smgr->lodDist[0])
                 {
-                    picklod = 1;
+                    picklod++;
                     if (camdist2 > smgr->lodDist[1])
                     {
-                        picklod = 2;
+                        picklod++;
                         if (camdist2 > smgr->lodDist[2])
                         {
-                            picklod = 3;
+                            picklod++;
                         }
                     }
                 }
@@ -344,27 +332,22 @@ void zEntSimpleObj_Init(void* ent, void* asset)
 
 void zEntSimpleObj_Init(zEntSimpleObj* ent, xEntAsset* asset, bool physparams)
 {
-    U32 tmpsize;
-    void* animData;
-    RpAtomic* modelData;
-    U32 temp_r3_4;
-    U32 animBoneCount;
-    xModelInstance* temp_r3;
-    xAnimPlay* temp_r3_2;
-    xAnimPlay* temp_r3_3;
-    xAnimTable* temp_r4;
     xSimpleObjAsset* sasset;
+    U32 tmpsize;
+    RpAtomic* modelData;
+    void* animData;
+    U32 animBoneCount;
 
     zEntInit((zEnt*)ent, asset, 0x53494D50U);
 
-    if (physparams != 0)
+    if (physparams)
     {
         ent->baseType = 0x3F;
     }
 
     // Deliberate: both arms are identical. The original picked between two asset layouts
     // that begin at the same offset, so the target emits no branch here.
-    if (physparams != 0)
+    if (physparams)
     {
         sasset = (xSimpleObjAsset*)(asset + 1);
     }
@@ -389,9 +372,9 @@ void zEntSimpleObj_Init(zEntSimpleObj* ent, xEntAsset* asset, bool physparams)
     ent->update = (xEntUpdateCallback)zEntSimpleObj_Update;
     ent->eventFunc = (xBaseEventCB)zEntSimpleObjEventCB;
     ent->render = zEntSimpleObj_Render;
-    if ((u8)ent->linkCount != 0)
+    if (ent->linkCount)
     {
-        if (physparams != 0)
+        if (physparams)
         {
             ent->link = (xLinkAsset*)((char*)ent->asset + 0x9C);
         }
@@ -407,25 +390,20 @@ void zEntSimpleObj_Init(zEntSimpleObj* ent, xEntAsset* asset, bool physparams)
     ent->eventFunc = (xBaseEventCB)zEntSimpleObjEventCB;
     modelData = (RpAtomic*)xSTFindAsset(asset->modelInfoID, &tmpsize);
     animData = NULL;
-    if (!(ent->miscflags & 1) && (ent->asset->modelInfoID != 0U) &&
-        (temp_r3 = ent->model, ((temp_r3 == NULL) == 0)) &&
-        (temp_r3_2 = temp_r3->Anim, ((temp_r3_2 == NULL) == 0)) &&
-        (temp_r4 = temp_r3_2->Table, ((temp_r4 == NULL) == 0)) &&
-        (strcmp(&"trailer_hitch\0xEntAutoEventSimple"[0xE], temp_r4->Name) == 0))
+    if (!(ent->miscflags & 1) && ent->asset->modelInfoID && ent->model && ent->model->Anim &&
+        ent->model->Anim->Table &&
+        strcmp(&"trailer_hitch\0xEntAutoEventSimple"[0xE], ent->model->Anim->Table->Name) == 0)
     {
-        temp_r3_3 = ent->model->Anim;
-        xAnimPlaySetState(temp_r3_3->Single, temp_r3_3->Table->StateList, 0.0f);
+        xAnimPlaySetState(ent->model->Anim->Single, ent->model->Anim->Table->StateList, 0.0f);
         ent->miscflags |= 1;
     }
-    else
+    else if (asset->animListID && !ent->atbl)
     {
-        temp_r3_4 = asset->animListID;
-        if ((temp_r3_4 != 0) && (ent->atbl == NULL))
+        animData = xSTFindAsset(asset->animListID, &tmpsize);
+        if (animData)
         {
-            animData = xSTFindAsset(temp_r3_4, &tmpsize);
-            if ((animData != NULL) &&
-                ((animBoneCount = iAnimBoneCount(animData), ((animBoneCount == 0U) != 0)) ||
-                 (animBoneCount != iModelNumBones(modelData))))
+            animBoneCount = iAnimBoneCount(animData);
+            if (!animBoneCount || animBoneCount != iModelNumBones(modelData))
             {
                 animData = NULL;
             }
@@ -490,8 +468,6 @@ void zEntSimpleObj_Load(zEntSimpleObj* ent, xSerial* s)
 
 void zEntSimpleObj_Reset(zEntSimpleObj* ent, xScene* scene)
 {
-    xEntBoundUpdateCallback temp_r12;
-
     zEntReset((zEnt*)ent);
     ent->animTime = 0.0f;
     ent->chkby &= 0xE3;
@@ -499,13 +475,15 @@ void zEntSimpleObj_Reset(zEntSimpleObj* ent, xScene* scene)
     {
         ent->chkby |= 0x18;
     }
-    temp_r12 = ent->bupdate;
-    if (temp_r12 != NULL)
+
+    if (ent->bupdate)
     {
-        temp_r12(ent, (xVec3*)&ent->model->Mat->pos);
-        return;
+        ent->bupdate(ent, (xVec3*)&ent->model->Mat->pos);
     }
-    xEntDefaultBoundUpdate((xEnt*)ent, (xVec3*)&ent->model->Mat->pos);
+    else
+    {
+        xEntDefaultBoundUpdate(ent, (xVec3*)&ent->model->Mat->pos);
+    }
 }
 
 s32 zEntSimpleObjEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* base3)

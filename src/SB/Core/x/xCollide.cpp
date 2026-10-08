@@ -2221,6 +2221,8 @@ static void SweptSphereHitsEntCB(xScene*, xRay3* ray, xQCData* qcd, xEnt* ent, v
             result = xRayHitsBoxFast(&lr, &tmpbox);
             break;
         }
+        case XBOUND_TYPE_CYL:
+            break;
         }
 
         if (!result)
@@ -2266,6 +2268,8 @@ static void SweptSphereHitsEntCB(xScene*, xRay3* ray, xQCData* qcd, xEnt* ent, v
                 sws->optr = ent;
                 sSweptSphereEntFound = 1;
             }
+            break;
+        case XBOUND_TYPE_CYL:
             break;
         }
     }

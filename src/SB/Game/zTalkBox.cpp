@@ -1169,8 +1169,8 @@ namespace
 
         switch (event)
         {
-        case eEventReset:
         case eEventSceneEnd:
+        case eEventReset:
             e.reset();
             break;
         case eEventInvisible:
@@ -1219,15 +1219,44 @@ namespace
             e.clear_text();
             break;
 
-        case eEventPadPressRight:
-        case eEventPadPressLeft:
-        case eEventOpenTBox:
-        case eEventCloseTBox:
+        case eEventTalkBox_OnSignal0:
+        case eEventTalkBox_OnSignal1:
+        case eEventTalkBox_OnSignal2:
+        case eEventTalkBox_OnSignal3:
+        case eEventTalkBox_OnSignal4:
+        case eEventTalkBox_OnSignal5:
+        case eEventTalkBox_OnSignal6:
+        case eEventTalkBox_OnSignal7:
+        case eEventTalkBox_OnSignal8:
+        case eEventTalkBox_OnSignal9:
+        case eEventTalkBox_OnSignal10:
+        case eEventTalkBox_OnSignal11:
+        case eEventTalkBox_OnSignal12:
+        case eEventTalkBox_OnSignal13:
+        case eEventTalkBox_OnSignal14:
+        case eEventTalkBox_OnSignal15:
+        case eEventTalkBox_OnSignal16:
+        case eEventTalkBox_OnSignal17:
         case eEventTalkBox_OnSignal18:
         case eEventTalkBox_OnSignal19:
         case eEventTalkBox_OnStart:
+        case eEventTalkBox_OnStop:
         case eEventTalkBox_OnYes:
         case eEventTalkBox_OnNo:
+        case eEventPadPressUp:
+        case eEventPadPressDown:
+        case eEventPadPressLeft:
+        case eEventPadPressRight:
+        case eEventPadPressStart:
+        case eEventPadPressSelect:
+        case eEventPadPressR1:
+        case eEventPadPressR2:
+        case eEventPadPressL1:
+        case eEventPadPressL2:
+        case eEventPadPressX:
+        case eEventPadPressO:
+        case eEventPadPressTriangle:
+        case eEventPadPressSquare:
             break;
         }
 

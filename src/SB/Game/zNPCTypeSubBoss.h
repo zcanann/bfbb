@@ -8,7 +8,13 @@ struct zNPCSubBoss : zNPCCommon //Size of zNPCSubBoss: 0x2B4
 {
     NPCTarget tgt_cur; //0x2A0
 
+#if defined(PS2)
+    zNPCSubBoss(S32 myType) : zNPCCommon(myType)
+    {
+    }
+#else
     zNPCSubBoss(S32 myType);
+#endif
 
     virtual void Setup();
     virtual U8 ColChkFlags() const;

@@ -13,6 +13,7 @@
 #include "zEnt.h"
 
 #if defined(PS2)
+extern "C" long skyTest_1;
 #include <new.h>
 #else
 #include <PowerPC_EABI_Support\MSL_C++\MSL_Common\Include\new.h>
@@ -197,8 +198,7 @@ namespace xhud
         motive_node* it = _motive_top;
         while (it != NULL)
         {
-            bool unk = it->m.update(*this, dt);
-            if (!unk)
+            if (!it->m.update(*this, dt))
             {
                 *itp = it->next;
                 motive_allocator()->free(it);
@@ -254,7 +254,7 @@ namespace xhud
     // Equivalent: scheduling
     U32 widget::type() const
     {
-        static U32 myid = xStrHash(a->type_name());
+        static U32 myid = xStrHash(asset::type_name());
         return myid;
     }
 
@@ -271,27 +271,24 @@ namespace xhud
 
         F32 dx = start_rc.loc.x - rc.loc.x;
         F32 dy = start_rc.loc.y - rc.loc.y;
-        F32 fVar1 = dx * dx + dy * dy;
-        if (fVar1 <= 0.000000009999999f)
+        F32 d2 = dx * dx + dy * dy;
+        if (d2 <= 0.000000009999999f)
         {
             rc.loc = start_rc.loc;
             rc.a = start_rc.a;
         }
         else
         {
-            F32 dVar4 = xsqrt(fVar1);
+            d2 = xsqrt(d2);
+            F32 vx = 10.0f * dx;
             F32 vy = 10.0f * dy;
-            fVar1 = 10.0f * dx;
-            F32 dVar5 = (-(fVar1 * fVar1 + (vy * vy)) / (2.0f * dVar4));
+            F32 a = -(vx * vx + vy * vy) / (2.0f * d2);
 
-            add_motive(motive(&rc.loc.x, fVar1, dx, (dVar5 * dx) / dVar4,
-                              accelerate_motive_update, NULL));
+            add_motive(motive(&rc.loc.x, vx, dx, (a * dx) / d2, accelerate_motive_update, NULL));
+            add_motive(motive(&rc.loc.y, vy, dy, (a * dy) / d2, accelerate_motive_update, NULL));
 
-            add_motive(motive(&rc.loc.y, vy, dy, (dVar5 * dy) / dVar4,
-                              accelerate_motive_update, NULL));
-
-            fVar1 = start_rc.a - rc.a;
-            add_motive(motive(&rc.a, 3.0f * fVar1, fVar1, 0.0f, linear_motive_update, NULL));
+            F32 da = start_rc.a - rc.a;
+            add_motive(motive(&rc.a, 3.0f * da, da, 0.0f, linear_motive_update, NULL));
         }
     }
 
@@ -434,15 +431,21 @@ namespace xhud
             F32 delta_time;
         };
 
-        template <class F> void for_each(U8 widget_type, U32 type_size, F f)
+        struct widget_chunk : xBase
         {
-            U32 count = globals.sceneCur->baseCount[widget_type];
-            U8* it = (U8*)globals.sceneCur->baseList[widget_type];
-            U8* end = it + count * type_size;
+            widget w;
+        };
+
+        template <class F> void for_each(U8 type, U32 size, F f)
+        {
+            zScene& s = *globals.sceneCur;
+            U8* it = (U8*)s.baseList[type];
+            U8* end = it + s.baseCount[type] * size;
             while (it != end)
             {
-                f(*(widget*)(it + sizeof(xBase)));
-                it += type_size;
+                widget_chunk* wc = (widget_chunk*)it;
+                f(wc->w);
+                it += size;
             }
         }
 
@@ -507,13 +510,14 @@ namespace xhud
     void widget::clear_motives()
     {
         activity = ACT_NONE;
-        motive_node* node = _motive_top;
-        while (node != NULL)
+        motive_node** itp = &_motive_top;
+        motive_node* it = *itp;
+        while (it != NULL)
         {
-            node->m.finish();
-            _motive_top = node->next;
-            motive_allocator()->free(node);
-            node = _motive_top;
+            it->m.finish();
+            *itp = it->next;
+            motive_allocator()->free(it);
+            it = *itp;
         }
     }
 
@@ -585,9 +589,20 @@ namespace xhud
         void render_one_model(xModelInstance& model, F32 alpha, const basic_rect<F32>& rect,
                               const xVec3& from, const xVec3& to, const xMat4x3& frame)
         {
+#if defined(PS2)
+            // Scale the GS alpha-test reference (TEST_1.AREF) by the widget's
+            // alpha while it draws, then restore it.
+            S32 aref = (skyTest_1 >> 4) & 0xff;
+            skyTest_1 &= ~0xff0;
+            S32 ref = aref * alpha;
+            skyTest_1 |= MAX(0, MIN(ref, 255)) << 4;
+#endif
             xModelSetMaterialAlpha(&model, 255.0f * alpha + 0.5f);
             xModelSetFrame(&model, &frame);
             xModelRender2D(model, rect, from, to);
+#if defined(PS2)
+            skyTest_1 = (skyTest_1 & ~0xff0) | (aref << 4);
+#endif
         }
     }
 
@@ -662,11 +677,12 @@ namespace xhud
     {
         static const float mult[4] = { -1.0f, -1.0f, 1.0f, 1.0f };
 
-        *((U32*)&m.context) += 1;
-        U32 i = *((U32*)&m.context);
+        U32& iter = *(U32*)&m.context;
+        iter++;
+        U32 i = iter;
         if (i > 0x32)
         {
-            m.context = 0;
+            iter = 0;
             *m.value -= m.offset;
             m.offset = 0.0f;
             return false;

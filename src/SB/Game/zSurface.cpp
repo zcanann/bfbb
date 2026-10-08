@@ -221,7 +221,7 @@ U8 zSurfaceOutOfBounds(const xSurface& s)
 {
     if (s.moprops)
     {
-        return ((zSurfaceProps*)s.moprops)->asset->phys_flags >> 4 & 1;
+        return (((zSurfaceProps*)s.moprops)->asset->phys_flags & 0x10) != 0;
     }
     return 0;
 }

@@ -2287,6 +2287,7 @@ U8 tier_queue_allocator::alloc_block()
     return block;
 }
 
+#if !defined(PS2)
 void tier_queue_allocator::free_block(U8 block)
 {
     block_data& data = blocks[block];
@@ -2298,6 +2299,7 @@ void tier_queue_allocator::free_block(U8 block)
 
     head = block;
 }
+#endif
 
 void xFXRibbon::init(const char* group, const char* name)
 {
@@ -2314,6 +2316,7 @@ void xFXRibbon::init(const char* group, const char* name)
     debug_init(group, name);
 }
 
+#if !defined(PS2)
 template <> void tier_queue<xFXRibbon::joint_data>::clear()
 {
     u32 block = get_block(first);
@@ -2328,6 +2331,7 @@ template <> void tier_queue<xFXRibbon::joint_data>::clear()
     _size = 0;
     first = 0;
 }
+#endif
 
 void xFXRibbon::set_default_config()
 {

@@ -28,7 +28,7 @@ void zTaxi_Init(zTaxi* taxi, taxi_asset* asset)
 
     taxi->basset = asset;
     taxi->eventFunc = zTaxiEventCB;
-    if (taxi->linkCount != 0)
+    if (taxi->linkCount > 0)
     {
         taxi->link = (xLinkAsset*)(asset + 1);
     }
@@ -211,15 +211,15 @@ S32 zTaxiEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase*
 {
     switch (toEvent)
     {
-    case eEventSceneBegin:
-        break;
-
     case eEventEnable:
         xBaseEnable(to);
         break;
 
     case eEventDisable:
         xBaseDisable(to);
+        break;
+
+    case eEventSceneBegin:
         break;
     }
     return eEventEnable;

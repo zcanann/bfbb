@@ -73,8 +73,8 @@ S32 zGooIs(xEnt* obj, F32& depth, U32 playerCheck)
     {
         if (obj == zgoo_gps[i].goo_ent)
         {
-            ret = 1;
             depth = zgoo_gps[i].depth = zgoo_gps[i].orig_depth;
+            ret = 1;
 
             break;
         }

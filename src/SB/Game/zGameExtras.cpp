@@ -247,10 +247,18 @@ S32 EGG_check_ExtrasFlags(EGGItem*)
 }
 
 // These defines make the cheat inputs easier to read
+// PS2 retail's tables and masks use Triangle/Circle, and both shoulder pairs.
+#if defined(PS2)
+#define Y XPAD_BUTTON_TRIANGLE
+#define X XPAD_BUTTON_O
+#define L1 (XPAD_BUTTON_L1 | XPAD_BUTTON_L2)
+#define R1 (XPAD_BUTTON_R1 | XPAD_BUTTON_R2)
+#else
 #define Y XPAD_BUTTON_SQUARE
 #define X XPAD_BUTTON_O
 #define L1 XPAD_BUTTON_L1
 #define R1 XPAD_BUTTON_R1
+#endif
 
 // 21 cheats
 // These symbols weren't actually defined as static. They are global in the object file.
@@ -327,10 +335,9 @@ void zGameExtras_Save(xSerial* xser)
 
 void zGameExtras_Load(xSerial* xser)
 {
-    S32 keepers[2];
-    keepers[0] = 0;
-    xser->Read(keepers);
-    g_flg_chEnabled |= keepers[0];
+    S32 keepers = 0;
+    xser->Read(&keepers);
+    g_flg_chEnabled |= keepers;
 }
 
 S32 TestCheat(U32 cheat[])
@@ -411,7 +418,7 @@ void zGameCheats(float dt)
         return;
     }
 
-    AddToCheatPressed(globals.pad0->pressed & 0x60000);
+    AddToCheatPressed(globals.pad0->pressed & (X | Y));
 
     S32 match = 0;
     sCheatTimer = 0.3f;
@@ -482,6 +489,13 @@ void GEC_dfltSound()
         // taken over "SBG01030", while "HB01" is forced into the pool ahead of
         // it. (The unrelated "HB01_FREE_MOVIE_PASS" further down is a genuine
         // separate string and lands later in the pool.)
+#if defined(PS2)
+        // The PS2 pool needs no layout trick: retail rematerialises the plain
+        // literal's address for each of the three hashes.
+        aid_sndList[0] = xStrHash("SBG01030");
+        aid_sndList[1] = xStrHash("SBG01030");
+        aid_sndList[2] = xStrHash("SBG01030");
+#else
         aid_sndList[0] = xStrHash("HB01\0"
                                   "SBG01030" +
                                   5);
@@ -491,6 +505,7 @@ void GEC_dfltSound()
         aid_sndList[2] = xStrHash("HB01\0"
                                   "SBG01030" +
                                   5);
+#endif
         aid_sndList[3] = xStrHash("SBG01017_a");
         aid_sndList[4] = xStrHash("SBG01017_b");
         aid_sndList[5] = xStrHash("SBG01018");
@@ -531,7 +546,7 @@ void GEC_cb_AddShiny()
 void GEC_cb_AddSpatulas()
 {
     zPlayerGlobals* pg = &globals.player;
-    pg->Inv_Spatula = (pg->Inv_Spatula + 10 >= 100) ? 100 : pg->Inv_Spatula + 10;
+    pg->Inv_Spatula = (pg->Inv_Spatula + 10 < 100) ? pg->Inv_Spatula + 10 : 100;
 
     U32 aid_snd = xStrHash("gspatula_sb");
 

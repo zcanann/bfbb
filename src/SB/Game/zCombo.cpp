@@ -33,7 +33,7 @@ static ztextbox* sHideText[5];
 /* .sbss */
 // TODO: comboHUD should be externed in the header, but that does not show up in objdiff
 widget_chunk* comboHUD;
-static zUIFont* sHideUIF;
+static zUIFont* sHideUIF[1];
 static S32 comboPending;
 static S32 comboLastCounter;
 static S32 comboCounter;
@@ -101,6 +101,8 @@ static void fillCombo(zComboReward* r)
 
 void zCombo_Setup()
 {
+    S32 i;
+
     comboCounter = 0;
     comboLastCounter = 0;
     comboPending = 0;
@@ -108,17 +110,16 @@ void zCombo_Setup()
 
     comboHUD = (widget_chunk*)zSceneFindObject(xStrHash("HUD_TEXT_COMBOMESSAGE"));
 
-    widget_chunk* hud = comboHUD;
-
-    if (hud != NULL)
+    if (comboHUD != NULL)
     {
-        hud->w.enable();
+        comboHUD->w.enable();
         comboHUD->w.hide();
     }
 
-    for (int i = 0; i < 16; ++i)
+    for (i = 0; i < 16; i++)
     {
-        comboReward[i].textAsset = (xTextAsset*)xSTFindAsset(xStrHash(comboReward[i].textName), 0);
+        U32 id = xStrHash(comboReward[i].textName);
+        comboReward[i].textAsset = (xTextAsset*)xSTFindAsset(id, 0);
     }
 
     comboReward[0].reward = globals.player.g.ShinyValueCombo0;
@@ -140,7 +141,7 @@ void zCombo_Setup()
 
     comboMaxTime = globals.player.g.ComboTimer;
 
-    for (int i = 0; i < 16; ++i)
+    for (i = 0; i < 16; i++)
     {
         fillCombo(&comboReward[i]);
     }
@@ -150,7 +151,7 @@ void zCombo_Setup()
     sHideText[2] = (ztextbox*)zSceneFindObject(xStrHash("MESSAGE_02_TEXTBOX"));
     sHideText[3] = (ztextbox*)zSceneFindObject(xStrHash("PROMPT_TEXTBOX"));
     sHideText[4] = (ztextbox*)zSceneFindObject(xStrHash("QUIT_TEXTBOX"));
-    sHideUIF = (zUIFont*)zSceneFindObject(xStrHash("MNU4 NPCTALK"));
+    sHideUIF[0] = (zUIFont*)zSceneFindObject(xStrHash("MNU4 NPCTALK"));
 }
 
 void zCombo_Add(S32 points)
@@ -222,9 +223,13 @@ void zCombo_Update(F32 dt)
         }
     }
 
-    if (sHideUIF != NULL && xEntIsVisible(sHideUIF))
+    for (S32 i = 0; i < 1; i++)
     {
-        comboHUD->w.text[0] = '\0';
+        if (sHideUIF[i] != NULL && xEntIsVisible(sHideUIF[i]))
+        {
+            comboHUD->w.text[0] = '\0';
+            break;
+        }
     }
 
     F32 timer = comboTimer;

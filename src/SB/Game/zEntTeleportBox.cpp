@@ -668,7 +668,7 @@ U32 zEntTeleportBox_isOpen(_zEntTeleportBox* ent)
 
 U32 zEntTeleportBox_isClosed(_zEntTeleportBox* ent)
 {
-    return zEntTeleportBox_isOpen(ent) == 0;
+    return !zEntTeleportBox_isOpen(ent);
 }
 
 S32 zEntTeleportBox_playerIn()

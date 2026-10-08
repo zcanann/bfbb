@@ -343,8 +343,8 @@ namespace
 
     U32 play_sound(S32 which, const xVec3* pos, F32 volume)
     {
-        const sound_asset& asset = sound_assets[which];
         const sound_data_type& data = sound_data[which];
+        const sound_asset& asset = sound_assets[which];
         const sound_property& snd = tweak.sound[which];
 
         if (asset.flags & 1)
@@ -600,49 +600,47 @@ void zNPCDutchman::Process(xScene* xscn, F32 dt)
     if (!flag.fighting)
     {
         zNPCCommon::Process(xscn, dt);
+        return;
     }
-    else
+
+    delay += dt;
+    psy_instinct->Timestep(dt, NULL);
+
+    if (!flag.fighting)
     {
-        delay += dt;
-        psy_instinct->Timestep(dt, NULL);
-
-        if (!flag.fighting)
-        {
-            zNPCCommon::Process(xscn, dt);
-        }
-        else
-        {
-            if (flag.face_player)
-            {
-                const xVec3& player_loc = *(const xVec3*)&globals.player.ent.model->Mat->pos;
-                const xVec3& center = get_center();
-
-                turn.dir.assign(player_loc.x - center.x, player_loc.z - center.z);
-                turn.dir.normalize();
-            }
-
-            update_turn(dt);
-            update_move(dt);
-            update_animation(dt);
-            update_flames(dt);
-            update_eye_glow(dt);
-            update_hand_trail(dt);
-            update_fade(dt);
-            update_slime(dt);
-
-            if (check_player_damage())
-            {
-                zEntPlayer_Damage((xBase*)this, 1);
-            }
-
-            update_camera(dt);
-            refresh_reticle();
-
-            flg_xtrarend |= 1;
-
-            zNPCCommon::Process(xscn, dt);
-        }
+        zNPCCommon::Process(xscn, dt);
+        return;
     }
+
+    if (flag.face_player)
+    {
+        const xVec3& player_loc = *(const xVec3*)&globals.player.ent.model->Mat->pos;
+        const xVec3& center = get_center();
+
+        turn.dir.assign(player_loc.x - center.x, player_loc.z - center.z);
+        turn.dir.normalize();
+    }
+
+    update_turn(dt);
+    update_move(dt);
+    update_animation(dt);
+    update_flames(dt);
+    update_eye_glow(dt);
+    update_hand_trail(dt);
+    update_fade(dt);
+    update_slime(dt);
+
+    if (check_player_damage())
+    {
+        zEntPlayer_Damage((xBase*)this, 1);
+    }
+
+    update_camera(dt);
+    refresh_reticle();
+
+    flg_xtrarend |= 1;
+
+    zNPCCommon::Process(xscn, dt);
 }
 
 S32 zNPCDutchman::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
@@ -669,6 +667,10 @@ void zNPCDutchman::Render()
     zNPCDutchman::render_debug();
 }
 
+#if defined(PS2)
+unsigned char PS2_MaskFrameBuffer_AlphaCompare(unsigned int mask, unsigned char alphaCompare);
+#endif
+
 void zNPCDutchman::RenderExtra()
 {
     S32 oldzwrite;
@@ -686,14 +688,22 @@ void zNPCDutchman::RenderExtra()
     RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
     RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDONE);
 
+#if defined(PS2)
+    U8 oldcmp = PS2_MaskFrameBuffer_AlphaCompare(0xFFFFFFFF, 1);
+#else
     iDrawSetFBMSK(-1);
+#endif
 
     for (xModelInstance* m = model; m != NULL; m = m->Next)
     {
         xModelRenderSingle(m);
     }
 
+#if defined(PS2)
+    PS2_MaskFrameBuffer_AlphaCompare(0, oldcmp);
+#else
     iDrawSetFBMSK(0);
+#endif
 
     for (xModelInstance* m = model; m != NULL; m = m->Next)
     {
@@ -2106,6 +2116,9 @@ void zNPCDutchman::update_fade(F32 dt)
         }
         break;
 
+    case FADE_TELEPORT:
+        break;
+
     case FADE_COALESCE:
         fade.time += dt;
 
@@ -2144,7 +2157,7 @@ void zNPCDutchman::update_slime(F32 dt)
         if (slice.age > tweak.damage.slime_time)
         {
             slime.slices.erase(it, slime.slices.end());
-            return;
+            break;
         }
 
         ++it;
@@ -2406,12 +2419,11 @@ void zNPCDutchman::stop_beam()
 void zNPCDutchman::set_alpha(F32 value)
 {
     alpha = value;
-
-    F32 model_alpha = value * tweak.alpha;
+    value *= tweak.alpha;
 
     for (xModelInstance* m = model; m != NULL; m = m->Next)
     {
-        if (model_alpha < 1.0f)
+        if (value < 1.0f)
         {
             m->Flags |= 0x4000;
         }
@@ -2420,7 +2432,7 @@ void zNPCDutchman::set_alpha(F32 value)
             m->Flags &= 0xbfff;
         }
 
-        m->Alpha = model_alpha;
+        m->Alpha = value;
     }
 }
 
@@ -2565,14 +2577,14 @@ U8 zNPCDutchman::check_player_damage()
 
 xVec3 zNPCDutchman::get_eye_loc(S32 index) const
 {
-    static const S32 lookup[] = { 10, 13 };
+    static const U32 lookup[] = { 10, 13 };
 
     return xModelGetBoneLocation(*model, lookup[index]);
 }
 
 xVec3 zNPCDutchman::get_hand_loc(S32 index) const
 {
-    static const S32 lookup[] = { 32, 40 };
+    static const U32 lookup[] = { 32, 40 };
 
     return xModelGetBoneLocation(*model, lookup[index]);
 }
@@ -2823,10 +2835,9 @@ namespace
 
     RxObjSpace3DVertex* render_beam(RxObjSpace3DVertex* vert, const zNPCDutchman::beam_info& beam)
     {
-        U32 segments = beam.segments;
-        U8 alpha = (S32)(0.5f + 255.0f * beam.alpha / segments);
+        U8 alpha = (U16)(0.5f + 255.0f * beam.alpha / beam.segments);
 
-        for (U32 i = 0; i < segments; i++)
+        for (U32 i = 0; i < beam.segments; i++)
         {
             vert = render_beam(vert, beam, i, alpha);
         }
@@ -3193,14 +3204,13 @@ void zNPCGoalDutchmanBeam::update_unfocus(F32 dt)
 
         kill_sound(SOUND_BEAM, beam[0].impact_sound);
         kill_sound(SOUND_BEAM, beam[1].impact_sound);
+        return;
     }
-    else
-    {
-        owner.beam[0].alpha = frac2;
-        owner.beam[1].alpha = frac2;
-        set_volume(SOUND_BEAM, beam[0].impact_sound, owner.beam[0].alpha);
-        set_volume(SOUND_BEAM, beam[1].impact_sound, owner.beam[1].alpha);
-    }
+
+    owner.beam[0].alpha = frac2;
+    owner.beam[1].alpha = frac2;
+    set_volume(SOUND_BEAM, beam[0].impact_sound, owner.beam[0].alpha);
+    set_volume(SOUND_BEAM, beam[1].impact_sound, owner.beam[1].alpha);
 }
 
 void zNPCGoalDutchmanBeam::aim_beam(beam_data& data, const xVec3& target, F32 wave_offset) const
@@ -3251,7 +3261,7 @@ void zNPCGoalDutchmanBeam::update_beam(F32 dt, beam_data& beam, S32 which)
     xAccelMove(dist, vel, cfg.accel, dt, cfg.end_dist, cfg.max_vel);
 
     F32 diff = dist - beam.dist;
-    F32 ddt = dt;
+    F32 ddt;
 
     if (diff >= 1.5f * tweak.beam.segment_width)
     {
@@ -3273,6 +3283,10 @@ void zNPCGoalDutchmanBeam::update_beam(F32 dt, beam_data& beam, S32 which)
             refresh_beam(which);
             add_effects(which, ddt);
         }
+    }
+    else
+    {
+        ddt = dt;
     }
 
     beam.dist = dist;

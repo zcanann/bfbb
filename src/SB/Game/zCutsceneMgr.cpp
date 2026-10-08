@@ -104,8 +104,8 @@ void zCutsceneMgrInit(void* b, void* tasset)
 
 void zCutsceneMgrInit(xBase* b, xCutsceneMgrAsset* tasset)
 {
+    xBaseInit(b, tasset);
     zCutsceneMgr* mgr = (zCutsceneMgr*)b;
-    xBaseInit(mgr, tasset);
     mgr->eventFunc = zCutsceneMgrEventCB;
     mgr->tasset = tasset;
     mgr->csn = NULL;
@@ -185,7 +185,7 @@ RpAtomic* HackAlphaCB(RpAtomic* atomic, void* data)
 
 void zCutSceneNamesTable_clearAll()
 {
-    for (int i = 0; i < 14; i++)
+    for (int i = 0; i < sizeof(zCutSceneNamesTable) / sizeof(zCutSceneNamesTable[0]); i++)
     {
         zCutSceneNamesTable[i].played = 0;
     }
