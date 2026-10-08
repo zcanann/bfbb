@@ -239,12 +239,11 @@ F32 xAngleClampFast(F32 a)
 
     if (a < 0.0f)
     {
-        return a + rad360;
+        a += rad360;
     }
-
-    if (a >= rad360)
+    else if (a >= rad360)
     {
-        return a - rad360;
+        a -= rad360;
     }
 
     return a;
@@ -273,6 +272,93 @@ F32 xDangleClamp(F32 a)
     return rem;
 }
 
+#if defined(PS2)
+#define XMATH_SIGN(f) (*(U32*)&(f) & 0x80000000)
+
+void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
+{
+    F32 offset;
+    F32 t1;
+    F32 t2;
+    F32 oldv;
+    F32 dv;
+    F32 newv;
+    F32 adx;
+    F32 diff;
+    F32 dx;
+
+    offset = endx - x;
+
+    if ((F32)xMathAbs(v) < 0.001f || XMATH_SIGN(offset) != XMATH_SIGN(v))
+    {
+        t1 = 1e38f;
+    }
+    else
+    {
+        t1 = offset / v;
+    }
+
+    t2 = (F32)xMathAbs(v / a);
+    if (t1 < t2)
+    {
+        a *= -1.0f;
+    }
+    if (offset < 0.0f)
+    {
+        a *= -1.0f;
+    }
+
+    oldv = v;
+    dv = a * dt;
+    newv = v + dv;
+
+    if ((F32)xMathAbs(newv) <= maxv)
+    {
+        v = newv;
+        adx = 0.5f * dv * dt;
+    }
+    else if ((F32)xMathAbs(v) <= maxv)
+    {
+        v = range_limit(newv, -maxv, maxv);
+        if (oldv != v)
+        {
+            diff = v - oldv;
+            adx = (0.5f * diff * diff) / a;
+        }
+        else
+        {
+            adx = 0.0f;
+        }
+    }
+    else if (XMATH_SIGN(newv) != XMATH_SIGN(dv))
+    {
+        v = newv;
+        adx = 0.5f * dv * dt;
+    }
+    else
+    {
+        adx = 0.0f;
+    }
+
+    dx = adx + oldv * dt;
+
+    if (t1 > t2)
+    {
+        if (XMATH_SIGN(dx) == XMATH_SIGN(offset) && (F32)xMathAbs(dx) > (F32)xMathAbs(offset))
+        {
+            dx = offset;
+            v = 0.0f;
+        }
+    }
+    else if (XMATH_SIGN(dx) != XMATH_SIGN(offset))
+    {
+        dx = offset;
+        v = 0.0f;
+    }
+
+    x += dx;
+}
+#else
 void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
 {
     // Todo: These variable names aren't all right.
@@ -449,6 +535,7 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
     }
     x += var_f2;
 }
+#endif
 
 F32 xAccelMoveTime(F32 dx, F32 a, F32, F32 maxv)
 {
@@ -467,6 +554,41 @@ F32 xAccelMoveTime(F32 dx, F32 a, F32, F32 maxv)
     return 2.0f * dx;
 }
 
+#if defined(PS2)
+// Copy the sign of src onto dst through the float bit patterns.
+#define XMATH_COPYSIGN(dst, src)                                                                   \
+    {                                                                                              \
+        U32 bn = *(U32*)&(src) & 0x80000000;                                                       \
+        U32 bp = *(U32*)&(dst) & (*(U32*)&(src) | 0x7fffffff);                                     \
+        U32 aa = bn | bp;                                                                          \
+        (dst) = *(F32*)&aa;                                                                        \
+    }
+
+void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 maxv)
+{
+    F32 diff;
+    F32 dv;
+
+    if ((F32)xMathAbs(v) > (F32)xMathAbs(maxv))
+    {
+        XMATH_COPYSIGN(a, v);
+        *(U32*)&a ^= 0x80000000;
+    }
+
+    XMATH_COPYSIGN(maxv, a);
+
+    dv = a * dt;
+    diff = maxv - v;
+    if (xabs(diff) < xabs(dv))
+    {
+        x += (v * dt) + ((0.5f * diff * diff) / a);
+        v = maxv;
+        return;
+    }
+    x += (dt * (0.5f * a * dt)) + (v * dt);
+    v += dv;
+}
+#else
 void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 maxv)
 {
     U32 bn; // r10
@@ -520,7 +642,37 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 maxv)
 #endif
     v += dv;
 }
+#endif
 
+#if defined(PS2)
+void xAccelStop(F32& x, F32& v, F32 a, F32 dt)
+{
+    U32 aa;
+    F32 oldv;
+
+    if (!(v >= -0.00001f) || !(v <= 0.00001f))
+    {
+        aa = (*(U32*)&v & 0x80000000) | (*(U32*)&a & (*(U32*)&v | 0x7fffffff));
+        a = *(F32*)&aa;
+        *(U32*)&a ^= 0x80000000;
+
+        oldv = v;
+        v += a * dt;
+
+        if ((*(U32*)&oldv & 0x80000000) == (*(U32*)&v & 0x80000000))
+        {
+            x += (a * (0.5f * dt * dt)) + (oldv * dt);
+            return;
+        }
+
+        if (!(a >= -0.00001f) || !(a <= 0.00001f))
+        {
+            x -= (0.5f * oldv * oldv) / a;
+        }
+        v = 0.0f;
+    }
+}
+#else
 void xAccelStop(F32& x, F32& v, F32 a, F32 dt)
 {
     S32 aa; // From DWARF, currently unused.
@@ -587,6 +739,7 @@ void xAccelStop(F32& x, F32& v, F32 a, F32 dt)
         v = 0.0f;
     }
 }
+#endif
 
 F32 xFuncPiece_Eval(xFuncPiece* func, F32 param, xFuncPiece** iterator)
 {

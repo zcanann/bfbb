@@ -105,8 +105,8 @@ void zLasso_SetGuide(xEnt* ent, xAnimState* lassoAnim)
         return;
     }
 
-    U32 guideListIdx = 0;
-    for (U32 i = 0; i < sNumGuideLists; i++, guideListIdx++)
+    U32 i;
+    for (i = 0; i < sNumGuideLists; i++)
     {
         if (sGuideList[i].target == ent)
         {
@@ -114,20 +114,20 @@ void zLasso_SetGuide(xEnt* ent, xAnimState* lassoAnim)
         }
     }
 
-    if (guideListIdx < sNumGuideLists)
+    if (i < sNumGuideLists)
     {
-        U32 guideIdx = 0;
-        for (U32 i = 0; i < sGuideList[guideListIdx].numGuides; i++, guideIdx++)
+        U32 j;
+        for (j = 0; j < sGuideList[i].numGuides; j++)
         {
-            if (sGuideList[guideListIdx].guide[i].lassoAnim == lassoAnim)
+            if (sGuideList[i].guide[j].lassoAnim == lassoAnim)
             {
                 break;
             }
         }
 
-        if (guideIdx < sGuideList[guideListIdx].numGuides)
+        if (j < sGuideList[i].numGuides)
         {
-            sCurrentGuide = &sGuideList[guideListIdx].guide[guideIdx];
+            sCurrentGuide = &sGuideList[i].guide[j];
         }
     }
 
@@ -142,20 +142,20 @@ void zLasso_InterpToGuide(zLasso* lasso)
     xVec3 rad1;
     xVec3 rad2;
 
+    RpGeometry* geom;
     RwV3d* v;
     S32 numVerts;
 
     if (sCurrentGuide != NULL)
     {
-        numVerts = sCurrentGuide->poly->Data->geometry->numTriangles;
-        v = sCurrentGuide->poly->Data->geometry->morphTarget->verts;
+        geom = sCurrentGuide->poly->Data->geometry;
+        v = geom->morphTarget->verts;
+        numVerts = geom->numTriangles;
         xVec3Init(&lasso->tgCenter, 0.0f, 0.0f, 0.0f);
 
-        S32 vertMapIdx = 0;
         for (S32 i = 0; i < numVerts; i++)
         {
-            xVec3AddTo(&lasso->tgCenter, (xVec3*)v + sCurrentGuide->vertMap[vertMapIdx]);
-            vertMapIdx += 1;
+            xVec3AddTo(&lasso->tgCenter, (xVec3*)v + sCurrentGuide->vertMap[i]);
         }
 
         xVec3SMul(&lasso->tgCenter, &lasso->tgCenter, 1.0f / (f32)numVerts);
@@ -816,7 +816,7 @@ void zLasso_ResetTimer(zLasso* lasso, F32 interpTime)
 
 static void fizzicalRadius(zLasso* lasso, F32 dt, xVec3* newPoint)
 {
-    lasso->crRadius = -((2.0f * (0.75f - lasso->crSlack) * dt) - lasso->crRadius);
+    lasso->crRadius -= 2.0f * (0.75f - lasso->crSlack) * dt;
     if (lasso->crRadius < 0.0f)
     {
         lasso->crRadius = 0.0f;

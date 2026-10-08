@@ -979,7 +979,7 @@ void xEntMotionDebugCB();
 // Non-matching: scheduling
 void xEntMotionDebugInit(U16 num_xems)
 {
-    if (num_xems != 0)
+    if (num_xems > 0)
     {
         xDebugModeAdd("DBG_XENTMOTION", xEntMotionDebugCB);
         dbg_num = 0;
@@ -1280,8 +1280,7 @@ static void xEntMotionDebugDraw(const xEntMotion* xem)
                 }
                 for (U16 jdx = 0; jdx < xMovePointGetNumPoints(omp); jdx++)
                 {
-                    xMovePoint* pmp = xMovePointGetPoint(omp, jdx);
-                    xDrawLine(xMovePointGetPos(omp), xMovePointGetPos(pmp));
+                    xDrawLine(xMovePointGetPos(omp), xMovePointGetPos(xMovePointGetPoint(omp, jdx)));
                 }
             }
         }
@@ -1302,6 +1301,8 @@ static void xEntMotionDebugDraw(const xEntMotion* xem)
             xDrawSetColor(g_NEON_RED);
             xDrawLine(&xem->pen.top, xEntGetPos(xem->owner));
         }
+        break;
+    case k_XENTMOTIONTYPE_SPLINE:
         break;
     }
 }

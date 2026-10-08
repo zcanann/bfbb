@@ -291,10 +291,7 @@ void zEntDestructObj_Hit(zEntDestructObj* ent, unsigned int mask)
 
 U32 zEntDestructObj_GetHit(zEntDestructObj* ent, unsigned int mask)
 {
-    s32 hitMask;
-
-    hitMask = ent->dasset->dflags & mask;
-    return (u32)(-hitMask | hitMask) >> 0x1FU;
+    return (ent->dasset->dflags & mask) != 0;
 }
 
 void zEntDestructObj_Save(zEntDestructObj* ent, xSerial* s)

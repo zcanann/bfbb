@@ -293,4 +293,17 @@ enum RpGeometryFlag
     rpGEOMETRYFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
 
+// RenderWare light flags and flag accessors.
+enum RpLightFlag
+{
+    rpLIGHTLIGHTATOMICS = 0x01,
+    rpLIGHTLIGHTWORLD = 0x02,
+    rpLIGHTFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+
+#define RpLightSetFlagsMacro(_light, _flags) ((((_light)->object.object.flags) = (RwUInt8)(_flags)), (_light))
+#define RpLightGetFlagsMacro(_light) ((_light)->object.object.flags)
+#define RpLightSetFlags(_light, _flags) RpLightSetFlagsMacro(_light, _flags)
+#define RpLightGetFlags(_light) RpLightGetFlagsMacro(_light)
+
 #endif

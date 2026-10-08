@@ -496,7 +496,9 @@ static S32 gloop_ct;
 static F32 gloop_time_secs;
 static F32 gwait_time_secs;
 static F32 gloop_net_time_secs;
+#if !defined(PS2)
 U8 sHackSmoothedUpdate;
+#endif
 
 static S32 zGameLoopContinue();
 static void zGameUpdateMode();
@@ -535,6 +537,9 @@ void zGameLoop()
         sTimeCurrent = iTimeGet();
         sTimeElapsed = iTimeDiffSec(sTimeLast, sTimeCurrent);
 
+#if !defined(PS2)
+        // GameCube-only frame smoothing; PS2 retail (and its DWARF) has neither the
+        // flag nor this block.
         if (sHackSmoothedUpdate)
         {
             if (sTimeElapsed > 0.1f)
@@ -568,6 +573,7 @@ void zGameLoop()
             total /= sAverageRange;
             sTimeElapsed = total;
         }
+#endif
 
         if (globals.QuarterSpeed)
         {
@@ -846,6 +852,58 @@ void zGamePause()
     }
 }
 
+#if defined(PS2)
+void zGamePauseIfPossible()
+{
+    if (zGameGetOstrich() != eGameOstrich_InScene)
+    {
+        return;
+    }
+
+    if (zMenuRunning())
+    {
+        return;
+    }
+
+    if (zGameModeGet() == eGameMode_Save || zGameModeGet() == eGameMode_Load)
+    {
+        return;
+    }
+
+    if (gBusStopIsRunning)
+    {
+        return;
+    }
+
+    if (!oob_state::IsPlayerInControl())
+    {
+        return;
+    }
+
+    if (globals.sceneCur->sceneID == 'PG12')
+    {
+        return;
+    }
+
+    if (globals.player.ControlOff)
+    {
+        if (globals.player.ControlOff & CONTROL_OWNER_TALK_BOX)
+        {
+            zGameStall();
+        }
+
+        if ((globals.player.ControlOff & CONTROL_OWNER_EVENT) &&
+            globals.sceneCur->sceneID == 'HB10')
+        {
+            zGameStall();
+        }
+        return;
+    }
+
+    zGamePause();
+}
+#endif
+
 void zGameStall()
 {
     if (!zGameIsPaused())
@@ -1117,6 +1175,22 @@ static void zGameUpdateMode()
         scene = globals.sceneCur;
         passet = scene->pendingPortal->passet;
 
+#if defined(PS2)
+        // Little-endian asset IDs: compose the scene ID from its bytes, and compare
+        // the stored IDs directly.
+        id = (char*)&passet->sceneID;
+        if (g_hiphopReloadHIP != 0)
+        {
+            nextSceneID = id[0] | (id[1] << 8) | (id[2] << 16) | (id[3] << 24);
+        }
+        else
+        {
+            nextSceneID = (id[0] << 24) | (id[1] << 16) | (id[2] << 8) | id[3];
+        }
+
+        if ((g_hiphopReloadHIP != 0) || (g_hiphopForcePortal != 0) ||
+            (passet->sceneID != scene->sceneID))
+#else
         // c/d used to be crossed over in the two expressions below, which made
         // nextSceneID come out as [+3][+1][+2][+0] - neither the sceneID nor its
         // byteswap.  The target's `or r31, r5, r3` / `or r3, r7, r0` pin it:
@@ -1134,6 +1208,7 @@ static void zGameUpdateMode()
         x = c | y;
 
         if ((g_hiphopReloadHIP != 0) || ((g_hiphopForcePortal != 0) || (x != scene->sceneID)))
+#endif
         {
             sPlayerMarkerStartID = passet->assetMarkerID;
             sPlayerMarkerStartCamID = passet->assetCameraID;
@@ -1413,7 +1488,7 @@ void zGameScreenTransitionUpdate(F32 percentComplete, char* msg, U8* rgba)
         if ((tex != NULL) && (ras = (RwRaster*)tex->raster, ras != NULL))
         {
 #if defined(PS2)
-            recipCamZ = 1.0f / RwCameraGetNearClipPlane(sGameScreenTransCam);
+            recipCamZ = 1.0f / sGameScreenTransCam->farPlane;
 #else
             RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)0);
 #endif

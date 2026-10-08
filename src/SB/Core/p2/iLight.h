@@ -27,4 +27,14 @@ void iLightSetPos(iLight* light, xVec3* pos);
 void iLightDestroy(iLight* light);
 void iLightEnv(iLight* light, S32 env);
 
+#define ILIGHT_TYPE_NONE 0
+#define ILIGHT_TYPE_POINT 1
+#define ILIGHT_TYPE_SPOT 2
+#define ILIGHT_TYPE_SPOTSOFT 3
+
+#define ILIGHT_ENV_NONE 0
+#define ILIGHT_ENV_ATOMIC 1
+#define ILIGHT_ENV_WORLD 2
+#define ILIGHT_ENV_ATOMICWORLD 3
+
 #endif

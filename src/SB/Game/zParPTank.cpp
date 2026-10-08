@@ -367,7 +367,7 @@ static void zParPTankBubbleUpdate(zParPTank* zp, float dt)
         uv = (RwTexCoords*)uvlock.data;
         if (xp->life > 0.21875f)
         {
-            uv[0].u = -(0.125f * (U32)((xp->life * 8.0f) / 1.75f) - 1.0f);
+            uv[0].u = 1.0f - 0.125f * (U32)((xp->life * 8.0f) / 1.75f);
             uv[1].u = 0.125f + uv[0].u;
         }
 

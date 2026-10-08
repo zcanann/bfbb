@@ -152,6 +152,10 @@ char* xUtil_idtag2string(U32 srctag, S32 bufidx)
         strptr[2] = isprint(uc[2]) ? uc[2] : '?';
         strptr[3] = isprint(uc[3]) ? uc[3] : '?';
         break;
+    case 0:
+    case 1:
+    case 2:
+    case 3:
     case 6:
     default:
         strptr[0] = isprint(uc[3]) ? uc[3] : '?';
@@ -189,7 +193,7 @@ U32 xUtil_crc_init()
 
             for (j = 0; j < 8; j++)
             {
-                if (crc_accum & 0x80000000)
+                if (crc_accum & 0x80000000L)
                 {
                     crc_accum = (crc_accum << 1) ^ 0x04C11DB7;
                 }

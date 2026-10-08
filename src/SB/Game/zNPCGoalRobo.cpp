@@ -699,7 +699,14 @@ S32 zNPCGoalAlertFodder::CheckSpot(F32 dt)
     {
         dir_plyr *= 1.0f / dst_plyr;
         dot_plyr = xVec3Dot(&dir_plyr, NPCC_faceDir(npc));
-        plyrInSpot = (dot_plyr < 0.86f) ? 0 : 1;
+        if (dot_plyr < 0.86f)
+        {
+            plyrInSpot = 0;
+        }
+        else
+        {
+            plyrInSpot = 1;
+        }
     }
     if (npc->DBG_IsNormLog(eNPCDCAT_Thirteen, 2) != 0)
     {
@@ -1571,8 +1578,8 @@ S32 zNPCGoalAlertChomper::Process(en_trantype* trantype, F32 dt, void* updCtxt, 
         if ((CheckSpot(dt) != 0) && !(globals.player.DamageTimer > 0.0f))
         {
             alertchomp = CHOMPER_ALERT_EVADE;
-            nextgoal = NPC_GOAL_ATTACKCHOMPER;
             *trantype = GOAL_TRAN_PUSH;
+            nextgoal = NPC_GOAL_ATTACKCHOMPER;
         }
         break;
     case CHOMPER_ALERT_EVADE:
@@ -1801,7 +1808,14 @@ S32 zNPCGoalAlertChomper::CheckSpot(F32 dt)
     {
         dir_plyr *= 1.0f / dst_plyr;
         dot_plyr = xVec3Dot(&dir_plyr, NPCC_faceDir(npc));
-        plyrInSpot = (dot_plyr < 0.86f) ? 0 : 1;
+        if (dot_plyr < 0.86f)
+        {
+            plyrInSpot = 0;
+        }
+        else
+        {
+            plyrInSpot = 1;
+        }
     }
     return plyrInSpot;
 }
@@ -3469,8 +3483,8 @@ S32 zNPCGoalAlertChuck::Process(en_trantype* trantype, F32 dt, void* updCtxt, xS
     {
     case CHUCK_ALERT_NOTICE:
         alertchuk = CHUCK_ALERT_BEGIN;
-        nextgoal = NPC_GOAL_NOTICE;
         *trantype = GOAL_TRAN_PUSH;
+        nextgoal = NPC_GOAL_NOTICE;
         break;
     case CHUCK_ALERT_ARENA:
         GetInArena(dt);
@@ -3498,8 +3512,8 @@ S32 zNPCGoalAlertChuck::Process(en_trantype* trantype, F32 dt, void* updCtxt, xS
         if (((tmr_reload < 0.0f) ? 1 : 0) && !(globals.player.DamageTimer > 0.0f))
         {
             alertchuk = CHUCK_ALERT_DIDTHROW;
-            nextgoal = NPC_GOAL_ATTACKCHUCK;
             *trantype = GOAL_TRAN_PUSH;
+            nextgoal = NPC_GOAL_ATTACKCHUCK;
         }
         else
         {
@@ -3799,7 +3813,7 @@ S32 zNPCGoalAlertTubelet::MoveToHome(F32 dt)
     }
     else
     {
-        if (dst_surplus > (rad + 2.0f))
+        if ((dst_surplus > (rad + 2.0f)) ? 1 : 0)
         {
             npc->ThrottleAdjust(dt, 7.2f, 5.5f);
         }
@@ -6385,47 +6399,47 @@ S32 zNPCGoalDamage::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene
 
     if (npc->SelfType() == NPC_TYPE_TUBELET)
     {
-        *trantype = GOAL_TRAN_PUSH;
         nextgoal = NPC_GOAL_DEFLATE;
+        *trantype = GOAL_TRAN_PUSH;
     }
     else if (flg_info & 0x10)
     {
         if (flg_howtodie & 0x1)
         {
             npc->Vibrate(npc->XYZDstSqToPlayer(NULL), ds2_viberange);
-            *trantype = GOAL_TRAN_SET;
             nextgoal = NPC_GOAL_AFTERLIFE;
+            *trantype = GOAL_TRAN_SET;
         }
         else if (flg_howtodie & 0x8)
         {
             npc->Vibrate(npc->XYZDstSqToPlayer(NULL), ds2_viberange);
-            *trantype = GOAL_TRAN_SET;
             nextgoal = NPC_GOAL_AFTERLIFE;
+            *trantype = GOAL_TRAN_SET;
         }
         else if (flg_howtodie & 0x4)
         {
             npc->Vibrate(NPC_VIBE_NORM, -1.0f);
-            *trantype = GOAL_TRAN_PUSH;
             nextgoal = NPC_GOAL_BASHED;
+            *trantype = GOAL_TRAN_PUSH;
         }
         else if (flg_howtodie & 0x2)
         {
             npc->Vibrate(NPC_VIBE_NORM, -1.0f);
-            *trantype = GOAL_TRAN_PUSH;
             nextgoal = NPC_GOAL_KNOCK;
+            *trantype = GOAL_TRAN_PUSH;
         }
         else
         {
             npc->Vibrate(npc->XYZDstSqToPlayer(NULL), ds2_viberange);
-            *trantype = GOAL_TRAN_SET;
             nextgoal = NPC_GOAL_AFTERLIFE;
+            *trantype = GOAL_TRAN_SET;
         }
     }
     else
     {
         npc->Vibrate(npc->XYZDstSqToPlayer(NULL), ds2_viberange);
-        *trantype = GOAL_TRAN_SET;
         nextgoal = NPC_GOAL_AFTERLIFE;
+        *trantype = GOAL_TRAN_SET;
     }
 
     flg_info = 0;
@@ -6472,8 +6486,8 @@ S32 zNPCGoalDamage::InputInfo(NPCDamageInfo* info)
         break;
     case DMGTYP_SIDE:
     case DMGTYP_HITBYTOSS:
-    case DMGTYP_BOULDER:
     case DMGTYP_BUBBOWL:
+    case DMGTYP_BOULDER:
     {
         flg_howtodie = 2;
         npc->InflictPain(-1, 0);
@@ -7321,7 +7335,24 @@ void zNPCGoalRespawn::KickFromTheNest()
     npc->nav_lead = nav_preserveDest;
 
     npc->arena.SetHome(npc, nav_preserveCurr);
-    npc->psy_instinct->GoalSet(NPC_GOAL_IDLE, 1);
+
+#if defined(PS2)
+    // The PS2 build still carries this tuning switch (DWARF: static goDirectToAlert,
+    // 0.0f in .data); the GameCube function has no trace of it.
+    static F32 goDirectToAlert = 0.0f;
+    if (goDirectToAlert)
+    {
+        npc->psy_instinct->GoalSet(NPC_GOAL_ALERT, 1);
+        if (!npc->arena.IsReady())
+        {
+            npc->arena.SetHome(npc, &pos_poofHere, 3.33f);
+        }
+    }
+    else
+#endif
+    {
+        npc->psy_instinct->GoalSet(NPC_GOAL_IDLE, 1);
+    }
 }
 
 S32 zNPCGoalRespawn::InputInfo(NPCSpawnInfo* info)
@@ -7634,7 +7665,7 @@ S32 zNPCGoalTubeDuckling::DuckStackInterp(F32 dt)
 
     if (xVec3Dot(NPCC_faceDir(pete), NPCC_faceDir(npc)) < 0.9f)
     {
-        stillbusy = 1;
+        stillbusy++;
     }
 
     xVec3 pos_desire;

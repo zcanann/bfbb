@@ -1185,7 +1185,9 @@ void zSceneInit(U32 theSceneID, S32 reloadInProgress)
     xClimateInit(&gClimate);
     zSceneInitEnvironmentalSoundEffect();
 
+#if !defined(PS2)
     sHackSmoothedUpdate = 1;
+#endif
 
     FootstepHackSceneEnter();
     zEntPickup_SceneEnter();
@@ -1311,6 +1313,7 @@ void zSceneUpdateSFXWidgets()
                                         s->baseCount[eBaseTypeSFX]);
 }
 
+#if !defined(PS2)
 static void HackSwapIt(char* buf, S32 size)
 {
     char* end = &buf[size - 1];
@@ -1325,6 +1328,7 @@ static void HackSwapIt(char* buf, S32 size)
         end--;
     }
 }
+#endif
 
 void zSceneSwitch(_zPortal* p, S32 forceSameScene)
 {
@@ -1332,13 +1336,23 @@ void zSceneSwitch(_zPortal* p, S32 forceSameScene)
 
     xPortalAsset* passet = globals.sceneCur->pendingPortal->passet;
 
-    gLevelChanged = (zSceneLeavingLevel() != 0);
+    if (zSceneLeavingLevel())
+    {
+        gLevelChanged = 1;
+    }
+    else
+    {
+        gLevelChanged = 0;
+    }
 
+#if !defined(PS2)
+    // Byte-swap an ID that was stored little-endian. PS2 retail has no such check.
     if (((char*)&passet->sceneID)[3] < '0' || ((char*)&passet->sceneID)[3] > '9')
     {
         char* id = (char*)&passet->sceneID;
         HackSwapIt(id, 4);
     }
+#endif
 
     U32 nextSceneID = (((char*)&passet->sceneID)[0] << 24) | (((char*)&passet->sceneID)[1] << 16) |
                       (((char*)&passet->sceneID)[2] << 8) | ((char*)&passet->sceneID)[3];
@@ -1492,6 +1506,10 @@ void zSceneSave(zScene* ent, xSerial* s)
                 ((xNPCBasic*)b)->Save(s);
                 break;
             }
+            case eBaseTypePlayer:
+            {
+                break;
+            }
             case eBaseTypePickup:
             {
                 zEntPickup_Save((zEntPickup*)b, s);
@@ -1522,9 +1540,19 @@ void zSceneSave(zScene* ent, xSerial* s)
                 zCamMarkerSave((zCamMarker*)b, s);
                 break;
             }
+            case eBaseTypeDoor:
+            case eBaseTypeSavePoint:
+            case eBaseTypeItem:
+            {
+                break;
+            }
             case eBaseTypeStatic:
             {
                 zEntSimpleObj_Save((zEntSimpleObj*)b, s);
+                break;
+            }
+            case eBaseTypeDynamic:
+            {
                 break;
             }
             case eBaseTypeMovePoint:
@@ -1535,6 +1563,10 @@ void zSceneSave(zScene* ent, xSerial* s)
             case eBaseTypeTimer:
             {
                 xTimerSave((xTimer*)b, s);
+                break;
+            }
+            case eBaseTypeBubble:
+            {
                 break;
             }
             case eBaseTypePortal:
@@ -1557,6 +1589,11 @@ void zSceneSave(zScene* ent, xSerial* s)
                 xSFXSave((xSFX*)b, s);
                 break;
             }
+            case eBaseTypeFFX:
+            case eBaseTypeVFX:
+            {
+                break;
+            }
             case eBaseTypeCounter:
             {
                 xCounterSave((_xCounter*)b, s);
@@ -1570,6 +1607,10 @@ void zSceneSave(zScene* ent, xSerial* s)
             case eBaseTypeButton:
             {
                 zEntButton_Save((_zEntButton*)b, s);
+                break;
+            }
+            case eBaseTypeProjectile:
+            {
                 break;
             }
             case eBaseTypeSurface:
@@ -1617,6 +1658,11 @@ void zSceneSave(zScene* ent, xSerial* s)
                 zUIFont_Save((zUIFont*)b, s);
                 break;
             }
+            case eBaseTypeProjectileType:
+            case eBaseTypeLobMaster:
+            {
+                break;
+            }
             case eBaseTypeEGenerator:
             {
                 zEGenerator_Save((zEGenerator*)b, s);
@@ -1645,6 +1691,10 @@ void zSceneSave(zScene* ent, xSerial* s)
             case eBaseTypeCameraTweak:
             {
                 zCameraTweak_Save((zCameraTweak*)b, s);
+                break;
+            }
+            case eBaseTypeCutsceneMgr:
+            {
                 break;
             }
             }
@@ -1966,37 +2016,6 @@ void zSceneReset()
         {
             switch (s->base[i]->baseType)
             {
-            case eBaseTypePickup:
-            case eBaseTypeCamera:
-            case eBaseTypeDoor:
-            case eBaseTypeSavePoint:
-            case eBaseTypeItem:
-            case eBaseTypeStatic:
-            case eBaseTypeDynamic:
-            case eBaseTypeMovePoint:
-            case eBaseTypeTimer:
-            case eBaseTypeBubble:
-            case eBaseTypePortal:
-            case eBaseTypeGroup:
-            case eBaseTypeSFX:
-            case eBaseTypeFFX:
-            case eBaseTypeVFX:
-            case eBaseTypeButton:
-            case eBaseTypeProjectile:
-            case eBaseTypeSurface:
-            case eBaseTypeDestructObj:
-            case eBaseTypeGust:
-            case eBaseTypeVolume:
-            case eBaseTypeDispatcher:
-            case eBaseTypeCond:
-            case eBaseTypeUI:
-            case eBaseTypeUIFont:
-            case eBaseTypeProjectileType:
-            case eBaseTypeFog:
-            case eBaseTypeLight:
-            case eBaseTypeParticleEmitter:
-            case eBaseTypeParticleSystem:
-            case eBaseTypeCutsceneMgr:
             default:
             {
                 zEntEvent(NULL, 0, s->base[i], eEventReset, NULL, NULL, 1);
@@ -2263,7 +2282,54 @@ void zSceneSetup()
                 break;
             }
             case eBaseTypeUnknown:
+            case eBaseTypeTrigger:
+            case eBaseTypeVillain:
+            case eBaseTypePlayer:
+            case eBaseTypeCamera:
+            case eBaseTypeDoor:
+            case eBaseTypeSavePoint:
+            case eBaseTypeItem:
+            case eBaseTypeDynamic:
+            case eBaseTypeTimer:
+            case eBaseTypeBubble:
+            case eBaseTypePortal:
+            case eBaseTypeSFX:
+            case eBaseTypeFFX:
+            case eBaseTypeVFX:
+            case eBaseTypeCounter:
+            case eBaseTypeHangable:
+            case eBaseTypeProjectile:
+            case eBaseTypeGust:
+            case eBaseTypeVolume:
+            case eBaseTypeCond:
+            case eBaseTypeUI:
+            case eBaseTypeUIFont:
+            case eBaseTypeProjectileType:
+            case eBaseTypeLobMaster:
+            case eBaseTypeFog:
+            case eBaseTypeLight:
+            case eBaseTypeCutsceneMgr:
+            case eBaseTypeScript:
+            case eBaseTypeHud:
+            case eBaseTypeNPCProps:
+            case eBaseTypeParticleEmitterProps:
+            case eBaseTypeCruiseBubble:
+            case eBaseTypeTextBox:
+            case eBaseTypeTalkBox:
+            case eBaseTypeTaskBox:
+            case eBaseTypeBoulderGenerator:
+            case eBaseTypeNPCSettings:
+            case eBaseTypeHUD_model:
+            case eBaseTypeHUD_font_meter:
+            case eBaseTypeHUD_unit_meter:
+            case eBaseTypeBungeeHook:
             case eBaseTypeZipLine:
+            case eBaseTypeArena:
+            case eBaseTypeDuplicator:
+            case eBaseTypeLaserBeam:
+            case eBaseTypeTurret:
+            case eBaseTypeCameraTweak:
+            case eBaseTypeSlideProps:
             case eBaseTypeHUD_text:
             {
                 break;
@@ -2529,8 +2595,7 @@ void zSceneSetup()
                                 {
                                     numPrimeMovers--;
                                 }
-
-                                if (gent->isCulled != 1)
+                                else
                                 {
                                     numDriven--;
                                 }

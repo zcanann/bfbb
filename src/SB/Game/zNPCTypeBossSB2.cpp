@@ -2439,9 +2439,7 @@ void zNPCB_SB2::move_nodes()
 {
     for (S32 i = 0; i < 9; i++)
     {
-        node_data& n = nodes[i];
-
-        if (n.ent == NULL)
+        if (nodes[i].ent == NULL)
         {
             continue;
         }
@@ -2449,24 +2447,24 @@ void zNPCB_SB2::move_nodes()
         xVec3 loc;
         xVec3 norm;
         xVec3 uploc;
-        RpAtomic* m = n.skin_model;
-        RwMatrixTag* skin_mat = n.skin_mat;
+        RpAtomic* m = nodes[i].skin_model;
+        RwMatrixTag* skin_mat = nodes[i].skin_mat;
 
         if (node_hooks[i].points == 3)
         {
             xVec3 rightloc;
 
-            iModelTagEval(m, &n.v3.tag[0], skin_mat, &loc);
-            iModelTagEval(m, &n.v3.tag[1], skin_mat, &uploc);
-            iModelTagEval(m, &n.v3.tag[2], skin_mat, &rightloc);
+            iModelTagEval(m, &nodes[i].v3.tag[0], skin_mat, &loc);
+            iModelTagEval(m, &nodes[i].v3.tag[1], skin_mat, &uploc);
+            iModelTagEval(m, &nodes[i].v3.tag[2], skin_mat, &rightloc);
 
             norm = (rightloc - loc).cross(uploc - loc);
             norm.up_normalize();
         }
         else
         {
-            iModelTagEval(m, &n.v2n1.tag, skin_mat, &loc, &norm);
-            iModelTagEval(m, &n.v2n1.uptag, skin_mat, &uploc);
+            iModelTagEval(m, &nodes[i].v2n1.tag, skin_mat, &loc, &norm);
+            iModelTagEval(m, &nodes[i].v2n1.uptag, skin_mat, &uploc);
         }
 
         xMat4x3 mat;
@@ -2485,7 +2483,7 @@ void zNPCB_SB2::move_nodes()
             mat.pos = loc;
         }
 
-        xEntReposition(*n.ent, mat);
+        xEntReposition(*nodes[i].ent, mat);
     }
 }
 

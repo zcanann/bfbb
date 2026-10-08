@@ -579,14 +579,14 @@ S32 zNPCGoalTalk::NPCMessage(NPCMsg* mail)
 
     switch (mail->msgid)
     {
-    case NPC_MID_DAMAGE:
-        break;
     case NPC_MID_TALKON:
         killAndExit = 0;
         stopTalking = 0;
         break;
     case NPC_MID_TALKOFF:
         killAndExit = 1;
+        break;
+    case NPC_MID_DAMAGE:
         break;
     default:
         handled = 0;

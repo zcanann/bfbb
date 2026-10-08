@@ -421,8 +421,8 @@ void zNPCBSandy::Init(xEntAsset* asset)
         objName[10]++;
         if (objName[10] > '9')
         {
-            objName[10] = '0';
             objName[9]++;
+            objName[10] = '0';
         }
     }
 
@@ -433,18 +433,15 @@ void zNPCBSandy::Init(xEntAsset* asset)
     this->curveNodeG = colorPicker ? 1.0f : 0.0f;
     this->curveNodeB = colorPicker ? 1.0f : 0.0f;
 
-    this->curveNode[0].time = 0.0f;
-    this->curveNode[0].scale = 1.0f;
-    this->curveNode[0].color.r = (U8)(255.0f * this->curveNodeR);
-    this->curveNode[0].color.g = (U8)(255.0f * this->curveNodeG);
-    this->curveNode[0].color.b = (U8)(255.0f * this->curveNodeB);
-    this->curveNode[0].color.a = 0xff;
-    this->curveNode[1].time = 1.0f;
-    this->curveNode[1].scale = 1.0f;
-    this->curveNode[1].color.r = (U8)(255.0f * this->curveNodeR);
-    this->curveNode[1].color.g = (U8)(255.0f * this->curveNodeG);
-    this->curveNode[1].color.b = (U8)(255.0f * this->curveNodeB);
-    this->curveNode[1].color.a = 0xff;
+    for (i = 0; i < 2; i++)
+    {
+        this->curveNode[i].time = i;
+        this->curveNode[i].scale = 1.0f;
+        this->curveNode[i].color.r = (U8)(255.0f * this->curveNodeR);
+        this->curveNode[i].color.g = (U8)(255.0f * this->curveNodeG);
+        this->curveNode[i].color.b = (U8)(255.0f * this->curveNodeB);
+        this->curveNode[i].color.a = 0xff;
+    }
     this->curveNodeAlpha = 1.0f;
     this->laserShow.set_curve(&this->curveNode[0], 0x6);
     this->laserShow.cfg.life_time = 0.5f;
@@ -663,8 +660,10 @@ void zNPCBSandy::Reset()
     this->crashedScoreboard = (xEnt*)zSceneFindObject(xStrHash("SCOREBOARD_HAZARD"));
 
     ((zEntSimpleObj*)this->crashedScoreboard)->sflags |= 0x8;
+#if !defined(PS2)
     this->crashedScoreboard->model->PipeFlags &= ~0xc;
     this->crashedScoreboard->model->PipeFlags |= 0x4;
+#endif
 
     this->scoreboardShrap = (zShrapnelAsset*)xSTFindAsset(xStrHash("pdome_scoreboard_shrapnel"), 0);
     this->sboardSecondShrap = (zShrapnelAsset*)xSTFindAsset(xStrHash("pdome_scoreboard_secondary_shrapnel"), 0);
@@ -736,8 +735,10 @@ void zNPCBSandy::Reset()
             objName[7] = '0' + (char)j;
 
             this->ropeObject[i][j] = (xEnt*)zSceneFindObject(xStrHash(objName));
+#if !defined(PS2)
             this->ropeObject[i][j]->model->PipeFlags &= ~0xc;
             this->ropeObject[i][j]->model->PipeFlags |= 0x4;
+#endif
 
             xAnimState* state = this->ropeObject[i][j]->model->Anim->Table->StateList;
             while (state)
@@ -759,14 +760,18 @@ void zNPCBSandy::Reset()
         objName[5] = '0' + (char)i;
 
         this->ropeObjectLo[i] = (xEnt*)zSceneFindObject(xStrHash(objName));
+#if !defined(PS2)
         this->ropeObjectLo[i]->model->PipeFlags &= ~0xc;
         this->ropeObjectLo[i]->model->PipeFlags |= 0x4;
+#endif
     }
 
     this->ropeSb = this->ropeObjectLo[4];
     this->ropeSbDamaged = (xEnt*)zSceneFindObject(xStrHash("ROPE_4_LO_DAMAGED"));
+#if !defined(PS2)
     this->ropeSbDamaged->model->PipeFlags &= ~0xc;
     this->ropeSbDamaged->model->PipeFlags |= 0x4;
+#endif
 
     strcpy(objName, "TURNBUCKLE_OBJ_00");
     for (i = 0; i < 8; i++)
@@ -774,14 +779,17 @@ void zNPCBSandy::Reset()
         objName[16] = '0' + (char)i;
 
         this->turnbuckle[i] = (xEnt*)zSceneFindObject(xStrHash(objName));
+#if !defined(PS2)
         this->turnbuckle[i]->model->PipeFlags &= ~0xc;
         this->turnbuckle[i]->model->PipeFlags |= 0x4;
+#endif
     }
 
     sRadiusOfRing = 0.0f;
     for (i = 0; i < 4; i++)
     {
-        xVec3Sub(&endPnt, &this->bouncePoint[i], &this->bouncePoint[i + 4]);
+        j = i + 4;
+        xVec3Sub(&endPnt, &this->bouncePoint[i], &this->bouncePoint[j]);
         sRadiusOfRing = 0.125f * xVec3Length(&endPnt) + sRadiusOfRing;
     }
 
@@ -1116,9 +1124,9 @@ static void zNPCBSandy_BossDamageEffect(xModelInstance* minst, U32 turnOff)
             return;
         }
 
-        j = 0;
         minst = BDErecord[i].BDEminst;
         BDErecord[i].BDEtimer = 0.0f;
+        j = 0;
 
         while (minst != NULL)
         {
@@ -1145,9 +1153,9 @@ static void zNPCBSandy_BossDamageEffect(xModelInstance* minst, U32 turnOff)
             return;
         }
 
-        j = 0;
         BDErecord[i].BDEminst = minst;
         BDErecord[i].BDEtimer = 3.0f;
+        j = 0;
 
         while (minst != NULL)
         {
@@ -1254,7 +1262,7 @@ void zNPCBSandy::Render()
         RwRenderStateSet(rwRENDERSTATETEXTURERASTER, this->targetRaster);
 
         xVec3Copy((xVec3*)&mat.pos, &this->targetPos);
-        xVec3Copy((xVec3*)&mat.at, (xVec3*)&globals.camera.mat.at);
+        xVec3Copy((xVec3*)&mat.at, &globals.camera.mat.at);
 
         mat.at.y = 0.0f;
 
@@ -1811,7 +1819,7 @@ void zNPCBSandy::Process(xScene* xscn, F32 dt)
         {
             this->edgeAlpha[i] = 1.0f;
 
-            xVec3Sub(&toEdge, (xVec3*)&globals.camera.mat.pos, &this->ringEdgeCenter[i]);
+            xVec3Sub(&toEdge, &globals.camera.mat.pos, &this->ringEdgeCenter[i]);
 
             if (xVec3Dot(&toEdge, &this->ropeNormal[i]) < 0.0f)
             {
@@ -3594,8 +3602,7 @@ S32 zNPCGoalBossSandyLeap::Enter(F32 dt, void* updCtxt)
 {
     zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
     xVec3 toRing;
-    F32 dist;
-    F32 mag;
+    F32 rad2;
 
     timeInGoal = 0.0f;
     stage = 0;
@@ -3612,10 +3619,10 @@ S32 zNPCGoalBossSandyLeap::Enter(F32 dt, void* updCtxt)
         toRing.y = 0.0f;
         toRing.z = endZ - sandy->ringEdgeCenter[4].z;
 
-        dist = xVec3Length2(&toRing);
-        if (dist < 100.0f)
+        rad2 = xVec3Length2(&toRing);
+        if (rad2 < 100.0f)
         {
-            xVec3SMulBy(&toRing, 10.0f / xsqrt(dist));
+            xVec3SMulBy(&toRing, 10.0f / xsqrt(rad2));
             endX = toRing.x + sandy->ringEdgeCenter[4].x;
             endZ = toRing.z + sandy->ringEdgeCenter[4].z;
         }
@@ -3627,12 +3634,12 @@ S32 zNPCGoalBossSandyLeap::Enter(F32 dt, void* updCtxt)
         endZ = 0.0f;
     }
 
-    mag = endX * endX + endZ * endZ;
-    if (mag > 100.0f)
+    rad2 = endX * endX + endZ * endZ;
+    if (rad2 > 100.0f)
     {
-        mag = 1.0f / xsqrt(mag);
-        endX = endX * (10.0f * mag);
-        endZ = endZ * (10.0f * mag);
+        rad2 = 1.0f / xsqrt(rad2);
+        endX = endX * (10.0f * rad2);
+        endZ = endZ * (10.0f * rad2);
     }
 
     startX = sandy->model->Mat->pos.x - endX;

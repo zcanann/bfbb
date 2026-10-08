@@ -2452,9 +2452,6 @@ void zNPCFodBzzt_ResetDanceParty()
 
 void zNPCFodBzzt_DoTheHokeyPokey(F32 dt)
 {
-    static S32 g_somebodyplay;
-    static S8 init;
-
     if (globals.player.Health < 1 || globals.player.DamageTimer > 0.25f ||
         (globals.player.ControlOff & 0xffffbeff) || zNPCFodBzzt::cnt_alerthokey < 1)
     {
@@ -2463,11 +2460,7 @@ void zNPCFodBzzt_DoTheHokeyPokey(F32 dt)
     }
     else
     {
-        if (init == 0)
-        {
-            g_somebodyplay = 1;
-            init = 1;
-        }
+        static S32 g_somebodyplay = 1;
 
         if (!((zNPCFodBzzt::tmr_hokeypokey < 0.0f) ? 1 : 0))
         {
@@ -3259,14 +3252,7 @@ static S32 g_sleepy_angryStates[5] = { 'NGR4', 'NGR0', 'NGRi', 'NGR=', 0 };
 // Scheduling
 void zNPCSleepy_Timestep(F32 dt)
 {
-    static F32 tmr_cycle;
-    static S8 init;
-
-    if (init == 0)
-    {
-        tmr_cycle = 0.0f;
-        init = 1;
-    }
+    static F32 tmr_cycle = 0.0f;
 
 #if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
     F32 dVar1 = NPCC_TmrCycle(&tmr_cycle, 1.0f / 50.0f, 2.63f);
@@ -3317,19 +3303,12 @@ void zNPCSleepy::Reset()
 
 void zNPCSleepy::ParseINI()
 {
-    static F32 rad_minimum;
-    static S8 init;
-
     NPCConfig* cfg = cfg_npc;
     zNPCRobot::ParseINI();
     cfg->snd_trax = g_sndTrax_Sleepy;
     NPCS_SndTablePrepare(g_sndTrax_Sleepy);
 
-    if (init == 0)
-    {
-        rad_minimum = 5.0f;
-        init = 1;
-    }
+    static F32 rad_minimum = 5.0f;
     cfg_npc->rad_detect = MAX(rad_minimum, cfg_npc->rad_detect);
 }
 
@@ -3513,7 +3492,7 @@ void zNPCSleepy::SnoreNZeez(F32 dt)
 S32 zNPCSleepy::RepelMissile(F32 dt)
 {
     tmr_nextPatriot = MAX(-1.0f, tmr_nextPatriot - dt);
-    if (haz_patriot != NULL && !(tmr_nextPatriot < 0.0f))
+    if (haz_patriot != NULL && !((tmr_nextPatriot < 0.0f) ? 1 : 0))
     {
         return 1;
     }
@@ -3904,7 +3883,7 @@ void zNPCArfArf::Init(xEntAsset* asset)
 void zNPCArfArf::Reset()
 {
     zNPCRobot::Reset();
-    for (int i = 0; i < sizeof(flg_puppy) / sizeof(S32); i++)
+    for (S32 i = 0; i < 5; i++)
     {
         flg_puppy[i] = 1;
     }
@@ -4676,27 +4655,22 @@ S32 zNPCTubelet::RoboHandleMail(NPCMsg* mail)
         {
             handled = 0;
 
-            NPCMsg msg = *mail;
-            zNPCTubeSlave* slave;
+            NPCMsg tellkid = *mail;
 
-            slave = tub_paul;
-
-            if (slave)
+            if (tub_paul)
             {
-                msg.sendto = slave->id;
-                msg.sysevent.from = this;
-                msg.sysevent.to = slave;
-                slave->NPCMessage(&msg);
+                tellkid.sendto = tub_paul->id;
+                tellkid.sysevent.from = this;
+                tellkid.sysevent.to = tub_paul;
+                tub_paul->NPCMessage(&tellkid);
             }
 
-            slave = tub_mary;
-
-            if (slave)
+            if (tub_mary)
             {
-                msg.sendto = slave->id;
-                msg.sysevent.from = this;
-                msg.sysevent.to = slave;
-                slave->NPCMessage(&msg);
+                tellkid.sendto = tub_mary->id;
+                tellkid.sysevent.from = this;
+                tellkid.sysevent.to = tub_mary;
+                tub_mary->NPCMessage(&tellkid);
             }
 
             break;
@@ -5545,14 +5519,7 @@ zNPCSlick* zNPCSlick::YouOwnSlipFX()
 
 void zNPCSlick::SlipSlidenAway(F32 dt)
 {
-    static S32 moreorless;
-    static S8 init;
-
-    if (init == 0)
-    {
-        moreorless = 0;
-        init = 1;
-    }
+    static S32 moreorless = 0;
 
     if (--moreorless < 0)
     {
@@ -5584,8 +5551,8 @@ S32 DUMY_grul_returnToIdle(xGoal* goal, void*, en_trantype* trantype, F32, void*
 
     if (goal->GetPsyche()->TimerGet(XPSY_TYMR_CURGOAL) > 10.0f)
     {
-        *trantype = GOAL_TRAN_SET;
         nextgoal = NPC_GOAL_IDLE;
+        *trantype = GOAL_TRAN_SET;
     }
 
     return nextgoal;
@@ -6294,6 +6261,17 @@ void NPCArena::SetHome(zNPCCommon* npc, zMovePoint* nav)
     nav_refer_curr = npc->nav_curr;
 
     SyncHomeFromNav();
+}
+
+void NPCArena::SetHome(zNPCCommon* npc, xVec3* pos, F32 rad)
+{
+    flg_arena = 0;
+    flg_arena |= 1;
+    nav_arena = NULL;
+    xVec3Copy(&pos_arena, pos);
+    rad_arena = MAX(1.0f, rad);
+    nav_refer_dest = npc->nav_dest;
+    nav_refer_curr = npc->nav_curr;
 }
 
 void NPCArena::AdjustHome(zNPCCommon* npc, xVec3* pos, F32 rad)

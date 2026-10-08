@@ -1027,6 +1027,10 @@ void zNPCBPatrick::Process(xScene* xscn, F32 dt)
 
     this->fudgeEmitter->prop->rate.val[0] = fudgeRate;
 
+    F32* swingY;
+    S32 shouldPlayIt;
+    F32 finalHeight;
+
     if (globals.player.lassoInfo.swingTarget)
     {
         if (this->notSwingingLastFrame)
@@ -1043,7 +1047,7 @@ void zNPCBPatrick::Process(xScene* xscn, F32 dt)
             }
         }
 
-        S32 shouldPlayIt = 0;
+        shouldPlayIt = 0;
 
         if (this->swingTimer <= 0.5f)
         {
@@ -1055,8 +1059,8 @@ void zNPCBPatrick::Process(xScene* xscn, F32 dt)
 
         if (this->swingTimer > 0.5f)
         {
-            F32 finalHeight = this->origSwingerHeight - 0.5f;
-            F32* swingY = &this->swinger[this->currSwinger]->model->Mat->pos.y;
+            finalHeight = this->origSwingerHeight - 0.5f;
+            swingY = &this->swinger[this->currSwinger]->model->Mat->pos.y;
 
             if (*swingY > finalHeight)
             {
@@ -1106,15 +1110,15 @@ void zNPCBPatrick::Process(xScene* xscn, F32 dt)
     {
         if (i != this->currSwinger)
         {
-            RwMatrix* mat = this->swinger[i]->model->Mat;
+            swingY = &this->swinger[i]->model->Mat->pos.y;
 
-            if (mat->pos.y < this->origSwingerHeight)
+            if (*swingY < this->origSwingerHeight)
             {
-                mat->pos.y += 3.0f * dt;
+                *swingY += 3.0f * dt;
 
-                if (mat->pos.y > this->origSwingerHeight)
+                if (*swingY > this->origSwingerHeight)
                 {
-                    mat->pos.y = this->origSwingerHeight;
+                    *swingY = this->origSwingerHeight;
                 }
             }
         }
@@ -2362,8 +2366,8 @@ void zNPCBPatrick::bossPatBoxCheckCollide(bossPatBox* box)
 {
     if (box->flags & 1 && box->pos < 8.5f)
     {
-        F32 z = this->model->Mat->pos.z - box->box->model->Mat->pos.z;
         F32 x = this->model->Mat->pos.x - box->box->model->Mat->pos.x;
+        F32 z = this->model->Mat->pos.z - box->box->model->Mat->pos.z;
 
         if (x * x + z * z < 4.0f)
         {
@@ -2984,8 +2988,7 @@ S32 zNPCGoalBossPatSpit::Process(en_trantype* trantype, F32 dt, void* updCtxt, x
         bossPatGlob* glob = pat->getNextFreeGlob();
         glob->t = 0.0f;
         glob->path.minTime = 0.0f;
-        leadTime = xurand();
-        glob->path.maxTime = 0.33f * leadTime + 1.0f;
+        glob->path.maxTime = 0.33f * xurand() + 1.0f;
         glob->path.gravity = 10.0f;
 
         xVec3Init(&offset, 0.0f, 0.0f, 0.0f);
@@ -4021,9 +4024,8 @@ S32 zNPCGoalBossPatFudge::Process(en_trantype* trantype, F32 dt, void* ctxt, xSc
         xVec3Sub(&dir, &pat->fudgePos, &pat->frame->mat.pos);
 
         F32 dist = xVec3Length(&dir);
-        F32 step = 20.0f * dt;
 
-        if (dist < step)
+        if (dist < 20.0f * dt)
         {
             xVec3Copy(&pat->frame->mat.pos, &pat->fudgePos);
             this->stage = 2;
@@ -4032,7 +4034,7 @@ S32 zNPCGoalBossPatFudge::Process(en_trantype* trantype, F32 dt, void* ctxt, xSc
         }
         else
         {
-            xVec3AddScaled(&pat->frame->mat.pos, &dir, step / dist);
+            xVec3AddScaled(&pat->frame->mat.pos, &dir, 20.0f * dt / dist);
 
             if (this->lerp > 1.0f)
             {

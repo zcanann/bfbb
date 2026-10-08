@@ -311,13 +311,13 @@ void xCutscene_SetSpeed(xCutscene* csn, F32 speed)
     csn->PlaybackSpeed = speed;
 
     F32 semitones;
-    if (speed)
+    if (!speed)
     {
-        semitones = xlog(speed) / 0.057762269f;
+        semitones = -99999.0f;
     }
     else
     {
-        semitones = -99999.0f;
+        semitones = xlog(speed) / 0.057762269f;
     }
 
     for (S32 i = 0; i < (S32)csn->SndNumChannel; i++)
@@ -331,19 +331,15 @@ F32 xlog(F32 x)
     return std::logf(x);
 }
 
+#if !defined(PS2)
 float std::logf(float x)
 {
     return (float)log((double)x);
 }
+#endif
 
 // A camera chunk's payload sits directly after its xCutsceneData header: the
 // number of fly keys, then the keys themselves.
-struct xCutsceneCameraData
-{
-    U32 NumKeys;
-    zFlyKey Keys[1];
-};
-
 void xCutscene_SetCamera(xCutscene* csn, xCamera* cam)
 {
     xCutsceneData* data;
@@ -366,9 +362,8 @@ void xCutscene_SetCamera(xCutscene* csn, xCamera* cam)
         if (data->DataType == XCUTSCENEDATA_TYPE_CAMERA)
         {
             frame = (S32)std::floorf(30.0f * csn->CamTime);
-            xCutsceneCameraData* camData = (xCutsceneCameraData*)(data + 1);
-            zFlyKey* keys = camData->Keys;
-            dataIndex = camData->NumKeys;
+            zFlyKey* keys = (zFlyKey*)((U32*)(data + 1) + 1);
+            dataIndex = *(U32*)(data + 1);
 
             if (frame < keys[0].frame)
             {

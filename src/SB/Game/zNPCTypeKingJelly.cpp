@@ -45,8 +45,11 @@ typedef void (*tweak_change_cb)(tweak_info&);
 #define ANIM_Attack02End01 18
 #define ANIM_LassoGrab01 19
 
-#define LYT_TYPE_LINE 0
-#define LYT_TYPE_ROTATING 1
+enum
+{
+    LYT_TYPE_LINE,
+    LYT_TYPE_ROTATING
+};
 
 #define SOUND_AMBIENT_RING 0
 #define SOUND_BIRTH 1
@@ -2797,8 +2800,8 @@ void zNPCKingJelly::refresh_tentacle_points(S32 which)
 
     for (S32 j = 0; j < 3; j++)
     {
-        xVec3& start = tentacle_points[which][4 * j];
-        xVec3& end = tentacle_points[which][4 * (j + 1)];
+        const xVec3& start = tentacle_points[which][4 * j];
+        const xVec3& end = tentacle_points[which][4 * (j + 1)];
         F32 pos = 0.25f;
 
         for (S32 k = 1; k < 4; k++)
@@ -3001,12 +3004,11 @@ void zNPCKingJelly::generate_thump_particles()
 
     s.rate.val[0] = (1.0f / NPC_FRAME_TIME) * tweak.thump.particles;
     s.vel.y = tweak.thump.vel;
+    s.radius = tweak.thump.radius;
 
     F32 drate = s.rate.val[0] * (-tweak.thump.particle_drop_off * iring);
     F32 dvel = s.vel.y * (-tweak.thump.vel_drop_off * iring);
-
     F32 dradius = tweak.thump.width * iring;
-    s.radius = tweak.thump.radius;
 
     for (S32 i = 0; i < tweak.thump.rings; i++)
     {
@@ -3047,41 +3049,46 @@ void zNPCKingJelly::start_charge()
 
 void zNPCKingJelly::update_charge(F32 frac)
 {
-    F32 thickness = lerp(frac, tweak.tentacle.thickness, tweak.tentacle.charge.thickness);
-    iColor_tag color = lerp(frac, tweak.tentacle.color, tweak.tentacle.charge.color);
-
-    for (S32 i = 0; i < 7; i++)
     {
-        zLightning*& zap = tentacle_lightning[i];
+        F32 thickness = lerp(frac, tweak.tentacle.thickness, tweak.tentacle.charge.thickness);
+        iColor_tag color = lerp(frac, tweak.tentacle.color, tweak.tentacle.charge.color);
 
-        if (zap != NULL)
+        for (S32 i = 0; i < 7; i++)
         {
-            for (S32 j = 0; j < zap->legacy.total_points - 1; j++)
-            {
-                zap->legacy.thickness[j] = thickness;
-            }
+            zLightning*& zap = tentacle_lightning[i];
 
-            zap->color = color;
-            zap->legacy.rot.degrees =
-                lerp(frac, zap->legacy.rot.degrees, tweak.tentacle.charge.move_degrees);
+            if (zap != NULL)
+            {
+                for (S32 j = 0; j < zap->legacy.total_points - 1; j++)
+                {
+                    zap->legacy.thickness[j] = thickness;
+                }
+
+                zap->color = color;
+                zap->legacy.rot.degrees =
+                    lerp(frac, zap->legacy.rot.degrees, tweak.tentacle.charge.move_degrees);
+            }
         }
     }
 
-    F32 radius = lerp(frac >= 0.25f ? 1.0f : 4.0f * frac, tweak.ambient_ring.radius,
-                      tweak.ambient_ring.charge.radius);
-    F32 max_height =
-        lerp(frac, tweak.ambient_ring.max_height, tweak.ambient_ring.charge.max_height);
-    F32 speed = lerp(frac, tweak.ambient_ring.speed, tweak.ambient_ring.charge.speed);
-    F32 thickness2 = lerp(frac, tweak.ambient_ring.thickness, tweak.ambient_ring.charge.thickness);
-    iColor_tag color2 = lerp(frac, tweak.ambient_ring.color, tweak.ambient_ring.charge.color);
-
-    for (S32 i = 0; i < 3; i++)
     {
-        ambient_rings[i].current.accel = speed;
-        ambient_rings[i].current.radius = radius;
-        ambient_rings[i].max_height = max_height;
-        ambient_rings[i].property.thickness = thickness2;
-        ambient_rings[i].property.color = color2;
+        F32 radius = frac >= 0.25f ? 1.0f : 4.0f * frac;
+        radius = lerp(radius, tweak.ambient_ring.radius, tweak.ambient_ring.charge.radius);
+        F32 max_height =
+            lerp(frac, tweak.ambient_ring.max_height, tweak.ambient_ring.charge.max_height);
+        F32 speed = lerp(frac, tweak.ambient_ring.speed, tweak.ambient_ring.charge.speed);
+        F32 thickness =
+            lerp(frac, tweak.ambient_ring.thickness, tweak.ambient_ring.charge.thickness);
+        iColor_tag color = lerp(frac, tweak.ambient_ring.color, tweak.ambient_ring.charge.color);
+
+        for (S32 i = 0; i < 3; i++)
+        {
+            ambient_rings[i].current.accel = speed;
+            ambient_rings[i].current.radius = radius;
+            ambient_rings[i].max_height = max_height;
+            ambient_rings[i].property.thickness = thickness;
+            ambient_rings[i].property.color = color;
+        }
     }
 }
 
@@ -3324,13 +3331,13 @@ void zNPCGoalKJIdle::rotate(float dt)
 {
     zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
 
-    xVec3& loc = (xVec3&)kj.model->Mat->pos;
+    xMat4x3& imat = *(xMat4x3*)kj.model->Mat;
     xVec3& target = (xVec3&)globals.player.ent.model->Mat->pos;
 
     xVec3 dir = { 0.0f, 0.0f, 0.0f };
 
-    dir.x = target.x - loc.x;
-    dir.z = target.z - loc.z;
+    dir.x = target.x - imat.pos.x;
+    dir.z = target.z - imat.pos.z;
 
     F32 mag = dir.length2();
 
@@ -3845,7 +3852,8 @@ void zNPCKingJelly::on_change_fade_obstructions(const tweak_info&)
 
 xVec3 zNPCKingJelly::get_center() const
 {
-    return (xVec3&)model->Mat[0].pos + (xVec3&)model->Mat[2].pos + cfg_npc->off_bound;
+    const xMat4x3* mat = (const xMat4x3*)model->Mat;
+    return mat[0].pos + mat[2].pos + cfg_npc->off_bound;
 }
 
 xVec3* zNPCKingJelly::get_bottom() const

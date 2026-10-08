@@ -398,10 +398,10 @@ float CalcRecipBlendMax(U16* arg0)
             f3 = 1.0f / (arg0[1] / 1024.0f);
         }
 
-        f3 = arg0[0] / 1024.0f + f3;
-        if (f3 > max)
+        float sum = arg0[0] / 1024.0f + f3;
+        if (sum > max)
         {
-            max = f3;
+            max = sum;
         }
         arg0 += 2;
     }

@@ -98,12 +98,12 @@ void xDecalEmitter::refresh_config()
 
     this->ilife = 1.0f / this->cfg.life_time;
 
-    if (this->cfg.texture.rows == 0)
+    if (this->cfg.texture.rows <= 0)
     {
         this->cfg.texture.rows = 1;
     }
 
-    if (this->cfg.texture.cols == 0)
+    if (this->cfg.texture.cols <= 0)
     {
         this->cfg.texture.cols = 1;
     }

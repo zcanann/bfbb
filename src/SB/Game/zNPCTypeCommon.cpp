@@ -256,7 +256,7 @@ void zNPCCommon::InitBounds()
     xSphere* sph = &this->bound.sph;
     xBBox* box = &this->bound.box;
 
-    if (cfg->useBoxBound)
+    if (this->cfg_npc->useBoxBound)
     {
         this->bound.type = XBOUND_TYPE_BOX;
     }
@@ -592,7 +592,7 @@ void zNPCCommon::Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, const xVec3* vec
         break;
     }
 
-    if (this->tmr_invuln < 0.0f)
+    if ((this->tmr_invuln < 0.0f) ? 1 : 0)
     {
         this->tmr_invuln = 0.5f;
 
@@ -898,6 +898,8 @@ S32 zNPCCommon::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam
 
     switch (toEvent)
     {
+    case eEventUnknown:
+        break;
     case eEventSceneEnd:
     {
         xPsyche* psy = this->psy_instinct;
@@ -907,6 +909,10 @@ S32 zNPCCommon::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam
         }
         break;
     }
+    case eEventSceneBegin:
+    case eEventRoomBegin:
+    case eEventRoomEnd:
+        break;
     case eEventNPCSpecial_PlatformSnap:
     case eEventNPCSpecial_PlatformFall:
     {
@@ -943,9 +949,12 @@ S32 zNPCCommon::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam
         zNPCMsg_SendMsg(&npcmsg, -1.0f, NULL);
 
         *handled = npcmsg.sysevent.handled;
-        doOtherEvents = se->doLinkEvents;
+        doOtherEvents = npcmsg.sysevent.doLinkEvents;
         break;
     }
+    case eEventMount:
+    case eEventDismount:
+        break;
     case eEventHit:
         this->ConvertHitEvent(from, to, toEvent, toParam, toParamWidget, handled);
         break;
@@ -986,6 +995,8 @@ S32 zNPCCommon::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam
         }
         break;
     }
+    case eEventDeath:
+        break;
     case eEventNPCKillQuietly:
         this->Damage(DMGTYP_KILLEVENT, from, NULL);
         break;
@@ -1039,7 +1050,7 @@ S32 zNPCCommon::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam
         zNPCMsg_SendMsg(&npcmsg, -1.0f, NULL);
 
         *handled = npcmsg.sysevent.handled;
-        doOtherEvents = se->doLinkEvents;
+        doOtherEvents = npcmsg.sysevent.doLinkEvents;
         break;
     }
     case eEventNPCForceConverseStart:
@@ -1078,7 +1089,7 @@ S32 zNPCCommon::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam
             zNPCMsg_SendMsg(&npcmsg, -1.0f, NULL);
 
             *handled = npcmsg.sysevent.handled;
-            doOtherEvents = se->doLinkEvents;
+            doOtherEvents = npcmsg.sysevent.doLinkEvents;
         }
 
         break;
@@ -1121,7 +1132,7 @@ S32 zNPCCommon::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam
         zNPCMsg_SendMsg(&npcmsg, -1.0f, NULL);
 
         *handled = npcmsg.sysevent.handled;
-        doOtherEvents = se->doLinkEvents;
+        doOtherEvents = npcmsg.sysevent.doLinkEvents;
         break;
     }
     case eEventNPCSetActiveOn:
@@ -1163,7 +1174,7 @@ S32 zNPCCommon::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam
             zNPCMsg_SendMsg(&npcmsg, -1.0f, NULL);
 
             *handled = npcmsg.sysevent.handled;
-            doOtherEvents = se->doLinkEvents;
+            doOtherEvents = npcmsg.sysevent.doLinkEvents;
         }
 
         break;
@@ -1209,7 +1220,7 @@ S32 zNPCCommon::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam
         zNPCMsg_SendMsg(&npcmsg, -1.0f, NULL);
 
         *handled = npcmsg.sysevent.handled;
-        doOtherEvents = se->doLinkEvents;
+        doOtherEvents = npcmsg.sysevent.doLinkEvents;
         break;
     }
     case eEventNPCScript_ScriptBegin:
@@ -1217,6 +1228,8 @@ S32 zNPCCommon::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam
         break;
     case eEventNPCScript_ScriptEnd:
         zNPCMsg_SendMsg(NPC_MID_SCRIPTEND, this);
+        break;
+    case eEventNPCScript_Halt:
         break;
     case eEventNPCScript_SetPos:
         if (toParamWidget)
@@ -1251,19 +1264,11 @@ S32 zNPCCommon::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam
     case eEventNPCScript_LeadPlayer:
         zEventName(toEvent);
         break;
-    case eEventUnknown:
-    case eEventMount:
-    case eEventDismount:
-    case eEventDeath:
-    case eEventSceneBegin:
-    case eEventRoomBegin:
-    case eEventRoomEnd:
     case eEventNPCScript_ScriptReady:
-    case eEventNPCScript_Halt:
+    case eEventNPCScript_PlayAnimDone:
     case eEventNPCScript_FaceWidgetDone:
     case eEventNPCScript_GotoWidgetDone:
     case eEventNPCScript_AttackWidgetDone:
-    case eEventNPCScript_PlayAnimDone:
         break;
     default:
         *handled = 0;
@@ -1956,7 +1961,7 @@ void zNPCCommon::PlayerKiltMe()
     en_xEventTags r30 = eEventUnknown;
     S32 r31 = this->SelfType();
 
-    if (!SomethingWonderful() && g_tmr_talkless < 0.0f)
+    if (!SomethingWonderful() && ((g_tmr_talkless < 0.0f) ? 1 : 0))
     {
         g_tmr_talkless = 3.0f + (xurand() - 0.5f) * 0.25f * 3.0f;
 
@@ -1978,17 +1983,12 @@ void zNPCCommon::PlayerKiltMe()
 
 void zNPCCommon::ISeePlayer()
 {
-    // non-matching: stubborn switch statement, may not be correct.
     en_xEventTags ven = eEventUnknown;
 
-    if (!SomethingWonderful() && g_tmr_talkless < 0.0f)
+    if (!SomethingWonderful() && ((g_tmr_talkless < 0.0f) ? 1 : 0))
     {
         g_tmr_talkless = 3.0f + (xurand() - 0.5f) * 0.25f * 3.0f;
 
-        // Retail compares NTF0 only as the start of a multi-value range, so the
-        // fish types NTF0..NTF; are all listed. The remaining difference is three
-        // pivot immediates in the NTF subtree (NTFJ/NTFH/NTFF vs retail
-        // NTFK/NTFG/NTF<); the exact set of listed fish cases is still unknown.
         switch (this->SelfType())
         {
         //case NPC_TYPE_UNKNOWN:
@@ -2031,25 +2031,21 @@ void zNPCCommon::ISeePlayer()
         case NPC_TYPE_BALLOONBOY:
         case NPC_TYPE_GARY:
         case NPC_TYPE_SQUIDWARD:
-        case NPC_TYPE_SQUIDWARD_MUSIC:
-        case NPC_TYPE_SQUIDWARD_BANDAID:
-        //case NPC_TYPE_DUTCHMAN_NSB:
-        //case NPC_TYPE_SANDYBIKINI:
-        //case NPC_TYPE_SANDYNPC:
-        //case NPC_TYPE_PATNPC:
-        //case NPC_TYPE_BOBNPC:
-        //case NPC_TYPE_PLANKNPC:
-        //case NPC_TYPE_MRKRABS:
-        //case NPC_TYPE_MSPUFFS:
-        //case NPC_TYPE_LARRY:
-        //case NPC_TYPE_BUBBUDDY:
+        case NPC_TYPE_DUTCHMAN_NSB:
+        case NPC_TYPE_SANDYBIKINI:
+        case NPC_TYPE_SANDYNPC:
+        case NPC_TYPE_PATNPC:
+        case NPC_TYPE_BOBNPC:
+        case NPC_TYPE_PLANKNPC:
+        case NPC_TYPE_MRKRABS:
+        case NPC_TYPE_MSPUFFS:
+        case NPC_TYPE_LARRY:
+        case NPC_TYPE_BUBBUDDY:
         case NPC_TYPE_NEWSFISH:
-        case NPC_TYPE_NEWSFISHTV:
-        //case NPC_TYPE_MOTORIST:
+        case NPC_TYPE_MOTORIST:
         case NPC_TYPE_MERMANCHAIR:
-        //case NPC_TYPE_MERMAN:
-        case NPC_TYPE_BARNACLEBOY:
-            //case NPC_TYPE_WORM:
+        case NPC_TYPE_MERMAN:
+        case NPC_TYPE_WORM:
             break;
         case NPC_TYPE_HAMMER:
         case NPC_TYPE_HAMSPIN:
@@ -2186,17 +2182,16 @@ void zNPCCommon::GetParm(en_npcparm pid, zMovePoint** val)
 void zNPCCommon::GetParm(en_npcparm pid, void* val)
 {
     // non-matching: regalloc, scheduling
-    F32 fv;
-    S32 iv;
-    xVec3 vec_tmp;
-    zMovePoint* mvpt;
-    char** names;
+    char** names = g_strz_params;
     U32 pmsize;
     xModelAssetParam* pmdata;
+    xVec3 vec_tmp = {};
+    F32 fv;
+    S32 iv;
+    zMovePoint* mvpt;
 
     pmdata = this->parmdata;
     pmsize = this->pdatsize;
-    names = g_strz_params;
 
     this->GetParmDefault(pid, val);
 
@@ -2743,12 +2738,7 @@ S32 zNPCCommon::AnimStart(U32 animID, S32 forceRestart)
         xSceneID2Name(globals.sceneCur, this->id);
     }
 
-    if (da_tran)
-    {
-        return da_tran->Dest->ID;
-    }
-
-    return 0;
+    return da_tran ? da_tran->Dest->ID : 0;
 }
 
 void zNPCCommon::AnimSetState(U32 animID, F32 time)
@@ -2788,14 +2778,11 @@ xAnimState* zNPCCommon::AnimCurState()
 U32 zNPCCommon::AnimCurStateID()
 {
     xAnimState* state = AnimCurState();
-    if (state != NULL)
-    {
-        return state->ID;
-    }
-    else
+    if (!state)
     {
         return 0;
     }
+    return state->ID;
 }
 
 F32 zNPCCommon::AnimDuration(xAnimState* ast)
@@ -2804,7 +2791,11 @@ F32 zNPCCommon::AnimDuration(xAnimState* ast)
     {
         ast = AnimCurState();
     }
-    return (ast == 0) ? 0.0f : ast->Data->Duration;
+    if (!ast)
+    {
+        return 0.0f;
+    }
+    return ast->Data->Duration;
 }
 
 F32 zNPCCommon::AnimTimeRemain(xAnimState* ast)
@@ -2928,7 +2919,7 @@ void zNPCCommon::Vibrate(en_npcvibe vibe, F32 duration)
 
 xVec3* zNPCCommon::MatPosSet(xVec3* pos)
 {
-    if (pos != NULL)
+    if (pos)
     {
         xVec3Copy((xVec3*)&model->Mat->pos, pos);
     }
@@ -2973,12 +2964,13 @@ void zNPCCommon::WonderOfTalking(S32 inprogress, xBase* owner)
 
 S32 zNPCCommon::SomethingWonderful()
 {
-    S32 flg_wonder = g_flg_wonder;
+    S32 flg_wonder = 0;
+
+    flg_wonder |= g_flg_wonder;
 
     if (globals.player.Health < 1)
     {
-        // Idk why they wouldn't do flg_wonder |= x here, but this is needed to match
-        flg_wonder = g_flg_wonder | 0b00000010;
+        flg_wonder |= 0b00000010;
     }
 
     if (globals.player.ControlOff & 0xffffbeff)
@@ -3096,7 +3088,7 @@ S32 zNPCCommon::SndPlayRandom(en_NPC_SOUND sndtype)
             xsid = this->SndStart(aidToPlay, sprop, cfg->rad_sound);
         }
     }
-    return (-xsid | xsid) >> 0x1f;
+    return (xsid != 0) ? 1 : 0;
 }
 
 U32 zNPCCommon::SndStart(U32 aid_toplay, NPCSndProp* sprop, F32 radius)
@@ -3106,7 +3098,7 @@ U32 zNPCCommon::SndStart(U32 aid_toplay, NPCSndProp* sprop, F32 radius)
     U32 owner;
     U32 xsid = 0;
     F32 vol;
-    U32 flg_snd;
+    S32 flg_snd;
     U32 xsndflags;
     static const F32 pitchChoices[7] = { -5.0f, -4.0f, -3.0f, -2.0f, -1.0f, 0.0f, 1.0f };
 
@@ -3160,8 +3152,8 @@ U32 zNPCCommon::SndStart(U32 aid_toplay, NPCSndProp* sprop, F32 radius)
         pvary = xUtil_choose(pitchChoices, 7, 0);
     }
 
-    xsndflags = 0x10000;
     owner = (U32)this + (flg_snd & 0x3);
+    xsndflags = 0x10000;
     if (flg_snd & 0x1000)
     {
         xsndflags &= ~0x10000;
@@ -3220,38 +3212,36 @@ void zNPCCommon::SndKillSounds(S32 flg_chan, S32 all)
     }
     else
     {
-        xSndStopChildren(owner + (flg_chan & 3));
+        owner += flg_chan & 3;
+        xSndStopChildren(owner);
     }
 }
 
 S32 zNPCCommon::SndQueUpdate(F32 dt)
 {
-    zNPCCommon* que;
-    S32 i;
-    S32 cnt;
+    NPCSndQueue* que;
     NPCSndProp* sprop;
-
-    cnt = 0;
-    que = this;
+    S32 i;
+    S32 cnt = 0;
 
     for (i = 0; i < 4; i++)
     {
-        if (que->snd_queue[0].sndtype != (en_NPC_SOUND)-2)
+        que = &snd_queue[i];
+        if (que->sndtype != NPC_STYP_BOGUS)
         {
             cnt++;
-            que->snd_queue[0].tmr_delay -= dt;
+            que->tmr_delay -= dt;
 
-            if (!(que->snd_queue[0].tmr_delay > 0.0f))
+            if (!(que->tmr_delay > 0.0f))
             {
                 cnt--;
-                sprop = NPCS_SndFindProps(que->snd_queue[0].sndtype);
-                this->SndStart(que->snd_queue[0].sndDirect, sprop, que->snd_queue[0].radius);
+                sprop = NPCS_SndFindProps(que->sndtype);
+                SndStart(que->sndDirect, sprop, que->radius);
 
-                que->snd_queue[0].sndtype = NPC_STYP_BOGUS;
-                que->snd_queue[0].sndDirect = 0;
+                que->sndtype = NPC_STYP_BOGUS;
+                que->sndDirect = 0;
             }
         }
-        que = (zNPCCommon*)((U8*)que + 0x14);
     }
 
     if (cnt > 0)
@@ -3448,6 +3438,10 @@ void zNPCCommon::LassoNotify(en_LASSO_EVENT event)
     case LASS_EVNT_GRABSTART:
     {
         lass->stage = LASS_STAT_GRABBING;
+        break;
+    }
+    case LASS_EVNT_GRABEND:
+    {
         break;
     }
     case LASS_EVNT_YANK:

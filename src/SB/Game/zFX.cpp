@@ -1274,7 +1274,7 @@ void zFX_SpawnBubbleBlast(const xVec3* pos, U32 num, F32 radius, F32 blast_vel, 
     {
         F32 ang = 2 * PI * xurand();
         F32 uz = 2.0f * xurand() - 1.0f;
-        F32 r = xsqrt(-(uz * uz - 1.0f));
+        F32 r = xsqrt(1.0f - uz * uz);
         itv->assign(r * icos(ang), r * isin(ang), uz);
         *itl = *pos + *itv * radius;
         *itv *= blast_vel;
@@ -1914,12 +1914,13 @@ namespace
 
 void reset_poppers()
 {
-    popper_data* pData;
+    popper_data* pData = &poppers[0];
     popper_data* pEnd = &poppers[sizeof(poppers) / sizeof(popper_data)];
-    for (pData = &poppers[0]; pData != pEnd; pData++)
+    while (pData != pEnd)
     {
         pData->state = STATE_NONE;
         pData->ent = NULL;
+        pData++;
     }
 }
 
@@ -2111,6 +2112,9 @@ void update_entrails(F32 dt)
 
 namespace
 {
+#ifdef PS2
+    inline
+#endif
     void entrail_data::update(F32 dt)
     {
         if (ent == NULL)
@@ -2127,11 +2131,8 @@ namespace
         entrail_type& t = entrail_types[type];
 
         const xVec3& campos = globals.camera.mat.pos;
-        xMat4x3* frame = xEntGetFrame(ent);
-        F32 dx = campos.x - frame->pos.x;
-        F32 dy = campos.y - frame->pos.y;
-        F32 dz = campos.z - frame->pos.z;
-        const xVec3 dist = { dx, dy, dz };
+        const xVec3& pos = xEntGetFrame(ent)->pos;
+        const xVec3 dist = { campos.x - pos.x, campos.y - pos.y, campos.z - pos.z };
 
         if (dist.length2() > t.cull_dist * t.cull_dist)
         {

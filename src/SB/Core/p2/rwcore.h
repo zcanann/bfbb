@@ -535,4 +535,20 @@ RwFrame* RwFrameGetRoot(const RwFrame* frame);
 RwBool RwFrameDestroyHierarchy(RwFrame* frame);
 }
 
+// RenderWare raster/texture and PS2 (sky) driver set-up API.
+typedef RwTexture* (*RwTextureCallBackRead)(const RwChar* name, const RwChar* maskName);
+
+extern "C" {
+RwInt32 RwRasterGetNumLevels(RwRaster* raster);
+RwBool RwTextureSetReadCallBack(RwTextureCallBackRead fpCallBack);
+RwBool RpSkySelectDeepZBuffer(RwBool enable);
+RwBool SkyInstallFileSystem(const char* deviceName);
+}
+
+// RenderWare matrix row accessors.
+#define RwMatrixGetRight(m) (&(m)->right)
+#define RwMatrixGetUp(m) (&(m)->up)
+#define RwMatrixGetAt(m) (&(m)->at)
+#define RwMatrixGetPos(m) (&(m)->pos)
+
 #endif

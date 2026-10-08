@@ -203,9 +203,13 @@ S32 NPCWidget::NPCIsTheLocker(const zNPCCommon* npc_lock)
     {
         return 0;
     }
+    else if (npc_lock == npc_ownerlock)
+    {
+        return 1;
+    }
     else
     {
-        return npc_lock == npc_ownerlock ? 1 : 0;
+        return 0;
     }
 }
 
@@ -777,6 +781,10 @@ void Firework::Update(F32 dt)
 {
     switch (this->fwstate)
     {
+    case FW_STAT_UNUSED:
+        break;
+    case FW_STAT_READY:
+        break;
     case FW_STAT_FLIGHT:
         this->FlyFlyFly(dt);
         if (this->tmr_remain < 0.0f)
