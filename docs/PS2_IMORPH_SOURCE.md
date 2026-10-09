@@ -91,3 +91,41 @@ Private reproducible evidence in `build`:
   kernel execution against original bytes.
 - `checkimorph-gc-all.py` and `imorph-gc-allocations.json` record the unchanged
   complete GameCube output against source parent `af07774e8`.
+
+## Original handwritten control flow
+
+The subsequent source restoration uses the original assembly-function form for
+all three PS2 kernels. These bodies are independently established handwritten
+MMI/VU routines: packed operations, manually allocated ABI registers, software
+pipelining, explicit delay slots, and no compiler-generated frame or named
+locals. The source preserves readable instructions and local labels, including
+the pipelined block stores and partial-block tail. GameCube retains its existing
+scalar C implementations.
+
+All 848 kernel bytes reproduce all four originals after resolving each actual
+source self-symbol relocation to its independently established original function
+base plus its internal label offset. The only ordinary-comparison residual is
+that the current target profile retains each literal internal J operand:
+
+| Kernel | J instruction offset | Destination offset within the same function |
+| --- | ---: | ---: |
+| `FastS16unpack` | 148 | 168 |
+| `FastS16weight2` | 180 | 200 |
+| `FastS16weight4` | 244 | 264 |
+
+No metadata is changed in this source follow-up. The debug-region whole-unit
+reports improve from 86.97318% to 98.91443%; France improves from 55.82547% to
+99.929245%. Exact totals remain 192 / two functions in each debug version and
+zero for the French subset until those genuine internal relocations are
+represented. All other function scores remain unchanged. This residual is a
+known relocation representation difference, not a compiler-code-generation
+hypothesis.
+
+All three complete GameCube allocated-section comparisons remain byte-identical.
+Private `build/imorph-asm-comparison.py` / `.json` preserve before and after
+complete-source builds in `imorph-asm-before/<version>` and
+`imorph-asm-after/<version>`. `imorph-asm-raw-proof.py` / `.json` independently
+checks every source relocation, its original within-function destination, and
+all reconstructed bytes. `checkimorph-asm-gc-all.py` and
+`imorph-asm-gc-allocations.json` retain the cross-platform control. Earlier typed
+pilot objects remain available under `imorph-pilot` and `imorph-asm-before`.

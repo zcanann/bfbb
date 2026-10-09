@@ -289,71 +289,86 @@ void iMorphRender(RpAtomic* model, RwMatrix* mat, S16** v_array, S16* weight, U3
 }
 
 #if defined(PS2)
-// These kernels consume padded groups of eight signed shorts. The weighted
+// The original hand-scheduled kernels consume padded groups of eight shorts.
+// Preserve their pipeline delay slots and bounded partial-block stores. Weighted
 // variants add signed integer products before converting to float in VU0;
 // scalar floating-point blending does not reproduce that arithmetic.
 #pragma dont_inline on
 #endif
 
+#if defined(PS2)
+asm
+#endif
 void FastS16unpack(F32* dest, S16* v, S32 count, F32 scale)
 {
 #if defined(PS2)
-    F32* last = dest + (((U32)(count - 1) >> 3) * 8);
-    scale *= 1.0f / 65536.0f;
-    U32 bits;
-    asm volatile("mfc1 %0, %1\n"
-                 "qmtc2 %0, vf1\n"
-                 : "=r"(bits) : "f"(scale));
-
-    for (;;)
-    {
-        asm volatile("lq a4, 0x0(%0)\n"
-                     "pextlh t4, a4, zero\n"
-                     "pextuh t5, a4, zero\n"
-                     "qmtc2 t4, vf2\n"
-                     "qmtc2 t5, vf3\n"
-                     "vitof0.xyzw vf2, vf2\n"
-                     "vmulx.xyzw vf2, vf2, vf1x\n"
-                     "vitof0.xyzw vf3, vf3\n"
-                     "vmulx.xyzw vf3, vf3, vf1x\n"
-                     : : "r"(v) : "a4", "t4", "t5", "memory");
-        v += 8;
-        if (dest == last)
-            break;
-        asm volatile("sqc2 vf2, 0x0(%0)\n"
-                     "sqc2 vf3, 0x10(%0)\n" : : "r"(dest) : "memory");
-        dest += 8;
-    }
-
-    if (count & 7)
-    {
-        unsigned __int128 tail;
-        if (count & 4)
-        {
-            asm volatile("sqc2 vf2, 0x0(%1)\n"
-                         "qmfc2 %0, vf3\n" : "=r"(tail) : "r"(dest) : "memory");
-            dest += 4;
-        }
-        else
-        {
-            asm volatile("qmfc2 %0, vf2\n" : "=r"(tail));
-        }
-        if (count & 2)
-        {
-            asm volatile("sd %0, 0x0(%1)\n"
-                         "pcpyud %0, %0, zero\n" : "+r"(tail) : "r"(dest) : "memory");
-            dest += 2;
-        }
-        if (count & 1)
-        {
-            asm volatile("sw %0, 0x0(%1)\n" : : "r"(tail), "r"(dest) : "memory");
-        }
-    }
-    else
-    {
-        asm volatile("sqc2 vf2, 0x0(%0)\n"
-                     "sqc2 vf3, 0x10(%0)\n" : : "r"(dest) : "memory");
-    }
+    lui v1, 0x3780
+    mtc1 v1, f0
+    nop
+    mul.s f0, f0, f12
+    addiu t6, a2, -0x1
+    srl t6, t6, 3
+    sll t6, t6, 5
+    addu t6, t6, a0
+    mfc1 v1, f0
+    b load_block
+    qmtc2 v1, vf1
+    nop
+store_block:
+    sqc2 vf2, 0x0(a0)
+    sqc2 vf3, 0x10(a0)
+    addiu a0, a0, 0x20
+    nop
+load_block:
+    lq a4, 0x0(a1)
+    addiu a1, a1, 0x10
+    pextlh t4, a4, zero
+    pextuh t5, a4, zero
+    qmtc2 t4, vf2
+    qmtc2 t5, vf3
+    vitof0.xyzw vf2, vf2
+    vmulx.xyzw vf2, vf2, vf1x
+    vitof0.xyzw vf3, vf3
+    bne a0, t6, store_block
+    vmulx.xyzw vf3, vf3, vf1x
+    nop
+    andi a5, a2, 0x7
+    beqz a5, store_full
+    nop
+    andi a5, a2, 0x4
+    beqz a5, lower_tail
+    nop
+    nop
+    sqc2 vf2, 0x0(a0)
+    qmfc2 a4, vf3
+    j tail_two
+    addiu a0, a0, 0x10
+    nop
+lower_tail:
+    qmfc2 a4, vf2
+    nop
+tail_two:
+    andi a5, a2, 0x2
+    beqz a5, tail_one
+    nop
+    nop
+    sd a4, 0x0(a0)
+    addiu a0, a0, 0x8
+    pcpyud a4, a4, zero
+    nop
+tail_one:
+    andi a5, a2, 0x1
+    beqz a5, done
+    nop
+    nop
+    b done
+    sw a4, 0x0(a0)
+store_full:
+    sqc2 vf2, 0x0(a0)
+    sqc2 vf3, 0x10(a0)
+done:
+    jr ra
+    nop
 #else
     for (S32 i = 0; i < count; i++)
     {
@@ -362,76 +377,87 @@ void FastS16unpack(F32* dest, S16* v, S32 count, F32 scale)
 #endif
 }
 
+#if defined(PS2)
+asm
+#endif
 void FastS16weight2(F32* dest, S16** v_array, S16* weight, S32 count, F32 scale)
 {
 #if defined(PS2)
-    unsigned __int128 weights01;
-    asm volatile("lh a4, 0x0(%1)\n"
-                 "lh a5, 0x2(%1)\n"
-                 "pcpyh a4, a4\n"
-                 "pcpyh a5, a5\n"
-                 "pextlh %0, a4, a5\n"
-                 : "=r"(weights01) : "r"(weight) : "a4", "a5");
-    F32* last = dest + (((U32)(count - 1) >> 3) * 8);
-    U32 bits;
-    asm volatile("mfc1 %0, %1\n"
-                 "qmtc2 %0, vf1\n" : "=r"(bits) : "f"(scale));
-    S16* v0 = v_array[0];
-    S16* v1 = v_array[1];
-    for (;;)
-    {
-        asm volatile("lq a4, 0x0(%0)\n"
-                     "lq a5, 0x0(%1)\n"
-                     "pextlh t4, a4, a5\n"
-                     "phmadh t4, t4, %2\n"
-                     "pextuh t5, a4, a5\n"
-                     "phmadh t5, t5, %2\n"
-                     "qmtc2 t4, vf2\n"
-                     "qmtc2 t5, vf3\n"
-                     "vitof0.xyzw vf2, vf2\n"
-                     "vmulx.xyzw vf2, vf2, vf1x\n"
-                     "vitof0.xyzw vf3, vf3\n"
-                     "vmulx.xyzw vf3, vf3, vf1x\n"
-                     : : "r"(v0), "r"(v1), "r"(weights01)
-                     : "a4", "a5", "t4", "t5", "memory");
-        v0 += 8;
-        v1 += 8;
-        if (dest == last)
-            break;
-        asm volatile("sqc2 vf2, 0x0(%0)\n"
-                     "sqc2 vf3, 0x10(%0)\n" : : "r"(dest) : "memory");
-        dest += 8;
-    }
-
-    if (count & 7)
-    {
-        unsigned __int128 tail;
-        if (count & 4)
-        {
-            asm volatile("sqc2 vf2, 0x0(%1)\n"
-                         "qmfc2 %0, vf3\n" : "=r"(tail) : "r"(dest) : "memory");
-            dest += 4;
-        }
-        else
-        {
-            asm volatile("qmfc2 %0, vf2\n" : "=r"(tail));
-        }
-        if (count & 2)
-        {
-            asm volatile("sd %0, 0x0(%1)\n"
-                         "pcpyud %0, %0, zero\n" : "+r"(tail) : "r"(dest) : "memory");
-            dest += 2;
-        }
-        if (count & 1)
-        {
-            asm volatile("sw %0, 0x0(%1)\n" : : "r"(tail), "r"(dest) : "memory");
-        }
-    }
-    else
-    {
-        asm volatile("sqc2 vf2, 0x0(%0)\n"
-                     "sqc2 vf3, 0x10(%0)\n" : : "r"(dest) : "memory");
-    }
+    lh a4, 0x0(a2)
+    lh a5, 0x2(a2)
+    pcpyh a4, a4
+    pcpyh a5, a5
+    pextlh v0, a4, a5
+    addiu t6, a3, -0x1
+    srl t6, t6, 3
+    sll t6, t6, 5
+    addu t6, t6, a0
+    mfc1 v1, f12
+    nop
+    qmtc2 v1, vf1
+    lwu v1, 0x0(a1)
+    b load_block
+    lwu a1, 0x4(a1)
+    nop
+store_block:
+    sqc2 vf2, 0x0(a0)
+    sqc2 vf3, 0x10(a0)
+    addiu a0, a0, 0x20
+    nop
+load_block:
+    lq a4, 0x0(v1)
+    lq a5, 0x0(a1)
+    addiu v1, v1, 0x10
+    pextlh t4, a4, a5
+    phmadh t4, t4, v0
+    pextuh t5, a4, a5
+    phmadh t5, t5, v0
+    addiu a1, a1, 0x10
+    qmtc2 t4, vf2
+    qmtc2 t5, vf3
+    vitof0.xyzw vf2, vf2
+    vmulx.xyzw vf2, vf2, vf1x
+    vitof0.xyzw vf3, vf3
+    bne a0, t6, store_block
+    vmulx.xyzw vf3, vf3, vf1x
+    nop
+    andi a5, a3, 0x7
+    beqz a5, store_full
+    nop
+    andi a5, a3, 0x4
+    beqz a5, lower_tail
+    nop
+    nop
+    sqc2 vf2, 0x0(a0)
+    qmfc2 a4, vf3
+    j tail_two
+    addiu a0, a0, 0x10
+    nop
+lower_tail:
+    qmfc2 a4, vf2
+    nop
+tail_two:
+    andi a5, a3, 0x2
+    beqz a5, tail_one
+    nop
+    nop
+    sd a4, 0x0(a0)
+    addiu a0, a0, 0x8
+    pcpyud a4, a4, zero
+    nop
+tail_one:
+    andi a5, a3, 0x1
+    beqz a5, done
+    nop
+    nop
+    b done
+    sw a4, 0x0(a0)
+store_full:
+    sqc2 vf2, 0x0(a0)
+    sqc2 vf3, 0x10(a0)
+done:
+    jr ra
+    nop
 #else
     S32 i;
     S16* a = v_array[0];
@@ -446,93 +472,103 @@ void FastS16weight2(F32* dest, S16** v_array, S16* weight, S32 count, F32 scale)
 #endif
 }
 
+#if defined(PS2)
+asm
+#endif
 void FastS16weight4(F32* dest, S16** v_array, S16* weight, S32 count, F32 scale)
 {
 #if defined(PS2)
-    unsigned __int128 weights01, weights23;
-    asm volatile("lh a4, 0x0(%2)\n"
-                 "lh a5, 0x2(%2)\n"
-                 "lh a6, 0x4(%2)\n"
-                 "lh a7, 0x6(%2)\n"
-                 "pcpyh a4, a4\n"
-                 "pcpyh a5, a5\n"
-                 "pcpyh a6, a6\n"
-                 "pcpyh a7, a7\n"
-                 "pextlh %0, a4, a5\n"
-                 "pextlh %1, a6, a7\n"
-                 : "=r"(weights01), "=r"(weights23) : "r"(weight) : "a4", "a5", "a6", "a7");
-    F32* last = dest + (((U32)(count - 1) >> 3) * 8);
-    U32 bits;
-    asm volatile("mfc1 %0, %1\n"
-                 "qmtc2 %0, vf1\n" : "=r"(bits) : "f"(scale));
-    S16* v0 = v_array[0];
-    S16* v1 = v_array[1];
-    S16* v2 = v_array[2];
-    S16* v3 = v_array[3];
-    for (;;)
-    {
-        asm volatile("lq a4, 0x0(%0)\n"
-                     "lq a5, 0x0(%1)\n"
-                     "lq a6, 0x0(%2)\n"
-                     "lq a7, 0x0(%3)\n"
-                     "pextlh t4, a4, a5\n"
-                     "phmadh t4, t4, %4\n"
-                     "pextuh t5, a4, a5\n"
-                     "phmadh t5, t5, %4\n"
-                     "pextlh a4, a6, a7\n"
-                     "phmadh a4, a4, %5\n"
-                     "pextuh a5, a6, a7\n"
-                     "phmadh a5, a5, %5\n"
-                     "paddw t4, t4, a4\n"
-                     "paddw t5, t5, a5\n"
-                     "qmtc2 t4, vf2\n"
-                     "qmtc2 t5, vf3\n"
-                     "vitof0.xyzw vf2, vf2\n"
-                     "vmulx.xyzw vf2, vf2, vf1x\n"
-                     "vitof0.xyzw vf3, vf3\n"
-                     "vmulx.xyzw vf3, vf3, vf1x\n"
-                     : : "r"(v0), "r"(v1), "r"(v2), "r"(v3), "r"(weights01), "r"(weights23)
-                     : "a4", "a5", "a6", "a7", "t4", "t5", "memory");
-        v0 += 8;
-        v1 += 8;
-        v2 += 8;
-        v3 += 8;
-        if (dest == last)
-            break;
-        asm volatile("sqc2 vf2, 0x0(%0)\n"
-                     "sqc2 vf3, 0x10(%0)\n" : : "r"(dest) : "memory");
-        dest += 8;
-    }
-
-    if (count & 7)
-    {
-        unsigned __int128 tail;
-        if (count & 4)
-        {
-            asm volatile("sqc2 vf2, 0x0(%1)\n"
-                         "qmfc2 %0, vf3\n" : "=r"(tail) : "r"(dest) : "memory");
-            dest += 4;
-        }
-        else
-        {
-            asm volatile("qmfc2 %0, vf2\n" : "=r"(tail));
-        }
-        if (count & 2)
-        {
-            asm volatile("sd %0, 0x0(%1)\n"
-                         "pcpyud %0, %0, zero\n" : "+r"(tail) : "r"(dest) : "memory");
-            dest += 2;
-        }
-        if (count & 1)
-        {
-            asm volatile("sw %0, 0x0(%1)\n" : : "r"(tail), "r"(dest) : "memory");
-        }
-    }
-    else
-    {
-        asm volatile("sqc2 vf2, 0x0(%0)\n"
-                     "sqc2 vf3, 0x10(%0)\n" : : "r"(dest) : "memory");
-    }
+    lh a4, 0x0(a2)
+    lh a5, 0x2(a2)
+    lh a6, 0x4(a2)
+    lh a7, 0x6(a2)
+    pcpyh a4, a4
+    pcpyh a5, a5
+    pcpyh a6, a6
+    pcpyh a7, a7
+    pextlh v0, a4, a5
+    pextlh v1, a6, a7
+    addiu t6, a3, -0x1
+    srl t6, t6, 3
+    sll t6, t6, 5
+    addu t6, t6, a0
+    mfc1 a2, f12
+    nop
+    qmtc2 a2, vf1
+    lwu a2, 0x0(a1)
+    lwu t7, 0x8(a1)
+    lwu t8, 0xc(a1)
+    b load_block
+    lwu a1, 0x4(a1)
+store_block:
+    sqc2 vf2, 0x0(a0)
+    sqc2 vf3, 0x10(a0)
+    addiu a0, a0, 0x20
+    nop
+load_block:
+    lq a4, 0x0(a2)
+    lq a5, 0x0(a1)
+    lq a6, 0x0(t7)
+    lq a7, 0x0(t8)
+    addiu a2, a2, 0x10
+    pextlh t4, a4, a5
+    phmadh t4, t4, v0
+    pextuh t5, a4, a5
+    phmadh t5, t5, v0
+    pextlh a4, a6, a7
+    phmadh a4, a4, v1
+    pextuh a5, a6, a7
+    phmadh a5, a5, v1
+    addiu a1, a1, 0x10
+    addiu t7, t7, 0x10
+    paddw t4, t4, a4
+    paddw t5, t5, a5
+    qmtc2 t4, vf2
+    qmtc2 t5, vf3
+    addiu t8, t8, 0x10
+    vitof0.xyzw vf2, vf2
+    vmulx.xyzw vf2, vf2, vf1x
+    vitof0.xyzw vf3, vf3
+    bne a0, t6, store_block
+    vmulx.xyzw vf3, vf3, vf1x
+    nop
+    andi a5, a3, 0x7
+    beqz a5, store_full
+    nop
+    andi a5, a3, 0x4
+    beqz a5, lower_tail
+    nop
+    nop
+    sqc2 vf2, 0x0(a0)
+    qmfc2 a4, vf3
+    j tail_two
+    addiu a0, a0, 0x10
+    nop
+lower_tail:
+    qmfc2 a4, vf2
+    nop
+tail_two:
+    andi a5, a3, 0x2
+    beqz a5, tail_one
+    nop
+    nop
+    sd a4, 0x0(a0)
+    addiu a0, a0, 0x8
+    pcpyud a4, a4, zero
+    nop
+tail_one:
+    andi a5, a3, 0x1
+    beqz a5, done
+    nop
+    nop
+    b done
+    sw a4, 0x0(a0)
+store_full:
+    sqc2 vf2, 0x0(a0)
+    sqc2 vf3, 0x10(a0)
+done:
+    jr ra
+    nop
 #else
     S32 i;
     S16* a0 = v_array[0];
