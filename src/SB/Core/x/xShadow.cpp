@@ -934,11 +934,66 @@ static RpCollisionTriangle* ShadowRenderTriangleCB(RpIntersection* isx, RpWorldS
         return collTriangle;
     }
 
+#if defined(PS2)
+    // Project three unaligned input positions using the matrix in vf28-vf31.
+    asm volatile("lwu $8, 0(%0)\n"
+                 "lwu $9, 4(%0)\n"
+                 "lwu $10, 8(%0)\n"
+                 "pextlw $8, $9, $8\n"
+                 "pcpyld $8, $10, $8\n"
+                 "qmtc2 $8, vf1\n"
+                 "lwu $8, 0(%1)\n"
+                 "lwu $9, 4(%1)\n"
+                 "lwu $10, 8(%1)\n"
+                 "pextlw $8, $9, $8\n"
+                 "pcpyld $8, $10, $8\n"
+                 "qmtc2 $8, vf2\n"
+                 "lwu $8, 0(%2)\n"
+                 "lwu $9, 4(%2)\n"
+                 "lwu $10, 8(%2)\n"
+                 "pextlw $8, $9, $8\n"
+                 "pcpyld $8, $10, $8\n"
+                 "qmtc2 $8, vf3\n"
+                 "vmulax.xyz ACC, vf28, vf1x\n"
+                 "vmadday.xyz ACC, vf29, vf1y\n"
+                 "vmaddaz.xyz ACC, vf30, vf1z\n"
+                 "vmaddw.xyz vf1, vf31, vf0w\n"
+                 "vmulax.xyz ACC, vf28, vf2x\n"
+                 "vmadday.xyz ACC, vf29, vf2y\n"
+                 "vmaddaz.xyz ACC, vf30, vf2z\n"
+                 "vmaddw.xyz vf2, vf31, vf0w\n"
+                 "vmulax.xyz ACC, vf28, vf3x\n"
+                 "vmadday.xyz ACC, vf29, vf3y\n"
+                 "vmaddaz.xyz ACC, vf30, vf3z\n"
+                 "vmaddw.xyz vf3, vf31, vf0w\n"
+                 "qmfc2 $8, vf1\n"
+                 "dsrl32 $9, $8, 0\n"
+                 "pcpyud $10, $8, $8\n"
+                 "sw $8, 0(%3)\n"
+                 "sw $9, 4(%3)\n"
+                 "sw $10, 8(%3)\n"
+                 "qmfc2 $8, vf2\n"
+                 "dsrl32 $9, $8, 0\n"
+                 "pcpyud $10, $8, $8\n"
+                 "sw $8, 12(%3)\n"
+                 "sw $9, 16(%3)\n"
+                 "sw $10, 20(%3)\n"
+                 "qmfc2 $8, vf3\n"
+                 "dsrl32 $9, $8, 0\n"
+                 "pcpyud $10, $8, $8\n"
+                 "sw $8, 24(%3)\n"
+                 "sw $9, 28(%3)\n"
+                 "sw $10, 32(%3)"
+                 : : "r"(collTriangle->vertices[0]), "r"(collTriangle->vertices[1]),
+                     "r"(collTriangle->vertices[2]), "r"(vShadOut)
+                 : "$8", "$9", "$10", "memory");
+#else
     vShad[0] = *collTriangle->vertices[0];
     vShad[1] = *collTriangle->vertices[1];
     vShad[2] = *collTriangle->vertices[2];
 
     RwV3dTransformPoints(vShadOut, vShad, 3, &param->invMatrix);
+#endif
 
     if (((vShadOut[0].z < 0.0f) && (vShadOut[1].z < 0.0f) && (vShadOut[2].z < 0.0f)) ||
         ((vShadOut[0].x < 0.0f) && (vShadOut[1].x < 0.0f) && (vShadOut[2].x < 0.0f)) ||
@@ -961,6 +1016,26 @@ static RpCollisionTriangle* ShadowRenderTriangleCB(RpIntersection* isx, RpWorldS
         Im3DBufferPos = 0;
     }
 
+#if defined(PS2)
+    RxObjSpace3DVertex* imv = &Im3DBuffer[Im3DBufferPos];
+    xVec3 c;
+
+    c.x = 0.002f * collTriangle->normal.x;
+    c.y = 0.002f * collTriangle->normal.y;
+    c.z = 0.002f * collTriangle->normal.z;
+
+    RwIm3DVertexSetPos(&imv[0], collTriangle->vertices[0]->x + c.x,
+                      collTriangle->vertices[0]->y + c.y,
+                      collTriangle->vertices[0]->z + c.z);
+
+    RwIm3DVertexSetPos(&imv[1], collTriangle->vertices[1]->x + c.x,
+                      collTriangle->vertices[1]->y + c.y,
+                      collTriangle->vertices[1]->z + c.z);
+
+    RwIm3DVertexSetPos(&imv[2], collTriangle->vertices[2]->x + c.x,
+                      collTriangle->vertices[2]->y + c.y,
+                      collTriangle->vertices[2]->z + c.z);
+#else
     RwV3d* v = collTriangle->vertices[0];
     RxObjSpace3DVertex* imv = &Im3DBuffer[Im3DBufferPos];
     xVec3 c;
@@ -977,6 +1052,8 @@ static RpCollisionTriangle* ShadowRenderTriangleCB(RpIntersection* isx, RpWorldS
     v = collTriangle->vertices[2];
     RwIm3DVertexSetPos(&imv[2], v->x + c.x, v->y + c.y, v->z + c.z);
 
+#endif
+
     imv[0].u = vShadOut[0].x;
     imv[1].u = vShadOut[1].x;
     imv[2].u = vShadOut[2].x;
@@ -984,11 +1061,18 @@ static RpCollisionTriangle* ShadowRenderTriangleCB(RpIntersection* isx, RpWorldS
     imv[1].v = vShadOut[1].y;
     imv[2].v = vShadOut[2].y;
 
+#if defined(PS2)
+    U32 sw = param->shadowWord;
+    *(U32*)&imv[0].c = sw;
+    *(U32*)&imv[1].c = sw;
+    *(U32*)&imv[2].c = sw;
+#else
     U8 sw = param->shadowValue;
 
     RwIm3DVertexSetRGBA(&imv[0], sw, sw, sw, sw);
     RwIm3DVertexSetRGBA(&imv[1], sw, sw, sw, sw);
     RwIm3DVertexSetRGBA(&imv[2], sw, sw, sw, sw);
+#endif
 
     Im3DBufferPos += 3;
 
@@ -1062,8 +1146,12 @@ static S32 ShadowRender(RwCamera* shadowCamera, RwRaster* shadowRast, RpIntersec
     RwMatrixTranslate(&param.invMatrix, &tr, rwCOMBINEPOSTCONCAT);
 
 #if defined(PS2)
-    // Retail loads param.invMatrix into VU0 vf28-vf31 here with inline asm for
-    // ShadowRenderTriangleCB; not recovered as C.
+    // The original callbacks use this persistent VU0 projection matrix.
+    asm volatile("lqc2 vf28, 0(%0)\n"
+                 "lqc2 vf29, 16(%0)\n"
+                 "lqc2 vf30, 32(%0)\n"
+                 "lqc2 vf31, 48(%0)"
+                 : : "r"(&param.invMatrix) : "memory");
 #else
     RwRenderStateGet(rwRENDERSTATEFOGENABLE, &fogstate);
     RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)0);
@@ -1988,8 +2076,12 @@ void xShadowVertical_DrawCache(xShadowCache* cache, F32 shadowFactor, F32 fadeDi
     RwMatrixTranslate(&param.invMatrix, &tr, rwCOMBINEPOSTCONCAT);
 
 #if defined(PS2)
-    // Retail loads param.invMatrix into VU0 vf28-vf31 here with inline asm for
-    // ShadowRenderTriangleCB; not recovered as C.
+    // The original callbacks use this persistent VU0 projection matrix.
+    asm volatile("lqc2 vf28, 0(%0)\n"
+                 "lqc2 vf29, 16(%0)\n"
+                 "lqc2 vf30, 32(%0)\n"
+                 "lqc2 vf31, 48(%0)"
+                 : : "r"(&param.invMatrix) : "memory");
 #else
     RwRenderStateGet(rwRENDERSTATEFOGENABLE, &fogstate);
     RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)0);
