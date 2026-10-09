@@ -210,7 +210,7 @@ def _merge_corroborated(functions: list[dict], registry: dict, expected: dict,
                        metadata: dict, binary: bytes, loaded: list[dict], kind: str | tuple[str, ...]) -> int:
     """Merge regenerated extents through shared identity, byte and overlap checks."""
     if registry != expected:
-        raise ValueError("Corroborated registry differs from regenerated original evidence")
+        raise ValueError(f"Corroborated registry differs from regenerated original evidence ({kind})")
     if registry["executable_sha1"] != metadata["sha1"] or registry.get("coverage_complete") is not False:
         raise ValueError("Corroborated registry identity or partial scope differs")
     allowed_kinds = (kind,) if isinstance(kind, str) else kind
