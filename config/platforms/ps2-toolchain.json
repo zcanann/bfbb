@@ -196249,10 +196249,374 @@
         "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
       ],
       "symbols": {
-        "HangableSetup": "HangableSetup__FP12zEntHangableP9xEntAsset"
+        "zEntHangable_FollowUpdate": "zEntHangable_FollowUpdate__FP12zEntHangable",
+        "zEntHangable_Reset": "zEntHangable_Reset__FP12zEntHangable",
+        "zEntHangable_Load": "zEntHangable_Load__FP12zEntHangableP7xSerial",
+        "zEntHangable_Save": "zEntHangable_Save__FP12zEntHangableP7xSerial",
+        "zEntHangable_SetMatrix": "zEntHangable_SetMatrix__FP12zEntHangablef",
+        "zEntHangableEventCB": "zEntHangableEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "zEntHangable_Update": "zEntHangable_Update__FP12zEntHangableP6xScenef",
+        "zEntHangable_UpdateFX": "zEntHangable_UpdateFX__FP12zEntHangable",
+        "zEntHangable_Init": "zEntHangable_Init__FPvPv",
+        "HangableSetup": "HangableSetup__FP12zEntHangableP9xEntAsset",
+        "zEntHangable_SetupFX": "zEntHangable_SetupFX__Fv"
       },
-      "calls": [],
+      "calls": [
+        {
+          "function": "zEntHangable_Reset",
+          "offset": 48,
+          "target_source": "SB/Core/x/xEnt.cpp",
+          "target_function": "xEntReset@001d4640",
+          "symbol": "xEntReset__FP4xEnt"
+        },
+        {
+          "function": "zEntHangable_Reset",
+          "offset": 60,
+          "target_source": "SB/Game/zEntHangable.cpp",
+          "target_function": "HangableSetup@001380d0",
+          "symbol": "HangableSetup__FP12zEntHangableP9xEntAsset"
+        },
+        {
+          "function": "zEntHangable_SetMatrix",
+          "offset": 284,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RotC@001ef6d0",
+          "symbol": "xMat3x3RotC__FP7xMat3x3ffff"
+        },
+        {
+          "function": "zEntHangable_SetMatrix",
+          "offset": 860,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3GetEuler@001efc40",
+          "symbol": "xMat3x3GetEuler__FPC7xMat3x3P5xVec3"
+        },
+        {
+          "function": "zEntHangable_SetMatrix",
+          "offset": 1252,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "zEntHangable_SetMatrix",
+          "offset": 1328,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "zEntHangableEventCB",
+          "offset": 324,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "zEntHangableEventCB",
+          "offset": 520,
+          "target_source": "SB/Game/zEntHangable.cpp",
+          "target_function": "zEntHangable_Reset@00137060",
+          "symbol": "zEntHangable_Reset__FP12zEntHangable"
+        },
+        {
+          "function": "zEntHangableEventCB",
+          "offset": 548,
+          "target_source": "SB/Game/zEntHangable.cpp",
+          "target_function": "zEntHangable_FollowUpdate@00136ee0",
+          "symbol": "zEntHangable_FollowUpdate__FP12zEntHangable"
+        },
+        {
+          "function": "zEntHangableEventCB",
+          "offset": 636,
+          "target_source": "SB/Core/x/xUpdateCull.cpp",
+          "target_function": "xUpdateCull_SetCB@00329420",
+          "symbol": "xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv"
+        },
+        {
+          "function": "zEntHangableEventCB",
+          "offset": 672,
+          "target_source": "SB/Core/x/xUpdateCull.cpp",
+          "target_function": "xUpdateCull_SetCB@00329420",
+          "symbol": "xUpdateCull_SetCB__FP14xUpdateCullMgrPvPFPvPv_UiPv"
+        },
+        {
+          "function": "zEntHangable_Update",
+          "offset": 64,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3GetEuler@001efc40",
+          "symbol": "xMat3x3GetEuler__FPC7xMat3x3P5xVec3"
+        },
+        {
+          "function": "zEntHangable_Update",
+          "offset": 256,
+          "target_source": "SB/Game/zEntHangable.cpp",
+          "target_function": "zEntHangable_UpdateFX@00137ea0",
+          "symbol": "zEntHangable_UpdateFX__FP12zEntHangable"
+        },
+        {
+          "function": "zEntHangable_Update",
+          "offset": 372,
+          "target_source": "SB/Game/zEntHangable.cpp",
+          "target_function": "zEntHangable_FollowUpdate@00136ee0",
+          "symbol": "zEntHangable_FollowUpdate__FP12zEntHangable"
+        },
+        {
+          "function": "zEntHangable_Update",
+          "offset": 1024,
+          "target_source": "SB/Game/zEntHangable.cpp",
+          "target_function": "zEntHangable_SetMatrix@001370e0",
+          "symbol": "zEntHangable_SetMatrix__FP12zEntHangablef"
+        },
+        {
+          "function": "zEntHangable_Init",
+          "offset": 76,
+          "target_source": "SB/Game/zEntHangable.cpp",
+          "target_function": "HangableSetup@001380d0",
+          "symbol": "HangableSetup__FP12zEntHangableP9xEntAsset"
+        },
+        {
+          "function": "zEntHangable_SetupFX",
+          "offset": 44,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        }
+      ],
       "linkage_provenance": [
+        {
+          "function": "zEntHangable_FollowUpdate",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 1273568,
+          "size": 376,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1273568,
+              "reference_sha256": "065b06b7330ccc215e81794a341121796d88a2b86f95534530b6475d6c16e891"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1273568,
+              "reference_sha256": "fbfc0f8ea2fb58f29cc018707f2193c4c2fd295e7075789b50cf1de60b8cca24"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1273568,
+              "reference_sha256": "7b9cc98a6f730c39b3fc7aba4b78ab56a0431575df7282350b2e262804a467a9"
+            }
+          ]
+        },
+        {
+          "function": "zEntHangable_Reset",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 1273952,
+          "size": 84,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1273952,
+              "reference_sha256": "623c77dc6e7e0a20e63458e9b2b309d5c8562e8604cfcdae4f24c14a7c0953c8"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1273952,
+              "reference_sha256": "3691ec00d0f5461418ab0aab779d06b4406339dec0398e455cacc315ee40b466"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1273952,
+              "reference_sha256": "496144f5e29e26ee74b1d0d2ff5719d831abd48e98b449e022faebce41edc217"
+            }
+          ]
+        },
+        {
+          "function": "zEntHangable_Load",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 1274048,
+          "size": 8,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1274048,
+              "reference_sha256": "d4980fec18b77054f912e29b4afe03403569f1edfcd7e09740713dc5acdea0ff"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1274048,
+              "reference_sha256": "d4980fec18b77054f912e29b4afe03403569f1edfcd7e09740713dc5acdea0ff"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1274048,
+              "reference_sha256": "d4980fec18b77054f912e29b4afe03403569f1edfcd7e09740713dc5acdea0ff"
+            }
+          ]
+        },
+        {
+          "function": "zEntHangable_Save",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 1274064,
+          "size": 8,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1274064,
+              "reference_sha256": "3932758e1799971732ac1141dd9a6212550daffdfd8ac6b6c27f4038174b0bee"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1274064,
+              "reference_sha256": "3932758e1799971732ac1141dd9a6212550daffdfd8ac6b6c27f4038174b0bee"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1274064,
+              "reference_sha256": "3932758e1799971732ac1141dd9a6212550daffdfd8ac6b6c27f4038174b0bee"
+            }
+          ]
+        },
+        {
+          "function": "zEntHangable_SetMatrix",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 1274080,
+          "size": 1612,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1274080,
+              "reference_sha256": "3a32e3e911d3b33761ba7c79f0fc663a3babb9766fdc43883a2f9c8da91a0e60"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1274080,
+              "reference_sha256": "85305eb251327241de26270c3020b9c37e8a84f0e096832f976a2aa85a48ec9d"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1274080,
+              "reference_sha256": "e168d6e7cb284794d80e8803c25ce90723daa0fdb0810a3a9649d1ebd575fbdc"
+            }
+          ]
+        },
+        {
+          "function": "zEntHangableEventCB",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 1275696,
+          "size": 812,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1275696,
+              "reference_sha256": "b31b5aaee1190c8f8effa98cd102e0d7942dbc5f198264a5932dfc35865c84ca"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1275696,
+              "reference_sha256": "bce835618f77ca663f3307ec82890776bdad6eb2bcc042a17c244edd4cf53292"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1275696,
+              "reference_sha256": "75490f38ef25aacb946cfb8f17b9d0439ae768ba3f8a71e2ca8ae65d06749e93"
+            }
+          ]
+        },
+        {
+          "function": "zEntHangable_Update",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 1276512,
+          "size": 1080,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1276512,
+              "reference_sha256": "906eae406dfe77cb4cfc31ca8d0bba2c065cdb74e08a464adc62e4fbc7ffc11a"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1276512,
+              "reference_sha256": "442b4fa479662fa1268ab56e501e0633a3f9645a5ef6cfb037b1d5d5d7cbebad"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1276512,
+              "reference_sha256": "e2dc17049ea5e8c9462c98a13195b1e605d6544934f63d6f95c46cf254517a33"
+            }
+          ]
+        },
+        {
+          "function": "zEntHangable_UpdateFX",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 1277600,
+          "size": 448,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1277600,
+              "reference_sha256": "bab13736a52dd0e04e86541d640a2f26529ac22c97586d71ee34668fc0ff0fda"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1277600,
+              "reference_sha256": "cff72be42d594862bd3202633ea57a658c441bd5b436d8c273014545493768ef"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1277600,
+              "reference_sha256": "5677df70835541a174eabfab00d5c2bced51b76a079243b01f67dec238fe01bf"
+            }
+          ]
+        },
+        {
+          "function": "zEntHangable_Init",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 1278048,
+          "size": 104,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1278048,
+              "reference_sha256": "4f1c3fbb0f0b083829d05ee797face21609039dc4d49e810965cdf644593125b"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1278048,
+              "reference_sha256": "4f1c3fbb0f0b083829d05ee797face21609039dc4d49e810965cdf644593125b"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1278048,
+              "reference_sha256": "4f1c3fbb0f0b083829d05ee797face21609039dc4d49e810965cdf644593125b"
+            }
+          ]
+        },
         {
           "function": "HangableSetup",
           "registry": "relocation-corroborated-functions.json",
@@ -196276,6 +196640,32 @@
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
               "source_address": 1278160,
               "reference_sha256": "df1b0992b019f67e1161eb34170af261650b18be151a1cb35c6eec6e3a48f0ea"
+            }
+          ]
+        },
+        {
+          "function": "zEntHangable_SetupFX",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 1278416,
+          "size": 84,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1278416,
+              "reference_sha256": "5dbec9048f5db1b4904deba2079c8a1fb2d3ed0af0e98e818267cf9b12d8ee77"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1278416,
+              "reference_sha256": "1ada2847ab9ed8577fabcd0853a8fd0a18d72931643d0ee5d062020e695491ee"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1278416,
+              "reference_sha256": "966e15d4617213d9ce72935d03f492e79bc314a9ac7ec859769918c1fa753461"
             }
           ]
         }

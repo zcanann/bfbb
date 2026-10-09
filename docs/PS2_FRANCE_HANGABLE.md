@@ -54,3 +54,14 @@ append these results to the existing combined TU registry and regenerate its
 canonical checks; the generator deliberately excludes its own new entries
 when loading independent context. This proof alone does not claim compiled
 source matching or a linked PS2 executable.
+
+The France-only source profile now selects all eleven proven members. Its
+canonical linkage names and seventeen restored direct calls are checked
+against all three original DWARF identities. Unpromoted external prefix
+contexts are excluded from relocation restoration. A private target generated
+through `ps2_source.prepare_functions` and compiled with the authenticated PS2
+toolchain produced 10/11 exact functions, 4,420/4,868 exact bytes and 99.94248%
+fuzzy matching. This adds nine exact functions and 4,168 exact bytes over the
+previous Setup-only profile. UpdateFX retains the same 99.375% residual as the
+debug originals. The source and all other version profiles are unchanged.
+These function comparisons do not establish a linked PS2 executable.
