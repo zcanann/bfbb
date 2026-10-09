@@ -86,3 +86,26 @@ The French comparison uses the independently reviewed 12-member target from
 string254. Private evidence: build/near263/{alignment.json,proof.json,
 gc/proof.json,xbox/proof.json,truth/<version>/report.json,
 french-expanded/report.json}. No additional source variants were retained.
+
+## Hash character lifetimes (2026-10-09)
+
+The PS2 hash loops now test the current byte before creating the original
+`char` local inside the loop body. Both hash overloads and HashCat update the
+accumulator before advancing the input pointer. This preserves the original
+byte narrowing and register lifetimes. Merely changing the old outer U32 local
+to char did not match: the character's scope and update order both matter.
+The bounded overload retains its unsigned limit check before reading a byte.
+
+All three complete original bodies now match: the unbounded hash (88 bytes),
+bounded hash (104), and prefixed hash (88). USA, Europe, Germany and France each
+gain 280 exact bytes and three functions. Their complete twelve-function string
+units rise from 5/12 functions and 2296/3948 exact bytes to 8/12 and 2576/3948;
+fuzzy matching improves from 92.64033% to 95.42148%. Every other function score
+is unchanged. Direct source-object/target-object body comparisons also confirm
+all twelve regional hash bodies are byte-identical, with no relocations needed.
+
+The new loop forms are PS2-only. The full GameCube USA build retains its entire
+progress report and passes the retail DOL SHA-1 check. No shared header, profile,
+registry, target boundary or compiler setting changes. Private evidence is
+`build/string-oct09`, including all four before/after reports, rejected loop
+forms and `raw-hash-proof.json`.

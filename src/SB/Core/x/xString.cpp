@@ -9,6 +9,14 @@
 U32 xStrHash(const char* str)
 {
     U32 hash = 0;
+#if defined(PS2)
+    while (*str)
+    {
+        char c = *str;
+        hash = (char)(c - (c & c >> 1 & 0x20)) + hash * 0x83;
+        str++;
+    }
+#else
 #ifdef XBOX
     char i;
 #else
@@ -24,6 +32,7 @@ U32 xStrHash(const char* str)
 #endif
         str++;
     }
+#endif
 
     return hash;
 }
@@ -32,6 +41,13 @@ U32 xStrHash(const char* str, size_t size)
 {
     U32 hash = 0;
     U32 i = 0;
+#if defined(PS2)
+    for (; i < size && *str; i++, str++)
+    {
+        char c = *str;
+        hash = (char)(c - (c & c >> 1 & 0x20)) + hash * 0x83;
+    }
+#else
 #ifdef XBOX
     char c;
 #else
@@ -54,6 +70,7 @@ U32 xStrHash(const char* str, size_t size)
         hash = (c - (c & (S32)c >> 1 & 0x20) & 0xff) + hash * 0x83;
 #endif
     }
+#endif
 
     return hash;
 }
@@ -65,6 +82,14 @@ U32 xStrHashCat(U32 prefix, const char* str)
     // match. It is still a live read of an indeterminate value anywhere the
     // parameter is not already in the accumulator's register.
     U32 hash = prefix;
+#if defined(PS2)
+    while (*str)
+    {
+        char c = *str;
+        hash = (char)(c - (c & c >> 1 & 0x20)) + hash * 0x83;
+        str++;
+    }
+#else
 #ifdef XBOX
     char i;
 #else
@@ -86,6 +111,7 @@ U32 xStrHashCat(U32 prefix, const char* str)
         hash = (i - (i & (S32)i >> 1 & 0x20) & 0xff) + hash * 0x83;
 #endif
     }
+#endif
 
     return hash;
 }
