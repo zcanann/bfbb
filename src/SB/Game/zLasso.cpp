@@ -34,7 +34,11 @@ static void nonfizzicalHonda(zLasso* lasso, f32 arg1, xVec3* arg2);
 static void fizzicalSlack(zLasso* lasso, f32 arg1, xVec3* arg2);
 static void initVertMap(zLassoGuide* guide);
 static void bakeMorphAnim(RpGeometry* geom, void* anim);
+#if defined(PS2)
+static void vec2vecMat(xMat4x3* m, const xVec3* v1, const xVec3* v2);
+#else
 static void vec2vecMat(xMat4x3* m, xVec3* v1, xVec3* v2);
+#endif
 
 inline void xMat4x3RotC(xMat4x3* m, F32 f1, F32 f2, F32 f3, F32 f4);
 inline void xMat4x3Rot(xMat4x3* m, const xVec3* v, F32 f);
@@ -248,7 +252,7 @@ void zLasso_Render(zLasso* lasso)
     F32 mdu;
 
     useGuide = ((((lasso->flags & 0x800) != 0) && ((lasso->flags & 0x4000) != 0)) ||
-                (((lasso->flags & 0x800) == 0) && ((lasso->flags & 0x2000) != 0)));
+                (!(lasso->flags & 0x800) && ((lasso->flags & 0x2000) != 0)));
 
     if (useGuide)
     {
@@ -976,7 +980,11 @@ static void initVertMap(zLassoGuide* guide)
     } while (curr != init);
 }
 
+#if defined(PS2)
+static void vec2vecMat(xMat4x3* m, const xVec3* v1, const xVec3* v2)
+#else
 static void vec2vecMat(xMat4x3* m, xVec3* v1, xVec3* v2)
+#endif
 {
     xVec3 v3;
     xVec3Cross(&v3, v1, v2);
