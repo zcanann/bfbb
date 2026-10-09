@@ -757,10 +757,15 @@ void xParCmd_DampenSpeed_Update(xParCmd* c, xParGroup* ps, F32 dt)
 
     if (cmd->enabled)
     {
+#if !defined(XBOX)
         p = ps->m_root;
+#endif
 
         F32 damp = dt * cmd->dampSpeed;
 
+#if defined(XBOX)
+        p = ps->m_root;
+#endif
         while (p)
         {
             xVec3AddScaled(&p->m_vel, &p->m_vel, damp);
