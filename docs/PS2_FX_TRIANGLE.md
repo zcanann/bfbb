@@ -34,3 +34,13 @@ regions and a complete GameCube `ninja -j 8` report comparison. Private
 evidence is in `build/zfx-oct09/after-proof.json` and
 `build/zfx-oct09/original-proof.json`. France has no profile for this
 function in the source baseline used for this change.
+
+The same unit's 520-byte `zFX_SpawnBubbleWall` also reaches 100% from
+69.63077% in all three debug regions. Its original loop reloads the
+position and velocity scale components after the random calls. The
+existing manual load-hoisting workaround is now limited to non-PS2
+builds, preserving GameCube's distinct original ordering. Normal
+full-unit checks confirm this adds 520 exact bytes and one exact
+function per debug region without other changes. The French unit's
+existing `update_popper` profile and the complete GameCube report remain
+unchanged. Private evidence is in `build/zfx-oct09/wall-proof.json`.

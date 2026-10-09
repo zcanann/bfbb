@@ -1195,7 +1195,8 @@ void zFX_SpawnBubbleWall()
     xVec3 pos[100];
     xVec3 vel[100];
 
-    // Retail hoisted these six loads out of the loop. Our compiler does not, so
+#if !defined(PS2)
+    // GameCube retail hoisted these six loads out of the loop. Our compiler does not, so
     // they are hoisted by hand; the declaration order fixes the register
     // assignment and the assignment order fixes the emitted load order.
     F32 sy, sx, vsz, vsy, vsx, sz;
@@ -1206,21 +1207,35 @@ void zFX_SpawnBubbleWall()
     vsy = bubblewall_velscale.y;
     vsz = bubblewall_velscale.z;
 
+#endif
+
     xVec3* pp = pos;
     xVec3* vp = vel;
     for (U32 i = 0; i < 50; i++, pp++, vp++)
     {
+#if defined(PS2)
+        pp->x = mat->pos.x + (xurand() - 0.5f) + bubblewall_scale.x * (xurand() - 0.5f);
+        pp->y = mat->pos.y + (xurand() - 0.5f) + bubblewall_scale.y * (xurand() - 0.5f);
+        pp->z = mat->pos.z + (xurand() - 0.5f) + bubblewall_scale.z * (xurand() - 0.5f);
+#else
         pp->x = mat->pos.x + (xurand() - 0.5f) + sx * (xurand() - 0.5f);
         pp->y = mat->pos.y + (xurand() - 0.5f) + sy * (xurand() - 0.5f);
         pp->z = mat->pos.z + (xurand() - 0.5f) + sz * (xurand() - 0.5f);
+#endif
 
         xVec3 offset;
         xVec3ScaleC(&offset, (xVec3*)&mat->at, 1.2f, 1.2f, 1.2f);
         xVec3Add(pp, pp, &offset);
 
+#if defined(PS2)
+        vp->x = bubblewall_velscale.x * (xurand() - 0.5f);
+        vp->y = bubblewall_velscale.y * (xurand() - 0.5f);
+        vp->z = bubblewall_velscale.z * (xurand() - 0.5f);
+#else
         vp->x = vsx * (xurand() - 0.5f);
         vp->y = vsy * (xurand() - 0.5f);
         vp->z = vsz * (xurand() - 0.5f);
+#endif
     }
 
     zParPTankSpawnBubbles(pos, vel, 50, 1.0f);
