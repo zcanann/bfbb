@@ -544,6 +544,34 @@
       "provenance": "reviewed-whole-tu-sequence"
     },
     {
+      "name": "iModelMaterialMulCB",
+      "source": "SB/Core/p2/iModel.cpp",
+      "address": 1757760,
+      "size": 712,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "iModelSetMaterialAlpha",
+      "source": "SB/Core/p2/iModel.cpp",
+      "address": 1759216,
+      "size": 224,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "iModelCull",
+      "source": "SB/Core/p2/iModel.cpp",
+      "address": 1764912,
+      "size": 288,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NextAtomicCallback",
+      "source": "SB/Core/p2/iModel.cpp",
+      "address": 1766352,
+      "size": 48,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "FastS16weight4",
       "source": "SB/Core/p2/iMorph.cpp",
       "address": 1767728,

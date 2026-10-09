@@ -1,4 +1,4 @@
-"""Authenticated complete boss animation-builder regression checks."""
+"""Authenticated complete model-leaf and typed-storage regression checks."""
 import json
 import os
 from pathlib import Path

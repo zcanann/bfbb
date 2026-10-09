@@ -15080,3 +15080,46 @@ comparison logs, `build/oct09-france-eval-townsfolk` and comparison log,
 `build/oct09-eval-townsfolk-<GameCube-version>.log`,
 `build/oct09-eval-townsfolk-xbox` and
 `build/oct09-france-townsfolk-{query,map}.json`.
+
+The triangle/model/motion batch adds 1,560 exact bytes / three functions in
+each debug PS2 region: BubbleWall 520 bytes, motion initialization 744, and
+FindAtomicCallback 296. USA reaches 1,035,628 bytes / 3,833 functions, PAL
+1,028,068 / 3,820, and Germany 1,029,136 / 3,822. Every earlier function/code/data
+measure survives the complete comparisons. Four changed units are rebuilt
+against the verified 214-unit snapshots; debug profiles and global compiler
+settings are unchanged, and all final source hashes are rechecked.
+
+Restored weighted vertex/tag kernels reach 93.14732% / 93.516304%; triangle
+skinning reaches 99.22085%, move-point banking 99.67374%, and goo update
+99.99288%. Raw VU words and lane masks are independently audited. Deferred
+compilation can extend pragma effects beyond lexical placement; the full-unit
+motion checks establish that only the intended functions change. Goo's original
+unused vector slot explains a remaining frame-size lead; unsuccessful local
+initialization probes are discarded without synthetic padding or a compiler
+defect claim. Unproved SDK identities remain unpromoted, including eight calls
+in the report-exact atomic callback.
+
+Four complete French model leaves add 1,272 known bytes, reaching 871 functions
+/ 425,832 bytes. All 575 earlier TU function records and all prior auxiliary
+proofs survive unchanged. Seven original-backed tests pass; typed material
+arrays and an independently anchored camera frustum prove all three address
+pairs, and all 42 Cull vector words match raw. Strict aggregate regeneration and
+all 83 source compilations succeed. The model leaves plus motion initialization
+add 1,728 exact bytes / four functions, reaching 211,128 / 591; no earlier score
+declines.
+
+Both Xbox releases add 228 exact bytes / two functions through particle damping
+and following, reaching 15,797 bytes / 84 functions. Both bodies match all
+81 / 147 bytes directly against authenticated originals, without relocations;
+every other compared particle body is unchanged. Both full 13-unit source
+reports pass. All three GameCube full source reports/checksums pass, and all
+allocated source section entries for the Xbox-specific edits remain identical
+in all four PS2 versions. Full CPU denominators and source-data/full-link
+limitations remain unchanged.
+
+Evidence: `build/oct09-fx-model-motion`, its three comparison logs,
+`build/oct09-france-fx-model-motion` and comparison log,
+`build/oct09-imodel-kernels-{proof.json,tests.log}`,
+`build/oct09-fx-model-motion-<GameCube-version>.log`,
+`build/oct09-fx-model-motion-xbox`, and the Xbox worktree's
+`build/xbox-{dampen,follow}-raw-proof.json` and cross-platform control artifacts.

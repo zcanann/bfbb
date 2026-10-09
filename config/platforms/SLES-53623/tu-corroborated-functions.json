@@ -65,14 +65,15 @@
     "Common NPC animation adds two complete original builders in an independently unique 400-byte cluster with 392 code bytes. Original member ordering, bounds and zero alignment gaps are checked separately from the Robot cluster. Complete typed names, literals, callback identity and animation callees corroborate every operand. No whole translation-unit or data extent is claimed.",
     "Boss NPC animation adds five individually unique complete original builders. All original owner/boundary identities, 279 typed table/string/callback/initializer operands and 143 JALs are checked in each reference, using five fixed complete dependencies. Shared initializer owner selection is constrained by each authenticated function source and preserves earlier Robot proof output. No whole translation-unit or data extent is claimed.",
     "Additional NPC animation adds five individually unique complete original builders. All original owners, bounds, 128 typed operands and 69 JALs are checked through five fixed complete dependencies. One scoped Sandy initializer verifies its complete bounded three-iteration copy prefix and final word; generic straight-line checks remain unchanged. No whole translation-unit or data extent is claimed.",
-    "Townsfolk animation adds nine complete original functions in two independently unique Ambient/Villager clusters. All original member orders, bounds, zero gaps, 74 typed operands and 62 transfers are checked. Three exact null-argument tail wrappers reach complete local builders; two scoped copy prefixes preserve the generic checker. No whole translation-unit or data extent is claimed."
+    "Townsfolk animation adds nine complete original functions in two independently unique Ambient/Villager clusters. All original member orders, bounds, zero gaps, 74 typed operands and 62 transfers are checked. Three exact null-argument tail wrappers reach complete local builders; two scoped copy prefixes preserve the generic checker. No whole translation-unit or data extent is claimed.",
+    "Model leaves add four independently unique complete original functions. Typed material arrays and an independently anchored camera frustum prove all three address pairs; all 42 Cull vector instruction words match raw. Original ownership, bounds, zero alignment and strict control flow are checked in all three references. No SDK callee, whole translation-unit or data extent is claimed."
   ],
   "counts": {
-    "functions": 575,
-    "code_bytes": 355692,
-    "source_units": 80,
+    "functions": 579,
+    "code_bytes": 356964,
+    "source_units": 81,
     "rooted_direct_call_entries": 129,
-    "closed_return_bodies": 544,
+    "closed_return_bodies": 548,
     "reviewed_tail_wrappers": 2,
     "registered_callback_entries": 26,
     "reviewed_leaf_tail_functions": 11,
@@ -98,7 +99,7 @@
     "reviewed_pad_kill_tails": 1,
     "reviewed_hangable_tail_chains": 2,
     "reviewed_group_base_tails": 2,
-    "reviewed_complete_caller_callee_clusters": 35,
+    "reviewed_complete_caller_callee_clusters": 39,
     "reviewed_event_shuffle_tails": 5,
     "exact_null_argument_tail_wrappers": 3
   },
@@ -10334,6 +10335,711 @@
         "unchanged_anchor_bytes": 60,
         "masked_instruction_count": 79
       },
+      "whole_translation_unit_claimed": false
+    },
+    {
+      "version": "SLUS-20680",
+      "complete_bodies": [
+        {
+          "source_address": 1756464,
+          "target_address": 1757760,
+          "size": 712,
+          "uniqueness": {
+            "matching_addresses": [
+              1757760
+            ],
+            "unchanged_anchor_offset": 16,
+            "unchanged_anchor_bytes": 696,
+            "masked_instruction_count": 1
+          },
+          "terminal_alignment_bytes": 8,
+          "raw_vector_instruction_words": []
+        },
+        {
+          "source_address": 1757920,
+          "target_address": 1759216,
+          "size": 224,
+          "uniqueness": {
+            "matching_addresses": [
+              1759216
+            ],
+            "unchanged_anchor_offset": 72,
+            "unchanged_anchor_bytes": 152,
+            "masked_instruction_count": 1
+          },
+          "terminal_alignment_bytes": 0,
+          "raw_vector_instruction_words": []
+        },
+        {
+          "source_address": 1763616,
+          "target_address": 1764912,
+          "size": 288,
+          "uniqueness": {
+            "matching_addresses": [
+              1764912
+            ],
+            "unchanged_anchor_offset": 16,
+            "unchanged_anchor_bytes": 272,
+            "masked_instruction_count": 1
+          },
+          "terminal_alignment_bytes": 0,
+          "raw_vector_instruction_words": [
+            {
+              "offset": 16,
+              "word": 3635019776
+            },
+            {
+              "offset": 20,
+              "word": 3635085328
+            },
+            {
+              "offset": 24,
+              "word": 1271550954
+            },
+            {
+              "offset": 28,
+              "word": 3635150880
+            },
+            {
+              "offset": 32,
+              "word": 1271618602
+            },
+            {
+              "offset": 36,
+              "word": 3635216432
+            },
+            {
+              "offset": 40,
+              "word": 1271686250
+            },
+            {
+              "offset": 44,
+              "word": 1259305921
+            },
+            {
+              "offset": 52,
+              "word": 1259373569
+            },
+            {
+              "offset": 60,
+              "word": 1259441217
+            },
+            {
+              "offset": 68,
+              "word": 1259305922
+            },
+            {
+              "offset": 72,
+              "word": 1259373570
+            },
+            {
+              "offset": 76,
+              "word": 1259441218
+            },
+            {
+              "offset": 80,
+              "word": 1259371499
+            },
+            {
+              "offset": 84,
+              "word": 1259437035
+            },
+            {
+              "offset": 100,
+              "word": 1242497981
+            },
+            {
+              "offset": 108,
+              "word": 1218973696
+            },
+            {
+              "offset": 112,
+              "word": 1271026108
+            },
+            {
+              "offset": 116,
+              "word": 1271027901
+            },
+            {
+              "offset": 120,
+              "word": 1271029950
+            },
+            {
+              "offset": 124,
+              "word": 1270900811
+            },
+            {
+              "offset": 128,
+              "word": 3632660528
+            },
+            {
+              "offset": 132,
+              "word": 1241514943
+            },
+            {
+              "offset": 136,
+              "word": 1243615324
+            },
+            {
+              "offset": 140,
+              "word": 3632463872
+            },
+            {
+              "offset": 144,
+              "word": 3632529424
+            },
+            {
+              "offset": 148,
+              "word": 3632594976
+            },
+            {
+              "offset": 152,
+              "word": 1273049151
+            },
+            {
+              "offset": 156,
+              "word": 1273043196
+            },
+            {
+              "offset": 160,
+              "word": 1273045245
+            },
+            {
+              "offset": 164,
+              "word": 1273047182
+            },
+            {
+              "offset": 168,
+              "word": 3632463936
+            },
+            {
+              "offset": 172,
+              "word": 3632529488
+            },
+            {
+              "offset": 176,
+              "word": 3632595040
+            },
+            {
+              "offset": 180,
+              "word": 1210585088
+            },
+            {
+              "offset": 184,
+              "word": 3632660592
+            },
+            {
+              "offset": 196,
+              "word": 1210451968
+            },
+            {
+              "offset": 232,
+              "word": 1266757695
+            },
+            {
+              "offset": 236,
+              "word": 1266751740
+            },
+            {
+              "offset": 240,
+              "word": 1266753789
+            },
+            {
+              "offset": 244,
+              "word": 1266755726
+            },
+            {
+              "offset": 248,
+              "word": 1210585088
+            }
+          ]
+        },
+        {
+          "source_address": 1765056,
+          "target_address": 1766352,
+          "size": 48,
+          "uniqueness": {
+            "matching_addresses": [
+              1766352
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 48,
+            "masked_instruction_count": 0
+          },
+          "terminal_alignment_bytes": 0,
+          "raw_vector_instruction_words": []
+        }
+      ],
+      "whole_translation_unit_claimed": false
+    },
+    {
+      "version": "SLES-51968",
+      "complete_bodies": [
+        {
+          "source_address": 1757760,
+          "target_address": 1757760,
+          "size": 712,
+          "uniqueness": {
+            "matching_addresses": [
+              1757760
+            ],
+            "unchanged_anchor_offset": 16,
+            "unchanged_anchor_bytes": 696,
+            "masked_instruction_count": 1
+          },
+          "terminal_alignment_bytes": 8,
+          "raw_vector_instruction_words": []
+        },
+        {
+          "source_address": 1759216,
+          "target_address": 1759216,
+          "size": 224,
+          "uniqueness": {
+            "matching_addresses": [
+              1759216
+            ],
+            "unchanged_anchor_offset": 72,
+            "unchanged_anchor_bytes": 152,
+            "masked_instruction_count": 1
+          },
+          "terminal_alignment_bytes": 0,
+          "raw_vector_instruction_words": []
+        },
+        {
+          "source_address": 1764912,
+          "target_address": 1764912,
+          "size": 288,
+          "uniqueness": {
+            "matching_addresses": [
+              1764912
+            ],
+            "unchanged_anchor_offset": 16,
+            "unchanged_anchor_bytes": 272,
+            "masked_instruction_count": 1
+          },
+          "terminal_alignment_bytes": 0,
+          "raw_vector_instruction_words": [
+            {
+              "offset": 16,
+              "word": 3635019776
+            },
+            {
+              "offset": 20,
+              "word": 3635085328
+            },
+            {
+              "offset": 24,
+              "word": 1271550954
+            },
+            {
+              "offset": 28,
+              "word": 3635150880
+            },
+            {
+              "offset": 32,
+              "word": 1271618602
+            },
+            {
+              "offset": 36,
+              "word": 3635216432
+            },
+            {
+              "offset": 40,
+              "word": 1271686250
+            },
+            {
+              "offset": 44,
+              "word": 1259305921
+            },
+            {
+              "offset": 52,
+              "word": 1259373569
+            },
+            {
+              "offset": 60,
+              "word": 1259441217
+            },
+            {
+              "offset": 68,
+              "word": 1259305922
+            },
+            {
+              "offset": 72,
+              "word": 1259373570
+            },
+            {
+              "offset": 76,
+              "word": 1259441218
+            },
+            {
+              "offset": 80,
+              "word": 1259371499
+            },
+            {
+              "offset": 84,
+              "word": 1259437035
+            },
+            {
+              "offset": 100,
+              "word": 1242497981
+            },
+            {
+              "offset": 108,
+              "word": 1218973696
+            },
+            {
+              "offset": 112,
+              "word": 1271026108
+            },
+            {
+              "offset": 116,
+              "word": 1271027901
+            },
+            {
+              "offset": 120,
+              "word": 1271029950
+            },
+            {
+              "offset": 124,
+              "word": 1270900811
+            },
+            {
+              "offset": 128,
+              "word": 3632660528
+            },
+            {
+              "offset": 132,
+              "word": 1241514943
+            },
+            {
+              "offset": 136,
+              "word": 1243615324
+            },
+            {
+              "offset": 140,
+              "word": 3632463872
+            },
+            {
+              "offset": 144,
+              "word": 3632529424
+            },
+            {
+              "offset": 148,
+              "word": 3632594976
+            },
+            {
+              "offset": 152,
+              "word": 1273049151
+            },
+            {
+              "offset": 156,
+              "word": 1273043196
+            },
+            {
+              "offset": 160,
+              "word": 1273045245
+            },
+            {
+              "offset": 164,
+              "word": 1273047182
+            },
+            {
+              "offset": 168,
+              "word": 3632463936
+            },
+            {
+              "offset": 172,
+              "word": 3632529488
+            },
+            {
+              "offset": 176,
+              "word": 3632595040
+            },
+            {
+              "offset": 180,
+              "word": 1210585088
+            },
+            {
+              "offset": 184,
+              "word": 3632660592
+            },
+            {
+              "offset": 196,
+              "word": 1210451968
+            },
+            {
+              "offset": 232,
+              "word": 1266757695
+            },
+            {
+              "offset": 236,
+              "word": 1266751740
+            },
+            {
+              "offset": 240,
+              "word": 1266753789
+            },
+            {
+              "offset": 244,
+              "word": 1266755726
+            },
+            {
+              "offset": 248,
+              "word": 1210585088
+            }
+          ]
+        },
+        {
+          "source_address": 1766352,
+          "target_address": 1766352,
+          "size": 48,
+          "uniqueness": {
+            "matching_addresses": [
+              1766352
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 48,
+            "masked_instruction_count": 0
+          },
+          "terminal_alignment_bytes": 0,
+          "raw_vector_instruction_words": []
+        }
+      ],
+      "whole_translation_unit_claimed": false
+    },
+    {
+      "version": "SLES-51970",
+      "complete_bodies": [
+        {
+          "source_address": 1754400,
+          "target_address": 1757760,
+          "size": 712,
+          "uniqueness": {
+            "matching_addresses": [
+              1757760
+            ],
+            "unchanged_anchor_offset": 16,
+            "unchanged_anchor_bytes": 696,
+            "masked_instruction_count": 1
+          },
+          "terminal_alignment_bytes": 8,
+          "raw_vector_instruction_words": []
+        },
+        {
+          "source_address": 1755856,
+          "target_address": 1759216,
+          "size": 224,
+          "uniqueness": {
+            "matching_addresses": [
+              1759216
+            ],
+            "unchanged_anchor_offset": 72,
+            "unchanged_anchor_bytes": 152,
+            "masked_instruction_count": 1
+          },
+          "terminal_alignment_bytes": 0,
+          "raw_vector_instruction_words": []
+        },
+        {
+          "source_address": 1761552,
+          "target_address": 1764912,
+          "size": 288,
+          "uniqueness": {
+            "matching_addresses": [
+              1764912
+            ],
+            "unchanged_anchor_offset": 16,
+            "unchanged_anchor_bytes": 272,
+            "masked_instruction_count": 1
+          },
+          "terminal_alignment_bytes": 0,
+          "raw_vector_instruction_words": [
+            {
+              "offset": 16,
+              "word": 3635019776
+            },
+            {
+              "offset": 20,
+              "word": 3635085328
+            },
+            {
+              "offset": 24,
+              "word": 1271550954
+            },
+            {
+              "offset": 28,
+              "word": 3635150880
+            },
+            {
+              "offset": 32,
+              "word": 1271618602
+            },
+            {
+              "offset": 36,
+              "word": 3635216432
+            },
+            {
+              "offset": 40,
+              "word": 1271686250
+            },
+            {
+              "offset": 44,
+              "word": 1259305921
+            },
+            {
+              "offset": 52,
+              "word": 1259373569
+            },
+            {
+              "offset": 60,
+              "word": 1259441217
+            },
+            {
+              "offset": 68,
+              "word": 1259305922
+            },
+            {
+              "offset": 72,
+              "word": 1259373570
+            },
+            {
+              "offset": 76,
+              "word": 1259441218
+            },
+            {
+              "offset": 80,
+              "word": 1259371499
+            },
+            {
+              "offset": 84,
+              "word": 1259437035
+            },
+            {
+              "offset": 100,
+              "word": 1242497981
+            },
+            {
+              "offset": 108,
+              "word": 1218973696
+            },
+            {
+              "offset": 112,
+              "word": 1271026108
+            },
+            {
+              "offset": 116,
+              "word": 1271027901
+            },
+            {
+              "offset": 120,
+              "word": 1271029950
+            },
+            {
+              "offset": 124,
+              "word": 1270900811
+            },
+            {
+              "offset": 128,
+              "word": 3632660528
+            },
+            {
+              "offset": 132,
+              "word": 1241514943
+            },
+            {
+              "offset": 136,
+              "word": 1243615324
+            },
+            {
+              "offset": 140,
+              "word": 3632463872
+            },
+            {
+              "offset": 144,
+              "word": 3632529424
+            },
+            {
+              "offset": 148,
+              "word": 3632594976
+            },
+            {
+              "offset": 152,
+              "word": 1273049151
+            },
+            {
+              "offset": 156,
+              "word": 1273043196
+            },
+            {
+              "offset": 160,
+              "word": 1273045245
+            },
+            {
+              "offset": 164,
+              "word": 1273047182
+            },
+            {
+              "offset": 168,
+              "word": 3632463936
+            },
+            {
+              "offset": 172,
+              "word": 3632529488
+            },
+            {
+              "offset": 176,
+              "word": 3632595040
+            },
+            {
+              "offset": 180,
+              "word": 1210585088
+            },
+            {
+              "offset": 184,
+              "word": 3632660592
+            },
+            {
+              "offset": 196,
+              "word": 1210451968
+            },
+            {
+              "offset": 232,
+              "word": 1266757695
+            },
+            {
+              "offset": 236,
+              "word": 1266751740
+            },
+            {
+              "offset": 240,
+              "word": 1266753789
+            },
+            {
+              "offset": 244,
+              "word": 1266755726
+            },
+            {
+              "offset": 248,
+              "word": 1210585088
+            }
+          ]
+        },
+        {
+          "source_address": 1762992,
+          "target_address": 1766352,
+          "size": 48,
+          "uniqueness": {
+            "matching_addresses": [
+              1766352
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 48,
+            "masked_instruction_count": 0
+          },
+          "terminal_alignment_bytes": 0,
+          "raw_vector_instruction_words": []
+        }
+      ],
       "whole_translation_unit_claimed": false
     }
   ],
@@ -60667,6 +61373,479 @@
           1755776,
           1756400
         ]
+      }
+    },
+    {
+      "name": "iModelMaterialMulCB",
+      "source": "SB/Core/p2/iModel.cpp",
+      "address": 1757760,
+      "size": 712,
+      "sha256": "5c60cb319de38deb4db358db7b65f5d4633aa0661f12dc6e992aa5adb73650d3",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-complete-caller-callee-cluster",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1756464,
+          "source": "SB/Core/p2/iModel.cpp",
+          "name": "iModelMaterialMulCB",
+          "linkage_name": "iModelMaterialMulCB__FP10RpMaterialPv",
+          "reference_sha256": "6dc879638c685a4018d15c25fbea93ca2d1f53d2f16f621b0c6628baacc33d9b",
+          "data_address_operands": [
+            {
+              "hi_offset": 4,
+              "lo_offset": 12,
+              "opcode": 9,
+              "reference_address": 5451840,
+              "target_address": 5450816,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1757760,
+          "source": "SB/Core/p2/iModel.cpp",
+          "name": "iModelMaterialMulCB",
+          "linkage_name": "iModelMaterialMulCB__FP10RpMaterialPv",
+          "reference_sha256": "f212c89cfdb8eb092ac6dca3f1ef872fb75a383d1626b36af289c8a2eed7b687",
+          "data_address_operands": [
+            {
+              "hi_offset": 4,
+              "lo_offset": 12,
+              "opcode": 9,
+              "reference_address": 5450560,
+              "target_address": 5450816,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1754400,
+          "source": "SB/Core/p2/iModel.cpp",
+          "name": "iModelMaterialMulCB",
+          "linkage_name": "iModelMaterialMulCB__FP10RpMaterialPv",
+          "reference_sha256": "af3aacfd5b79643c27ddf14de3bdd2b0753ab575bfbd5153440035bb0f1dcb51",
+          "data_address_operands": [
+            {
+              "hi_offset": 4,
+              "lo_offset": 12,
+              "opcode": 9,
+              "reference_address": 5449024,
+              "target_address": 5450816,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "proof_scope": "complete_original_model_leaves_with_typed_material_storage_and_anchored_frustum",
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1758464
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              1757864,
+              1757884
+            ],
+            [
+              1757876,
+              1757908
+            ],
+            [
+              1757928,
+              1757944
+            ],
+            [
+              1757936,
+              1757976
+            ],
+            [
+              1757960,
+              1757976
+            ],
+            [
+              1757992,
+              1758016
+            ],
+            [
+              1758008,
+              1758044
+            ],
+            [
+              1758052,
+              1758072
+            ],
+            [
+              1758064,
+              1758100
+            ],
+            [
+              1758120,
+              1758136
+            ],
+            [
+              1758128,
+              1758168
+            ],
+            [
+              1758152,
+              1758168
+            ],
+            [
+              1758184,
+              1758208
+            ],
+            [
+              1758200,
+              1758236
+            ],
+            [
+              1758244,
+              1758264
+            ],
+            [
+              1758256,
+              1758292
+            ],
+            [
+              1758312,
+              1758328
+            ],
+            [
+              1758320,
+              1758360
+            ],
+            [
+              1758344,
+              1758360
+            ],
+            [
+              1758376,
+              1758400
+            ],
+            [
+              1758392,
+              1758428
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              1757768,
+              -16
+            ],
+            [
+              1758468,
+              16
+            ]
+          ],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "whole_translation_unit_claimed": false
+      }
+    },
+    {
+      "name": "iModelSetMaterialAlpha",
+      "source": "SB/Core/p2/iModel.cpp",
+      "address": 1759216,
+      "size": 224,
+      "sha256": "c1abd5ce9ac9b2afa1b03e624f824eee388f40c26d62130e5b34c0e7fc09299a",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-complete-caller-callee-cluster",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1757920,
+          "source": "SB/Core/p2/iModel.cpp",
+          "name": "iModelSetMaterialAlpha",
+          "linkage_name": "iModelSetMaterialAlpha__FP8RpAtomicUc",
+          "reference_sha256": "ebaf03e62752c3daf6be45f414f80279698821c3aa43d4c61c015df122871077",
+          "data_address_operands": [
+            {
+              "hi_offset": 60,
+              "lo_offset": 68,
+              "opcode": 9,
+              "reference_address": 5451968,
+              "target_address": 5450944,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1759216,
+          "source": "SB/Core/p2/iModel.cpp",
+          "name": "iModelSetMaterialAlpha",
+          "linkage_name": "iModelSetMaterialAlpha__FP8RpAtomicUc",
+          "reference_sha256": "679b8c5a2927b14d80dfcf3ec1e3d830d077d725d5b5224144ecc8e17c7c98a5",
+          "data_address_operands": [
+            {
+              "hi_offset": 60,
+              "lo_offset": 68,
+              "opcode": 9,
+              "reference_address": 5450688,
+              "target_address": 5450944,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1755856,
+          "source": "SB/Core/p2/iModel.cpp",
+          "name": "iModelSetMaterialAlpha",
+          "linkage_name": "iModelSetMaterialAlpha__FP8RpAtomicUc",
+          "reference_sha256": "7413ec62f0f4ff10a901bde4cb8570d84c1a02646e4a10ca8fc138ba31f3587e",
+          "data_address_operands": [
+            {
+              "hi_offset": 60,
+              "lo_offset": 68,
+              "opcode": 9,
+              "reference_address": 5449152,
+              "target_address": 5450944,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "proof_scope": "complete_original_model_leaves_with_typed_material_storage_and_anchored_frustum",
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1759432
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              1759224,
+              1759240
+            ],
+            [
+              1759268,
+              1759416
+            ],
+            [
+              1759408,
+              1759304
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              1759228,
+              -16
+            ],
+            [
+              1759436,
+              16
+            ]
+          ],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 0
+        },
+        "whole_translation_unit_claimed": false
+      }
+    },
+    {
+      "name": "iModelCull",
+      "source": "SB/Core/p2/iModel.cpp",
+      "address": 1764912,
+      "size": 288,
+      "sha256": "ebde94afb61cfb015bf2e1f71de29a81d8b54c1df7515c8670438d7818eb3daa",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-complete-caller-callee-cluster",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1763616,
+          "source": "SB/Core/p2/iModel.cpp",
+          "name": "iModelCull",
+          "linkage_name": "iModelCull__FP8RpAtomicP11RwMatrixTag",
+          "reference_sha256": "3bf73f14d49d53aa3788766242973940cc75fc6585c1c7e1c0a2f33cb07f7ef3",
+          "data_address_operands": [
+            {
+              "hi_offset": 8,
+              "lo_offset": 12,
+              "opcode": 9,
+              "reference_address": 5426016,
+              "target_address": 5424992,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1764912,
+          "source": "SB/Core/p2/iModel.cpp",
+          "name": "iModelCull",
+          "linkage_name": "iModelCull__FP8RpAtomicP11RwMatrixTag",
+          "reference_sha256": "d978890a24b9a48971f926e0659e3f9bb8dfda17fa25678bcd1f79eb70dbcb13",
+          "data_address_operands": [
+            {
+              "hi_offset": 8,
+              "lo_offset": 12,
+              "opcode": 9,
+              "reference_address": 5424736,
+              "target_address": 5424992,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1761552,
+          "source": "SB/Core/p2/iModel.cpp",
+          "name": "iModelCull",
+          "linkage_name": "iModelCull__FP8RpAtomicP11RwMatrixTag",
+          "reference_sha256": "767b5e434d165f9cced6516dc1fa899ff72599b331c362ca04b2e01fbf0f8b8f",
+          "data_address_operands": [
+            {
+              "hi_offset": 8,
+              "lo_offset": 12,
+              "opcode": 9,
+              "reference_address": 5423200,
+              "target_address": 5424992,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "proof_scope": "complete_original_model_leaves_with_typed_material_storage_and_anchored_frustum",
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1765192
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              1765140,
+              1765184
+            ],
+            [
+              1765168,
+              1765184
+            ],
+            [
+              1765176,
+              1765192
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 0
+        },
+        "whole_translation_unit_claimed": false
+      }
+    },
+    {
+      "name": "NextAtomicCallback",
+      "source": "SB/Core/p2/iModel.cpp",
+      "address": 1766352,
+      "size": 48,
+      "sha256": "c94cd85b03598d9e57a18b7c7dd4fbc8b714e53e28a2095670b829ca68579396",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-complete-caller-callee-cluster",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 1765056,
+          "source": "SB/Core/p2/iModel.cpp",
+          "name": "NextAtomicCallback",
+          "linkage_name": "NextAtomicCallback__FP8RpAtomicPv",
+          "reference_sha256": "c94cd85b03598d9e57a18b7c7dd4fbc8b714e53e28a2095670b829ca68579396",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 1766352,
+          "source": "SB/Core/p2/iModel.cpp",
+          "name": "NextAtomicCallback",
+          "linkage_name": "NextAtomicCallback__FP8RpAtomicPv",
+          "reference_sha256": "c94cd85b03598d9e57a18b7c7dd4fbc8b714e53e28a2095670b829ca68579396",
+          "data_address_operands": [],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 1762992,
+          "source": "SB/Core/p2/iModel.cpp",
+          "name": "NextAtomicCallback",
+          "linkage_name": "NextAtomicCallback__FP8RpAtomicPv",
+          "reference_sha256": "c94cd85b03598d9e57a18b7c7dd4fbc8b714e53e28a2095670b829ca68579396",
+          "data_address_operands": [],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "proof_scope": "complete_original_model_leaves_with_typed_material_storage_and_anchored_frustum",
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            1766392
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              1766356,
+              1766376
+            ],
+            [
+              1766364,
+              1766392
+            ],
+            [
+              1766376,
+              1766392
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [
+            1766372
+          ],
+          "following_zero_alignment": 0
+        },
+        "whole_translation_unit_claimed": false
       }
     },
     {
@@ -420660,6 +421839,3464 @@
         }
       ],
       "data_extents_promoted": false
+    }
+  ],
+  "imodel_kernels_data_proofs": [
+    {
+      "version": "SLUS-20680",
+      "typed_storage": {
+        "objects": {
+          "sMaterialColor": {
+            "declaration_die": 3769972,
+            "type_die": 3809473,
+            "reference_address": 5451840,
+            "target_address": 5450816,
+            "count": 16,
+            "element_size": 4,
+            "size": 64
+          },
+          "sMaterialAlpha": {
+            "declaration_die": 3770062,
+            "type_die": 3789870,
+            "reference_address": 5451968,
+            "target_address": 5450944,
+            "count": 16,
+            "element_size": 1,
+            "size": 16
+          },
+          "globals.camera.frustplane": {
+            "declaration_die": 3770510,
+            "type_die": 3794283,
+            "reference_address": 5426016,
+            "target_address": 5424992,
+            "count": 12,
+            "element_size": 16,
+            "size": 192,
+            "member_die": 3828609,
+            "array_type_die": 3833091,
+            "component_offset": 624,
+            "independent_anchor": {
+              "source": "SB/Game/zNPCGoalStd.cpp",
+              "name": "CalcNewDir",
+              "address": 2912416,
+              "size": 624,
+              "sha256": "9ec0e90e42c2657dc34eb4105c443ea96cd6497ea5802fc8c0a48db7d1cea3c0"
+            }
+          }
+        },
+        "layouts": {
+          "RwRGBA": {
+            "die_offset": 3774424,
+            "tag": 2,
+            "size": 4,
+            "members": [
+              {
+                "name": "red",
+                "offset": 0,
+                "die_offset": 3774451,
+                "location": "040000000007",
+                "type_attributes": {
+                  "5": 3
+                }
+              },
+              {
+                "name": "green",
+                "offset": 1,
+                "die_offset": 3774483,
+                "location": "040100000007",
+                "type_attributes": {
+                  "5": 3
+                }
+              },
+              {
+                "name": "blue",
+                "offset": 2,
+                "die_offset": 3774517,
+                "location": "040200000007",
+                "type_attributes": {
+                  "5": 3
+                }
+              },
+              {
+                "name": "alpha",
+                "offset": 3,
+                "die_offset": 3774550,
+                "location": "040300000007",
+                "type_attributes": {
+                  "5": 3
+                }
+              }
+            ]
+          },
+          "zGlobals": {
+            "die_offset": 3794283,
+            "tag": 2,
+            "size": 8272,
+            "members": [
+              {
+                "name": "player",
+                "offset": 1792,
+                "die_offset": 3794343,
+                "location": "040007000007",
+                "type_attributes": {
+                  "7": 3813234
+                }
+              },
+              {
+                "name": "pickupTable",
+                "offset": 8256,
+                "die_offset": 3794380,
+                "location": "044020000007",
+                "type_attributes": {
+                  "8": "013a053a00"
+                }
+              },
+              {
+                "name": "cmgr",
+                "offset": 8260,
+                "die_offset": 3794425,
+                "location": "044420000007",
+                "type_attributes": {
+                  "8": "017d093a00"
+                }
+              },
+              {
+                "name": "sceneCur",
+                "offset": 8264,
+                "die_offset": 3794463,
+                "location": "044820000007",
+                "type_attributes": {
+                  "8": "014d0d3a00"
+                }
+              },
+              {
+                "name": "scenePreload",
+                "offset": 8268,
+                "die_offset": 3794505,
+                "location": "044c20000007",
+                "type_attributes": {
+                  "8": "014d0d3a00"
+                }
+              }
+            ]
+          },
+          "xVec4": {
+            "die_offset": 3795178,
+            "tag": 2,
+            "size": 16,
+            "members": [
+              {
+                "name": "x",
+                "offset": 0,
+                "die_offset": 3795204,
+                "location": "040000000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "y",
+                "offset": 4,
+                "die_offset": 3795234,
+                "location": "040400000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "z",
+                "offset": 8,
+                "die_offset": 3795264,
+                "location": "040800000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "w",
+                "offset": 12,
+                "die_offset": 3795294,
+                "location": "040c00000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              }
+            ]
+          },
+          "xCamera": {
+            "die_offset": 3825900,
+            "tag": 2,
+            "size": 816,
+            "members": [
+              {
+                "name": "lo_cam",
+                "offset": 16,
+                "die_offset": 3825959,
+                "location": "041000000007",
+                "type_attributes": {
+                  "8": "01c8ac3900"
+                }
+              },
+              {
+                "name": "mat",
+                "offset": 32,
+                "die_offset": 3825999,
+                "location": "042000000007",
+                "type_attributes": {
+                  "7": 3806522
+                }
+              },
+              {
+                "name": "omat",
+                "offset": 96,
+                "die_offset": 3826033,
+                "location": "046000000007",
+                "type_attributes": {
+                  "7": 3806522
+                }
+              },
+              {
+                "name": "mbasis",
+                "offset": 160,
+                "die_offset": 3826068,
+                "location": "04a000000007",
+                "type_attributes": {
+                  "7": 3825666
+                }
+              },
+              {
+                "name": "bound",
+                "offset": 208,
+                "die_offset": 3826105,
+                "location": "04d000000007",
+                "type_attributes": {
+                  "7": 3808699
+                }
+              },
+              {
+                "name": "tgt_mat",
+                "offset": 284,
+                "die_offset": 3826141,
+                "location": "041c01000007",
+                "type_attributes": {
+                  "8": "013a153a00"
+                }
+              },
+              {
+                "name": "tgt_omat",
+                "offset": 288,
+                "die_offset": 3826182,
+                "location": "042001000007",
+                "type_attributes": {
+                  "8": "013a153a00"
+                }
+              },
+              {
+                "name": "tgt_bound",
+                "offset": 292,
+                "die_offset": 3826224,
+                "location": "042401000007",
+                "type_attributes": {
+                  "8": "01bb1d3a00"
+                }
+              },
+              {
+                "name": "focus",
+                "offset": 296,
+                "die_offset": 3826267,
+                "location": "042801000007",
+                "type_attributes": {
+                  "7": 3782647
+                }
+              },
+              {
+                "name": "sc",
+                "offset": 308,
+                "die_offset": 3826303,
+                "location": "043401000007",
+                "type_attributes": {
+                  "8": "0106b03900"
+                }
+              },
+              {
+                "name": "tran_accum",
+                "offset": 312,
+                "die_offset": 3826339,
+                "location": "043801000007",
+                "type_attributes": {
+                  "7": 3782647
+                }
+              },
+              {
+                "name": "fov",
+                "offset": 324,
+                "die_offset": 3826380,
+                "location": "044401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "flags",
+                "offset": 328,
+                "die_offset": 3826412,
+                "location": "044801000007",
+                "type_attributes": {
+                  "5": 9
+                }
+              },
+              {
+                "name": "tmr",
+                "offset": 332,
+                "die_offset": 3826446,
+                "location": "044c01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "tm_acc",
+                "offset": 336,
+                "die_offset": 3826478,
+                "location": "045001000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "tm_dec",
+                "offset": 340,
+                "die_offset": 3826513,
+                "location": "045401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "ltmr",
+                "offset": 344,
+                "die_offset": 3826548,
+                "location": "045801000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "ltm_acc",
+                "offset": 348,
+                "die_offset": 3826581,
+                "location": "045c01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "ltm_dec",
+                "offset": 352,
+                "die_offset": 3826617,
+                "location": "046001000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "dmin",
+                "offset": 356,
+                "die_offset": 3826653,
+                "location": "046401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "dmax",
+                "offset": 360,
+                "die_offset": 3826686,
+                "location": "046801000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "dcur",
+                "offset": 364,
+                "die_offset": 3826719,
+                "location": "046c01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "dgoal",
+                "offset": 368,
+                "die_offset": 3826752,
+                "location": "047001000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hmin",
+                "offset": 372,
+                "die_offset": 3826786,
+                "location": "047401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hmax",
+                "offset": 376,
+                "die_offset": 3826819,
+                "location": "047801000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hcur",
+                "offset": 380,
+                "die_offset": 3826852,
+                "location": "047c01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hgoal",
+                "offset": 384,
+                "die_offset": 3826885,
+                "location": "048001000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pmin",
+                "offset": 388,
+                "die_offset": 3826919,
+                "location": "048401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pmax",
+                "offset": 392,
+                "die_offset": 3826952,
+                "location": "048801000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pcur",
+                "offset": 396,
+                "die_offset": 3826985,
+                "location": "048c01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pgoal",
+                "offset": 400,
+                "die_offset": 3827018,
+                "location": "049001000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "depv",
+                "offset": 404,
+                "die_offset": 3827052,
+                "location": "049401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hepv",
+                "offset": 408,
+                "die_offset": 3827085,
+                "location": "049801000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pepv",
+                "offset": 412,
+                "die_offset": 3827118,
+                "location": "049c01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "orn_epv",
+                "offset": 416,
+                "die_offset": 3827151,
+                "location": "04a001000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "yaw_epv",
+                "offset": 420,
+                "die_offset": 3827187,
+                "location": "04a401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pitch_epv",
+                "offset": 424,
+                "die_offset": 3827223,
+                "location": "04a801000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "roll_epv",
+                "offset": 428,
+                "die_offset": 3827261,
+                "location": "04ac01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "orn_cur",
+                "offset": 432,
+                "die_offset": 3827298,
+                "location": "04b001000007",
+                "type_attributes": {
+                  "7": 3779692
+                }
+              },
+              {
+                "name": "orn_goal",
+                "offset": 448,
+                "die_offset": 3827336,
+                "location": "04c001000007",
+                "type_attributes": {
+                  "7": 3779692
+                }
+              },
+              {
+                "name": "orn_diff",
+                "offset": 464,
+                "die_offset": 3827375,
+                "location": "04d001000007",
+                "type_attributes": {
+                  "7": 3779692
+                }
+              },
+              {
+                "name": "yaw_cur",
+                "offset": 480,
+                "die_offset": 3827414,
+                "location": "04e001000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "yaw_goal",
+                "offset": 484,
+                "die_offset": 3827450,
+                "location": "04e401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pitch_cur",
+                "offset": 488,
+                "die_offset": 3827487,
+                "location": "04e801000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pitch_goal",
+                "offset": 492,
+                "die_offset": 3827525,
+                "location": "04ec01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "roll_cur",
+                "offset": 496,
+                "die_offset": 3827564,
+                "location": "04f001000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "roll_goal",
+                "offset": 500,
+                "die_offset": 3827601,
+                "location": "04f401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "dct",
+                "offset": 504,
+                "die_offset": 3827639,
+                "location": "04f801000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "dcd",
+                "offset": 508,
+                "die_offset": 3827671,
+                "location": "04fc01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "dccv",
+                "offset": 512,
+                "die_offset": 3827703,
+                "location": "040002000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "dcsv",
+                "offset": 516,
+                "die_offset": 3827736,
+                "location": "040402000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hct",
+                "offset": 520,
+                "die_offset": 3827769,
+                "location": "040802000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hcd",
+                "offset": 524,
+                "die_offset": 3827801,
+                "location": "040c02000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hccv",
+                "offset": 528,
+                "die_offset": 3827833,
+                "location": "041002000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hcsv",
+                "offset": 532,
+                "die_offset": 3827866,
+                "location": "041402000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pct",
+                "offset": 536,
+                "die_offset": 3827899,
+                "location": "041802000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pcd",
+                "offset": 540,
+                "die_offset": 3827931,
+                "location": "041c02000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pccv",
+                "offset": 544,
+                "die_offset": 3827963,
+                "location": "042002000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pcsv",
+                "offset": 548,
+                "die_offset": 3827996,
+                "location": "042402000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "orn_ct",
+                "offset": 552,
+                "die_offset": 3828029,
+                "location": "042802000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "orn_cd",
+                "offset": 556,
+                "die_offset": 3828064,
+                "location": "042c02000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "orn_ccv",
+                "offset": 560,
+                "die_offset": 3828099,
+                "location": "043002000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "orn_csv",
+                "offset": 564,
+                "die_offset": 3828135,
+                "location": "043402000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "yaw_ct",
+                "offset": 568,
+                "die_offset": 3828171,
+                "location": "043802000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "yaw_cd",
+                "offset": 572,
+                "die_offset": 3828206,
+                "location": "043c02000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "yaw_ccv",
+                "offset": 576,
+                "die_offset": 3828241,
+                "location": "044002000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "yaw_csv",
+                "offset": 580,
+                "die_offset": 3828277,
+                "location": "044402000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pitch_ct",
+                "offset": 584,
+                "die_offset": 3828313,
+                "location": "044802000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pitch_cd",
+                "offset": 588,
+                "die_offset": 3828350,
+                "location": "044c02000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pitch_ccv",
+                "offset": 592,
+                "die_offset": 3828387,
+                "location": "045002000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pitch_csv",
+                "offset": 596,
+                "die_offset": 3828425,
+                "location": "045402000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "roll_ct",
+                "offset": 600,
+                "die_offset": 3828463,
+                "location": "045802000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "roll_cd",
+                "offset": 604,
+                "die_offset": 3828499,
+                "location": "045c02000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "roll_ccv",
+                "offset": 608,
+                "die_offset": 3828535,
+                "location": "046002000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "roll_csv",
+                "offset": 612,
+                "die_offset": 3828572,
+                "location": "046402000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "frustplane",
+                "offset": 624,
+                "die_offset": 3828609,
+                "location": "047002000007",
+                "type_attributes": {
+                  "7": 3833091
+                }
+              }
+            ]
+          },
+          "xGlobals": {
+            "die_offset": 3835989,
+            "tag": 2,
+            "size": 1792,
+            "members": [
+              {
+                "name": "camera",
+                "offset": 0,
+                "die_offset": 3836018,
+                "location": "040000000007",
+                "type_attributes": {
+                  "7": 3825900
+                }
+              },
+              {
+                "name": "pad0",
+                "offset": 816,
+                "die_offset": 3836055,
+                "location": "043003000007",
+                "type_attributes": {
+                  "8": "01dbcf3900"
+                }
+              },
+              {
+                "name": "pad1",
+                "offset": 820,
+                "die_offset": 3836093,
+                "location": "043403000007",
+                "type_attributes": {
+                  "8": "01dbcf3900"
+                }
+              },
+              {
+                "name": "pad2",
+                "offset": 824,
+                "die_offset": 3836131,
+                "location": "043803000007",
+                "type_attributes": {
+                  "8": "01dbcf3900"
+                }
+              },
+              {
+                "name": "pad3",
+                "offset": 828,
+                "die_offset": 3836169,
+                "location": "043c03000007",
+                "type_attributes": {
+                  "8": "01dbcf3900"
+                }
+              },
+              {
+                "name": "profile",
+                "offset": 832,
+                "die_offset": 3836207,
+                "location": "044003000007",
+                "type_attributes": {
+                  "5": 8
+                }
+              },
+              {
+                "name": "profFunc",
+                "offset": 836,
+                "die_offset": 3836243,
+                "location": "044403000007",
+                "type_attributes": {
+                  "7": 3838439
+                }
+              },
+              {
+                "name": "updateMgr",
+                "offset": 1604,
+                "die_offset": 3836282,
+                "location": "044406000007",
+                "type_attributes": {
+                  "8": "0133563a00"
+                }
+              },
+              {
+                "name": "sceneFirst",
+                "offset": 1608,
+                "die_offset": 3836325,
+                "location": "044806000007",
+                "type_attributes": {
+                  "5": 8
+                }
+              },
+              {
+                "name": "sceneStart",
+                "offset": 1612,
+                "die_offset": 3836364,
+                "location": "044c06000007",
+                "type_attributes": {
+                  "7": 3838824
+                }
+              },
+              {
+                "name": "currWorld",
+                "offset": 1644,
+                "die_offset": 3836405,
+                "location": "046c06000007",
+                "type_attributes": {
+                  "8": "017c983900"
+                }
+              },
+              {
+                "name": "fog",
+                "offset": 1648,
+                "die_offset": 3836448,
+                "location": "047006000007",
+                "type_attributes": {
+                  "7": 3833201
+                }
+              },
+              {
+                "name": "fogA",
+                "offset": 1676,
+                "die_offset": 3836482,
+                "location": "048c06000007",
+                "type_attributes": {
+                  "7": 3833201
+                }
+              },
+              {
+                "name": "fogB",
+                "offset": 1704,
+                "die_offset": 3836517,
+                "location": "04a806000007",
+                "type_attributes": {
+                  "7": 3833201
+                }
+              },
+              {
+                "name": "fog_t0",
+                "offset": 1736,
+                "die_offset": 3836552,
+                "location": "04c806000007",
+                "type_attributes": {
+                  "5": 11
+                }
+              },
+              {
+                "name": "fog_t1",
+                "offset": 1744,
+                "die_offset": 3836587,
+                "location": "04d006000007",
+                "type_attributes": {
+                  "5": 11
+                }
+              },
+              {
+                "name": "option_vibration",
+                "offset": 1752,
+                "die_offset": 3836622,
+                "location": "04d806000007",
+                "type_attributes": {
+                  "5": 8
+                }
+              },
+              {
+                "name": "QuarterSpeed",
+                "offset": 1756,
+                "die_offset": 3836667,
+                "location": "04dc06000007",
+                "type_attributes": {
+                  "5": 9
+                }
+              },
+              {
+                "name": "update_dt",
+                "offset": 1760,
+                "die_offset": 3836708,
+                "location": "04e006000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "useHIPHOP",
+                "offset": 1764,
+                "die_offset": 3836746,
+                "location": "04e406000007",
+                "type_attributes": {
+                  "5": 8
+                }
+              },
+              {
+                "name": "NoMusic",
+                "offset": 1768,
+                "die_offset": 3836784,
+                "location": "04e806000007",
+                "type_attributes": {
+                  "5": 3
+                }
+              },
+              {
+                "name": "currentActivePad",
+                "offset": 1769,
+                "die_offset": 3836820,
+                "location": "04e906000007",
+                "type_attributes": {
+                  "5": 1
+                }
+              },
+              {
+                "name": "firstStartPressed",
+                "offset": 1770,
+                "die_offset": 3836865,
+                "location": "04ea06000007",
+                "type_attributes": {
+                  "5": 3
+                }
+              },
+              {
+                "name": "minVSyncCnt",
+                "offset": 1772,
+                "die_offset": 3836911,
+                "location": "04ec06000007",
+                "type_attributes": {
+                  "5": 9
+                }
+              },
+              {
+                "name": "dontShowPadMessageDuringLoadingOrCutScene",
+                "offset": 1776,
+                "die_offset": 3836951,
+                "location": "04f006000007",
+                "type_attributes": {
+                  "5": 3
+                }
+              },
+              {
+                "name": "autoSaveFeature",
+                "offset": 1777,
+                "die_offset": 3837021,
+                "location": "04f106000007",
+                "type_attributes": {
+                  "5": 3
+                }
+              }
+            ]
+          }
+        },
+        "data_extents_promoted": false
+      },
+      "operands": [
+        {
+          "caller": "iModelMaterialMulCB__FP10RpMaterialPv",
+          "caller_address": 1757760,
+          "typed_object": "sMaterialColor",
+          "hi_offset": 4,
+          "lo_offset": 12,
+          "opcode": 9,
+          "reference_address": 5451840,
+          "target_address": 5450816,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "iModelSetMaterialAlpha__FP8RpAtomicUc",
+          "caller_address": 1759216,
+          "typed_object": "sMaterialAlpha",
+          "hi_offset": 60,
+          "lo_offset": 68,
+          "opcode": 9,
+          "reference_address": 5451968,
+          "target_address": 5450944,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "iModelCull__FP8RpAtomicP11RwMatrixTag",
+          "caller_address": 1764912,
+          "typed_object": "globals.camera.frustplane",
+          "hi_offset": 8,
+          "lo_offset": 12,
+          "opcode": 9,
+          "reference_address": 5426016,
+          "target_address": 5424992,
+          "storage": "zero_fill"
+        }
+      ]
+    },
+    {
+      "version": "SLES-51968",
+      "typed_storage": {
+        "objects": {
+          "sMaterialColor": {
+            "declaration_die": 3770430,
+            "type_die": 3809931,
+            "reference_address": 5450560,
+            "target_address": 5450816,
+            "count": 16,
+            "element_size": 4,
+            "size": 64
+          },
+          "sMaterialAlpha": {
+            "declaration_die": 3770520,
+            "type_die": 3790287,
+            "reference_address": 5450688,
+            "target_address": 5450944,
+            "count": 16,
+            "element_size": 1,
+            "size": 16
+          },
+          "globals.camera.frustplane": {
+            "declaration_die": 3770968,
+            "type_die": 3794741,
+            "reference_address": 5424736,
+            "target_address": 5424992,
+            "count": 12,
+            "element_size": 16,
+            "size": 192,
+            "member_die": 3829067,
+            "array_type_die": 3833549,
+            "component_offset": 624,
+            "independent_anchor": {
+              "source": "SB/Game/zNPCGoalStd.cpp",
+              "name": "CalcNewDir",
+              "address": 2912416,
+              "size": 624,
+              "sha256": "9ec0e90e42c2657dc34eb4105c443ea96cd6497ea5802fc8c0a48db7d1cea3c0"
+            }
+          }
+        },
+        "layouts": {
+          "RwRGBA": {
+            "die_offset": 3777604,
+            "tag": 2,
+            "size": 4,
+            "members": [
+              {
+                "name": "red",
+                "offset": 0,
+                "die_offset": 3777631,
+                "location": "040000000007",
+                "type_attributes": {
+                  "5": 3
+                }
+              },
+              {
+                "name": "green",
+                "offset": 1,
+                "die_offset": 3777663,
+                "location": "040100000007",
+                "type_attributes": {
+                  "5": 3
+                }
+              },
+              {
+                "name": "blue",
+                "offset": 2,
+                "die_offset": 3777697,
+                "location": "040200000007",
+                "type_attributes": {
+                  "5": 3
+                }
+              },
+              {
+                "name": "alpha",
+                "offset": 3,
+                "die_offset": 3777730,
+                "location": "040300000007",
+                "type_attributes": {
+                  "5": 3
+                }
+              }
+            ]
+          },
+          "zGlobals": {
+            "die_offset": 3794741,
+            "tag": 2,
+            "size": 8272,
+            "members": [
+              {
+                "name": "player",
+                "offset": 1792,
+                "die_offset": 3794801,
+                "location": "040007000007",
+                "type_attributes": {
+                  "7": 3813692
+                }
+              },
+              {
+                "name": "pickupTable",
+                "offset": 8256,
+                "die_offset": 3794838,
+                "location": "044020000007",
+                "type_attributes": {
+                  "8": "0104073a00"
+                }
+              },
+              {
+                "name": "cmgr",
+                "offset": 8260,
+                "die_offset": 3794883,
+                "location": "044420000007",
+                "type_attributes": {
+                  "8": "01470b3a00"
+                }
+              },
+              {
+                "name": "sceneCur",
+                "offset": 8264,
+                "die_offset": 3794921,
+                "location": "044820000007",
+                "type_attributes": {
+                  "8": "01170f3a00"
+                }
+              },
+              {
+                "name": "scenePreload",
+                "offset": 8268,
+                "die_offset": 3794963,
+                "location": "044c20000007",
+                "type_attributes": {
+                  "8": "01170f3a00"
+                }
+              }
+            ]
+          },
+          "xVec4": {
+            "die_offset": 3795636,
+            "tag": 2,
+            "size": 16,
+            "members": [
+              {
+                "name": "x",
+                "offset": 0,
+                "die_offset": 3795662,
+                "location": "040000000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "y",
+                "offset": 4,
+                "die_offset": 3795692,
+                "location": "040400000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "z",
+                "offset": 8,
+                "die_offset": 3795722,
+                "location": "040800000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "w",
+                "offset": 12,
+                "die_offset": 3795752,
+                "location": "040c00000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              }
+            ]
+          },
+          "xCamera": {
+            "die_offset": 3826358,
+            "tag": 2,
+            "size": 816,
+            "members": [
+              {
+                "name": "lo_cam",
+                "offset": 16,
+                "die_offset": 3826417,
+                "location": "041000000007",
+                "type_attributes": {
+                  "8": "0192ae3900"
+                }
+              },
+              {
+                "name": "mat",
+                "offset": 32,
+                "die_offset": 3826457,
+                "location": "042000000007",
+                "type_attributes": {
+                  "7": 3806980
+                }
+              },
+              {
+                "name": "omat",
+                "offset": 96,
+                "die_offset": 3826491,
+                "location": "046000000007",
+                "type_attributes": {
+                  "7": 3806980
+                }
+              },
+              {
+                "name": "mbasis",
+                "offset": 160,
+                "die_offset": 3826526,
+                "location": "04a000000007",
+                "type_attributes": {
+                  "7": 3826124
+                }
+              },
+              {
+                "name": "bound",
+                "offset": 208,
+                "die_offset": 3826563,
+                "location": "04d000000007",
+                "type_attributes": {
+                  "7": 3809157
+                }
+              },
+              {
+                "name": "tgt_mat",
+                "offset": 284,
+                "die_offset": 3826599,
+                "location": "041c01000007",
+                "type_attributes": {
+                  "8": "0104173a00"
+                }
+              },
+              {
+                "name": "tgt_omat",
+                "offset": 288,
+                "die_offset": 3826640,
+                "location": "042001000007",
+                "type_attributes": {
+                  "8": "0104173a00"
+                }
+              },
+              {
+                "name": "tgt_bound",
+                "offset": 292,
+                "die_offset": 3826682,
+                "location": "042401000007",
+                "type_attributes": {
+                  "8": "01851f3a00"
+                }
+              },
+              {
+                "name": "focus",
+                "offset": 296,
+                "die_offset": 3826725,
+                "location": "042801000007",
+                "type_attributes": {
+                  "7": 3783105
+                }
+              },
+              {
+                "name": "sc",
+                "offset": 308,
+                "die_offset": 3826761,
+                "location": "043401000007",
+                "type_attributes": {
+                  "8": "0199b13900"
+                }
+              },
+              {
+                "name": "tran_accum",
+                "offset": 312,
+                "die_offset": 3826797,
+                "location": "043801000007",
+                "type_attributes": {
+                  "7": 3783105
+                }
+              },
+              {
+                "name": "fov",
+                "offset": 324,
+                "die_offset": 3826838,
+                "location": "044401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "flags",
+                "offset": 328,
+                "die_offset": 3826870,
+                "location": "044801000007",
+                "type_attributes": {
+                  "5": 9
+                }
+              },
+              {
+                "name": "tmr",
+                "offset": 332,
+                "die_offset": 3826904,
+                "location": "044c01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "tm_acc",
+                "offset": 336,
+                "die_offset": 3826936,
+                "location": "045001000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "tm_dec",
+                "offset": 340,
+                "die_offset": 3826971,
+                "location": "045401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "ltmr",
+                "offset": 344,
+                "die_offset": 3827006,
+                "location": "045801000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "ltm_acc",
+                "offset": 348,
+                "die_offset": 3827039,
+                "location": "045c01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "ltm_dec",
+                "offset": 352,
+                "die_offset": 3827075,
+                "location": "046001000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "dmin",
+                "offset": 356,
+                "die_offset": 3827111,
+                "location": "046401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "dmax",
+                "offset": 360,
+                "die_offset": 3827144,
+                "location": "046801000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "dcur",
+                "offset": 364,
+                "die_offset": 3827177,
+                "location": "046c01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "dgoal",
+                "offset": 368,
+                "die_offset": 3827210,
+                "location": "047001000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hmin",
+                "offset": 372,
+                "die_offset": 3827244,
+                "location": "047401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hmax",
+                "offset": 376,
+                "die_offset": 3827277,
+                "location": "047801000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hcur",
+                "offset": 380,
+                "die_offset": 3827310,
+                "location": "047c01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hgoal",
+                "offset": 384,
+                "die_offset": 3827343,
+                "location": "048001000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pmin",
+                "offset": 388,
+                "die_offset": 3827377,
+                "location": "048401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pmax",
+                "offset": 392,
+                "die_offset": 3827410,
+                "location": "048801000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pcur",
+                "offset": 396,
+                "die_offset": 3827443,
+                "location": "048c01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pgoal",
+                "offset": 400,
+                "die_offset": 3827476,
+                "location": "049001000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "depv",
+                "offset": 404,
+                "die_offset": 3827510,
+                "location": "049401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hepv",
+                "offset": 408,
+                "die_offset": 3827543,
+                "location": "049801000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pepv",
+                "offset": 412,
+                "die_offset": 3827576,
+                "location": "049c01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "orn_epv",
+                "offset": 416,
+                "die_offset": 3827609,
+                "location": "04a001000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "yaw_epv",
+                "offset": 420,
+                "die_offset": 3827645,
+                "location": "04a401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pitch_epv",
+                "offset": 424,
+                "die_offset": 3827681,
+                "location": "04a801000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "roll_epv",
+                "offset": 428,
+                "die_offset": 3827719,
+                "location": "04ac01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "orn_cur",
+                "offset": 432,
+                "die_offset": 3827756,
+                "location": "04b001000007",
+                "type_attributes": {
+                  "7": 3780150
+                }
+              },
+              {
+                "name": "orn_goal",
+                "offset": 448,
+                "die_offset": 3827794,
+                "location": "04c001000007",
+                "type_attributes": {
+                  "7": 3780150
+                }
+              },
+              {
+                "name": "orn_diff",
+                "offset": 464,
+                "die_offset": 3827833,
+                "location": "04d001000007",
+                "type_attributes": {
+                  "7": 3780150
+                }
+              },
+              {
+                "name": "yaw_cur",
+                "offset": 480,
+                "die_offset": 3827872,
+                "location": "04e001000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "yaw_goal",
+                "offset": 484,
+                "die_offset": 3827908,
+                "location": "04e401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pitch_cur",
+                "offset": 488,
+                "die_offset": 3827945,
+                "location": "04e801000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pitch_goal",
+                "offset": 492,
+                "die_offset": 3827983,
+                "location": "04ec01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "roll_cur",
+                "offset": 496,
+                "die_offset": 3828022,
+                "location": "04f001000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "roll_goal",
+                "offset": 500,
+                "die_offset": 3828059,
+                "location": "04f401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "dct",
+                "offset": 504,
+                "die_offset": 3828097,
+                "location": "04f801000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "dcd",
+                "offset": 508,
+                "die_offset": 3828129,
+                "location": "04fc01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "dccv",
+                "offset": 512,
+                "die_offset": 3828161,
+                "location": "040002000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "dcsv",
+                "offset": 516,
+                "die_offset": 3828194,
+                "location": "040402000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hct",
+                "offset": 520,
+                "die_offset": 3828227,
+                "location": "040802000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hcd",
+                "offset": 524,
+                "die_offset": 3828259,
+                "location": "040c02000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hccv",
+                "offset": 528,
+                "die_offset": 3828291,
+                "location": "041002000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hcsv",
+                "offset": 532,
+                "die_offset": 3828324,
+                "location": "041402000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pct",
+                "offset": 536,
+                "die_offset": 3828357,
+                "location": "041802000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pcd",
+                "offset": 540,
+                "die_offset": 3828389,
+                "location": "041c02000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pccv",
+                "offset": 544,
+                "die_offset": 3828421,
+                "location": "042002000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pcsv",
+                "offset": 548,
+                "die_offset": 3828454,
+                "location": "042402000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "orn_ct",
+                "offset": 552,
+                "die_offset": 3828487,
+                "location": "042802000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "orn_cd",
+                "offset": 556,
+                "die_offset": 3828522,
+                "location": "042c02000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "orn_ccv",
+                "offset": 560,
+                "die_offset": 3828557,
+                "location": "043002000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "orn_csv",
+                "offset": 564,
+                "die_offset": 3828593,
+                "location": "043402000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "yaw_ct",
+                "offset": 568,
+                "die_offset": 3828629,
+                "location": "043802000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "yaw_cd",
+                "offset": 572,
+                "die_offset": 3828664,
+                "location": "043c02000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "yaw_ccv",
+                "offset": 576,
+                "die_offset": 3828699,
+                "location": "044002000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "yaw_csv",
+                "offset": 580,
+                "die_offset": 3828735,
+                "location": "044402000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pitch_ct",
+                "offset": 584,
+                "die_offset": 3828771,
+                "location": "044802000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pitch_cd",
+                "offset": 588,
+                "die_offset": 3828808,
+                "location": "044c02000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pitch_ccv",
+                "offset": 592,
+                "die_offset": 3828845,
+                "location": "045002000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pitch_csv",
+                "offset": 596,
+                "die_offset": 3828883,
+                "location": "045402000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "roll_ct",
+                "offset": 600,
+                "die_offset": 3828921,
+                "location": "045802000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "roll_cd",
+                "offset": 604,
+                "die_offset": 3828957,
+                "location": "045c02000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "roll_ccv",
+                "offset": 608,
+                "die_offset": 3828993,
+                "location": "046002000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "roll_csv",
+                "offset": 612,
+                "die_offset": 3829030,
+                "location": "046402000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "frustplane",
+                "offset": 624,
+                "die_offset": 3829067,
+                "location": "047002000007",
+                "type_attributes": {
+                  "7": 3833549
+                }
+              }
+            ]
+          },
+          "xGlobals": {
+            "die_offset": 3836447,
+            "tag": 2,
+            "size": 1792,
+            "members": [
+              {
+                "name": "camera",
+                "offset": 0,
+                "die_offset": 3836476,
+                "location": "040000000007",
+                "type_attributes": {
+                  "7": 3826358
+                }
+              },
+              {
+                "name": "pad0",
+                "offset": 816,
+                "die_offset": 3836513,
+                "location": "043003000007",
+                "type_attributes": {
+                  "8": "01a5d13900"
+                }
+              },
+              {
+                "name": "pad1",
+                "offset": 820,
+                "die_offset": 3836551,
+                "location": "043403000007",
+                "type_attributes": {
+                  "8": "01a5d13900"
+                }
+              },
+              {
+                "name": "pad2",
+                "offset": 824,
+                "die_offset": 3836589,
+                "location": "043803000007",
+                "type_attributes": {
+                  "8": "01a5d13900"
+                }
+              },
+              {
+                "name": "pad3",
+                "offset": 828,
+                "die_offset": 3836627,
+                "location": "043c03000007",
+                "type_attributes": {
+                  "8": "01a5d13900"
+                }
+              },
+              {
+                "name": "profile",
+                "offset": 832,
+                "die_offset": 3836665,
+                "location": "044003000007",
+                "type_attributes": {
+                  "5": 8
+                }
+              },
+              {
+                "name": "profFunc",
+                "offset": 836,
+                "die_offset": 3836701,
+                "location": "044403000007",
+                "type_attributes": {
+                  "7": 3838897
+                }
+              },
+              {
+                "name": "updateMgr",
+                "offset": 1604,
+                "die_offset": 3836740,
+                "location": "044406000007",
+                "type_attributes": {
+                  "8": "0155573a00"
+                }
+              },
+              {
+                "name": "sceneFirst",
+                "offset": 1608,
+                "die_offset": 3836783,
+                "location": "044806000007",
+                "type_attributes": {
+                  "5": 8
+                }
+              },
+              {
+                "name": "sceneStart",
+                "offset": 1612,
+                "die_offset": 3836822,
+                "location": "044c06000007",
+                "type_attributes": {
+                  "7": 3839282
+                }
+              },
+              {
+                "name": "currWorld",
+                "offset": 1644,
+                "die_offset": 3836863,
+                "location": "046c06000007",
+                "type_attributes": {
+                  "8": "013f993900"
+                }
+              },
+              {
+                "name": "fog",
+                "offset": 1648,
+                "die_offset": 3836906,
+                "location": "047006000007",
+                "type_attributes": {
+                  "7": 3833659
+                }
+              },
+              {
+                "name": "fogA",
+                "offset": 1676,
+                "die_offset": 3836940,
+                "location": "048c06000007",
+                "type_attributes": {
+                  "7": 3833659
+                }
+              },
+              {
+                "name": "fogB",
+                "offset": 1704,
+                "die_offset": 3836975,
+                "location": "04a806000007",
+                "type_attributes": {
+                  "7": 3833659
+                }
+              },
+              {
+                "name": "fog_t0",
+                "offset": 1736,
+                "die_offset": 3837010,
+                "location": "04c806000007",
+                "type_attributes": {
+                  "5": 11
+                }
+              },
+              {
+                "name": "fog_t1",
+                "offset": 1744,
+                "die_offset": 3837045,
+                "location": "04d006000007",
+                "type_attributes": {
+                  "5": 11
+                }
+              },
+              {
+                "name": "option_vibration",
+                "offset": 1752,
+                "die_offset": 3837080,
+                "location": "04d806000007",
+                "type_attributes": {
+                  "5": 8
+                }
+              },
+              {
+                "name": "QuarterSpeed",
+                "offset": 1756,
+                "die_offset": 3837125,
+                "location": "04dc06000007",
+                "type_attributes": {
+                  "5": 9
+                }
+              },
+              {
+                "name": "update_dt",
+                "offset": 1760,
+                "die_offset": 3837166,
+                "location": "04e006000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "useHIPHOP",
+                "offset": 1764,
+                "die_offset": 3837204,
+                "location": "04e406000007",
+                "type_attributes": {
+                  "5": 8
+                }
+              },
+              {
+                "name": "NoMusic",
+                "offset": 1768,
+                "die_offset": 3837242,
+                "location": "04e806000007",
+                "type_attributes": {
+                  "5": 3
+                }
+              },
+              {
+                "name": "currentActivePad",
+                "offset": 1769,
+                "die_offset": 3837278,
+                "location": "04e906000007",
+                "type_attributes": {
+                  "5": 1
+                }
+              },
+              {
+                "name": "firstStartPressed",
+                "offset": 1770,
+                "die_offset": 3837323,
+                "location": "04ea06000007",
+                "type_attributes": {
+                  "5": 3
+                }
+              },
+              {
+                "name": "minVSyncCnt",
+                "offset": 1772,
+                "die_offset": 3837369,
+                "location": "04ec06000007",
+                "type_attributes": {
+                  "5": 9
+                }
+              },
+              {
+                "name": "dontShowPadMessageDuringLoadingOrCutScene",
+                "offset": 1776,
+                "die_offset": 3837409,
+                "location": "04f006000007",
+                "type_attributes": {
+                  "5": 3
+                }
+              },
+              {
+                "name": "autoSaveFeature",
+                "offset": 1777,
+                "die_offset": 3837479,
+                "location": "04f106000007",
+                "type_attributes": {
+                  "5": 3
+                }
+              }
+            ]
+          }
+        },
+        "data_extents_promoted": false
+      },
+      "operands": [
+        {
+          "caller": "iModelMaterialMulCB__FP10RpMaterialPv",
+          "caller_address": 1757760,
+          "typed_object": "sMaterialColor",
+          "hi_offset": 4,
+          "lo_offset": 12,
+          "opcode": 9,
+          "reference_address": 5450560,
+          "target_address": 5450816,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "iModelSetMaterialAlpha__FP8RpAtomicUc",
+          "caller_address": 1759216,
+          "typed_object": "sMaterialAlpha",
+          "hi_offset": 60,
+          "lo_offset": 68,
+          "opcode": 9,
+          "reference_address": 5450688,
+          "target_address": 5450944,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "iModelCull__FP8RpAtomicP11RwMatrixTag",
+          "caller_address": 1764912,
+          "typed_object": "globals.camera.frustplane",
+          "hi_offset": 8,
+          "lo_offset": 12,
+          "opcode": 9,
+          "reference_address": 5424736,
+          "target_address": 5424992,
+          "storage": "zero_fill"
+        }
+      ]
+    },
+    {
+      "version": "SLES-51970",
+      "typed_storage": {
+        "objects": {
+          "sMaterialColor": {
+            "declaration_die": 3771276,
+            "type_die": 3810777,
+            "reference_address": 5449024,
+            "target_address": 5450816,
+            "count": 16,
+            "element_size": 4,
+            "size": 64
+          },
+          "sMaterialAlpha": {
+            "declaration_die": 3771366,
+            "type_die": 3791133,
+            "reference_address": 5449152,
+            "target_address": 5450944,
+            "count": 16,
+            "element_size": 1,
+            "size": 16
+          },
+          "globals.camera.frustplane": {
+            "declaration_die": 3771814,
+            "type_die": 3795587,
+            "reference_address": 5423200,
+            "target_address": 5424992,
+            "count": 12,
+            "element_size": 16,
+            "size": 192,
+            "member_die": 3829913,
+            "array_type_die": 3834395,
+            "component_offset": 624,
+            "independent_anchor": {
+              "source": "SB/Game/zNPCGoalStd.cpp",
+              "name": "CalcNewDir",
+              "address": 2912416,
+              "size": 624,
+              "sha256": "9ec0e90e42c2657dc34eb4105c443ea96cd6497ea5802fc8c0a48db7d1cea3c0"
+            }
+          }
+        },
+        "layouts": {
+          "RwRGBA": {
+            "die_offset": 3778450,
+            "tag": 2,
+            "size": 4,
+            "members": [
+              {
+                "name": "red",
+                "offset": 0,
+                "die_offset": 3778477,
+                "location": "040000000007",
+                "type_attributes": {
+                  "5": 3
+                }
+              },
+              {
+                "name": "green",
+                "offset": 1,
+                "die_offset": 3778509,
+                "location": "040100000007",
+                "type_attributes": {
+                  "5": 3
+                }
+              },
+              {
+                "name": "blue",
+                "offset": 2,
+                "die_offset": 3778543,
+                "location": "040200000007",
+                "type_attributes": {
+                  "5": 3
+                }
+              },
+              {
+                "name": "alpha",
+                "offset": 3,
+                "die_offset": 3778576,
+                "location": "040300000007",
+                "type_attributes": {
+                  "5": 3
+                }
+              }
+            ]
+          },
+          "zGlobals": {
+            "die_offset": 3795587,
+            "tag": 2,
+            "size": 8272,
+            "members": [
+              {
+                "name": "player",
+                "offset": 1792,
+                "die_offset": 3795647,
+                "location": "040007000007",
+                "type_attributes": {
+                  "7": 3814538
+                }
+              },
+              {
+                "name": "pickupTable",
+                "offset": 8256,
+                "die_offset": 3795684,
+                "location": "044020000007",
+                "type_attributes": {
+                  "8": "01520a3a00"
+                }
+              },
+              {
+                "name": "cmgr",
+                "offset": 8260,
+                "die_offset": 3795729,
+                "location": "044420000007",
+                "type_attributes": {
+                  "8": "01950e3a00"
+                }
+              },
+              {
+                "name": "sceneCur",
+                "offset": 8264,
+                "die_offset": 3795767,
+                "location": "044820000007",
+                "type_attributes": {
+                  "8": "0165123a00"
+                }
+              },
+              {
+                "name": "scenePreload",
+                "offset": 8268,
+                "die_offset": 3795809,
+                "location": "044c20000007",
+                "type_attributes": {
+                  "8": "0165123a00"
+                }
+              }
+            ]
+          },
+          "xVec4": {
+            "die_offset": 3796482,
+            "tag": 2,
+            "size": 16,
+            "members": [
+              {
+                "name": "x",
+                "offset": 0,
+                "die_offset": 3796508,
+                "location": "040000000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "y",
+                "offset": 4,
+                "die_offset": 3796538,
+                "location": "040400000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "z",
+                "offset": 8,
+                "die_offset": 3796568,
+                "location": "040800000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "w",
+                "offset": 12,
+                "die_offset": 3796598,
+                "location": "040c00000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              }
+            ]
+          },
+          "xCamera": {
+            "die_offset": 3827204,
+            "tag": 2,
+            "size": 816,
+            "members": [
+              {
+                "name": "lo_cam",
+                "offset": 16,
+                "die_offset": 3827263,
+                "location": "041000000007",
+                "type_attributes": {
+                  "8": "01e0b13900"
+                }
+              },
+              {
+                "name": "mat",
+                "offset": 32,
+                "die_offset": 3827303,
+                "location": "042000000007",
+                "type_attributes": {
+                  "7": 3807826
+                }
+              },
+              {
+                "name": "omat",
+                "offset": 96,
+                "die_offset": 3827337,
+                "location": "046000000007",
+                "type_attributes": {
+                  "7": 3807826
+                }
+              },
+              {
+                "name": "mbasis",
+                "offset": 160,
+                "die_offset": 3827372,
+                "location": "04a000000007",
+                "type_attributes": {
+                  "7": 3826970
+                }
+              },
+              {
+                "name": "bound",
+                "offset": 208,
+                "die_offset": 3827409,
+                "location": "04d000000007",
+                "type_attributes": {
+                  "7": 3810003
+                }
+              },
+              {
+                "name": "tgt_mat",
+                "offset": 284,
+                "die_offset": 3827445,
+                "location": "041c01000007",
+                "type_attributes": {
+                  "8": "01521a3a00"
+                }
+              },
+              {
+                "name": "tgt_omat",
+                "offset": 288,
+                "die_offset": 3827486,
+                "location": "042001000007",
+                "type_attributes": {
+                  "8": "01521a3a00"
+                }
+              },
+              {
+                "name": "tgt_bound",
+                "offset": 292,
+                "die_offset": 3827528,
+                "location": "042401000007",
+                "type_attributes": {
+                  "8": "01d3223a00"
+                }
+              },
+              {
+                "name": "focus",
+                "offset": 296,
+                "die_offset": 3827571,
+                "location": "042801000007",
+                "type_attributes": {
+                  "7": 3783951
+                }
+              },
+              {
+                "name": "sc",
+                "offset": 308,
+                "die_offset": 3827607,
+                "location": "043401000007",
+                "type_attributes": {
+                  "8": "01e7b43900"
+                }
+              },
+              {
+                "name": "tran_accum",
+                "offset": 312,
+                "die_offset": 3827643,
+                "location": "043801000007",
+                "type_attributes": {
+                  "7": 3783951
+                }
+              },
+              {
+                "name": "fov",
+                "offset": 324,
+                "die_offset": 3827684,
+                "location": "044401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "flags",
+                "offset": 328,
+                "die_offset": 3827716,
+                "location": "044801000007",
+                "type_attributes": {
+                  "5": 9
+                }
+              },
+              {
+                "name": "tmr",
+                "offset": 332,
+                "die_offset": 3827750,
+                "location": "044c01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "tm_acc",
+                "offset": 336,
+                "die_offset": 3827782,
+                "location": "045001000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "tm_dec",
+                "offset": 340,
+                "die_offset": 3827817,
+                "location": "045401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "ltmr",
+                "offset": 344,
+                "die_offset": 3827852,
+                "location": "045801000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "ltm_acc",
+                "offset": 348,
+                "die_offset": 3827885,
+                "location": "045c01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "ltm_dec",
+                "offset": 352,
+                "die_offset": 3827921,
+                "location": "046001000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "dmin",
+                "offset": 356,
+                "die_offset": 3827957,
+                "location": "046401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "dmax",
+                "offset": 360,
+                "die_offset": 3827990,
+                "location": "046801000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "dcur",
+                "offset": 364,
+                "die_offset": 3828023,
+                "location": "046c01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "dgoal",
+                "offset": 368,
+                "die_offset": 3828056,
+                "location": "047001000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hmin",
+                "offset": 372,
+                "die_offset": 3828090,
+                "location": "047401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hmax",
+                "offset": 376,
+                "die_offset": 3828123,
+                "location": "047801000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hcur",
+                "offset": 380,
+                "die_offset": 3828156,
+                "location": "047c01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hgoal",
+                "offset": 384,
+                "die_offset": 3828189,
+                "location": "048001000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pmin",
+                "offset": 388,
+                "die_offset": 3828223,
+                "location": "048401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pmax",
+                "offset": 392,
+                "die_offset": 3828256,
+                "location": "048801000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pcur",
+                "offset": 396,
+                "die_offset": 3828289,
+                "location": "048c01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pgoal",
+                "offset": 400,
+                "die_offset": 3828322,
+                "location": "049001000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "depv",
+                "offset": 404,
+                "die_offset": 3828356,
+                "location": "049401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hepv",
+                "offset": 408,
+                "die_offset": 3828389,
+                "location": "049801000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pepv",
+                "offset": 412,
+                "die_offset": 3828422,
+                "location": "049c01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "orn_epv",
+                "offset": 416,
+                "die_offset": 3828455,
+                "location": "04a001000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "yaw_epv",
+                "offset": 420,
+                "die_offset": 3828491,
+                "location": "04a401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pitch_epv",
+                "offset": 424,
+                "die_offset": 3828527,
+                "location": "04a801000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "roll_epv",
+                "offset": 428,
+                "die_offset": 3828565,
+                "location": "04ac01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "orn_cur",
+                "offset": 432,
+                "die_offset": 3828602,
+                "location": "04b001000007",
+                "type_attributes": {
+                  "7": 3780996
+                }
+              },
+              {
+                "name": "orn_goal",
+                "offset": 448,
+                "die_offset": 3828640,
+                "location": "04c001000007",
+                "type_attributes": {
+                  "7": 3780996
+                }
+              },
+              {
+                "name": "orn_diff",
+                "offset": 464,
+                "die_offset": 3828679,
+                "location": "04d001000007",
+                "type_attributes": {
+                  "7": 3780996
+                }
+              },
+              {
+                "name": "yaw_cur",
+                "offset": 480,
+                "die_offset": 3828718,
+                "location": "04e001000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "yaw_goal",
+                "offset": 484,
+                "die_offset": 3828754,
+                "location": "04e401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pitch_cur",
+                "offset": 488,
+                "die_offset": 3828791,
+                "location": "04e801000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pitch_goal",
+                "offset": 492,
+                "die_offset": 3828829,
+                "location": "04ec01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "roll_cur",
+                "offset": 496,
+                "die_offset": 3828868,
+                "location": "04f001000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "roll_goal",
+                "offset": 500,
+                "die_offset": 3828905,
+                "location": "04f401000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "dct",
+                "offset": 504,
+                "die_offset": 3828943,
+                "location": "04f801000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "dcd",
+                "offset": 508,
+                "die_offset": 3828975,
+                "location": "04fc01000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "dccv",
+                "offset": 512,
+                "die_offset": 3829007,
+                "location": "040002000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "dcsv",
+                "offset": 516,
+                "die_offset": 3829040,
+                "location": "040402000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hct",
+                "offset": 520,
+                "die_offset": 3829073,
+                "location": "040802000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hcd",
+                "offset": 524,
+                "die_offset": 3829105,
+                "location": "040c02000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hccv",
+                "offset": 528,
+                "die_offset": 3829137,
+                "location": "041002000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "hcsv",
+                "offset": 532,
+                "die_offset": 3829170,
+                "location": "041402000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pct",
+                "offset": 536,
+                "die_offset": 3829203,
+                "location": "041802000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pcd",
+                "offset": 540,
+                "die_offset": 3829235,
+                "location": "041c02000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pccv",
+                "offset": 544,
+                "die_offset": 3829267,
+                "location": "042002000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pcsv",
+                "offset": 548,
+                "die_offset": 3829300,
+                "location": "042402000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "orn_ct",
+                "offset": 552,
+                "die_offset": 3829333,
+                "location": "042802000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "orn_cd",
+                "offset": 556,
+                "die_offset": 3829368,
+                "location": "042c02000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "orn_ccv",
+                "offset": 560,
+                "die_offset": 3829403,
+                "location": "043002000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "orn_csv",
+                "offset": 564,
+                "die_offset": 3829439,
+                "location": "043402000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "yaw_ct",
+                "offset": 568,
+                "die_offset": 3829475,
+                "location": "043802000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "yaw_cd",
+                "offset": 572,
+                "die_offset": 3829510,
+                "location": "043c02000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "yaw_ccv",
+                "offset": 576,
+                "die_offset": 3829545,
+                "location": "044002000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "yaw_csv",
+                "offset": 580,
+                "die_offset": 3829581,
+                "location": "044402000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pitch_ct",
+                "offset": 584,
+                "die_offset": 3829617,
+                "location": "044802000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pitch_cd",
+                "offset": 588,
+                "die_offset": 3829654,
+                "location": "044c02000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pitch_ccv",
+                "offset": 592,
+                "die_offset": 3829691,
+                "location": "045002000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "pitch_csv",
+                "offset": 596,
+                "die_offset": 3829729,
+                "location": "045402000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "roll_ct",
+                "offset": 600,
+                "die_offset": 3829767,
+                "location": "045802000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "roll_cd",
+                "offset": 604,
+                "die_offset": 3829803,
+                "location": "045c02000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "roll_ccv",
+                "offset": 608,
+                "die_offset": 3829839,
+                "location": "046002000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "roll_csv",
+                "offset": 612,
+                "die_offset": 3829876,
+                "location": "046402000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "frustplane",
+                "offset": 624,
+                "die_offset": 3829913,
+                "location": "047002000007",
+                "type_attributes": {
+                  "7": 3834395
+                }
+              }
+            ]
+          },
+          "xGlobals": {
+            "die_offset": 3837293,
+            "tag": 2,
+            "size": 1792,
+            "members": [
+              {
+                "name": "camera",
+                "offset": 0,
+                "die_offset": 3837322,
+                "location": "040000000007",
+                "type_attributes": {
+                  "7": 3827204
+                }
+              },
+              {
+                "name": "pad0",
+                "offset": 816,
+                "die_offset": 3837359,
+                "location": "043003000007",
+                "type_attributes": {
+                  "8": "01f3d43900"
+                }
+              },
+              {
+                "name": "pad1",
+                "offset": 820,
+                "die_offset": 3837397,
+                "location": "043403000007",
+                "type_attributes": {
+                  "8": "01f3d43900"
+                }
+              },
+              {
+                "name": "pad2",
+                "offset": 824,
+                "die_offset": 3837435,
+                "location": "043803000007",
+                "type_attributes": {
+                  "8": "01f3d43900"
+                }
+              },
+              {
+                "name": "pad3",
+                "offset": 828,
+                "die_offset": 3837473,
+                "location": "043c03000007",
+                "type_attributes": {
+                  "8": "01f3d43900"
+                }
+              },
+              {
+                "name": "profile",
+                "offset": 832,
+                "die_offset": 3837511,
+                "location": "044003000007",
+                "type_attributes": {
+                  "5": 8
+                }
+              },
+              {
+                "name": "profFunc",
+                "offset": 836,
+                "die_offset": 3837547,
+                "location": "044403000007",
+                "type_attributes": {
+                  "7": 3839743
+                }
+              },
+              {
+                "name": "updateMgr",
+                "offset": 1604,
+                "die_offset": 3837586,
+                "location": "044406000007",
+                "type_attributes": {
+                  "8": "01a35a3a00"
+                }
+              },
+              {
+                "name": "sceneFirst",
+                "offset": 1608,
+                "die_offset": 3837629,
+                "location": "044806000007",
+                "type_attributes": {
+                  "5": 8
+                }
+              },
+              {
+                "name": "sceneStart",
+                "offset": 1612,
+                "die_offset": 3837668,
+                "location": "044c06000007",
+                "type_attributes": {
+                  "7": 3840128
+                }
+              },
+              {
+                "name": "currWorld",
+                "offset": 1644,
+                "die_offset": 3837709,
+                "location": "046c06000007",
+                "type_attributes": {
+                  "8": "018d9c3900"
+                }
+              },
+              {
+                "name": "fog",
+                "offset": 1648,
+                "die_offset": 3837752,
+                "location": "047006000007",
+                "type_attributes": {
+                  "7": 3834505
+                }
+              },
+              {
+                "name": "fogA",
+                "offset": 1676,
+                "die_offset": 3837786,
+                "location": "048c06000007",
+                "type_attributes": {
+                  "7": 3834505
+                }
+              },
+              {
+                "name": "fogB",
+                "offset": 1704,
+                "die_offset": 3837821,
+                "location": "04a806000007",
+                "type_attributes": {
+                  "7": 3834505
+                }
+              },
+              {
+                "name": "fog_t0",
+                "offset": 1736,
+                "die_offset": 3837856,
+                "location": "04c806000007",
+                "type_attributes": {
+                  "5": 11
+                }
+              },
+              {
+                "name": "fog_t1",
+                "offset": 1744,
+                "die_offset": 3837891,
+                "location": "04d006000007",
+                "type_attributes": {
+                  "5": 11
+                }
+              },
+              {
+                "name": "option_vibration",
+                "offset": 1752,
+                "die_offset": 3837926,
+                "location": "04d806000007",
+                "type_attributes": {
+                  "5": 8
+                }
+              },
+              {
+                "name": "QuarterSpeed",
+                "offset": 1756,
+                "die_offset": 3837971,
+                "location": "04dc06000007",
+                "type_attributes": {
+                  "5": 9
+                }
+              },
+              {
+                "name": "update_dt",
+                "offset": 1760,
+                "die_offset": 3838012,
+                "location": "04e006000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              },
+              {
+                "name": "useHIPHOP",
+                "offset": 1764,
+                "die_offset": 3838050,
+                "location": "04e406000007",
+                "type_attributes": {
+                  "5": 8
+                }
+              },
+              {
+                "name": "NoMusic",
+                "offset": 1768,
+                "die_offset": 3838088,
+                "location": "04e806000007",
+                "type_attributes": {
+                  "5": 3
+                }
+              },
+              {
+                "name": "currentActivePad",
+                "offset": 1769,
+                "die_offset": 3838124,
+                "location": "04e906000007",
+                "type_attributes": {
+                  "5": 1
+                }
+              },
+              {
+                "name": "firstStartPressed",
+                "offset": 1770,
+                "die_offset": 3838169,
+                "location": "04ea06000007",
+                "type_attributes": {
+                  "5": 3
+                }
+              },
+              {
+                "name": "minVSyncCnt",
+                "offset": 1772,
+                "die_offset": 3838215,
+                "location": "04ec06000007",
+                "type_attributes": {
+                  "5": 9
+                }
+              },
+              {
+                "name": "dontShowPadMessageDuringLoadingOrCutScene",
+                "offset": 1776,
+                "die_offset": 3838255,
+                "location": "04f006000007",
+                "type_attributes": {
+                  "5": 3
+                }
+              },
+              {
+                "name": "autoSaveFeature",
+                "offset": 1777,
+                "die_offset": 3838325,
+                "location": "04f106000007",
+                "type_attributes": {
+                  "5": 3
+                }
+              }
+            ]
+          }
+        },
+        "data_extents_promoted": false
+      },
+      "operands": [
+        {
+          "caller": "iModelMaterialMulCB__FP10RpMaterialPv",
+          "caller_address": 1757760,
+          "typed_object": "sMaterialColor",
+          "hi_offset": 4,
+          "lo_offset": 12,
+          "opcode": 9,
+          "reference_address": 5449024,
+          "target_address": 5450816,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "iModelSetMaterialAlpha__FP8RpAtomicUc",
+          "caller_address": 1759216,
+          "typed_object": "sMaterialAlpha",
+          "hi_offset": 60,
+          "lo_offset": 68,
+          "opcode": 9,
+          "reference_address": 5449152,
+          "target_address": 5450944,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "iModelCull__FP8RpAtomicP11RwMatrixTag",
+          "caller_address": 1764912,
+          "typed_object": "globals.camera.frustplane",
+          "hi_offset": 8,
+          "lo_offset": 12,
+          "opcode": 9,
+          "reference_address": 5423200,
+          "target_address": 5424992,
+          "storage": "zero_fill"
+        }
+      ]
     }
   ]
 }
