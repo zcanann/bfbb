@@ -67,3 +67,13 @@ fuzzy matching. This adds nine exact functions and 4,168 exact bytes over the
 previous Setup-only profile. UpdateFX retains the same 99.375% residual as the
 debug originals. The source and all other version profiles are unchanged.
 These function comparisons do not establish a linked PS2 executable.
+
+The integrated full production report also passed registry reconstruction,
+source compilation and section export on 2026-10-08. It covers 677 recovered
+functions / 242,700 known code bytes and reports 407 exact functions / 115,748
+exact code bytes against the unchanged 2,979,968-byte CPU-code denominator.
+This snapshot includes the pad, particle, spline and update-cull changes.
+Evidence: `build/oct08-france-after/SLES-53623/{progress,report}.json` in the
+root checkout. Compiler jobs used isolated output directories in parallel;
+each ran the unchanged authenticated `ps2_source.compile_units` implementation.
+The exported report still records whole-executable source linking as pending.
