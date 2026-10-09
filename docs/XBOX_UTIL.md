@@ -90,3 +90,13 @@ section byte and size. Evidence: `build/urand-{shapes,flows}.json`,
 `build/urand-full`, `build/nonxbox/proof.json` and `build/nonxbox-ps2/proof.json`
 in the Xbox worktree. This is a partial function improvement; source data and
 a complete original Xbox executable build remain pending.
+
+Staging integration passes both full production reports in
+`build/oct09-culling-robots-xbox-retry`, preserving the private pilot's sole
+38.454544% to 79.84849% function gain and every previous exact match. Removing
+an obsolete source-comparison sentence from the reviewed original metadata
+required refreshing the anonymous registry's reviewed-input digest. Both
+originals were independently re-decoded: all 2,440 anonymous records / 612,389
+bytes remain identical, and only that digest changes. The strict report check
+then succeeds. Evidence is `build/oct09-urand-boundaries` and both regional
+production comparison logs.

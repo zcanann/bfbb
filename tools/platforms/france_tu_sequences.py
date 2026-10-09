@@ -689,6 +689,33 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in sound_playback['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Sound playback adds nine complete bodies with all three original ownership and strict-control-flow witnesses. Typed objects, complete diagnostic strings, independently proved callees and literal opaque runtime contexts corroborate every operand. Vector identity uses the unique complete two-member sequence; one scoped runtime leaf and one complete flush template retain explicitly checked sizes and operand inventories. Two HIS bodies remain coverage-only. No opaque runtime identity, whole playback translation-unit or data extent is claimed.')
+    from platforms.france_goalrobo_streaks import generate_unit as generate_goalrobo_streaks
+    goalrobo_streaks = generate_goalrobo_streaks(originals, registry_dir)
+    document['functions'].extend(goalrobo_streaks['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(goalrobo_streaks['sequence_proofs'])
+    document['goalrobo_streaks_data_proofs'] = goalrobo_streaks['data_proofs']
+    for key, value in goalrobo_streaks['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Robotic streaks adds four unique complete robotic callers and effects consumers using all three originals. Both full effects consumers agree on the original typed nested streak-array base, and every caller transfer reaches the complete update helper. No registry identities are consumed, and no whole translation-unit or data extent is claimed.')
+    from platforms.france_goalrobo_motion import generate_unit as generate_goalrobo_motion
+    goalrobo_motion = generate_goalrobo_motion(originals, registry_dir)
+    document['functions'].extend(goalrobo_motion['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(goalrobo_motion['sequence_proofs'])
+    document['goalrobo_motion_data_proofs'] = goalrobo_motion['data_proofs']
+    for key, value in goalrobo_motion['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Robotic motion adds thirty-one unique complete original motion helpers and robotic consumers. Complete literal helper bodies and exactly thirty-four proved JAL destinations close every transfer; no changed data operand is accepted. Eight fixed independently proved destinations fence later recovery dependencies. No whole translation-unit or data extent is claimed.')
+    from platforms.france_goalrobo_models import generate_unit as generate_goalrobo_models
+    goalrobo_models = generate_goalrobo_models(originals, registry_dir)
+    document['functions'].extend(goalrobo_models['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(goalrobo_models['sequence_proofs'])
+    document['goalrobo_models_data_proofs'] = goalrobo_models['data_proofs']
+    for key, value in goalrobo_models['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Robotic models adds nine unique complete original model helpers and robotic consumers. The complete find/show/hide helper graph and exactly nineteen proved JAL destinations close every transfer; no changed data operand is accepted. Three fixed independently proved destinations fence later recovery dependencies. No whole translation-unit or data extent is claimed.')
     return document
 
 

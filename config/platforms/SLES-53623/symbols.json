@@ -2070,6 +2070,20 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xFXStreakUpdate",
+      "source": "SB/Core/x/xFX.cpp",
+      "address": 1999216,
+      "size": 208,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "xFXStreakStop",
+      "source": "SB/Core/x/xFX.cpp",
+      "address": 1999424,
+      "size": 96,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "xFXanimUVAtomicSetup",
       "source": "SB/Core/x/xFX.cpp",
       "address": 2009584,
@@ -4058,6 +4072,202 @@
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
+      "name": "Exit",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2810768,
+      "size": 180,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2811040,
+      "size": 240,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Exit",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2812096,
+      "size": 184,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2812288,
+      "size": 368,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2814864,
+      "size": 96,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2821456,
+      "size": 288,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "StreakUpdate",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2825888,
+      "size": 244,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Exit",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2828160,
+      "size": 104,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2830480,
+      "size": 360,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Exit",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2835728,
+      "size": 40,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Exit",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2837136,
+      "size": 48,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2837936,
+      "size": 172,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPCMessage",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2838240,
+      "size": 132,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2838384,
+      "size": 132,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Exit",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2840464,
+      "size": 176,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPCMessage",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2840816,
+      "size": 48,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Exit",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2846320,
+      "size": 92,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "FXStreakUpdate",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2848144,
+      "size": 1636,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Exit",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2850496,
+      "size": 128,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "FXStreakUpdate",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2853456,
+      "size": 868,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Exit",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2857152,
+      "size": 128,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Notify",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2858816,
+      "size": 80,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2862864,
+      "size": 100,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "MoveToHome",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2863680,
+      "size": 444,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZoomMove",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2865280,
+      "size": 464,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2868208,
+      "size": 88,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2882976,
+      "size": 104,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2903232,
+      "size": 128,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "NPCMessage",
       "source": "SB/Game/zNPCGoalStd.cpp",
       "address": 2908864,
@@ -4478,6 +4688,90 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "AnimTimeRemain",
+      "source": "SB/Game/zNPCTypeCommon.cpp",
+      "address": 2953696,
+      "size": 104,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "AnimCurStateID",
+      "source": "SB/Game/zNPCTypeCommon.cpp",
+      "address": 2953920,
+      "size": 96,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ModelAtomicFind",
+      "source": "SB/Game/zNPCTypeCommon.cpp",
+      "address": 2954608,
+      "size": 80,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ModelAtomicShow",
+      "source": "SB/Game/zNPCTypeCommon.cpp",
+      "address": 2954688,
+      "size": 100,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ModelAtomicHide",
+      "source": "SB/Game/zNPCTypeCommon.cpp",
+      "address": 2954800,
+      "size": 84,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "IsAttackFrame",
+      "source": "SB/Game/zNPCTypeCommon.cpp",
+      "address": 2958800,
+      "size": 296,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ThrottleApply",
+      "source": "SB/Game/zNPCTypeCommon.cpp",
+      "address": 2962944,
+      "size": 372,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ThrottleAdjust",
+      "source": "SB/Game/zNPCTypeCommon.cpp",
+      "address": 2963472,
+      "size": 264,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "VelStop",
+      "source": "SB/Game/zNPCTypeCommon.cpp",
+      "address": 2963744,
+      "size": 192,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "DstSqFromHome",
+      "source": "SB/Game/zNPCTypeRobot.cpp",
+      "address": 2976752,
+      "size": 144,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "PctFromHome",
+      "source": "SB/Game/zNPCTypeRobot.cpp",
+      "address": 2976896,
+      "size": 120,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "IncludesPos",
+      "source": "SB/Game/zNPCTypeRobot.cpp",
+      "address": 2977024,
+      "size": 176,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "RemoveFromFamily",
       "source": "SB/Game/zNPCTypeTiki.cpp",
       "address": 3048000,
@@ -4756,6 +5050,13 @@
       "address": 3256288,
       "size": 104,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "NPCC_Bounce",
+      "source": "SB/Game/zNPCSupport.cpp",
+      "address": 3256608,
+      "size": 184,
+      "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
       "name": "IsVisible",
@@ -5113,6 +5414,13 @@
       "address": 3931376,
       "size": 700,
       "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "Start",
+      "source": "SB/Game/zNPCHazard.cpp",
+      "address": 3979408,
+      "size": 128,
+      "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
       "name": "xCMprep",

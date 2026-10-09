@@ -35,3 +35,14 @@ corrupted independent callee evidence. Replay takes about six seconds. Private
 artifacts are `build/goalrobo-models-proof.json` and
 `build/goalrobo-models-france-pilot/report.json`; canonical aggregate
 regeneration and the full French report remain production integration gates.
+
+The combined production gate passes in `build/oct09-france-culling-robots`:
+all original-backed aggregate evidence regenerates identically and all 76
+enabled source units compile. Streak, motion and model clusters add 44 complete
+identities / 9,716 known bytes. With the exact ZoomMove source fix and two
+already-proven support bodies newly selected, exact matching rises by 9,892
+bytes / 46 functions to 172,964 bytes / 510 functions. Coverage reaches 775
+functions / 377,460 bytes. Every earlier score is retained; the CPU denominator
+stays 2,979,968 bytes. Source data and a full executable link remain pending.
+All twelve original-backed cluster tests pass, including changed data/call
+operands, duplicated bodies, dependency fences and JSON roundtrip checks.

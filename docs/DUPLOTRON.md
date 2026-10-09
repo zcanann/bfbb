@@ -14857,3 +14857,39 @@ and source-data/link limitations are unchanged. Evidence:
 comparison logs, `build/oct09-{playback,hangable-vector}-tests.log`,
 `build/oct09-vector-playback-<GameCube-version>.log`, and
 `build/oct09-vector-playback-xbox` with both regional comparison logs.
+
+The culling/robot batch adds 2,076 exact USA bytes / four functions, reaching
+1,018,232 bytes / 3,793 functions. Climate wind lifetime, hazard's steamy-stinky
+body and original robotic zoom/appearance operand order provide those gains.
+Restoring VU side-plane and scalar near-plane culling raises eleven NPC particle
+updates from 29-76% to 98-99.95% and decal update from 48.63% to 94.67508%.
+Original lane masks, packed comparisons and actual vmul.w branch delay slots
+are checked raw in all three debug regions. Typed hazard union locals, original
+call boundaries and PS2 rotation paths produce nine more function improvements.
+The combined USA fuzzy measure rises from 64.709509% to 65.105562% with no loss
+in any earlier function/code/data measure; all seven changed units are rebuilt
+against the previously verified 214-unit source/target snapshot.
+
+French streak/motion/model closure adds 44 complete identities / 9,716 bytes.
+All new source bodies are exact, and two previously proven support bodies gain
+source comparison. Exact matching rises by 9,892 bytes / 46 functions, reaching
+172,964 bytes / 510 functions. Strict original-backed regeneration preserves
+every earlier proof; all 76 enabled source units compile. Coverage reaches 775
+functions / 377,460 bytes. Twelve cluster mutation/duplicate/dependency tests
+pass. The refreshed largest-first fuzzy map excludes those proven bodies and
+continues to treat remaining candidates as diagnostics only.
+
+All three GameCube complete source reports/checksums preserve their earlier
+scores. The Xbox-only weighted random calculation improves xUtil_yesno from
+38.454544% to 79.84849% in both complete 13-unit production builds; exact totals
+stay 15,306 bytes / 81 functions and all other scores remain unchanged. Updating
+an explanatory reviewed-metadata sentence required a new anonymous-registry
+input digest; full re-decoding confirms every one of the 2,440 anonymous records
+is unchanged. CPU denominators, source-data and complete-link limitations remain
+unchanged for all platforms.
+
+Evidence: `build/oct09-us-culling-robots`, `build/oct09-france-culling-robots`,
+their comparison logs, `build/oct09-robot-cluster-tests.log`,
+`build/oct09-culling-robots-<GameCube-version>.log`,
+`build/oct09-culling-robots-xbox-retry`, both regional comparison logs,
+`build/oct09-urand-boundaries` and `build/oct09-france-robots-map{,-query}.json`.
