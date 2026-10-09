@@ -336,14 +336,16 @@ static void xScrFxDistortionUpdate(F32 dt)
     }
 }
 
-static void xScrFxDistortionRender(RwCamera*)
+static void xScrFxDistortionRender(RwCamera* camera)
 {
+#if defined(PS2)
+    iScrFxDistortionRender(camera);
+#endif
 }
 
 void xScrFXGlareInit()
 {
-    sGlare->flags = 0;
-    for (S32 i = 1; i < 10; i++)
+    for (S32 i = 0; i < 10; i++)
     {
         sGlare[i].flags = 0;
     }

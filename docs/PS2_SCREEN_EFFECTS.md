@@ -1,7 +1,8 @@
 # PS2 screen-effects renderer
 
 The complete existing `xScrFx.cpp` now compiles using the normal PS2 profile.
-No function body changes are needed. All original functions stay in the comparison:
+The initial profile needed no function body changes; subsequent source restorations
+are documented below. All original functions stay in the comparison:
 
 | Original | Functions | Original bytes | Normal matched code | Fuzzy score |
 | --- | ---: | ---: | ---: | ---: |
@@ -54,3 +55,33 @@ code matching is not a claim of raw linked-byte identity.
 Private evidence is in `build/ps2render208`: the pinned SDK header, authenticated
 original layouts, compiled layouts, `qwords-type-proof.json`, three complete
 reports/profiles, independent raw relocation proofs, and GC comparisons.
+
+## Glare reset and platform distortion rendering
+
+The glare initialization now clears all ten flags in one ordinary loop. Separating
+element zero before the remaining nine iterations produced a different PS2 unroll;
+the complete loop restores the original two groups of five stores in both inlined
+callers. `xScrFxInit` (100 bytes) and `xScrFxReset` (56 bytes) become exact.
+
+The shared distortion-render wrapper was empty. The original PS2 `xScrFxRender`
+calls the independently named `iScrFxDistortionRender`, passing the current camera
+from `ourGlobals`. The wrapper now forwards to that platform function on PS2,
+restoring all 68 original bytes of its caller. Other platforms retain the empty
+wrapper, and no header or compiler profile changes are involved.
+
+Complete debug-region reports gain three functions / 224 bytes, from 16 / 4084 to
+19 / 4308. Every other function score is unchanged, including the regional
+7648/7640-byte denominator difference. The existing French letterbox subset stays
+two functions / 116 bytes exact. A complete GU4Y78 comparison preserves every
+function score and all 30 exact functions / 4276 bytes; the shared loop therefore
+needs no platform guard.
+
+Raw verification independently applies the source object's real call, GP and
+HI16/LO16 relocations using original function records and DWARF data declarations.
+All three changed functions reproduce all 224 bytes in each debug original,
+including the `sGlare + 9 * sizeof(xGlare)` address addend and the `ourGlobals`
+current-camera load. Existing comparison and full-link limitations remain.
+
+Private artifacts in the agent worktree: `build/scrfx-full-comparison.py` and
+`.json`, `build/scrfx-proof.py` and `build/scrfx-raw-proof.json`, the scoped French
+target diagnostic, and `build/checkscrfxgc.py` with retained before/after reports.
