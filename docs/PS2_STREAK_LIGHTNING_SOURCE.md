@@ -91,3 +91,12 @@ with no other function-score or size/data changes in any region. GameCube preser
 score (`build/ribbon-normal-gc-{before,after}.json`). Original instruction-shape
 evidence is in `build/ribbon-normal-original-shape.json`; the existing unresolved
 trigonometric call identities are not newly promoted by this comparison.
+
+Initializing `zLightningFunc_Render`'s vertex count before its vertex-pointer
+setup moves the zero store toward its original position and improves that
+function from 95.46598% to 95.75052% in all three debug regions. Complete units
+retain 7208 exact bytes with every other function score and all size/data controls
+unchanged. The GameCube unit remains 17/17 exact (12448 bytes). Evidence is
+`build/lightning-init-final-comparison.json`, its function-delta JSON, and
+`build/lightning-init-gc-{before,after}.json`. The French source profile does not
+currently contain this function, so this change makes no French score claim.

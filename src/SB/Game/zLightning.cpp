@@ -677,6 +677,7 @@ void zLightningFunc_Render(zLightning* l)
         pieceZ[i] = sLFuncZ;
     }
 
+    U32 nvert = 0;
     vert[0] = gRenderArr.m_vertex;
     vert[1] = vert[0] + 240;
 
@@ -699,7 +700,6 @@ void zLightningFunc_Render(zLightning* l)
 
     U32 alpha = U8(xrand());
     S32 firstTex = 0;
-    U32 nvert = 0;
 
     for (i = 0; i < 2; i++)
     {
