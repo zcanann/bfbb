@@ -22,7 +22,8 @@ Fresh complete-unit reports for SLUS-20680, SLES-51968 and SLES-51970 agree:
 The unit fuzzy score rises from 94.41555% to 96.37248%. Its five exact
 functions and 1,756 exact code bytes remain unchanged, and no other function
 score regresses. These profiles do not measure PS2 source data or establish a
-complete source-linked executable. France has no xSpline comparison profile.
+complete source-linked executable. The French profile also compares all
+thirteen functions; its combined validation is recorded below.
 
 A full GameCube USA source rebuild produces a report exactly equal to the
 baseline; the normal retail link still has SHA1
@@ -57,3 +58,15 @@ baseline, and its normal retail SHA1 is unchanged. Private evidence is
 `build/ps2tridiag-oct08/`, including all six regional unit reports and
 `validation.json`. PS2 source data and a complete linked executable remain
 outside these unit comparisons.
+
+The French whole-unit before/after comparison independently confirms the same
+five improvements from both changes, including `Tridiag_Solve`. Its fuzzy score
+rises from 94.41555% to 97.75168%, with exact counts and every other function
+unchanged. The configured target object comes from the previously verified
+French profile; the complete source is rebuilt with the current pinned profile
+and French version define. Evidence is `build/oct08-spline-france-{before,after}`
+and `build/oct08-spline-france.log` in the staging checkout.
+
+Integration also rebuilt all source and verified the full retail DOL checksum
+for each of GQPE78, GQPP78 and GU4Y78. All three complete GameCube reports are
+unchanged by the spline edits.
