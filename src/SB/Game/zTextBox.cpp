@@ -153,8 +153,8 @@ namespace
 
         switch (event)
         {
-        case eEventReset:
         case eEventSceneEnd:
+        case eEventReset:
         {
             e.reset();
             break;
@@ -221,7 +221,7 @@ void ztextbox::load(const asset_type& a)
     asset = (asset_type*)&a;
     eventFunc = cb_dispatch;
 
-    if (linkCount)
+    if (linkCount > 0)
     {
         link = (xLinkAsset*)(&a + 1);
     }
@@ -247,6 +247,9 @@ void ztextbox::update(xScene&, F32)
 {
 }
 
+#ifdef PS2
+#pragma dont_inline on
+#endif
 void ztextbox::reset()
 {
     deactivate();
@@ -258,6 +261,9 @@ void ztextbox::reset()
     set_text(asset->text);
 }
 
+#ifdef PS2
+#pragma dont_inline reset
+#endif
 void ztextbox::render()
 {
     if (flag.dirty)
