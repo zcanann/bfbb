@@ -328,15 +328,12 @@ void xMat3x3Euler(xMat3x3* m, F32 yaw, F32 pitch, F32 roll)
     m->up.y = icp * icr;
     m->up.z = (isy * isr) + (ic_prod * icy);
 #else
-    F32 ic_prod = isy * isp;
-    F32 is_prod = icy * isp;
-
-    m->right.x = (icy * icr) + (isr * ic_prod);
+    m->right.x = (icy * icr) + (isr * (isy * isp));
     m->right.y = icp * isr;
-    m->right.z = (-isy * icr) + (isr * is_prod);
-    m->up.x = (-icy * isr) + (icr * ic_prod);
+    m->right.z = (-isy * icr) + (isr * (icy * isp));
+    m->up.x = (-icy * isr) + (icr * (isy * isp));
     m->up.y = icp * icr;
-    m->up.z = (isy * isr) + (icr * is_prod);
+    m->up.z = (isy * isr) + (icr * (icy * isp));
 #endif
     m->at.x = isy * icp;
     m->at.y = -isp;
@@ -821,9 +818,24 @@ void xQuatSlerp(xQuat* o, const xQuat* a, const xQuat* b, F32 t)
         bsph = one_sintheta * isin(t * abdot);
     }
 
+#if defined(PS2)
+    F32 ax = a->v.x * asph;
+    F32 ay = a->v.y * asph;
+    F32 az = a->v.z * asph;
+    F32 as = a->s * asph;
+    F32 bx = b->v.x * bsph;
+    F32 by = b->v.y * bsph;
+    F32 bz = b->v.z * bsph;
+    F32 bs = b->s * bsph;
+    o->s = as + bs;
+    o->v.x = ax + bx;
+    o->v.y = ay + by;
+    o->v.z = az + bz;
+#else
     xQuatSMul(&qp1, a, asph);
     xQuatSMul(&qp2, b, bsph);
     xQuatAdd(o, &qp1, &qp2);
+#endif
     xQuatNormalize(o, o);
     return;
 }
@@ -864,13 +876,22 @@ void xBoxUnion(xBox& a, const xBox& b, const xBox& c)
     a.lower.z = MIN(b.lower.z, c.lower.z);
 }
 
+#if defined(PS2)
+inline
+#endif
 void xBoxFromCircle(xBox& box, const xVec3& center, const xVec3& dir, F32 r)
 {
     xVec3 ext = { 0.0f, 0.0f, 0.0f };
+#if defined(PS2)
+    ext.x = r * xsqrt(1.0f - dir.x * dir.x);
+    ext.y = r * xsqrt(1.0f - dir.y * dir.y);
+    ext.z = r * xsqrt(1.0f - dir.z * dir.z);
+#else
     const F32 one = 1.0f;
     ext.x = r * xsqrt(one - dir.x * dir.x);
     ext.y = r * xsqrt(one - dir.y * dir.y);
     ext.z = r * xsqrt(one - dir.z * dir.z);
+#endif
 
     box.upper = center + ext;
     box.lower = center - ext;
