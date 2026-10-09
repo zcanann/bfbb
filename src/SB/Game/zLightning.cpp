@@ -549,26 +549,18 @@ static void UpdateLightning(zLightning* l, F32 seconds)
     }
     else
     {
-        l->func.endParam[0] += seconds * (l->func.endVel[0] * sLFuncShift);
-        while (l->func.endParam[0] > sLFuncEnd[9])
+        for (S32 i = 0; i < 2; i++)
         {
-            l->func.endParam[0] -= 10.0f;
-        }
+            l->func.endParam[i] += seconds * (l->func.endVel[i] * sLFuncShift);
+            while (l->func.endParam[i] > sLFuncEnd[9])
+            {
+                l->func.endParam[i] -= 10.0f;
+            }
 
-        while (l->func.endParam[0] < 0.0f)
-        {
-            l->func.endParam[0] += 10.0f;
-        }
-
-        l->func.endParam[1] += seconds * (l->func.endVel[1] * sLFuncShift);
-        while (l->func.endParam[1] > sLFuncEnd[9])
-        {
-            l->func.endParam[1] -= 10.0f;
-        }
-
-        while (l->func.endParam[1] < 0.0f)
-        {
-            l->func.endParam[1] += 10.0f;
+            while (l->func.endParam[i] < 0.0f)
+            {
+                l->func.endParam[i] += 10.0f;
+            }
         }
     }
 }

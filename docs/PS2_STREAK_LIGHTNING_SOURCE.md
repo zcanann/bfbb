@@ -197,3 +197,22 @@ controls, France and all GameCube scores remain unchanged. Evidence is
 `build/ribbon-update-final-comparison.json`, its function-delta JSON and
 `build/ribbon-update-gc-{before,after}.json`. The shared expression needs no
 platform conditional.
+
+`UpdateLightning` updates its two functional endpoints with a shared loop,
+replacing the duplicated source bodies. All three PS2 originals have the same
+two-iteration loop tail (`addiu a0,1; slti v1,a0,2; bnez v1` and the pointer
+increment in its delay slot), independently recorded in
+`build/lightning-loop-original.json`. The natural loop raises the 1612-byte
+function from 88.90323% to 99.50372% in every debug region. Two extra no-ops
+remain in the lower-bound wrapping path, so this is not an exact-match claim.
+Changing the outer loop to do/while regressed; an explicit guarded inner
+do/while gave the same result and was discarded.
+
+Complete lightning units reach 98.69423%, retain all 7208 exact bytes and all
+other function scores and size/data controls. GameCube still has all 17
+functions / 12448 bytes exact; its compiler produces the existing unrolled
+shape from this shared source, so no platform conditional is needed. Evidence
+is `build/lightning-loop-final-comparison.json`, its function-delta JSON and
+`build/lightning-loop-gc-{before,after}.json`. This function is not currently
+profiled for France. Existing unresolved calls and raw delay-slot checks remain
+unchanged.
