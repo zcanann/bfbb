@@ -50,3 +50,13 @@ explanation is assumed. USA, PAL and German GameCube reports preserve all
 function records and unit measures. Private comparisons are under
 `build/prawn-source-before`, `build/prawn-source-after` and
 `build/prawn-gc-verify`, summarized in `build/prawn-source-summary.json`.
+
+A subsequent PS2-only change groups `turning()`'s equivalent boolean
+conditions as `!(A && B)`, preserving retail's short-circuit structure.
+In all three debug versions, `update_turn` improves again to 97.48964%,
+and the beam goal's `Process` improves from 85.402985% to 87.56716%.
+Only these two function records change; the selected unit reaches 94.17742%
+with exact counts unchanged. All three GameCube reports remain unchanged.
+These comparisons are recorded in `build/prawn-condition-source-summary.json`
+and the corresponding `build/prawn-condition-source-before` / `after`
+directories.

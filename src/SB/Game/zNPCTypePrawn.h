@@ -288,10 +288,17 @@ struct zNPCPrawn : zNPCSubBoss
     {
         const xVec2 facing = { model->Mat->at.x, model->Mat->at.z };
 
+#if defined(PS2)
+        return !xfeq0(turn.vel) ||
+               (!xfeq0(turn.accel) &&
+                !(look_dir.x > look_dir.y && xabs(look_dir.x - facing.x) < 0.001f) &&
+                !(look_dir.x < look_dir.y && xabs(look_dir.y - facing.y) < 0.001f));
+#else
         return !xfeq0(turn.vel) ||
                (!xfeq0(turn.accel) &&
                 (!(look_dir.x > look_dir.y) || !(xabs(look_dir.x - facing.x) < 0.001f)) &&
                 (!(look_dir.x < look_dir.y) || !(xabs(look_dir.y - facing.y) < 0.001f)));
+#endif
     }
     void update_round();
     void decompose();
