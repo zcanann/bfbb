@@ -1381,7 +1381,12 @@ void xSweptSpherePrepare(xSweptSphere* sws, xVec3* start, xVec3* end, F32 radius
     F32 dy = end->y - start->y;
     F32 dz = end->z - start->z;
 
+#if defined(PS2)
+    F32 invmag = xsqrt(SQR(dx) + SQR(dy) + SQR(dz));
+    sws->dist = invmag;
+#else
     sws->dist = xsqrt(SQR(dx) + SQR(dy) + SQR(dz));
+#endif
     if (sws->dist < 0.0001f)
     {
         sws->dist = 0.0f;
@@ -1389,7 +1394,11 @@ void xSweptSpherePrepare(xSweptSphere* sws, xVec3* start, xVec3* end, F32 radius
         return;
     }
 
+#if defined(PS2)
+    invmag = 1.0f / invmag;
+#else
     F32 invmag = 1.0f / sws->dist;
+#endif
     sws->basis.xm.at.x = dx * invmag;
     sws->basis.xm.at.y = dy * invmag;
     sws->basis.xm.at.z = dz * invmag;
@@ -1406,7 +1415,11 @@ void xSweptSpherePrepare(xSweptSphere* sws, xVec3* start, xVec3* end, F32 radius
         sws->basis.xm.up.y = dx;
         sws->basis.xm.up.z = 0.0f;
     }
+#if defined(PS2)
+    sws->basis.xm.up /= xCollideSqrt(sws->basis.xm.up.length2());
+#else
     sws->basis.xm.up.normalize();
+#endif
 
     xVec3Cross(&sws->basis.xm.right, &sws->basis.xm.up, &sws->basis.xm.at);
 

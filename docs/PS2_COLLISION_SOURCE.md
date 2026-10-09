@@ -330,3 +330,28 @@ Baseline: `79e9c4ead`. Private evidence:
 `build/collide-oct09/obb-proof.json` and `obb-raw-proof.json`. This change needs
 no header, compiler or registry edit; full production checks remain the
 integration gate.
+
+
+## Swept-sphere preparation distance lifetime (2026-10-09)
+
+`xSweptSpherePrepare` uses the same explicit square-root boundary while
+normalizing the selected up vector. Restoring that local operation raises
+the pilot from 92.30901% to 98.88412%. The remaining first-distance register
+chain is recovered by using the named `invmag` local for the measured distance
+before replacing it with the reciprocal. Original DWARF assigns that local to
+FPR2. Merely moving its declaration had no effect; retaining this value's
+lifetime completes the match. Substituting the explicit assembly square root
+for the initial distance regressed and was rejected. Both changes are scoped
+to PS2; GameCube retains its former expressions.
+
+Normal complete-unit builds in all three debug regions now match all 932
+bytes, improving from 92.30901% to 100%. Exact unit coverage rises from
+12,036 bytes / 21 functions to 12,968 bytes / 22 functions. All other 35
+function scores are unchanged, and fresh GameCube solo retains 72/75 exact.
+Independent raw replay resolves the three calls and `xqc_def_ctrl` through
+original DWARF, reproducing every original byte in each region with no
+excluded words. No SDK alias or compiler patch is involved.
+
+Baseline: `5bc92b436`. Private evidence:
+`build/collide-oct09/prepare-proof.json`, `prepare-locals.json`, and
+`prepare-raw-proof.json`. Full production checks remain the integration gate.
