@@ -3029,8 +3029,9 @@ bool xSphereHitsCapsule(const xVec3& center, F32 radius, const xVec3& v1, const 
         return false;
 
     F32 d = xsqrt(q);
-    F32 r1 = 1.0f / (2.0f * f31) * (-b + d);
-    F32 r2 = 1.0f / (2.0f * f31) * (-b - d);
+    F32 scale = 1.0f / (2.0f * f31);
+    F32 r1 = scale * (-b + d);
+    F32 r2 = scale * (-b - d);
 
     return ((r1 >= 0.0f && r1 <= 1.0f) || (r2 >= 0.0f && r2 <= 1.0f));
 }

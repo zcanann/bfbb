@@ -413,6 +413,28 @@ Private evidence: `build/collide-oct09/mgc-proof.json`, `mgc-locals.json`,
 `mgc-raw-proof.json`, and the four regional reports. Full production checks
 remain the integration gate.
 
+## Sphere-capsule shared reciprocal (2026-10-09)
+
+The two roots in `xSphereHitsCapsule` now explicitly share one local holding
+`1.0f / (2.0f * f31)`. This preserves the original reciprocal lifetime across
+both root calculations, recovering the register choices and square-root
+scheduling without changing the square-root implementation. Alternative
+declaration order, direct division and explicit assembly square-root forms
+were measured and rejected. The new local name `scale` describes the source
+expression; it does not assert an original debug-local identity.
+
+Normal complete-unit builds in USA, Europe, Germany and France improve this
+496-byte function from 93.30645% to 100%. Direct raw comparison reproduces
+every byte in each region, with no relocations or excluded words. Exact unit
+coverage rises from 12,968 bytes / 22 functions to 13,464 bytes / 23 functions;
+the other 35 function scores are unchanged. Fresh GameCube solo remains
+72/75 exact, including this shared-source body. The Xbox profile does not
+compile this unit or use it as a dependency; no Xbox gain is claimed.
+
+Baseline: `314f23fc8`. Private evidence:
+`build/collide-oct09/capsule-proof.json`, `capsule-locals.json`, and
+`capsule-raw-proof.json`. Full production controls remain the integration gate.
+
 ## Oriented-box projected-radius lifetimes (2026-10-09)
 
 `xOBBHitsOBB` now keeps `ar` and `br` as the separate projected radii, adding
