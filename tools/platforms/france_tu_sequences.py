@@ -716,6 +716,33 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in goalrobo_models['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Robotic models adds nine unique complete original model helpers and robotic consumers. The complete find/show/hide helper graph and exactly nineteen proved JAL destinations close every transfer; no changed data operand is accepted. Three fixed independently proved destinations fence later recovery dependencies. No whole translation-unit or data extent is claimed.')
+    from platforms.france_goalrobo_facing import generate_unit as generate_goalrobo_facing
+    goalrobo_facing = generate_goalrobo_facing(originals, registry_dir)
+    document['functions'].extend(goalrobo_facing['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(goalrobo_facing['sequence_proofs'])
+    document['goalrobo_facing_data_proofs'] = goalrobo_facing['data_proofs']
+    for key, value in goalrobo_facing['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Robotic facing adds five unique complete original facing helpers and robotic consumers. Exactly sixteen original JALs, six fixed independent identities and one literal unnamed runtime context close every transfer. One complete forty-byte helper uses an exhaustive scoped twenty-byte seed with exactly one proved call operand masked; generic uniqueness thresholds are unchanged. No runtime identity, whole translation-unit or data extent is claimed.')
+    from platforms.france_npc_helpers import generate_unit as generate_npc_helpers
+    npc_helpers = generate_npc_helpers(originals, registry_dir)
+    document['functions'].extend(npc_helpers['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(npc_helpers['sequence_proofs'])
+    document['npc_helpers_data_proofs'] = npc_helpers['data_proofs']
+    for key, value in npc_helpers['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('NPC helpers adds thirty-one unique complete original navigation, collision and robotic bodies. Exactly thirty-four JAL destinations follow an acyclic complete-body graph or nineteen fixed independent identities. No changed data operand, whole translation-unit or data extent is claimed.')
+    from platforms.france_npc_player_model import generate_unit as generate_npc_player_model
+    npc_player_model = generate_npc_player_model(originals, registry_dir)
+    document['functions'].extend(npc_player_model['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(npc_player_model['sequence_proofs'])
+    document['npc_player_model_data_proofs'] = npc_player_model['data_proofs']
+    for key, value in npc_player_model['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('NPC player-model adds eight unique complete original consumers. Nine data operands follow the original typed globals.player.ent.model path and an independent complete CalcNewDir anchor; nineteen JALs close through complete identities or two literal unnamed runtime contexts. No runtime identity, whole translation-unit or data extent is claimed.')
     return document
 
 

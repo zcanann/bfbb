@@ -44,3 +44,13 @@ offset. Replay takes about fourteen seconds. Private artifacts are
 `build/npc-player-model-proof.json` and
 `build/npc-player-model-france-pilot/report.json`. Production integration still
 requires canonical aggregate regeneration and the full French report.
+
+The combined production gate passes in `build/oct09-france-save-npc`:
+all original-backed aggregate registries regenerate identically and all 76
+enabled source units compile. Facing, navigation/collision and player-model
+clusters add 44 complete identities / 10,844 known bytes. With the independently
+validated DuploNotice source fix, exact matching rises by 5,672 bytes / 29
+functions, reaching 178,636 bytes / 539 functions. Coverage reaches 819
+functions / 388,304 bytes; every earlier score survives and the CPU denominator
+stays 2,979,968 bytes. All sixteen original-backed tests pass. Source data,
+unnamed runtime identity and a full original executable link remain pending.

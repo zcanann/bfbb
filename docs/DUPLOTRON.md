@@ -14893,3 +14893,43 @@ their comparison logs, `build/oct09-robot-cluster-tests.log`,
 `build/oct09-culling-robots-<GameCube-version>.log`,
 `build/oct09-culling-robots-xbox-retry`, both regional comparison logs,
 `build/oct09-urand-boundaries` and `build/oct09-france-robots-map{,-query}.json`.
+
+The save/emitter/NPC batch adds another 4,208 exact USA bytes / fourteen
+functions, reaching 1,022,440 bytes / 3,807 functions. Save selection, format,
+space/slot validation and the previously missing autosave updater add 2,800
+bytes / eight functions. Original German wrong-device prompts remain present.
+Typed emitter event/result lifetimes contribute 600 bytes / two functions;
+hazard cylinder arithmetic adds 240 / one, robot kennel counter scopes add
+168 / one, and particle-system predicates add 400 / two. Snow and sprite VU
+culling, original recursive call boundaries, emitter bound references and
+signed particle limits supply further fuzzy gains. The USA fuzzy measure rises
+from 65.105562% to 65.299311%, with all eight changed units recompiled against
+the previously verified 214-unit source/target snapshot and no earlier loss.
+Interpolation source restores the original unassigned result for unsupported
+PS2 modes; supported modes are independently checked, and GC keeps its matched
+initializer. Unnamed runtime callees remain unresolved rather than promoted.
+
+French facing/NPC/player-model closure adds 44 complete identities / 10,844
+bytes, reaching 819 functions / 388,304 known bytes. Typed nested player-model
+operands use the independent complete CalcNewDir anchor; scoped small-helper
+uniqueness preserves the generic thresholds and all opaque runtime contexts
+remain unnamed. Together with exact DuploNotice source, matching rises by
+5,672 bytes / 29 functions, reaching 178,636 bytes / 539 functions. All 76
+enabled units compile after strict aggregate evidence regeneration. Sixteen
+original-backed mutation/duplicate/dependency tests pass, and every earlier
+function/code/data score is retained.
+
+Xbox particle random inlining adds 263 exact bytes / one function in both
+complete 13-unit production builds, reaching 15,569 bytes / 82 functions.
+Three neighboring commands improve without changing any other score. The
+actual source reconstructs all 263 original bytes using eight named address
+operands; all 45 actual HIGHLOW fields across the four bodies are authenticated.
+The full GameCube reports/checksums remain unchanged in all three regions.
+CPU denominators and source-data/full-link limitations remain unchanged.
+
+Evidence: `build/oct09-us-save-npc`, `build/oct09-france-save-npc`, their
+comparison logs, `build/oct09-npc-{helper,facing}-tests.log`,
+`build/oct09-save-npc-<GameCube-version>.log`, `build/oct09-save-npc-xbox`,
+both regional comparison logs, and `build/oct09-france-npc-map{,-query}.json`.
+The private Xbox reconstruction and all-section cross-platform proofs are
+cited in `XBOX_PARTICLE_RANDOM.md`.

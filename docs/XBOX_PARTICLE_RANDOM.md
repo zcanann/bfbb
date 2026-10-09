@@ -43,3 +43,9 @@ evidence in the Xbox worktree: `build/parrand-full-retry`,
 `build/parrand-raw-proof.json`, `build/parrand-expressions.json`,
 `build/nonxbox-parrand/proof.json` and `build/nonxbox-ps2-parrand/proof.json`.
 Root comparison logs are `build/oct09-parrand-full-<Xbox-version>-compare.log`.
+
+Staging integration independently repeats both complete production builds in
+`build/oct09-save-npc-xbox`. Each confirms the same 263-byte / one-function gain,
+three additional function improvements, unchanged coverage and no earlier
+function/code/data regression. The combined PS2 reports and all three complete
+GameCube reports retain their prior scores through the Xbox-only source change.
