@@ -3675,8 +3675,12 @@ S32 zNPCGoalAlertChuck::ZoomMove(F32 dt)
     {
         xVec3SMulBy(&dir, (1.0f / dist));
         npc->ThrottleApply(dt, &dir, 0);
+#if defined(PS2)
+        dst_zoom -= (dt * npc->spd_throttle) * ((F32)xabs(dir.x) + (F32)xabs(dir.z));
+#else
         dst_zoom =
             -((dt * npc->spd_throttle) * ((F32)xabs(dir.x) + (F32)xabs(dir.z)) - dst_zoom);
+#endif
     }
     if (dst_zoom < 0.0f)
     {
