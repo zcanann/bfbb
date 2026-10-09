@@ -35,6 +35,15 @@ cover all 1,024 valid MOV.S source/destination pairs, invalid formats and
 reserved fields, and MFC1/CFC1 clobber negatives. Standalone proof replay
 takes about seven seconds with authenticated local originals.
 
+The private France source comparison restores all 104 calls and matches all
+three builders exactly: 7,448 of 7,448 bytes and three of three functions.
+The France-only profile adds those bytes to the selected-function coverage;
+the full CPU-code denominator is unchanged. Source and existing version
+profiles are unchanged. Private evidence and report are
+`build/player-animation-tables-proof.json` and
+`build/player-animation-tables-france-pilot/report.json` in the regional
+checkout.
+
 The larger SpongeBob, Patrick and Sandy builders remain outside this proof.
 Their additional callbacks, insertion helpers and typed pointer tables need
 complete independent evidence; the German original relocates player callback
