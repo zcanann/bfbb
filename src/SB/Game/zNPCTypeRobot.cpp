@@ -5342,11 +5342,22 @@ void zNPCSlick::Damage(en_NPC_DAMAGE_TYPE dmg_type, xBase* who, const xVec3* vec
     }
 }
 
+#if defined(PS2)
+static inline S32 NPCShieldRepairElapsed(F32 timer)
+{
+    return timer < 0.0f;
+}
+#endif
+
 void zNPCSlick::ShieldUpdate(F32 dt)
 {
     tmr_repairShield = MAX(-1.0f, tmr_repairShield - dt);
 
+#if defined(PS2)
+    if (NPCShieldRepairElapsed(tmr_repairShield))
+#else
     if (tmr_repairShield < 0.0f)
+#endif
     {
         ShieldShow();
     }

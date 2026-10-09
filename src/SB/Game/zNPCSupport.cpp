@@ -616,9 +616,20 @@ void NPCBlinker::Reset()
     idx_uvcell = 0;
 }
 
+#if defined(PS2)
+static inline S32 NPCBlinkerTimerElapsed(F32 timer)
+{
+    return timer < 0.0f;
+}
+#endif
+
 void NPCBlinker::Update(F32 dt, F32 ratio, F32 tym_slow, F32 tym_fast)
 {
+#if defined(PS2)
+    if (NPCBlinkerTimerElapsed(tmr_uvcell))
+#else
     if (tmr_uvcell < 0.0f)
+#endif
     {
         idx_uvcell++;
         if (3 < idx_uvcell)

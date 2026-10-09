@@ -16,3 +16,20 @@ Evidence: `build/npc-duplo-source-summary.json`, regional before/after reports,
 and `build/npc-duplo-gc-check.log`. Separately tested shield Boolean casts and
 corner-vector expression rewrites did not improve their targets and were
 discarded.
+
+Two timer conditions now preserve the original PS2 integer predicate stage:
+ShieldUpdate (608 bytes, 96.57895% to 100%) and NPCBlinker::Update (140 bytes,
+86.85714% to 100%). TU-private inline predicates return S32. Returning bool
+folded away the original Boolean materialization; returning U8 still differed.
+The S32 form restores the original comparison, zero extension and branch
+without assembly, volatile access or compiler changes. The private helper
+names describe the reconstruction; original inline names are unknown.
+
+The change is PS2-only because using that form for GameCube changes its code.
+Full source comparisons in all four PS2 regions show exactly those two function
+changes: +748 exact bytes and two exact functions per region. Combined Robot
+and Support exact bytes grow 46,596 to 47,344 in USA, 46,436 to 47,184 in PAL
+and German, and 2,804 to 3,552 in the selected French profiles. All six GameCube
+unit comparisons (two units across three versions) remain unchanged.
+Evidence: `build/npc-timer-source-summary.json`, its regional reports,
+`build/npc-timer-robot-gc.log` and `build/npc-timer-support-gc.log`.
