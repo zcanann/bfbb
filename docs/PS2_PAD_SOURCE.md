@@ -72,9 +72,11 @@ unknown platform and runtime calls remain unresolved.
 The standalone proof passed for all three originals. Negative controls reject
 a changed analog threshold, a changed Kill return context, an inconsistent pad
 array address, and a branch bypassing a byte-address definition. Previously
-committed proof records are preserved exactly. Canonical complete registry
-regeneration remains required when integrating this additive proof with other
-French sequence changes.
+committed proof records are preserved exactly. Full canonical registry
+regeneration passed in the root checkout with the Hangable additions on
+2026-10-08 (`build/oct08-france-tu-check.log`). Together these recover seventeen
+new boundaries / 7,464 known bytes, bringing known French code to 242,700 bytes
+without changing the loaded-image or CPU-code denominators.
 
 Private reproduction: `build/pad-france-proof.py`, `pad-france-proof.json`,
 `pad-proof-negative-controls.json`, and `pad-france-diagnostic/target.o` in the

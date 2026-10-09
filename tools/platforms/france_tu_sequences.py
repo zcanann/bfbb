@@ -563,6 +563,16 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in pad['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Pad adds seven members from the complete eight-function sequence and the existing NormalizeAnalog neighbor. Original typed arrays prove four pad records and thirty-two rumble records. Only the exact eight-byte Kill J/NOP to an independently compared empty-return leaf receives scoped tail handling. Complete external platform contexts remain unpromoted; locally enumerated byte-address consumers preserve strict LUI lifetimes, and opaque runtime calls retain literal unmasked words and identical 64-byte context.')
+    from platforms.france_hangable_sequence import generate_unit as generate_hangable
+    hangable = generate_hangable(originals, registry_dir)
+    document['functions'].extend(hangable['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(hangable['sequence_proofs'])
+    document['call_neighbors'].extend(hangable['call_neighbors'])
+    document['hangable_data_proofs'] = hangable['data_proofs']
+    for key, value in hangable['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Hangable adds ten members from all eleven original functions and the existing Setup neighbor. Original typed globals, the complete circle initializer, four strings and independently verified culling callbacks corroborate changed operands. Only exact eight-byte Load/Save J/NOP chains into independently verified base bodies receive scoped tail handling; external entry prefixes remain unpromoted context, and generic CFG checks remain unchanged.')
     return document
 
 

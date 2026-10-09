@@ -49,10 +49,12 @@ transfers retain the strict shared GPR decoder. No shared verifier is weakened.
 
 Standalone original-only validation passed for all three references on
 2026-10-08 in 29.46 seconds. The private result is
-`build/hangable-proof.json` in the regional worker checkout. Integration must
-append these results to the existing combined TU registry and regenerate its
-canonical checks; the generator deliberately excludes its own new entries
-when loading independent context. This proof alone does not claim compiled
+`build/hangable-proof.json` in the regional worker checkout. The root checkout
+independently reproduced the payload, appended it to the combined TU registry,
+and passed full canonical regeneration with the pad additions on 2026-10-08
+(`build/oct08-france-tu-check.log`). All previous records remain unchanged.
+The generator deliberately excludes its own new entries when loading
+independent context. This proof alone does not claim compiled
 source matching or a linked PS2 executable.
 
 The France-only source profile now selects all eleven proven members. Its

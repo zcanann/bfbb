@@ -75,11 +75,81 @@
       "provenance": "machine-corroborated-explicit-transfers"
     },
     {
+      "name": "zEntHangable_FollowUpdate",
+      "source": "SB/Game/zEntHangable.cpp",
+      "address": 1273568,
+      "size": 376,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zEntHangable_Reset",
+      "source": "SB/Game/zEntHangable.cpp",
+      "address": 1273952,
+      "size": 84,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zEntHangable_Load",
+      "source": "SB/Game/zEntHangable.cpp",
+      "address": 1274048,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zEntHangable_Save",
+      "source": "SB/Game/zEntHangable.cpp",
+      "address": 1274064,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zEntHangable_SetMatrix",
+      "source": "SB/Game/zEntHangable.cpp",
+      "address": 1274080,
+      "size": 1612,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zEntHangableEventCB",
+      "source": "SB/Game/zEntHangable.cpp",
+      "address": 1275696,
+      "size": 812,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zEntHangable_Update",
+      "source": "SB/Game/zEntHangable.cpp",
+      "address": 1276512,
+      "size": 1080,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zEntHangable_UpdateFX",
+      "source": "SB/Game/zEntHangable.cpp",
+      "address": 1277600,
+      "size": 448,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zEntHangable_Init",
+      "source": "SB/Game/zEntHangable.cpp",
+      "address": 1278048,
+      "size": 104,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "HangableSetup",
       "source": "SB/Game/zEntHangable.cpp",
       "address": 1278160,
       "size": 252,
       "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "zEntHangable_SetupFX",
+      "source": "SB/Game/zEntHangable.cpp",
+      "address": 1278416,
+      "size": 84,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "zEntPickup_SpawnNRewards",
