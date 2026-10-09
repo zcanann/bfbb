@@ -57,3 +57,14 @@ complete unit evidence is `build/ribbon-call-final-comparison.json` and
 `build/ribbon-call-final-changes.json`. The guarded pragma preserves every
 GameCube function score (`build/ribbon-call-gc-{before,after}.json`). This does
 not expand the existing identity claims for the other renderer's SDK calls.
+
+The ribbon strip's local vertex helper has the opposite requirement: its two
+calls must be expanded inside `xFXRibbon::render_strip`, as in the original.
+Declaring that existing helper `inline` at both its forward declaration and
+definition restores the full 1112-byte strip function, from 9.374% to exact.
+All three debug `xFX` units advance from 13256 to 14368 exact bytes with every
+other score unchanged. France remains unchanged, and the shared inline declaration
+preserves every GameCube function score, including 148 exact functions / 23256
+bytes. Evidence is `build/ribbon-strip-final-comparison.json`, its function-delta
+JSON, and `build/ribbon-strip-gc-{before,after}.json`. No compiler-version patch or
+platform conditional is needed for this helper.
