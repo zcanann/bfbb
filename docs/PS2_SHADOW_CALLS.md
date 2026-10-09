@@ -130,3 +130,19 @@ from 20/34 and 4,864 bytes to 22/34 and 8,020 bytes; fuzzy matching rises from
 GameCube USA report remains identical and its retail DOL SHA-1 passes. France
 and Xbox have no enabled source profile for this unit. Private evidence uses
 `*-cache.json` and `cache-proof.json` under `build/shadow-oct09`.
+
+
+## Exact entity callback
+
+The 996-byte `shadowCacheEntityCB` now uses the original conditional reciprocal
+expressions when constructing capsule gradients. The prior zero-initialize /
+conditional-assignment form omitted several NOPs and chose different floating
+registers. Restoring `nonzero ? reciprocal : zero` reproduces the complete
+original body; the apparent scheduling residual was a source-form issue.
+
+USA, Europe and Germany all improve from 95.56225% to 100%, gaining another
+996 exact bytes and one function. Unit totals are now 23/34 functions and
+9,016/20,044 exact bytes, with 98.5937% fuzzy matching. Every other score is
+unchanged. This shared rewrite also preserves the full GameCube USA report
+and retail DOL SHA-1. France/Xbox have no enabled unit profile. Evidence uses
+`*-entity.json` and `entity-proof.json` under `build/shadow-oct09`.

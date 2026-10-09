@@ -2262,27 +2262,18 @@ static S32 shadowCacheEntityCB(xEnt* ent, void* cbdata)
 
             memset(cbparam->rayCloser, 0, sizeof(cbparam->rayCloser));
 
-            recip = 0.0f;
-            if (cbparam->localDelta.x != 0.0f)
-            {
-                recip = 1.0f / cbparam->localDelta.x;
-            }
+            recip =
+                (cbparam->localDelta.x != 0.0f) ? (1.0f / cbparam->localDelta.x) : 0.0f;
             grad.dydx = cbparam->localDelta.y * recip;
             grad.dzdx = cbparam->localDelta.z * recip;
 
-            recip = 0.0f;
-            if (cbparam->localDelta.y != 0.0f)
-            {
-                recip = 1.0f / cbparam->localDelta.y;
-            }
+            recip =
+                (cbparam->localDelta.y != 0.0f) ? (1.0f / cbparam->localDelta.y) : 0.0f;
             grad.dxdy = cbparam->localDelta.x * recip;
             grad.dzdy = cbparam->localDelta.z * recip;
 
-            recip = 0.0f;
-            if (cbparam->localDelta.z != 0.0f)
-            {
-                recip = 1.0f / cbparam->localDelta.z;
-            }
+            recip =
+                (cbparam->localDelta.z != 0.0f) ? (1.0f / cbparam->localDelta.z) : 0.0f;
             grad.dxdz = cbparam->localDelta.x * recip;
             grad.dydz = cbparam->localDelta.y * recip;
 
