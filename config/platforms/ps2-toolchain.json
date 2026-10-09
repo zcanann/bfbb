@@ -231263,6 +231263,645 @@
         }
       ],
       "selector": "name_address"
+    },
+    {
+      "source": "src/SB/Core/gc/iMorph.cpp",
+      "target_unit": "SB/Core/p2/iMorph.cpp",
+      "object": "source/iMorph.o",
+      "symbols": {
+        "FastS16weight4": "FastS16weight4__FPfPPsPsif",
+        "FastS16weight2": "FastS16weight2__FPfPPsPsif",
+        "FastS16unpack": "FastS16unpack__FPfPsif",
+        "iMorphRender": "iMorphRender__FP8RpAtomicP11RwMatrixTagPPsPsUif",
+        "iMorphOptimize": "iMorphOptimize__FP8RpAtomici",
+        "MorphCommon": "MorphCommon__FP8RpAtomicP11RwMatrixTagPPsPsUifi"
+      },
+      "calls": [
+        {
+          "function": "iMorphRender",
+          "offset": 8,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_function": "MorphCommon",
+          "symbol": "MorphCommon__FP8RpAtomicP11RwMatrixTagPPsPsUifi"
+        },
+        {
+          "function": "iMorphRender",
+          "offset": 28,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPopTemp",
+          "symbol": "xMemPopTemp__FPv"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 632,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelRender",
+          "symbol": "iModelRender__FP8RpAtomicP11RwMatrixTag"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1060,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPushTemp",
+          "symbol": "xMemPushTemp__FUi"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1180,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemPushTemp",
+          "symbol": "xMemPushTemp__FUi"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1288,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_function": "FastS16unpack",
+          "symbol": "FastS16unpack__FPfPsif"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1340,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_function": "FastS16weight2",
+          "symbol": "FastS16weight2__FPfPPsPsif"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1384,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_function": "FastS16weight4",
+          "symbol": "FastS16weight4__FPfPPsPsif"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1744,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_function": "FastS16unpack",
+          "symbol": "FastS16unpack__FPfPsif"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1796,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_function": "FastS16weight2",
+          "symbol": "FastS16weight2__FPfPPsPsif"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1840,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_function": "FastS16weight4",
+          "symbol": "FastS16weight4__FPfPPsPsif"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1880,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelRender",
+          "symbol": "iModelRender__FP8RpAtomicP11RwMatrixTag"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1996,
+          "target_source": "SB/Core/p2/iModel.cpp",
+          "target_function": "iModelRender",
+          "symbol": "iModelRender__FP8RpAtomicP11RwMatrixTag"
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "iMorphRender",
+          "offset": 16,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_alloc",
+          "symbol": "s_alloc"
+        },
+        {
+          "function": "iMorphRender",
+          "offset": 36,
+          "opcode": 43,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_alloc",
+          "symbol": "s_alloc"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 84,
+          "opcode": 43,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_geom",
+          "symbol": "s_geom"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 88,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_geom",
+          "symbol": "s_geom"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 96,
+          "opcode": 43,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_tgt",
+          "symbol": "s_tgt"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 104,
+          "opcode": 43,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_numV",
+          "symbol": "s_numV"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 108,
+          "opcode": 43,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_alloc",
+          "symbol": "s_alloc"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 116,
+          "opcode": 43,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_nTemp",
+          "symbol": "s_nTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 132,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_tgt",
+          "symbol": "s_tgt"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 276,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_geom",
+          "symbol": "s_geom"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 308,
+          "opcode": 43,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_vTemp",
+          "symbol": "s_vTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 312,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_vTemp",
+          "symbol": "s_vTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 352,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_tgt",
+          "symbol": "s_tgt"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 356,
+          "opcode": 43,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_vTemp",
+          "symbol": "s_vTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 368,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_numV",
+          "symbol": "s_numV"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 372,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_vTemp",
+          "symbol": "s_vTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 392,
+          "opcode": 43,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_nTemp",
+          "symbol": "s_nTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 396,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_nTemp",
+          "symbol": "s_nTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 440,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_tgt",
+          "symbol": "s_tgt"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 444,
+          "opcode": 43,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_nTemp",
+          "symbol": "s_nTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 640,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_tgt",
+          "symbol": "s_tgt"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 656,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_tgt",
+          "symbol": "s_tgt"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 976,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_geom",
+          "symbol": "s_geom"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1024,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_numV",
+          "symbol": "s_numV"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1040,
+          "opcode": 43,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_vTemp",
+          "symbol": "s_vTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1068,
+          "opcode": 43,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_vTemp",
+          "symbol": "s_vTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1072,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_vTemp",
+          "symbol": "s_vTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1084,
+          "opcode": 43,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_alloc",
+          "symbol": "s_alloc"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1112,
+          "opcode": 43,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_vTemp",
+          "symbol": "s_vTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1128,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_geom",
+          "symbol": "s_geom"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1148,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_numV",
+          "symbol": "s_numV"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1164,
+          "opcode": 43,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_nTemp",
+          "symbol": "s_nTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1188,
+          "opcode": 43,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_nTemp",
+          "symbol": "s_nTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1192,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_alloc",
+          "symbol": "s_alloc"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1204,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_nTemp",
+          "symbol": "s_nTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1212,
+          "opcode": 43,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_alloc",
+          "symbol": "s_alloc"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1244,
+          "opcode": 43,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_nTemp",
+          "symbol": "s_nTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1264,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_numV",
+          "symbol": "s_numV"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1268,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_vTemp",
+          "symbol": "s_vTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1316,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_numV",
+          "symbol": "s_numV"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1324,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_vTemp",
+          "symbol": "s_vTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1360,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_numV",
+          "symbol": "s_numV"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1364,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_vTemp",
+          "symbol": "s_vTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1392,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_nTemp",
+          "symbol": "s_nTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1472,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_numV",
+          "symbol": "s_numV"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1628,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_numV",
+          "symbol": "s_numV"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1720,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_numV",
+          "symbol": "s_numV"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1724,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_nTemp",
+          "symbol": "s_nTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1772,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_numV",
+          "symbol": "s_numV"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1780,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_nTemp",
+          "symbol": "s_nTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1816,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_numV",
+          "symbol": "s_numV"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1820,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_nTemp",
+          "symbol": "s_nTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1860,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_geom",
+          "symbol": "s_geom"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1888,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_tgt",
+          "symbol": "s_tgt"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1904,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_tgt",
+          "symbol": "s_tgt"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1932,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_geom",
+          "symbol": "s_geom"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1944,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_tgt",
+          "symbol": "s_tgt"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1948,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_vTemp",
+          "symbol": "s_vTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1964,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_tgt",
+          "symbol": "s_tgt"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1968,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_nTemp",
+          "symbol": "s_nTemp"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 1988,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_geom",
+          "symbol": "s_geom"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 2004,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_tgt",
+          "symbol": "s_tgt"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 2016,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_tgt",
+          "symbol": "s_tgt"
+        },
+        {
+          "function": "MorphCommon",
+          "offset": 2036,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_name": "s_nTemp",
+          "symbol": "s_nTemp"
+        }
+      ],
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ]
+    },
+    {
+      "source": "src/SB/Core/gc/iMorph.cpp",
+      "target_unit": "SB/Core/p2/iMorph.cpp",
+      "object": "source/iMorph.o",
+      "symbols": {
+        "FastS16weight4": "FastS16weight4__FPfPPsPsif",
+        "FastS16weight2": "FastS16weight2__FPfPPsPsif",
+        "FastS16unpack": "FastS16unpack__FPfPsif"
+      },
+      "calls": [],
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ]
     }
   ]
 }
