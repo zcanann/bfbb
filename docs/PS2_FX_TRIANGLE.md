@@ -57,3 +57,14 @@ identities are not promoted by this source comparison. No artificial
 stack allocation was added. Full-unit regional comparisons, the French
 `update_popper` control, and the complete GameCube report show no
 regressions; private evidence is in `build/zfx-oct09/goo-proof.json`.
+
+The remaining goo frame difference has a concrete source-lifetime lead:
+original DWARF includes a 12-byte `xVec3 pos` at `sp+0x30`, which is
+absent from the reconstructed function. The original has no instruction
+accessing that slot. A plain unused declaration is eliminated by the
+current compiler; center-copy, component, assignment, and zero
+initialization probes introduce instructions absent from retail and
+regress the match. None is retained. The frame difference must not be
+treated as evidence of a compiler defect or filled with synthetic padding.
+The original local records are saved privately in
+`build/zfx-oct09/goo-dwarf.txt`.
