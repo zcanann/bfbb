@@ -1,6 +1,7 @@
 #include "iFMV.h"
 
 #include <rwcore.h>
+#include <rwplcore.h>
 #include <stdio.h>
 #include <types.h>
 
