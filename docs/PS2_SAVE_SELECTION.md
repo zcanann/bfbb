@@ -44,3 +44,20 @@ The current profile has no France coverage for this unit, so no France gain
 is claimed. Private reproducible evidence is in `build/save-oct09/`:
 regional before/after reports, `prove.py`, `proof.json`, retained solo builds,
 and `GC-after.json`. The full GC build/report check passes unchanged.
+
+## Card selection follow-up
+
+The original `zSaveLoad_CardPick` records an unsigned-byte `formatDone`
+local. It tracks successful formatting and returns 11 when the subsequent
+selection succeeds. The GC source had reused that variable name for UI
+indices, losing the PS2 flag and completion result. The restored PS2 path
+also skips formatting checks while loading and preserves its distinct
+no-games prompt/result handling. UI index expressions follow the same
+original conditional-argument form as GameSelect.
+
+Across all three debug regions, CardPick's 1464-byte body improves from
+55.273224% to 98.907104%. Only two prompt-loop NOP placements remain different.
+`zSaveLoad_CardCheckSpace` also becomes exact (404 bytes) after restoring
+the conditional UI index in its inlined prompt. These are the only two
+function-score changes; other scores and the full GC report remain unchanged.
+Evidence: `build/save-oct09/*-pick.json` and `pick-proof.json`.

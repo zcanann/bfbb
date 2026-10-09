@@ -519,12 +519,16 @@ S32 zSaveLoad_CardPromptFormat(S32 mode)
 
 S32 zSaveLoad_CardPromptSpace(S32 mode)
 {
+#if defined(PS2)
+    zSaveLoad_UIEvent(mode == 1 ? 0 : 0x15, eEventUIFocusOff_Unselect);
+#else
     S32 i = 0x15;
     if (mode == 1)
     {
         i = 0;
     }
     zSaveLoad_UIEvent(i, eEventUIFocusOff_Unselect);
+#endif
     zSaveLoad_UIEvent(0x16, eEventUIFocusOff_Unselect);
     zSaveLoad_UIEvent(0x25, eEventUIFocusOn_Select);
 
@@ -677,12 +681,16 @@ S32 zSaveLoad_CardWrongDeviceErrorPrompt(S32 mode)
 
 S32 zSaveLoad_CardDamagedErrorPrompt(S32 mode)
 {
+#if defined(PS2)
+    zSaveLoad_UIEvent(mode == 1 ? 0x37 : 0x38, eEventUIFocusOn_Select);
+#else
     int i = 0x38;
     if (mode == 1)
     {
         i = 0x37;
     }
     zSaveLoad_UIEvent(i, eEventUIFocusOn_Select);
+#endif
 
     promptSel = -1;
     while (promptSel == -1)
@@ -690,12 +698,16 @@ S32 zSaveLoad_CardDamagedErrorPrompt(S32 mode)
         zSaveLoad_Tick();
     }
 
+#if defined(PS2)
+    zSaveLoad_UIEvent(mode == 1 ? 0x37 : 0x38, eEventUIFocusOff_Unselect);
+#else
     i = 0x38;
     if (mode == 1)
     {
         i = 0x37;
     }
     zSaveLoad_UIEvent(i, eEventUIFocusOff_Unselect);
+#endif
     return promptSel;
 }
 
@@ -1311,11 +1323,20 @@ S32 zSaveLoad_CardCheckSlotOverwrite(S32 cardNumber, S32 gameNumber)
 S32 zSaveLoad_CardPick(S32 mode)
 {
     S32 done = 0;
+#if defined(PS2)
+    U8 formatDone;
+#else
     S32 formatDone = 0x16;
+#endif
 
     currentCard = -1;
     promptSel = -1;
 
+#if defined(PS2)
+    formatDone = 0;
+    zSaveLoad_UIEvent(mode == 1 ? 1 : 0x16, eEventUIFocusOn);
+    zSaveLoad_UIEvent(mode == 1 ? 4 : 0x17, eEventUISelect);
+#else
     if (mode == 1)
     {
         formatDone = 1;
@@ -1329,6 +1350,7 @@ S32 zSaveLoad_CardPick(S32 mode)
     }
 
     zSaveLoad_UIEvent(formatDone, eEventUISelect);
+#endif
 
     while (!done && promptSel == -1)
     {
@@ -1352,6 +1374,10 @@ S32 zSaveLoad_CardPick(S32 mode)
                 continue;
             }
 
+#if defined(PS2)
+            if (mode != 1)
+            {
+#endif
             done = zSaveLoad_CardCheckFormatted(currentCard, mode);
             switch (done)
             {
@@ -1386,36 +1412,77 @@ S32 zSaveLoad_CardPick(S32 mode)
                 done = 0;
                 promptSel = -1;
                 continue;
+#if defined(PS2)
+            case 11:
+                formatDone = 1;
+                break;
+#else
             case 8:
             case 9:
             case 10:
             case 11:
-
+#endif
             default:
                 break;
             }
 
+#if defined(PS2)
+            }
+#endif
+
             done = zSaveLoad_CardCheckValid(currentCard, mode);
             switch (done)
             {
+#if defined(PS2)
+            case 5:
+                done = 0;
+                promptSel = -1;
+                break;
+            case 6:
+                if (mode == 1)
+                {
+                    if (zSaveLoad_CardPromptGames(mode) == 3)
+                    {
+                        done = 0;
+                        promptSel = -1;
+                    }
+                    else
+                    {
+                        done = -1;
+                        currentGame = -1;
+                        promptSel = -1;
+                    }
+                    break;
+                }
+                done = 0;
+                promptSel = -1;
+                continue;
+#else
             case 5:
             case 6:
                 done = 0;
                 promptSel = -1;
                 continue;
+#endif
             case 2:
             case 4:
                 promptSel = -1;
                 currentGame = -1;
                 break;
+#if !defined(PS2)
             case 0:
             case 1:
                 break;
+#endif
             case -1:
                 done = 0;
                 promptSel = -1;
                 continue;
+#if defined(PS2)
+            default:
+#else
             case 3:
+#endif
                 break;
             }
         }
@@ -1423,6 +1490,13 @@ S32 zSaveLoad_CardPick(S32 mode)
         zSaveLoad_Tick();
     }
 
+#if defined(PS2)
+    zSaveLoad_UIEvent(mode == 1 ? 1 : 0x16, eEventUIFocusOff_Unselect);
+    if (formatDone && done == 1)
+    {
+        return 11;
+    }
+#else
     formatDone = 0x16;
     if (mode == 1)
     {
@@ -1430,6 +1504,7 @@ S32 zSaveLoad_CardPick(S32 mode)
     }
 
     zSaveLoad_UIEvent(formatDone, eEventUIFocusOff_Unselect);
+#endif
 
     if (done == 1)
     {
