@@ -229122,7 +229122,8 @@
         "getUpCB@00330bd0": "getUpCB__FP5xGoalPvP11en_trantypefPv",
         "elbowDropCB@00330f80": "elbowDropCB__FP5xGoalPvP11en_trantypefPv",
         "tauntCB@00331780": "tauntCB__FP5xGoalPvP11en_trantypefPv",
-        "idleCB@003318d0": "idleCB__FP5xGoalPvP11en_trantypefPv"
+        "idleCB@003318d0": "idleCB__FP5xGoalPvP11en_trantypefPv",
+        "Enter@0032ea40": "Enter__21zNPCGoalBossSandyLeapFfPv"
       },
       "calls": [
         {
@@ -229782,6 +229783,14 @@
           "target_source": "SB/Game/zNPCTypeCommon.cpp",
           "target_function": "AnimTimeRemain@002d11e0",
           "symbol": "AnimTimeRemain__10zNPCCommonFP10xAnimState"
+        },
+        {
+          "function": "Enter@0032ea40",
+          "offset": 476,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter@002cb490",
+          "symbol": "Enter__14zNPCGoalCommonFfPv",
+          "opcode": 2
         }
       ],
       "linkage_provenance": [
@@ -230328,6 +230337,32 @@
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
               "source_address": 3345328,
               "reference_sha256": "a8f271cea03fe983197c6b4b69f9b8436692254cefaba9432775ae97624d02b6"
+            }
+          ]
+        },
+        {
+          "function": "Enter@0032ea40",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3336768,
+          "size": 484,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3335376,
+              "reference_sha256": "7839258a5b7792b02d308d200e1f0465a321f77b6a578105d3747ff60277186e"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3336656,
+              "reference_sha256": "b9d46dedfd2afbda48627a98597ae0681290166b28bacdcb8dd376c52eac9d54"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3333408,
+              "reference_sha256": "514eee6951d9ce57fc7d6e6dd17d7b327f6258cf75da08574d725fb0c048dedf"
             }
           ]
         }

@@ -44,3 +44,10 @@ read, so future discoveries cannot change this proof's context.
 Private artifacts: `build/sandy-leap-proof.json`,
 `build/sandy-leap-tests.txt`, `build/sandy-leap-originals.txt`, and
 `build/sandy-leap-france-pilot/report.json`.
+
+The source profile explicitly restores this verified J transfer with opcode 2.
+Leap Enter scores 99.62810%, matching the three debug versions after the scoped
+PS2 ring-center lifetime change. All 21 prior French Sandy function records
+remain unchanged. The selection now contains 22 functions / 14,780 bytes,
+12,444 exact bytes / 20 exact functions, at 99.93369% similarity. This identity
+adds known coverage but no newly exact bytes.
