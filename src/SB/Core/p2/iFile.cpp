@@ -85,7 +85,7 @@ void iFileDebugMode()
     for (id = HISGetFirstValidRequest(); id != -1; id = requestDebug.small.nextRequest)
     {
         HISGetRequestDebug(id, &requestDebug);
-        if (requestDebug.small.status)
+        if (requestDebug.small.status != HIS_STATUS_INVALID_ID)
         {
             xprintf("r%02d: ST=%-8s D=%08X (%s) P=%-5d/%-5d\n", id,
                     STATUSES[requestDebug.small.status], requestDebug.destination,
