@@ -66,3 +66,24 @@ profile still leaves this global operand unresolved, so its ordinary code
 score is not a complete relocation or link result. Private evidence is
 `build/behave-scene-raw-proof.json`, `build/behave-scene-proof.py`, and
 `build/behave-scene-gc-{before,after}.json`, with retained whole source objects.
+
+## Timer-stack loop shape
+
+The five timer entries in `FreshWipe` use a PS2 do/while loop, retaining the
+original loop instead of expanding it into five stores. Its initialized index
+is zero and its fixed bound is five, so the first iteration and all five writes
+are guaranteed in both forms. The pointer-stack clearing loop remains unchanged.
+
+The 108-byte function improves from 58.88889% to 96.296295% in all three debug
+versions, with only one extra scheduled NOP remaining. Complete-unit fuzzy
+matching rises from 95.06714% to 95.71918%; exact code remains 2,992 bytes / 21
+functions. France's existing exact scene-reset comparison remains unchanged.
+The shared loop spelling was measured and regressed GameCube, so the guarded
+change preserves all GU4Y78 scores, including 59 exact functions / 7,280 bytes.
+
+Whole-unit reports and retained source-object paths are recorded in
+`build/behave-fresh-full-comparison.json`, with a replay script and
+`build/behave-fresh-gc-{before,after}.json`. Earlier/later compiler and inlining
+probes did not reproduce the complete original function without regressions;
+production compiler settings remain unchanged. No exact-function or link claim
+is added by this fuzzy improvement.

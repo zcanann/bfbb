@@ -155,10 +155,19 @@ void xPsyche::FreshWipe()
     this->gid_safegoal = 0;
     this->pendgoal = 0;
     this->pendtype = PEND_TRAN_NONE;
+#if defined(PS2)
+    S32 i = 0;
+    do
+    {
+        this->tmr_stack[0][i] = 0.0f;
+        ++i;
+    } while (i < 5);
+#else
     for (S32 i = 0; i < 5; ++i)
     {
         this->tmr_stack[0][i] = 0.0f;
     }
+#endif
     this->clt_owner = NULL;
     this->userContext = NULL;
     this->fun_remap = NULL;
