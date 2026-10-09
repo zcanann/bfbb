@@ -437,6 +437,9 @@ S32 PKR_LoadStep_Async()
     return rc;
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 char* PKR_LayerMemReserve(st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* layer)
 {
     char* mem = NULL;
@@ -464,7 +467,13 @@ char* PKR_LayerMemReserve(st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* layer)
 
     return mem;
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 void PKR_LayerMemRelease(st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* layer)
 {
     switch (PKR_layerLoadDest(layer->laytyp))
@@ -486,6 +495,9 @@ void PKR_LayerMemRelease(st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* layer)
         break;
     }
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 void PKR_drv_guardLayer(st_PACKER_LTOC_NODE*)
 {
@@ -722,6 +734,9 @@ void PKR_xform_asset(st_PACKER_ATOC_NODE* assnode, S32 dumpable_layer)
     }
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 void* PKR_FindAsset(st_PACKER_READ_DATA* pr, U32 aid)
 {
     st_PACKER_ATOC_NODE* assnode = NULL;
@@ -743,6 +758,9 @@ void* PKR_FindAsset(st_PACKER_READ_DATA* pr, U32 aid)
     }
     return NULL;
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 S32 PKR_LoadLayer(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer)
 {
@@ -1152,6 +1170,9 @@ S32 LOD_r_PACK(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     return 1;
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 S32 LOD_r_PVER(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     S32 ver = 0;
@@ -1180,6 +1201,9 @@ S32 LOD_r_PVER(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     }
     return 1;
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 S32 LOD_r_PFLG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
@@ -1310,6 +1334,9 @@ S32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, S32 plattag, 
     return 1;
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 S32 LOD_r_PLAT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     S32 result = 1;
@@ -1333,7 +1360,13 @@ S32 LOD_r_PLAT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     }
     return result;
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 S32 LOD_r_DICT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     U32 cid = g_hiprf->enter(pkg);
@@ -1355,7 +1388,13 @@ S32 LOD_r_DICT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     }
     return 1;
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 S32 LOD_r_ATOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     U32 cid = g_hiprf->enter(pkg);
@@ -1375,6 +1414,9 @@ S32 LOD_r_ATOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     }
     return 1;
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 S32 LOD_r_AINF(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
@@ -1436,6 +1478,9 @@ S32 LOD_r_AHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     return 1;
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 S32 LOD_r_ADBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_ATOC_NODE* assnode)
 {
     S32 ival = 0;
@@ -1445,6 +1490,10 @@ S32 LOD_r_ADBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_ATOC_NODE
     assnode->assalign = ival;
 
     g_hiprf->readString(pkg, tmpbuf);
+#if defined(PS2)
+    strncpy(assnode->basename, tmpbuf, sizeof(assnode->basename) - 1);
+    assnode->basename[sizeof(assnode->basename) - 1] = '\0';
+#endif
     tmpbuf[0] = 0;
 
     g_hiprf->readString(pkg, tmpbuf);
@@ -1457,7 +1506,13 @@ S32 LOD_r_ADBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_ATOC_NODE
 
     return 1;
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 S32 LOD_r_LTOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     U32 cid = g_hiprf->enter(pkg);
@@ -1477,6 +1532,9 @@ S32 LOD_r_LTOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     }
     return 1;
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 S32 LOD_r_LINF(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
@@ -1545,6 +1603,9 @@ S32 LOD_r_LDBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE
     return 1;
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 S32 LOD_r_STRM(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     U32 cid = g_hiprf->enter(pkg);
@@ -1564,6 +1625,9 @@ S32 LOD_r_STRM(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     }
     return 1;
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 S32 LOD_r_DHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
@@ -1581,6 +1645,9 @@ void PKR_spew_verhist()
 {
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 st_PACKER_ASSETTYPE* PKR_type2typeref(U32 type, st_PACKER_ASSETTYPE* typelist)
 {
     st_PACKER_ASSETTYPE* da_type = NULL;
@@ -1601,6 +1668,9 @@ st_PACKER_ASSETTYPE* PKR_type2typeref(U32 type, st_PACKER_ASSETTYPE* typelist)
     }
     return da_type;
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
 {
@@ -1772,6 +1842,9 @@ void* PKR_getmem(U32 id, S32 amount, U32, S32 align, S32 isTemp, char** memtrue)
     return memptr;
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 void PKR_relmem(U32 id, S32 blksize, void* memptr, U32, S32 isTemp)
 {
     g_memalloc_pair--;
@@ -1794,6 +1867,9 @@ void PKR_relmem(U32 id, S32 blksize, void* memptr, U32, S32 isTemp)
         }
     }
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 void PKR_push_memmark()
 {

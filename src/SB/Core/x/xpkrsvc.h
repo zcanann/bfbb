@@ -43,13 +43,17 @@ struct st_PACKER_ATOC_NODE
     st_HIPLOADDATA* ownpkg;
     st_PACKER_READ_DATA* ownpr;
 
-    // looks like this was removed in the GC version
-    // Evidence: memory allocation; Name function returns a constant
-    // char basename[32];
+#if defined(PS2)
+    char basename[32];
+#endif
 
     char* Name() const
     {
+#if defined(PS2)
+        return (char*)basename;
+#else
         return "<unknown>";
+#endif
     }
 };
 
