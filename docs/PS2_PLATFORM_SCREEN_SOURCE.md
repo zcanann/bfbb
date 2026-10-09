@@ -85,3 +85,50 @@ Private evidence: `iscrfx-overlay-comparison.json`, `iscrfx-overlay-changes.json
 `iscrfx-overlay-raw-proof.json`, `iscrfx-overlay-raw-residual.json`, and
 `iscrfx-overlay-layout-proof.json`, with frozen objects/reports in
 `build/iscrfx-overlay/`. The source parent is `a98c1efb8`.
+
+## Motion-blur allocation and vertex setup
+
+The next restoration implements the original 272-byte allocation routine and
+its static 452-byte vertex setup helper. Both functions retain their original
+sizes. In USA, PAL, and Germany, their normal report scores are 97.05882% and
+94.95575%, respectively. The complete thirteen-function / 5,788-byte unit rises
+from 46.02626% to 58.002766% fuzzy matching; its prior 1,524 exact bytes / nine
+functions and all earlier function/data results remain unchanged. Only the
+2,396-byte distortion renderer remains unimplemented. Neither new body is
+claimed exact, and no comparison/export rules or target metadata change.
+
+Allocation preserves the original empty-rectangle initialization, rejects
+nonpositive framebuffer dimensions, creates an unallocated camera-texture
+raster, attaches the framebuffer subrectangle, destroys a failed attachment,
+and reports the original `Error creating raster\n` diagnostic on allocation
+failure. The 23-byte null-terminated string and its original HI16/LO16 operands
+were checked separately in all three originals. `RwRasterSubRaster` is declared
+locally with its SDK interface; that spelling does not establish an original
+runtime identity. The four external destinations remain unresolved. The named
+call to the static setup helper uses its original DWARF identity. A raw replay
+checks every non-NOP instruction, branch destination, and delay slot, with only
+the original zero-fill/guard NOP placement differing. This is diagnostic
+evidence, not a relaxation of the normal score.
+
+Setup uses the original 512/1024 width selection, half-texel UV offsets, camera
+near-plane depth, reciprocal depth, and four white Sky2 vertices. Original
+DWARF names the horizontal/vertical position and UV steps. A one-cell grid
+construction retains the original explicit zero/one products and four-corner
+ordering; the precise source loop syntax is a reconstruction. Direct literal
+corner expressions were also tested, but this compiler folds away operations
+present in every original. An independent instruction-level symbolic replay
+executes both width branches of the actual original and compiled functions,
+with ABI caller clobbers at the single unresolved SDK call. All 44 ordered
+vertex writes have identical floating-point expression trees, without
+reassociation, and both sides read camera near-plane exactly once. This checks
+the reconstructed arithmetic and side effects separately from fuzzy scoring.
+Remaining differences concern UV temporary registers/scheduling and two
+constant GPR assignments. No compiler-version explanation or patch is claimed.
+
+All changes are confined to the PS2 source and this document. There is no
+French identity/profile expansion, shared-header change, or GameCube/Xbox
+source selection change. Private evidence: `iscrfx-motion-comparison.json`,
+`iscrfx-motion-changes.json`, `iscrfx-motion-open-raw-proof.py` / `.json`, and
+`iscrfx-motion-vertex-flow-proof.py` / `.json`; actual whole-source objects,
+compiler logs and reports are frozen in `build/iscrfx-motion/<version>/`.
+The source parent is `1d88117c1`.
