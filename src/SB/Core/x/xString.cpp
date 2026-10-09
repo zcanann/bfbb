@@ -448,7 +448,7 @@ S32 icompare(const substr& s1, const substr& s2)
         }
         else
         {
-#ifdef XBOX
+#if defined(XBOX) || defined(PS2)
             result = s1.size < s2.size ? -1 : 1;
 #else
             result = 1;

@@ -129,3 +129,16 @@ identical and its retail DOL SHA-1 check passes. The buffer tokenizer remains
 unchanged: multiple restart, character, destination and counter-lifetime probes
 improved its fuzzy score but did not reproduce its whole body. Private evidence
 uses `*-token.json` and `raw-token-proof.json` under `build/string-oct09`.
+
+## Substring comparison join (2026-10-09)
+
+PS2 now shares the existing Xbox conditional expression for the length
+tiebreak in `icompare`. This recovers the original join branch and makes its
+complete 192-byte body exact in all four PS2 releases. Each string unit rises
+to 10/12 functions and 3088/3948 exact bytes, with fuzzy matching improving
+from 97.32827% to 97.535965%. Every other function score is unchanged.
+
+Direct source/target comparisons confirm all four complete bodies. The full
+GameCube USA report remains identical and its retail DOL SHA-1 check passes.
+Private evidence uses `*-compare.json` and `raw-compare-proof.json` under
+`build/string-oct09`. No target, registry, header or compiler setting changes.
