@@ -32,12 +32,12 @@ void xLaserBoltEmitter::set_texture(const char* name)
     set_texture(xStrHash(name));
 }
 
-void xLaserBoltEmitter::set_texture(U32 aid)
+inline void xLaserBoltEmitter::set_texture(U32 aid)
 {
     set_texture((RwTexture*)xSTFindAsset(aid, NULL));
 }
 
-void xLaserBoltEmitter::set_texture(RwTexture* tex)
+inline void xLaserBoltEmitter::set_texture(RwTexture* tex)
 {
     if (tex == NULL)
     {
@@ -49,7 +49,7 @@ void xLaserBoltEmitter::set_texture(RwTexture* tex)
     }
 }
 
-void xLaserBoltEmitter::set_texture(RwRaster* raster)
+inline void xLaserBoltEmitter::set_texture(RwRaster* raster)
 {
     this->bolt_raster = raster;
 }
@@ -398,7 +398,7 @@ void xLaserBoltEmitter::apply_damage(xLaserBoltEmitter::bolt& b)
     }
 }
 
-void xLaserBoltEmitter::reset_fx(fx_when_enum when)
+inline void xLaserBoltEmitter::reset_fx(fx_when_enum when)
 {
     effect_data* cur_fx = this->fx[when];
     effect_data* fx_end = cur_fx + this->fxsize[when];
