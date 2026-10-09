@@ -14790,3 +14790,17 @@ checks are clean. GameCube streak and glare fuzzy scores improve; no exact or da
 measure is lost. Evidence: `build/oct09-{us,france}-sdk`, their comparison logs,
 `build/oct09-animation-extension-tests.log`, `build/oct09-sdk-<GameCube-version>.log`,
 and the raw projection/caller artifacts cited in the unit notes.
+
+The renderer/sound follow-up adds another 2,280 exact USA bytes / three functions,
+reaching 1,007,672 bytes / 3,778 functions. Ring lifetime selection, fireworks
+setting order and original sound-position scalar lifetimes supply the exact
+gains; lightning initialization order and omitting an unused PS2-only counter
+improve fuzzy matching. All 37 sound functions / 6,764 bytes are now exact in
+the three debug PS2 regions. The fast shadow receiver is restored from original
+C/VU operations, with all 66 vector words checked raw including masks.
+
+The complete USA/French report comparisons retain every earlier score and exact
+match; the French report is entirely unchanged. All three GameCube full source
+reports/checksums pass without new regressions. Evidence:
+`build/oct09-{us,france}-render-followup`, their comparison logs, and
+`build/oct09-render-followup-<GameCube-version>.log`.
