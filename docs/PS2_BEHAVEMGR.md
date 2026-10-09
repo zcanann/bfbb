@@ -26,3 +26,27 @@ All 224 actual GameCube game/engine objects recompiled with identical allocated
 sections. Private evidence in build/ps2core162 includes the unchanged-body source
 object, per-region target objects/profiles/reports, original layouts, and the
 GameCube comparison. No function identity or extent is added by this work.
+
+## Transition call and goal-list access recovery
+
+A PS2-only `dont_inline` scope preserves the original call to `GoalPopToBase`
+from `ParseTranRequest`. Reading the public list link directly in `FindGoal`
+restores the original inlined accessor load. Both changes are scoped to PS2:
+the shared direct-field spelling was measured and regressed the existing
+GameCube `FindGoal` match, so GameCube retains its accessor call.
+
+Complete source objects in USA, PAL and Germany add two exact functions:
+`ParseTranRequest` (300 bytes) and `FindGoal` (164). Exact code rises from
+2,280 / 18 functions to 2,744 / 20 functions out of 6,196 bytes / 31 functions.
+All other function scores are unchanged. Raw original-byte comparisons pass
+for all 464 bytes in each region after applying the ten real JAL relocations.
+Every GU4Y78 GameCube score remains unchanged, including 59 exact functions
+and 7,280 bytes. France currently profiles only `xBehaveMgr_SceneReset`, whose
+83.54839% source score is unchanged; no new French coverage is claimed.
+
+Private PS2-worktree artifacts include `build/behave-raw-proof.json`,
+`build/behaveproof.py`, `build/behave-gc-{before,after}.json`, retained whole
+source objects, and the limited fresh French diagnostic target. Common
+`ForceTran` and loop-source probes did not improve the remaining differences
+and were restored. No compiler, profile, relocation or scoring settings change.
+These code results do not establish a retail executable link.

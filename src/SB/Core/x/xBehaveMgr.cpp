@@ -430,6 +430,9 @@ S32 xPsyche::GoalPush(S32 gid, S32 unk)
     return result;
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 S32 xPsyche::GoalPopToBase(S32 overpend)
 {
     if (this->flg_psyche & 4)
@@ -450,6 +453,9 @@ S32 xPsyche::GoalPopToBase(S32 overpend)
         return 1;
     }
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 S32 xPsyche::GoalPopRecover(S32 overpend)
 {
@@ -678,7 +684,11 @@ xGoal* xPsyche::FindGoal(S32 gid)
             break;
         }
 
+#if defined(PS2)
+        goal = goal->next;
+#else
         goal = goal->Next();
+#endif
     }
     if (goal == NULL)
     {
