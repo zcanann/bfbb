@@ -43,8 +43,9 @@ namespace
 void xSndInit()
 {
     iSndInit();
+    U32 i = 0;
     xSndVoiceInfo* voice = gSnd.voice;
-    for (S32 i = 0; i < XSND_VOICE_COUNT; i++, voice++)
+    for (; i < XSND_VOICE_COUNT; i++, voice++)
     {
         voice->flags = 0;
         voice->lock_owner = 0;
@@ -198,7 +199,11 @@ void xSndAddDelayed(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, U32 par
 {
     _xSndDelayed* snd = &sDelayedSnd[0];
 
+#if defined(PS2)
+    for (S32 i = 0; i < 16; i++)
+#else
     for (U32 i = 0x10; i != 0; i--)
+#endif
     {
         if (snd->delay <= 0.0f)
         {
@@ -580,7 +585,7 @@ void xSndStartStereo(U32 id1, U32 id2, F32 pitch)
 U32 xSndIDIsPlaying(U32 sndID)
 {
     xSndVoiceInfo* voice = gSnd.voice;
-    for (int i = 0; i < XSND_VOICE_COUNT; i++, voice++)
+    for (U32 i = 0; i < XSND_VOICE_COUNT; i++, voice++)
     {
         if (voice->flags & 1 && voice->sndID == sndID)
         {
@@ -609,8 +614,9 @@ void xSndStop(U32 snd)
 
 void xSndParentDied(U32 pid)
 {
+    U32 i = 0;
     xSndVoiceInfo* voice = gSnd.voice;
-    for (S32 i = 0; i < XSND_VOICE_COUNT; i++, voice++)
+    for (; i < XSND_VOICE_COUNT; i++, voice++)
     {
         if (voice->parentID == pid)
         {
@@ -872,7 +878,11 @@ U8 xSndStreamLock(U32 owner, sound_category kill_cat, bool kill_nonlooping)
     return 0;
 }
 
+#if defined(PS2)
+U8 xSndStreamReady(U32 owner)
+#else
 U32 xSndStreamReady(U32 owner)
+#endif
 {
     xSndVoiceInfo* begin = gSnd.voice;
     xSndVoiceInfo* end = begin + STREAM_VOICE_COUNT;

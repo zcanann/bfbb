@@ -121,3 +121,31 @@ The full GameCube USA build preserves its complete progress report and passes
 the retail DOL SHA-1 check. Private original/after/final unit reports and rejected
 inlining probes are under `build/sound-oct08`. No comparison profile, registry,
 original target, or compiler binary was changed.
+
+## Counter lifetimes and stream-ready type (2026-10-09)
+
+Five more complete bodies now match in all three debug regions: Init (264
+bytes), ParentDied (64), IDIsPlaying (88), AddDelayed (128), and StreamReady
+(88). This adds 632 exact bytes and five functions, reaching 36/37 functions
+and 6148/6764 bytes. Fuzzy matching rises from 98.3974% to 99.09048%. Only
+ProcessSoundPos remains unmatched. Every other function score is unchanged.
+
+The three voice loops use unsigned counters, matching the original unsigned
+comparisons. Init and ParentDied initialize their counters before forming the
+voice pointer; unsigned types alone improved the bodies but did not reproduce
+their register lifetimes. These changes preserve the exact GameCube bodies.
+AddDelayed uses the original signed ascending counter on PS2 and retains the
+existing countdown loop on GameCube.
+
+StreamReady's PS2 definition now returns U8. Authenticated DWARF1 records in
+all three debug executables give fundamental type 3 (unsigned char), and its
+sole source caller in zTalkBox already declares that type. The old U32
+definition introduced an extra unsigned-byte conversion and padding. No shared
+header or caller declaration changes. GameCube retains its existing definition.
+
+All four PS2 versions were compiled before and after. France's established
+three-function subset stays exactly 132/132 bytes. The full GameCube USA build
+preserves its entire progress report and passes the retail DOL SHA-1 check.
+Private evidence is `build/sound-oct09`, including the original DWARF type
+records, per-region reports and rejected source probes. No profile, registry,
+original target or compiler binary changed.
