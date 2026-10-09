@@ -200,3 +200,49 @@ compiler change is added for this residual.
 Evidence is build/icollide-env4-final-comparison.json,
 build/icollide-env4-final-changes.json, build/icollide-env4-raw-proof.json and
 build/icollide-dimension-raw-proof.json. The baseline is c54b12b9e.
+
+
+## Swept-sphere triangle vector transform (2026-10-09)
+
+`xSweptSphereToTriangle` previously transformed its three vertices through
+scalar matrix helpers. The USA, Europe and Germany originals instead share
+an identical 216-byte inline VU kernel at function offsets 0x20 through 0xf8.
+It loads the four inverse-basis rows, packs each unaligned 12-byte vertex,
+transforms all three with full `xyzw` vector masks, and scatters nine result
+floats into `xform[0..2]`. A PS2-local helper restores that kernel without
+fixed GPR bindings or changes to shared matrix headers. Its descriptive name
+is a reconstruction, not a recovered original symbol.
+
+Original DWARF places `xform[4]` at stack offset zero in a 0xa0-byte frame,
+followed by the edge/contact vectors. It also distinguishes the vertex
+`distzsqr` input from the reused `testdist` output. Restoring those lifetimes,
+reusing the named `invZ`, and preserving the edge/vertex `sqrt.s` inline
+boundaries recovers most of the remaining scalar body. Normal length keeps
+the built-in square root and uses the original conditional reciprocal join.
+Using explicit square-root assembly for that normal instead was measured
+and rejected because it changed the register and load schedule substantially.
+The closing vertex uses the existing `xVec3Copy` helper. GameCube keeps its
+previous transform, square-root, and temporary expressions.
+
+Normal complete-unit builds for SLUS-20680, SLES-51968 and SLES-51970 improve
+the 2,536-byte triangle body from 66.03155% to 98.33438%. All other 35 function
+scores are unchanged. Exact coverage remains 10,528 bytes / 20 functions;
+this is a fuzzy matching gain, not an exact-function gain. Fresh GameCube
+solo validation retains 72 of 75 exact functions, including the triangle;
+the existing box and two assignment residuals are unchanged. Full regional
+production gates remain the integration check.
+
+The three original kernel SHA-256 values are identical:
+`dbd4692fb9eb18e43413257b3201db901860e7d3d1c58447bc845b01ff12d544`.
+Independent raw-word checks verify all twelve vector operations, including
+lane masks and operands, in each rebuilt region. Symbolic replay of integer
+packing, vector multiply/add order and stores reproduces the same nine
+output addresses and expressions. The complete bodies have 2,352 of 2,536
+bytes directly equal, with no relocations. Remaining differences are GPR
+allocation/instruction scheduling in the kernel and a few independent scalar
+loads/stores or branch-adjacent operations. These are retained as residuals;
+no compiler patch or compiler-version attribution is proposed.
+
+Baseline: `3ac9a9a80`. Private evidence: `build/collide-oct09/triangle-proof.json`,
+`triangle-locals.json`, `triangle-kernel-proof.json`, and
+`triangle-raw-differences.json`. No registry or runtime aliases change.

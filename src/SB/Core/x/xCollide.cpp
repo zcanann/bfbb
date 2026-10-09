@@ -1390,6 +1390,82 @@ void xSweptSphereGetResults(xSweptSphere* sws)
     }
 }
 
+#if defined(PS2)
+// Transform three unaligned 12-byte vertices together using the original VU kernel.
+static inline void xSweptSphereTransformTriangle(xVec3* out, const xMat4x3* mat,
+                                                const xVec3* v0, const xVec3* v1,
+                                               const xVec3* v2)
+{
+    U32 packed, x, y, z;
+    asm volatile("lqc2 vf16, 0(%4)\n"
+                 "lqc2 vf17, 16(%4)\n"
+                 "lqc2 vf18, 32(%4)\n"
+                 "lqc2 vf19, 48(%4)\n"
+                 "lw %0, 0(%6)\n"
+                 "lw %1, 4(%6)\n"
+                 "lw %2, 8(%6)\n"
+                 "pextlw %0, %1, %0\n"
+                 "lw %1, 0(%7)\n"
+                 "pcpyld %0, %2, %0\n"
+                 "lw %2, 4(%7)\n"
+                 "qmtc2 %0, vf1\n"
+                 "lw %3, 8(%7)\n"
+                 "pextlw %0, %2, %1\n"
+                 "lw %1, 0(%8)\n"
+                 "pcpyld %0, %3, %0\n"
+                 "lw %2, 4(%8)\n"
+                 "qmtc2 %0, vf2\n"
+                 "lw %3, 8(%8)\n"
+                 "pextlw %0, %2, %1\n"
+                 "vmulax.xyzw ACC, vf16, vf1x\n"
+                 "pcpyld %0, %3, %0\n"
+                 "vmadday.xyzw ACC, vf17, vf1y\n"
+                 "qmtc2 %0, vf3\n"
+                 "vmaddaz.xyzw ACC, vf18, vf1z\n"
+                 "vmaddw.xyzw vf1, vf19, vf0w\n"
+                 "vmulax.xyzw ACC, vf16, vf2x\n"
+                 "vmadday.xyzw ACC, vf17, vf2y\n"
+                 "vmaddaz.xyzw ACC, vf18, vf2z\n"
+                 "vmaddw.xyzw vf2, vf19, vf0w\n"
+                 "vmulax.xyzw ACC, vf16, vf3x\n"
+                 "vmadday.xyzw ACC, vf17, vf3y\n"
+                 "vmaddaz.xyzw ACC, vf18, vf3z\n"
+                 "vmaddw.xyzw vf3, vf19, vf0w\n"
+                 "qmfc2 %0, vf1\n"
+                 "qmfc2 %1, vf2\n"
+                 "sw %0, 0(%5)\n"
+                 "prot3w %0, %0\n"
+                 "sw %0, 4(%5)\n"
+                 "prot3w %0, %0\n"
+                 "sw %0, 8(%5)\n"
+                 "qmfc2 %2, vf3\n"
+                 "sw %1, 12(%5)\n"
+                 "prot3w %1, %1\n"
+                 "sw %1, 16(%5)\n"
+                 "prot3w %1, %1\n"
+                 "sw %1, 20(%5)\n"
+                 "sw %2, 24(%5)\n"
+                 "prot3w %2, %2\n"
+                 "sw %2, 28(%5)\n"
+                 "prot3w %2, %2\n"
+                 "sw %2, 32(%5)\n"
+                 : "=&r"(packed), "=&r"(x), "=&r"(y), "=&r"(z)
+                 : "r"(mat), "r"(out), "r"(v0), "r"(v1), "r"(v2)
+                 : "memory");
+}
+#endif
+
+#if defined(PS2)
+static inline F32 xSweptSphereTriangleSqrt(F32 value)
+{
+    F32 result;
+    asm volatile("sqrt.s %0, %1" : "=f"(result) : "f"(value));
+    return result;
+}
+#else
+#define xSweptSphereTriangleSqrt xsqrt
+#endif
+
 S32 xSweptSphereToTriangle(xSweptSphere* sws, xVec3* v0, xVec3* v1, xVec3* v2)
 {
     S32 i;
@@ -1399,9 +1475,13 @@ S32 xSweptSphereToTriangle(xSweptSphere* sws, xVec3* v0, xVec3* v1, xVec3* v2)
         return 0;
 
     xVec3 xform[4];
+#if defined(PS2)
+    xSweptSphereTransformTriangle(xform, &sws->invbasis.xm, v0, v1, v2);
+#else
     xMat4x3Toworld(&xform[0], &sws->invbasis.xm, v0);
     xMat4x3Toworld(&xform[1], &sws->invbasis.xm, v1);
     xMat4x3Toworld(&xform[2], &sws->invbasis.xm, v2);
+#endif
 
     rad = sws->radius;
     raddist = sws->curdist + rad;
@@ -1426,10 +1506,7 @@ S32 xSweptSphereToTriangle(xSweptSphere* sws, xVec3* v0, xVec3* v1, xVec3* v2)
     lengthSq = RwV3dDotProductMacro((RwV3d*)&xnorm, (RwV3d*)&xnorm);
 #if defined(PS2)
     recipLength = sqrtf(lengthSq);
-    if (recipLength > 0.0f)
-    {
-        recipLength = 1.0f / recipLength;
-    }
+    recipLength = recipLength > 0.0f ? 1.0f / recipLength : recipLength;
     RwV3dScaleMacro((RwV3d*)&xnorm, (RwV3d*)&xnorm, recipLength);
 #else
     recipLength = _rwInvSqrt(lengthSq);
@@ -1523,7 +1600,11 @@ S32 xSweptSphereToTriangle(xSweptSphere* sws, xVec3* v0, xVec3* v1, xVec3* v2)
     S32 edge_contact_found = -1;
     S32 vert_contact_found = -1;
 
+#if defined(PS2)
+    xVec3Copy(&xform[3], &xform[0]);
+#else
     xform[3] = xform[0];
+#endif
 
     F32 edge_contact_lerp;
     for (i = 0; i < 3; i++)
@@ -1545,7 +1626,11 @@ S32 xSweptSphereToTriangle(xSweptSphere* sws, xVec3* v0, xVec3* v1, xVec3* v2)
             uu.y = -cyl.y * cyl.z;
             uu.z = magNsqr;
             F32 ulen;
+#if defined(PS2)
+            ulen = xSweptSphereTriangleSqrt(SQR(uu.x) + SQR(uu.y) + SQR(uu.z));
+#else
             xsqrtfast(ulen, SQR(uu.x) + SQR(uu.y) + SQR(uu.z));
+#endif
             if (!(ulen < 0.000001f))
             {
                 ulen = 1.0f / ulen;
@@ -1554,9 +1639,14 @@ S32 xSweptSphereToTriangle(xSweptSphere* sws, xVec3* v0, xVec3* v1, xVec3* v2)
                 uu.z *= ulen;
                 if (!(uu.z < 0.000001f))
                 {
+#if defined(PS2)
+                    invZ = 1.0f / uu.z;
+                    testdist = invZ *
+#else
                     testdist = 1.0f / uu.z *
+#endif
                                (uu.x * pt.x + uu.y * pt.y + uu.z * pt.z -
-                                xsqrt(radsqr - dsqr));
+                                xSweptSphereTriangleSqrt(radsqr - dsqr));
                     if (testdist >= sws->curdist)
                         continue;
                     if (!(testdist <= -rad))
@@ -1574,10 +1664,23 @@ S32 xSweptSphereToTriangle(xSweptSphere* sws, xVec3* v0, xVec3* v1, xVec3* v2)
                 }
             }
         }
+#if defined(PS2)
+        F32 distzsqr = radsqr - SQR(xform[i].x) - SQR(xform[i].y);
+        if (!(distzsqr <= 0.0f))
+        {
+            testdist = pt.z - xSweptSphereTriangleSqrt(distzsqr);
+            if (!(testdist >= sws->curdist) && !(testdist <= -rad))
+            {
+                sws->curdist = testdist;
+                vert_contact_found = i;
+                edge_contact_found = -1;
+            }
+        }
+#else
         testdist = radsqr - SQR(xform[i].x) - SQR(xform[i].y);
         if (!(testdist <= 0.0f))
         {
-            F32 distzsqr = pt.z - xsqrt(testdist);
+            F32 distzsqr = pt.z - xSweptSphereTriangleSqrt(testdist);
             if (!(distzsqr >= sws->curdist) && !(distzsqr <= -rad))
             {
                 sws->curdist = distzsqr;
@@ -1585,6 +1688,7 @@ S32 xSweptSphereToTriangle(xSweptSphere* sws, xVec3* v0, xVec3* v1, xVec3* v2)
                 edge_contact_found = -1;
             }
         }
+#endif
     }
 
     if (vert_contact_found >= 0)
@@ -1609,6 +1713,10 @@ S32 xSweptSphereToTriangle(xSweptSphere* sws, xVec3* v0, xVec3* v1, xVec3* v2)
 
     return 0;
 }
+
+#if !defined(PS2)
+#undef xSweptSphereTriangleSqrt
+#endif
 
 S32 xSweptSphereToSphere(xSweptSphere* sws, xSphere* sph)
 {
