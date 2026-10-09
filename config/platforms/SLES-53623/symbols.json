@@ -54,6 +54,34 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "zParamGetVector",
+      "source": "SB/Game/zEnt.cpp",
+      "address": 1257248,
+      "size": 328,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "zParamGetFloatList",
+      "source": "SB/Game/zEnt.cpp",
+      "address": 1257968,
+      "size": 376,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "zParamGetFloat",
+      "source": "SB/Game/zEnt.cpp",
+      "address": 1258528,
+      "size": 168,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "zParamGetInt",
+      "source": "SB/Game/zEnt.cpp",
+      "address": 1258880,
+      "size": 168,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "zEntButton_SceneUpdate",
       "source": "SB/Game/zEntButton.cpp",
       "address": 1266640,
@@ -3715,6 +3743,76 @@
       "provenance": "reviewed-whole-tu-sequence"
     },
     {
+      "name": "zEntEvent",
+      "source": "SB/Core/x/xEvent.cpp",
+      "address": 2635840,
+      "size": 412,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zEntEvent",
+      "source": "SB/Core/x/xEvent.cpp",
+      "address": 2636256,
+      "size": 32,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zEntEvent",
+      "source": "SB/Core/x/xEvent.cpp",
+      "address": 2636288,
+      "size": 32,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zEntEvent",
+      "source": "SB/Core/x/xEvent.cpp",
+      "address": 2636320,
+      "size": 32,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zEntEvent",
+      "source": "SB/Core/x/xEvent.cpp",
+      "address": 2636352,
+      "size": 32,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zEntEvent",
+      "source": "SB/Core/x/xEvent.cpp",
+      "address": 2636384,
+      "size": 68,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zEntEvent",
+      "source": "SB/Core/x/xEvent.cpp",
+      "address": 2636464,
+      "size": 32,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zEntEvent",
+      "source": "SB/Core/x/xEvent.cpp",
+      "address": 2636496,
+      "size": 88,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zEntEvent",
+      "source": "SB/Core/x/xEvent.cpp",
+      "address": 2636592,
+      "size": 72,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "zEntEvent",
+      "source": "SB/Core/x/xEvent.cpp",
+      "address": 2636672,
+      "size": 80,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xCounterReset",
       "source": "SB/Core/x/xCounter.cpp",
       "address": 2747840,
@@ -3722,11 +3820,67 @@
       "provenance": "machine-corroborated-explicit-transfers"
     },
     {
+      "name": "get_any",
+      "source": "SB/Core/x/xGroup.cpp",
+      "address": 2752624,
+      "size": 64,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xGroupGetItem",
+      "source": "SB/Core/x/xGroup.cpp",
+      "address": 2752688,
+      "size": 20,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xGroupGetItemPtr",
       "source": "SB/Core/x/xGroup.cpp",
       "address": 2752720,
       "size": 200,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xGroupGetCount",
+      "source": "SB/Core/x/xGroup.cpp",
+      "address": 2752928,
+      "size": 12,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xGroupEventCB",
+      "source": "SB/Core/x/xGroup.cpp",
+      "address": 2752944,
+      "size": 712,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xGroupLoad",
+      "source": "SB/Core/x/xGroup.cpp",
+      "address": 2753664,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xGroupSave",
+      "source": "SB/Core/x/xGroup.cpp",
+      "address": 2753680,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xGroupSetup",
+      "source": "SB/Core/x/xGroup.cpp",
+      "address": 2753696,
+      "size": 156,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xGroupInit",
+      "source": "SB/Core/x/xGroup.cpp",
+      "address": 2753856,
+      "size": 172,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "NPCMessage",
@@ -4520,6 +4674,13 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "register_tweaks",
+      "source": "SB/Game/zNPCTypeKingJelly.cpp",
+      "address": 3420080,
+      "size": 23444,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "HISPlayExternalStreamAsync",
       "source": "SB/Core/p2/his/HISAPI.cpp",
       "address": 3455888,
@@ -4590,6 +4751,13 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "register_tweaks",
+      "source": "SB/Game/zNPCTypeBossSB2.cpp",
+      "address": 3493760,
+      "size": 14764,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "iCameraUpdateFog",
       "source": "SB/Core/x/iCamera.cpp",
       "address": 3524912,
@@ -4623,6 +4791,13 @@
       "address": 3779424,
       "size": 364,
       "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "register_tweaks",
+      "source": "SB/Game/zNPCTypeDutchman.cpp",
+      "address": 3824832,
+      "size": 15588,
+      "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
       "name": "xCurveAssetEvaluate",

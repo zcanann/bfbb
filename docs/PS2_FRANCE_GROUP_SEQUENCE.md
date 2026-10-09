@@ -21,19 +21,21 @@ changed address pair must point to the local event callback, at the original
 HI/LO offsets and with the original opcode. No data identity is added.
 
 External transfers use existing named identities, including the independently
-reviewed nonprogress allocator. Three calls to the 32-byte event wrapper retain
-unresolved literal target words in the comparison object. The verifier checks
-that complete original wrapper as nonpromoted context in all three originals;
-it does not name its French entry, claim its extent, or resolve its transfer to
-the larger event implementation.
+reviewed nonprogress allocator. This proof checks the complete 32-byte event
+wrapper as nonpromoted context in all three originals. The separate event
+sequence proof then establishes that wrapper and its larger implementation,
+rooted in this independently regenerated group caller. Group regeneration
+explicitly excludes the dependent event records from its known anchors, so
+registration cannot introduce circular evidence.
 
-The diagnostic full source object reports nine exact functions / 1,352 bytes,
-up from the existing 200-byte accessor. This is an ordinary code-score result:
-the three unresolved event calls still prevent a fully resolved relocation or
-source-link claim. The profile adds only the previously proven external calls,
-the local callback address pair, and the independently reviewed `gActiveHeap`
-operand. No compiler or scoring settings change. Global registry generation and
-the full combined canonical report remain the integration gate.
+The complete source object reports nine exact functions / 1,352 bytes,
+up from the existing 200-byte accessor. Its profile includes verified external
+calls, the local callback address pair and the independently reviewed
+`gActiveHeap` operand. With the event sequence integrated, all five callback
+calls are restored. Independent original-byte reconstruction verifies the
+712-byte callback together with all 880 event bytes; see
+`PS2_FRANCE_EVENT_SEQUENCE.md`. No compiler or scoring settings change, and
+these function comparisons do not establish a linked executable.
 
 Private artifacts in the PS2 worktree are `build/group-france-proof.json`,
 `build/group-france-diagnostic/target.o` and `relocations.json`, the retained

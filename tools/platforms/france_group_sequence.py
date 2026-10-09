@@ -42,6 +42,11 @@ def generate_unit(originals, registry_dir):
     known = {}
     for path in sorted(registry_dir.glob('*functions.json')):
         for f in json.loads(path.read_text()).get('functions', []):
+            # Event identity is proved from this caller. Preserve the original
+            # unpromoted context here even after event records are registered;
+            # otherwise regeneration would trust a dependent proof as an anchor.
+            if f['source'] == 'SB/Core/x/xEvent.cpp':
+                continue
             if f['source'] == SOURCE and f['name'] != 'xGroupGetItemPtr':
                 continue
             if f['address'] in known:

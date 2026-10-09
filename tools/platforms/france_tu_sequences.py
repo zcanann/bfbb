@@ -573,6 +573,55 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in hangable['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Hangable adds ten members from all eleven original functions and the existing Setup neighbor. Original typed globals, the complete circle initializer, four strings and independently verified culling callbacks corroborate changed operands. Only exact eight-byte Load/Save J/NOP chains into independently verified base bodies receive scoped tail handling; external entry prefixes remain unpromoted context, and generic CFG checks remain unchanged.')
+    from platforms.france_group_sequence import generate_unit as generate_group
+    group = generate_group(originals, registry_dir)
+    document['functions'].extend(group['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(group['sequence_proofs'])
+    document['call_neighbors'].extend(group['call_neighbors'])
+    document['group_data_proofs'] = group['data_proofs']
+    for key, value in group['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Group adds eight members from the complete nine-function sequence and the existing item-accessor neighbor. Only exact Load/Save J/NOP wrappers into independently verified base bodies receive scoped tail handling. The event wrapper remains complete unpromoted original context; generic boundary checks remain unchanged.')
+    from platforms.france_dutchman_tweaks import generate_unit as generate_dutchman
+    dutchman = generate_dutchman(originals, registry_dir)
+    document['functions'].extend(dutchman['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(dutchman['sequence_proofs'])
+    document['call_neighbors'].extend(dutchman['call_neighbors'])
+    document['dutchman_data_proofs'] = dutchman['data_proofs']
+    for key, value in dutchman['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Dutchman proves one unique complete parameter-registration caller and three complete named helpers, not the whole translation unit. All four bodies pass strict closure checks in all three originals. Complete parameter strings and known helper callees corroborate all changed operands; one unchanged runtime prefix remains unpromoted. The distinct caller-callee-cluster kind preserves this narrower proof scope.')
+    from platforms.france_event_sequence import generate_unit as generate_event
+    event = generate_event(originals, registry_dir)
+    document['functions'].extend(event['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(event['sequence_proofs'])
+    document['call_neighbors'].extend(event['call_neighbors'])
+    document['event_data_proofs'] = event['data_proofs']
+    for key, value in event['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Event adds all ten original overloads rooted in a freshly regenerated group caller. Five strictly closed bodies and five exact register-only shuffle tails preserve complete original control flow. External callees are independently known; group regeneration excludes these dependent event entries so the original context cannot become a circular anchor.')
+    from platforms.france_kingjelly_tweaks import generate_unit as generate_kingjelly
+    kingjelly = generate_kingjelly(originals, registry_dir)
+    document['functions'].extend(kingjelly['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(kingjelly['sequence_proofs'])
+    document['call_neighbors'].extend(kingjelly['call_neighbors'])
+    document['kingjelly_data_proofs'] = kingjelly['data_proofs']
+    for key, value in kingjelly['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('King Jelly proves one unique complete parameter-registration caller and its complete float-list helper. Three-version names, bounds, strict returns, all instruction bits and complete strings agree. The earlier parameter helpers are independently regenerated; the complete original color helper remains unpromoted context. No whole translation-unit or data extent is claimed.')
+    from platforms.france_sb2_tweaks import generate_unit as generate_sb2
+    sb2 = generate_sb2(originals, registry_dir)
+    document['functions'].extend(sb2['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(sb2['sequence_proofs'])
+    document['sb2_data_proofs'] = sb2['data_proofs']
+    for key, value in sb2['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('SB2 proves one unique complete parameter-registration body with all three original ownership and strict return witnesses. Complete strings, independently regenerated parameter helpers and original typed sound-array layouts corroborate every changed operand. Array element/member offsets are preserved; no whole translation-unit or data extent is claimed.')
     return document
 
 
