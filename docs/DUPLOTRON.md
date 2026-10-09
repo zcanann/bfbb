@@ -15196,3 +15196,49 @@ and its three comparison logs, `build/oct09-france-clump-collision-disco` and
 comparison log, `build/oct09-boss-sound-tests.log`,
 `build/oct09-clump-collision-disco-<GameCube-version>.log` and
 `build/oct09-clump-collision-disco-xbox`.
+
+The camera/main/math/sound batch adds 3,080 exact bytes / seven functions in
+USA and PAL, reaching 1,048,384 / 3,853 and 1,040,824 / 3,840. Germany also
+recovers its 736-byte main and 1,632-byte loop, gaining 5,448 / nine and
+reaching 1,044,260 / 3,844. Camera is now 14/14 and 3,984/3,984 in all debug
+regions; quaternion interpolation and Euler conversion add 676 exact bytes.
+All earlier function/code/data measures survive. Four changed source units are
+rebuilt against the verified 214-unit snapshots, with unchanged debug profiles,
+global compiler settings and final source hashes. Source is frozen at
+`ac8cce373` throughout validation.
+
+Previously omitted startup query and splash behavior now scores 96.43606% and
+95.173615%. Original PAL camera dimensions, 50 Hz polling and controller text
+are independently checked; splash extern declarations preserve original asset
+types and extents without shipping asset definitions. All non-NOP words and
+relative branch destinations agree in the bounded original audits, while
+unproved runtime/data relocations and extra compiler NOPs remain counted.
+Stream playback improves to 87.63571%, and cone bounds to 99.0991%. Neither
+prior/future compiler probes nor source loop experiments establish a patch
+justification, so no compiler patch or artificial padding is introduced.
+
+Twelve complete French sound/Sandy identities add 7,000 known bytes, reaching
+919 functions / 443,888 bytes. Full typed objects/arrays, fixed complete
+dependencies, complete strings and strict unique bodies/anchored tail clusters
+corroborate the new identities. All 615 previous TU function records, auxiliary
+proofs and sequence/limitation prefixes remain unchanged. Four already-verified
+camera identities receive source comparison without altering their bounds or
+relocations. Full production regeneration and all 85 source compilations pass;
+with camera and math source, matching gains 9,964 bytes / eighteen functions,
+reaching 233,956 / 647. No earlier score declines.
+
+The decoder cache retains only completed immutable buffers, returns independent
+attribute dictionaries, and preserves lazy failure/partial-iteration behavior.
+All 945,882 reference rows/attributes match the previous decoder exactly. Warm
+benchmark iterations are two to three times faster; cold decoding and retained
+memory cost more, as documented in `PS2_DWARF_REUSE.md`. Full canonical proof
+regeneration validates the unchanged evidence, and all 41 original-backed
+mutation and cache-isolation tests pass.
+
+Fresh GameCube source reports/checksums and both complete Xbox source reports
+pass unchanged. Full CPU denominators and source-data/full-link limitations
+remain unchanged. Evidence: `build/oct09-camera-main-sandy` and its three
+comparison logs, `build/oct09-france-camera-main-sandy` and comparison log,
+`build/oct09-controls-sandy-tests.log`, `build/oct09-dwarf-cache-benchmark.json`,
+`build/oct09-camera-main-sandy-<GameCube-version>.log` and
+`build/oct09-camera-main-sandy-xbox`.

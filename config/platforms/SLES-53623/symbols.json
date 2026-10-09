@@ -768,6 +768,34 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "iSndGetVol",
+      "source": "SB/Core/p2/iSnd.cpp",
+      "address": 1804528,
+      "size": 144,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "iSndSetVol",
+      "source": "SB/Core/p2/iSnd.cpp",
+      "address": 1804672,
+      "size": 492,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "iSndStop",
+      "source": "SB/Core/p2/iSnd.cpp",
+      "address": 1805168,
+      "size": 184,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "iSndPause",
+      "source": "SB/Core/p2/iSnd.cpp",
+      "address": 1805360,
+      "size": 140,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "iSndFindFreeVoice",
       "source": "SB/Core/p2/iSnd.cpp",
       "address": 1805504,
@@ -775,10 +803,38 @@
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
+      "name": "iSndIsReady",
+      "source": "SB/Core/p2/iSnd.cpp",
+      "address": 1806880,
+      "size": 120,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "iSndPlay",
       "source": "SB/Core/p2/iSnd.cpp",
       "address": 1807008,
       "size": 1120,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "iSndIsPlayingByHandle",
+      "source": "SB/Core/p2/iSnd.cpp",
+      "address": 1808128,
+      "size": 112,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "iSndIsPlaying",
+      "source": "SB/Core/p2/iSnd.cpp",
+      "address": 1808240,
+      "size": 112,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "iSndIsPlaying",
+      "source": "SB/Core/p2/iSnd.cpp",
+      "address": 1808352,
+      "size": 88,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
@@ -3208,6 +3264,13 @@
       "source": "SB/Core/x/xSnd.cpp",
       "address": 2137216,
       "size": 64,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "xSndStop",
+      "source": "SB/Core/x/xSnd.cpp",
+      "address": 2137280,
+      "size": 8,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
@@ -5782,6 +5845,13 @@
     {
       "name": "Process",
       "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3327936,
+      "size": 2832,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
       "address": 3331248,
       "size": 544,
       "provenance": "reviewed-complete-caller-callee-cluster"
@@ -5798,6 +5868,13 @@
       "source": "SB/Game/zNPCTypeBossSandy.cpp",
       "address": 3332800,
       "size": 88,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3332896,
+      "size": 2336,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
@@ -5868,6 +5945,13 @@
       "source": "SB/Game/zNPCTypeBossSandy.cpp",
       "address": 3357424,
       "size": 128,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "zNPCBSandy_BossDamageEffect",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3362816,
+      "size": 432,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {

@@ -835,6 +835,54 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in sound_wrappers['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Sound wrappers add three complete original entries in one independently unique 1520-byte cluster with an already-proved 1376-byte anchor. Tiny tail wrappers have exact complete argument, terminal jump and delay-slot inventories, preserve SP/RA, and mask only the fixed known callee. All three original owners, bounds and alignment gaps are checked. No whole translation-unit or data extent is claimed.')
+    from platforms.france_sound_controls import generate_unit as generate_sound_controls
+    sound_controls = generate_sound_controls(originals, registry_dir)
+    document['functions'].extend(sound_controls['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(sound_controls['sequence_proofs'])
+    document['sound_controls_data_proofs'] = sound_controls['data_proofs']
+    document['sound_controls_call_proofs'] = sound_controls['call_proofs']
+    for key, value in sound_controls['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Sound controls add eight independently unique complete original bodies. Typed sound-global fields and four fixed complete HIS callees corroborate every changed operand. Original declarations, member paths, ownership, bounds, zero padding and strict control flow are checked in all three references. No whole translation-unit, data extent or new runtime context is claimed.')
+    from platforms.france_sound_stop_wrapper import generate_unit as generate_sound_stop_wrapper
+    sound_stop_wrapper = generate_sound_stop_wrapper(originals, registry_dir)
+    document['functions'].extend(sound_stop_wrapper['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(sound_stop_wrapper['sequence_proofs'])
+    document['sound_stop_wrapper_data_proofs'] = sound_stop_wrapper['data_proofs']
+    for key, value in sound_stop_wrapper['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Sound stop wrapper adds one complete eight-byte tail within an independently unique 176-byte cluster of three complete authenticated original members. Original ownership, member order, bounds, zero gaps and complete known anchors/callee are rechecked in all three references. Only the fixed iSndStop terminal jump target is masked; generic short-seed uniqueness rules are unchanged.')
+    from platforms.france_sandy_clothesline import generate_unit as generate_sandy_clothesline
+    sandy_clothesline = generate_sandy_clothesline(originals, registry_dir)
+    document['functions'].extend(sandy_clothesline['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(sandy_clothesline['sequence_proofs'])
+    document['sandy_clothesline_data_proofs'] = sandy_clothesline['data_proofs']
+    document['sandy_clothesline_call_proofs'] = sandy_clothesline['call_proofs']
+    for key, value in sandy_clothesline['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Sandy clothesline adds one independently unique complete original goal. Twenty-five fixed complete calls and 35 typed spring-object, bounded sound-array and complete-string operands are checked in all three references. Original ownership, bounds, alignment and strict control flow remain required. No whole translation-unit or data extent is claimed.')
+    from platforms.france_sandy_damage_effect import generate_unit as generate_sandy_damage_effect
+    sandy_damage_effect = generate_sandy_damage_effect(originals, registry_dir)
+    document['functions'].extend(sandy_damage_effect['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(sandy_damage_effect['sequence_proofs'])
+    document['sandy_damage_effect_data_proofs'] = sandy_damage_effect['data_proofs']
+    for key, value in sandy_damage_effect['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Sandy damage effect adds one independently unique complete call-free original body. The full four-element BDE record array and model RGB/Next member paths are checked through original declarations, array bounds and types in all three references. Original ownership, bounds, alignment and strict control flow are preserved. No data extent or whole translation-unit is claimed.')
+    from platforms.france_sandy_sit import generate_unit as generate_sandy_sit
+    sandy_sit = generate_sandy_sit(originals, registry_dir)
+    document['functions'].extend(sandy_sit['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(sandy_sit['sequence_proofs'])
+    document['sandy_sit_data_proofs'] = sandy_sit['data_proofs']
+    document['sandy_sit_call_proofs'] = sandy_sit['call_proofs']
+    for key, value in sandy_sit['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Sandy sit adds one independently unique complete original goal. Fourteen fixed complete calls and typed player carry/model paths, complete bone/sound arrays and strings corroborate every changed operand in all three references. Original ownership, bounds, alignment and strict control flow remain required. No whole translation-unit or data extent is claimed.')
     return document
 
 
