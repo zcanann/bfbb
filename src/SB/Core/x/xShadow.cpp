@@ -1916,12 +1916,23 @@ static RpCollisionTriangle* shadowCacheEnvCB(RpIntersection* isx, RpWorldSector*
         cache->polyRayDepth[1] = MAX(0.5f * dydx * cache->radius + depth0, cache->polyRayDepth[1]);
     }
 
+#if defined(PS2)
+    if ((n0d - 0.5f * n0x * cache->radius <= 1e-05f) &&
+        (n1d - 0.5f * n1x * cache->radius <= 1e-05f) &&
+        (n2d - 0.5f * n2x * cache->radius <= 1e-05f))
+#else
     if ((-(0.5f * n0x * cache->radius - n0d) <= 1e-05f) &&
         (-(0.5f * n1x * cache->radius - n1d) <= 1e-05f) &&
         (-(0.5f * n2x * cache->radius - n2d) <= 1e-05f))
+#endif
     {
+#if defined(PS2)
+        cache->polyRayDepth[2] =
+            MAX(depth0 - 0.5f * dydx * cache->radius, cache->polyRayDepth[2]);
+#else
         cache->polyRayDepth[2] =
             MAX(-(0.5f * dydx * cache->radius - depth0), cache->polyRayDepth[2]);
+#endif
     }
 
     if ((0.5f * n0z * cache->radius + n0d <= 1e-05f) &&
@@ -1931,12 +1942,23 @@ static RpCollisionTriangle* shadowCacheEnvCB(RpIntersection* isx, RpWorldSector*
         cache->polyRayDepth[3] = MAX(0.5f * dydz * cache->radius + depth0, cache->polyRayDepth[3]);
     }
 
+#if defined(PS2)
+    if ((n0d - 0.5f * n0z * cache->radius <= 1e-05f) &&
+        (n1d - 0.5f * n1z * cache->radius <= 1e-05f) &&
+        (n2d - 0.5f * n2z * cache->radius <= 1e-05f))
+#else
     if ((-(0.5f * n0z * cache->radius - n0d) <= 1e-05f) &&
         (-(0.5f * n1z * cache->radius - n1d) <= 1e-05f) &&
         (-(0.5f * n2z * cache->radius - n2d) <= 1e-05f))
+#endif
     {
+#if defined(PS2)
+        cache->polyRayDepth[4] =
+            MAX(depth0 - 0.5f * dydz * cache->radius, cache->polyRayDepth[4]);
+#else
         cache->polyRayDepth[4] =
             MAX(-(0.5f * dydz * cache->radius - depth0), cache->polyRayDepth[4]);
+#endif
     }
 
     return collTriangle;
@@ -1952,6 +1974,10 @@ static S32 shadowCacheLeafCB(S32 numTriangles, S32 triOffset, void* data)
     RpTriangle* triangles = geometry->triangles;
     S32 triSlot;
     U16* triIndex = RpCollisionGeometryGetData(geometry)->triangleMap + triOffset;
+
+#if defined(PS2)
+    S32 i;
+#endif
 
     while (numTriangles--)
     {
@@ -1974,6 +2000,44 @@ static S32 shadowCacheLeafCB(S32 numTriangles, S32 triOffset, void* data)
         F32 startX = cbparam->capsuleStart.x;
         F32 startZ = cbparam->capsuleStart.z;
 
+#if defined(PS2)
+        for (i = 0; i < 3; i++)
+        {
+            xVec3* vert0 = &worldV[i];
+            xVec3* vert1 = &worldV[(i == 2) ? 0 : i + 1];
+            F32 nz = vert0->z - vert1->z;
+            F32 nx = vert1->x - vert0->x;
+            F32 nmag2 = nz * nz + nx * nx;
+            F32 pdot = nz * (startX - vert0->x) + nx * (startZ - vert0->z);
+
+            if ((pdot > 0.0f) &&
+                (pdot * pdot >=
+                 nmag2 * (cbparam->capsuleRadius * cbparam->capsuleRadius)))
+            {
+                goto next_tri;
+            }
+        }
+
+        for (i = 0; i < 3; i++)
+        {
+            xVec3* vert0 = &worldV[i];
+            xVec3* vert1 = &worldV[(i + 1) % 3];
+            xVec3* vert2 = &worldV[(i + 2) % 3];
+            F32 dotA = (vert1->z - vert0->z) * (startZ - vert0->z) +
+                       (vert1->x - vert0->x) * (startX - vert0->x);
+            F32 dotB = (vert2->z - vert0->z) * (startZ - vert0->z) +
+                       (vert2->x - vert0->x) * (startX - vert0->x);
+
+            if ((dotA < 0.0f) && (dotB < 0.0f) &&
+                ((startZ - vert0->z) * (startZ - vert0->z) +
+                     (startX - vert0->x) * (startX - vert0->x) >
+                 cbparam->capsuleRadius * cbparam->capsuleRadius))
+            {
+                goto next_tri;
+            }
+        }
+
+#else
         wv = worldV;
 
         U32 j;
@@ -2014,6 +2078,7 @@ static S32 shadowCacheLeafCB(S32 numTriangles, S32 triOffset, void* data)
             }
         }
 
+#endif
         cbparam->polyFound++;
 
         {
@@ -2041,6 +2106,8 @@ static S32 shadowCacheLeafCB(S32 numTriangles, S32 triOffset, void* data)
             F32 n2z = worldV[0].x - worldV[2].x;
             F32 n2d = n2x * (cache->pos.x - worldV[2].x) + n2z * (cache->pos.z - worldV[2].z);
 
+            F32 denom;
+
             if ((n0d <= 1e-05f) && (n1d <= 1e-05f) && (n2d <= 1e-05f) &&
                 (depth0 > cache->polyRayDepth[0]))
             {
@@ -2052,25 +2119,35 @@ static S32 shadowCacheLeafCB(S32 numTriangles, S32 triOffset, void* data)
                 (0.5f * n1x * cache->radius + n1d <= 1e-05f) &&
                 (0.5f * n2x * cache->radius + n2d <= 1e-05f))
             {
-                F32 depth1 = 0.5f * dydx * cache->radius + depth0;
+                denom = 0.5f * dydx * cache->radius + depth0;
 
-                if (depth1 > cache->polyRayDepth[1])
+                if (denom > cache->polyRayDepth[1])
                 {
                     cbparam->rayCloser[1] = cbparam->ent;
-                    cache->polyRayDepth[1] = depth1;
+                    cache->polyRayDepth[1] = denom;
                 }
             }
 
+#if defined(PS2)
+            if ((n0d - 0.5f * n0x * cache->radius <= 1e-05f) &&
+                (n1d - 0.5f * n1x * cache->radius <= 1e-05f) &&
+                (n2d - 0.5f * n2x * cache->radius <= 1e-05f))
+#else
             if ((-(0.5f * n0x * cache->radius - n0d) <= 1e-05f) &&
                 (-(0.5f * n1x * cache->radius - n1d) <= 1e-05f) &&
                 (-(0.5f * n2x * cache->radius - n2d) <= 1e-05f))
+#endif
             {
-                F32 depth2 = -(0.5f * dydx * cache->radius - depth0);
+#if defined(PS2)
+                denom = depth0 - 0.5f * dydx * cache->radius;
+#else
+                denom = -(0.5f * dydx * cache->radius - depth0);
+#endif
 
-                if (depth2 > cache->polyRayDepth[2])
+                if (denom > cache->polyRayDepth[2])
                 {
                     cbparam->rayCloser[2] = cbparam->ent;
-                    cache->polyRayDepth[2] = depth2;
+                    cache->polyRayDepth[2] = denom;
                 }
             }
 
@@ -2078,25 +2155,35 @@ static S32 shadowCacheLeafCB(S32 numTriangles, S32 triOffset, void* data)
                 (0.5f * n1z * cache->radius + n1d <= 1e-05f) &&
                 (0.5f * n2z * cache->radius + n2d <= 1e-05f))
             {
-                F32 depth3 = 0.5f * dydz * cache->radius + depth0;
+                denom = 0.5f * dydz * cache->radius + depth0;
 
-                if (depth3 > cache->polyRayDepth[3])
+                if (denom > cache->polyRayDepth[3])
                 {
                     cbparam->rayCloser[3] = cbparam->ent;
-                    cache->polyRayDepth[3] = depth3;
+                    cache->polyRayDepth[3] = denom;
                 }
             }
 
+#if defined(PS2)
+            if ((n0d - 0.5f * n0z * cache->radius <= 1e-05f) &&
+                (n1d - 0.5f * n1z * cache->radius <= 1e-05f) &&
+                (n2d - 0.5f * n2z * cache->radius <= 1e-05f))
+#else
             if ((-(0.5f * n0z * cache->radius - n0d) <= 1e-05f) &&
                 (-(0.5f * n1z * cache->radius - n1d) <= 1e-05f) &&
                 (-(0.5f * n2z * cache->radius - n2d) <= 1e-05f))
+#endif
             {
-                F32 depth4 = -(0.5f * dydz * cache->radius - depth0);
+#if defined(PS2)
+                denom = depth0 - 0.5f * dydz * cache->radius;
+#else
+                denom = -(0.5f * dydz * cache->radius - depth0);
+#endif
 
-                if (depth4 > cache->polyRayDepth[4])
+                if (denom > cache->polyRayDepth[4])
                 {
                     cbparam->rayCloser[4] = cbparam->ent;
-                    cache->polyRayDepth[4] = depth4;
+                    cache->polyRayDepth[4] = denom;
                 }
             }
         }

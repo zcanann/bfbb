@@ -105,3 +105,28 @@ identical and its retail DOL SHA-1 passes. France has no enabled source profile
 for this unit. Private evidence is `*-fast.json` and `fast-raw-proof.json` in
 `build/shadow-oct09`; the latter records executable and source-object hashes,
 original addresses, vector-sequence hashes, and the sole changed function.
+
+
+## Exact cache callbacks
+
+The model-cache leaf callback now follows the original debug locals: one
+signed loop index, explicit per-iteration vertex pointers, Z-first dot products
+in the vertex-distance tests, and one reused `denom` for the four offset ray
+depths. The leaf and environment callbacks also restore PS2's direct
+`base - offset` arithmetic instead of negating `offset - base`. GameCube keeps
+its existing arithmetic and loop forms.
+
+These are source fixes; no compiler adjustment is involved. Both complete
+bodies are exact in USA, Europe and Germany:
+
+| Complete body | Before | After |
+| --- | ---: | ---: |
+| `shadowCacheLeafCB`, 2,132 bytes | 87.69043% | 100% |
+| `shadowCacheEnvCB`, 1,024 bytes | 96.171875% | 100% |
+
+Each region gains **3,156 exact bytes and two functions**. Unit totals rise
+from 20/34 and 4,864 bytes to 22/34 and 8,020 bytes; fuzzy matching rises from
+96.868286% to 98.37318%. Every other function score is unchanged. The full
+GameCube USA report remains identical and its retail DOL SHA-1 passes. France
+and Xbox have no enabled source profile for this unit. Private evidence uses
+`*-cache.json` and `cache-proof.json` under `build/shadow-oct09`.
