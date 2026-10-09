@@ -670,9 +670,15 @@ S32 PKR_findNextLayerToLoad(st_PACKER_READ_DATA** work_on_pkg, st_PACKER_LTOC_NO
     S32 j;
 
     *next_layer = NULL;
+#if defined(PS2)
+    tmppr = *work_on_pkg;
+    if (tmppr != NULL)
+    {
+#else
     if (*work_on_pkg != NULL)
     {
         tmppr = *work_on_pkg;
+#endif
         for (j = 0; j < tmppr->laytoc.cnt; j++)
         {
             tmplay = (st_PACKER_LTOC_NODE*)tmppr->laytoc.list[j];
@@ -687,9 +693,15 @@ S32 PKR_findNextLayerToLoad(st_PACKER_READ_DATA** work_on_pkg, st_PACKER_LTOC_NO
 
     if (*next_layer == NULL)
     {
+#if defined(PS2)
+        for (i = 0; i < 16; i++)
+        {
+            tmppr = &g_readdatainst[i];
+#else
         tmppr = g_readdatainst;
         for (i = 0; i < 16; i++, tmppr++)
         {
+#endif
             if ((g_loadlock & 1 << i) == 0 || tmppr == *work_on_pkg)
             {
                 continue;

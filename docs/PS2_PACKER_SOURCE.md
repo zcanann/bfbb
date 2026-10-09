@@ -192,3 +192,21 @@ remains different; this does not establish a compiler defect. Reversing
 cached-variable declarations did not improve the final candidate and was
 not retained. Private evidence is in `build/packer-oct09/typecnt-proof.json`
 and `typecnt-raw-proof.json`.
+
+
+## Next-layer package traversal
+
+On PS2, `PKR_findNextLayerToLoad` now assigns the current package pointer
+before testing it, then derives each subsequent package from its array
+index. This recovers the original pointer lifetime and repeated count load
+in the second layer scan. The 272-byte body improves from **94.19118% to
+99.48529%** in all three debug regions; the other 49 functions retain their
+scores, and fresh GC solo remains 76/76 exact.
+
+The retained candidate keeps the original local declarations. A bounded
+24-order declaration survey improved intermediate candidates but did not
+resolve the residual; the explicit pointer assignment was more effective.
+The remaining difference swaps the second scan's index and layer-pointer
+registers (a2/a4). No binding or compiler patch is introduced. Original DWARF
+local records for all three regions and whole-unit comparisons are retained
+in `build/packer-oct09/findnext-locals.json` and `findnext-proof.json`.
