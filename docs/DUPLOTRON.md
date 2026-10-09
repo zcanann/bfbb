@@ -14746,3 +14746,21 @@ with no other function or code/data measure regression. Evidence:
 `build/oct09-{us,france}-ui`, their comparison logs, and
 `build/oct09-ui-<GameCube-version>.log`. The authentic RenderWare RGBA macro
 investigation remains a separate private caller sweep, outside this batch.
+
+The first player-animation batch adds three exact French builders / 7,448 bytes.
+Full canonical regeneration preserves all earlier proof records and validates
+the exact COP1 MOV.S decoder extension, including reserved-bit rejection and
+MFC1/CFC1 address-register clobbers. All six decoder/literal/original mutation
+tests pass. French coverage reaches 708 functions / 334,228 known bytes; its
+70-unit source build reports 131,368 exact bytes / 444 exact functions with
+the unchanged 2,979,968-byte CPU denominator. The other builders remain outside
+this scoped proof pending complete callback/helper evidence.
+
+The PS2 UI renderer also improves from about 57.99% to 97.62% across the debug
+regions after restoring vertex depth, reciprocal depth, regional dimensions
+and byte-color locals. USA full CPU fuzzy rises from 64.281576% to 64.316060%,
+with exact bytes/functions unchanged. Every previous function score/exact match
+is retained; all three GameCube source reports and retail checksums pass.
+Evidence: `build/oct09-france-animation`, `build/oct09-us-ui-render`, their
+comparison logs, `build/oct09-player-tables-tests.log`, and
+`build/oct09-animation-<GameCube-version>.log`.

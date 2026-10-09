@@ -653,6 +653,15 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in prawn['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Prawn proves one unique complete parameter-registration caller in all three originals. Strict original/target returns, all instruction bits, complete strings including repeated empty literals, independently regenerated parameter helpers and original typed sound arrays corroborate the body. No whole translation-unit or data extent is claimed.')
+    from platforms.france_player_animation_tables import generate_unit as generate_player_tables
+    player_tables = generate_player_tables(originals, registry_dir)
+    document['functions'].extend(player_tables['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(player_tables['sequence_proofs'])
+    document['player_animation_table_data_proofs'] = player_tables['data_proofs']
+    for key, value in player_tables['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Player animation tables adds three unique complete builders using all three original ownership and strict-return witnesses. Complete strings, independently confirmed animation callees and code-pointer identities corroborate every changed operand. Remaining builders are excluded pending callback/helper evidence; no whole translation-unit or data extent is claimed.')
     return document
 
 

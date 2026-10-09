@@ -4,9 +4,9 @@
   "scope": "All file-backed PT_LOAD bytes; zero-fill memory and non-loadable ELF metadata excluded",
   "code_classification_complete": false,
   "loaded_file_bytes": 4255232,
-  "known_code_bytes": 326780,
+  "known_code_bytes": 334228,
   "known_data_bytes": 0,
-  "unclassified_loaded_bytes": 3928452,
+  "unclassified_loaded_bytes": 3921004,
   "segments": [
     {
       "address": 1048576,
@@ -420,8 +420,43 @@
       "segment": 0,
       "kind": "unclassified",
       "address": 1403232,
-      "size": 120160,
+      "size": 13760,
       "file_offset": 354784
+    },
+    {
+      "segment": 0,
+      "kind": "function",
+      "address": 1416992,
+      "size": 6536,
+      "file_offset": 368544
+    },
+    {
+      "segment": 0,
+      "kind": "unclassified",
+      "address": 1423528,
+      "size": 8,
+      "file_offset": 375080
+    },
+    {
+      "segment": 0,
+      "kind": "function",
+      "address": 1423536,
+      "size": 352,
+      "file_offset": 375088
+    },
+    {
+      "segment": 0,
+      "kind": "function",
+      "address": 1423888,
+      "size": 560,
+      "file_offset": 375440
+    },
+    {
+      "segment": 0,
+      "kind": "unclassified",
+      "address": 1424448,
+      "size": 98944,
+      "file_offset": 376000
     },
     {
       "segment": 0,

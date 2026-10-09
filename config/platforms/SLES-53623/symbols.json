@@ -208,6 +208,27 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "zEntPlayer_TreeDomeSBAnimTable",
+      "source": "SB/Game/zEntPlayerAnimationTables.h",
+      "address": 1416992,
+      "size": 6536,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "zEntPlayer_BoulderVehicleAnimTable",
+      "source": "SB/Game/zEntPlayerAnimationTables.h",
+      "address": 1423536,
+      "size": 352,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "zSpongeBobTongue_AnimTable",
+      "source": "SB/Game/zEntPlayerAnimationTables.h",
+      "address": 1423888,
+      "size": 560,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "zEntSimpleObj_MgrCustomUpdate",
       "source": "SB/Game/zEntSimpleObj.cpp",
       "address": 1523392,
