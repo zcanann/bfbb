@@ -604,17 +604,22 @@ void iSndStartStereo(U32 id1, U32 id2, F32 pitch)
     gSndWhere = eSndWhere_NA;
 }
 
+// Retail performs the two signed integer absolute values out of line.
+#pragma inline_intrinsics off
 U32 iSndFindFreeVoice(U32 priority, U32 flags, U32 owner)
 {
     U32 i;
     U32 vlo;
     U32 vhi;
-    U32 best = 999;
-    U32 bestpri = 99999;
-    S32 bestvol = 99999;
+    U32 best;
+    U32 bestpri;
+    S32 bestvol;
     xSndVoiceInfo* vp;
 
     gSndWhere = eSndWhere_FindFreeVoice;
+    best = 999;
+    bestpri = 99999;
+    bestvol = 99999;
 
     if (flags & 0x4)
     {
@@ -623,7 +628,7 @@ U32 iSndFindFreeVoice(U32 priority, U32 flags, U32 owner)
         vhi = 4;
 
         xSndVoiceInfo* begin = &gSnd.voice[vlo];
-        xSndVoiceInfo* end = &gSnd.voice[vhi];
+        xSndVoiceInfo* end = begin + (vhi - vlo);
         for (xSndVoiceInfo* v = begin; v != end; v++)
         {
             if (v->lock_owner != 0 && v->lock_owner == owner)
@@ -698,6 +703,8 @@ U32 iSndFindFreeVoice(U32 priority, U32 flags, U32 owner)
     gSndWhere = eSndWhere_NA;
     return best;
 }
+
+#pragma inline_intrinsics reset
 
 void iSndPause(U32 snd, U32 pause)
 {

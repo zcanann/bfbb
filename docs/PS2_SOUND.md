@@ -182,3 +182,30 @@ The discarded probes in `build/sound-position-source-probe` include cached
 vectors and pointers, direct memberwise operations, and changed compound
 assignments. No comparison settings, original targets, headers or compiler
 binaries changed.
+
+## PS2 voice selection source recovery (2026-10-09)
+
+The platform-specific iSndFindFreeVoice now reports 100% for its 900-byte
+body in USA, Europe, Germany and France, previously 85.28%. The locked-voice
+range end derives from its begin pointer, selection sentinels initialize after
+the diagnostic state write, and function-scoped `inline_intrinsics off` retains
+the original two out-of-line signed absolute-value operations. The pragma resets
+before the next function; no shared headers or other platform sources change.
+
+Full debug-region iSnd reports rise from 4888/6908 exact bytes (23/25 functions)
+to 5788/6908 (24/25), with fuzzy matching 94.23335% to 96.15113%. The existing
+four-function French subset rises from 872/2892 exact bytes to 1772/2892,
+86.22545% to 90.806366%. All other function and data records stay unchanged.
+The French target is copied unchanged from the independently verified terminal
+`oct09-france-math-particle-laser` cache; no new identities are registered.
+
+Independent raw replay in each debug original agrees on 892/900 bytes after
+applying original-DWARF-backed function/global relocations. The two remaining
+JAL words at offsets 504 and 516 call the same unnamed runtime entry (USA
+0x114b50). The source calls `abs`; that does not establish the original symbol's
+identity, so both destinations remain unresolved in target metadata. This is
+complete comparison matching, not a claim of a fully linked byte-identical body.
+
+Private evidence: `build/isnd-free-final-comparison.json`,
+`build/isnd-free-final-changes.json`, `build/isnd-free-raw-proof.json`, and
+`build/isnd-locals.py`. GameCube and Xbox use separate platform sound sources.
