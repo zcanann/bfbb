@@ -137,35 +137,34 @@ void iSphereBoundVec(xSphere* o, const xSphere* s, const xVec3* v)
         {
             memcpy(o, s, sizeof(xSphere));
         }
+        return;
+    }
+
+    if (usetemp)
+    {
+        tp = &temp;
     }
     else
     {
-        if (usetemp)
-        {
-            tp = &temp;
-        }
-        else
-        {
-            tp = o;
-        }
+        tp = o;
+    }
 
-        xVec3Copy(&tp->center, &isx.norm);
+    xVec3Copy(&tp->center, &isx.norm);
 
-        scale = (isx.dist - s->r) / (2.0f * isx.dist);
+    scale = (isx.dist - s->r) / (2.0f * isx.dist);
 
 #if defined(XBOX)
-        xVec3SMul(&tp->center, &isx.norm, scale);
+    xVec3SMul(&tp->center, &isx.norm, scale);
 #else
-        xVec3SMul(&tp->center, &tp->center, scale);
+    xVec3SMul(&tp->center, &tp->center, scale);
 #endif
-        xVec3Add(&tp->center, &tp->center, &s->center);
+    xVec3Add(&tp->center, &tp->center, &s->center);
 
-        tp->r = 0.5f * (isx.dist + s->r);
+    tp->r = 0.5f * (isx.dist + s->r);
 
-        if (usetemp)
-        {
-            memcpy(o, tp, sizeof(xSphere));
-        }
+    if (usetemp)
+    {
+        memcpy(o, tp, sizeof(xSphere));
     }
 }
 

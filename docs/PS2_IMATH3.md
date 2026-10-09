@@ -64,3 +64,28 @@ Private reproducible evidence: `build/imath3-final-comparison.py` and `.json`,
 `checkimath3-gc-all.py`, `imath3-gc-allocations.json`,
 `checkimath3-xbox.py`, `checkimath3-xboxeu.py`, and
 `imath3-xbox-controls.py` / `imath3-xbox-binary-controls.json`.
+
+### Complete geometry comparison
+
+A follow-up replaces the outer `else` in `iSphereBoundVec` with an immediate
+return after its already-contained case. This natural early return restores the
+original shared return join and NOP placement without changing the computations
+or alias-handling behavior. All four complete PS2 unit reports now reach
+5,944 / 5,944 bytes and fifteen / fifteen functions at 100%; the additional
+316-byte function rises from 97.40506%. All other functions and data are unchanged.
+
+Independent raw checking reproduces 308 / 316 bytes in each named original. The
+two remaining JAL operands at offsets 108 and 296 refer to the same still-unnamed
+runtime entry; the compiled spelling is `memcpy`, but this source change does not
+establish that original identity or normalize its operands. Thus 100% here is the
+existing comparison result, not a claim of complete relocation closure.
+
+The shared early-return form preserves every allocated GameCube section in all
+three regions and both Xbox production-profile comparison containers and full
+private linked source code/data sections. Follow-up evidence is recorded under
+`build/imath3-bound-final-{comparison,changes}.json`,
+`imath3-iSphereBoundVec-raw-proof.{py,json}`,
+`imath3-bound-gc-allocations.json`, and
+`imath3-bound-xbox-binary-controls.json`; corresponding `imath3-bound` and
+`checkimath3-bound` scripts reproduce these checks against source parent
+`71fc97851`.
