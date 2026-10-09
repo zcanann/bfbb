@@ -81,3 +81,25 @@ are `*-auto.json`, with comparisons in `auto-proof.json`.
 
 The SDK calls use the existing `libmc.h` reconstruction of `sceMcSync` and
 `sceMcGetInfo`. This change adds no SDK identity records or registry entries.
+
+## Format, space and slot checks
+
+The original format prompt passes conditional UI indices directly into the
+event helper. Restoring those expressions lets the compiler reproduce its
+original inlining into `zSaveLoad_CardCheckFormatted`. Conversely, the
+space-check wrapper calls the separate `CardCheckSpaceSingle_doCheck`
+body; a scoped PS2 pragma preserves that original boundary.
+
+The PS2 slot check returns 6 immediately for an unformatted target, recognizes
+the corruption label/date pair, and checks startup space before offering an
+empty slot. The call is specifically `xSGTgtHaveRoomStartup`, verified against
+the original debug-backed callee in all three regions; it is distinct from
+the ordinary room check. Lack of startup space returns 10. Restoring the
+larger body also reproduces its original call from the slot-check wrapper.
+
+These four functions become exact in each debug region: formatted check
+(492 bytes), space-check wrapper (220), slot-check wrapper (248), and slot
+check body (308), totaling 1268 bytes. Dispatch also improves from 34.851852%
+to 68.111115%. All other scores and the full GC report remain unchanged.
+Evidence: `*-checks.json`, `checks-proof.json`, and `slot-startup-calls.json`
+in `build/save-oct09/`.

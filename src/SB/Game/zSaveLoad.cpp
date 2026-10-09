@@ -493,6 +493,10 @@ S32 zSaveLoad_CardPrompt(S32 mode)
 
 S32 zSaveLoad_CardPromptFormat(S32 mode)
 {
+#if defined(PS2)
+    zSaveLoad_UIEvent(mode == 1 ? 0 : 0x15, eEventUIFocusOff_Unselect);
+    zSaveLoad_UIEvent(mode == 1 ? 1 : 0x16, eEventUIFocusOff_Unselect);
+#else
     S32 i = 0x15;
     if (mode == 1)
     {
@@ -506,6 +510,7 @@ S32 zSaveLoad_CardPromptFormat(S32 mode)
         i = 1;
     }
     zSaveLoad_UIEvent(i, eEventUIFocusOff_Unselect);
+#endif
     zSaveLoad_UIEvent(0x32, eEventUIFocusOn);
 
     promptSel = -1;
@@ -924,6 +929,9 @@ S32 zSaveLoad_CardCheckFormattedSingle(S32 num)
     return rc;
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 S32 zSaveLoad_CardCheckSpaceSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, S32 num)
 {
     int rc;
@@ -951,6 +959,9 @@ S32 zSaveLoad_CardCheckSpaceSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, S32 num)
     }
     return rc;
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 S32 zSaveLoad_CardCheckSpaceSingle(S32 num)
 {
@@ -1061,15 +1072,35 @@ S32 zSaveLoad_CardCheckSlotEmpty_hasGame_doCheck(st_XSAVEGAME_DATA* xsgdata, S32
 
     if (xSGTgtIsFormat(xsgdata, num, 0) <= 0)
     {
+#if defined(PS2)
+        return 6;
+#else
         rc = -1;
+#endif
     }
     else
     {
         xSGTgtSelect(xsgdata, num);
         rc = xSGGameIsEmpty(xsgdata, game);
+#if defined(PS2)
+        if (strcmp(zSaveLoadGameTable[game].label, "Corrupt Game File\n\n") == 0 &&
+            strcmp(zSaveLoadGameTable[game].date, "Corrupt Game File\n\n") == 0)
+        {
+            return 1;
+        }
+#endif
         if (rc != 0)
         {
-            rc = 0;
+#if defined(PS2)
+            if (!xSGTgtHaveRoomStartup(xsgdata, num, 0xcc00, -1, NULL, NULL, NULL))
+            {
+                rc = 10;
+            }
+            else
+#endif
+            {
+                rc = 0;
+            }
         }
         else if (rc == 0)
         {
