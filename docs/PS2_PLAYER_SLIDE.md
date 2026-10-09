@@ -45,3 +45,14 @@ and lost most of the apparent gain. Such helpers are not retained.
 `-O3,p` produces the same baseline as `-O4,p`; `-O2,p` regresses it.
 No compiler flags, pragmas, patches, or forced register bindings are
 part of this change.
+
+## Player movement call boundary
+
+The separate `zEntPlayer_Move` routine calls `TurnToFace` at offset `0x25c`.
+The original JAL resolves to `0x172d00` in USA/Europe and `0x172e00` in
+Germany. Keeping this existing helper out of line on PS2 improves the
+1280-byte caller from 75.106% to 99.375%; all other functions in the unit
+retain their scores. A scoped `dont_inline` pragma restores that boundary.
+The only remaining differences are two extra NOPs, in the aggregate
+zero-initialization loop and following the first dampening zero store.
+The complete USA GameCube report remains identical.

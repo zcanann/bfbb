@@ -566,6 +566,9 @@ static void LeanUpdate(F32 angle, F32 dt)
     globals.player.LeanLerp += t * dt;
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 static void TurnToFace(xEnt* ent, const xVec3* target, F32 speedLimit, F32 dt)
 {
     xVec3 currentFacing = ent->frame->mat.at;
@@ -593,6 +596,10 @@ static void TurnToFace(xEnt* ent, const xVec3* target, F32 speedLimit, F32 dt)
         ent->frame->mode |= 0x20;
     }
 }
+
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 static void PlayerArrive(xEnt* ent, xBase* base)
 {
