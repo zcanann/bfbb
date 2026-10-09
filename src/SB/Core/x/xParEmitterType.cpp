@@ -39,8 +39,10 @@ void xParEmitterAngleVariation(xPar* p, xParEmitterAsset* a)
     {
         xMat3x3 mat_rot = { 0 };
         F32 ang_debrisCone = a->vel_angle_variation;
-        F32 ang[3] = { ang_debrisCone * (xurand() - 0.5f), ang_debrisCone * (xurand() - 0.5f),
-                       ang_debrisCone * (xurand() - 0.5f) };
+        F32 ang[3] = { 0 };
+        ang[0] = ang_debrisCone * (xurand() - 0.5f);
+        ang[1] = ang_debrisCone * (xurand() - 0.5f);
+        ang[2] = ang_debrisCone * (xurand() - 0.5f);
 
         xMat3x3Euler(&mat_rot, ang[0], ang[1], ang[2]);
         xMat3x3LMulVec(&p->m_vel, &mat_rot, &p->m_vel);
@@ -863,5 +865,19 @@ xVec3 xVec3::operator+(F32 f) const
     xVec3 temp = *this;
     temp += f;
     return temp;
+}
+#endif
+
+#if defined(PS2)
+// These vector helpers inline in the original circle emitters.
+inline F32 xVec2Dot(const xVec2* a, const xVec2* b)
+{
+    return a->x * b->x + a->y * b->y;
+}
+
+inline void xVec2Init(xVec2* v, F32 _x, F32 _y)
+{
+    v->x = _x;
+    v->y = _y;
 }
 #endif
