@@ -16,9 +16,13 @@
 #include <types.h>
 
 #if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
-enum { CREDITS_SCREEN_HEIGHT = 528 };
+enum { CREDITS_SCREEN_WIDTH = 640, CREDITS_SCREEN_HEIGHT = 528 };
+#elif defined(VERSION_SLES_51968) || defined(VERSION_SLES_51970)
+enum { CREDITS_SCREEN_WIDTH = 512, CREDITS_SCREEN_HEIGHT = 512 };
+#elif defined(PS2)
+enum { CREDITS_SCREEN_WIDTH = 640, CREDITS_SCREEN_HEIGHT = 448 };
 #else
-enum { CREDITS_SCREEN_HEIGHT = 480 };
+enum { CREDITS_SCREEN_WIDTH = 640, CREDITS_SCREEN_HEIGHT = 480 };
 #endif
 
 void __deadstripped_rodata()
@@ -195,9 +199,9 @@ static U32 xCMrender(F32 time, xCreditsData* data)
                     tx = tex->x;
                     ty = tex->y;
 
-                    x0 = 640.0f * tx;
+                    x0 = (F32)CREDITS_SCREEN_WIDTH * tx;
                     y0 = (F32)CREDITS_SCREEN_HEIGHT * ty;
-                    x1 = 640.0f * (tx + tex->w);
+                    x1 = (F32)CREDITS_SCREEN_WIDTH * (tx + tex->w);
                     y1 = (F32)CREDITS_SCREEN_HEIGHT * (ty + tex->h);
                     Im2DRenderQuad(x0, y0, x1, y1, 0.0f, 1000000.0f, 0.5f);
                     xprintf("tex %6.2f,%6.2f - %6.2f,%6.2f\n", x0, y0, x1, y1);
