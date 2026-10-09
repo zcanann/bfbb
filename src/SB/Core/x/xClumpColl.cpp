@@ -766,6 +766,112 @@ static S32 LeafNodeLinePolyIntersect(xClumpCollBSPTriangle* triangles, void* dat
                 v1 = &triangles->v.p[1];
                 v2 = &triangles->v.p[2];
             }
+#if defined(PS2)
+            {
+                // Pack the unaligned 12-byte vertices, then form both triangle edges
+                // and the ray cross product in the VU.
+                U32 x, y, z, packed;
+                F32 det, u, v, t, epsilon, tolerance;
+                const RwV3d* start = &isData->start;
+                const RwV3d* delta = &isData->delta;
+                asm volatile("lw %0, 0(%9)\n"
+                             "vaddw.xyz vf11, vf0, vf0w\n"
+                             "lw %1, 4(%9)\n"
+                             "lw %2, 8(%9)\n"
+                             "pextlw %3, %1, %0\n"
+                             "lw %0, 0(%11)\n"
+                             "pcpyld %3, %2, %3\n"
+                             "lw %1, 4(%11)\n"
+                             "qmtc2 %3, vf1\n"
+                             "lw %2, 8(%11)\n"
+                             "pextlw %3, %1, %0\n"
+                             "lqc2 vf7, 0(%8)\n"
+                             "pcpyld %3, %2, %3\n"
+                             "lw %0, 0(%10)\n"
+                             "qmtc2 %3, vf3\n"
+                             "lw %1, 4(%10)\n"
+                             "vsub.xyz vf5, vf3, vf1\n"
+                             "lw %2, 8(%10)\n"
+                             "pextlw %3, %1, %0\n"
+                             "lqc2 vf6, 0(%7)\n"
+                             "pcpyld %3, %2, %3\n"
+                             "qmtc2 %3, vf2\n"
+                             "vopmula.xyz ACC, vf7, vf5\n"
+                             "lui %1, 0xb22b\n"
+                             "vopmsub.xyz vf8, vf5, vf7\n"
+                             "ori %1, %1, 0xcc77\n"
+                             "vsub.xyz vf4, vf2, vf1\n"
+                             "lui %2, 0xb727\n"
+                             "vsub.xyz vf6, vf6, vf1\n"
+                             "ori %2, %2, 0xc5ac\n"
+                             "vadd.xyz vf12, vf0, vf5\n"
+                             "vmul.xyz vf9, vf8, vf4\n"
+                             "vadday.x ACC, vf9, vf9y\n"
+                             "vmaddz.x vf9, vf11, vf9z\n"
+                             "qmfc2 %0, vf9\n"
+                             "mtc1 %1, %5\n"
+                             "mtc1 %0, %4\n"
+                             "mtc1 %2, %6\n"
+                             : "=&r"(x), "=&r"(y), "=&r"(z), "=&r"(packed), "=f"(det),
+                               "=f"(epsilon), "=f"(tolerance)
+                             : "r"(start), "r"(delta), "r"(v0), "r"(v1), "r"(v2)
+                             : "memory");
+                // Flip the edges for the reverse-facing triangle.
+                if (det < epsilon)
+                {
+                    asm volatile("vopmula.xyz ACC, vf7, vf4\n"
+                                 "vopmsub.xyz vf8, vf4, vf7\n"
+                                 "vadd.xyz vf5, vf0, vf4\n"
+                                 "vadd.xyz vf4, vf0, vf12\n"
+                                 "vmul.xyz vf9, vf8, vf12\n"
+                                 "vadday.x ACC, vf9, vf9y\n"
+                                 "vmaddz.x vf9, vf11, vf9z\n"
+                                 "qmfc2 %1, vf9\n"
+                                 "mtc1 %1, %0\n"
+                                 : "=f"(det), "=&r"(x) : : "memory");
+                }
+                if (det <= -epsilon)
+                    continue;
+                asm volatile("vmul.xyz vf9, vf8, vf6\n"
+                             "vadday.x ACC, vf9, vf9y\n"
+                             "vmaddz.x vf9, vf11, vf9z\n"
+                             "qmfc2 %1, vf9\n"
+                             "mtc1 %1, %0\n"
+                             : "=f"(u), "=&r"(x) : : "memory");
+                F32 lo = det * tolerance;
+                F32 hi = det - lo;
+                if (u < lo)
+                    continue;
+                if (hi < u)
+                    continue;
+                asm volatile("vopmula.xyz ACC, vf6, vf4\n"
+                             "vopmsub.xyz vf8, vf4, vf6\n"
+                             "vmul.xyz vf9, vf8, vf7\n"
+                             "vadday.x ACC, vf9, vf9y\n"
+                             "vmaddz.x vf9, vf11, vf9z\n"
+                             "qmfc2 %1, vf9\n"
+                             "mtc1 %1, %0\n"
+                             : "=f"(v), "=&r"(x) : : "memory");
+                if (v < lo)
+                    continue;
+                u += v;
+                if (hi < u)
+                    continue;
+                asm volatile("vmul.xyz vf9, vf8, vf5\n"
+                             "vadday.x ACC, vf9, vf9y\n"
+                             "vmaddz.x vf9, vf11, vf9z\n"
+                             "qmfc2 %1, vf9\n"
+                             "mtc1 %1, %0\n"
+                             : "=f"(t), "=&r"(x) : : "memory");
+                if (t < lo)
+                    continue;
+                if (hi < t)
+                    continue;
+                F32 hit_distance = t / det;
+                asm volatile("swc1 %0, 0(%1)" : : "f"(hit_distance), "r"(&distance) : "memory");
+                result = 1;
+            }
+#else
             RwV3dSubMacro(&edge1, v1, v0);
             RwV3dSubMacro(&edge2, v2, v0);
             RwV3dCrossProductMacro(&pVec, &isData->delta, &edge2);
@@ -803,6 +909,7 @@ static S32 LeafNodeLinePolyIntersect(xClumpCollBSPTriangle* triangles, void* dat
                     }
                 }
             }
+#endif
             if (result)
             {
                 RpCollisionTriangle collisionTri;
