@@ -229115,7 +229115,8 @@
         "leapCB@00330ec0": "leapCB__FP5xGoalPvP11en_trantypefPv",
         "noHeadCB@00331100": "noHeadCB__FP5xGoalPvP11en_trantypefPv",
         "hiddenByCutscene@00332690": "hiddenByCutscene__10zNPCBSandyFv",
-        "BoundEventCB@00333af0": "BoundEventCB__FP5xBaseP5xBaseUiPCfP5xBase"
+        "BoundEventCB@00333af0": "BoundEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "Process@0032c7c0": "Process__28zNPCGoalBossSandyClotheslineFP11en_trantypefPvP6xScene"
       },
       "calls": [
         {
@@ -229481,6 +229482,181 @@
           "target_source": "SB/Game/zLightning.cpp",
           "target_function": "zLightningShow@00181c80",
           "symbol": "zLightningShow__FP10zLightningi"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 96,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "AnimTimeRemain@002d11e0",
+          "symbol": "AnimTimeRemain__10zNPCCommonFP10xAnimState"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 156,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand@001ee540",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 228,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 288,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3D@0020a310",
+          "symbol": "xSndPlay3D__FUiffUiUiP4xEntff14sound_categoryf"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 356,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "DoAutoAnim@002cb210",
+          "symbol": "DoAutoAnim__14zNPCGoalCommonF16en_NPC_GOAL_SPOTi"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 472,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize@00210d10",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 636,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 648,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 660,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 672,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 684,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand@001ee540",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 940,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 952,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 964,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 976,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 1292,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize@00210d10",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 1452,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize@00210d10",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 1808,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 1872,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3D@0020a310",
+          "symbol": "xSndPlay3D__FUiffUiUiP4xEntff14sound_categoryf"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 1892,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndStop@00209cc0",
+          "symbol": "xSndStop__FUi"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 1940,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "DoAutoAnim@002cb210",
+          "symbol": "DoAutoAnim__14zNPCGoalCommonF16en_NPC_GOAL_SPOTi"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 1996,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent@00283a40",
+          "symbol": "zEntEvent__FP5xBaseUiPCf"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 2228,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent@00283a40",
+          "symbol": "zEntEvent__FP5xBaseUiPCf"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 2316,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "DoAutoAnim@002cb210",
+          "symbol": "DoAutoAnim__14zNPCGoalCommonF16en_NPC_GOAL_SPOTi"
+        },
+        {
+          "function": "Process@0032c7c0",
+          "offset": 2776,
+          "target_source": "SB/Core/x/xBehaviour.cpp",
+          "target_function": "Process@002f2250",
+          "symbol": "Process__5xGoalFP11en_trantypefPvP6xScene"
         }
       ],
       "linkage_provenance": [
@@ -229845,6 +230021,32 @@
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
               "source_address": 3354064,
               "reference_sha256": "637226c4d7d66e11e1f97c018930325b9cc7d8d39a5f4c30222d22accce109ed"
+            }
+          ]
+        },
+        {
+          "function": "Process@0032c7c0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3327936,
+          "size": 2832,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3326544,
+              "reference_sha256": "bbf417dd052f28385714eb91e8bd20f4b52fbf64bbc22490bdc3f3c4b1841914"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3327824,
+              "reference_sha256": "f46712cf2617f7ccbe0ed547845951fa870f97b08d99dc130b6ee20f68e4612c"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3324576,
+              "reference_sha256": "dba2c828a63d04f0f872860cc61b8b136e03b560708f5f3db365aa6372430332"
             }
           ]
         }
