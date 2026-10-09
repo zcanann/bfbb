@@ -35,3 +35,25 @@ unit reports, GC report and build logs. Earlier unsuccessful GC-only spline
 trials are under `build/spline-oct08/`; the xParEmitter ternary trial was
 rejected because its code gain displaced jump-table entries and lost matched
 data.
+
+## Tridiagonal solver address induction
+
+On PS2, name the predecessor and successor vectors through pointers and use
+an explicit descending `for` loop for back substitution. Retail carries the
+neighbor address separately from the current array cursor. The prior index
+locals and post-decrement condition recreated extra address calculations and
+a different loop guard. The PS2 path retains the same three component
+expressions, store order, allocations and frees. GameCube keeps the existing
+index-based loops, which avoid unwanted loop unrolling in that compiler.
+
+Fresh whole-unit reports in all three debug regions change only
+`Tridiag_Solve`, from 83.79518% to 98.650604%. The xSpline unit score increases
+from 96.37248% to 97.75168%; five exact functions and 1,756 exact code bytes
+remain unchanged. Remaining differences include register allocation and load
+ordering. No compiler-version cause is assumed.
+
+The full rebuilt GameCube USA report is again identical to the original
+baseline, and its normal retail SHA1 is unchanged. Private evidence is
+`build/ps2tridiag-oct08/`, including all six regional unit reports and
+`validation.json`. PS2 source data and a complete linked executable remain
+outside these unit comparisons.
