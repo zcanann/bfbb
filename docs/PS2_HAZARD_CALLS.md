@@ -84,3 +84,19 @@ initializer is simpler. The remaining difference is two padding NOPs.
 Only these two function scores change. Exact coverage gains another 240
 bytes and one function per debug region; the full GC report stays identical.
 Evidence: `build/hazard-oct09/*-small.json` and `small-proof.json`.
+
+## Fragment selection follow-up
+
+The PS2 `PickFunFrag` now spells out its original count check, random-index
+selection and clamping for the local choices array. The generic selection
+helper also tested the address of that local array against null, a branch
+absent from the original. Keeping the random value in its own local restores
+the original multiply operand order. The 256-byte routine improves from
+87.5% to 96.875% in all three debug regions; only one NOP's placement within
+the zero-initialization/selection setup remains different. Other functions
+and exact coverage remain unchanged, as does the full GC report. Evidence:
+`build/hazard-oct09/*-pick.json` and `pick-proof.json`.
+
+A reduced zero-initialization loop retains the same extra in-loop NOP in both
+3.0b38 and later 3.0.1b74. MW 2.4 emits a different constant-copy sequence.
+This comparison does not support a compiler patch.

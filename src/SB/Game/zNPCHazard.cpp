@@ -1939,7 +1939,25 @@ en_hazmodel NPCHazard::PickFunFrag()
         }
     }
 
+#if defined(PS2)
+    if (cnt_choice < 1)
+    {
+        return (en_hazmodel)0;
+    }
+    F32 rand = xurand();
+    S32 idx = rand * cnt_choice;
+    if (idx >= cnt_choice)
+    {
+        idx = cnt_choice - 1;
+    }
+    if (idx < 0)
+    {
+        idx = 0;
+    }
+    return (en_hazmodel)choices[idx];
+#else
     return (en_hazmodel)xUtil_choose<S32>(choices, cnt_choice, NULL);
+#endif
 }
 #if defined(PS2)
 #pragma dont_inline reset
