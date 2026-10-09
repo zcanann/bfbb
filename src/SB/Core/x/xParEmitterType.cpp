@@ -692,24 +692,25 @@ namespace
 
 void xParEmitterEmitEntBound(xPar* p, xParEmitterAsset* a, F32 dt, const xEnt* ent)
 {
-    xMat4x3* mat = (xMat4x3*)ent->model->Mat;
+    xPEEntBound& eb = a->e_entbound;
+    xMat4x3& mat = *(xMat4x3*)ent->model->Mat;
 
-    if (a->e_entbound.flags & 0x1)
+    if (eb.flags & 0x1)
     {
-        xMat3x3RMulVec(&p->m_vel, mat, &a->vel);
+        xMat3x3RMulVec(&p->m_vel, &mat, &a->vel);
     }
     else
     {
         p->m_vel = a->vel;
     }
 
-    xVec3 off = get_random_offset(ent->bound, a->e_entbound.expand, a->e_entbound.type);
+    xVec3 off = get_random_offset(ent->bound, eb.expand, eb.type);
 
-    p->m_pos = mat->pos + off;
+    p->m_pos = mat.pos + off;
 
-    if (a->e_entbound.deflection != 0.0f)
+    if (eb.deflection != 0.0f)
     {
-        p->m_vel += off * a->e_entbound.deflection;
+        p->m_vel += off * eb.deflection;
     }
 
     p->m_vel *= dt;
@@ -752,10 +753,6 @@ namespace
             off.x *= 2.0f * xurand() - 1.0f;
             off.y *= 2.0f * xurand() - 1.0f;
             off.z *= 2.0f * xurand() - 1.0f;
-            break;
-        }
-        case (0 << 3) | XBOUND_TYPE_CYL:
-        {
             break;
         }
         case (0 << 3) | XBOUND_TYPE_OBB:
@@ -803,10 +800,6 @@ namespace
             }
 
             off = ((b.box.box.upper - b.box.center) + expand) * face;
-            break;
-        }
-        case (1 << 3) | XBOUND_TYPE_CYL:
-        {
             break;
         }
         case (1 << 3) | XBOUND_TYPE_OBB:

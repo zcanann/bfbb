@@ -98,3 +98,24 @@ to PS2. GC then preserves every score and all 16 exact functions / 2,816 bytes.
 Evidence: `emitter-limit-original.py` / `.txt`,
 `emitter-limit-final-comparison.json`, `emitter-limit-final-changes.json`, and
 `emitter-limit-gc-{before,after}.json` in the private build directory.
+
+## Entity-bound emitter references and dispatch
+
+Restore the entity-bound region and matrix as references in
+`xParEmitterEmitEntBound`; both locals are reference types in all three original
+debug records. Remove the empty cylinder cases from the offset helper. These
+cases have the same behavior as the existing default path, and the original
+dispatch compares only bound/subtype values 12, 10, 9, 4, 2, and 1.
+
+The 2,460-byte emitter improves from 95.39187% to 97.28943% in all three debug
+versions. Full `xParEmitterType` fuzzy matching improves from 97.31473% to
+97.67063%; all other 18 function scores and data controls remain unchanged.
+GC retains every score and 27 exact functions / 7,996 bytes. Private evidence:
+`emitter-bound-proof.py` / `.json`, `emitter-bound-final-comparison.json`,
+`emitter-bound-final-changes.json`, and `emitter-bound-gc-{before,after}.json`.
+
+The repeated zero-initialization loops still have surplus NOPs. Older 2.4 and
+newer 3.0.1 compiler probes produce substantially different initialization and
+control-flow strategies; this is not evidence for a targeted compiler patch.
+The neighboring FFCC compiler-baseline document describes PowerPC compiler
+patches, with no applicable PS2 scheduling fix identified here.
