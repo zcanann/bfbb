@@ -210,3 +210,24 @@ The remaining difference swaps the second scan's index and layer-pointer
 registers (a2/a4). No binding or compiler patch is introduced. Original DWARF
 local records for all three regions and whole-unit comparisons are retained
 in `build/packer-oct09/findnext-locals.json` and `findnext-proof.json`.
+
+
+## Startup sector size and transform guard
+
+PS2 `PKRStartup` now sets `pkr_sector_size` to **2048**, as the original
+immediate at function offset 0x130 specifies in all three debug versions.
+The previous shared value 32 belongs to the GC path. This corrects source
+behavior despite the small difference in the fuzzy score. The transform
+helper combines its handler and callback checks into one short-circuit
+condition, restoring their shared original failure branch while preserving
+null-handler safety and callback behavior.
+
+Normal whole-unit checks make `PKRStartup` **328 bytes, 100%** (from
+99.98781%) and `PKR_xform_asset` **296 bytes, 100%** (from 99.932434%)
+in every debug region: **+624 exact bytes and two functions** per region.
+The remaining 48 functions preserve their scores, and fresh GC solo remains
+76/76 exact. Raw complete bodies match after only 74/2 source relocation
+fields are masked, including unmasked agreement of the sector-size constant
+and every branch target. No symbol identities are promoted. Evidence is in
+`build/packer-oct09/startup-transform-proof.json` and
+`startup-transform-raw-proof.json`.

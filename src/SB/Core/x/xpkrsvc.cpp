@@ -145,7 +145,11 @@ S32 PKRStartup()
     {
         g_pkr_read_funcmap = g_pkr_read_funcmap_original;
         g_hiprf = get_HIPLFuncs();
+#if defined(PS2)
+        pkr_sector_size = 2048;
+#else
         pkr_sector_size = 32;
+#endif
     }
     return g_packinit;
 }
@@ -800,12 +804,16 @@ void PKR_xform_asset(st_PACKER_ATOC_NODE* assnode, S32 dumpable_layer)
 {
     if (!(assnode->infoflag & 4))
     {
+#if defined(PS2)
+        if (assnode->typeref != NULL && assnode->typeref->readXForm != NULL)
+#else
         if (assnode->typeref == NULL)
         {
             return;
         }
 
         if (assnode->typeref->readXForm != NULL)
+#endif
         {
             assnode->Name();
             xUtil_idtag2string(assnode->asstype, 0);
