@@ -924,6 +924,45 @@ void NPARParmOilBub::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos
     par->nparmode = pmod;
 }
 
+#if defined(PS2)
+// The PS2 particle culler keeps the four side planes in VU registers.
+static inline void NPAR_PrepCull()
+{
+    if (g_doNPARCull)
+    {
+        asm volatile("lqc2 vf14, 0(%0)\n"
+                     "lqc2 vf15, 16(%0)\n"
+                     "lqc2 vf16, 32(%0)\n"
+                     "lqc2 vf17, 48(%0)\n"
+                     : : "r"(globals.camera.frustplane) : "memory");
+    }
+}
+
+static inline S32 NPAR_TestSidePlanes(NPARData* npdata)
+{
+    S32 thisChickIsToast;
+    asm volatile("lqc2 vf8, 0(%1)\n"
+                 "vaddaw.xyzw ACC, vf17, vf8w\n"
+                 "vmsubax.xyzw ACC, vf14, vf8x\n"
+                 "vmsubay.xyzw ACC, vf15, vf8y\n"
+                 "vmsubz.xyzw vf1, vf16, vf8z\n"
+                 "qmfc2 %0, vf1\n"
+                 "pcgtw %0, $0, %0\n"
+                 "ppach %0, $0, %0\n"
+                 "vmul.w vf7, vf8, vf10\n"
+                 : "=&r"(thisChickIsToast) : "r"(npdata) : "memory");
+    return thisChickIsToast;
+}
+
+static inline F32 NPAR_NearPlaneDistance(const NPARData* npdata)
+{
+    return globals.camera.frustplane[4].x * npdata->pos.x +
+           globals.camera.frustplane[5].x * npdata->pos.y +
+           globals.camera.frustplane[6].x * npdata->pos.z -
+           globals.camera.frustplane[7].x + 0.5f * npdata->xy_size[0];
+}
+#endif
+
 void NPAR_Upd_OilBubble(NPARMgmt* mgmt, F32 dt)
 {
     ptank_pool__pos_color_size_uv2 pool;
@@ -933,6 +972,10 @@ void NPAR_Upd_OilBubble(NPARMgmt* mgmt, F32 dt)
     pool.rs.dst_blend = 6;
     pool.rs.flags = 0;
     pool.reset();
+
+#if defined(PS2)
+    NPAR_PrepCull();
+#endif
 
     for (S32 i = 0; i < mgmt->cnt_active; i++)
     {
@@ -944,11 +987,19 @@ void NPAR_Upd_OilBubble(NPARMgmt* mgmt, F32 dt)
 
         F32 rat = MAX(0.0f, npdata->tmr_remain) / npdata->tym_exist;
 
+#if defined(PS2)
+        F32 rat_rev = 1.0f - rat;
+#endif
+
         npdata->pos += npdata->vel * dt;
         npdata->vel += npparm->acc_oilBubble * dt;
         npdata->vel *= 0.9f;
 
+#if defined(PS2)
+        F32 arch = ARCH(rat_rev);
+#else
         F32 arch = ARCH(1.0f - rat);
+#endif
 
         F32 dim;
         if (npdata->nparmode == 1)
@@ -964,7 +1015,12 @@ void NPAR_Upd_OilBubble(NPARMgmt* mgmt, F32 dt)
         npdata->xy_size[1] = dim;
         npdata->color.alpha = arch * npparm->colr_base.alpha;
 
+#if defined(PS2)
+        S32 thisChickIsToast = (U8)(npdata->tmr_remain < 0.0f);
+        if (thisChickIsToast)
+#else
         if (npdata->tmr_remain < 0.0f)
+#endif
         {
             mgmt->PromoteTail(i);
             i--;
@@ -973,6 +1029,17 @@ void NPAR_Upd_OilBubble(NPARMgmt* mgmt, F32 dt)
         {
             if (g_doNPARCull)
             {
+#if defined(PS2)
+                if (NPAR_TestSidePlanes(npdata))
+                {
+                    continue;
+                }
+                F32 par_dist = NPAR_NearPlaneDistance(npdata);
+                if (!(par_dist < -0.1f))
+                {
+                    continue;
+                }
+#else
                 RwSphere testSphere;
                 testSphere.center = *(RwV3d*)&npdata->pos;
                 testSphere.radius = npdata->xy_size[0];
@@ -981,6 +1048,7 @@ void NPAR_Upd_OilBubble(NPARMgmt* mgmt, F32 dt)
                 {
                     continue;
                 }
+#endif
             }
 
             pool.next();
@@ -1029,7 +1097,15 @@ void NPARParmTubeSpiral::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3*
 
 void NPAR_Upd_TubeSpiral(NPARMgmt* mgmt, F32 dt)
 {
+#if defined(PS2)
+    static F32 useFixedTimestepForSpiral = 1.0f;
+    if (useFixedTimestepForSpiral)
+    {
+        dt = NPC_FRAME_TIME;
+    }
+#else
     static const F32 useFixedTimestepForSpiral = NPC_FRAME_TIME;
+#endif
     static const F32 seg_allowCollide[2] = { 0.0f, 0.9f };
 
     ptank_pool__pos_color_size_uv2 pool;
@@ -1039,8 +1115,10 @@ void NPAR_Upd_TubeSpiral(NPARMgmt* mgmt, F32 dt)
     pool.rs.dst_blend = 2;
     pool.rs.flags = 0;
     pool.reset();
-
     const xVec3 pos_plyr = *xEntGetCenter(&globals.player.ent);
+#if defined(PS2)
+    NPAR_PrepCull();
+#endif
 
     for (S32 i = 0; i < mgmt->cnt_active; i++)
     {
@@ -1048,19 +1126,32 @@ void NPAR_Upd_TubeSpiral(NPARMgmt* mgmt, F32 dt)
 
         const NPARParmTubeSpiral* npparm = &g_parm_tubespiral[npdata->nparmode];
 
+#if defined(PS2)
+        npdata->tmr_remain -= dt;
+#else
         npdata->tmr_remain -= useFixedTimestepForSpiral;
+#endif
 
         F32 rat = MAX(0.0f, npdata->tmr_remain) / npdata->tym_exist;
         F32 rat_rev = 1.0f - rat;
 
+#if defined(PS2)
+        npdata->pos += npdata->vel * dt;
+#else
         npdata->pos += npdata->vel * useFixedTimestepForSpiral;
+#endif
 
         F32 arch = ARCH(rat_rev);
 
         F32 dim;
         if (rat_rev < 0.2f)
         {
+#if defined(PS2)
+            F32 subrat = rat_rev / 0.2f;
+            dim = SMOOTH(subrat, npparm->siz_base[0], npparm->siz_base[1]);
+#else
             dim = SMOOTH(rat_rev / 0.2f, npparm->siz_base[0], npparm->siz_base[1]);
+#endif
         }
         else
         {
@@ -1080,7 +1171,12 @@ void NPAR_Upd_TubeSpiral(NPARMgmt* mgmt, F32 dt)
             npdata->color.alpha = rat * npparm->colr_base.alpha;
         }
 
+#if defined(PS2)
+        S32 thisChickIsToast = (U8)(npdata->tmr_remain < 0.0f);
+        if (thisChickIsToast)
+#else
         if (npdata->tmr_remain < 0.0f)
+#endif
         {
             mgmt->PromoteTail(i);
             i--;
@@ -1102,6 +1198,17 @@ void NPAR_Upd_TubeSpiral(NPARMgmt* mgmt, F32 dt)
 
             if (g_doNPARCull)
             {
+#if defined(PS2)
+                if (NPAR_TestSidePlanes(npdata))
+                {
+                    continue;
+                }
+                F32 par_dist = NPAR_NearPlaneDistance(npdata);
+                if (!(par_dist < -0.1f))
+                {
+                    continue;
+                }
+#else
                 RwSphere testSphere;
                 testSphere.center = *(RwV3d*)&npdata->pos;
                 testSphere.radius = npdata->xy_size[0];
@@ -1110,6 +1217,7 @@ void NPAR_Upd_TubeSpiral(NPARMgmt* mgmt, F32 dt)
                 {
                     continue;
                 }
+#endif
             }
 
             pool.next();
@@ -1338,6 +1446,9 @@ void NPAR_Upd_TubeConfetti(NPARMgmt* mgmt, F32 dt)
     pool.rs.dst_blend = 6;
     pool.rs.flags = 0;
     pool.reset();
+#if defined(PS2)
+    NPAR_PrepCull();
+#endif
 
     for (S32 i = 0; i < mgmt->cnt_active; i++)
     {
@@ -1400,7 +1511,12 @@ void NPAR_Upd_TubeConfetti(NPARMgmt* mgmt, F32 dt)
             }
         }
 
+#if defined(PS2)
+        S32 thisChickIsToast = (U8)(npdata->tmr_remain < 0.0f);
+        if (thisChickIsToast)
+#else
         if (npdata->tmr_remain < 0.0f)
+#endif
         {
             mgmt->PromoteTail(i);
             i--;
@@ -1409,6 +1525,17 @@ void NPAR_Upd_TubeConfetti(NPARMgmt* mgmt, F32 dt)
         {
             if (g_doNPARCull)
             {
+#if defined(PS2)
+                if (NPAR_TestSidePlanes(npdata))
+                {
+                    continue;
+                }
+                F32 par_dist = NPAR_NearPlaneDistance(npdata);
+                if (!(par_dist < -0.1f))
+                {
+                    continue;
+                }
+#else
                 RwSphere testSphere;
                 testSphere.center = *(RwV3d*)&npdata->pos;
                 testSphere.radius = npdata->xy_size[0];
@@ -1417,6 +1544,7 @@ void NPAR_Upd_TubeConfetti(NPARMgmt* mgmt, F32 dt)
                 {
                     continue;
                 }
+#endif
             }
 
             pool.next();
@@ -1458,6 +1586,9 @@ void NPARParmGloveDust::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* 
 
 void NPAR_Upd_GloveDust(NPARMgmt* mgmt, F32 dt)
 {
+#if defined(PS2)
+    S32 i;
+#endif
     const NPARParmGloveDust* npparm = &g_parm_glovedust[0];
     ptank_pool__pos_color_size_uv2 pool;
 
@@ -1466,8 +1597,15 @@ void NPAR_Upd_GloveDust(NPARMgmt* mgmt, F32 dt)
     pool.rs.dst_blend = 6;
     pool.rs.flags = 0;
     pool.reset();
+#if defined(PS2)
+    NPAR_PrepCull();
+#endif
 
+#if defined(PS2)
+    for (i = 0; i < mgmt->cnt_active; i++)
+#else
     for (S32 i = 0; i < mgmt->cnt_active; i++)
+#endif
     {
         NPARData* npdata = &mgmt->par_buf[i];
 
@@ -1482,7 +1620,12 @@ void NPAR_Upd_GloveDust(NPARMgmt* mgmt, F32 dt)
         F32 dim;
         if (rat_rev < 0.2f)
         {
+#if defined(PS2)
+            F32 subrat = rat_rev / 0.2f;
+            dim = SMOOTH(subrat, npparm->siz_base[0], npparm->siz_base[1]);
+#else
             dim = SMOOTH(rat_rev / 0.2f, npparm->siz_base[0], npparm->siz_base[1]);
+#endif
         }
         else
         {
@@ -1493,7 +1636,12 @@ void NPAR_Upd_GloveDust(NPARMgmt* mgmt, F32 dt)
         npdata->xy_size[1] = dim;
         npdata->color.alpha = (1.0f - rat_rev) * npparm->colr_base.alpha;
 
+#if defined(PS2)
+        S32 thisChickIsToast = (U8)(npdata->tmr_remain < 0.0f);
+        if (thisChickIsToast)
+#else
         if (npdata->tmr_remain < 0.0f)
+#endif
         {
             mgmt->PromoteTail(i);
             i--;
@@ -1502,6 +1650,17 @@ void NPAR_Upd_GloveDust(NPARMgmt* mgmt, F32 dt)
         {
             if (g_doNPARCull)
             {
+#if defined(PS2)
+                if (NPAR_TestSidePlanes(npdata))
+                {
+                    continue;
+                }
+                F32 par_dist = NPAR_NearPlaneDistance(npdata);
+                if (!(par_dist < -0.1f))
+                {
+                    continue;
+                }
+#else
                 RwSphere testSphere;
                 testSphere.center = *(RwV3d*)&npdata->pos;
                 testSphere.radius = npdata->xy_size[0];
@@ -1510,6 +1669,7 @@ void NPAR_Upd_GloveDust(NPARMgmt* mgmt, F32 dt)
                 {
                     continue;
                 }
+#endif
             }
 
             pool.next();
@@ -1526,6 +1686,9 @@ void NPAR_Upd_GloveDust(NPARMgmt* mgmt, F32 dt)
 
 void NPAR_Upd_MonsoonRain(NPARMgmt* mgmt, F32 dt)
 {
+#if defined(PS2)
+    S32 i;
+#endif
     const NPARParmMonsoonRain* npparm = &g_parm_monsoonrain;
     ptank_pool__pos_color_size_uv2 pool;
 
@@ -1534,8 +1697,15 @@ void NPAR_Upd_MonsoonRain(NPARMgmt* mgmt, F32 dt)
     pool.rs.dst_blend = 6;
     pool.rs.flags = 0;
     pool.reset();
+#if defined(PS2)
+    NPAR_PrepCull();
+#endif
 
+#if defined(PS2)
+    for (i = 0; i < mgmt->cnt_active; i++)
+#else
     for (S32 i = 0; i < mgmt->cnt_active; i++)
+#endif
     {
         NPARData* npdata = &mgmt->par_buf[i];
 
@@ -1550,7 +1720,12 @@ void NPAR_Upd_MonsoonRain(NPARMgmt* mgmt, F32 dt)
         F32 dim;
         if (rat_rev < 0.2f)
         {
+#if defined(PS2)
+            F32 subrat = rat_rev / 0.2f;
+            dim = SMOOTH(subrat, npparm->siz_base[0], npparm->siz_base[1]);
+#else
             dim = SMOOTH(rat_rev / 0.2f, npparm->siz_base[0], npparm->siz_base[1]);
+#endif
         }
         else
         {
@@ -1561,7 +1736,12 @@ void NPAR_Upd_MonsoonRain(NPARMgmt* mgmt, F32 dt)
         npdata->xy_size[1] = dim;
         npdata->color.alpha = (1.0f - rat_rev) * npparm->colr_base.alpha;
 
+#if defined(PS2)
+        S32 thisChickIsToast = (U8)(npdata->tmr_remain < 0.0f);
+        if (thisChickIsToast)
+#else
         if (npdata->tmr_remain < 0.0f)
+#endif
         {
             mgmt->PromoteTail(i);
             i--;
@@ -1570,6 +1750,17 @@ void NPAR_Upd_MonsoonRain(NPARMgmt* mgmt, F32 dt)
         {
             if (g_doNPARCull)
             {
+#if defined(PS2)
+                if (NPAR_TestSidePlanes(npdata))
+                {
+                    continue;
+                }
+                F32 par_dist = NPAR_NearPlaneDistance(npdata);
+                if (!(par_dist < -0.1f))
+                {
+                    continue;
+                }
+#else
                 RwSphere testSphere;
                 testSphere.center = *(RwV3d*)&npdata->pos;
                 testSphere.radius = npdata->xy_size[0];
@@ -1578,6 +1769,7 @@ void NPAR_Upd_MonsoonRain(NPARMgmt* mgmt, F32 dt)
                 {
                     continue;
                 }
+#endif
             }
 
             pool.next();
@@ -1644,6 +1836,9 @@ void NPAR_Upd_SleepyZeez(NPARMgmt* mgmt, F32 dt)
     pool.rs.dst_blend = 2;
     pool.rs.flags = 0;
     pool.reset();
+#if defined(PS2)
+    NPAR_PrepCull();
+#endif
 
     for (S32 i = 0; i < mgmt->cnt_active; i++)
     {
@@ -1706,7 +1901,12 @@ void NPAR_Upd_SleepyZeez(NPARMgmt* mgmt, F32 dt)
             }
         }
 
+#if defined(PS2)
+        S32 thisChickIsToast = (U8)(npdata->tmr_remain < 0.0f);
+        if (thisChickIsToast)
+#else
         if (npdata->tmr_remain < 0.0f)
+#endif
         {
             mgmt->PromoteTail(i);
             i--;
@@ -1715,6 +1915,17 @@ void NPAR_Upd_SleepyZeez(NPARMgmt* mgmt, F32 dt)
         {
             if (g_doNPARCull)
             {
+#if defined(PS2)
+                if (NPAR_TestSidePlanes(npdata))
+                {
+                    continue;
+                }
+                F32 par_dist = NPAR_NearPlaneDistance(npdata);
+                if (!(par_dist < -0.1f))
+                {
+                    continue;
+                }
+#else
                 RwSphere testSphere;
                 testSphere.center = *(RwV3d*)&npdata->pos;
                 testSphere.radius = npdata->xy_size[0];
@@ -1723,6 +1934,7 @@ void NPAR_Upd_SleepyZeez(NPARMgmt* mgmt, F32 dt)
                 {
                     continue;
                 }
+#endif
             }
 
             pool.next();
@@ -1799,6 +2011,9 @@ void NPAR_Upd_ChuckSplash(NPARMgmt* mgmt, F32 dt)
     pool.rs.dst_blend = 2;
     pool.rs.flags = 0;
     pool.reset();
+#if defined(PS2)
+    NPAR_PrepCull();
+#endif
 
     for (S32 i = 0; i < mgmt->cnt_active; i++)
     {
@@ -1841,7 +2056,12 @@ void NPAR_Upd_ChuckSplash(NPARMgmt* mgmt, F32 dt)
 
         npdata->color.alpha = rat * npparm->colr_base.alpha;
 
+#if defined(PS2)
+        S32 thisChickIsToast = (U8)(npdata->tmr_remain < 0.0f);
+        if (thisChickIsToast)
+#else
         if (npdata->tmr_remain < 0.0f)
+#endif
         {
             mgmt->PromoteTail(i);
             i--;
@@ -1850,6 +2070,17 @@ void NPAR_Upd_ChuckSplash(NPARMgmt* mgmt, F32 dt)
         {
             if (g_doNPARCull)
             {
+#if defined(PS2)
+                if (NPAR_TestSidePlanes(npdata))
+                {
+                    continue;
+                }
+                F32 par_dist = NPAR_NearPlaneDistance(npdata);
+                if (!(par_dist < -0.1f))
+                {
+                    continue;
+                }
+#else
                 RwSphere testSphere;
                 testSphere.center = *(RwV3d*)&npdata->pos;
                 testSphere.radius = npdata->xy_size[0];
@@ -1858,6 +2089,7 @@ void NPAR_Upd_ChuckSplash(NPARMgmt* mgmt, F32 dt)
                 {
                     continue;
                 }
+#endif
             }
 
             pool.next();
@@ -1907,6 +2139,9 @@ void NPAR_Upd_VisSplash(NPARMgmt* mgmt, F32 dt)
     pool.rs.dst_blend = 2;
     pool.rs.flags = 0;
     pool.reset();
+#if defined(PS2)
+    NPAR_PrepCull();
+#endif
 
     for (S32 i = 0; i < mgmt->cnt_active; i++)
     {
@@ -1949,7 +2184,12 @@ void NPAR_Upd_VisSplash(NPARMgmt* mgmt, F32 dt)
 
         npdata->color.alpha = rat * npparm->colr_base.alpha;
 
+#if defined(PS2)
+        S32 thisChickIsToast = (U8)(npdata->tmr_remain < 0.0f);
+        if (thisChickIsToast)
+#else
         if (npdata->tmr_remain < 0.0f)
+#endif
         {
             mgmt->PromoteTail(i);
             i--;
@@ -1958,6 +2198,17 @@ void NPAR_Upd_VisSplash(NPARMgmt* mgmt, F32 dt)
         {
             if (g_doNPARCull)
             {
+#if defined(PS2)
+                if (NPAR_TestSidePlanes(npdata))
+                {
+                    continue;
+                }
+                F32 par_dist = NPAR_NearPlaneDistance(npdata);
+                if (!(par_dist < -0.1f))
+                {
+                    continue;
+                }
+#else
                 RwSphere testSphere;
                 testSphere.center = *(RwV3d*)&npdata->pos;
                 testSphere.radius = npdata->xy_size[0];
@@ -1966,6 +2217,7 @@ void NPAR_Upd_VisSplash(NPARMgmt* mgmt, F32 dt)
                 {
                     continue;
                 }
+#endif
             }
 
             pool.next();
@@ -2032,6 +2284,9 @@ void NPAR_Upd_TarTarGunk(NPARMgmt* mgmt, F32 dt)
     pool.rs.dst_blend = 6;
     pool.rs.flags = 0;
     pool.reset();
+#if defined(PS2)
+    NPAR_PrepCull();
+#endif
 
     for (S32 i = 0; i < mgmt->cnt_active; i++)
     {
@@ -2094,7 +2349,12 @@ void NPAR_Upd_TarTarGunk(NPARMgmt* mgmt, F32 dt)
             }
         }
 
+#if defined(PS2)
+        S32 thisChickIsToast = (U8)(npdata->tmr_remain < 0.0f);
+        if (thisChickIsToast)
+#else
         if (npdata->tmr_remain < 0.0f)
+#endif
         {
             mgmt->PromoteTail(i);
             i--;
@@ -2103,6 +2363,17 @@ void NPAR_Upd_TarTarGunk(NPARMgmt* mgmt, F32 dt)
         {
             if (g_doNPARCull)
             {
+#if defined(PS2)
+                if (NPAR_TestSidePlanes(npdata))
+                {
+                    continue;
+                }
+                F32 par_dist = NPAR_NearPlaneDistance(npdata);
+                if (!(par_dist < -0.1f))
+                {
+                    continue;
+                }
+#else
                 RwSphere testSphere;
                 testSphere.center = *(RwV3d*)&npdata->pos;
                 testSphere.radius = npdata->xy_size[0];
@@ -2111,6 +2382,7 @@ void NPAR_Upd_TarTarGunk(NPARMgmt* mgmt, F32 dt)
                 {
                     continue;
                 }
+#endif
             }
 
             pool.next();
@@ -2161,6 +2433,9 @@ void NPAR_Upd_DogBreath(NPARMgmt* mgmt, F32 dt)
     pool.rs.dst_blend = 6;
     pool.rs.flags = 0;
     pool.reset();
+#if defined(PS2)
+    NPAR_PrepCull();
+#endif
 
     const xVec3 pos_plyr = *xEntGetCenter(&globals.player.ent);
 
@@ -2188,7 +2463,12 @@ void NPAR_Upd_DogBreath(NPARMgmt* mgmt, F32 dt)
         npdata->xy_size[1] = dim;
         npdata->color.alpha = arch * npparm->colr_base.alpha;
 
+#if defined(PS2)
+        S32 thisChickIsToast = (U8)(npdata->tmr_remain < 0.0f);
+        if (thisChickIsToast)
+#else
         if (npdata->tmr_remain < 0.0f)
+#endif
         {
             mgmt->PromoteTail(i);
             i--;
@@ -2197,6 +2477,17 @@ void NPAR_Upd_DogBreath(NPARMgmt* mgmt, F32 dt)
         {
             if (g_doNPARCull)
             {
+#if defined(PS2)
+                if (NPAR_TestSidePlanes(npdata))
+                {
+                    continue;
+                }
+                F32 par_dist = NPAR_NearPlaneDistance(npdata);
+                if (!(par_dist < -0.1f))
+                {
+                    continue;
+                }
+#else
                 RwSphere testSphere;
                 testSphere.center = *(RwV3d*)&npdata->pos;
                 testSphere.radius = npdata->xy_size[0];
@@ -2205,6 +2496,7 @@ void NPAR_Upd_DogBreath(NPARMgmt* mgmt, F32 dt)
                 {
                     continue;
                 }
+#endif
             }
 
             if (npdata->nparmode != 1 && !(globals.player.DamageTimer > 0.0f) &&
@@ -2284,6 +2576,9 @@ void NPAR_Upd_Fireworks(NPARMgmt* mgmt, F32 dt)
     pool.rs.dst_blend = 2;
     pool.rs.flags = 0;
     pool.reset();
+#if defined(PS2)
+    NPAR_PrepCull();
+#endif
 
     for (S32 i = 0; i < mgmt->cnt_active; i++)
     {
@@ -2346,7 +2641,12 @@ void NPAR_Upd_Fireworks(NPARMgmt* mgmt, F32 dt)
             }
         }
 
+#if defined(PS2)
+        S32 thisChickIsToast = (U8)(npdata->tmr_remain < 0.0f);
+        if (thisChickIsToast)
+#else
         if (npdata->tmr_remain < 0.0f)
+#endif
         {
             mgmt->PromoteTail(i);
             i--;
@@ -2355,6 +2655,17 @@ void NPAR_Upd_Fireworks(NPARMgmt* mgmt, F32 dt)
         {
             if (g_doNPARCull)
             {
+#if defined(PS2)
+                if (NPAR_TestSidePlanes(npdata))
+                {
+                    continue;
+                }
+                F32 par_dist = NPAR_NearPlaneDistance(npdata);
+                if (!(par_dist < -0.1f))
+                {
+                    continue;
+                }
+#else
                 RwSphere testSphere;
                 testSphere.center = *(RwV3d*)&npdata->pos;
                 testSphere.radius = npdata->xy_size[0];
@@ -2363,6 +2674,7 @@ void NPAR_Upd_Fireworks(NPARMgmt* mgmt, F32 dt)
                 {
                     continue;
                 }
+#endif
             }
 
             pool.next();
