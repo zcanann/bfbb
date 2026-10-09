@@ -231,3 +231,23 @@ fields are masked, including unmasked agreement of the sector-size constant
 and every branch target. No symbol identities are promoted. Evidence is in
 `build/packer-oct09/startup-transform-proof.json` and
 `startup-transform-raw-proof.json`.
+
+
+## Cleanup and duplicate-lookup locals
+
+PS2 `PKR_ReadDone` declares its two loop counters in the order that recovers
+the original saved-register assignments. `PKR_FRIEND_assetIsGameDup` places
+`tmp_ass` in the outer scope after the `is_dup` initialization. Original
+DWARF in all three debug versions records `is_dup`, `tmp_ass`, `i`, and
+`idx` in that outer scope. Moving `tmp_ass` before the initialization scored
+worse and was not retained.
+
+Normal whole-unit checks make cleanup **644 bytes, 100%** (from 99.62733%)
+and duplicate lookup **456 bytes, 100%** (from 99.38596%) in all three
+regions: **+1100 exact bytes and two functions** per region. All other
+48 functions retain their results, and fresh GC solo remains 76/76 exact.
+Complete raw lengths and words match after 11 relocation fields in each
+body are masked; no registers or branches are ignored. Source behavior and
+runtime identities are unchanged. Evidence is in
+`build/packer-oct09/cleanup-duplicate-proof.json`,
+`cleanup-duplicate-raw-proof.json`, and `cleanup-duplicate-locals.json`.

@@ -235,8 +235,13 @@ st_PACKER_READ_DATA* PKR_ReadInit(void* userdata, char* pkgfile, U32 opts, S32* 
 
 void PKR_ReadDone(st_PACKER_READ_DATA* pr)
 {
+#if defined(PS2)
+    S32 j;
+    S32 i;
+#else
     S32 i;
     S32 j;
+#endif
     S32 lockid;
     st_PACKER_ATOC_NODE* assnode;
     st_PACKER_LTOC_NODE* laynode;
@@ -1110,6 +1115,9 @@ S32 PKR_FRIEND_assetIsGameDup(U32 aid, const st_PACKER_READ_DATA* skippr, S32 ou
                               U32 chksum, char*)
 {
     S32 is_dup = 0;
+#if defined(PS2)
+    st_PACKER_ATOC_NODE* tmp_ass;
+#endif
     if (aid == 0x7ab6743a)
     {
         return 0;
@@ -1132,7 +1140,11 @@ S32 PKR_FRIEND_assetIsGameDup(U32 aid, const st_PACKER_READ_DATA* skippr, S32 ou
             continue;
         }
 
+#if defined(PS2)
+        tmp_ass = (st_PACKER_ATOC_NODE*)g_readdatainst[i].asstoc.list[idx];
+#else
         st_PACKER_ATOC_NODE* tmp_ass = (st_PACKER_ATOC_NODE*)g_readdatainst[i].asstoc.list[idx];
+#endif
         if ((tmp_ass->loadflag & 0x80000) == 0 && tmp_ass->asstype != 0x534e4420 &&
             tmp_ass->asstype != 0x534e4453)
         {
