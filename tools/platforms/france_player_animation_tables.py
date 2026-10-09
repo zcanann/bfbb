@@ -1,7 +1,7 @@
-"""Prove three complete player animation builders using original-only operands.
+"""Prove five complete player animation builders using original-only operands.
 
-The other builders require additional callback, insertion-helper and pointer
-table evidence and are deliberately excluded from this scoped cluster proof.
+The main SpongeBob builder still requires insertion-helper and pointer-table
+evidence and is deliberately excluded from this scoped cluster proof.
 """
 from __future__ import annotations
 
@@ -22,6 +22,8 @@ MEMBERS = [
     ("zEntPlayer_TreeDomeSBAnimTable", 0x159F20, 6536, 91, 90, (1, 90, 0, 0)),
     ("zEntPlayer_BoulderVehicleAnimTable", 0x15B8B0, 352, 7, 2, (1, 2, 2, 0)),
     ("zSpongeBobTongue_AnimTable", 0x15BA10, 560, 8, 7, (1, 7, 0, 0)),
+    ("zPatrick_AnimTable", 0x161880, 11056, 243, 56, (1, 56, 87, 12)),
+    ("zSandy_AnimTable", 0x1643B0, 14400, 315, 61, (1, 61, 127, 0)),
 ]
 CALLEES = ("xAnimTableNew", "xAnimTableNewState", "xAnimTableNewTransition", "xAnimTableAddTransition")
 
@@ -49,6 +51,21 @@ def generate_unit(originals, registry_dir):
             require(all(prior[k] == row[k] for k in ("name", "source", "size", "sha256")),
                     "Conflicting independent animation-table context")
     records, sequences, data_proofs = {}, [], []
+    # German relocates these player callbacks while USA/PAL keep their address
+    # words literal. Both large builders root the complete nonpromoted contexts.
+    from platforms.france_player_animation_context import OriginalData, callback_context, PLAYER
+    callbacks = {}
+    german = originals["SLES-51970"]
+    for name, b, size, *_ in MEMBERS[3:]:
+        f = next(f for f in german.functions if (f["source"],f["name"]) == (SOURCE,name))
+        pairs, _, _ = compare(german,target,f["low"],b,size)
+        for p in pairs:
+            ref = german.by_address.get(p["reference_address"])
+            if ref is not None and ref["source"] == PLAYER:
+                identity = (ref["name"],ref["high"]-ref["low"])
+                require(callbacks.setdefault(p["target_address"],identity) == identity,
+                        "Player callback identities collapse")
+    require(len(callbacks) == 34, "Complete builder callback inventory differs")
     for version in REFERENCES:
         original = originals[version]
         links = canonical_linkages(original.data, original.metadata)
@@ -56,7 +73,18 @@ def generate_unit(originals, registry_dir):
         require(len(owned) == 6 and sum(f["high"] - f["low"] for f in owned) == 56516,
                 "Original six-builder animation ownership differs")
         mapping = {}
+        context_data = OriginalData(original)
+        contexts = {}
+        for entry,(name,size) in sorted(callbacks.items()):
+            refs = [f for f in original.functions if (f["source"],f["name"],f["high"]-f["low"]) == (PLAYER,name,size)]
+            require(len(refs) == 1, "Original full player callback identity is ambiguous")
+            contexts[entry] = callback_context(original,target,refs[0]["low"],entry,known,context_data)
+        data_proofs.append({"version":version,"source":SOURCE,
+                            "complete_nonpromoted_player_callback_contexts":list(contexts.values()),
+                            "data_extents_promoted":False})
         for name, b, size, literal_count, pointer_count, inventory in MEMBERS:
+            if version == "SLES-51970":
+                pointer_count += {"zPatrick_AnimTable":67,"zSandy_AnimTable":83}.get(name,0)
             matches = [f for f in owned if f["name"] == name]
             require(len(matches) == 1 and matches[0]["high"] - matches[0]["low"] == size,
                     "Complete original animation-builder extent differs")
@@ -74,10 +102,16 @@ def generate_unit(originals, registry_dir):
                 require(ra not in mapping or mapping[ra] == tb, "Animation-builder address mapping inconsistent")
                 mapping[ra] = tb
                 if ra in original.by_address:
-                    callback = checked_identity(original, target, ra, tb, known)
-                    require((callback["source"], callback["name"]) ==
-                            ("SB/Core/x/xAnim.cpp", "xAnimDefaultBeforeEnter"),
-                            "Animation-builder callback differs from its independently known original")
+                    if tb in contexts:
+                        context = contexts[tb]
+                        require(context["source_address"] == ra,
+                                "Builder pointer does not address its complete original callback context")
+                        callback = {**context,"sha256":context["target_sha256"]}
+                    else:
+                        callback = checked_identity(original, target, ra, tb, known)
+                        require((callback["source"], callback["name"]) ==
+                                ("SB/Core/x/xAnim.cpp", "xAnimDefaultBeforeEnter"),
+                                "Animation-builder callback differs from its independently known original")
                     pointers.append({**pair, "name": callback["name"], "size": callback["size"],
                                      "complete_target_sha256": callback["sha256"]})
                 else:
@@ -101,10 +135,13 @@ def generate_unit(originals, registry_dir):
                 require(bounds["passes"], "Animation builder lacks complete closed original bounds")
             unique = unique_template(target, original.read(a, size), masks, b)
             if b not in records:
+                scope = ("complete_caller_with_proven_callback_contexts_and_independently_proven_callees"
+                         if name in ("zPatrick_AnimTable", "zSandy_AnimTable") else
+                         "complete_caller_with_independently_proven_callees_and_callback")
                 records[b] = {"name": name, "source": SOURCE, "address": b, "size": size,
                     "sha256": digest(target.read(b, size)), "boundary_confirmation": True,
                     "confirmation_kind": CLUSTER_KIND, "provenance": [],
-                    "corroboration": {"proof_scope": "complete_caller_with_independently_proven_callees_and_callback",
+                    "corroboration": {"proof_scope": scope,
                         "unique_complete_caller": b, "local_control_flow": bounds,
                         "whole_translation_unit_claimed": False}}
             record = records[b]
@@ -119,9 +156,9 @@ def generate_unit(originals, registry_dir):
                 "whole_translation_unit_claimed": False})
             data_proofs.append({"version": version, "source": SOURCE, "name": name,
                 "complete_strings": strings, "known_code_pointers": pointers, "data_extents_promoted": False})
-    require(len(records) == 3 and all(len(f["provenance"]) == 3 for f in records.values()),
-            "Animation subset requires all three bodies from all three originals")
+    require(len(records) == 5 and all(len(f["provenance"]) == 3 for f in records.values()),
+            "Animation subset requires all five bodies from all three originals")
     return {"functions": sorted(records.values(), key=lambda f: f["address"]),
             "sequence_proofs": sequences, "data_proofs": data_proofs,
-            "counts": {"functions": 3, "code_bytes": 7448, "source_units": 1,
-                       "closed_return_bodies": 3, "reviewed_complete_caller_callee_clusters": 3}}
+            "counts": {"functions": 5, "code_bytes": 32904, "source_units": 1,
+                       "closed_return_bodies": 5, "reviewed_complete_caller_callee_clusters": 5}}
