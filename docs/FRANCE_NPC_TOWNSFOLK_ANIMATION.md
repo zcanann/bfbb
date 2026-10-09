@@ -40,3 +40,12 @@ its delay store, and Jelly's preceding call. JSON round-trip identity is
 required. Evidence is `build/npc-townsfolk-animation-proof.json` and
 `build/npc-townsfolk-animation-tests-final.txt`. No data extents are promoted and no
 compiled source supplies function identity evidence.
+
+All nine new French source functions match exactly: +3,976 exact bytes and
++9 functions. Ambient adds a new source profile with 1,368 exact bytes in
+three members. Villager adds 2,608 exact bytes in six members; its prior
+280-byte SceneTimestep retains every score/metadata field (69.64286%).
+The Villager profile uses address-qualified selectors to distinguish each
+wrapper from its overloaded full builder, preserving the earlier member's
+linkage and call evidence. All non-French profiles remain unchanged.
+Source evidence is `build/npc-townsfolk-animation-france-pilot/report.json`.
