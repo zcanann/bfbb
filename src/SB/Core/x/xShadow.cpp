@@ -255,6 +255,27 @@ static S32 ShadowRender(RwCamera* shadowCamera, RwRaster* shadowRast, RpIntersec
 
 void xShadowRenderWorld(xVec3* center, F32 radius, F32 max_dist)
 {
+#if defined(PS2)
+    RpIntersection shadowZone;
+    xSphere zone;
+    RwFrame* camFrame = (RwFrame*)ShadowCamera->object.object.parent;
+    RwMatrixTag* camMatrix = &camFrame->modelling;
+    xVec3* at = (xVec3*)&camMatrix->at;
+    xVec3* up = (xVec3*)&camMatrix->up;
+    xVec3* rt = (xVec3*)&camMatrix->right;
+    xRay3 R[1];
+    xCollis entcoll[1];
+    xCollis envcoll[1];
+    const F32 sf[3][2] = { { 0.0f, 0.0f }, { 0.0f, 0.5f }, { 0.0f, -0.5f } };
+    U32 hit_env;
+    U32 hit_ent;
+    F32 ent_dist;
+    F32 env_dist;
+    xVec3 ent_pos;
+    xVec3 env_pos;
+    S32 i;
+    xQCData q;
+#else
     RwFrame* camFrame = (RwFrame*)ShadowCamera->object.object.parent;
     RwMatrixTag* camMatrix = &camFrame->modelling;
     xVec3* at = (xVec3*)&camMatrix->at;
@@ -274,6 +295,8 @@ void xShadowRenderWorld(xVec3* center, F32 radius, F32 max_dist)
     F32 ent_dist;
     F32 env_dist;
     S32 i;
+
+#endif
 
     gShadowFlags = 0;
     hit_env = 0;
@@ -322,7 +345,11 @@ void xShadowRenderWorld(xVec3* center, F32 radius, F32 max_dist)
 
         if (entcoll[i].flags & 0x1)
         {
+#if defined(PS2)
+            hit_ent++;
+#else
             hit_ent = 1;
+#endif
             if (entcoll[i].dist < ent_dist)
             {
                 ent_dist = entcoll[i].dist;
@@ -333,7 +360,11 @@ void xShadowRenderWorld(xVec3* center, F32 radius, F32 max_dist)
 
         if (envcoll[i].flags & 0x1)
         {
+#if defined(PS2)
+            hit_env++;
+#else
             hit_env = 1;
+#endif
             if (envcoll[i].dist < env_dist)
             {
                 env_dist = envcoll[i].dist;

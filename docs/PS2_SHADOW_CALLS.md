@@ -175,3 +175,18 @@ exact in USA, Europe and Germany (previously 91.304344%). Unit totals reach
 98.8625% fuzzy matching. Every other score and the full GameCube USA
 report remain unchanged; the retail DOL SHA-1 passes. Evidence uses
 `*-remove.json` and `remove-proof.json`.
+
+
+## Exact world shadow selection
+
+The 1,568-byte `xShadowRenderWorld` body restores the PS2 declaration order
+recorded in DWARF, including ray/collision arrays and the final intersection.
+Its hit counts increment rather than being assigned one. These restore the
+original stack offsets and register lifetimes. GameCube retains its existing
+form. USA, Europe and Germany all improve from 98.56888% to 100%, adding
+1,568 exact bytes and one function per region.
+
+Totals reach 26/34 functions, 11,508/20,044 exact bytes, and
+98.97446% fuzzy matching. Every other function and the full GameCube USA
+report are unchanged; the retail DOL SHA-1 passes. Evidence uses
+`*-world.json` and `world-proof.json`.
