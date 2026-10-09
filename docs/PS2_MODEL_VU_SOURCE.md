@@ -99,3 +99,25 @@ does not add names to target metadata.
 Additional private evidence: `model-skin-decode.py` / `.txt`,
 `model-skin-final-comparison.py` / `.json`, `model-skin-final-changes.json`, and
 `model-skin-raw-proof.py` / `.json`. The comparison baseline is `70c4beace`.
+
+## Atomic callback parent-field lifetime
+
+Keeping a reference to `atomic->object.object.parent` across the callback
+recovers the original saved field address and the repeated frame-pointer loads
+after SDK calls. This is a reference to the actual `void*` member, not a cached
+frame value or a cast to an unrelated reference type. `FindAtomicCallback`
+improves from 93.175674% to 100%, adding 296 report-exact bytes / one function
+in all three debug versions. Spelling the bone-count return as its explicit
+nonnull branch also improves `iModelNumBones` from 93.333336% to 94%.
+
+The complete model unit improves from 93.47379% to 93.685486%, with 3,492
+report-exact bytes / 17 functions and no other function or data regression.
+Independent relocation replay proves all 264 non-call bytes of the callback,
+including the DWARF-named child callback and static global references. Eight
+SDK calls retain unproved runtime names; their original destinations are
+recorded, and none is promoted to an authenticated target alias. The 100%
+report result does not imply those missing identities have been established.
+
+Private evidence: `model-callback-final-comparison.py` / `.json`,
+`model-callback-final-changes.json`, and `model-callback-raw-proof.py` / `.json`.
+The before/after source baseline is `5d7b117b4`.

@@ -77,6 +77,8 @@ void iModelInit()
 
 static RpAtomic* FindAtomicCallback(RpAtomic* atomic, void*)
 {
+    // Retain the parent field itself so each SDK call observes its current value.
+    void*& frame = atomic->object.object.parent;
     RpHAnimHierarchy* pHier = GetHierarchy(atomic);
     RpSkin* pSkin = RpSkinGeometryGetSkin(atomic->geometry);
 
@@ -84,7 +86,7 @@ static RpAtomic* FindAtomicCallback(RpAtomic* atomic, void*)
     {
         pHier = RpHAnimHierarchyCreate(RpSkinGetNumBones(pSkin), NULL, NULL,
                                        rpHANIMHIERARCHYLOCALSPACEMATRICES, 0x24);
-        RpHAnimFrameSetHierarchy(RpAtomicGetFrame(atomic), pHier);
+        RpHAnimFrameSetHierarchy((RwFrame*)frame, pHier);
     }
     if (pHier != NULL && pSkin != NULL)
     {
@@ -99,7 +101,7 @@ static RpAtomic* FindAtomicCallback(RpAtomic* atomic, void*)
         gLastAtomicList[gLastAtomicCount++] = atomic;
     }
 
-    RwFrameGetRoot(RpAtomicGetFrame(atomic));
+    RwFrameGetRoot((RwFrame*)frame);
     return atomic;
 }
 
@@ -245,7 +247,11 @@ RpAtomic* iModelFile_RWMultiAtomic(RpAtomic* model)
 U32 iModelNumBones(RpAtomic* model)
 {
     RpHAnimHierarchy* hierarchy = GetHierarchy(model);
-    return hierarchy == NULL ? 0 : hierarchy->numNodes;
+    if (hierarchy != NULL)
+    {
+        return hierarchy->numNodes;
+    }
+    return 0;
 }
 
 // The animation matrix stack stays in vf20-vf23 between bones. Each new
