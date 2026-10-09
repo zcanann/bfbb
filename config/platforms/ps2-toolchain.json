@@ -232670,6 +232670,43 @@
       "executable_sha1s": [
         "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
       ]
+    },
+    {
+      "source": "src/SB/Core/p2/isavegame.cpp",
+      "target_unit": "SB/Core/p2/isavegame.cpp",
+      "object": "source/isavegame.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "iSG_is_synccode_realerr": "iSG_is_synccode_realerr__FiiP19st_ISG_MEMCARD_DATA",
+        "iSG_mca_fwrite": "iSG_mca_fwrite__FP19st_ISG_MEMCARD_DATAPci",
+        "iSG_mca_fread": "iSG_mca_fread__FP19st_ISG_MEMCARD_DATAPci",
+        "iSG_mca_fopen": "iSG_mca_fopen__FP19st_ISG_MEMCARD_DATAPCc13en_ISG_IOMODE",
+        "iSG_mca_unfmt": "iSG_mca_unfmt__FP19st_ISG_MEMCARD_DATA",
+        "iSG_mca_fmt": "iSG_mca_fmt__FP19st_ISG_MEMCARD_DATAi",
+        "iSG_get_fmoddate": "iSG_get_fmoddate__FP19st_ISG_MEMCARD_DATAPCcPiPiPiPiPiPi",
+        "iSG_isSpaceForFile": "iSG_isSpaceForFile__FP19st_ISG_MEMCARD_DATAiiPCcPCcPiPi",
+        "iSG_mc_availDirEnt": "iSG_mc_availDirEnt__FP19st_ISG_MEMCARD_DATAiPCc",
+        "iSG_mc_availclust": "iSG_mc_availclust__FP19st_ISG_MEMCARD_DATAi",
+        "iSG_mc_isPSIIcard": "iSG_mc_isPSIIcard__FP19st_ISG_MEMCARD_DATAi",
+        "iSG_mc_isformatted": "iSG_mc_isformatted__FP19st_ISG_MEMCARD_DATAi",
+        "iSG_mc_exists": "iSG_mc_exists__FP19st_ISG_MEMCARD_DATAi",
+        "iSG_mcidx_portslot": "iSG_mcidx_portslot__FiPiPiPi",
+        "iSG_add_sysicons": "iSG_add_sysicons__FP19st_ISG_MEMCARD_DATA",
+        "iSGAutoSave_Connect": "iSGAutoSave_Connect__FiPvPFPv10en_CHGCODE_v",
+        "iSGReadLeader": "iSGReadLeader__FP13st_ISGSESSIONPCcPcii",
+        "iSGLoadFile": "iSGLoadFile__FP13st_ISGSESSIONPCcPci",
+        "iSGSaveFile": "iSGSaveFile__FP13st_ISGSESSIONPCcPciiPc",
+        "iSGFileSize": "iSGFileSize__FP13st_ISGSESSIONPCc",
+        "iSGTgtHaveRoom": "iSGTgtHaveRoom__FP13st_ISGSESSIONiiPCcPCcPiPiPi",
+        "iSGTgtSetActive": "iSGTgtSetActive__FP13st_ISGSESSIONi",
+        "iSGTgtState": "iSGTgtState__FP13st_ISGSESSIONiPCc",
+        "iSGStartup": "iSGStartup__Fv"
+      },
+      "calls": [],
+      "gp_relocations": [],
+      "inline": "auto,bottomup"
     }
   ]
 }
