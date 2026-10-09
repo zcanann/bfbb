@@ -197608,74 +197608,107 @@
         "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
       ],
       "symbols": {
-        "xSndIsReady": "xSndIsReady__FUi",
-        "xSndExit": "xSndExit__Fv",
-        "xSndSetEnvironmentalEffect": "xSndSetEnvironmentalEffect__F12sound_effect",
-        "xSndStreamUnlock": "xSndStreamUnlock__FUi",
-        "xSndStreamReady": "xSndStreamReady__FUi",
-        "xSndParentDied": "xSndParentDied__FUi",
-        "xSndIDIsPlaying": "xSndIDIsPlaying__FUi",
-        "xSndSetListenerData": "xSndSetListenerData__F19sound_listener_typePC7xMat4x3",
-        "xSndInternalUpdateVoicePos": "xSndInternalUpdateVoicePos__FP13xSndVoiceInfo",
-        "xSndProcessSoundPos": "xSndProcessSoundPos__FPC5xVec3P5xVec3",
-        "xSndCalculateListenerPosition": "xSndCalculateListenerPosition__Fv",
-        "xSndAddDelayed": "xSndAddDelayed__FUiffUiUiUiP4xEntP5xVec3ff14sound_categoryf",
-        "xSndPlayInternal": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf"
+        "xSndIsReady@00209d40": "xSndIsReady__FUi",
+        "xSndExit@0020a350": "xSndExit__Fv",
+        "xSndSetEnvironmentalEffect@0020ae40": "xSndSetEnvironmentalEffect__F12sound_effect",
+        "xSndStreamUnlock@00209550": "xSndStreamUnlock__FUi",
+        "xSndStreamReady@002095a0": "xSndStreamReady__FUi",
+        "xSndParentDied@00209c80": "xSndParentDied__FUi",
+        "xSndIDIsPlaying@00209cd0": "xSndIDIsPlaying__FUi",
+        "xSndSetListenerData@0020a380": "xSndSetListenerData__F19sound_listener_typePC7xMat4x3",
+        "xSndInternalUpdateVoicePos@0020a530": "xSndInternalUpdateVoicePos__FP13xSndVoiceInfo",
+        "xSndProcessSoundPos@0020a650": "xSndProcessSoundPos__FPC5xVec3P5xVec3",
+        "xSndCalculateListenerPosition@0020a8c0": "xSndCalculateListenerPosition__Fv",
+        "xSndAddDelayed@0020aa60": "xSndAddDelayed__FUiffUiUiUiP4xEntP5xVec3ff14sound_categoryf",
+        "xSndPlayInternal@00209d60": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf",
+        "xSndPlay3D@0020a2c0": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
+        "xSndPlay3D@0020a310": "xSndPlay3D__FUiffUiUiP4xEntff14sound_categoryf",
+        "xSndPlay@0020a330": "xSndPlay__FUiffUiUiUi14sound_categoryf"
       },
       "calls": [
         {
-          "function": "xSndInternalUpdateVoicePos",
+          "function": "xSndInternalUpdateVoicePos@0020a530",
           "offset": 260,
           "target_source": "SB/Core/x/xSnd.cpp",
           "target_function": "xSndProcessSoundPos@0020a650",
           "symbol": "xSndProcessSoundPos__FPC5xVec3P5xVec3"
         },
         {
-          "function": "xSndPlayInternal",
+          "function": "xSndPlayInternal@00209d60",
           "offset": 264,
           "target_source": "SB/Core/x/xSnd.cpp",
           "target_function": "xSndAddDelayed@0020aa60",
           "symbol": "xSndAddDelayed__FUiffUiUiUiP4xEntP5xVec3ff14sound_categoryf"
         },
         {
-          "function": "xSndPlayInternal",
+          "function": "xSndPlayInternal@00209d60",
           "offset": 604,
           "target_source": "SB/Core/p2/iSnd.cpp",
           "target_function": "iSndLookup@001ba100",
           "symbol": "iSndLookup__FUi"
         },
         {
-          "function": "xSndPlayInternal",
+          "function": "xSndPlayInternal@00209d60",
           "offset": 648,
           "target_source": "SB/Core/p2/iSnd.cpp",
           "target_function": "iSndLookup@001ba100",
           "symbol": "iSndLookup__FUi"
         },
         {
-          "function": "xSndPlayInternal",
+          "function": "xSndPlayInternal@00209d60",
           "offset": 752,
           "target_source": "SB/Core/p2/iSnd.cpp",
           "target_function": "iSndFindFreeVoice@001b8cc0",
           "symbol": "iSndFindFreeVoice__FUiUiUi"
         },
         {
-          "function": "xSndPlayInternal",
+          "function": "xSndPlayInternal@00209d60",
           "offset": 1256,
           "target_source": "SB/Core/x/xSnd.cpp",
           "target_function": "xSndInternalUpdateVoicePos@0020a530",
           "symbol": "xSndInternalUpdateVoicePos__FP13xSndVoiceInfo"
         },
         {
-          "function": "xSndPlayInternal",
+          "function": "xSndPlayInternal@00209d60",
           "offset": 1264,
           "target_source": "SB/Core/p2/iSnd.cpp",
           "target_function": "iSndPlay@001b92a0",
           "symbol": "iSndPlay__FP13xSndVoiceInfo"
+        },
+        {
+          "function": "xSndPlay3D@0020a2c0",
+          "offset": 32,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlayInternal@00209d60",
+          "symbol": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "xSndPlay3D@0020a2c0",
+          "offset": 52,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlayInternal@00209d60",
+          "symbol": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf"
+        },
+        {
+          "function": "xSndPlay3D@0020a310",
+          "offset": 16,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlayInternal@00209d60",
+          "symbol": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf",
+          "opcode": 2
+        },
+        {
+          "function": "xSndPlay@0020a330",
+          "offset": 20,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlayInternal@00209d60",
+          "symbol": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf",
+          "opcode": 2
         }
       ],
       "linkage_provenance": [
         {
-          "function": "xSndIsReady",
+          "function": "xSndIsReady@00209d40",
           "registry": "corroborated-functions.json",
           "france_address": 2137408,
           "size": 32,
@@ -197689,7 +197722,7 @@
           ]
         },
         {
-          "function": "xSndExit",
+          "function": "xSndExit@0020a350",
           "registry": "corroborated-functions.json",
           "france_address": 2138960,
           "size": 32,
@@ -197703,7 +197736,7 @@
           ]
         },
         {
-          "function": "xSndSetEnvironmentalEffect",
+          "function": "xSndSetEnvironmentalEffect@0020ae40",
           "registry": "corroborated-functions.json",
           "france_address": 2141760,
           "size": 68,
@@ -197717,7 +197750,7 @@
           ]
         },
         {
-          "function": "xSndStreamUnlock",
+          "function": "xSndStreamUnlock@00209550",
           "registry": "tu-corroborated-functions.json",
           "france_address": 2135376,
           "size": 72,
@@ -197743,7 +197776,7 @@
           ]
         },
         {
-          "function": "xSndStreamReady",
+          "function": "xSndStreamReady@002095a0",
           "registry": "tu-corroborated-functions.json",
           "france_address": 2135456,
           "size": 88,
@@ -197769,7 +197802,7 @@
           ]
         },
         {
-          "function": "xSndParentDied",
+          "function": "xSndParentDied@00209c80",
           "registry": "tu-corroborated-functions.json",
           "france_address": 2137216,
           "size": 64,
@@ -197795,7 +197828,7 @@
           ]
         },
         {
-          "function": "xSndIDIsPlaying",
+          "function": "xSndIDIsPlaying@00209cd0",
           "registry": "tu-corroborated-functions.json",
           "france_address": 2137296,
           "size": 88,
@@ -197821,7 +197854,7 @@
           ]
         },
         {
-          "function": "xSndSetListenerData",
+          "function": "xSndSetListenerData@0020a380",
           "registry": "tu-corroborated-functions.json",
           "france_address": 2139008,
           "size": 232,
@@ -197847,7 +197880,7 @@
           ]
         },
         {
-          "function": "xSndInternalUpdateVoicePos",
+          "function": "xSndInternalUpdateVoicePos@0020a530",
           "registry": "tu-corroborated-functions.json",
           "france_address": 2139440,
           "size": 284,
@@ -197873,7 +197906,7 @@
           ]
         },
         {
-          "function": "xSndProcessSoundPos",
+          "function": "xSndProcessSoundPos@0020a650",
           "registry": "tu-corroborated-functions.json",
           "france_address": 2139728,
           "size": 616,
@@ -197899,7 +197932,7 @@
           ]
         },
         {
-          "function": "xSndCalculateListenerPosition",
+          "function": "xSndCalculateListenerPosition@0020a8c0",
           "registry": "tu-corroborated-functions.json",
           "france_address": 2140352,
           "size": 416,
@@ -197925,7 +197958,7 @@
           ]
         },
         {
-          "function": "xSndAddDelayed",
+          "function": "xSndAddDelayed@0020aa60",
           "registry": "tu-corroborated-functions.json",
           "france_address": 2140768,
           "size": 128,
@@ -197951,7 +197984,7 @@
           ]
         },
         {
-          "function": "xSndPlayInternal",
+          "function": "xSndPlayInternal@00209d60",
           "registry": "tu-corroborated-functions.json",
           "france_address": 2137440,
           "size": 1376,
@@ -197975,8 +198008,87 @@
               "reference_sha256": "4f70ceaa4e43e9f2ce56f4f14d21560a0ae986a0415e9a7ee83885acc39f1c1d"
             }
           ]
+        },
+        {
+          "function": "xSndPlay3D@0020a2c0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2138816,
+          "size": 72,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2137408,
+              "reference_sha256": "f3e9a566442cb4432bd2eeec011921282cb0b4c88dd9dbd6a4991fd2bc95f04b"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2138704,
+              "reference_sha256": "5eecb9c1545303cdf2489f9b578edc3c5e1cd9a570a8145c9212aea5ab3ef077"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2135360,
+              "reference_sha256": "d208b0e55c84d6761f9ee9c5c39581fe20cb65bd7037ede7e3f8f85450eba517"
+            }
+          ]
+        },
+        {
+          "function": "xSndPlay3D@0020a310",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2138896,
+          "size": 24,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2137488,
+              "reference_sha256": "456e42fee57fa7a6f49161bcf4bf1846ea5003ee5b7767ceeedbdb633f47f5c7"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2138784,
+              "reference_sha256": "086bd609faf262593bc7cfb85bf00b487e8e0e39e5d6181260609fe9c6613e2a"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2135440,
+              "reference_sha256": "93d54f4d7aed59329bcd76fb2aae05dc35241d0889fab7680cda95c08f835303"
+            }
+          ]
+        },
+        {
+          "function": "xSndPlay@0020a330",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2138928,
+          "size": 28,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2137520,
+              "reference_sha256": "5e9cd0e152fbc9106268493cdddeaa378ef87fc71b5e293c13c06103841afaa8"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2138816,
+              "reference_sha256": "fa650cf5da4db27cfba6b9a7dea93321b499dd03aa69987a071f80ac4db5f639"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2135472,
+              "reference_sha256": "6e593a12a61ca0367a96b20ba24c209e7829ffe7256c567670c1b310443ce514"
+            }
+          ]
         }
-      ]
+      ],
+      "selector": "name_address"
     },
     {
       "source": "src/SB/Core/x/xScrFx.cpp",
