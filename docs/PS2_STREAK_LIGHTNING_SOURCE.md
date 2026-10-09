@@ -68,3 +68,26 @@ preserves every GameCube function score, including 148 exact functions / 23256
 bytes. Evidence is `build/ribbon-strip-final-comparison.json`, its function-delta
 JSON, and `build/ribbon-strip-gc-{before,after}.json`. No compiler-version patch or
 platform conditional is needed for this helper.
+
+The normal helper then improves from 67.01744% to 98.77907% in all four
+PS2 regions without changing the exact-byte count. Original DWARF lists only `a`, `b`,
+`ax`, `ay` and `az`; the extra cached vector components were needed for the
+GameCube reconstruction. The PS2 branch reads the absolute values directly and
+reloads components in the first arm, as its original does. Local `peephole off`
+and `opt_common_subs off` scopes preserve the original separate multiplies/adds
+and repeated loads. The GameCube branch and its rounding remain unchanged.
+
+The three original 688-byte normal functions have the same instruction stream
+after excluding only actual J/JAL destinations (addresses US `0x1e5da0`, Europe
+`0x1e6280`, Germany `0x1e5560`). The remaining source differences are the first
+trigonometric call's argument-save scheduling and one branch-alignment NOP.
+Diagnostic compilers 2.4 and 3.0.1 do not solve them (74.169% and 59.773%
+respectively), so this is not evidence for a new compiler patch. Production
+comparison rules and the compiler stay unchanged.
+
+Complete regional evidence is `build/ribbon-normal-final-comparison.json` and
+its function-delta JSON; France receives the same normal-helper improvement,
+with no other function-score or size/data changes in any region. GameCube preserves every
+score (`build/ribbon-normal-gc-{before,after}.json`). Original instruction-shape
+evidence is in `build/ribbon-normal-original-shape.json`; the existing unresolved
+trigonometric call identities are not newly promoted by this comparison.

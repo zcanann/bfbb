@@ -2530,11 +2530,21 @@ void xFXRibbon::set_texture(const char* name)
     set_texture(xStrHash(name));
 }
 
+#if defined(PS2)
+// Preserve separate arithmetic and component reloads in the PS2 original.
+#pragma peephole off
+#pragma opt_common_subs off
+#endif
 void xFXRibbon::get_normal(xVec3& norm, const xVec3& dir, F32 orient)
 {
     F32 a = isin(orient);
     F32 b = icos(orient);
 
+#if defined(PS2)
+    F32 ax = xabs(dir.x);
+    F32 ay = xabs(dir.y);
+    F32 az = xabs(dir.z);
+#else
     // Declared z,y,x but assigned x,y,z, and that split is load-bearing: the target
     // loads the components in address order (0x0, 0x4, 0x8) while colouring them
     // f9, f8, f7 -- descending. CodeWarrior colours the FP class in DECLARATION
@@ -2551,6 +2561,7 @@ void xFXRibbon::get_normal(xVec3& norm, const xVec3& dir, F32 orient)
     F32 ax = xabs(dx);
     F32 ay = xabs(dy);
     F32 az = xabs(dz);
+#endif
 
     if (ax < ay && ax < az)
     {
@@ -2560,6 +2571,12 @@ void xFXRibbon::get_normal(xVec3& norm, const xVec3& dir, F32 orient)
         // repeats the z-axis arm's `dir.z * (a * dir.y)` instead, which is what
         // the target object computes.
 
+#if defined(PS2)
+        norm.x = -a * (dir.y * dir.y + dir.z * dir.z);
+        norm.y = dir.z * (a * dir.y) + b * dir.z;
+        norm.z = dir.z * (a * dir.x) - b * dir.y;
+        norm *= 1.0f / xsqrt(dir.y * dir.y + dir.z * dir.z);
+#else
         // Numerical fidelity, load-bearing -- do NOT fold these back into one
         // `dir.y * dir.y + dir.z * dir.z` expression. Retail rounds each square to
         // single precision and only then adds:
@@ -2576,6 +2593,7 @@ void xFXRibbon::get_normal(xVec3& norm, const xVec3& dir, F32 orient)
         norm.y = dz * (a * dy) + b * dz;
         norm.z = dz * (a * dx) - b * dy;
         norm *= 1.0f / xsqrt(dy2 + dz2);
+#endif
     }
     else if (ay < az)
     {
@@ -2592,6 +2610,11 @@ void xFXRibbon::get_normal(xVec3& norm, const xVec3& dir, F32 orient)
         norm *= 1.0f / xsqrt(dir.x * dir.x + dir.y * dir.y);
     }
 }
+
+#if defined(PS2)
+#pragma opt_common_subs reset
+#pragma peephole reset
+#endif
 
 void xFXRibbon::refresh_joint(joint_data& joint, const tier_queue<joint_data>::iterator& it)
 {
