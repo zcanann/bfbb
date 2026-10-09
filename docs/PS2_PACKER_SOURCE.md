@@ -173,3 +173,22 @@ source relocation fields are masked; no branch operands, registers, or
 non-relocation constants are ignored. This does not authenticate masked
 runtime identities. Evidence is in `build/packer-oct09/counter-proof.json`
 and `counter-raw-proof.json`.
+
+
+## Type-count builder locals
+
+The USA original DWARF places one signed `idx` in the outer function scope,
+alongside `typcnt`, `tmplist`, `lasttype`, and `lasttidx`. The PS2 source now
+reuses one outer index across both passes. Evaluating `tmplist` before the
+minimum capacity selection also restores the original argument schedule
+for `XOrdInit`; the capacity remains at least two.
+
+The 784-byte `PKR_bld_typecnt` improves from **94.35204% to 98.97959%**
+in all three debug regions, with the other 49 functions unchanged and fresh
+GC solo 76/76 exact. Both original and source are 196 words, and all 172
+non-NOP words agree after three call relocation fields are masked and
+relative branch destinations are checked by non-NOP ordinal. NOP placement
+remains different; this does not establish a compiler defect. Reversing
+cached-variable declarations did not improve the final candidate and was
+not retained. Private evidence is in `build/packer-oct09/typecnt-proof.json`
+and `typecnt-raw-proof.json`.

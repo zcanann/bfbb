@@ -1832,6 +1832,9 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
     st_PACKER_ATOC_NODE* assnode;
     S32 j;
     S32 i;
+#if defined(PS2)
+    S32 idx;
+#endif
     S32 typcnt[129] = {};
     st_XORDEREDARRAY* tmplist;
     U32 lasttype = 0;
@@ -1845,7 +1848,9 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
             assnode = (st_PACKER_ATOC_NODE*)laynode->assref.list[j];
             if (!(assnode->loadflag & 0x100000) && !(assnode->loadflag & 0x200000))
             {
+#if !defined(PS2)
                 S32 idx;
+#endif
                 if (lasttype != 0 && assnode->asstype == lasttype)
                 {
                     idx = lastidx;
@@ -1876,7 +1881,13 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
     {
         if (typcnt[k] >= 1)
         {
+#if defined(PS2)
+            tmplist = &pr->typelist[k];
+            S32 count = typcnt[k] > 1 ? typcnt[k] : 2;
+            XOrdInit(tmplist, count, false);
+#else
             XOrdInit(&pr->typelist[k], typcnt[k] > 1 ? typcnt[k] : 2, false);
+#endif
         }
     }
 
@@ -1888,7 +1899,9 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
             assnode = (st_PACKER_ATOC_NODE*)laynode->assref.list[j];
             if (!(assnode->loadflag & 0x100000) && !(assnode->loadflag & 0x200000))
             {
+#if !defined(PS2)
                 S32 idx;
+#endif
                 if (lasttype != 0 && assnode->asstype == lasttype)
                 {
                     idx = lastidx;
