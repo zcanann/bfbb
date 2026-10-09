@@ -229117,7 +229117,8 @@
         "hiddenByCutscene@00332690": "hiddenByCutscene__10zNPCBSandyFv",
         "BoundEventCB@00333af0": "BoundEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
         "Process@0032c7c0": "Process__28zNPCGoalBossSandyClotheslineFP11en_trantypefPvP6xScene",
-        "zNPCBSandy_BossDamageEffect@00335000": "zNPCBSandy_BossDamageEffect__FP14xModelInstanceUi"
+        "zNPCBSandy_BossDamageEffect@00335000": "zNPCBSandy_BossDamageEffect__FP14xModelInstanceUi",
+        "Process@0032db20": "Process__20zNPCGoalBossSandySitFP11en_trantypefPvP6xScene"
       },
       "calls": [
         {
@@ -229658,6 +229659,104 @@
           "target_source": "SB/Core/x/xBehaviour.cpp",
           "target_function": "Process@002f2250",
           "symbol": "Process__5xGoalFP11en_trantypefPvP6xScene"
+        },
+        {
+          "function": "Process@0032db20",
+          "offset": 320,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "Process@0032db20",
+          "offset": 380,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3D@0020a310",
+          "symbol": "xSndPlay3D__FUiffUiUiP4xEntff14sound_categoryf"
+        },
+        {
+          "function": "Process@0032db20",
+          "offset": 396,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent@00283ab0",
+          "symbol": "zEntEvent__FP5xBaseUi"
+        },
+        {
+          "function": "Process@0032db20",
+          "offset": 472,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat4x3Mul@001eee10",
+          "symbol": "xMat4x3Mul__FP7xMat4x3PC7xMat4x3PC7xMat4x3"
+        },
+        {
+          "function": "Process@0032db20",
+          "offset": 916,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "Process@0032db20",
+          "offset": 1184,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize@00210d10",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "Process@0032db20",
+          "offset": 1308,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "Process@0032db20",
+          "offset": 1564,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "Process@0032db20",
+          "offset": 1624,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndPlay3D@0020a310",
+          "symbol": "xSndPlay3D__FUiffUiUiP4xEntff14sound_categoryf"
+        },
+        {
+          "function": "Process@0032db20",
+          "offset": 1640,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent@00283a00",
+          "symbol": "zEntEvent__FP5xBaseP5xBaseUi"
+        },
+        {
+          "function": "Process@0032db20",
+          "offset": 2220,
+          "target_source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "target_function": "zNPCBSandy_BossDamageEffect@00335000",
+          "symbol": "zNPCBSandy_BossDamageEffect__FP14xModelInstanceUi"
+        },
+        {
+          "function": "Process@0032db20",
+          "offset": 2236,
+          "target_source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "target_function": "zNPCBSandy_BossDamageEffect@00335000",
+          "symbol": "zNPCBSandy_BossDamageEffect__FP14xModelInstanceUi"
+        },
+        {
+          "function": "Process@0032db20",
+          "offset": 2252,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "DoAutoAnim@002cb210",
+          "symbol": "DoAutoAnim__14zNPCGoalCommonF16en_NPC_GOAL_SPOTi"
+        },
+        {
+          "function": "Process@0032db20",
+          "offset": 2280,
+          "target_source": "SB/Core/x/xBehaviour.cpp",
+          "target_function": "Process@002f2250",
+          "symbol": "Process__5xGoalFP11en_trantypefPvP6xScene"
         }
       ],
       "linkage_provenance": [
@@ -230074,6 +230173,32 @@
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
               "source_address": 3359456,
               "reference_sha256": "7a9823b0581145c0b9faa0ffb36396df2b6ee6449c1713701815885e7ce6c99e"
+            }
+          ]
+        },
+        {
+          "function": "Process@0032db20",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3332896,
+          "size": 2336,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3331504,
+              "reference_sha256": "308e0b791f92daae5ad39ebc8f99ebc96eb20e736e742eb0ce7dcd441d601fe6"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3332784,
+              "reference_sha256": "e18fa7f024c1be49097ece508ec2ec7b6425e8b31cdf76333c6b58141c2b6b50"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3329536,
+              "reference_sha256": "9b8845a95434659c68e7e2bd2332671aa1053a53468d090218564a4bb3a4bb2d"
             }
           ]
         }
