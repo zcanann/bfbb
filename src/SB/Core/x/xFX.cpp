@@ -944,12 +944,12 @@ namespace
     void lerp(xVec3& v, F32 frac, const xVec3& v0, const xVec3& v1);
 
     void set_vert(RxObjSpace3DVertex& vert, const vert_data& vd);
-    void set_vert(RxObjSpace3DVertex& vert, const xVec3& loc, const xVec3& norm,
-                  const RwTexCoords& uv, U8 alpha);
+    inline void set_vert(RxObjSpace3DVertex& vert, const xVec3& loc, const xVec3& norm,
+                         const RwTexCoords& uv, U8 alpha);
     void push_triangle(RxObjSpace3DVertex*& vert, const tri_data& tri);
-    S32 clip_triangle(tri_data* out, const tri_data& in, F32 depth);
+    inline S32 clip_triangle(tri_data* out, const tri_data& in, F32 depth);
     void refresh_vert_buffer(RxObjSpace3DVertex*& vert, bool flush);
-    U32 count_alpha_triangles(const RpTriangle* tri, const F32* depth, u32 size);
+    inline U32 count_alpha_triangles(const RpTriangle* tri, const F32* depth, u32 size);
     void depth_sort(U16* index, const tri_data* tri, u32 size);
 
 #define ALPHA_COUNT 300
@@ -957,6 +957,9 @@ namespace
     U8 alpha_count0[ALPHA_COUNT];
     U8 alpha_count1[ALPHA_COUNT];
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
     void depth_sort(U16* index, const tri_data* tri, u32 size)
     {
         for (U32 i = 0; i < size; i++)
@@ -976,6 +979,10 @@ namespace
             }
         }
     }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
+
 } // namespace
 
 void xFXRenderProximityFade(const xModelInstance& model, F32 near_dist, F32 far_dist)
@@ -1267,7 +1274,7 @@ namespace
         RwIm3DVertexSetUV(&vert, vd.uv.u, vd.uv.v);
     }
 
-    S32 clip_triangle(tri_data* out, const tri_data& in, F32 depth)
+    inline S32 clip_triangle(tri_data* out, const tri_data& in, F32 depth)
     {
         U16 flags;
         U8 i0;
@@ -1290,20 +1297,20 @@ namespace
 
         switch (flags)
         {
-        case 0x0e:
         case 0x31:
+        case 0x0e:
             i0 = 0;
             i1 = 1;
             i2 = 2;
             break;
-        case 0x15:
         case 0x2a:
+        case 0x15:
             i0 = 1;
             i1 = 2;
             i2 = 0;
             break;
-        case 0x1c:
         case 0x23:
+        case 0x1c:
             i0 = 2;
             i1 = 0;
             i2 = 1;
@@ -1392,8 +1399,8 @@ namespace
         }
     }
 
-    void set_vert(RxObjSpace3DVertex& vert, const xVec3& loc, const xVec3& norm,
-                  const RwTexCoords& uv, U8 alpha)
+    inline void set_vert(RxObjSpace3DVertex& vert, const xVec3& loc, const xVec3& norm,
+                         const RwTexCoords& uv, U8 alpha)
     {
         RwIm3DVertexSetPos(&vert, loc.x, loc.y, loc.z);
         RwIm3DVertexSetNormal(&vert, norm.x, norm.y, norm.z);
@@ -1425,7 +1432,7 @@ namespace
         }
     }
 
-    U32 count_alpha_triangles(const RpTriangle* tri, const F32* depth, u32 size)
+    inline U32 count_alpha_triangles(const RpTriangle* tri, const F32* depth, u32 size)
     {
         static const U8 segments[43] = { 0, 1, 3, 0, 1, 2, 4, 0, 3, 4, 3, 0, 0, 0, 0,
                                          0, 1, 2, 4, 0, 2, 1, 2, 0, 4, 2, 1, 0, 0, 0,
@@ -1479,10 +1486,15 @@ namespace
                 flags |= 0x10;
             }
 
+#if defined(PS2)
+            alpha_count0[i] = segments[flags];
+            total += segments[flags];
+#else
             n = segments[flags];
 
             alpha_count0[i] = n;
             total += n;
+#endif
 
             i++;
             tri++;

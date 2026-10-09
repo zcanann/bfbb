@@ -148,3 +148,25 @@ The original pointer-type DIE audit is `build/fx-env-pointer-dwarf.json`.
 Complete comparisons are `build/fx-bubble-final-comparison.json`, its
 function-delta JSON, and `build/fx-bubble-gc-{before,after}.json`. This is an
 ordinary source comparison with the existing unresolved SDK identity limits.
+
+The proximity-fade renderer explicitly inlines its alpha-triangle counter,
+triangle clipper and position/normal vertex writer, while retaining the original
+call to `depth_sort` with a scoped PS2 pragma. Raw calls in all three debug
+originals independently confirm the sort boundary and the absence of calls to
+the three inlined helpers (`build/fade-original-calls.json`). No extra pragma
+is needed for the vertex-data writer or implicit assignment operators.
+
+The clipper's paired case labels follow the original comparison order. Its
+counter reloads the segment table after writing the alpha count on PS2, as the
+original instructions do; GameCube retains its original cached lookup because
+the shared spelling regressed its otherwise exact counter. These changes lift
+the 4520-byte renderer from 47.779% to 92.45221% in all three debug regions.
+Complete `xFX` fuzzy matching reaches 97.09688%, retaining all 17208 exact bytes,
+all other function scores and all target/data controls. The French profile and
+every GameCube function score remain unchanged (148 exact functions / 23256
+bytes). This function is not currently profiled for France.
+
+Evidence is `build/fade-final-comparison.json`, its function-delta JSON, and
+`build/fade-gc-{before,after}.json`. Unnamed assignment and SDK call targets
+remain unresolved in the comparison profile; this source improvement does not
+promote those identities or claim a fully linked match.
