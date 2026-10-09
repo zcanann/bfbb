@@ -157,3 +157,22 @@ The string-unit fuzzy score rises from 97.535965% to 99.108406%, retaining
 unchanged. The PS2-only branches preserve the complete GameCube USA report,
 and its retail DOL SHA-1 check passes. Private evidence uses `*-buffer.json`
 under `build/string-oct09`.
+
+## Float-list pointer assignment (2026-10-09)
+
+Separating the PS2 input-pointer assignment from its null check recovers the
+original saved-register test. All four float-parser comparisons improve from
+98.43511% to 98.47328%; only the two whitespace-loop NOPs remain different.
+Exact totals remain 10/12 functions and 3088/3948 bytes, while the string-unit
+fuzzy score reaches 99.11347%. Other function scores are unchanged. The
+GameCube form stays separate: sharing the split assignment changed its output.
+The retained PS2-only change preserves the complete GameCube USA report and
+passes the retail DOL SHA-1 check.
+
+Rejected probes covered guard spelling, whitespace condition order, for/do
+loops, explicit breaks/continues, integer and character locals, and the negate
+assignment's lifetime. Full-TU compiler probes also provided no patch evidence:
+3.0.1b74 reduced the float-parser score to 42.076336%, while 2.4 scored
+62.82443% with its unsupported bottomup inline option omitted. Neither recovered
+the original function. Private evidence is `build/string-oct09/*-float.json`
+and the source/compiler probe files in that directory.

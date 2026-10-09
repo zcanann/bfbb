@@ -362,7 +362,12 @@ S32 xStrParseFloatList(F32* dest, const char* strbuf, S32 max)
     char* numstart;
     char savech;
 
+#ifdef PS2
+    str = (char*)strbuf;
+    if (!str)
+#else
     if (!(str = (char*)strbuf))
+#endif
     {
         return 0;
     }
