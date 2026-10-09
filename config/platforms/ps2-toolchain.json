@@ -220908,7 +220908,8 @@
         "Enter@002b0d50": "Enter__15zNPCGoalTubePalFfPv",
         "Exit@002b6e70": "Exit__19zNPCGoalAttackChuckFfPv",
         "Process@002ba360": "Process__13zNPCGoalChaseFP11en_trantypefPvP6xScene",
-        "Process@002c4970": "Process__14zNPCGoalGoHomeFP11en_trantypefPvP6xScene"
+        "Process@002c4970": "Process__14zNPCGoalGoHomeFP11en_trantypefPvP6xScene",
+        "DuckStackInterp@002afff0": "DuckStackInterp__20zNPCGoalTubeDucklingFf"
       },
       "calls": [
         {
@@ -221365,6 +221366,20 @@
           "target_source": "SB/Core/x/xBehaviour.cpp",
           "target_function": "Process@002f2250",
           "symbol": "Process__5xGoalFP11en_trantypefPvP6xScene"
+        },
+        {
+          "function": "DuckStackInterp@002afff0",
+          "offset": 124,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "TurnToFace@002d34a0",
+          "symbol": "TurnToFace__10zNPCCommonFfPC5xVec3f"
+        },
+        {
+          "function": "DuckStackInterp@002afff0",
+          "offset": 220,
+          "target_source": "SB/Game/zNPCTypeRobot.cpp",
+          "target_function": "PosStacked@002d9380",
+          "symbol": "PosStacked__13zNPCTubeSlaveFP5xVec3"
         }
       ],
       "linkage_provenance": [
@@ -222147,6 +222162,32 @@
               "reference_sha256": "5316fad773a5cfb0d66327ed57f59dc53e105abaf09f622827bed2105212a558"
             }
           ]
+        },
+        {
+          "function": "DuckStackInterp@002afff0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2818032,
+          "size": 484,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2816624,
+              "reference_sha256": "a29eb202c57698e96b73563a16edcaf32ea744ac7376e9d3dfd96c7f864186d9"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2817920,
+              "reference_sha256": "7dcb2cbe337830099861c79457ac765ac7f39a16c6ab63c996814284b26a7613"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2814608,
+              "reference_sha256": "744c6fe4524debb3cbca204de0d28f826adb737601e1c5cae65e50f7e99978ae"
+            }
+          ]
         }
       ],
       "selector": "name_address"
@@ -222162,7 +222203,16 @@
         "NPCC_Bounce": "NPCC_Bounce__FP5xVec3P5xVec3f",
         "NPCC_TmrCycle": "NPCC_TmrCycle__FPfff",
         "IsVisible": "IsVisible__9NPCWidgetFv",
-        "NPCC_dir_toXZAng": "NPCC_dir_toXZAng__FPC5xVec3"
+        "NPCC_dir_toXZAng": "NPCC_dir_toXZAng__FPC5xVec3",
+        "NPCC_MakeArbPlane": "NPCC_MakeArbPlane__FPC5xVec3P5xVec3P5xVec3",
+        "NPCC_rotHPB": "NPCC_rotHPB__FP7xMat3x3fff",
+        "NPCC_xBoundBack": "NPCC_xBoundBack__FP6xBound",
+        "NPCC_xBoundAway": "NPCC_xBoundAway__FP6xBound",
+        "NPCC_LineHitsBound": "NPCC_LineHitsBound__FP5xVec3P5xVec3P6xBoundP7xCollis",
+        "NPCC_chk_hitEnt": "NPCC_chk_hitEnt__FP4xEntP6xBoundP7xCollis",
+        "Update": "Update__10NPCBlinkerFffff",
+        "Off": "Off__9NPCWidgetFPC10zNPCCommoni",
+        "On": "On__9NPCWidgetFPC10zNPCCommoni"
       },
       "calls": [
         {
@@ -222171,6 +222221,97 @@
           "target_source": "SB/Core/x/xMath.cpp",
           "target_function": "xAngleClampFast@001edf80",
           "symbol": "xAngleClampFast__Ff"
+        },
+        {
+          "function": "NPCC_MakeArbPlane",
+          "offset": 80,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize@00210d10",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "NPCC_rotHPB",
+          "offset": 108,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RotZ@001ef550",
+          "symbol": "xMat3x3RotZ__FP7xMat3x3f"
+        },
+        {
+          "function": "NPCC_rotHPB",
+          "offset": 120,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RotX@001ef650",
+          "symbol": "xMat3x3RotX__FP7xMat3x3f"
+        },
+        {
+          "function": "NPCC_rotHPB",
+          "offset": 136,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Mul@001ef150",
+          "symbol": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "NPCC_rotHPB",
+          "offset": 148,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3RotY@001ef5d0",
+          "symbol": "xMat3x3RotY__FP7xMat3x3f"
+        },
+        {
+          "function": "NPCC_rotHPB",
+          "offset": 164,
+          "target_source": "SB/Core/x/xMath3.cpp",
+          "target_function": "xMat3x3Mul@001ef150",
+          "symbol": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "NPCC_LineHitsBound",
+          "offset": 208,
+          "target_source": "SB/Core/x/xBound.cpp",
+          "target_function": "xRayHitsBound@001c0c50",
+          "symbol": "xRayHitsBound__FPC5xRay3PC6xBoundP7xCollis"
+        },
+        {
+          "function": "NPCC_chk_hitEnt",
+          "offset": 120,
+          "target_source": "SB/Core/x/xQuickCull.cpp",
+          "target_function": "xQuickCullForEverything@001fa8c0",
+          "symbol": "xQuickCullForEverything__FP7xQCData"
+        },
+        {
+          "function": "NPCC_chk_hitEnt",
+          "offset": 136,
+          "target_source": "SB/Core/x/xBound.cpp",
+          "target_function": "xBoundHitsBound@001c10e0",
+          "symbol": "xBoundHitsBound__FPC6xBoundPC6xBoundP7xCollis"
+        },
+        {
+          "function": "Off",
+          "offset": 124,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent@00283ab0",
+          "symbol": "zEntEvent__FP5xBaseUi"
+        },
+        {
+          "function": "Off",
+          "offset": 136,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent@00283ab0",
+          "symbol": "zEntEvent__FP5xBaseUi"
+        },
+        {
+          "function": "On",
+          "offset": 224,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent@00283ab0",
+          "symbol": "zEntEvent__FP5xBaseUi"
+        },
+        {
+          "function": "On",
+          "offset": 236,
+          "target_source": "SB/Core/x/xEvent.cpp",
+          "target_function": "zEntEvent@00283ab0",
+          "symbol": "zEntEvent__FP5xBaseUi"
         }
       ],
       "linkage_provenance": [
@@ -222277,6 +222418,240 @@
               "reference_sha256": "abbe64fb43e5fd18546ee0336ecd454d48ce478ce5259204cbafc020f6d0a6cc"
             }
           ]
+        },
+        {
+          "function": "NPCC_MakeArbPlane",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3256016,
+          "size": 196,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3254608,
+              "reference_sha256": "f6cf0a2419633571e903de8cddbbcd25ac731bcbf1ac1a47ffe93b8799b5c71e"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3255904,
+              "reference_sha256": "0a2a7cd2b43b77b4c0713cc43457d958d3eafe1c789d12373e7345345a424d37"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3252592,
+              "reference_sha256": "5151c228dc0eac7d716388f0b76958d81755a0e2cb57140f6d800496f9e3f0ff"
+            }
+          ]
+        },
+        {
+          "function": "NPCC_rotHPB",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3256400,
+          "size": 196,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3254992,
+              "reference_sha256": "14084fa8aad475ba2de342ce02b97246e67192d4f0824b08f0eabac9153e8fa7"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3256288,
+              "reference_sha256": "2a252dba549fc571a09cae2b2afa40788ab009cf82169a7ba341902ebf79d09d"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3252976,
+              "reference_sha256": "792322305e108b56a2ee0972892f976150440ca23e0dfa456c525fe986af4dc3"
+            }
+          ]
+        },
+        {
+          "function": "NPCC_xBoundBack",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3257504,
+          "size": 96,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3256096,
+              "reference_sha256": "712b554054383369121edd4defc8bd0090e4186faaa7354d22e3da35513bb906"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3257392,
+              "reference_sha256": "712b554054383369121edd4defc8bd0090e4186faaa7354d22e3da35513bb906"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3254080,
+              "reference_sha256": "712b554054383369121edd4defc8bd0090e4186faaa7354d22e3da35513bb906"
+            }
+          ]
+        },
+        {
+          "function": "NPCC_xBoundAway",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3257600,
+          "size": 96,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3256192,
+              "reference_sha256": "0b4934a0c767cb748f60803b2728527ae209e18774db28f727f29bbb97c1ae98"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3257488,
+              "reference_sha256": "0b4934a0c767cb748f60803b2728527ae209e18774db28f727f29bbb97c1ae98"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3254176,
+              "reference_sha256": "0b4934a0c767cb748f60803b2728527ae209e18774db28f727f29bbb97c1ae98"
+            }
+          ]
+        },
+        {
+          "function": "NPCC_LineHitsBound",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3258016,
+          "size": 240,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3256608,
+              "reference_sha256": "32ca2b9c4f2c544ad4733f29ecb93ee2301c138ba544dfe51bef9e8ef333d64c"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3257904,
+              "reference_sha256": "7e5980e9d4642d46a1714f65c344bdecaf4f25e8aa7131568494a0ab583861a6"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3254592,
+              "reference_sha256": "28afc8f80c03190d242dfe6ebafe068229f0d95ba5cde0beda9701eb95afd43b"
+            }
+          ]
+        },
+        {
+          "function": "NPCC_chk_hitEnt",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3258256,
+          "size": 200,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3256848,
+              "reference_sha256": "7690a7fb075cb73074ddd83d025314b6987e55b5b85df4fa94d42d168060eaaa"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3258144,
+              "reference_sha256": "8c4742789c0010fa529b889c62330e502be0a24b7689db7574ecec29ba1b7d09"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3254832,
+              "reference_sha256": "bb14193506536cb717c26f4fe7e0f0d65e26e82d1e77175fa931cf889e07273c"
+            }
+          ]
+        },
+        {
+          "function": "Update",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3262464,
+          "size": 140,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3261056,
+              "reference_sha256": "a75408f090a1b8fb3565d730f9094994efb0b72e73de28aa61f34d4f4243b5c0"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3262352,
+              "reference_sha256": "a75408f090a1b8fb3565d730f9094994efb0b72e73de28aa61f34d4f4243b5c0"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3259040,
+              "reference_sha256": "a75408f090a1b8fb3565d730f9094994efb0b72e73de28aa61f34d4f4243b5c0"
+            }
+          ]
+        },
+        {
+          "function": "Off",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3266592,
+          "size": 168,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3265184,
+              "reference_sha256": "85b5d7998c894ef341cee961c0f9ee8cb848b35bcea831940279eff0c0e892be"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3266480,
+              "reference_sha256": "07e1b1a8a198bf26ad6caab128232bb41fc02b805b0c05c7f422564363f5c1c6"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3263168,
+              "reference_sha256": "b22456f882b5910902724b5a314d4ff38fc0c7e84c9c2a09f8167fc2a6171dbf"
+            }
+          ]
+        },
+        {
+          "function": "On",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3266768,
+          "size": 264,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3265360,
+              "reference_sha256": "9843644766f9797370e1d987b13f7c262b6d54b6672144616cd96a74120faa3d"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3266656,
+              "reference_sha256": "84c1f3c1a8b83e75fd0bad676ed37633062bc85d21ef7c39cd478d579235e638"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3263344,
+              "reference_sha256": "e4e6aff3051764b5b9bf4f80da9ddabc09bef30c0c1232d1eb1b86cec55383fd"
+            }
+          ]
         }
       ]
     },
@@ -222297,7 +222672,15 @@
         "ModelAtomicFind": "ModelAtomicFind__10zNPCCommonFiiP14xModelInstance",
         "ModelAtomicShow": "ModelAtomicShow__10zNPCCommonFiP14xModelInstance",
         "ModelAtomicHide": "ModelAtomicHide__10zNPCCommonFiP14xModelInstance",
-        "TurnToFace": "TurnToFace__10zNPCCommonFfPC5xVec3f"
+        "TurnToFace": "TurnToFace__10zNPCCommonFfPC5xVec3f",
+        "NPCC_BuildStandardAnimTran": "NPCC_BuildStandardAnimTran__FP10xAnimTablePPcPiif",
+        "LassoSyncAnims": "LassoSyncAnims__10zNPCCommonF11en_lassanim",
+        "AnimDuration": "AnimDuration__10zNPCCommonFP10xAnimState",
+        "AnimSetState": "AnimSetState__10zNPCCommonFUif",
+        "MvptReset": "MvptReset__10zNPCCommonFP10zMovePoint",
+        "ParseProps": "ParseProps__10zNPCCommonFv",
+        "ThrottleAccel": "ThrottleAccel__10zNPCCommonFfif",
+        "BoundAsRadius": "BoundAsRadius__10zNPCCommonCFi"
       },
       "calls": [
         {
@@ -222334,6 +222717,55 @@
           "target_source": "SB/Core/x/xMath.cpp",
           "target_function": "xDangleClamp@001edef0",
           "symbol": "xDangleClamp__Ff"
+        },
+        {
+          "function": "NPCC_BuildStandardAnimTran",
+          "offset": 180,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "NPCC_BuildStandardAnimTran",
+          "offset": 216,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableAddTransition@00213530",
+          "symbol": "xAnimTableAddTransition__FP10xAnimTableP15xAnimTransitionPCc"
+        },
+        {
+          "function": "NPCC_BuildStandardAnimTran",
+          "offset": 368,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "NPCC_BuildStandardAnimTran",
+          "offset": 436,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "LassoSyncAnims",
+          "offset": 120,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimPlaySetState@002125d0",
+          "symbol": "xAnimPlaySetState__FP11xAnimSingleP10xAnimStatef"
+        },
+        {
+          "function": "AnimSetState",
+          "offset": 32,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableGetStateID@00212f90",
+          "symbol": "xAnimTableGetStateID__FP10xAnimTableUi"
+        },
+        {
+          "function": "AnimSetState",
+          "offset": 56,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimPlaySetState@002125d0",
+          "symbol": "xAnimPlaySetState__FP11xAnimSingleP10xAnimStatef"
         }
       ],
       "linkage_provenance": [
@@ -222596,6 +223028,214 @@
               "reference_sha256": "3181748543194acaaaf3f13963964fd338c937a2049543da5cbeb6bcca9d80a7"
             }
           ]
+        },
+        {
+          "function": "NPCC_BuildStandardAnimTran",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2947920,
+          "size": 516,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2946512,
+              "reference_sha256": "6b591a4fadf9e70d2a297f2d76c127cde0cfab8a93340e8ab9a4c8b129999539"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2947808,
+              "reference_sha256": "4a5418bb2be235681ffec891ea56e72b5ed0c82abde5d2439d42db118a2ccc10"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2944496,
+              "reference_sha256": "5800be6aa97cfa5bcb658f3b73c7e57d7380bdb2615df7c0feb789b5d3068393"
+            }
+          ]
+        },
+        {
+          "function": "LassoSyncAnims",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2949712,
+          "size": 140,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2948304,
+              "reference_sha256": "ed9696085abd319a8a9492e509780ed8156c8e8962aee0ba63902a4cef2b976a"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2949600,
+              "reference_sha256": "91492c74567331e2d3ed6a5c72475ab96378153438939cc4aa7df5c2a6292a90"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2946288,
+              "reference_sha256": "6b6297e826b655f7a77e51d3f9d1dd1209393e8ca7c40a32cc2b517deae141d9"
+            }
+          ]
+        },
+        {
+          "function": "AnimDuration",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2953808,
+          "size": 112,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2952400,
+              "reference_sha256": "94c6c7c762fe4fbd795f5f8fac0e9e1a96559d6d72311bbd995a9ad7d3359932"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2953696,
+              "reference_sha256": "94c6c7c762fe4fbd795f5f8fac0e9e1a96559d6d72311bbd995a9ad7d3359932"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2950384,
+              "reference_sha256": "94c6c7c762fe4fbd795f5f8fac0e9e1a96559d6d72311bbd995a9ad7d3359932"
+            }
+          ]
+        },
+        {
+          "function": "AnimSetState",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2954192,
+          "size": 84,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2952784,
+              "reference_sha256": "d737ace653d13bc91152df7da16d4941461f94aab6a7d1af206f0524c502cac6"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2954080,
+              "reference_sha256": "34d655f0ab7dd0b1e13fb23b902c938c85c4831dfb016cadf12f74ac1c76f3ac"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2950768,
+              "reference_sha256": "9dfd74e6c2a295139725a81fc6e375634e34f6bf2728fb5ad07321a20b345cc2"
+            }
+          ]
+        },
+        {
+          "function": "MvptReset",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2955904,
+          "size": 108,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2954496,
+              "reference_sha256": "6693ca3e204f0a859f9f4d28414858e5f832696f32f72b73521c3b97dc9df3ac"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2955792,
+              "reference_sha256": "6693ca3e204f0a859f9f4d28414858e5f832696f32f72b73521c3b97dc9df3ac"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2952480,
+              "reference_sha256": "6693ca3e204f0a859f9f4d28414858e5f832696f32f72b73521c3b97dc9df3ac"
+            }
+          ]
+        },
+        {
+          "function": "ParseProps",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2960544,
+          "size": 140,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2959136,
+              "reference_sha256": "57d5d9d0515a8bab1ab7e9810371cd7272863b0c47fe21528bcd5e395d639350"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2960432,
+              "reference_sha256": "57d5d9d0515a8bab1ab7e9810371cd7272863b0c47fe21528bcd5e395d639350"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2957120,
+              "reference_sha256": "57d5d9d0515a8bab1ab7e9810371cd7272863b0c47fe21528bcd5e395d639350"
+            }
+          ]
+        },
+        {
+          "function": "ThrottleAccel",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2963328,
+          "size": 136,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2961920,
+              "reference_sha256": "50267066811e2599cb50a2e61066b65a2fecf406b1d67bb5b68f956b713a8597"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2963216,
+              "reference_sha256": "50267066811e2599cb50a2e61066b65a2fecf406b1d67bb5b68f956b713a8597"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2959904,
+              "reference_sha256": "50267066811e2599cb50a2e61066b65a2fecf406b1d67bb5b68f956b713a8597"
+            }
+          ]
+        },
+        {
+          "function": "BoundAsRadius",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2967712,
+          "size": 216,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2966304,
+              "reference_sha256": "09800e6e9d7f1804a1ef95c7b5e03db289d7017f04c694e537281e570c28809c"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2967600,
+              "reference_sha256": "09800e6e9d7f1804a1ef95c7b5e03db289d7017f04c694e537281e570c28809c"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2964288,
+              "reference_sha256": "09800e6e9d7f1804a1ef95c7b5e03db289d7017f04c694e537281e570c28809c"
+            }
+          ]
         }
       ]
     },
@@ -222610,7 +223250,20 @@
         "DstSqFromHome": "DstSqFromHome__8NPCArenaFP5xVec3P5xVec3",
         "PctFromHome": "PctFromHome__8NPCArenaFP5xVec3",
         "IncludesPos": "IncludesPos__8NPCArenaFP5xVec3fP5xVec3",
-        "FacePos": "FacePos__9zNPCRobotFP5xVec3ff"
+        "FacePos": "FacePos__9zNPCRobotFP5xVec3ff",
+        "SetHome": "SetHome__8NPCArenaFP10zNPCCommonP5xVec3f",
+        "NextBestNav": "NextBestNav__8NPCArenaFP10zNPCCommonP10zMovePoint",
+        "NeedToCycle": "NeedToCycle__8NPCArenaFP10zNPCCommon",
+        "ShieldUpdate": "ShieldUpdate__9zNPCSlickFf",
+        "PosStacked": "PosStacked__13zNPCTubeSlaveFP5xVec3",
+        "Notice": "Notice__10TubeNoticeF10en_psynoteP5xGoalPv",
+        "Chk_IsBonked": "Chk_IsBonked__11zNPCTubeletFv",
+        "Unbonk": "Unbonk__11zNPCTubeletFv",
+        "AdoptADoggie": "AdoptADoggie__10zNPCArfArfFv",
+        "DuploNotice": "DuploNotice__10zNPCArfArfF13en_SM_NOTICESPv",
+        "RepelMissile": "RepelMissile__10zNPCSleepyFf",
+        "BlinkerUpdate": "BlinkerUpdate__11zNPCFodBombFff",
+        "MoveTowardsArena": "MoveTowardsArena__9zNPCRobotFff"
       },
       "calls": [
         {
@@ -222619,6 +223272,90 @@
           "target_source": "SB/Game/zNPCTypeCommon.cpp",
           "target_function": "TurnToFace@002d34a0",
           "symbol": "TurnToFace__10zNPCCommonFfPC5xVec3f"
+        },
+        {
+          "function": "ShieldUpdate",
+          "offset": 400,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ModelAtomicFind@002d1570",
+          "symbol": "ModelAtomicFind__10zNPCCommonFiiP14xModelInstance"
+        },
+        {
+          "function": "ShieldUpdate",
+          "offset": 448,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ModelAtomicHide@002d1630",
+          "symbol": "ModelAtomicHide__10zNPCCommonFiP14xModelInstance"
+        },
+        {
+          "function": "ShieldUpdate",
+          "offset": 472,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ModelAtomicShow@002d15c0",
+          "symbol": "ModelAtomicShow__10zNPCCommonFiP14xModelInstance"
+        },
+        {
+          "function": "Chk_IsBonked",
+          "offset": 260,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ModelAtomicShow@002d15c0",
+          "symbol": "ModelAtomicShow__10zNPCCommonFiP14xModelInstance"
+        },
+        {
+          "function": "Chk_IsBonked",
+          "offset": 276,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ModelAtomicHide@002d1630",
+          "symbol": "ModelAtomicHide__10zNPCCommonFiP14xModelInstance"
+        },
+        {
+          "function": "Chk_IsBonked",
+          "offset": 292,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ModelAtomicHide@002d1630",
+          "symbol": "ModelAtomicHide__10zNPCCommonFiP14xModelInstance"
+        },
+        {
+          "function": "Unbonk",
+          "offset": 20,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ModelAtomicShow@002d15c0",
+          "symbol": "ModelAtomicShow__10zNPCCommonFiP14xModelInstance"
+        },
+        {
+          "function": "Unbonk",
+          "offset": 36,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ModelAtomicHide@002d1630",
+          "symbol": "ModelAtomicHide__10zNPCCommonFiP14xModelInstance"
+        },
+        {
+          "function": "Unbonk",
+          "offset": 52,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ModelAtomicHide@002d1630",
+          "symbol": "ModelAtomicHide__10zNPCCommonFiP14xModelInstance"
+        },
+        {
+          "function": "BlinkerUpdate",
+          "offset": 52,
+          "target_source": "SB/Game/zNPCSupport.cpp",
+          "target_function": "Update@0031c800",
+          "symbol": "Update__10NPCBlinkerFffff"
+        },
+        {
+          "function": "MoveTowardsArena",
+          "offset": 212,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ThrottleAdjust@002d3810",
+          "symbol": "ThrottleAdjust__10zNPCCommonFfff"
+        },
+        {
+          "function": "MoveTowardsArena",
+          "offset": 232,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ThrottleApply@002d3600",
+          "symbol": "ThrottleApply__10zNPCCommonFfPC5xVec3i"
         }
       ],
       "linkage_provenance": [
@@ -222723,6 +223460,344 @@
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
               "source_address": 3017344,
               "reference_sha256": "e6b66e73ebb44b2763f0ba9111b671dc4c9bf215cf973fdda314dd95e54e4db5"
+            }
+          ]
+        },
+        {
+          "function": "SetHome",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2974912,
+          "size": 92,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2973504,
+              "reference_sha256": "796abbc8e9183a79acb365986e1dd6a933ca18b9c7872948172ff9ef008f3d99"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2974800,
+              "reference_sha256": "796abbc8e9183a79acb365986e1dd6a933ca18b9c7872948172ff9ef008f3d99"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2971488,
+              "reference_sha256": "796abbc8e9183a79acb365986e1dd6a933ca18b9c7872948172ff9ef008f3d99"
+            }
+          ]
+        },
+        {
+          "function": "NextBestNav",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2975264,
+          "size": 296,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2973856,
+              "reference_sha256": "2643824a89e3d7457f8abba0c490a31600d1fb1679225edbfbc2b5c3dcaf9196"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2975152,
+              "reference_sha256": "2643824a89e3d7457f8abba0c490a31600d1fb1679225edbfbc2b5c3dcaf9196"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2971840,
+              "reference_sha256": "2643824a89e3d7457f8abba0c490a31600d1fb1679225edbfbc2b5c3dcaf9196"
+            }
+          ]
+        },
+        {
+          "function": "NeedToCycle",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2976448,
+          "size": 304,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2975040,
+              "reference_sha256": "980fc0d4e675df37cf8a57378845d029532a598311454c164e313e539855e8dc"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2976336,
+              "reference_sha256": "980fc0d4e675df37cf8a57378845d029532a598311454c164e313e539855e8dc"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2973024,
+              "reference_sha256": "980fc0d4e675df37cf8a57378845d029532a598311454c164e313e539855e8dc"
+            }
+          ]
+        },
+        {
+          "function": "ShieldUpdate",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2983904,
+          "size": 608,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2982496,
+              "reference_sha256": "0633cbec044900f2bbe201f439e155cdba83c1a54dc788d9e348080c78b6f86c"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2983792,
+              "reference_sha256": "0c20ca11a2f1d8114aa862995018b1e756a503aad2209598b76fa844b801108a"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2980480,
+              "reference_sha256": "1ab4204b69ec058e64a5f0ae1198eaac7edba23f1a576fa243262923a766d3c7"
+            }
+          ]
+        },
+        {
+          "function": "PosStacked",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2986880,
+          "size": 92,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2985472,
+              "reference_sha256": "a38a6ae208eeb2e8d442f4f08a2c7820cb8eff50d802a7505eddc7fc873729bc"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2986768,
+              "reference_sha256": "a38a6ae208eeb2e8d442f4f08a2c7820cb8eff50d802a7505eddc7fc873729bc"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2983456,
+              "reference_sha256": "a38a6ae208eeb2e8d442f4f08a2c7820cb8eff50d802a7505eddc7fc873729bc"
+            }
+          ]
+        },
+        {
+          "function": "Notice",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2988464,
+          "size": 264,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2987056,
+              "reference_sha256": "7bc8f629d6ea9474502cabd2389cd419208762f1f3fe72675127cdce23d19c68"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2988352,
+              "reference_sha256": "7bc8f629d6ea9474502cabd2389cd419208762f1f3fe72675127cdce23d19c68"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2985040,
+              "reference_sha256": "7bc8f629d6ea9474502cabd2389cd419208762f1f3fe72675127cdce23d19c68"
+            }
+          ]
+        },
+        {
+          "function": "Chk_IsBonked",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2988752,
+          "size": 368,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2987344,
+              "reference_sha256": "150325b5abc83701a394b899761fb621a1e45e19d0d697449609f93cab6659dc"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2988640,
+              "reference_sha256": "a498b1279ae45d056c06ad818efc627114613a5f53dffb00226ee4d5869dfb29"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2985328,
+              "reference_sha256": "f9eb8feb18bcf1a425c373b8f3f7b6b86f88f8dfe5eca893c3b518b9febe7353"
+            }
+          ]
+        },
+        {
+          "function": "Unbonk",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2989120,
+          "size": 108,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2987712,
+              "reference_sha256": "4d48c0b7219d0b5c76c4107984e2c18a077bd6c566dcb6fa2ca1b1e3f86784e4"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2989008,
+              "reference_sha256": "6f3cd7cfcb6243caa7dcf2f6e2f46f652ba0e6ab124235a7f9601df771131a58"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2985696,
+              "reference_sha256": "6b730b9a5d020c59dff0ab6895e867e22f1514d05551b1c61deabfad6a79c28b"
+            }
+          ]
+        },
+        {
+          "function": "AdoptADoggie",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2996384,
+          "size": 88,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2994976,
+              "reference_sha256": "946717446395d08a5ce88ab8aa1f2fe9263446cd889a8666c283b97b734e326c"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2996272,
+              "reference_sha256": "946717446395d08a5ce88ab8aa1f2fe9263446cd889a8666c283b97b734e326c"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2992960,
+              "reference_sha256": "946717446395d08a5ce88ab8aa1f2fe9263446cd889a8666c283b97b734e326c"
+            }
+          ]
+        },
+        {
+          "function": "DuploNotice",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2996480,
+          "size": 168,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2995072,
+              "reference_sha256": "98481a4bc187d1eaf73254be08348b5b2fd7adca646d30faa3e15dea3cd862bb"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2996368,
+              "reference_sha256": "98481a4bc187d1eaf73254be08348b5b2fd7adca646d30faa3e15dea3cd862bb"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2993056,
+              "reference_sha256": "98481a4bc187d1eaf73254be08348b5b2fd7adca646d30faa3e15dea3cd862bb"
+            }
+          ]
+        },
+        {
+          "function": "RepelMissile",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3002944,
+          "size": 120,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3001536,
+              "reference_sha256": "1d4f484ed9966822ad76041bae0834610c04952010d911cace9aeb1b467a5d2c"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3002832,
+              "reference_sha256": "1d4f484ed9966822ad76041bae0834610c04952010d911cace9aeb1b467a5d2c"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2999520,
+              "reference_sha256": "1d4f484ed9966822ad76041bae0834610c04952010d911cace9aeb1b467a5d2c"
+            }
+          ]
+        },
+        {
+          "function": "BlinkerUpdate",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3016192,
+          "size": 88,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3014784,
+              "reference_sha256": "9d39ff4923e67224b03a8fe0315744aa29013e06e6f6727e88dabdc34d3f4794"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3016080,
+              "reference_sha256": "a9708f48f9814c0a131e8661c44e0ea5fb830ac5f1ed7f867714bc77107b9412"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3012768,
+              "reference_sha256": "58ac66f7f1a56a09ccfea74ca5f375c943e4c37888c0a40d3744d56c1e9e0917"
+            }
+          ]
+        },
+        {
+          "function": "MoveTowardsArena",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3019344,
+          "size": 272,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3017936,
+              "reference_sha256": "e350e0b3f1de4a5fb765772399282d059b9999819f51f19cf45d22a7570c9024"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3019232,
+              "reference_sha256": "5d5feeb794d82355bb645d889a1163cc52aa05ca9db73c57dd6f66f74775ecca"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3015920,
+              "reference_sha256": "58a0c5e914e0bd9b06590569f2f71d2961870500c1d05bd69e1a1c6bccec3ead"
             }
           ]
         }
