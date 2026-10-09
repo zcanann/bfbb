@@ -132,3 +132,56 @@ source selection change. Private evidence: `iscrfx-motion-comparison.json`,
 `iscrfx-motion-vertex-flow-proof.py` / `.json`; actual whole-source objects,
 compiler logs and reports are frozen in `build/iscrfx-motion/<version>/`.
 The source parent is `1d88117c1`.
+
+## Distortion renderer
+
+The remaining 2,396-byte distortion body is now restored. All three debug
+versions report 99.926544% for the function and 99.36835% for the complete
+thirteen-function / 5,788-byte source unit. Every earlier function result stays
+unchanged, including the 1,524 exact bytes / nine functions. The source now
+implements all thirteen original bodies; this does not make the remaining
+fuzzy bodies exact or establish their unresolved SDK linkage.
+
+The renderer reconstructs the original camera-facing particle corners, six
+position-only immediate vertices, matrix multiplication and transformed-point
+paths, four depth rejection branches, perspective divisions, and first-particle
+diagnostic prints. The SDK vector macros operate through their `RwV3d` casts;
+these preserve the original aliasing and otherwise-dead perspective stores.
+Explicit component copies from each temporary matrix position preserve the
+original loads and local lifetimes. No shared vector or SDK header is changed.
+The matrix multiplication declaration is local, and its original destination
+remains unresolved rather than being named from the source compiler output.
+
+The original routine is unfinished in observable ways: it does not increment
+the immediate-buffer position or write vertex UV/color fields, and its final
+flush refers to the static buffer while the loop uses a local buffer of the
+same name. Those behaviors are retained. The original diagnostic format is
+`% 6.3f % 6.3f % 6.3f\n`; both original references and the compiled string were
+checked. The original identity-matrix macro also preserves existing flag bits,
+including its uninitialized local input. These are fidelity restorations, not
+attempts to repair the retail renderer.
+
+A raw replay of each actual compiled object applies only original DWARF-backed
+call, GP and HI16/LO16 references plus the independently checked string.
+2,264 / 2,396 bytes agree directly. Of the remaining 33 words, 23 are unresolved
+SDK/runtime transfers; the other ten are precisely four accesses to the local
+matrix-pointer stack slot (original 0xf0, source 0xfc) and two three-instruction
+subtractions with swapped float temporary registers. All other arithmetic,
+branches, delay slots, memory accesses and instruction positions agree. The
+normal score and exporter continue to retain these differences. Equivalent
+matrix-local/declaration forms did not remove the residual, and direct/SDK
+macro subtraction variants regressed matching; no compiler patch is proposed.
+
+All three originals independently confirm the six used aggregate layouts:
+`xVec3` / `RwV3d` (12), `DistortionParticle` (48), `RwMatrixTag` (64),
+`tagiRenderInput` (128), and `RxObjSpace3DVertex` (36), including their member
+offsets. The static pointer and count occupy four bytes each in the original
+load segment's zero-filled memory region. The existing platform declarations
+agree; no guessed padding is introduced. France remains outside this unit's
+proven profile, and GameCube/Xbox source selection stays unchanged.
+
+Private evidence: `iscrfx-distortion-comparison.json`,
+`iscrfx-distortion-changes.json`, `iscrfx-distortion-raw-proof.py` / `.json`,
+`iscrfx-distortion-layout-proof.py` / `.json`, and frozen whole-source objects,
+compiler logs and reports in `build/iscrfx-distortion/<version>/`. The source
+parent is `fffa3020d`.

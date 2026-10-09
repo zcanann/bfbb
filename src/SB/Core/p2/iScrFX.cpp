@@ -1,5 +1,9 @@
 #include "iScrFX.h"
 
+#include "iParMgr.h"
+#include "xScrFx.h"
+#include "xDebug.h"
+
 #include <rwim2d.h>
 #include <rwim3d.h>
 #include <stdio.h>
@@ -14,6 +18,8 @@ struct RwRect
 
 extern "C" RwRaster* RwRasterSubRaster(RwRaster* subRaster, RwRaster* raster, RwRect* rect);
 
+extern "C" RwMatrix* RwMatrixMultiply(RwMatrix* matrix, const RwMatrix* a, const RwMatrix* b);
+
 struct _iMotionBlurData
 {
     S32 motionBlurAlpha;
@@ -26,6 +32,8 @@ struct _iMotionBlurData
 
 static U32 sMotionBlurEnabled;
 static _iMotionBlurData sMBD;
+static RwIm3DVertex* Im3DBuffer;
+static U32 Im3DBufferPos;
 
 void iScrFxInit()
 {
@@ -249,4 +257,128 @@ S32 iScrFxMotionBlurOpen(RwCamera* camera)
     }
     iScrFxMotionBlurCreateImmediateModeData(camera, &rect);
     return 1;
+}
+
+void iScrFxDistortionRender(RwCamera* camera)
+{
+    xVec3 at;
+    DistortionParticle* dp = gDistortionParticles;
+    RwMatrix* mat = RwFrameGetLTM(RwCameraGetFrame(camera));
+    RwMatrix ptmat;
+    RwMatrix tmp;
+    RwMatrix invMtx;
+    RwMatrixSetIdentity(&ptmat);
+    RwMatrixInvert(&invMtx, RwFrameGetLTM(RwCameraGetFrame(camera)));
+    for (S32 i = 0; i < gNumDistortionParticles; i++, dp++)
+    {
+        RwIm3DVertex* Im3DBuffer = gRenderBuffer.m_vertex;
+        if (Im3DBufferPos > 480 - 6)
+        {
+            if (RwIm3DTransform(Im3DBuffer, Im3DBufferPos, NULL,
+                                rwIM3D_VERTEXUV | rwIM3D_VERTEXXYZ | rwIM3D_VERTEXRGBA))
+            {
+                RwIm3DRenderPrimitive(rwPRIMTYPETRILIST);
+                RwIm3DEnd();
+            }
+            Im3DBufferPos = 0;
+        }
+        RwIm3DVertex* imv = &Im3DBuffer[Im3DBufferPos];
+        xVec3 a, b, c, d;
+        xVec3 sa, sb, sc, sd;
+        xVec3 mmsa, mmsb, mmsc, mmsd;
+        xVec3 right;
+        xVec3Sub(&at, (xVec3*)&mat->pos, &dp->pos);
+        xVec3Normalize(&at, &at);
+        xVec3Cross(&right, &at, &dp->dir);
+        a.x = dp->pos.x;
+        a.y = dp->pos.y;
+        a.z = dp->pos.z;
+        xVec3AddScaled(&a, &dp->dir, -0.5f);
+        xVec3AddScaled(&a, &right, -0.5f);
+        xVec3Add(&b, &a, &right);
+        xVec3Add(&c, &a, &dp->dir);
+        xVec3Add(&d, &a, &dp->dir);
+        xVec3AddTo(&d, &right);
+        RwIm3DVertexSetPos(&imv[0], a.x, a.y, a.z);
+        RwIm3DVertexSetPos(&imv[1], b.x, b.y, b.z);
+        RwIm3DVertexSetPos(&imv[2], c.x, c.y, c.z);
+        RwIm3DVertexSetPos(&imv[3], b.x, b.y, b.z);
+        RwIm3DVertexSetPos(&imv[4], c.x, c.y, c.z);
+        RwIm3DVertexSetPos(&imv[5], d.x, d.y, d.z);
+
+        ptmat.pos.x = a.x;
+        ptmat.pos.y = a.y;
+        ptmat.pos.z = a.z;
+        RwMatrixMultiply(&tmp, &invMtx, &ptmat);
+        mmsa.x = tmp.pos.x;
+        mmsa.y = tmp.pos.y;
+        mmsa.z = tmp.pos.z;
+        RwV3dTransformPoints((RwV3d*)&sa, (RwV3d*)&a, 1, &invMtx);
+        if (mmsa.z <= 0.0f)
+        {
+            continue;
+        }
+        if (i == 0)
+        {
+            xprintf("% 6.3f % 6.3f % 6.3f\n", mmsa.x, mmsa.y, mmsa.z);
+            xprintf("% 6.3f % 6.3f % 6.3f\n", sa.x, sa.y, sa.z);
+        }
+        RwV3dScaleMacro((RwV3d*)&mmsa, (RwV3d*)&mmsa, 1.0f / mmsa.z);
+        RwV3dScaleMacro((RwV3d*)&sa, (RwV3d*)&sa, 1.0f / sa.z);
+
+        ptmat.pos.x = b.x;
+        ptmat.pos.y = b.y;
+        ptmat.pos.z = b.z;
+        RwMatrixMultiply(&tmp, &invMtx, &ptmat);
+        mmsb.x = tmp.pos.x;
+        mmsb.y = tmp.pos.y;
+        mmsb.z = tmp.pos.z;
+        RwV3dTransformPoints((RwV3d*)&sb, (RwV3d*)&b, 1, &invMtx);
+        if (mmsb.z <= 0.0f)
+        {
+            continue;
+        }
+        RwV3dScaleMacro((RwV3d*)&mmsb, (RwV3d*)&mmsb, 1.0f / mmsb.z);
+        RwV3dScaleMacro((RwV3d*)&sb, (RwV3d*)&sb, 1.0f / sb.z);
+
+        ptmat.pos.x = c.x;
+        ptmat.pos.y = c.y;
+        ptmat.pos.z = c.z;
+        RwMatrixMultiply(&tmp, &invMtx, &ptmat);
+        mmsc.x = tmp.pos.x;
+        mmsc.y = tmp.pos.y;
+        mmsc.z = tmp.pos.z;
+        RwV3dTransformPoints((RwV3d*)&sc, (RwV3d*)&c, 1, &invMtx);
+        if (mmsc.z <= 0.0f)
+        {
+            continue;
+        }
+        RwV3dScaleMacro((RwV3d*)&mmsc, (RwV3d*)&mmsc, 1.0f / mmsc.z);
+        RwV3dScaleMacro((RwV3d*)&sc, (RwV3d*)&sc, 1.0f / sc.z);
+
+        ptmat.pos.x = d.x;
+        ptmat.pos.y = d.y;
+        ptmat.pos.z = d.z;
+        RwMatrixMultiply(&tmp, &invMtx, &ptmat);
+        mmsd.x = tmp.pos.x;
+        mmsd.y = tmp.pos.y;
+        mmsd.z = tmp.pos.z;
+        RwV3dTransformPoints((RwV3d*)&sd, (RwV3d*)&d, 1, &invMtx);
+        if (mmsd.z <= 0.0f)
+        {
+            continue;
+        }
+        RwV3dScaleMacro((RwV3d*)&mmsd, (RwV3d*)&mmsd, 1.0f / mmsd.z);
+        RwV3dScaleMacro((RwV3d*)&sd, (RwV3d*)&sd, 1.0f / sd.z);
+    }
+    if (Im3DBufferPos)
+    {
+        if (RwIm3DTransform(Im3DBuffer, Im3DBufferPos, NULL,
+                            rwIM3D_VERTEXUV | rwIM3D_VERTEXXYZ | rwIM3D_VERTEXRGBA))
+        {
+            RwIm3DRenderPrimitive(rwPRIMTYPETRILIST);
+            RwIm3DEnd();
+        }
+        Im3DBufferPos = 0;
+    }
 }
