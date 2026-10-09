@@ -1411,21 +1411,24 @@ void NPARParmTubeConfetti::ConfigPar(NPARData* par, en_nparmode pmod, const xVec
     F32 justTheRand = fac_rand;
 
 #if defined(PS2)
-    F32 du = 1.0f;
-    F32 dv = 1.0f;
-    du /= num_uvcell[0];
-    dv /= num_uvcell[1];
+    // Retail retains the column count across the particle UV stores.
+    U32 count_u = num_uvcell[0];
+    F32 du = 1.0f / count_u;
 #else
     F32 du = 1.0f / num_uvcell[0];
-    F32 dv = 1.0f / num_uvcell[1];
 #endif
+    F32 dv = 1.0f / num_uvcell[1];
 
     if (pmod == 0)
     {
         F32 samecalc = 2.0f * (justTheRand - 0.5f );
         S32 idx_cell = samecalc * num_uvcell[1];
         par->uv_tl[0] = idx_cell * du;
+#if defined(PS2)
+        par->uv_tl[1] = (row_uvstart + (int)(samecalc * count_u)) * dv;
+#else
         par->uv_tl[1] = (row_uvstart + (int)(samecalc * num_uvcell[0])) * dv;
+#endif
         par->uv_br[0] = par->uv_tl[0] + du;
         par->uv_br[1] = par->uv_tl[1] + dv;
 
@@ -1808,21 +1811,23 @@ void NPARParmSleepyZeez::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3*
     F32 justTheRand = fac_rand;
 
 #if defined(PS2)
-    F32 du = 1.0f;
-    F32 dv = 1.0f;
-    du /= num_uvcell[0];
-    dv /= num_uvcell[1];
+    U32 count_u = num_uvcell[0];
+    F32 du = 1.0f / count_u;
 #else
     F32 du = 1.0f / num_uvcell[0];
-    F32 dv = 1.0f / num_uvcell[1];
 #endif
+    F32 dv = 1.0f / num_uvcell[1];
 
     if (pmod == 0)
     {
         F32 samecalc = 2.0f * (justTheRand - 0.5f);
         S32 idx_cell = samecalc * num_uvcell[1];
         par->uv_tl[0] = idx_cell * du;
+#if defined(PS2)
+        par->uv_tl[1] = (row_uvstart + (int)(samecalc * count_u)) * dv;
+#else
         par->uv_tl[1] = (row_uvstart + (int)(samecalc * num_uvcell[0])) * dv;
+#endif
         par->uv_br[0] = par->uv_tl[0] + du;
         par->uv_br[1] = par->uv_tl[1] + dv;
 
@@ -2263,21 +2268,23 @@ void NPARParmTarTarGunk::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3*
     F32 justTheRand = fac_rand;
 
 #if defined(PS2)
-    F32 du = 1.0f;
-    F32 dv = 1.0f;
-    du /= num_uvcell[0];
-    dv /= num_uvcell[1];
+    U32 count_u = num_uvcell[0];
+    F32 du = 1.0f / count_u;
 #else
     F32 du = 1.0f / num_uvcell[0];
-    F32 dv = 1.0f / num_uvcell[1];
 #endif
+    F32 dv = 1.0f / num_uvcell[1];
 
     if (pmod == 0)
     {
         F32 samecalc = 2.0f * (justTheRand - 0.5f );
         S32 idx_cell = samecalc * num_uvcell[1];
         par->uv_tl[0] = idx_cell * du;
+#if defined(PS2)
+        par->uv_tl[1] = (row_uvstart + (int)(samecalc * count_u)) * dv;
+#else
         par->uv_tl[1] = (row_uvstart + (int)(samecalc * num_uvcell[0])) * dv;
+#endif
         par->uv_br[0] = par->uv_tl[0] + du;
         par->uv_br[1] = par->uv_tl[1] + dv;
 
@@ -2562,21 +2569,23 @@ void NPARParmFahrwerkz::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* 
     F32 justTheRand = fac_rand;
 
 #if defined(PS2)
-    F32 du = 1.0f;
-    F32 dv = 1.0f;
-    du /= num_uvcell[0];
-    dv /= num_uvcell[1];
+    U32 count_u = num_uvcell[0];
+    F32 du = 1.0f / count_u;
 #else
     F32 du = 1.0f / num_uvcell[0];
-    F32 dv = 1.0f / num_uvcell[1];
 #endif
+    F32 dv = 1.0f / num_uvcell[1];
 
     if (pmod == 0)
     {
         F32 samecalc = 2.0f * (justTheRand - 0.5f );
         S32 idx_cell = samecalc * num_uvcell[1];
         par->uv_tl[0] = idx_cell * du;
+#if defined(PS2)
+        par->uv_tl[1] = (row_uvstart + (int)(samecalc * count_u)) * dv;
+#else
         par->uv_tl[1] = (row_uvstart + (int)(samecalc * num_uvcell[0])) * dv;
+#endif
         par->uv_br[0] = par->uv_tl[0] + du;
         par->uv_br[1] = par->uv_tl[1] + dv;
 

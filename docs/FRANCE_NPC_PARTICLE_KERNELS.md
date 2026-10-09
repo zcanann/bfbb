@@ -50,3 +50,9 @@ records remain exact, giving 2,060 exact bytes across all seven selected
 functions. The four Supplement builders score 97.34155% fuzzy: three are exact
 (1,128 bytes), while TubeConfetti retains the same 94.72028% score as all three
 debug-reference versions. No source modification is included.
+
+The later PS2 atlas count-reuse source change makes TubeConfetti exact as well.
+With that source, all nine newly proved functions are exact (3,504 bytes), and
+the combined eleven-function pilot with the two previous Hazard records is
+100% across 4,332 bytes. See `PS2_NPC_PARTICLES.md` for the independent all-region
+source checks. This does not change any original identity evidence.

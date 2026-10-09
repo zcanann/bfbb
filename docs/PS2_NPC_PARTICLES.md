@@ -99,3 +99,30 @@ Removing the synthetic UV index local and moving `justTheRand` after the
 reciprocals did not improve these routines; those probes were discarded.
 Remaining differences include UV-count reuse and scheduling. No compiler
 cause is asserted.
+
+## Exact atlas count reuse
+
+The four ConfigPar atlas builders now keep `num_uvcell[0]` in an unsigned
+local across the particle UV stores and use separate reciprocal expressions.
+The original instructions retain this count for the second UV expression;
+reloading through the parameter object changed register lifetimes and
+scheduling. Explicit count reuse restores all four complete bodies without
+assembly, volatile accesses, compiler changes or a generic optimization fence.
+The non-PS2 preprocessed expressions remain the same.
+
+Fahrwerkz, TarTarGunk and SleepyZeez (740 bytes each) improve from 92.189186%
+to 100%; TubeConfetti (1,144 bytes) improves from 94.72028% to 100%. Each of
+USA, PAL and German gains 3,364 exact bytes and four exact functions. The full
+65-function Supplement unit rises from 14,516 to 17,880 exact bytes, 49 to 53
+exact functions and 99.29531% to 99.86032% fuzzy; every other function record
+is unchanged. All three GC full-unit reports retain identical records and
+measures. The newly proved French Confetti body is also exact, adding another
+1,144 exact bytes and one function to the particle-kernel profile; its full
+11-function, two-unit pilot is now 100% across 4,332 bytes. The other three
+French duplicate builders still require independent surrounding identity proof.
+
+Private evidence: `build/npc-uv-cache-region-summary.json`, before/after reports
+in `build/npc-uv-cache-regions/`, `build/npc-uv-cache-gc.txt`, and
+`build/npc-particle-kernels-france-pilot/{before-source,report}.json`. A separate
+probe rearranging the synthetic arithmetic locals into the DWARF declaration
+order did not improve the score and was discarded.
