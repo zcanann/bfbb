@@ -82,3 +82,20 @@ GC USA report remains JSON-identical to `build/string-oct09/GC-before-report.jso
 
 The current source profile covers these three PS2 debug executables only.
 This pass adds no French recovery, registry entries or compiler changes.
+
+## Reciprocal numerator follow-up
+
+The four atlas initializers now initialize `du` and `dv` to `1.0f` before
+applying their divisions. This keeps the two numerator values available in
+retail's order. The shared source expressions and non-PS2 paths remain as
+before. Fahrwerkz, TarTarGunk and SleepyZeez rise from 91.37838% to 92.18919%;
+TubeConfetti rises from 94.475525% to 94.72028%. All three debug-region unit
+scores rise from 99.24505% to 99.29531%, with unchanged exact coverage and no
+other function-score changes. The full GC report and retail checksum also
+remain unchanged. Evidence: `build/particles-oct09/*-config.json` and
+`config-proof.json`.
+
+Removing the synthetic UV index local and moving `justTheRand` after the
+reciprocals did not improve these routines; those probes were discarded.
+Remaining differences include UV-count reuse and scheduling. No compiler
+cause is asserted.

@@ -1410,8 +1410,15 @@ void NPARParmTubeConfetti::ConfigPar(NPARData* par, en_nparmode pmod, const xVec
 
     F32 justTheRand = fac_rand;
 
+#if defined(PS2)
+    F32 du = 1.0f;
+    F32 dv = 1.0f;
+    du /= num_uvcell[0];
+    dv /= num_uvcell[1];
+#else
     F32 du = 1.0f / num_uvcell[0];
     F32 dv = 1.0f / num_uvcell[1];
+#endif
 
     if (pmod == 0)
     {
@@ -1800,8 +1807,15 @@ void NPARParmSleepyZeez::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3*
 
     F32 justTheRand = fac_rand;
 
+#if defined(PS2)
+    F32 du = 1.0f;
+    F32 dv = 1.0f;
+    du /= num_uvcell[0];
+    dv /= num_uvcell[1];
+#else
     F32 du = 1.0f / num_uvcell[0];
     F32 dv = 1.0f / num_uvcell[1];
+#endif
 
     if (pmod == 0)
     {
@@ -2248,8 +2262,15 @@ void NPARParmTarTarGunk::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3*
 
     F32 justTheRand = fac_rand;
 
+#if defined(PS2)
+    F32 du = 1.0f;
+    F32 dv = 1.0f;
+    du /= num_uvcell[0];
+    dv /= num_uvcell[1];
+#else
     F32 du = 1.0f / num_uvcell[0];
     F32 dv = 1.0f / num_uvcell[1];
+#endif
 
     if (pmod == 0)
     {
@@ -2540,8 +2561,15 @@ void NPARParmFahrwerkz::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* 
     
     F32 justTheRand = fac_rand;
 
+#if defined(PS2)
+    F32 du = 1.0f;
+    F32 dv = 1.0f;
+    du /= num_uvcell[0];
+    dv /= num_uvcell[1];
+#else
     F32 du = 1.0f / num_uvcell[0];
     F32 dv = 1.0f / num_uvcell[1];
+#endif
 
     if (pmod == 0)
     {
