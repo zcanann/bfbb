@@ -43,3 +43,13 @@ matching. The insertion body is 99.354836%; its only two instruction
 differences concern the order of a string terminator store and pointer
 increment. Private report: `build/cruise-animation-france-pilot/report.json`.
 The full CPU-code denominator is unchanged.
+
+The PS2 source now writes `s[1] = '\0'` before incrementing `s`, reproducing
+the original terminator store and branch-delay increment. In USA, PAL and
+German this changes only `insert_player_animations`, from 99.354836% to exact:
+each complete unit moves from 15,824 to 16,568 exact bytes and 66 to 67 exact
+functions; fuzzy matching rises from 94.60988% to 94.61979%. All three
+GameCube unit reports remain unchanged. France's new three-function cluster
+is now 1,148/1,148 exact bytes, three of three functions and 100% fuzzy.
+After report: `build/cruise-animation-france-pilot/report-after.json`;
+cross-version summary: `build/cruise-animation-source-summary.json`.

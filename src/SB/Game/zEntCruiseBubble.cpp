@@ -2806,7 +2806,12 @@ namespace cruise_bubble
             strcat(s, start_anim_states[i]);
             s += strlen(s);
             *s = ' ';
+#if defined(PS2)
+            s[1] = '\0';
+            ++s;
+#else
             *++s = '\0';
+#endif
         }
 
         shared.atran.player.aim =
