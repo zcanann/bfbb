@@ -208,7 +208,9 @@ char* xStrTok(char* string, const char* control, char** nextoken)
 
 char* xStrTokBuffer(const char* string, const char* control, void* buffer)
 {
+#ifndef PS2
     U8 c;
+#endif
     U8* str;
     U8* ctrl;
     U8 map[32];
@@ -234,24 +236,49 @@ char* xStrTokBuffer(const char* string, const char* control, void* buffer)
         map[*ctrl >> 3] |= bit;
     } while (*ctrl++ != '\0');
 
+#if defined(PS2)
+    if (string)
+    {
+        str = (U8*)string;
+    }
+    else
+    {
+        str = (U8*)*(char**)buffer;
+    }
+#else
     str = (string) ? (U8*)string : (U8*)*(char**)buffer;
+#endif
 
+#if defined(PS2)
+    while (map[*str >> 3] & (1 << (*str & 0x7)) && *str != '\0')
+#else
     while (map[(*str >> 3) & 0x1F] & (1 << (*str & 0x7)) && *str != '\0')
+#endif
     {
         str++;
     }
 
     string = (char*)str;
 
+#if defined(PS2)
+    while (*str != '\0')
+    {
+        if (map[*str >> 3] & (1 << (*str & 0x7)))
+#else
     while ((c = *str) != '\0')
     {
         if (map[(c >> 3) & 0x1F] & (1 << (c & 0x7)))
+#endif
         {
             str++;
             break;
         }
 
+#if defined(PS2)
+        *dest = *str;
+#else
         *dest = c;
+#endif
         dest++;
         str++;
     }

@@ -142,3 +142,18 @@ Direct source/target comparisons confirm all four complete bodies. The full
 GameCube USA report remains identical and its retail DOL SHA-1 check passes.
 Private evidence uses `*-compare.json` and `raw-compare-proof.json` under
 `build/string-oct09`. No target, registry, header or compiler setting changes.
+
+## Buffer tokenizer recovery (2026-10-09)
+
+The PS2 buffer tokenizer now uses the same explicit restart branch as the
+in-place tokenizer, indexes its bitmap directly with the unsigned input byte
+shifted by three, and reads that byte directly for its token test and copy.
+These equivalent source forms improve its complete 336-byte comparison from
+73.4881% to 91.96429% in all four PS2 releases. Remaining register and scheduling
+differences prevent an exact match. No exact function or byte gain is claimed.
+
+The string-unit fuzzy score rises from 97.535965% to 99.108406%, retaining
+10/12 exact functions and 3088/3948 exact bytes. Every other function score is
+unchanged. The PS2-only branches preserve the complete GameCube USA report,
+and its retail DOL SHA-1 check passes. Private evidence uses `*-buffer.json`
+under `build/string-oct09`.
