@@ -680,6 +680,349 @@ void xShadowReceiveShadow(xEnt* ent, F32 shadowFactor, S32 shadowMode, RwMatrixT
     }
 }
 
+#if defined(PS2)
+static void xShadowReceiveShadowFastPS2(xEnt* ent, F32 shadowFactor, S32 shadowMode,
+                                      RwMatrixTag* shadowMat, RwRaster* shadowRast)
+{
+    RwCamera* shadowCamera = ShadowCamera;
+    F32 radius;
+    F32 fadeDist = 0.0f;
+    RwMatrixTag invMatrix;
+    RwV3d at __attribute__((aligned(16)));
+    RwV3d scl;
+    RwV3d tr;
+
+    if (shadowRast != NULL)
+    {
+        RwRenderStateSet(rwRENDERSTATETEXTURERASTER, shadowRast);
+    }
+    else
+    {
+        RwRenderStateSet(rwRENDERSTATETEXTURERASTER, shadowCamera->frameBuffer);
+    }
+
+    RwRenderStateSet(rwRENDERSTATETEXTUREADDRESS, (void*)rwTEXTUREADDRESSCLAMP);
+    RwRenderStateSet(rwRENDERSTATEVERTEXALPHAENABLE, (void*)1);
+
+    switch (shadowMode)
+    {
+    case 1:
+        RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
+        break;
+    case 0:
+    default:
+        RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDZERO);
+        break;
+    }
+
+    if (shadowFactor < 0.0f)
+    {
+        shadowFactor = -shadowFactor;
+
+        switch (shadowMode)
+        {
+        case 1:
+            RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDINVSRCALPHA);
+            RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDSRCALPHA);
+            break;
+        case 0:
+        default:
+            RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDSRCALPHA);
+            break;
+        }
+    }
+    else
+    {
+        switch (shadowMode)
+        {
+        case 1:
+            RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCALPHA);
+            break;
+        case 0:
+        default:
+            RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCALPHA);
+            break;
+        }
+    }
+
+
+    RwMatrixTag* shadowMatrix;
+    if (shadowMat != NULL)
+    {
+        shadowMatrix = shadowMat;
+    }
+    else
+    {
+        shadowMatrix = &((RwFrame*)shadowCamera->object.object.parent)->modelling;
+    }
+
+    at = shadowMatrix->at;
+
+    radius = gShadowObjectRadius;
+
+    RwMatrixInvert(&invMatrix, shadowMatrix);
+
+    scl.x = scl.y = -0.5f / radius;
+    scl.z = 1.0f / (fadeDist + radius);
+    RwMatrixScale(&invMatrix, &scl, rwCOMBINEPOSTCONCAT);
+
+    tr.x = tr.y = 0.5f;
+    tr.z = 0.0f;
+    RwMatrixTranslate(&invMatrix, &tr, rwCOMBINEPOSTCONCAT);
+
+    asm volatile("lqc2 vf28, 0x0(%0)\n"
+                 "lqc2 vf29, 0x10(%0)\n"
+                 "lqc2 vf30, 0x20(%0)\n"
+                 "lqc2 vf31, 0x30(%0)\n"
+                 : : "r"(&invMatrix) : "memory");
+
+    U32 i;
+    U32 num_verts;
+    xVec3* xvert;
+    RpTriangle* tri;
+    RpGeometry* geom;
+    U8 val = (U8)(255.0f * shadowFactor);
+    U32 vertex_color = (val << 24) | (val << 16) | (val << 8) | val;
+    xModelInstance* model = ent->model;
+    U32 max_verts = 0;
+    U32 model_num = 0;
+    U32 ent_id = ent->id;
+
+    for (; model != NULL; model = model->Next)
+    {
+        RpAtomic* atomic = model->Data;
+        model_num++;
+        // Retail keeps this atomic/model diagnostic snapshot in EE registers.
+        asm volatile("addiu $10, %0, 0x0\n"
+                     "addiu $11, %1, 0x0\n"
+                     "lw $12, 0x0(%2)\n"
+                     "lw $13, 0x4(%2)\n"
+                     "pextlw $12, $13, $12\n"
+                     "lw $13, 0x8(%2)\n"
+                     "lw $14, 0xc(%2)\n"
+                     "pextlw $13, $14, $13\n"
+                     "lw $14, 0x10(%2)\n"
+                     "lw $15, 0x14(%2)\n"
+                     "pextlw $14, $15, $14\n"
+                     "lw $15, 0x18(%2)\n"
+                     "lw $24, 0x1c(%2)\n"
+                     "pextlw $15, $24, $15\n"
+                     : : "r"(model_num), "r"(ent_id), "r"(atomic)
+                     : "$10", "$11", "$12", "$13", "$14", "$15", "$24");
+
+        geom = atomic->geometry;
+        num_verts = geom->numVertices;
+        if (num_verts > max_verts)
+        {
+            max_verts = num_verts;
+        }
+    }
+
+    xvert = (xVec3*)xMemPushTemp(max_verts * sizeof(xVec3));
+    if (xvert != NULL)
+    {
+        Im3DBuffer = gRenderBuffer.m_vertex;
+        asm volatile("lqc2 vf20, 0x0(%0)\n"
+                     "vmulx.w vf20, vf0, vf20x\n"
+                     "vmuly.w vf21, vf0, vf20y\n"
+                     "vmulz.w vf22, vf0, vf20z\n"
+                     : : "r"(&at) : "memory");
+
+        for (model = ent->model; model != NULL; model = model->Next)
+        {
+            geom = model->Data->geometry;
+            iModelVertEval(model->Data, 0, geom->numVertices, model->Mat, NULL, xvert);
+            tri = geom->triangles;
+            for (i = 0; i < geom->numTriangles; i++, tri++)
+            {
+                if (Im3DBufferPos > 0x1dd)
+                {
+                    if (RwIm3DTransform(Im3DBuffer, Im3DBufferPos, NULL,
+                                        rwIM3D_VERTEXUV | rwIM3D_VERTEXXYZ | rwIM3D_VERTEXRGBA))
+                    {
+                        RwIm3DRenderPrimitive(rwPRIMTYPETRILIST);
+                        RwIm3DEnd();
+                    }
+                    Im3DBufferPos = 0;
+                }
+
+                RxObjSpace3DVertex* imv = &Im3DBuffer[Im3DBufferPos];
+                xVec3* v0 = &xvert[tri->vertIndex[0]];
+                xVec3* v1 = &xvert[tri->vertIndex[1]];
+                xVec3* v2 = &xvert[tri->vertIndex[2]];
+
+                U32 clip;
+                // Project into shadow UV space and reject a shared outside clip plane.
+                asm volatile("lwu $8, 0x0(%1)\n"
+                             "lui $9, 0xbf00\n"
+                             "qmtc2 $9, vf24\n"
+                             "lwu $9, 0x4(%1)\n"
+                             "lwu $10, 0x8(%1)\n"
+                             "pextlw $8, $9, $8\n"
+                             "pcpyld $8, $10, $8\n"
+                             "qmtc2 $8, vf1\n"
+                             "lwu $8, 0x0(%2)\n"
+                             "vaddx.yzw vf24, vf0, vf24x\n"
+                             "lwu $9, 0x4(%2)\n"
+                             "lwu $10, 0x8(%2)\n"
+                             "pextlw $8, $9, $8\n"
+                             "pcpyld $8, $10, $8\n"
+                             "qmtc2 $8, vf2\n"
+                             "lwu $8, 0x0(%3)\n"
+                             "lwu $9, 0x4(%3)\n"
+                             "lwu $10, 0x8(%3)\n"
+                             "pextlw $8, $9, $8\n"
+                             "pcpyld $8, $10, $8\n"
+                             "qmtc2 $8, vf3\n"
+                             "vmulax.xyz ACC, vf28, vf1x\n"
+                             "vmadday.xyz ACC, vf29, vf1y\n"
+                             "vmaddaz.xyz ACC, vf30, vf1z\n"
+                             "vmaddw.xyz vf4, vf31, vf0w\n"
+                             "vmulax.xyz ACC, vf28, vf2x\n"
+                             "vmadday.xyz ACC, vf29, vf2y\n"
+                             "vmaddaz.xyz ACC, vf30, vf2z\n"
+                             "vmaddw.xyz vf5, vf31, vf0w\n"
+                             "vmulax.xyz ACC, vf28, vf3x\n"
+                             "vmadday.xyz ACC, vf29, vf3y\n"
+                             "vmaddaz.xyz ACC, vf30, vf3z\n"
+                             "vmaddw.xyz vf6, vf31, vf0w\n"
+                             "vadd.xyz vf25, vf4, vf24\n"
+                             "vadd.xyz vf26, vf5, vf24\n"
+                             "vadd.xyz vf27, vf6, vf24\n"
+                             "vsub vf7, vf2, vf1\n"
+                             "vclipw.xyz vf25, vf24w\n"
+                             "vclipw.xyz vf26, vf24w\n"
+                             "vclipw.xyz vf27, vf24w\n"
+                             "vsub vf8, vf3, vf1\n"
+                             "vnop\n"
+                             "vnop\n"
+                             "vnop\n"
+                             "vnop\n"
+                             "vnop\n"
+                             "cfc2 $8, vi18\n"
+                             "srl $9, $8, 6\n"
+                             "srl $10, $8, 12\n"
+                             "and $8, $8, $9\n"
+                             "and $8, $8, $10\n"
+                             "andi %0, $8, 0x2f\n"
+                             : "=r"(clip) : "r"(v0), "r"(v1), "r"(v2)
+                             : "$8", "$9", "$10", "memory");
+                if (clip != 0)
+                {
+                    continue;
+                }
+
+                asm volatile("vopmula.xyz ACC, vf7, vf8\n"
+                             "vopmsub.xyz vf27, vf8, vf7\n"
+                             : : : "memory");
+
+                F32 local_SHADOW_BIAS_AMT = 0.002f;
+                F32 local_SHADOW_MINNORMY = 0.00017431141f;
+                // Start the reciprocal square root while testing the unnormalized facing dot.
+                asm volatile("vmul vf22, vf27, vf27\n"
+                             "vmulax.w ACC, vf20, vf27x\n"
+                             "vmadday.w ACC, vf21, vf27y\n"
+                             "vmaddz.w vf24, vf22, vf27z\n"
+                             "vaddy.x vf24, vf22, vf22y\n"
+                             "vnop\n"
+                             "vnop\n"
+                             "vnop\n"
+                             "vaddz.x vf24, vf24, vf22z\n"
+                             "vnop\n"
+                             "vnop\n"
+                             "vnop\n"
+                             "lw $8, 0x0(%1)\n"
+                             "vnop\n"
+                             "qmtc2 $8, vf23\n"
+                             "vrsqrt Q, vf23x, vf24x\n"
+                             "qmfc2 $8, vf24\n"
+                             "mtsah $0, 0x6\n"
+                             "qfsrv $8, $8, $8\n"
+                             "mtc1 $8, %0\n"
+                             : "=f"(shadowFactor) : "r"(&local_SHADOW_BIAS_AMT)
+                             : "$8", "memory");
+
+                if (!(shadowFactor <= 0.0f))
+                {
+                    continue;
+                }
+
+                asm volatile("vwaitq\n"
+                             "vmulq vf27, vf27, Q\n"
+                             "vnop\n"
+                             "vnop\n"
+                             "lw $9, 0x0(%1)\n"
+                             "qmfc2 $10, vf27\n"
+                             "vadd vf1, vf1, vf27\n"
+                             "vadd vf2, vf2, vf27\n"
+                             "vadd vf3, vf3, vf27\n"
+                             "dsrl32 $10, $10, 0\n"
+                             "sltu %0, $10, $9\n"
+                             : "=r"(clip) : "r"(&local_SHADOW_MINNORMY)
+                             : "$8", "$9", "$10", "memory");
+                if (clip != 0)
+                {
+                    continue;
+                }
+
+                // Store biased world positions and the original projected UV coordinates.
+                asm volatile("qmfc2 $8, vf1\n"
+                             "dsrl32 $9, $8, 0\n"
+                             "pcpyud $10, $8, $8\n"
+                             "sw $8, 0x0(%0)\n"
+                             "sw $9, 0x4(%0)\n"
+                             "sw $10, 0x8(%0)\n"
+                             "qmfc2 $8, vf2\n"
+                             "dsrl32 $9, $8, 0\n"
+                             "pcpyud $10, $8, $8\n"
+                             "sw $8, 0x24(%0)\n"
+                             "sw $9, 0x28(%0)\n"
+                             "sw $10, 0x2c(%0)\n"
+                             "qmfc2 $8, vf3\n"
+                             "dsrl32 $9, $8, 0\n"
+                             "pcpyud $10, $8, $8\n"
+                             "sw $8, 0x48(%0)\n"
+                             "sw $9, 0x4c(%0)\n"
+                             "sw $10, 0x50(%0)\n"
+                             "qmfc2 $8, vf4\n"
+                             "dsrl32 $9, $8, 0\n"
+                             "sw $8, 0x1c(%0)\n"
+                             "sw $9, 0x20(%0)\n"
+                             "qmfc2 $8, vf5\n"
+                             "dsrl32 $9, $8, 0\n"
+                             "sw $8, 0x40(%0)\n"
+                             "sw $9, 0x44(%0)\n"
+                             "qmfc2 $8, vf6\n"
+                             "dsrl32 $9, $8, 0\n"
+                             "sw $8, 0x64(%0)\n"
+                             "sw $9, 0x68(%0)\n"
+                             : : "r"(imv) : "$8", "$9", "$10", "memory");
+
+                *(U32*)&imv[0].c = vertex_color;
+                *(U32*)&imv[1].c = vertex_color;
+                *(U32*)&imv[2].c = vertex_color;
+                Im3DBufferPos += 3;
+            }
+
+            if (Im3DBufferPos != 0)
+            {
+                if (RwIm3DTransform(Im3DBuffer, Im3DBufferPos, NULL,
+                                    rwIM3D_VERTEXUV | rwIM3D_VERTEXXYZ | rwIM3D_VERTEXRGBA))
+                {
+                    RwIm3DRenderPrimitive(rwPRIMTYPETRILIST);
+                    RwIm3DEnd();
+                }
+                Im3DBufferPos = 0;
+            }
+        }
+
+        xMemPopTemp(xvert);
+        RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCALPHA);
+        RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
+    }
+}
+#endif
+
 void xShadowRender(xEnt* ent, F32 max_dist)
 {
     xVec3 center;

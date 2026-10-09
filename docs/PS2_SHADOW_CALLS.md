@@ -47,7 +47,7 @@ All three debug releases improve identically. Unit fuzzy matching rises from
 Exact totals remain 20/34 functions and 4,864 bytes; every other function score
 is unchanged. The full GameCube USA report remains identical and its retail
 DOL SHA-1 passes. France still has no enabled profile for this unit. The
-separate large `xShadowReceiveShadowFastPS2` routine remains unrecovered.
+separate large `xShadowReceiveShadowFastPS2` routine is restored below.
 
 Private regional reports use `*-vu.json`. `vu-raw-proof.json` records original
 executable hashes, original core addresses and source-object hashes for the
@@ -74,3 +74,34 @@ Exact totals remain 20/34 functions and 4,864 bytes; every other score is
 unchanged. The full GameCube USA report remains identical and its retail DOL
 SHA-1 passes. France has no enabled profile. Private reports use
 `*-manager.json`; the remaining manager differences are register assignments.
+
+
+## Fast model receiver
+
+`xShadowReceiveShadowFastPS2` previously had only a declaration. Its recovered
+C body now sets blending, builds the shadow matrix, allocates transformed model
+vertices, and batches receiver triangles. The original VU operations project
+vertices, reject common outside clip planes, calculate and bias the normal,
+and store positions/UVs. Original model/atomic diagnostic register snapshots
+are retained. The camera direction loaded with `lqc2` is explicitly aligned
+to 16 bytes, as in the original stack layout.
+
+All **66 COP2 instruction words**, in order, are raw-identical to each original
+USA, Europe and Germany body. This includes vector masks, register transfers,
+clip operations and reciprocal-square-root waits. The check deliberately does
+not claim an exact whole body: C/assembly boundaries retain extra branches or
+NOPs, scalar/index register differences and constant-store scheduling. Source
+emits 1,784 bytes for the original 1,760-byte function.
+
+| Metric, each debug release | Before | After |
+| --- | ---: | ---: |
+| Fast receiver fuzzy | 0% (absent) | 93.6% |
+| Unit fuzzy | 88.649574% | 96.868286% |
+| Exact functions | 20/34 | 20/34 |
+| Exact bytes | 4,864/20,044 | 4,864/20,044 |
+
+Every other function score is unchanged. The full GameCube USA report remains
+identical and its retail DOL SHA-1 passes. France has no enabled source profile
+for this unit. Private evidence is `*-fast.json` and `fast-raw-proof.json` in
+`build/shadow-oct09`; the latter records executable and source-object hashes,
+original addresses, vector-sequence hashes, and the sole changed function.
