@@ -225434,7 +225434,8 @@
         "Off": "Off__9NPCWidgetFPC10zNPCCommoni",
         "On": "On__9NPCWidgetFPC10zNPCCommoni",
         "NPCC_DstSqPlyrToPos": "NPCC_DstSqPlyrToPos__FPC5xVec3",
-        "NPCC_aimVary": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3"
+        "NPCC_aimVary": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+        "NPCC_MakePerp": "NPCC_MakePerp__FP5xVec3PC5xVec3"
       },
       "calls": [
         {
@@ -225576,6 +225577,14 @@
           "target_source": "SB/Core/x/xVec3.cpp",
           "target_function": "xVec3Normalize@00210d10",
           "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "NPCC_MakePerp",
+          "offset": 48,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize@00210d10",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3",
+          "opcode": 2
         }
       ],
       "linkage_provenance": [
@@ -225966,6 +225975,32 @@
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
               "source_address": 3255072,
               "reference_sha256": "7b45efd52f35681a07149d0c21eb19ab97d0318092aaa2ac5e417da7c75a1b33"
+            }
+          ]
+        },
+        {
+          "function": "NPCC_MakePerp",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3256224,
+          "size": 56,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3254816,
+              "reference_sha256": "a776e4dc393aad0d3d54e886e2aa66665e5f3b859e77f0fa2856bebaf60f9f98"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3256112,
+              "reference_sha256": "38d0e791a10a6be72359c867ef6c4be8a38b61505ff8d8a08817a574a46f0779"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3252800,
+              "reference_sha256": "3beb38744417946dc0a14a6b71f905409577371f905505bcd683ba49e5d586cd"
             }
           ]
         }
@@ -230808,7 +230843,9 @@
         "ColResp_Default@003c8f00": "ColResp_Default__9NPCHazardFP12xSweptSpheref",
         "ColTestCyl@003c9840": "ColTestCyl__9NPCHazardFPC6xBoundff",
         "PosSet@003cb840": "PosSet__9NPCHazardFPC5xVec3",
-        "HAZ_ord_sorttest@003cd690": "HAZ_ord_sorttest__FPvPv"
+        "HAZ_ord_sorttest@003cd690": "HAZ_ord_sorttest__FPvPv",
+        "WavesOfEvil@003c4560": "WavesOfEvil__9NPCHazardFv",
+        "WaterSplash@003c48f0": "WaterSplash__9NPCHazardFPC5xVec3"
       },
       "calls": [
         {
@@ -230817,6 +230854,118 @@
           "target_source": "SB/Core/x/xFX.cpp",
           "target_function": "xFXStreakUpdate@001e8170",
           "symbol": "xFXStreakUpdate__FUiPC5xVec3PC5xVec3"
+        },
+        {
+          "function": "WavesOfEvil@003c4560",
+          "offset": 88,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "WavesOfEvil@003c4560",
+          "offset": 240,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "WavesOfEvil@003c4560",
+          "offset": 832,
+          "target_source": "SB/Game/zNPCSupplement.cpp",
+          "target_function": "NPAR_EmitH2OSpray@003b4980",
+          "symbol": "NPAR_EmitH2OSpray__FPC5xVec3PC5xVec3"
+        },
+        {
+          "function": "WaterSplash@003c48f0",
+          "offset": 104,
+          "target_source": "SB/Game/zNPCSupport.cpp",
+          "target_function": "NPCC_MakePerp@0031afa0",
+          "symbol": "NPCC_MakePerp__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "WaterSplash@003c48f0",
+          "offset": 304,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "WaterSplash@003c48f0",
+          "offset": 448,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "WaterSplash@003c48f0",
+          "offset": 496,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand@001ee540",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "WaterSplash@003c48f0",
+          "offset": 732,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "WaterSplash@003c48f0",
+          "offset": 780,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand@001ee540",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "WaterSplash@003c48f0",
+          "offset": 1164,
+          "target_source": "SB/Game/zNPCSupplement.cpp",
+          "target_function": "NPAR_EmitH2ODrips@003b4b40",
+          "symbol": "NPAR_EmitH2ODrips__FPC5xVec3PC5xVec3"
+        },
+        {
+          "function": "WaterSplash@003c48f0",
+          "offset": 1200,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "WaterSplash@003c48f0",
+          "offset": 1324,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "WaterSplash@003c48f0",
+          "offset": 1376,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand@001ee540",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "WaterSplash@003c48f0",
+          "offset": 1612,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "WaterSplash@003c48f0",
+          "offset": 1664,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand@001ee540",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "WaterSplash@003c48f0",
+          "offset": 2044,
+          "target_source": "SB/Game/zNPCSupplement.cpp",
+          "target_function": "NPAR_EmitH2ODrops@003b4a60",
+          "symbol": "NPAR_EmitH2ODrops__FPC5xVec3PC5xVec3"
         }
       ],
       "linkage_provenance": [
@@ -230999,6 +231148,58 @@
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
               "source_address": 3983728,
               "reference_sha256": "df589430b815e13979b9cb149530d1d3306ee0eb268fa644fd6ecc64855dfca5"
+            }
+          ]
+        },
+        {
+          "function": "WavesOfEvil@003c4560",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3949920,
+          "size": 908,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3948544,
+              "reference_sha256": "3b0c1bde825c6d5f93070c043fb0e1d0a7ebd535fb73362fb4c8c9ad618d214f"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3949808,
+              "reference_sha256": "4f3be929e85d2e391b19403a7c113eeea2a5ffc5f9fdecffe95df49b65dbc481"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3946560,
+              "reference_sha256": "747771181c737b398e1597c58342e952781e88933dae003732830e897a0c38e2"
+            }
+          ]
+        },
+        {
+          "function": "WaterSplash@003c48f0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3950832,
+          "size": 2172,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3949456,
+              "reference_sha256": "f3f3c76bca7774e9ec40d66ea005917a442c4da2c7d92d133ece71ba0091f8fd"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3950720,
+              "reference_sha256": "565d0c21986d41ccf66842364accb8ec8193f4dddab51d9aecaecccd050aa667"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3947472,
+              "reference_sha256": "73db001424d7721447d4f2800f668e0273d1608279e323ac20ad7d01943b78e0"
             }
           ]
         }
