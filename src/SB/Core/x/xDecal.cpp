@@ -288,8 +288,9 @@ void xDecalEmitter::update(F32 dt)
         }
         
         update_frac(unit);
-        curve_node& node0 = this->curve[unit.curve_index];
-        curve_node& node1 = this->curve[unit.curve_index+1];
+        U32 curve_index = unit.curve_index;
+        curve_node& node0 = this->curve[curve_index];
+        curve_node& node1 = this->curve[curve_index + 1];
         
         F32 scale;
         lerp(scale, unit.frac, node0.scale, node1.scale);

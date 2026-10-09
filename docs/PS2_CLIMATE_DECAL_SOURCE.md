@@ -56,3 +56,13 @@ All 46 GameCube functions / 4388 bytes remain exact. Evidence is
 function-delta JSON and `build/decal-cull-gc-{before,after}.json`. Remaining
 differences include curve-index reloads and integer-register assignment; no
 exact or complete-runtime match is claimed.
+
+Caching the decal's promoted curve index before the two adjacent curve-node
+lookups further raises its update from 92.32808% to 94.31546% in each debug
+region. The update's fraction helper remains unchanged: caching its separate
+index regressed and was discarded. Complete units reach 97.75676%, with every
+other score, exact byte count and size/data control unchanged. France and all
+46 exact GameCube functions remain unchanged. Evidence is
+`build/decal-index-final-comparison.json`, its function-delta JSON,
+`build/decal-index-gc-{before,after}.json`, and the repeated compiled VU
+lane/delay-slot audit in `build/decal-index-compiled-proof.json`.
