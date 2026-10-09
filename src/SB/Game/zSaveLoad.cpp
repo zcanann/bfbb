@@ -2894,14 +2894,22 @@ S32 xSGT_LoadLoadCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTE
     xSGReadData(xsgdata, rctxt, bigbuf, 1, strlen(currSceneStr));
     if (strlen(currSceneStr) != strlen(bigbuf))
     {
+#if defined(PS2)
+        compdiff++;
+#else
         compdiff = 1;
+#endif
     }
     if (compdiff == 0)
     {
         strcpy(sceneRead, bigbuf);
     }
 
+#if defined(PS2)
+    return !compdiff;
+#else
     return compdiff == 0;
+#endif
 }
 
 S32 xSGT_LoadPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, U32 ui,

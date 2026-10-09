@@ -207,3 +207,12 @@ SaveLoop's 1576-byte body improves from 90.730965% to 97.92132% in all three
 regions. These are the only two changed scores; the full GC report remains
 identical. Remaining differences include prompt-loop NOP placement.
 Evidence: `*-prompts.json`, `prompts-proof.json`, and `trc-save-proof.json`.
+
+## Load callback comparison
+
+The PS2 room-load callback increments its comparison-failure count and
+returns its logical negation. These original expressions improve its
+204-byte body from 91.666664% to 96.07843% in every debug region; the
+remaining difference is the zero-initialization-loop NOP placement.
+No other scores change and the full GC report remains identical.
+Evidence: `*-loadcb.json` and `loadcb-proof.json`.
