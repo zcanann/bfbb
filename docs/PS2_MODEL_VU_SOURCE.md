@@ -63,3 +63,39 @@ Private evidence in `C:/Projects/bfbb-agent-ps2-oct08/build`:
   before/after source reports against `39d4ec169`, with no regressions.
 - `model-vu-raw-proof.py` / `.json`: ordered raw VU/MMI checks, original typed
   frustum address proof, and retained compiled-object/relocation inventories.
+
+## Weighted vertex and tag evaluation
+
+The follow-up restores `iModelVertEval` and the position-only `iModelTagEval`
+through their shared inline `SkinXform` helper. Each debug region's complete
+unit improves from 78.12218% to 93.47379%. The 896-byte vertex routine reaches
+93.14732%; the 736-byte tag routine reaches 93.516304%. All other function and
+data measures remain unchanged, including the previous matrix/culling gains
+and all 3,196 exact bytes / 16 functions. No new exact claim is made.
+
+The helper retains the original two-word cache mask, concatenates each of the
+four indexed skin/bone matrices only once, and keeps the root matrix in vf1-vf4.
+The VU kernel scales the vertex by each weight before its matrix multiplication,
+accumulates translation with the same weight, and finally transforms the summed
+position by the root. All later-weight early exits use the original raw zero-bit
+test; replacing them with floating comparison would change the handling of
+negative zero. The first weight is always evaluated. The tag caller separately
+retains its original floating test of the first weight and its unskinned path.
+
+All 25 VU arithmetic instructions appear in their original order with identical
+raw words, including lane masks, broadcasts, and accumulator operations, in both
+functions in all three regions. The vertex function also retains the original
+geometry reload before obtaining its skin. Root loads and the packed kernel
+remain directly inside the original inline helper: separate nested helpers
+were emitted as calls and disrupted both inlining and the original register
+lifetimes. That source form was discarded; no compiler flags were changed.
+
+The vertex function compiles to its original 896 bytes. The tag body is still
+eight bytes larger, at 744 bytes. Register/lifetime and scheduling residuals
+remain fully counted. Skin and point-transform SDK destinations remain unresolved
+where they were unresolved before; the source uses existing declarations and
+does not add names to target metadata.
+
+Additional private evidence: `model-skin-decode.py` / `.txt`,
+`model-skin-final-comparison.py` / `.json`, `model-skin-final-changes.json`, and
+`model-skin-raw-proof.py` / `.json`. The comparison baseline is `70c4beace`.

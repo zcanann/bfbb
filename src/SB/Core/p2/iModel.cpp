@@ -593,6 +593,182 @@ U32 iModelVertCount(RpAtomic* model)
     return model->geometry->numVertices;
 }
 
+// Cache all four indexed bone matrices, then accumulate weighted positions in
+// VU0. Later weights stop on zero bits; the first weight always contributes.
+static inline void SkinXform(xVec3* dest, const xVec3* vert, RwMatrix* mat,
+                             const RwMatrix* skinmat, const F32* wt, const U32* idx, U32 count)
+{
+    U32 catMatFlags[2] = {};
+    RwMatrix* catmat = (RwMatrix*)giAnimScratch;
+    asm volatile("lqc2 vf1, 0x0(%0)\n"
+                 "lqc2 vf2, 0x10(%0)\n"
+                 "lqc2 vf3, 0x20(%0)\n"
+                 "lqc2 vf4, 0x30(%0)\n"
+                 : : "r"(mat) : "memory");
+    ++mat;
+    while (count != 0)
+    {
+        for (U32 i = 0; i < 4; ++i)
+        {
+            U32 midx = (*idx >> (i * 8)) & 0xff;
+            if (!(catMatFlags[midx >> 5] & (1 << (midx & 31))))
+            {
+                xMat4x3Mul((xMat4x3*)(catmat + midx), (const xMat4x3*)(skinmat + midx),
+                           (const xMat4x3*)(mat + midx));
+                catMatFlags[midx >> 5] |= 1 << (midx & 31);
+            }
+        }
+        {
+            U32 packedIndex = *idx;
+            U32 nextWeight;
+            asm volatile("lw %0, 0x0(%2)\n"
+                         "lw a5, 0x4(%2)\n"
+                         "lw a6, 0x8(%2)\n"
+                         "pextlw %0, a5, %0\n"
+                         "pcpyld %0, a6, %0\n"
+                         "qmtc2 %0, vf9\n"
+                         "lw %0, 0x0(%3)\n"
+                         "andi a5, %1, 0xff\n"
+                         "sll a5, a5, 6\n"
+                         "addu a5, a5, %4\n"
+                         "srl %1, %1, 8\n"
+                         "qmtc2 %0, vf10\n"
+                         "lw %0, 0x4(%3)\n"
+                         "vmulx.xyzw vf11, vf9, vf10x\n"
+                         "lqc2 vf5, 0x0(a5)\n"
+                         "lqc2 vf6, 0x10(a5)\n"
+                         "lqc2 vf7, 0x20(a5)\n"
+                         "lqc2 vf8, 0x30(a5)\n"
+                         "vmulax.xyz ACC, vf5, vf11x\n"
+                         "vmadday.xyz ACC, vf6, vf11y\n"
+                         "vmaddaz.xyz ACC, vf7, vf11z\n"
+                         "vmaddax.xyz ACC, vf8, vf10x\n"
+                         : "=&r"(nextWeight), "+r"(packedIndex) : "r"(vert), "r"(wt), "r"(catmat) : "a5", "a6", "memory");
+            if (!nextWeight)
+            {
+                goto finish;
+            }
+            asm volatile("andi a5, %1, 0xff\n"
+                         "sll a5, a5, 6\n"
+                         "addu a5, a5, %3\n"
+                         "srl %1, %1, 8\n"
+                         "qmtc2 %0, vf10\n"
+                         "lw %0, 0x8(%2)\n"
+                         "vmulx.xyzw vf11, vf9, vf10x\n"
+                         "lqc2 vf5, 0x0(a5)\n"
+                         "lqc2 vf6, 0x10(a5)\n"
+                         "lqc2 vf7, 0x20(a5)\n"
+                         "lqc2 vf8, 0x30(a5)\n"
+                         "vmaddax.xyz ACC, vf5, vf11x\n"
+                         "vmadday.xyz ACC, vf6, vf11y\n"
+                         "vmaddaz.xyz ACC, vf7, vf11z\n"
+                         "vmaddax.xyz ACC, vf8, vf10x\n"
+                         : "+r"(nextWeight), "+r"(packedIndex) : "r"(wt), "r"(catmat) : "a5", "memory");
+            if (!nextWeight)
+            {
+                goto finish;
+            }
+            asm volatile("andi a5, %1, 0xff\n"
+                         "sll a5, a5, 6\n"
+                         "addu a5, a5, %3\n"
+                         "srl %1, %1, 8\n"
+                         "qmtc2 %0, vf10\n"
+                         "lw %0, 0xc(%2)\n"
+                         "vmulx.xyzw vf11, vf9, vf10x\n"
+                         "lqc2 vf5, 0x0(a5)\n"
+                         "lqc2 vf6, 0x10(a5)\n"
+                         "lqc2 vf7, 0x20(a5)\n"
+                         "lqc2 vf8, 0x30(a5)\n"
+                         "vmaddax.xyz ACC, vf5, vf11x\n"
+                         "vmadday.xyz ACC, vf6, vf11y\n"
+                         "vmaddaz.xyz ACC, vf7, vf11z\n"
+                         "vmaddax.xyz ACC, vf8, vf10x\n"
+                         : "+r"(nextWeight), "+r"(packedIndex) : "r"(wt), "r"(catmat) : "a5", "memory");
+            if (!nextWeight)
+            {
+                goto finish;
+            }
+            asm volatile("andi a5, %1, 0xff\n"
+                         "sll a5, a5, 6\n"
+                         "addu a5, a5, %2\n"
+                         "qmtc2 %0, vf10\n"
+                         "vmulx.xyzw vf11, vf9, vf10x\n"
+                         "lqc2 vf5, 0x0(a5)\n"
+                         "lqc2 vf6, 0x10(a5)\n"
+                         "lqc2 vf7, 0x20(a5)\n"
+                         "lqc2 vf8, 0x30(a5)\n"
+                         "vmaddax.xyz ACC, vf5, vf11x\n"
+                         "vmadday.xyz ACC, vf6, vf11y\n"
+                         "vmaddaz.xyz ACC, vf7, vf11z\n"
+                         "vmaddax.xyz ACC, vf8, vf10x\n"
+                         : : "r"(nextWeight), "r"(packedIndex), "r"(catmat) : "a5", "memory");
+        finish:
+            asm volatile("vmaddx.xyz vf10, vf0, vf0x\n"
+                         "vmulax.xyz ACC, vf1, vf10x\n"
+                         "vmadday.xyz ACC, vf2, vf10y\n"
+                         "vmaddaz.xyz ACC, vf3, vf10z\n"
+                         "vmaddw.xyz vf10, vf4, vf0w\n"
+                         "qmfc2 %0, vf10\n"
+                         "sw %0, 0x0(%1)\n"
+                         "prot3w %0, %0\n"
+                         "sw %0, 0x4(%1)\n"
+                         "prot3w %0, %0\n"
+                         "sw %0, 0x8(%1)\n"
+                         : "=&r"(nextWeight) : "r"(dest) : "memory");
+        }
+        ++vert;
+        ++dest;
+        ++idx;
+        wt += 4;
+        --count;
+    }
+}
+
+U32 iModelVertEval(RpAtomic* model, U32 index, U32 count, RwMatrix* mat, xVec3* vert, xVec3* dest)
+{
+    RpGeometry* geom = RpAtomicGetGeometry(model);
+
+    if (vert == NULL)
+    {
+        U32 numVerts = geom->numVertices;
+        if ((index >= numVerts) || (count == 0))
+        {
+            return 0;
+        }
+        count = (count < numVerts - index) ? count : (numVerts - index);
+        vert = (xVec3*)geom->morphTarget->verts;
+        vert += index;
+    }
+
+    RpSkin* skin = RpSkinGeometryGetSkin(model->geometry);
+    if (skin)
+    {
+        SkinXform(dest, vert, mat, RpSkinGetSkinToBoneMatrices(skin),
+                  (F32*)(RpSkinGetVertexBoneWeights(skin) + index),
+                  RpSkinGetVertexBoneIndices(skin) + index, count);
+    }
+    else
+    {
+        RwV3dTransformPoints((RwV3d*)dest, (const RwV3d*)vert, count, mat);
+    }
+    return count;
+}
+
+void iModelTagEval(RpAtomic* model, const xModelTag* tag, RwMatrix* mat, xVec3* dest)
+{
+    if (tag->wt[0])
+    {
+        RpGeometry* geom = RpAtomicGetGeometry(model);
+        RpSkin* skin = RpSkinGeometryGetSkin(geom);
+        const RwMatrix* skinmat = RpSkinGetSkinToBoneMatrices(skin);
+        SkinXform(dest, &tag->v, mat, skinmat, tag->wt, &tag->matidx, 1);
+    }
+    else
+    {
+        RwV3dTransformPoints((RwV3d*)dest, (RwV3d*)&tag->v, 1, mat);
+    }
+}
+
 static inline void SkinNormals(xVec3* dest, const xVec3* normal, const RwMatrix* mat,
                         const RwMatrix* skinmat, const F32* wt, const U32* idx, U32 count)
 {
