@@ -2,6 +2,12 @@
 
 #include <rwcore.h>
 
+static inline F32 skb_abs(F32 value)
+{
+    asm volatile("abs.s %0, %0" : "+f"(value));
+    return value;
+}
+
 F32 iAnimDurationSKB(iAnimSKBHeader* data)
 {
     return ((F32*)((iAnimSKBKey*)(data + 1) + data->KeyCount))[data->TimeCount - 1];
@@ -14,23 +20,23 @@ void _iAnimSKBAdjustTranslate(iAnimSKBHeader* data, U32 bone, F32* starttran, F3
     F32 outScale[3];
     F32 pos;
     F32 factor[3];
-    F32 oldmax[3] = { 0.0f, 0.0f, 0.0f };
-    F32 newmax[3] = { 0.0f, 0.0f, 0.0f };
     F32 timefirst, timelast;
     iAnimSKBKey* keys;
     F32* times;
     U16* offsets;
 
-    tcount = data->TimeCount;
-    bcount = data->BoneCount;
     kcount = data->KeyCount;
+    bcount = data->BoneCount;
+    tcount = data->TimeCount;
+    F32 oldmax[3] = {};
+    F32 newmax[3] = {};
 
     keys = (iAnimSKBKey*)(data + 1);
     times = (F32*)(keys + kcount);
     offsets = (U16*)(times + tcount);
 
     keyfirst = offsets[bone];
-    keylast = offsets[bone + bcount * (tcount - 2)] + 1;
+    keylast = offsets[bone + (tcount - 2) * bcount] + 1;
 
     timefirst = times[0];
     timelast = times[tcount - 1];
@@ -43,9 +49,9 @@ void _iAnimSKBAdjustTranslate(iAnimSKBHeader* data, U32 bone, F32* starttran, F3
             {
                 pos = data->Scale[idx] * keys[i].Tran[idx];
 
-                if (FABS(pos) > oldmax[idx])
+                if (skb_abs(pos) > oldmax[idx])
                 {
-                    oldmax[idx] = FABS(pos);
+                    oldmax[idx] = skb_abs(pos);
                 }
 
                 if (i >= keyfirst && i <= keylast)
@@ -54,9 +60,9 @@ void _iAnimSKBAdjustTranslate(iAnimSKBHeader* data, U32 bone, F32* starttran, F3
                            (endtran[idx] - starttran[idx]) *
                                (times[keys[i].TimeIndex] - timefirst) / (timelast - timefirst);
 
-                    if (FABS(pos) > newmax[idx])
+                    if (skb_abs(pos) > newmax[idx])
                     {
-                        newmax[idx] = FABS(pos);
+                        newmax[idx] = skb_abs(pos);
                     }
                 }
             }
@@ -158,7 +164,7 @@ S32 _iAnimSKBExtractTranslate(iAnimSKBHeader* data, U32 bone, xVec3* tranArray, 
     times = (F32*)(keys + data->KeyCount);
     offsets = (U16*)(times + tcount);
 
-    keylast = offsets[bone + (tcount - 2) * data->BoneCount] + 1;
+    keylast = offsets[bone + data->BoneCount * (tcount - 2)] + 1;
 
     for (i = offsets[bone]; i <= keylast; i++)
     {
