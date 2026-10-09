@@ -48,7 +48,7 @@ Each result records its search window, seed start estimate and nominal flank
 slack. Verified exclusions or region edges may clip that window. Normalized LCS
 scores, body hashes and raw-byte equality are separate fields.
 
-Defaults are 20 queries, 16,384 words per query, 12 windows, 24 selected seeds,
+Defaults are 20 queries, 32,768 words per query, 12 windows, 24 selected seeds,
 64 occurrences per seed and 32 words of flank slack. `--max-words`, `--slack`,
 `--max-windows`, `--max-seeds`, `--max-occurrences` and `--seed-words` expose these
 budgets. Cell-budget diagnostics count windows left coarse, not discarded
@@ -105,10 +105,13 @@ Temporary replacements prevent incomplete caches. Use `--cache-dir` to isolate r
 
 The initial large-block check found candidate windows for Dutchman (59,688
 reference bytes), Hazard (57,056), BossSB2 (56,124) and KingJelly (49,460), at
-99.68–99.82% normalized LCS. A five-query cold run took 19.27 seconds, including
+99.68â€“99.82% normalized LCS. A five-query cold run took 19.27 seconds, including
 5.58 seconds preparing caches. These are unconfirmed coarse windows and observed
 local timings. None was promoted into a registry. Private evidence is
 `build/france-large-oct08.json` and `build/france-large-map-oct08.json`.
+An expanded scan also found an 83,680-byte, 188-function GoalRobo block at
+99.84% normalized LCS. The default word limit includes this larger block;
+the quadratic refinement cap remains unchanged.
 
 ```sh
 python -m unittest discover -s tools/tests -p test_france_fuzzy.py -v

@@ -524,7 +524,7 @@ def main():
     p.add_argument("--name", default="", help="case-insensitive DWARF function-name substring")
     p.add_argument("--source", default="", help="case-insensitive original source-path substring")
     p.add_argument("--address", type=lambda s: int(s, 0), help="exact reference entry address")
-    for name, default in (("limit", 20), ("top", 5), ("seed-words", 5), ("max-words", 16384),
+    for name, default in (("limit", 20), ("top", 5), ("seed-words", 5), ("max-words", 32768),
                           ("max-windows", 12), ("max-cells", 1000000), ("max-seeds", 24),
                           ("max-occurrences", 64), ("slack", 32)):
         p.add_argument("--" + name, type=int, default=default)
