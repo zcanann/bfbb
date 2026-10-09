@@ -121,3 +121,14 @@ every GameCube score remain unchanged. Evidence is
 `build/fireworks-update-final-comparison.json`, its function-delta JSON and
 `build/fireworks-update-gc-{before,after}.json`. Existing unresolved SDK call
 limitations remain in place.
+
+PS2 scene entry omits the unused `num_fx_atomics` definition and reset retained
+by the GameCube source. The static counter has no reader or escaped address,
+none of the three PS2 debug streams names it, and the original function lacks
+the reconstructed extra store. The bounded platform guard improves
+`xFX_SceneEnter` from 94.21429% to 95.36466% in each debug region. Complete
+regional comparisons retain all exact bytes and other function scores, with
+unchanged target sizes/counts and data measures; France and every GameCube
+score remain unchanged. Evidence is `build/fx-counter-dwarf-audit.json`,
+`build/fx-scene-enter-final-comparison.json`, its function-delta JSON, and
+`build/fx-scene-enter-gc-{before,after}.json`.

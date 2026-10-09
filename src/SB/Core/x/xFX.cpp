@@ -48,7 +48,9 @@ F32 EnvMapShininess = 1.0f;
 
 /* End global variables */
 
+#if !defined(PS2)
 static U32 num_fx_atomics = 0;
+#endif
 static U32 xfx_initted = 0;
 
 static void LightResetFrame(RpLight* light);
@@ -538,7 +540,9 @@ void xFX_SceneEnter(RpWorld* world)
         }
     }
 
+#if !defined(PS2)
     num_fx_atomics = 0;
+#endif
 }
 
 void xFX_SceneExit(RpWorld*)
