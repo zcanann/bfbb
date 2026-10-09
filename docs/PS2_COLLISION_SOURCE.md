@@ -304,3 +304,29 @@ production checks remain the integration gate. The adjacent near-exact
 `xCollideCalcTri` was also inspected: its residual is alignment NOP placement
 and consequent branch displacement changes, so no artificial padding was
 introduced there.
+
+
+## Nonuniform box-sphere normalization (2026-10-09)
+
+`xSphereHitsOBB_nu` was using the local normalization macro tuned for
+GameCube, which stores length first and introduces square/component
+temporaries. PS2 originals store normalized components before length in the
+unit-length and zero-length cases, use the ordinary sum-of-squares expression,
+and retain a `sqrt.s` boundary before storing and reloading the measured
+length. A PS2-local macro restores those operations and reuses `xCollideSqrt`.
+The GameCube macro and shared headers are unchanged. The generic normalization
+macro alone improved the pilot from 86.97878% to 91.32361%; restoring the square
+root boundary completed the match.
+
+All three normal complete-unit builds now match the entire 1,508-byte
+function, improving from 86.97878% to 100%. Exact unit coverage rises from
+10,528 bytes / 20 functions to 12,036 bytes / 21 functions, with all other
+35 scores unchanged. Fresh GameCube solo retains the previous 72/75 exact
+result. Independent replay resolves the two JAL operands through the original
+DWARF names `xMat3x3Tolocal` and `xSphereHitsBox`, then reproduces all 1,508
+original bytes in each region. No words remain excluded from that replay.
+
+Baseline: `79e9c4ead`. Private evidence:
+`build/collide-oct09/obb-proof.json` and `obb-raw-proof.json`. This change needs
+no header, compiler or registry edit; full production checks remain the
+integration gate.

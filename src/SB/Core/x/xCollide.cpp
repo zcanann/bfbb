@@ -44,6 +44,49 @@ extern U8 xClumpColl_FilterFlags;
 #include <world/bageomet.h>
 #endif
 
+#if defined(PS2)
+static inline F32 xCollideSqrt(F32 value)
+{
+    F32 result;
+    asm volatile("sqrt.s %0, %1" : "=f"(result) : "f"(value));
+    return result;
+}
+#else
+#define xCollideSqrt xsqrt
+#endif
+
+#if defined(PS2)
+// PS2 stores the normalized components before the length; preserve its sqrt boundary.
+#define xVec3NormalizeTmpMacro(o, v, len)                                                             \
+    MACRO_START                                                                                    \
+    {                                                                                              \
+        F32 len2 = SQR((v)->x) + SQR((v)->y) + SQR((v)->z);                                        \
+        if (xeq(len2, 1.0f, 1e-5f))                                                                \
+        {                                                                                          \
+            (o)->x = (v)->x;                                                                       \
+            (o)->y = (v)->y;                                                                       \
+            (o)->z = (v)->z;                                                                       \
+            *(len) = 1.0f;                                                                         \
+        }                                                                                          \
+        else if (xeq(len2, 0.0f, 1e-5f))                                                           \
+        {                                                                                          \
+            (o)->x = 0.0f;                                                                         \
+            (o)->y = 1.0f;                                                                         \
+            (o)->z = 0.0f;                                                                         \
+            *(len) = 0.0f;                                                                         \
+        }                                                                                          \
+        else                                                                                       \
+        {                                                                                          \
+            *(len) = xCollideSqrt(len2);                                                                  \
+            F32 len_inv = 1.0f / *(len);                                                           \
+            (o)->x = (v)->x * len_inv;                                                             \
+            (o)->y = (v)->y * len_inv;                                                             \
+            (o)->z = (v)->z * len_inv;                                                             \
+        }                                                                                          \
+    }                                                                                              \
+    MACRO_STOP
+
+#else
 // Same computation as xVec3NormalizeMacro in xVec3Inlines.h, but written the way the retail
 // object was built: the length is stored before the components are copied, and the squares are
 // held in named temporaries. Reproducing that here (rather than editing the shared header) takes
@@ -78,6 +121,8 @@ extern U8 xClumpColl_FilterFlags;
         }                                                                                          \
     }                                                                                              \
     MACRO_STOP
+
+#endif
 
 _xCollsIdx xCollideGetCollsIdx(const xCollis* coll, const xVec3* tohit, const xMat3x3* mat)
 {
@@ -325,16 +370,6 @@ static RpCollisionTriangle* sphereHitsModelCB(RpIntersection* isx, RpCollisionTr
     return sphereHitsEnvCB(&context->localx, NULL, tri, dist, context->coll);
 }
 
-#if defined(PS2)
-static inline F32 xCollideSqrt(F32 value)
-{
-    F32 result;
-    asm volatile("sqrt.s %0, %1" : "=f"(result) : "f"(value));
-    return result;
-}
-#else
-#define xCollideSqrt xsqrt
-#endif
 
 U32 xSphereHitsModel(const xSphere* b, const xModelInstance* m, xCollis* coll)
 {
