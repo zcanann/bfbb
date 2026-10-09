@@ -356,7 +356,8 @@ void ztextbox::set_text(U32 id)
     }
     else
     {
-        set_text(xTextAssetGetText(ta));
+        ta++;
+        set_text((char*)ta);
     }
 }
 

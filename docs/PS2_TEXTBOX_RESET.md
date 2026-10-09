@@ -28,3 +28,14 @@ so no France matching gain is claimed.
 The full GameCube USA report remains identical and the retail DOL SHA-1 check
 passes. Private evidence is `build/textbox-oct09/*-{before,after}.json`, with
 source snapshots for the separate call-boundary and condition-order probes.
+
+## Text pointer lifetime
+
+Advancing the asset pointer past its header in a separate statement before
+calling `set_text` recovers the original text-pointer register lifetime. The
+168-byte ID overload becomes exact in all three debug releases, raising each
+unit to 18/21 functions and 2,704 exact bytes. USA fuzzy matching reaches
+93.17709%; Europe/Germany reach 93.83482%. Every other function score is
+unchanged, as is the entire GameCube USA report; its retail DOL SHA-1 passes.
+Private evidence uses `*-pointer.json` in the same directory. An explicit text
+local and byte-pointer arithmetic did not reproduce the same register lifetime.
