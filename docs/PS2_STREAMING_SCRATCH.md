@@ -22,3 +22,16 @@ The declaration is PS2-only. Full GameCube USA, Europe and Germany builds produc
 unchanged function, code and data scores and pass their retail DOL SHA-1 checks.
 Private unit reports for all
 four PS2 versions and rejected source probes are in `build/stransvc-oct08`.
+
+A follow-up places `xSTGetAssetInfoByType`'s `sum` initialization immediately
+after its scratch-record initializer. This restores the lifetime used around
+the output-clear call, improving the 516-byte body from 96.04651% to 98.02326%
+in all four PS2 releases. The unit reaches 99.40544%, with unchanged exact
+totals and all other function scores. Moving the initializer after the clear
+or after scene counting scored lower. Six initialization-order probes in
+`xSTFindAssetByType` did not justify a further source change.
+
+This ordering change is shared source. GameCube USA's function remains exactly
+matched, and the full build report remains byte-for-byte equivalent as JSON.
+The four additional PS2 reports use the `-sum-after.json` suffix in the same
+private evidence directory.
