@@ -564,6 +564,12 @@
           "linkage_name": "?rndseed@@3IA",
           "size": 4,
           "object": "xMath.obj"
+        },
+        "float:30000000": {
+          "linkage_name": "__real@30000000",
+          "size": 4,
+          "object": "xParCmd.obj",
+          "value_hex": "00000030"
         }
       },
       "direct_calls": {
@@ -574,19 +580,13 @@
         "xParCmdOrbitLine_Update(xParCmd*,xParGroup*,F32)": [],
         "xParCmdAccelerate_Update(xParCmd*,xParGroup*,F32)": [],
         "xParCmdMove_Update(xParCmd*,xParGroup*,F32)": [],
-        "xParCmdMoveRandom_Update(xParCmd*,xParGroup*,F32)": [
-          "?xurand@@YAMXZ"
-        ],
-        "xParCmdMoveRandomPar_Update(xParCmd*,xParGroup*,F32)": [
-          "?xurand@@YAMXZ"
-        ],
+        "xParCmdMoveRandom_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmdMoveRandomPar_Update(xParCmd*,xParGroup*,F32)": [],
         "xParCmdRandomVelocityPar_Update(xParCmd*,xParGroup*,F32)": [
-          "?xMat3x3Euler@@YAXPAUxMat3x3@@MMM@Z",
-          "?xurand@@YAMXZ"
+          "?xMat3x3Euler@@YAXPAUxMat3x3@@MMM@Z"
         ],
         "xParCmdApplyWind_Update(xParCmd*,xParGroup*,F32)": [],
         "xParCmdRotPar_Update(xParCmd*,xParGroup*,F32)": [
-          "?xurand@@YAMXZ",
           "__ftol2"
         ],
         "xParCmdVelocityApply_Update(xParCmd*,xParGroup*,F32)": [],
@@ -642,13 +642,64 @@
         "xParCmdOrbitLine_Update(xParCmd*,xParGroup*,F32)": [],
         "xParCmdAccelerate_Update(xParCmd*,xParGroup*,F32)": [],
         "xParCmdMove_Update(xParCmd*,xParGroup*,F32)": [],
-        "xParCmdMoveRandom_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmdMoveRandom_Update(xParCmd*,xParGroup*,F32)": [
+          {
+            "symbol": "rndseed",
+            "field": "displacement",
+            "prefix": "a1",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "float:4f800000",
+            "field": "displacement",
+            "prefix": "d805",
+            "addend": 0,
+            "count": 3
+          },
+          {
+            "symbol": "float:30000000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0,
+            "count": 3
+          },
+          {
+            "symbol": "rndseed",
+            "field": "displacement",
+            "prefix": "a3",
+            "addend": 0,
+            "count": 1
+          }
+        ],
         "xParCmdMoveRandomPar_Update(xParCmd*,xParGroup*,F32)": [
           {
             "symbol": "float:3f000000",
             "field": "displacement",
             "prefix": "d80d",
-            "addend": 0
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "rndseed",
+            "field": "displacement",
+            "prefix": "a1",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "float:4f800000",
+            "field": "displacement",
+            "prefix": "d805",
+            "addend": 0,
+            "count": 2
+          },
+          {
+            "symbol": "float:2f800000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0,
+            "count": 2
           },
           {
             "symbol": "float:3f000000",
@@ -656,9 +707,45 @@
             "prefix": "d825",
             "addend": 0,
             "count": 2
+          },
+          {
+            "symbol": "rndseed",
+            "field": "displacement",
+            "prefix": "a3",
+            "addend": 0,
+            "count": 1
           }
         ],
-        "xParCmdRandomVelocityPar_Update(xParCmd*,xParGroup*,F32)": [],
+        "xParCmdRandomVelocityPar_Update(xParCmd*,xParGroup*,F32)": [
+          {
+            "symbol": "rndseed",
+            "field": "displacement",
+            "prefix": "8b15",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "float:4f800000",
+            "field": "displacement",
+            "prefix": "d805",
+            "addend": 0,
+            "count": 3
+          },
+          {
+            "symbol": "float:2f800000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0,
+            "count": 3
+          },
+          {
+            "symbol": "rndseed",
+            "field": "displacement",
+            "prefix": "8915",
+            "addend": 0,
+            "count": 1
+          }
+        ],
         "xParCmdApplyWind_Update(xParCmd*,xParGroup*,F32)": [],
         "xParCmdRotPar_Update(xParCmd*,xParGroup*,F32)": [
           {
@@ -674,6 +761,34 @@
             "prefix": "d80d",
             "addend": 0,
             "count": 6
+          },
+          {
+            "symbol": "rndseed",
+            "field": "displacement",
+            "prefix": "8b35",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "float:4f800000",
+            "field": "displacement",
+            "prefix": "d805",
+            "addend": 0,
+            "count": 3
+          },
+          {
+            "symbol": "float:2f800000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0,
+            "count": 3
+          },
+          {
+            "symbol": "rndseed",
+            "field": "displacement",
+            "prefix": "8935",
+            "addend": 0,
+            "count": 1
           }
         ],
         "xParCmdVelocityApply_Update(xParCmd*,xParGroup*,F32)": [],

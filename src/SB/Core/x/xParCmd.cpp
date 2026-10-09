@@ -6,6 +6,12 @@
 #include "xMathInlines.h"
 #if defined(XBOX)
 #include "xMath3.h"
+static inline F32 xParCmdRandom()
+{
+    return xrand() * 2.3283064e-10f;
+}
+#else
+#define xParCmdRandom xurand
 #endif
 
 struct xCmdInfo
@@ -285,9 +291,9 @@ void xParCmdMoveRandom_Update(xParCmd* c, xParGroup* ps, F32 dt)
     xVec3 var_28;
     var_28 = cmd->dir;
 
-    var_28.x *= 2.0f * xurand();
-    var_28.y *= 2.0f * xurand();
-    var_28.z *= 2.0f * xurand();
+    var_28.x *= 2.0f * xParCmdRandom();
+    var_28.y *= 2.0f * xParCmdRandom();
+    var_28.z *= 2.0f * xParCmdRandom();
 
     xVec3Sub(&var_28, &var_28, &cmd->dir);
     xVec3SMulBy(&var_28, dt);
@@ -312,8 +318,8 @@ void xParCmdMoveRandomPar_Update(xParCmd* c, xParGroup* ps, F32 dt)
 
     while (p)
     {
-        p->m_pos.x += f31 * (xurand() - 0.5f);
-        p->m_pos.z += f30 * (xurand() - 0.5f);
+        p->m_pos.x += f31 * (xParCmdRandom() - 0.5f);
+        p->m_pos.z += f30 * (xParCmdRandom() - 0.5f);
 
         p = p->m_next;
     }
@@ -347,9 +353,9 @@ void xParCmdRandomVelocityPar_Update(xParCmd* c, xParGroup* ps, F32 dt)
     {
         xMat3x3 var_88;
 
-        F32 y = 2.0f * (f31 * xurand()) - f31;
-        F32 x = 2.0f * (f30 * xurand()) - f30;
-        F32 z = 2.0f * (f29 * xurand()) - f29;
+        F32 y = 2.0f * (f31 * xParCmdRandom()) - f31;
+        F32 x = 2.0f * (f30 * xParCmdRandom()) - f30;
+        F32 z = 2.0f * (f29 * xParCmdRandom()) - f29;
 
         xMat3x3Euler(&var_88, x, y, z);
         xMat3x3LMulVec(&p->m_vel, &var_88, &p->m_vel);
@@ -411,9 +417,9 @@ void xParCmdRotPar_Update(xParCmd* c, xParGroup* ps, F32 dt)
 
     while (p)
     {
-        p->m_rotdeg[0] += (U8)(dt * (f30 * xurand() + f27));
-        p->m_rotdeg[1] += (U8)(dt * (f29 * xurand() + f26));
-        p->m_rotdeg[2] += (U8)(dt * (f28 * xurand() + f25));
+        p->m_rotdeg[0] += (U8)(dt * (f30 * xParCmdRandom() + f27));
+        p->m_rotdeg[1] += (U8)(dt * (f29 * xParCmdRandom() + f26));
+        p->m_rotdeg[2] += (U8)(dt * (f28 * xParCmdRandom() + f25));
 
         p = p->m_next;
     }
