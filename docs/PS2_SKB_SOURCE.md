@@ -44,9 +44,9 @@ Private evidence in `C:/Projects/bfbb-agent-ps2-oct08/build`:
   is part of the result.
 
 GameCube selects `SB/Core/gc/iAnimSKB.cpp`; Xbox does not select this PS2 source.
-Their source and headers are unchanged. Although the French original sequence
-has been independently recovered, the existing source profile currently selects
-only the three debug versions. This change does not alter that profile.
+Their source and headers are unchanged. The first two source commits select
+only the three debug versions; the separate French extension below adds the
+already recovered French sequence to source comparison.
 
 ## VU evaluator restoration
 
@@ -95,3 +95,28 @@ Additional private evidence:
 - `skb-eval-raw-proof.py` / `.json`: full-word VU arithmetic checks, original
   typed polynomial identity/content hashes, and the compiled object's sole
   HI/LO relocation pair in each version.
+
+## French source profile
+
+A separate profile entry selects only the authenticated French executable and
+the four existing SKB functions. Every address-qualified target name maps to the
+same canonical linker spelling in all three original DWARF records. The profile
+records those source addresses, executable identities, and body hashes. It adds
+no functions, boundaries, data identities, relocation rules, or calls.
+
+Compiling all four functions with `VERSION_SLES_53623=1` yields 92.31973% for
+the unchanged 4,216-byte unit. Duration adds 32 raw-exact bytes; Eval is
+78.87838%, Adjust is 99.17742%, and Extract is 99.931694%. The emitted bytes of
+each of the four functions agree with each of the three debug-version builds.
+The 122 full VU words also agree directly with the French original evaluator.
+
+The private target rebuild preserves each of the previous four `.text` sections
+byte for byte, changing only their authenticated symbol spellings. Its function
+count and all 4,216 original code bytes remain unchanged. The cached report's
+coverage document is preserved, as are every unrelated profile and target unit.
+Root's combined regeneration gate remains responsible for the final full report.
+
+Private reproduction and evidence: `build/skb-france-profile.py`,
+`build/skb-france-source-proof.py`, and
+`build/skb-france-diagnostic/{profile-proof,source-proof}.json`. The compiled
+French object and report are in `build/ps2solo-tvrkkkoi`.

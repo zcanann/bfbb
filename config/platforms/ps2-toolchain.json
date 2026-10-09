@@ -227367,6 +227367,161 @@
         }
       ],
       "selector": "name_address"
+    },
+    {
+      "source": "src/SB/Core/p2/iAnimSKB.cpp",
+      "target_unit": "SB/Core/p2/iAnimSKB.cpp",
+      "object": "source/iAnimSKB.o",
+      "selector": "name_address",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "_iAnimSKBExtractTranslate@001a4730": "_iAnimSKBExtractTranslate__FP14iAnimSKBHeaderUiP5xVec3i",
+        "_iAnimSKBAdjustTranslate@001a4cf0": "_iAnimSKBAdjustTranslate__FP14iAnimSKBHeaderUiPfPf",
+        "iAnimDurationSKB@001a51d0": "iAnimDurationSKB__FP14iAnimSKBHeader",
+        "iAnimEvalSKB@001a51f0": "iAnimEvalSKB__FP14iAnimSKBHeaderfUiP5xVec3P5xQuat"
+      },
+      "calls": [],
+      "gp_relocations": [],
+      "linkage_provenance": [
+        {
+          "function": "_iAnimSKBExtractTranslate@001a4730",
+          "france_address": 1722160,
+          "size": 1464,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1721360,
+              "name": "_iAnimSKBExtractTranslate",
+              "source": "SB/Core/p2/iAnimSKB.cpp",
+              "linkage_name": "_iAnimSKBExtractTranslate__FP14iAnimSKBHeaderUiP5xVec3i",
+              "reference_sha256": "76a24084e5b00bbbf579e72423364d93357a44f623e458cf9327cffd9a532a7f"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1722160,
+              "name": "_iAnimSKBExtractTranslate",
+              "source": "SB/Core/p2/iAnimSKB.cpp",
+              "linkage_name": "_iAnimSKBExtractTranslate__FP14iAnimSKBHeaderUiP5xVec3i",
+              "reference_sha256": "76a24084e5b00bbbf579e72423364d93357a44f623e458cf9327cffd9a532a7f"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1718800,
+              "name": "_iAnimSKBExtractTranslate",
+              "source": "SB/Core/p2/iAnimSKB.cpp",
+              "linkage_name": "_iAnimSKBExtractTranslate__FP14iAnimSKBHeaderUiP5xVec3i",
+              "reference_sha256": "76a24084e5b00bbbf579e72423364d93357a44f623e458cf9327cffd9a532a7f"
+            }
+          ]
+        },
+        {
+          "function": "_iAnimSKBAdjustTranslate@001a4cf0",
+          "france_address": 1723632,
+          "size": 1240,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1722832,
+              "name": "_iAnimSKBAdjustTranslate",
+              "source": "SB/Core/p2/iAnimSKB.cpp",
+              "linkage_name": "_iAnimSKBAdjustTranslate__FP14iAnimSKBHeaderUiPfPf",
+              "reference_sha256": "2e11f43ea350def1f75a01000e712d6d73d890368c38045fdd4a035b45916e8a"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1723632,
+              "name": "_iAnimSKBAdjustTranslate",
+              "source": "SB/Core/p2/iAnimSKB.cpp",
+              "linkage_name": "_iAnimSKBAdjustTranslate__FP14iAnimSKBHeaderUiPfPf",
+              "reference_sha256": "2e11f43ea350def1f75a01000e712d6d73d890368c38045fdd4a035b45916e8a"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1720272,
+              "name": "_iAnimSKBAdjustTranslate",
+              "source": "SB/Core/p2/iAnimSKB.cpp",
+              "linkage_name": "_iAnimSKBAdjustTranslate__FP14iAnimSKBHeaderUiPfPf",
+              "reference_sha256": "2e11f43ea350def1f75a01000e712d6d73d890368c38045fdd4a035b45916e8a"
+            }
+          ]
+        },
+        {
+          "function": "iAnimDurationSKB@001a51d0",
+          "france_address": 1724880,
+          "size": 32,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1724080,
+              "name": "iAnimDurationSKB",
+              "source": "SB/Core/p2/iAnimSKB.cpp",
+              "linkage_name": "iAnimDurationSKB__FP14iAnimSKBHeader",
+              "reference_sha256": "a7b51cae7caeadf8ed7cf842af96056c9be918c883181e6808ccdc26d4be1ce6"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1724880,
+              "name": "iAnimDurationSKB",
+              "source": "SB/Core/p2/iAnimSKB.cpp",
+              "linkage_name": "iAnimDurationSKB__FP14iAnimSKBHeader",
+              "reference_sha256": "a7b51cae7caeadf8ed7cf842af96056c9be918c883181e6808ccdc26d4be1ce6"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1721520,
+              "name": "iAnimDurationSKB",
+              "source": "SB/Core/p2/iAnimSKB.cpp",
+              "linkage_name": "iAnimDurationSKB__FP14iAnimSKBHeader",
+              "reference_sha256": "a7b51cae7caeadf8ed7cf842af96056c9be918c883181e6808ccdc26d4be1ce6"
+            }
+          ]
+        },
+        {
+          "function": "iAnimEvalSKB@001a51f0",
+          "france_address": 1724912,
+          "size": 1480,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1724112,
+              "name": "iAnimEvalSKB",
+              "source": "SB/Core/p2/iAnimSKB.cpp",
+              "linkage_name": "iAnimEvalSKB__FP14iAnimSKBHeaderfUiP5xVec3P5xQuat",
+              "reference_sha256": "ecab111be079508633fd7d9edaa5ba67a72be9fda66e694f0e18703471292b0a"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1724912,
+              "name": "iAnimEvalSKB",
+              "source": "SB/Core/p2/iAnimSKB.cpp",
+              "linkage_name": "iAnimEvalSKB__FP14iAnimSKBHeaderfUiP5xVec3P5xQuat",
+              "reference_sha256": "fcc150cd1f2ffdf2c4dfc91e00e54bb9958b216a8bcef7128e30c07ed2450b48"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1721552,
+              "name": "iAnimEvalSKB",
+              "source": "SB/Core/p2/iAnimSKB.cpp",
+              "linkage_name": "iAnimEvalSKB__FP14iAnimSKBHeaderfUiP5xVec3P5xQuat",
+              "reference_sha256": "c8f7b8ede8f4b553e1aeee3ec4bb53c2ed2ccac4204c177b8983c06786d45974"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
