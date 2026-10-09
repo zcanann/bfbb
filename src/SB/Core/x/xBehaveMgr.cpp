@@ -205,7 +205,11 @@ void xPsyche::Amnesia(S32 i)
     while (g != NULL)
     {
         xGoal* thisg = g;
+#if defined(PS2)
+        g = thisg->next;
+#else
         g = thisg->Next();
+#endif
 
         if ((i != 0) || (this->GIDInStack(thisg->GetID()) == 0))
         {

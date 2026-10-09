@@ -50,3 +50,19 @@ source objects, and the limited fresh French diagnostic target. Common
 `ForceTran` and loop-source probes did not improve the remaining differences
 and were restored. No compiler, profile, relocation or scoring settings change.
 These code results do not establish a retail executable link.
+
+## Scene-reset list traversal
+
+The same PS2 direct-link access in `Amnesia` restores the original traversal
+in the inlined scene reset. `xBehaveMgr_SceneReset` becomes exact at 248 bytes
+in all four PS2 versions. Debug totals rise to 2,992 bytes / 21 functions;
+France's currently profiled single function becomes 248 / 248 bytes exact.
+All other function scores remain unchanged. GameCube retains its accessor
+spelling and every GU4Y78 score, including 59 exact functions / 7,280 bytes.
+
+Raw comparisons reproduce every scene-reset byte in all three debug originals
+after applying the single genuine `g_behavmgr` GP relocation. The French
+profile still leaves this global operand unresolved, so its ordinary code
+score is not a complete relocation or link result. Private evidence is
+`build/behave-scene-raw-proof.json`, `build/behave-scene-proof.py`, and
+`build/behave-scene-gc-{before,after}.json`, with retained whole source objects.
