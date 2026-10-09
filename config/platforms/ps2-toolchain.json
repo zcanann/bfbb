@@ -192691,9 +192691,25 @@
       ],
       "symbols": {
         "RemoveFromFamily": "RemoveFromFamily__8zNPCTikiFv",
-        "ZNPC_Tiki_Startup": "ZNPC_Tiki_Startup__Fv"
+        "ZNPC_Tiki_Startup": "ZNPC_Tiki_Startup__Fv",
+        "ZNPC_AnimTable_Tiki": "ZNPC_AnimTable_Tiki__Fv"
       },
-      "calls": [],
+      "calls": [
+        {
+          "function": "ZNPC_AnimTable_Tiki",
+          "offset": 24,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew@00214070",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "ZNPC_AnimTable_Tiki",
+          "offset": 96,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        }
+      ],
       "linkage_provenance": [
         {
           "function": "RemoveFromFamily",
@@ -192744,6 +192760,32 @@
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
               "source_address": 3057216,
               "reference_sha256": "417c6bec74cb00a20b9e038c57c1723c1f3a2e746d9c50a024e2a5a6cff18741"
+            }
+          ]
+        },
+        {
+          "function": "ZNPC_AnimTable_Tiki",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3057152,
+          "size": 124,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3055744,
+              "reference_sha256": "ac6663bd62f501a1acb1f5391b63ea3dfc4b599eeef20f58f1aef85ebe74b2e4"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3057040,
+              "reference_sha256": "51351b9b206cbf2d68018fb9dfed6b95d04f48dfeee5d0b8cc5e011bb62c318d"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3053728,
+              "reference_sha256": "c47ff2678edd8f6b0d60077681a6c3dbdcfea4c74766fd713103d81996f5157a"
             }
           ]
         }
@@ -227518,6 +227560,639 @@
               "source": "SB/Core/p2/iAnimSKB.cpp",
               "linkage_name": "iAnimEvalSKB__FP14iAnimSKBHeaderfUiP5xVec3P5xQuat",
               "reference_sha256": "c8f7b8ede8f4b553e1aeee3ec4bb53c2ed2ccac4204c177b8983c06786d45974"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Game/zNPCTypeBossPatrick.cpp",
+      "target_unit": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "object": "source/zNPCTypeBossPatrick.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "ZNPC_AnimTable_BossPatrick": "ZNPC_AnimTable_BossPatrick__Fv"
+      },
+      "calls": [
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "offset": 92,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew@00214070",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "offset": 168,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "offset": 240,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "offset": 312,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "offset": 384,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "offset": 456,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "offset": 528,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "offset": 600,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "offset": 672,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "offset": 744,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "offset": 816,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "offset": 888,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "offset": 960,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "offset": 1032,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "offset": 1104,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "offset": 1176,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "offset": 1248,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "offset": 1320,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "offset": 1392,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "offset": 1464,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "offset": 1536,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "offset": 1608,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "offset": 1680,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "offset": 1716,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "NPCC_BuildStandardAnimTran@002cfb50",
+          "symbol": "NPCC_BuildStandardAnimTran__FP10xAnimTablePPcPiif"
+        }
+      ],
+      "linkage_provenance": [
+        {
+          "function": "ZNPC_AnimTable_BossPatrick",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3638976,
+          "size": 1744,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3637600,
+              "reference_sha256": "9eac7329ab04832a9b8ba8b97027da4eeecccd2c8d739da5a7b23984907f30e7"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3638864,
+              "reference_sha256": "51749b19dfd92535367612df8bf189477e085041bf1d9dc1338db44f78d4f051"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3635616,
+              "reference_sha256": "ea5b855dcd273ad4eb557fc9d301cacf52a1d343965624645db9c8ede8ba39b6"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Game/zNPCTypeBossSB1.cpp",
+      "target_unit": "SB/Game/zNPCTypeBossSB1.cpp",
+      "object": "source/zNPCTypeBossSB1.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "ZNPC_AnimTable_BossSB1": "ZNPC_AnimTable_BossSB1__Fv"
+      },
+      "calls": [
+        {
+          "function": "ZNPC_AnimTable_BossSB1",
+          "offset": 68,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew@00214070",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB1",
+          "offset": 144,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB1",
+          "offset": 216,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB1",
+          "offset": 288,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB1",
+          "offset": 360,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB1",
+          "offset": 432,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB1",
+          "offset": 504,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB1",
+          "offset": 576,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB1",
+          "offset": 648,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB1",
+          "offset": 720,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB1",
+          "offset": 792,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB1",
+          "offset": 828,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "NPCC_BuildStandardAnimTran@002cfb50",
+          "symbol": "NPCC_BuildStandardAnimTran__FP10xAnimTablePPcPiif"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB1",
+          "offset": 892,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSB1",
+          "offset": 956,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        }
+      ],
+      "linkage_provenance": [
+        {
+          "function": "ZNPC_AnimTable_BossSB1",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3523648,
+          "size": 1028,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3522272,
+              "reference_sha256": "4fda08ad1973f4bb402258187b65b214caf9bb6f16000f03c83b3881cb371fdc"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3523536,
+              "reference_sha256": "b8ebc759b9cc4c0e18f8bb9a688ef7058b96539b78bfde64c0215ab7c52349cb"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3520288,
+              "reference_sha256": "e5a294ab161f1b2e7324dfadfb790b15b2a8c2c48ebfdf1a74debf884ba16425"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Game/zNPCTypeBossSandy.cpp",
+      "target_unit": "SB/Game/zNPCTypeBossSandy.cpp",
+      "object": "source/zNPCTypeBossSandy.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "ZNPC_AnimTable_BossSandy": "ZNPC_AnimTable_BossSandy__Fv"
+      },
+      "calls": [
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 84,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew@00214070",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 160,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 232,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 304,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 376,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 448,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 520,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 592,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 664,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 736,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 808,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 880,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 952,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 1024,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 1096,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 1168,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 1240,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 1312,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 1384,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 1456,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 1528,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 1600,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 1672,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 1744,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "offset": 1780,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "NPCC_BuildStandardAnimTran@002cfb50",
+          "symbol": "NPCC_BuildStandardAnimTran__FP10xAnimTablePPcPiif"
+        }
+      ],
+      "linkage_provenance": [
+        {
+          "function": "ZNPC_AnimTable_BossSandy",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3370864,
+          "size": 1852,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3369472,
+              "reference_sha256": "0089a8675da87a095e124f5a24c8ff6351211feb452a98d1aa391a3ebbb28051"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3370752,
+              "reference_sha256": "fdcef1f3e15064d0aa5f63df2de28b5ec6c6a202a20cb04b6da4ddec51d6f633"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3367504,
+              "reference_sha256": "9cee73a1bd530e8fa6d501556782956737e3ee5fd4815e6634c8e83d6ebcf9db"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Game/zNPCTypeTest.cpp",
+      "target_unit": "SB/Game/zNPCTypeTest.cpp",
+      "object": "source/zNPCTypeTest.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "ZNPC_AnimTable_Test": "ZNPC_AnimTable_Test__Fv"
+      },
+      "calls": [
+        {
+          "function": "ZNPC_AnimTable_Test",
+          "offset": 44,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew@00214070",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "ZNPC_AnimTable_Test",
+          "offset": 124,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Test",
+          "offset": 228,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_Test",
+          "offset": 308,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        }
+      ],
+      "linkage_provenance": [
+        {
+          "function": "ZNPC_AnimTable_Test",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3295504,
+          "size": 368,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3294112,
+              "reference_sha256": "c6aa32fad0750713de62c800108a7a88525449e462dd43168437eaff699f13ea"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3295392,
+              "reference_sha256": "2410d15e56d9eb02df3df8769e99c4209634f35a61548244bc65c07fdaa96185"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3292080,
+              "reference_sha256": "1b3ae709decb6bc308ee6758d7c551cb327b8743b63b2162aa3595c0d42f5698"
             }
           ]
         }

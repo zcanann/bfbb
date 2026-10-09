@@ -35,3 +35,12 @@ payloads, altered original extents/dependencies, and duplicate complete bodies.
 JSON round-trip equality is required. Private evidence is
 `build/npc-remaining-animation-proof.json` and
 `build/npc-remaining-animation-tests.txt`.
+
+The French source pilot makes Patrick, Test and Tiki exact: +2,236 exact
+bytes and +3 functions. Sandy is 99.56803% and SB1 is 99.22179%; both differ
+only by two extra compiled NOPs around the final transition-list loop.
+The previously selected Tiki members retain their verified scores, sizes
+and metadata. Its selected subset grows from 512 to 636 exact bytes and
+two to three exact functions. Four new French source-unit profiles are added;
+all non-French profiles and all prior French entries remain unchanged.
+Private source evidence is `build/npc-remaining-animation-france-pilot/report.json`.
