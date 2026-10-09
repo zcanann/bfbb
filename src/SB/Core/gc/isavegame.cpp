@@ -913,15 +913,15 @@ static S32 iSG_start_your_engines()
     return 1;
 }
 
-// Looks equivalent. Can't get variable initializtions to match.
+// The remaining difference is in the initialization schedule.
 S32 iSG_mcidx2slot(S32 param1, S32* out_slot, S32* param3)
 {
-    *out_slot = -1;
-    s32 cardReady[ISG_NUM_SLOTS] = {};
     S32 ret = 0;
     S32 idk = 0;
     s32 memSize = 0;
+    *out_slot = -1;
     s32 sectorSize = 0;
+    s32 cardReady[ISG_NUM_SLOTS] = {};
 
     for (S32 i = 0; i < ISG_NUM_SLOTS; i++)
     {

@@ -14603,3 +14603,27 @@ Bink decoder match. No exact-function or completed-TU gain is claimed.
 
 Evidence: build/expand136-shift-mask.py, its candidate and raw diff directory,
 build/expand136-baseline.json, and build/parallel-136-final-validation.json.
+
+## Memory-card slot initialization order (2026-10-08)
+
+`iSG_mcidx2slot` improves from 95.671875% to 96.03125% in all three
+GameCube versions by initializing the memory-size output before the slot
+output and the readiness array afterward. The initial values, card-probing
+loop, return values, and 256-byte function extent are unchanged. This is
+a partial source improvement; initialization scheduling still differs.
+
+The bounded sweep measured all 120 orders of the five initialization groups.
+All three complete source builds and retail DOL checksums pass. Comparing
+every function and unit measure finds this function's fuzzy score is the
+only change; exact code, data, function counts, and completion are unchanged.
+USA overall fuzzy rises from 99.71828% to 99.71831%; Europe and Germany rise
+from 99.71839% to 99.71843%. The unit remains NonMatching.
+
+The two other save-card holdouts were also checked: 48 equivalent switch
+case-group/default variants do not change their scores. Stock GC/2.0, 2.5,
+2.6, and 2.7 retain the same three residuals, so these tests provide no
+new compiler-patch justification.
+
+Private evidence: `build/oct08-save-init-probe/results.json`,
+`build/oct08-save-probe/results.json`, the `oct08-save-after-<version>.json`
+reports, and `build/oct08-save-german-proof.log`.
