@@ -355,3 +355,32 @@ excluded words. No SDK alias or compiler patch is involved.
 Baseline: `5bc92b436`. Private evidence:
 `build/collide-oct09/prepare-proof.json`, `prepare-locals.json`, and
 `prepare-raw-proof.json`. Full production checks remain the integration gate.
+
+
+## Swept-box axis and edge calculations (2026-10-09)
+
+The PS2 swept-box body scales each box axis through consecutive scalar
+multiply/store operations. Its previous source inherited the reordered scalar
+temporaries used for GameCube. Restoring direct component operations raises
+the PS2 match, while preserving the GameCube form. The edge loop also uses
+the same explicit square-root boundaries independently observed in the
+triangle routine. Original debug locals distinguish `distzsqr` from the
+reused `testdist`; the corner and vertex calculations now preserve those
+lifetimes. Member assignment helpers express the four transformed corners.
+
+The retained candidate improves the 3,084-byte `xSweptSphereToBox` from
+86.446175% to 95.11284% in normal complete-unit builds for USA, Europe,
+Germany and France. The other 35 function scores are unchanged, and exact
+coverage remains 12,968 bytes / 22 functions. France includes an independently
+compiled before/after control of this source change. Fresh GameCube solo
+retains 72/75 exact functions, with the box's existing 99.175% residual
+unchanged. This remains a fuzzy gain: scalar register allocation, load/store
+scheduling and corner-array evaluation order still differ from the original.
+
+Reusing `invZ` for the edge reciprocal, changing the plane-distance dot
+helpers, and alternative corner copy/assignment forms were measured
+separately; regressing candidates were discarded. No register bindings,
+artificial padding, header changes or compiler-version attribution are added.
+Baseline: `4a4debed7`. Private evidence is
+`build/collide-oct09/box-proof.json`, `box-locals.json`, and the retained
+regional reports. Full production checks remain the integration gate.

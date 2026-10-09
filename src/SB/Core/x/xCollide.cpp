@@ -1804,9 +1804,6 @@ S32 xSweptSphereToTriangle(xSweptSphere* sws, xVec3* v0, xVec3* v1, xVec3* v2)
     return 0;
 }
 
-#if !defined(PS2)
-#undef xCollideSqrt
-#endif
 
 S32 xSweptSphereToSphere(xSweptSphere* sws, xSphere* sph)
 {
@@ -1866,6 +1863,17 @@ S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat)
     F32 rad, radsqr, testdist, invZ;
     xVec3 boxPos, boxaX, boxaY, boxaZ;
 
+#if defined(PS2)
+    boxaX.x = dx * boxinvbasis->right.x;
+    boxaX.y = dx * boxinvbasis->right.y;
+    boxaX.z = dx * boxinvbasis->right.z;
+    boxaY.x = dy * boxinvbasis->up.x;
+    boxaY.y = dy * boxinvbasis->up.y;
+    boxaY.z = dy * boxinvbasis->up.z;
+    boxaZ.x = dz * boxinvbasis->at.x;
+    boxaZ.y = dz * boxinvbasis->at.y;
+    boxaZ.z = dz * boxinvbasis->at.z;
+#else
     F32 aZz, aZy, aZx, aYz, aYy, aYx, aXz, aXy, aXx;
     aXx = dx * boxinvbasis->right.x;
     aXy = dx * boxinvbasis->right.y;
@@ -1885,6 +1893,8 @@ S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat)
     boxaZ.x = aZx;
     boxaZ.y = aZy;
     boxaZ.z = aZz;
+
+#endif
 
     xMat4x3Toworld(&boxPos, boxinvbasis, &box->lower);
 
@@ -1999,6 +2009,17 @@ S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat)
             }
             else
             {
+#if defined(PS2)
+                distzsqr = radsqr - SQR(boxPos.x) - SQR(boxPos.y);
+                if (distzsqr <= 0.0f)
+                    return 0;
+                testdist = boxPos.z - xsqrt(distzsqr);
+                if (testdist >= sws->curdist)
+                    return 0;
+                if (testdist <= -rad)
+                    return 0;
+                sws->curdist = testdist;
+#else
                 testdist = radsqr - SQR(boxPos.x) - SQR(boxPos.y);
                 if (testdist <= 0.0f)
                     return 0;
@@ -2008,6 +2029,7 @@ S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat)
                 if (distzsqr <= -rad)
                     return 0;
                 sws->curdist = distzsqr;
+#endif
                 sws->contact = boxPos;
                 sws->polynorm.x = -boxaX.x;
                 sws->polynorm.y = -boxaX.y;
@@ -2049,6 +2071,12 @@ S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat)
     S32 vert_contact_found = -1;
     F32 edge_contact_lerp;
 
+#if defined(PS2)
+    xform[0].assign(boxPos.x, boxPos.y, boxPos.z);
+    xform[1].assign(boxPos.x + boxA1.x, boxPos.y + boxA1.y, boxPos.z + boxA1.z);
+    xform[2].assign(boxPos.x + boxA1.x + boxA2.x, boxPos.y + boxA1.y + boxA2.y, boxPos.z + boxA1.z + boxA2.z);
+    xform[3].assign(boxPos.x + boxA2.x, boxPos.y + boxA2.y, boxPos.z + boxA2.z);
+#else
     xform[0].x = boxPos.x;
     xform[0].y = boxPos.y;
     xform[0].z = boxPos.z;
@@ -2061,6 +2089,7 @@ S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat)
     xform[3].x = boxPos.x + boxA2.x;
     xform[3].y = boxPos.y + boxA2.y;
     xform[3].z = boxPos.z + boxA2.z;
+#endif
     xform[4] = xform[0];
 
     for (i = 0; i < 4; i++)
@@ -2082,7 +2111,11 @@ S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat)
             uu.y = -cyl.y * cyl.z;
             uu.z = magNsqr;
             F32 ulen;
+#if defined(PS2)
+            ulen = xCollideSqrt(SQR(uu.x) + SQR(uu.y) + SQR(uu.z));
+#else
             xsqrtfast(ulen, SQR(uu.x) + SQR(uu.y) + SQR(uu.z));
+#endif
             if (!(ulen < 0.000001f))
             {
                 ulen = 1.0f / ulen;
@@ -2093,7 +2126,8 @@ S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat)
                 {
                     testdist = 1.0f / uu.z *
                                (uu.x * pt.x + uu.y * pt.y + uu.z * pt.z -
-                                xsqrt(radsqr - dsqr));
+                                xCollideSqrt(radsqr - dsqr));
+
                     if (testdist >= sws->curdist)
                         continue;
                     if (!(testdist <= -rad))
@@ -2111,10 +2145,25 @@ S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat)
                 }
             }
         }
+#if defined(PS2)
+        F32 distzsqr = radsqr - SQR(xform[i].x) - SQR(xform[i].y);
+        if (!(distzsqr <= 0.0f))
+        {
+            testdist = pt.z - xCollideSqrt(distzsqr);
+            if (testdist >= sws->curdist)
+                continue;
+            if (!(testdist <= -rad))
+            {
+                sws->curdist = testdist;
+                vert_contact_found = i;
+                edge_contact_found = -1;
+            }
+        }
+#else
         testdist = radsqr - SQR(xform[i].x) - SQR(xform[i].y);
         if (!(testdist <= 0.0f))
         {
-            F32 distzsqr = pt.z - xsqrt(testdist);
+            F32 distzsqr = pt.z - xCollideSqrt(testdist);
             if (distzsqr >= sws->curdist)
                 continue;
             if (!(distzsqr <= -rad))
@@ -2124,6 +2173,7 @@ S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat)
                 edge_contact_found = -1;
             }
         }
+#endif
     }
 
     if (vert_contact_found >= 0)
@@ -3000,4 +3050,8 @@ xVec2& xVec2::operator-=(const xVec2& v)
     y -= v.y;
     return *this;
 }
+#endif
+
+#if !defined(PS2)
+#undef xCollideSqrt
 #endif
