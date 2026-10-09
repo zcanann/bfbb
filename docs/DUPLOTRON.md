@@ -14627,3 +14627,54 @@ new compiler-patch justification.
 Private evidence: `build/oct08-save-init-probe/results.json`,
 `build/oct08-save-probe/results.json`, the `oct08-save-after-<version>.json`
 reports, and `build/oct08-save-german-proof.log`.
+
+## Parallel PS2 and France matching (2026-10-09)
+
+Full reports against a fresh `8afd24dc3` baseline retain every previously
+measured function score and exact match. The USA report now has 982,784 exact
+code bytes / 3,735 exact functions, up 6,576 bytes / 24 functions. France has
+118,832 exact bytes / 431 exact functions, up 11,572 bytes / 45 functions.
+The full CPU-code denominators remain 2,978,560 and 2,979,968 bytes respectively.
+Neither report claims a fully linked retail executable.
+
+France's original-only recovery adds 42 identities / 64,332 known bytes:
+pad, Hangable, Group, Event, the Dutchman parameter caller and three helpers,
+King Jelly and its float-list helper, and the SB2 parameter caller. The combined
+registry now covers 702 functions / 299,568 bytes. The parameter bodies use a
+distinct caller/callee-cluster proof kind; they do not claim complete NPC units.
+Original typed arrays, complete literals, strict control flow, unique masked
+bodies and three authenticated reference versions establish the new extents.
+
+The final production run regenerates all three proof registries, checks the
+committed symbols/splits, compiles 66 French source units and exports the full
+region report. A dependency regression found during integration is fixed:
+Group and Hangable keep their independently compared Event contexts after the
+Event functions are registered. Original-backed tests cover both dependency
+fences. All 385 previously published TU-proof records remain unchanged.
+
+Source gains include particle loops, pad thresholds/rumble pointer reuse,
+culling and group operand order, sound voice bounds and original wrappers,
+scoped grid/FFX call boundaries, spline inlining/address induction, missing
+streaming scratch initialization, and MovePoint's shared unit-length local.
+Changed source units were compared in all four PS2 regions; direct original
+byte reconstruction corroborates the newly exact debug-region bodies where
+relocations are available. French unresolved operands remain documented in
+their unit notes. All three GameCube full source reports and retail checksums
+pass with unchanged scores after the earlier memory-card improvement.
+
+The France fuzzy tool searches large original functions and contiguous blocks
+first, uses bit-parallel LCS beyond the quadratic refinement budget, excludes
+authenticated occupied ranges, and replays tentative maps as ranking penalties.
+The final diagnostic map excludes all 299,568 verified bytes. Tentative candidates
+remain ineligible for progress. Compiler probes did not establish an earlier-bug,
+later-fix pattern; this batch adds no compiler patch.
+
+Private evidence: `build/oct08-france-final/SLES-53623`,
+`build/oct09-us-current/SLUS-20680`, `build/oct09-{france,us}-comparison.log`,
+`build/oct09-hangable-test.log`, and the per-unit artifacts cited in the PS2
+notes. The baseline worktree is `C:/Projects/bfbb-verify-oct08-before`; its USA
+baseline reused 137 completed objects from the initial serial run and compiled
+the rest against the frozen source. The interrupted compiler's partial object
+was excluded. The subsequent USA source refresh recompiles the three changed
+units against the unchanged verified targets, preserving source hashes and the
+full report/export checks.
