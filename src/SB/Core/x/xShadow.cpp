@@ -2297,10 +2297,15 @@ static S32 shadowCacheEntityCB(xEnt* ent, void* cbdata)
 
 void xShadowVertical_FillCache(xShadowCache* cache, xVec3* pos, F32 r, F32 depth, F32 minNormY)
 {
+#if !defined(PS2)
     ShadowCBParam cbparam;
+#endif
     RpIntersection isx;
     F32 sortRayDepth[5];
     xQCData qcd;
+#if defined(PS2)
+    ShadowCBParam cbparam;
+#endif
     ShadowCacheContext context;
 
     cache->pos = *pos;
@@ -2371,12 +2376,12 @@ void xShadowVertical_FillCache(xShadowCache* cache, xVec3* pos, F32 r, F32 depth
     cbparam.capsuleStart.x = pos->x;
     cbparam.capsuleStart.y = pos->y;
     cbparam.capsuleStart.z = pos->z;
-    cbparam.capsuleEnd.x = cbparam.capsuleStart.x;
+    cbparam.capsuleEnd.x = pos->x;
     cbparam.capsuleEnd.y = endY;
-    cbparam.capsuleEnd.z = cbparam.capsuleStart.z;
+    cbparam.capsuleEnd.z = pos->z;
     cbparam.capsuleRadius = r;
 
-    xQuickCullForBox(&qcd, (xBox*)cbparam.isx);
+    xQuickCullForBox(&qcd, (xBox*)&isx);
 
     xGridCheckPosition(&colls_grid, (xVec3*)&isx, &qcd, shadowCacheEntityCB, &cbparam);
     xGridCheckPosition(&colls_oso_grid, (xVec3*)&isx, &qcd, shadowCacheEntityCB, &cbparam);

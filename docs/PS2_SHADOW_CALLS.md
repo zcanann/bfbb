@@ -146,3 +146,19 @@ USA, Europe and Germany all improve from 95.56225% to 100%, gaining another
 unchanged. This shared rewrite also preserves the full GameCube USA report
 and retail DOL SHA-1. France/Xbox have no enabled unit profile. Evidence uses
 `*-entity.json` and `entity-proof.json` under `build/shadow-oct09`.
+
+
+## Exact cache fill
+
+`xShadowVertical_FillCache` restores the original PS2 stack-local order, placing
+`cbparam` after the intersection, sorted depths and quick-cull data. Capsule
+endpoints read the input position directly, and quick-cull receives the local
+intersection directly. These remove unnecessary aliases while preserving the
+original load sequence. The original DWARF stack locations independently
+confirm the restored layout.
+
+The complete 740-byte function improves from 94.88108% to 100% in USA, Europe
+and Germany. Totals are now 24/34 functions and 9,756/20,044 exact bytes, with
+98.78268% fuzzy matching. Every other score is unchanged. The full GameCube
+USA report remains identical and its retail DOL SHA-1 passes. France/Xbox
+have no enabled unit profile. Evidence uses `*-fill.json` and `fill-proof.json`.
