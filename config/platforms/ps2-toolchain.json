@@ -228892,6 +228892,127 @@
           ]
         }
       ]
+    },
+    {
+      "source": "src/SB/Core/p2/iModel.cpp",
+      "target_unit": "SB/Core/p2/iModel.cpp",
+      "object": "source/iModel.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "iModelMaterialMulCB": "iModelMaterialMulCB__FP10RpMaterialPv",
+        "iModelSetMaterialAlpha": "iModelSetMaterialAlpha__FP8RpAtomicUc",
+        "iModelCull": "iModelCull__FP8RpAtomicP11RwMatrixTag",
+        "NextAtomicCallback": "NextAtomicCallback__FP8RpAtomicPv"
+      },
+      "calls": [],
+      "linkage_provenance": [
+        {
+          "function": "iModelMaterialMulCB",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 1757760,
+          "size": 712,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1756464,
+              "reference_sha256": "6dc879638c685a4018d15c25fbea93ca2d1f53d2f16f621b0c6628baacc33d9b"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1757760,
+              "reference_sha256": "f212c89cfdb8eb092ac6dca3f1ef872fb75a383d1626b36af289c8a2eed7b687"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1754400,
+              "reference_sha256": "af3aacfd5b79643c27ddf14de3bdd2b0753ab575bfbd5153440035bb0f1dcb51"
+            }
+          ]
+        },
+        {
+          "function": "iModelSetMaterialAlpha",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 1759216,
+          "size": 224,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1757920,
+              "reference_sha256": "ebaf03e62752c3daf6be45f414f80279698821c3aa43d4c61c015df122871077"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1759216,
+              "reference_sha256": "679b8c5a2927b14d80dfcf3ec1e3d830d077d725d5b5224144ecc8e17c7c98a5"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1755856,
+              "reference_sha256": "7413ec62f0f4ff10a901bde4cb8570d84c1a02646e4a10ca8fc138ba31f3587e"
+            }
+          ]
+        },
+        {
+          "function": "iModelCull",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 1764912,
+          "size": 288,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1763616,
+              "reference_sha256": "3bf73f14d49d53aa3788766242973940cc75fc6585c1c7e1c0a2f33cb07f7ef3"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1764912,
+              "reference_sha256": "d978890a24b9a48971f926e0659e3f9bb8dfda17fa25678bcd1f79eb70dbcb13"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1761552,
+              "reference_sha256": "767b5e434d165f9cced6516dc1fa899ff72599b331c362ca04b2e01fbf0f8b8f"
+            }
+          ]
+        },
+        {
+          "function": "NextAtomicCallback",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 1766352,
+          "size": 48,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1765056,
+              "reference_sha256": "c94cd85b03598d9e57a18b7c7dd4fbc8b714e53e28a2095670b829ca68579396"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1766352,
+              "reference_sha256": "c94cd85b03598d9e57a18b7c7dd4fbc8b714e53e28a2095670b829ca68579396"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1762992,
+              "reference_sha256": "c94cd85b03598d9e57a18b7c7dd4fbc8b714e53e28a2095670b829ca68579396"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
