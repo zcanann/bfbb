@@ -5,8 +5,12 @@ This reads metadata only; interpretation and ownership checks belong to callers.
 """
 
 import struct
+from collections import OrderedDict
 
-def iter_dies(debug: bytes):
+_DIE_CACHE = OrderedDict()
+_DIE_CACHE_SIZE = 3
+
+def _decode_dies(debug: bytes):
     """Read the DWARF1 forms present in MW PS2 debug info using the stdlib."""
     offset = 0
     owner = None
@@ -61,3 +65,29 @@ def iter_dies(debug: bytes):
             owner = attrs.get(3)
         yield offset, tag, owner, attrs
         offset = end
+
+
+def iter_dies(debug: bytes):
+    """Decode lazily, caching only completed immutable debug buffers.
+
+    Each caller receives fresh attribute dictionaries. Cached scalar values,
+    strings and byte blocks are immutable; partial and failed parses never enter
+    the bounded cache. Mutable input buffers retain their uncached behavior.
+    """
+    if not isinstance(debug, bytes):
+        yield from _decode_dies(debug)
+        return
+    cached = _DIE_CACHE.get(debug)
+    if cached is not None:
+        _DIE_CACHE.move_to_end(debug)
+        for offset, tag, owner, attrs in cached:
+            yield offset, tag, owner, dict(attrs)
+        return
+    rows = []
+    for offset, tag, owner, attrs in _decode_dies(debug):
+        rows.append((offset, tag, owner, tuple(attrs.items())))
+        yield offset, tag, owner, attrs
+    _DIE_CACHE[debug] = tuple(rows)
+    _DIE_CACHE.move_to_end(debug)
+    while len(_DIE_CACHE) > _DIE_CACHE_SIZE:
+        _DIE_CACHE.popitem(last=False)
