@@ -2,10 +2,14 @@
 
 The 2452-byte `xEntMPMove` improves from 68.368675% to 99.67374% in
 all four PS2 profiles, including France. The unit retains its existing
-`-inline deferred` profile. A PS2-only `inline_depth(4)` setting surrounds
-this function and is reset immediately afterward, allowing its banking
-expression to expand through the nested vector helpers as in retail.
-No profile or compiler binary changes are involved.
+`-inline deferred` profile. A PS2-only `inline_depth(4)` directive is
+written before this function, with a reset directive after it, allowing
+its banking expression to expand through the nested vector helpers as
+in retail. Deferred compilation can apply an inline-depth setting to
+functions textually outside those directives; their placement does not
+prove function-only scope. Full-unit comparisons confirm that only
+`xEntMPMove` changes here. No profile or compiler binary changes are
+involved.
 
 The baseline emits two calls to `xVec3::operator*=(float)` while computing
 `bank * speed * 0.01f + gravity`. The original embeds both operations,
