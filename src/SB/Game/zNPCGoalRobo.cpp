@@ -1355,6 +1355,13 @@ void zNPCGoalAlertFodBzzt::GetInArena(F32 dt)
     npc->ThrottleApply(dt, &dir, 0);
 }
 
+#if defined(PS2)
+static inline S32 NPCGoalWarmupElapsed(F32 timer)
+{
+    return timer < 0.0f;
+}
+#endif
+
 void zNPCGoalAlertFodBzzt::DeathRayUpdate(F32 dt)
 {
     static const RwRGBA rgba_benign = { 0, 255, 0, 128 };
@@ -1364,14 +1371,20 @@ void zNPCGoalAlertFodBzzt::DeathRayUpdate(F32 dt)
     zNPCFodBzzt* npc = (zNPCFodBzzt*)this->psyche->clt_owner;
     S32 canDoDamage = 1;
 
+#if defined(PS2)
+    if (!NPCGoalWarmupElapsed(tmr_warmup))
+#else
     if (!(tmr_warmup < 0.0f))
+#endif
     {
         canDoDamage = 0;
 
-        F32 pam = tmr_warmup / 1.25f;
+        F32 pam;
         S32 doFX = 1;
         F32 pam_segments[8] = { 0.9f, 0.95f, 0.7f, 0.8f, 0.45f, 0.6f, 0.1f, 0.3f };
         S32 i;
+
+        pam = tmr_warmup / 1.25f;
 
         for (i = 0; i < 8; i += 2)
         {
@@ -1463,7 +1476,11 @@ void zNPCGoalAlertFodBzzt::DeathRayUpdate(F32 dt)
             }
             else if (dst_plyr > 10.0f)
             {
+#if defined(PS2)
+                cnt_inContact = MAX(0, cnt_inContact - 1);
+#else
                 cnt_inContact = (cnt_inContact - 1) & ~((cnt_inContact - 1) >> 31);
+#endif
             }
             else
             {
@@ -1472,7 +1489,11 @@ void zNPCGoalAlertFodBzzt::DeathRayUpdate(F32 dt)
         }
         else
         {
+#if defined(PS2)
+            cnt_inContact = MAX(0, cnt_inContact - 1);
+#else
             cnt_inContact = (cnt_inContact - 1) & ~((cnt_inContact - 1) >> 31);
+#endif
         }
 
         cnt_nextlos = 5;

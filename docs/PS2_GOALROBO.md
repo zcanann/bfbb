@@ -31,3 +31,17 @@ and 63,408 exact bytes (98.26499% fuzzy); PAL and German reach 193/229 and
 All three GameCube unit reports remain unchanged. Evidence is
 `build/goalrobo-appear-source-summary.json` and
 `build/goalrobo-appear-gc-check.log`.
+
+DeathRayUpdate now matches all 2,260 original bytes in USA, PAL and German
+(96.12212% to 100%). Its PS2 warmup check uses the original integer predicate
+stage, its local segment table initializes before the warmup division, and
+its two decrements use MAX(0, count - 1). Reversing the MAX operands emitted a
+different branch shape. The GameCube integer bit expression remains behind
+the platform guard; the declaration/initialization order works in both builds.
+
+Full regional GoalRobo reports change only DeathRayUpdate: +2,260 exact bytes
+and one exact function in each debug PS2 region. The currently recovered
+French subset is unchanged because it does not yet identify this body.
+All three freshly built GameCube units preserve every function record and
+measure. Evidence: `build/goalrobo-warmup-source-summary.json`, its regional
+reports and `build/goalrobo-warmup-gc.log`. No compiler patch was needed.
