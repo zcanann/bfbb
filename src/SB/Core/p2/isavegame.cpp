@@ -1071,6 +1071,7 @@ void iSGAutoSave_Disconnect(st_ISGSESSION* isg)
     iSGSessionEnd(isg);
 }
 
+#pragma dont_inline on
 S32 iSGAutoSave_Monitor(st_ISGSESSION* isg, S32 idx_target)
 {
     U32 stat;
@@ -1094,6 +1095,7 @@ S32 iSGAutoSave_Monitor(st_ISGSESSION* isg, S32 idx_target)
     return 1;
 }
 
+#pragma dont_inline reset
 S32 iSG_start_your_engines()
 {
     S32 result = 1;

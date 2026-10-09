@@ -93,3 +93,25 @@ Private evidence: `save-format-final-comparison.json`,
 `save-format-final-changes.json`, `save-format-originals.txt`, and the four
 `save-format-*-raw-proof.json` artifacts under `build`. The source parent for
 these comparisons is `4551a6669`.
+
+## Autosave monitor call
+
+A pragma scoped to `iSGAutoSave_Monitor` preserves its original call to
+`iSGTgtState`. The monitor improves from 19.65625% to 100% in all three debug
+versions, adding 128 exact bytes and one function. Their complete units reach
+11,816 / 13,984 bytes, 46 / 53 functions, and 99.66819% fuzzy matching (Germany:
+99.66791%). Every other function/data result and the entire existing French
+24-function report remain unchanged. France does not yet identify the monitor.
+
+Original-only relocation replay matches all 128 bytes in each debug version,
+including the direct state-query call and global data address. Original types
+confirm the 156-byte session's client-data field at 144 and callback at 152,
+and the 1,792-byte `xGlobals` with `autoSaveFeature` at 1777. No SDK/runtime call
+identity or metadata change is needed. Scoping the pragma to the state-query
+definition was rejected because it also prevented required inlining within
+that function; a pragma on only its forward declaration had no effect.
+
+Private evidence: `save-monitor-final-comparison.json`,
+`save-monitor-final-changes.json`, `save-monitor-originals.txt`,
+`save-monitor-iSGAutoSave_Monitor-raw-proof.json`, and
+`save-monitor-layout-proof.json`. The comparison parent is `c9fd9c6db`.
