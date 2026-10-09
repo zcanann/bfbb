@@ -1776,12 +1776,12 @@ void xFXStreakRender()
 {
     static RwIm3DVertex sStripVert[4];
 
+    xFXStreakElem* e;
     xFXStreakElem* e1;
     S32 streak;
     xFXStreak* s;
-    S32 count;
     S32 j;
-    xFXStreakElem* e;
+    S32 count;
 
     for (streak = 0; streak < 10; streak++)
     {
