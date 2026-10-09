@@ -51,6 +51,37 @@ original/target/source gate remains the integration check.
 Private evidence in the isolated worktree: `build/iscrfx-originals.py` / `.txt`,
 `iscrfx-original-profile-proof.json`, `iscrfx-first-comparison.json`,
 `iscrfx-first-raw-proof.json`, `iscrfx-first-layout-proof.json`, and the actual
-per-version objects, compiler logs, and reports in `iscrfx-pilot/`. The source
+per-version objects, compiler logs, and reports frozen in `iscrfx-first/`. The source
 baseline is `7cbc85884` plus the two independent memory-card follow-ups
 (replayed as `703f1290e` / `0dc8f0fe4`).
+
+## Motion-blur overlay and lifecycle
+
+The next source restoration adds the typed overlay renderer and the two camera
+lifecycle wrappers. Both 84-byte wrappers become exact in all three debug
+versions, increasing the unit to 1,524 code-matched bytes / nine functions.
+The 1,144-byte overlay reports 99.65035%, raising whole-unit fuzzy matching from
+23.427782% to 46.02626%. Every previously compared function and data result is
+unchanged. The remaining three original bodies still have no source implementation.
+
+The overlay sets all four Sky2 float colors, preserves the original render-state
+sequence, and submits four vertices with six indices. Original DWARF records a
+16-byte `RwRect` local with x/y/w/h signed fields at 0/4/8/12. Its otherwise unused
+zero initializer is present in every original and is therefore retained. The
+compiler emits one additional NOP in that initializer loop: the source function
+is 1,148 bytes, with corresponding forward/backward branch displacement changes.
+A private original-aware replay proves this precise residual while keeping all
+sixteen unnamed SDK calls unresolved. Production comparison and export rules
+are not altered, and the function remains non-exact.
+
+`iScrFxCameraCreated` replays all 84 original bytes. `iScrFxCameraEndScene`
+replays 80 / 84; its anonymous GP-relative initial white color remains unresolved.
+The inline rendering wrapper preserves the original front-buffer guard and its
+separate call to the static overlay function. No new target/profile/header
+changes are involved in this follow-up. The shared SDK declarations are used
+as before, with the original `RwRect` declaration local to this PS2 source file.
+
+Private evidence: `iscrfx-overlay-comparison.json`, `iscrfx-overlay-changes.json`,
+`iscrfx-overlay-raw-proof.json`, `iscrfx-overlay-raw-residual.json`, and
+`iscrfx-overlay-layout-proof.json`, with frozen objects/reports in
+`build/iscrfx-overlay/`. The source parent is `a98c1efb8`.

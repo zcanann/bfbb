@@ -3,6 +3,14 @@
 #include <rwim2d.h>
 #include <rwim3d.h>
 
+struct RwRect
+{
+    RwInt32 x;
+    RwInt32 y;
+    RwInt32 w;
+    RwInt32 h;
+};
+
 struct _iMotionBlurData
 {
     S32 motionBlurAlpha;
@@ -95,4 +103,60 @@ S32 iScrFxCameraDestroyed(RwCamera*)
         return 1;
     }
     return 0;
+}
+
+static void iCameraOverlayRender(RwCamera* pCamera, RwRaster* ras, RwRGBA col)
+{
+    RwIm2DVertexSetIntRGBA(&sMBD.vertex[0], col.red, col.green, col.blue, col.alpha);
+    RwIm2DVertexSetIntRGBA(&sMBD.vertex[1], col.red, col.green, col.blue, col.alpha);
+    RwIm2DVertexSetIntRGBA(&sMBD.vertex[2], col.red, col.green, col.blue, col.alpha);
+    RwIm2DVertexSetIntRGBA(&sMBD.vertex[3], col.red, col.green, col.blue, col.alpha);
+
+    RwRect rect = {};
+    RwRenderStateSet(rwRENDERSTATETEXTUREFILTER, (void*)rwFILTERNEAREST);
+    RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)FALSE);
+    RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)FALSE);
+    RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)FALSE);
+    RwRenderStateSet(rwRENDERSTATETEXTURERASTER, ras);
+    RwRenderStateSet(rwRENDERSTATEVERTEXALPHAENABLE, (void*)TRUE);
+    RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
+    RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCALPHA);
+    RwIm2DRenderIndexedPrimitive(rwPRIMTYPETRILIST, sMBD.vertex, 4, sMBD.index, 6);
+    RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)FALSE);
+    RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)TRUE);
+    RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)TRUE);
+    RwRenderStateSet(rwRENDERSTATETEXTURERASTER, NULL);
+    RwRenderStateSet(rwRENDERSTATEVERTEXALPHAENABLE, (void*)FALSE);
+    RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
+    RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCALPHA);
+}
+
+inline void iScrFxMotionBlurRender(RwCamera* camera, U32 alpha)
+{
+    if (sMBD.motionBlurFrontBuffer != NULL)
+    {
+        RwRGBA col = { 0xff, 0xff, 0xff, (U8)alpha };
+        iCameraOverlayRender(camera, sMBD.motionBlurFrontBuffer, col);
+    }
+}
+
+void iScrFxCameraEndScene(RwCamera* pCamera)
+{
+    if (sMotionBlurEnabled && sMBD.motionBlurAlpha != 0)
+    {
+        iScrFxMotionBlurRender(pCamera, sMBD.motionBlurAlpha & 0xff);
+    }
+}
+
+void iScrFxCameraCreated(RwCamera* pCamera)
+{
+    sMBD.motionBlurAlpha = 0x90;
+    sMBD.motionBlurFrontBuffer = NULL;
+    sMBD.index[0] = 0;
+    sMBD.index[1] = 1;
+    sMBD.index[2] = 2;
+    sMBD.index[3] = 0;
+    sMBD.index[4] = 2;
+    sMBD.index[5] = 3;
+    iScrFxMotionBlurOpen(pCamera);
 }
