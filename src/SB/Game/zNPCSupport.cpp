@@ -285,12 +285,18 @@ S32 NPCTarget::FindNearest(S32 flg_consider, xBase* skipme, xVec3* from, F32 dst
     S32 found = 0;
     st_XORDEREDARRAY* npclist;
     F32 ds2_best;
+#if defined(PS2)
+    zNPCCommon *npc, *npc_best = NULL;
+#else
     zNPCCommon *npc, *npc_best;
+#endif
     xVec3 vec = {};
     F32 fv;
     S32 i, ntyp;
 
+#if !defined(PS2)
     npc_best = NULL;
+#endif
     ds2_best = (dst_max < 0.0f) ? FLOAT_MAX : SQ(dst_max);
 
     if (flg_consider & 0x1)
@@ -304,7 +310,11 @@ S32 NPCTarget::FindNearest(S32 flg_consider, xBase* skipme, xVec3* from, F32 dst
         }
     }
 
+#if defined(PS2)
+    if (!found && from && (flg_consider & 0x1E))
+#else
     if (from && (flg_consider & 0x1E))
+#endif
     {
         npclist = zNPCMgr_GetNPCList();
 
@@ -324,6 +334,9 @@ S32 NPCTarget::FindNearest(S32 flg_consider, xBase* skipme, xVec3* from, F32 dst
                 if (npc->IsAlive())
                 {
                     xVec3Sub(&vec, xEntGetPos(npc), from);
+#if defined(PS2)
+                    fv = iabs(vec.y);
+#endif
                     if (flg_consider & 0x80)
                     {
                         vec.y = 0.0f;
