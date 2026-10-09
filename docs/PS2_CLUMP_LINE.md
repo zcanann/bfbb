@@ -49,7 +49,7 @@ profile supplies independently recovered targets; no new French identity is
 claimed here.
 
 `tools/solo.py Core/x/xClumpColl --top 3` retains all nine GameCube functions
-exact, and the complete GQPE78 report is identical to the validated baseline.
+exact. Whole-build GameCube validation is performed by the integration gate.
 Private before/after reports and raw-word checks are in `build/clump-oct09`,
 particularly `after-proof.json`, `raw-proof.json`, and `rawproof.py`.
 
@@ -71,8 +71,7 @@ The remaining register allocation, instruction scheduling, and temporary-store
 ordering differences are retained as source work, not a compiler diagnosis.
 
 The normal four-region unit checks preserve the other ten functions, including
-the restored line kernel. GameCube remains 9/9 exact with an identical full
-report. This is another fuzzy gain with no change to exact byte/function counts.
+the restored line kernel. The GameCube unit remains 9/9 exact. This is another fuzzy gain with no change to exact byte/function counts.
 Private evidence is `sphere-proof.json`, `sphere-raw-proof.json`, and
 `sphererawproof.py` under `build/clump-oct09`.
 
@@ -90,5 +89,5 @@ regions. It adds 560 code-matched bytes and one function per region, with all
 other unit functions unchanged. The box callback still has an existing unresolved
 SDK call identity (`RtIntersectionBBoxTriangle` in the source); report equality
 does not authenticate that runtime name or claim complete linked raw bytes.
-GameCube stays 9/9 exact and its full report is unchanged. Regional before/after
+The GameCube unit stays 9/9 exact. Regional before/after
 evidence is `build/clump-oct09/loops-proof.json`.
