@@ -32,7 +32,23 @@ Standalone validation passed all three originals in 29.36 seconds on
 Authenticated-original tests passed in 70.17 seconds, rejecting changed
 instruction bits, strings and typed-array mappings. The France-only source
 profile restores all 101 verified calls and compares the newly selected body
-at 97.76456% fuzzy matching, with no additional exact bytes. This expands
+initially at 97.76456% fuzzy matching, with no additional exact bytes. This expands
 selected-function coverage by 12,572 bytes; the full CPU-code denominator is
-unchanged. Existing source and other version profiles are unchanged. Private
+unchanged. Other version profiles are unchanged. Private
 validation: `build/plankton-france-pilot/report.json` in the regional checkout.
+
+The PS2 vector `auto_tweak::load_param` specialization now passes the current
+vector directly as the default argument. This removes five redundant vector
+copies and restores the original 0xe0-byte stack frame in Plankton's parameter
+body. All four PS2 versions improve from 97.76456% to 99.68183%; the remaining
+differences are ten inserted nops, with no differing relocation operands.
+Exact function and byte counts do not change.
+
+Full Plankton and Prawn unit comparisons in all three debug PS2 versions
+show only this function changing. Plankton's unit score rises from 96.099754%
+to 96.66157%, retaining 81/107 exact functions and 15,916/42,904 exact bytes.
+Prawn is unchanged. The original GameCube specialization is retained; USA,
+PAL and German comparisons preserve every function record and unit measure
+in both units. Private reports are under `build/plankton-source-before`,
+`build/plankton-source-after`, and `build/plankton-gc-verify`; France's updated
+comparison is `build/plankton-france-pilot/report-after-vector.json`.

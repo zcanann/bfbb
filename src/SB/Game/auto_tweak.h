@@ -45,8 +45,12 @@ namespace auto_tweak
     inline void load_param<xVec3, S32>(xVec3& value, S32, S32, S32, xModelAssetParam* ap, U32 apsize,
                                    const char* name)
     {
+#if defined(PS2)
+        zParamGetVector(ap, apsize, name, value, &value);
+#else
         xVec3 def = value;
         zParamGetVector(ap, apsize, name, def, &value);
+#endif
     }
 } // namespace auto_tweak
 
