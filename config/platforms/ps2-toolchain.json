@@ -191780,7 +191780,9 @@
         "set_default_config": "set_default_config__9xFXRibbonFv",
         "xFXanimUVAtomicSetup": "xFXanimUVAtomicSetup__FP8RpAtomic",
         "xFXanimUV2PSetAngle": "xFXanimUV2PSetAngle__Ff",
-        "xFXanimUVSetAngle": "xFXanimUVSetAngle__Ff"
+        "xFXanimUVSetAngle": "xFXanimUVSetAngle__Ff",
+        "xFXStreakUpdate": "xFXStreakUpdate__FUiPC5xVec3PC5xVec3",
+        "xFXStreakStop": "xFXStreakStop__FUi"
       },
       "calls": [
         {
@@ -192023,6 +192025,58 @@
               "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
               "source_address": 2008416,
               "reference_sha256": "6f3f114974abe7380530d2b769a9a9c84d4c3b46896f7d23504299f035d46d21"
+            }
+          ]
+        },
+        {
+          "function": "xFXStreakUpdate",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 1999216,
+          "size": 208,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1997856,
+              "reference_sha256": "02d8332ee4c1637a9578943e281f91b934b9fca0fe232f6695b0f52c4415e30c"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1999104,
+              "reference_sha256": "dfe628eea7f3e65c522853e78a112b888ca598a33401b915cb533e4b6954f898"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1995744,
+              "reference_sha256": "de6e9dc2fbb5993b7e944df3a5a6d8332e16f7762fa41a0bd0822fc0d526afa8"
+            }
+          ]
+        },
+        {
+          "function": "xFXStreakStop",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 1999424,
+          "size": 96,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1998064,
+              "reference_sha256": "3b73ce07d8647c8d58eb3c1ba6e50fd3baa008bddc022940205b4b18604f9a26"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1999312,
+              "reference_sha256": "db2e68df2d5120f2af7bd88f8d877a6bbf0a72632939a82c06fc067274fe340b"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1995952,
+              "reference_sha256": "2abdad726fcc5f01b8ff7a9772f1ccbef9e295bb4e10df690b6397890b3ac64c"
             }
           ]
         }
@@ -220789,6 +220843,103 @@
           ]
         }
       ]
+    },
+    {
+      "source": "src/SB/Game/zNPCGoalRobo.cpp",
+      "target_unit": "SB/Game/zNPCGoalRobo.cpp",
+      "object": "source/zNPCGoalRobo.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "FXStreakUpdate@002b7590": "FXStreakUpdate__22zNPCGoalAttackArfMeleeFv",
+        "FXStreakUpdate@002b8a50": "FXStreakUpdate__20zNPCGoalAttackHammerFP5xVec3"
+      },
+      "calls": [
+        {
+          "function": "FXStreakUpdate@002b7590",
+          "offset": 964,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "xFXStreakUpdate@001e8170",
+          "symbol": "xFXStreakUpdate__FUiPC5xVec3PC5xVec3"
+        },
+        {
+          "function": "FXStreakUpdate@002b7590",
+          "offset": 1560,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "xFXStreakUpdate@001e8170",
+          "symbol": "xFXStreakUpdate__FUiPC5xVec3PC5xVec3"
+        },
+        {
+          "function": "FXStreakUpdate@002b8a50",
+          "offset": 580,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "xFXStreakUpdate@001e8170",
+          "symbol": "xFXStreakUpdate__FUiPC5xVec3PC5xVec3"
+        },
+        {
+          "function": "FXStreakUpdate@002b8a50",
+          "offset": 812,
+          "target_source": "SB/Core/x/xFX.cpp",
+          "target_function": "xFXStreakUpdate@001e8170",
+          "symbol": "xFXStreakUpdate__FUiPC5xVec3PC5xVec3"
+        }
+      ],
+      "linkage_provenance": [
+        {
+          "function": "FXStreakUpdate@002b7590",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2848144,
+          "size": 1636,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2846736,
+              "reference_sha256": "c4ce69d3458d09ce08c87da7904cc1d4c63d7418e6ede6477fd1adb96e18ac00"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2848032,
+              "reference_sha256": "b417b3a5e018b91dd9ee74a238e08e7d7b9350c513fce973932aaa1b36d00f38"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2844720,
+              "reference_sha256": "c88d8dfb163176fe1aaf383a3ed18ffc0f111533af4b036c55d6c6f59fe7facb"
+            }
+          ]
+        },
+        {
+          "function": "FXStreakUpdate@002b8a50",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2853456,
+          "size": 868,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2852048,
+              "reference_sha256": "187467f8020f84eee6bfda8dbe46a8687b3e1cf1c64fb8cc0b02f14f2e8ea4db"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2853344,
+              "reference_sha256": "85f426d69bc5577527353cf7f00f2c47bed116315b41fb78de2ebcc296393189"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2850032,
+              "reference_sha256": "c65b8a092729d2a8743653d92d7299a91e11e03268015ec433320d600c1c6bec"
+            }
+          ]
+        }
+      ],
+      "selector": "name_address"
     }
   ]
 }
