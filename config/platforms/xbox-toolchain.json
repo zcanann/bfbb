@@ -2158,7 +2158,7 @@
         "xFuncPiece_ShiftPiece(xFuncPiece*,xFuncPiece*,F32)": "?xFuncPiece_ShiftPiece@@YAXPAUxFuncPiece@@0M@Z",
         "xatan2(F32,F32)": "?xatan2@@YAMMM@Z"
       },
-      "scope": "Twelve independently reviewed math functions, including the actual emitted inline xatan2 body, from the complete real xMath source and genuine runtime. The helper reporting group follows generated xMath.obj ownership; its original definition/header TU is unknown. Other public APIs without verified original entries remain unassigned. Original unknown cubic callees remain raw. No TU or executable completion claim.",
+      "scope": "Twelve independently reviewed math functions, including the actual emitted inline xatan2 body, from the complete real xMath source and genuine runtime. The helper reporting group follows generated xMath.obj ownership; its original definition/header TU is unknown. Other public APIs without verified original entries remain unassigned. All eight cubic calls use independently authenticated game entries or the pinned-vendor pow wrapper; shared runtime context receives no source credit. No TU or executable completion claim.",
       "globals": {
         "float:3f800000": {
           "linkage_name": "__real@3f800000",

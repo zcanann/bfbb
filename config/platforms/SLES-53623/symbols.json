@@ -6081,6 +6081,34 @@
       "provenance": "reviewed-whole-tu-sequence"
     },
     {
+      "name": "ConfigPar",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3899632,
+      "size": 284,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ConfigPar",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3901904,
+      "size": 540,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ConfigPar",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3911424,
+      "size": 1144,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ConfigPar",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3917984,
+      "size": 304,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "Init",
       "source": "SB/Game/zNPCHazard.cpp",
       "address": 3931376,
@@ -6088,10 +6116,45 @@
       "provenance": "machine-corroborated-explicit-transfers"
     },
     {
+      "name": "StreakUpdate",
+      "source": "SB/Game/zNPCHazard.cpp",
+      "address": 3933648,
+      "size": 544,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ColResp_Default",
+      "source": "SB/Game/zNPCHazard.cpp",
+      "address": 3968768,
+      "size": 280,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ColTestCyl",
+      "source": "SB/Game/zNPCHazard.cpp",
+      "address": 3971136,
+      "size": 240,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "PosSet",
+      "source": "SB/Game/zNPCHazard.cpp",
+      "address": 3979328,
+      "size": 80,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "Start",
       "source": "SB/Game/zNPCHazard.cpp",
       "address": 3979408,
       "size": 128,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "HAZ_ord_sorttest",
+      "source": "SB/Game/zNPCHazard.cpp",
+      "address": 3987088,
+      "size": 88,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {

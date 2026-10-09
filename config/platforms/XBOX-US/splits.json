@@ -145,8 +145,8 @@
       "classification": "unclassified"
     }
   ],
-  "known_code_bytes": 635415,
-  "unclassified_text_bytes": 1163345,
+  "known_code_bytes": 635442,
+  "unclassified_text_bytes": 1163318,
   "text_ranges": [
     {
       "kind": "function",
@@ -25275,7 +25275,18 @@
     {
       "kind": "unclassified",
       "address": 1824485,
-      "size": 536
+      "size": 7
+    },
+    {
+      "kind": "function",
+      "address": 1824492,
+      "size": 27,
+      "canonical_identifier": "__CIpow"
+    },
+    {
+      "kind": "unclassified",
+      "address": 1824519,
+      "size": 502
     },
     {
       "kind": "function",

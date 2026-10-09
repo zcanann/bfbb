@@ -15123,3 +15123,40 @@ Evidence: `build/oct09-fx-model-motion`, its three comparison logs,
 `build/oct09-fx-model-motion-<GameCube-version>.log`,
 `build/oct09-fx-model-motion-xbox`, and the Xbox worktree's
 `build/xbox-{dampen,follow}-raw-proof.json` and cross-platform control artifacts.
+
+The math/particle/laser batch adds 4,504 exact bytes / seven functions in each
+debug PS2 version: 932 cubic bytes, 3,364 particle-atlas bytes and 208 laser
+helper bytes. USA reaches 1,040,132 bytes / 3,840 functions, PAL 1,032,572 /
+3,827, and Germany 1,033,640 / 3,829. Acceleration additionally improves
+95.349464% to 99.97312%. All prior function/code/data scores survive the full
+comparisons. Three changed source units are rebuilt against the verified
+214-unit snapshots with unchanged debug profiles and stable final source hashes.
+Raw cubic proof establishes 896/932 bytes; nine runtime JAL identities remain
+unresolved. The acceleration branch residual remains counted.
+
+Nine independently unique French particle/hazard kernels add 3,504 known bytes;
+coverage reaches 880 functions / 429,336 bytes. Complete fixed math/streak
+callees and a typed full zero vector prove every changed operand. Duplicate
+builders remain unpromoted, all 579 prior TU records/auxiliary proofs survive,
+and seven original-backed tests pass. Full aggregate regeneration and all 84
+source compilations succeed. With the exact atlas/cubic source, France adds
+4,436 exact bytes / ten functions, reaching 215,564 bytes / 601 functions.
+All earlier scores are preserved.
+
+The ordinary Xbox cubic score initially exposed missing target-call provenance
+at the strict export gate. Independent pinned-vendor/original proof closes all
+eight calls without changing that guard. Only a 27-byte x87 pow wrapper enters
+known coverage; its complete matching vendor implementation is context, with
+no runtime source credit. All old symbol/anonymous records survive and eight
+original-backed mutation/archive tests pass. Both complete 13-unit source
+reports add 654 exact bytes / one function, reaching 16,451 / 85; known coverage
+is 2,557 functions / 635,442 bytes. See `XBOX_CUBIC_CALLS.md` for the identity
+and inverse-relocation checks.
+
+Fresh GameCube source reports/checksums pass in all three versions. CPU
+denominators and source-data/full-link limitations remain unchanged. Evidence:
+`build/oct09-math-particle-laser`, its three comparison logs,
+`build/oct09-france-math-particle-laser` and comparison log,
+`build/oct09-npc-particle-kernels-tests.log`,
+`build/oct09-math-particle-laser-<GameCube-version>.log`, and
+`build/oct09-math-particle-laser-pow-final-xbox` with both comparison logs.

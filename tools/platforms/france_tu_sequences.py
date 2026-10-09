@@ -806,6 +806,16 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in imodel_kernels['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Model leaves add four independently unique complete original functions. Typed material arrays and an independently anchored camera frustum prove all three address pairs; all 42 Cull vector instruction words match raw. Original ownership, bounds, zero alignment and strict control flow are checked in all three references. No SDK callee, whole translation-unit or data extent is claimed.')
+    from platforms.france_npc_particle_kernels import generate_unit as generate_npc_particle_kernels
+    npc_particle_kernels = generate_npc_particle_kernels(originals, registry_dir)
+    document['functions'].extend(npc_particle_kernels['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(npc_particle_kernels['sequence_proofs'])
+    document['npc_particle_kernels_data_proofs'] = npc_particle_kernels['data_proofs']
+    document['npc_particle_kernels_call_proofs'] = npc_particle_kernels['call_proofs']
+    for key, value in npc_particle_kernels['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Particle and hazard kernels add nine independently unique complete original functions. Complete fixed xurand and streak callees and a typed full zero vector prove every changed operand. Original ownership, bounds, zero alignment and strict control flow are checked in all three references. Duplicate builders remain unpromoted. No whole translation-unit or data extent is claimed.')
     return document
 
 

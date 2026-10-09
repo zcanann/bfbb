@@ -4,9 +4,9 @@
   "scope": "All file-backed PT_LOAD bytes; zero-fill memory and non-loadable ELF metadata excluded",
   "code_classification_complete": false,
   "loaded_file_bytes": 4255232,
-  "known_code_bytes": 425832,
+  "known_code_bytes": 429336,
   "known_data_bytes": 0,
-  "unclassified_loaded_bytes": 3829400,
+  "unclassified_loaded_bytes": 3825896,
   "segments": [
     {
       "address": 1048576,
@@ -10885,8 +10885,64 @@
       "segment": 0,
       "kind": "unclassified",
       "address": 3883008,
-      "size": 48368,
+      "size": 16624,
       "file_offset": 2834560
+    },
+    {
+      "segment": 0,
+      "kind": "function",
+      "address": 3899632,
+      "size": 284,
+      "file_offset": 2851184
+    },
+    {
+      "segment": 0,
+      "kind": "unclassified",
+      "address": 3899916,
+      "size": 1988,
+      "file_offset": 2851468
+    },
+    {
+      "segment": 0,
+      "kind": "function",
+      "address": 3901904,
+      "size": 540,
+      "file_offset": 2853456
+    },
+    {
+      "segment": 0,
+      "kind": "unclassified",
+      "address": 3902444,
+      "size": 8980,
+      "file_offset": 2853996
+    },
+    {
+      "segment": 0,
+      "kind": "function",
+      "address": 3911424,
+      "size": 1144,
+      "file_offset": 2862976
+    },
+    {
+      "segment": 0,
+      "kind": "unclassified",
+      "address": 3912568,
+      "size": 5416,
+      "file_offset": 2864120
+    },
+    {
+      "segment": 0,
+      "kind": "function",
+      "address": 3917984,
+      "size": 304,
+      "file_offset": 2869536
+    },
+    {
+      "segment": 0,
+      "kind": "unclassified",
+      "address": 3918288,
+      "size": 13088,
+      "file_offset": 2869840
     },
     {
       "segment": 0,
@@ -10899,8 +10955,57 @@
       "segment": 0,
       "kind": "unclassified",
       "address": 3932076,
-      "size": 47332,
+      "size": 1572,
       "file_offset": 2883628
+    },
+    {
+      "segment": 0,
+      "kind": "function",
+      "address": 3933648,
+      "size": 544,
+      "file_offset": 2885200
+    },
+    {
+      "segment": 0,
+      "kind": "unclassified",
+      "address": 3934192,
+      "size": 34576,
+      "file_offset": 2885744
+    },
+    {
+      "segment": 0,
+      "kind": "function",
+      "address": 3968768,
+      "size": 280,
+      "file_offset": 2920320
+    },
+    {
+      "segment": 0,
+      "kind": "unclassified",
+      "address": 3969048,
+      "size": 2088,
+      "file_offset": 2920600
+    },
+    {
+      "segment": 0,
+      "kind": "function",
+      "address": 3971136,
+      "size": 240,
+      "file_offset": 2922688
+    },
+    {
+      "segment": 0,
+      "kind": "unclassified",
+      "address": 3971376,
+      "size": 7952,
+      "file_offset": 2922928
+    },
+    {
+      "segment": 0,
+      "kind": "function",
+      "address": 3979328,
+      "size": 80,
+      "file_offset": 2930880
     },
     {
       "segment": 0,
@@ -10913,8 +11018,22 @@
       "segment": 0,
       "kind": "unclassified",
       "address": 3979536,
-      "size": 48464,
+      "size": 7552,
       "file_offset": 2931088
+    },
+    {
+      "segment": 0,
+      "kind": "function",
+      "address": 3987088,
+      "size": 88,
+      "file_offset": 2938640
+    },
+    {
+      "segment": 0,
+      "kind": "unclassified",
+      "address": 3987176,
+      "size": 40824,
+      "file_offset": 2938728
     },
     {
       "segment": 0,
