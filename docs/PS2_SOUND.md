@@ -149,3 +149,13 @@ preserves its entire progress report and passes the retail DOL SHA-1 check.
 Private evidence is `build/sound-oct09`, including the original DWARF type
 records, per-region reports and rejected source probes. No profile, registry,
 original target or compiler binary changed.
+
+ProcessSoundPos's switch cases now break to the existing function end instead
+of returning separately. This preserves behavior and the exact GameCube body
+while improving the remaining 616-byte PS2 function from 90.012985% to
+91.31169% in USA, Europe and Germany. Unit fuzzy matching reaches 99.208755%;
+the 36 exact functions and 6148 exact bytes are unchanged. France's established
+subset remains identical. The full GameCube USA report is unchanged and its
+retail DOL SHA-1 check passes. Four-region reports use the `-break.json` suffix
+under `build/sound-oct09`. Several vector-temporary and half-multiply variants
+scored lower and were discarded.

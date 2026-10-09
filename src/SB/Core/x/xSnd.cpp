@@ -269,13 +269,13 @@ void xSndProcessSoundPos(const xVec3* pActual, xVec3* pProcessed) {
             inwardShift /= 2.0f;
             temp_f *= (factor - inwardShift) / factor;
             *pProcessed = temp_f + gSnd.listenerMat[1].pos;
-            return;
+            break;
         }
         *pProcessed = *pActual;
-        return;
+        break;
     case SND_LISTENER_MODE_CAMERA:
         *pProcessed = *pActual;
-        return;
+        break;
     }
 }
 
