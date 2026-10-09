@@ -44,3 +44,16 @@ full-unit checks confirm this adds 520 exact bytes and one exact
 function per debug region without other changes. The French unit's
 existing `update_popper` profile and the complete GameCube report remain
 unchanged. Private evidence is in `build/zfx-oct09/wall-proof.json`.
+
+`zFXGooUpdateInstance` (1124 bytes) improves from 71.626335% to 99.99288%
+in the three debug regions. The PS2 original omits the CPU geometry lock,
+sine deformation loop, and unlock used on GameCube. PS2's existing
+`zFXGooRenderAtomic` instead supplies the warping parameters to its goo
+pipeline. The update now retains CPU vertex deformation only on non-PS2
+builds. All 281 instructions align; excluding existing relocation-name
+differences, only the prologue and epilogue stack adjustments differ
+(`0x40` original versus `0x30` compiled). Existing runtime call and data
+identities are not promoted by this source comparison. No artificial
+stack allocation was added. Full-unit regional comparisons, the French
+`update_popper` control, and the complete GameCube report show no
+regressions; private evidence is in `build/zfx-oct09/goo-proof.json`.

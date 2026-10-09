@@ -477,6 +477,7 @@ void zFXGooUpdateInstance(zFXGooInstance* goo, F32 dt)
     F32 tmp = xpow(1.0f - goo->alpha, 1.5f);
     goo->warb_time += tmp * dt;
 
+#if !defined(PS2)
     if (goo->alpha < 1.0f && goo->atomic != NULL)
     {
         RpGeometry* geom = RpAtomicGetGeometry(goo->atomic);
@@ -501,6 +502,8 @@ void zFXGooUpdateInstance(zFXGooInstance* goo, F32 dt)
             RpGeometryUnlock(geom);
         }
     }
+
+#endif
 
     if (goo_timer_textbox != NULL)
     {
