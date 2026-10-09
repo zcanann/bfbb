@@ -110,10 +110,22 @@ static void xCMprep(xCreditsData* data)
     hdr->state = hdr->state == 0 ? 1 : 0;
 }
 
+#ifdef PS2
+struct xColorUnpack
+{
+    U8 a, b, g, r;
+};
+#endif
+
 static iColor_tag xCMcolor_scale(iColor_tag color, F32 t)
 {
+#ifdef PS2
+    iColor_tag ret;
+    xColorUnpack c = *(xColorUnpack*)&color;
+#else
     iColor_tag ret = color;
     iColor_tag c = color;
+#endif
     F32 r = c.r;
     F32 g = c.g;
     F32 b = c.b;

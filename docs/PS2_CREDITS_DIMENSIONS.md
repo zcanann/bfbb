@@ -27,3 +27,32 @@ The full GameCube USA build retains its complete progress report and passes
 the retail DOL SHA-1 check. Private regional evidence is
 `build/credits-oct09/*-{before,dimensions}.json`. Separate unsuccessful source
 probes of the credits state toggle and camera helpers were discarded.
+
+## Packed color conversion
+
+The original credits compilation unit also declares `xColorUnpack`, a four-byte
+type distinct from `iColor_tag`. All three debug executables independently
+describe this layout:
+
+| Type | Offset 0 | Offset 1 | Offset 2 | Offset 3 |
+| --- | --- | --- | --- | --- |
+| xColorUnpack | a | b | g | r |
+| iColor_tag | r | g | b | a |
+
+The original render body copies the packed bytes, reads its red channel at
+offset three and its alpha at offset zero, scales alpha, and writes ordinary
+RGBA output. The previous shared helper read its input as an ordinary RGBA
+color instead. PS2 now restores the original unpacked view before scaling.
+Its return color is filled by `xColorInit`, without an unnecessary initial copy.
+
+USA render matching improves from 86.595795% to 89.34762%; Europe and Germany
+improve from 86.57409% to 89.33037%. Unit fuzzy scores reach 90.36087% and
+90.346886% respectively. Exact totals and all other function scores remain
+unchanged. France still has no enabled source profile for this unit.
+
+The full GameCube USA report and retail DOL SHA-1 remain unchanged. Private
+proof is `build/credits-oct09/color-type-proof.json`, which records the original
+executable hashes and independently decoded field offsets, and the three
+`*-unpack.json` whole-unit reports. Pointer/reference views, assignment instead
+of initialization, explicit per-channel copies and a preinitialized return
+color were tested; none matched as closely as the retained aggregate copy.
