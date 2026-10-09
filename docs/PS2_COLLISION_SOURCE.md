@@ -154,3 +154,24 @@ operands in this function. The platform scope remains debug PS2 only.
 Private evidence is build/icollide-sphere-final-comparison.json,
 build/icollide-sphere-final-changes.json, build/icollide-sphere-raw-proof.json
 and build/icollide-sphere-locals-proof.json. The baseline is c73f98aa6.
+
+## Floor-contact index lifetime (2026-10-09)
+
+The original sphereHitsEnv3CB reads the active FLOOR index directly when
+comparing the existing floor contact, then assigns idx after accepting the
+replacement. Removing the premature idx copy and using FLOOR for those
+comparisons restores the original byte loads and integer conversion
+boundaries. Every successful path still assigns idx before using it.
+The contact tests, replacement choice and output calculations are unchanged.
+
+All three full source units gain the complete 1,804-byte callback, which
+improves from 96.57206% to 100%. Full-unit fuzzy matching rises from
+98.321304% to 98.90847%, and exact coverage from 4,440 bytes / 16 functions
+to 6,244 bytes / 17 functions. Other function records and data measures are
+unchanged. Original-DWARF function/global relocation replay reproduces all
+1,804 bytes in each release, with no unresolved operands. The existing
+PS2-only platform source scope is unchanged.
+
+Evidence is build/icollide-floor-final-comparison.json,
+build/icollide-floor-final-changes.json and build/icollide-floor-raw-proof.json.
+The baseline is 678797b54.

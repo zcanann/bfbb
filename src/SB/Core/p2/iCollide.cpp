@@ -331,15 +331,14 @@ static RpCollisionTriangle* sphereHitsEnv3CB(RpIntersection* isx, RpWorldSector*
 
     if (SQR(tohit.y) > SQR(tohit.x) + SQR(tohit.z))
     {
-        idx = FLOOR;
         if (FLOOR == 0xff)
         {
             idx = FLOOR = cbnumcs++;
         }
         else if (tohit.y < 0.0f)
         {
-            if (colls[idx].hdng.y > 0.0f || dist < colls[idx].dist ||
-                (iabs(dist - colls[idx].dist) < 0.001f && tri->normal.y > colls[idx].norm.y))
+            if (colls[FLOOR].hdng.y > 0.0f || dist < colls[FLOOR].dist ||
+                (iabs(dist - colls[FLOOR].dist) < 0.001f && tri->normal.y > colls[FLOOR].norm.y))
             {
                 idx = FLOOR;
             }
@@ -350,9 +349,9 @@ static RpCollisionTriangle* sphereHitsEnv3CB(RpIntersection* isx, RpWorldSector*
         }
         else
         {
-            if (colls[idx].hdng.y > 0.0f &&
-                (dist < colls[idx].dist ||
-                 (iabs(dist - colls[idx].dist) < 0.001f && tri->normal.y > colls[idx].norm.y)))
+            if (colls[FLOOR].hdng.y > 0.0f &&
+                (dist < colls[FLOOR].dist ||
+                 (iabs(dist - colls[FLOOR].dist) < 0.001f && tri->normal.y > colls[FLOOR].norm.y)))
             {
                 idx = FLOOR;
             }
