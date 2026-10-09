@@ -1400,12 +1400,30 @@ namespace
     }
 } // namespace
 
+#if defined(PS2)
+// Retail compares the representation sign, including negative zero.
+#define PRAWN_SAME_SIGN(a, b) ((*(const U32*)&(a) & 0x80000000) == (*(const U32*)&(b) & 0x80000000))
+#define PRAWN_TURN_MAX_VEL this->turn.max_vel
+#else
+#define PRAWN_TURN_MAX_VEL max_vel
+#endif
+
 void zNPCPrawn::update_turn(F32 dt)
 {
+#if defined(PS2)
+    // Original DWARF retains all three planar locals and their initializers.
+    xVec3& player_loc3 = *xEntGetPos(&globals.player.ent);
+    xVec3& loc3 = *xEntGetPos(this);
+    xVec3& start3 = get_facing();
+    xVec2 player_loc = { player_loc3.x, player_loc3.z };
+    xVec2 loc = { loc3.x, loc3.z };
+    xVec2 facing = { start3.x, start3.z };
+#else
     get_center();
 
     RwMatrix* mat = this->model->Mat;
     xVec2 facing = { mat->at.x, mat->at.z };
+#endif
 
     if (!turning())
     {
@@ -1425,7 +1443,11 @@ void zNPCPrawn::update_turn(F32 dt)
     }
 
     bool decel = xabs(this->turn.vel) < 0.001f ||
+#if defined(PS2)
+                 !PRAWN_SAME_SIGN(diff, this->turn.vel);
+#else
                  (diff < 0.0f ? 1 : 0) != (this->turn.vel < 0.0f ? 1 : 0);
+#endif
 
     if (decel)
     {
@@ -1444,17 +1466,23 @@ void zNPCPrawn::update_turn(F32 dt)
     F32 accel = this->turn.accel * (dir * sign);
     F32 dvel = accel * dt;
     F32 vel = this->turn.vel + dvel;
+#if !defined(PS2)
     F32 max_vel = this->turn.max_vel;
+#endif
 
-    if (xabs(vel) <= max_vel)
+    if (xabs(vel) <= PRAWN_TURN_MAX_VEL)
     {
         this->turn.vel = vel;
     }
-    else if (xabs(this->turn.vel) <= max_vel)
+    else if (xabs(this->turn.vel) <= PRAWN_TURN_MAX_VEL)
     {
-        this->turn.vel = range_limit<F32>(vel, -max_vel, max_vel);
+        this->turn.vel = range_limit<F32>(vel, -PRAWN_TURN_MAX_VEL, PRAWN_TURN_MAX_VEL);
     }
+#if defined(PS2)
+    else if (!PRAWN_SAME_SIGN(vel, dvel))
+#else
     else if ((vel < 0.0f ? 1 : 0) != (dvel < 0.0f ? 1 : 0))
+#endif
     {
         this->turn.vel = vel;
     }
@@ -1462,20 +1490,42 @@ void zNPCPrawn::update_turn(F32 dt)
     F32 step = this->turn.vel * dt;
     if (time_to_target > time_to_stop)
     {
+#if defined(PS2)
+        if (PRAWN_SAME_SIGN(step, diff) && xabs(step) > xabs(diff))
+#else
         if ((step < 0.0f ? 1 : 0) == (diff < 0.0f ? 1 : 0) && xabs(step) > xabs(diff))
+#endif
         {
+#if defined(PS2)
+            step = diff;
+            this->turn.vel = 0.0f;
+#else
             this->turn.vel = 0.0f;
             step = diff;
+#endif
         }
     }
+#if defined(PS2)
+    else if (!PRAWN_SAME_SIGN(step, diff))
+#else
     else if ((step < 0.0f ? 1 : 0) != (diff < 0.0f ? 1 : 0))
+#endif
     {
+#if defined(PS2)
+        step = diff;
+        this->turn.vel = 0.0f;
+#else
         this->turn.vel = 0.0f;
         step = diff;
+#endif
     }
 
     set_yaw_matrix(*(xMat3x3*)this->frame, cur + step);
 }
+#if defined(PS2)
+#undef PRAWN_SAME_SIGN
+#endif
+#undef PRAWN_TURN_MAX_VEL
 
 void zNPCPrawn::update_animation(F32 dt)
 {

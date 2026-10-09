@@ -36,3 +36,17 @@ one new exact function and 2,660 exact code bytes. Source and all other
 version profiles remain unchanged. The selected-function denominator grows
 by 2,660 bytes; the full CPU-code denominator stays fixed. Private report:
 `build/prawn-france-pilot/report.json`.
+
+Separate PS2 source work restores `update_turn`'s three original planar
+locals, representation-sign comparisons, uncached maximum-velocity reads,
+and assignment order. Original DWARF names `player_loc`, `loc`, and
+`start_dir`; integer loads and `0x80000000` masks establish the sign tests.
+The function improves from 59.321243% to 94.72021% in USA, PAL and German
+PS2, with only this function changing across each complete selected-unit
+report. The unit rises from 91.77952% to 93.9192%, retaining 29/53 exact
+functions and 9,396/25,544 exact bytes. Remaining differences include
+initial load scheduling and inline boolean expressions; no compiler-version
+explanation is assumed. USA, PAL and German GameCube reports preserve all
+function records and unit measures. Private comparisons are under
+`build/prawn-source-before`, `build/prawn-source-after` and
+`build/prawn-gc-verify`, summarized in `build/prawn-source-summary.json`.
