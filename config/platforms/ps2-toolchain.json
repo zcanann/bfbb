@@ -230845,7 +230845,8 @@
         "PosSet@003cb840": "PosSet__9NPCHazardFPC5xVec3",
         "HAZ_ord_sorttest@003cd690": "HAZ_ord_sorttest__FPvPv",
         "WavesOfEvil@003c4560": "WavesOfEvil__9NPCHazardFv",
-        "WaterSplash@003c48f0": "WaterSplash__9NPCHazardFPC5xVec3"
+        "WaterSplash@003c48f0": "WaterSplash__9NPCHazardFPC5xVec3",
+        "OilSplash@003c2910": "OilSplash__9NPCHazardFPC5xVec3"
       },
       "calls": [
         {
@@ -230966,6 +230967,48 @@
           "target_source": "SB/Game/zNPCSupplement.cpp",
           "target_function": "NPAR_EmitH2ODrops@003b4a60",
           "symbol": "NPAR_EmitH2ODrops__FPC5xVec3PC5xVec3"
+        },
+        {
+          "function": "OilSplash@003c2910",
+          "offset": 88,
+          "target_source": "SB/Game/zNPCSupport.cpp",
+          "target_function": "NPCC_MakeArbPlane@0031aed0",
+          "symbol": "NPCC_MakeArbPlane__FPC5xVec3P5xVec3P5xVec3"
+        },
+        {
+          "function": "OilSplash@003c2910",
+          "offset": 256,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "OilSplash@003c2910",
+          "offset": 320,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand@001ee540",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "OilSplash@003c2910",
+          "offset": 556,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "OilSplash@003c2910",
+          "offset": 620,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand@001ee540",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "OilSplash@003c2910",
+          "offset": 996,
+          "target_source": "SB/Game/zNPCSupplement.cpp",
+          "target_function": "NPAR_EmitOilSplash@003b52c0",
+          "symbol": "NPAR_EmitOilSplash__FPC5xVec3PC5xVec3"
         }
       ],
       "linkage_provenance": [
@@ -231200,6 +231243,32 @@
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
               "source_address": 3947472,
               "reference_sha256": "73db001424d7721447d4f2800f668e0273d1608279e323ac20ad7d01943b78e0"
+            }
+          ]
+        },
+        {
+          "function": "OilSplash@003c2910",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3942672,
+          "size": 1084,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3941296,
+              "reference_sha256": "4f615e513ddd1095ad5acf45d52a9b67407ae1ac52ae723b8e773f3da4c64b55"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3942560,
+              "reference_sha256": "d0c09bb8c5ef02db1ae0f25762f21a186c9c8df86167dac78a7e65998991e37f"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3939312,
+              "reference_sha256": "ebf8faf54429d366fd74e3d4995e3a18e9de7e997a6ecccf24a617e2ed875caf"
             }
           ]
         }
