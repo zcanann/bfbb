@@ -220872,194 +220872,6 @@
       ]
     },
     {
-      "source": "src/SB/Game/zNPCSupport.cpp",
-      "target_unit": "SB/Game/zNPCSupport.cpp",
-      "object": "source/zNPCSupport.o",
-      "executable_sha1s": [
-        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
-      ],
-      "symbols": {
-        "NPCC_Bounce": "NPCC_Bounce__FP5xVec3P5xVec3f",
-        "NPCC_TmrCycle": "NPCC_TmrCycle__FPfff",
-        "IsVisible": "IsVisible__9NPCWidgetFv"
-      },
-      "calls": [],
-      "linkage_provenance": [
-        {
-          "function": "NPCC_Bounce",
-          "registry": "tu-corroborated-functions.json",
-          "france_address": 3256608,
-          "size": 184,
-          "references": [
-            {
-              "version": "SLUS-20680",
-              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 3255200,
-              "reference_sha256": "09e1d6d91ffcf1d9e4f4e97656ac544973d9553a965f106a36a233a155204886"
-            },
-            {
-              "version": "SLES-51968",
-              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 3256496,
-              "reference_sha256": "09e1d6d91ffcf1d9e4f4e97656ac544973d9553a965f106a36a233a155204886"
-            },
-            {
-              "version": "SLES-51970",
-              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 3253184,
-              "reference_sha256": "09e1d6d91ffcf1d9e4f4e97656ac544973d9553a965f106a36a233a155204886"
-            }
-          ]
-        },
-        {
-          "function": "NPCC_TmrCycle",
-          "registry": "corroborated-functions.json",
-          "france_address": 3256288,
-          "size": 104,
-          "references": [
-            {
-              "version": "SLES-51968",
-              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 3256176,
-              "reference_sha256": "7a9b2b9777cf77e61e733e0ea9cd36c064ffd80ba90e22b566e6715e36ab24c5"
-            },
-            {
-              "version": "SLES-51970",
-              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 3252864,
-              "reference_sha256": "7a9b2b9777cf77e61e733e0ea9cd36c064ffd80ba90e22b566e6715e36ab24c5"
-            },
-            {
-              "version": "SLUS-20680",
-              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 3254880,
-              "reference_sha256": "7a9b2b9777cf77e61e733e0ea9cd36c064ffd80ba90e22b566e6715e36ab24c5"
-            }
-          ]
-        },
-        {
-          "function": "IsVisible",
-          "registry": "corroborated-functions.json",
-          "france_address": 3266512,
-          "size": 72,
-          "references": [
-            {
-              "version": "SLES-51968",
-              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 3266400,
-              "reference_sha256": "7175cac668e2eab453908f8359a22fce346c4926227dac621c5f4f3c184e7482"
-            },
-            {
-              "version": "SLES-51970",
-              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 3263088,
-              "reference_sha256": "7175cac668e2eab453908f8359a22fce346c4926227dac621c5f4f3c184e7482"
-            },
-            {
-              "version": "SLUS-20680",
-              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 3265104,
-              "reference_sha256": "7175cac668e2eab453908f8359a22fce346c4926227dac621c5f4f3c184e7482"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "source": "src/SB/Game/zNPCTypeRobot.cpp",
-      "target_unit": "SB/Game/zNPCTypeRobot.cpp",
-      "object": "source/zNPCTypeRobot.o",
-      "executable_sha1s": [
-        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
-      ],
-      "symbols": {
-        "DstSqFromHome": "DstSqFromHome__8NPCArenaFP5xVec3P5xVec3",
-        "PctFromHome": "PctFromHome__8NPCArenaFP5xVec3",
-        "IncludesPos": "IncludesPos__8NPCArenaFP5xVec3fP5xVec3"
-      },
-      "calls": [],
-      "linkage_provenance": [
-        {
-          "function": "DstSqFromHome",
-          "registry": "tu-corroborated-functions.json",
-          "france_address": 2976752,
-          "size": 144,
-          "references": [
-            {
-              "version": "SLUS-20680",
-              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 2975344,
-              "reference_sha256": "300eb9085096462a647760482bd463ab40de2ea880f4d0341f5ae7eaff436893"
-            },
-            {
-              "version": "SLES-51968",
-              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 2976640,
-              "reference_sha256": "300eb9085096462a647760482bd463ab40de2ea880f4d0341f5ae7eaff436893"
-            },
-            {
-              "version": "SLES-51970",
-              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 2973328,
-              "reference_sha256": "300eb9085096462a647760482bd463ab40de2ea880f4d0341f5ae7eaff436893"
-            }
-          ]
-        },
-        {
-          "function": "PctFromHome",
-          "registry": "tu-corroborated-functions.json",
-          "france_address": 2976896,
-          "size": 120,
-          "references": [
-            {
-              "version": "SLUS-20680",
-              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 2975488,
-              "reference_sha256": "fdcd00e58cc67a95ee994022ca4d9f51ad03ade64b6236ffce148d7a5a70052c"
-            },
-            {
-              "version": "SLES-51968",
-              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 2976784,
-              "reference_sha256": "fdcd00e58cc67a95ee994022ca4d9f51ad03ade64b6236ffce148d7a5a70052c"
-            },
-            {
-              "version": "SLES-51970",
-              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 2973472,
-              "reference_sha256": "fdcd00e58cc67a95ee994022ca4d9f51ad03ade64b6236ffce148d7a5a70052c"
-            }
-          ]
-        },
-        {
-          "function": "IncludesPos",
-          "registry": "tu-corroborated-functions.json",
-          "france_address": 2977024,
-          "size": 176,
-          "references": [
-            {
-              "version": "SLUS-20680",
-              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
-              "source_address": 2975616,
-              "reference_sha256": "ad703ecd909712fd3340d4305005a8acfee75b611791130612b86d77abf8e100"
-            },
-            {
-              "version": "SLES-51968",
-              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
-              "source_address": 2976912,
-              "reference_sha256": "ad703ecd909712fd3340d4305005a8acfee75b611791130612b86d77abf8e100"
-            },
-            {
-              "version": "SLES-51970",
-              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
-              "source_address": 2973600,
-              "reference_sha256": "ad703ecd909712fd3340d4305005a8acfee75b611791130612b86d77abf8e100"
-            }
-          ]
-        }
-      ]
-    },
-    {
       "source": "src/SB/Game/zNPCGoalRobo.cpp",
       "target_unit": "SB/Game/zNPCGoalRobo.cpp",
       "object": "source/zNPCGoalRobo.o",
@@ -221094,7 +220906,9 @@
         "Exit@002ae8c0": "Exit__17zNPCGoalTubeDyingFfPv",
         "Enter@002ae980": "Enter__17zNPCGoalTubeDyingFfPv",
         "Enter@002b0d50": "Enter__15zNPCGoalTubePalFfPv",
-        "Exit@002b6e70": "Exit__19zNPCGoalAttackChuckFfPv"
+        "Exit@002b6e70": "Exit__19zNPCGoalAttackChuckFfPv",
+        "Process@002ba360": "Process__13zNPCGoalChaseFP11en_trantypefPvP6xScene",
+        "Process@002c4970": "Process__14zNPCGoalGoHomeFP11en_trantypefPvP6xScene"
       },
       "calls": [
         {
@@ -221481,6 +221295,76 @@
           "target_source": "SB/Game/zNPCGoalStd.cpp",
           "target_function": "Exit@002ca390",
           "symbol": "Exit__16zNPCGoalPushAnimFfPv"
+        },
+        {
+          "function": "Process@002ba360",
+          "offset": 352,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "TurnToFace@002d34a0",
+          "symbol": "TurnToFace__10zNPCCommonFfPC5xVec3f"
+        },
+        {
+          "function": "Process@002ba360",
+          "offset": 392,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ThrottleAdjust@002d3810",
+          "symbol": "ThrottleAdjust__10zNPCCommonFfff"
+        },
+        {
+          "function": "Process@002ba360",
+          "offset": 412,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ThrottleApply@002d3600",
+          "symbol": "ThrottleApply__10zNPCCommonFfPC5xVec3i"
+        },
+        {
+          "function": "Process@002ba360",
+          "offset": 436,
+          "target_source": "SB/Core/x/xBehaviour.cpp",
+          "target_function": "Process@002f2250",
+          "symbol": "Process__5xGoalFP11en_trantypefPvP6xScene"
+        },
+        {
+          "function": "Process@002c4970",
+          "offset": 220,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ThrottleAdjust@002d3810",
+          "symbol": "ThrottleAdjust__10zNPCCommonFfff"
+        },
+        {
+          "function": "Process@002c4970",
+          "offset": 276,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize@00210d10",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "Process@002c4970",
+          "offset": 300,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "TurnToFace@002d34a0",
+          "symbol": "TurnToFace__10zNPCCommonFfPC5xVec3f"
+        },
+        {
+          "function": "Process@002c4970",
+          "offset": 328,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ThrottleAdjust@002d3810",
+          "symbol": "ThrottleAdjust__10zNPCCommonFfff"
+        },
+        {
+          "function": "Process@002c4970",
+          "offset": 348,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ThrottleApply@002d3600",
+          "symbol": "ThrottleApply__10zNPCCommonFfPC5xVec3i"
+        },
+        {
+          "function": "Process@002c4970",
+          "offset": 372,
+          "target_source": "SB/Core/x/xBehaviour.cpp",
+          "target_function": "Process@002f2250",
+          "symbol": "Process__5xGoalFP11en_trantypefPvP6xScene"
         }
       ],
       "linkage_provenance": [
@@ -222211,9 +222095,190 @@
               "reference_sha256": "9d1f5b23bb3acad9188ed88012ff7208b201033772887076e1cb28aa6320dfad"
             }
           ]
+        },
+        {
+          "function": "Process@002ba360",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2859872,
+          "size": 476,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2858464,
+              "reference_sha256": "1bd8cc1cf7bfd061fadabf24b96cd6646de9b3c62458f1735eeef8b8e52c14ef"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2859760,
+              "reference_sha256": "66db4ace4eaa436cc50d25b5a40b6c3ace474df03d9fb5321335ab46f9ef9d59"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2856448,
+              "reference_sha256": "24ad4fef99a0a566fa821d732014991d5c2cc763999609d142a285b97a4772e2"
+            }
+          ]
+        },
+        {
+          "function": "Process@002c4970",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2902384,
+          "size": 420,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2900976,
+              "reference_sha256": "70f4f0a5629c95d9e255e2b278be06ab873922d2622fa0173735c5fd4e25d324"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2902272,
+              "reference_sha256": "a09ff24e5169ae0b18ac650094bd28f91e0773fa9221d7f712395ab2c49ac090"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2898960,
+              "reference_sha256": "5316fad773a5cfb0d66327ed57f59dc53e105abaf09f622827bed2105212a558"
+            }
+          ]
         }
       ],
       "selector": "name_address"
+    },
+    {
+      "source": "src/SB/Game/zNPCSupport.cpp",
+      "target_unit": "SB/Game/zNPCSupport.cpp",
+      "object": "source/zNPCSupport.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "NPCC_Bounce": "NPCC_Bounce__FP5xVec3P5xVec3f",
+        "NPCC_TmrCycle": "NPCC_TmrCycle__FPfff",
+        "IsVisible": "IsVisible__9NPCWidgetFv",
+        "NPCC_dir_toXZAng": "NPCC_dir_toXZAng__FPC5xVec3"
+      },
+      "calls": [
+        {
+          "function": "NPCC_dir_toXZAng",
+          "offset": 20,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xAngleClampFast@001edf80",
+          "symbol": "xAngleClampFast__Ff"
+        }
+      ],
+      "linkage_provenance": [
+        {
+          "function": "NPCC_Bounce",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3256608,
+          "size": 184,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3255200,
+              "reference_sha256": "09e1d6d91ffcf1d9e4f4e97656ac544973d9553a965f106a36a233a155204886"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3256496,
+              "reference_sha256": "09e1d6d91ffcf1d9e4f4e97656ac544973d9553a965f106a36a233a155204886"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3253184,
+              "reference_sha256": "09e1d6d91ffcf1d9e4f4e97656ac544973d9553a965f106a36a233a155204886"
+            }
+          ]
+        },
+        {
+          "function": "NPCC_TmrCycle",
+          "registry": "corroborated-functions.json",
+          "france_address": 3256288,
+          "size": 104,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3256176,
+              "reference_sha256": "7a9b2b9777cf77e61e733e0ea9cd36c064ffd80ba90e22b566e6715e36ab24c5"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3252864,
+              "reference_sha256": "7a9b2b9777cf77e61e733e0ea9cd36c064ffd80ba90e22b566e6715e36ab24c5"
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3254880,
+              "reference_sha256": "7a9b2b9777cf77e61e733e0ea9cd36c064ffd80ba90e22b566e6715e36ab24c5"
+            }
+          ]
+        },
+        {
+          "function": "IsVisible",
+          "registry": "corroborated-functions.json",
+          "france_address": 3266512,
+          "size": 72,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3266400,
+              "reference_sha256": "7175cac668e2eab453908f8359a22fce346c4926227dac621c5f4f3c184e7482"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3263088,
+              "reference_sha256": "7175cac668e2eab453908f8359a22fce346c4926227dac621c5f4f3c184e7482"
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3265104,
+              "reference_sha256": "7175cac668e2eab453908f8359a22fce346c4926227dac621c5f4f3c184e7482"
+            }
+          ]
+        },
+        {
+          "function": "NPCC_dir_toXZAng",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3259760,
+          "size": 40,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3258352,
+              "reference_sha256": "64ccf0b2eb0e1b23e6d236cc74bdc0249b7dfb30af4683ab16d03ab62f765295"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3259648,
+              "reference_sha256": "88c5ac38e3368a6a455303c4d66b003d04d80115156af51cc1248ce5d0713652"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3256336,
+              "reference_sha256": "abbe64fb43e5fd18546ee0336ecd454d48ce478ce5259204cbafc020f6d0a6cc"
+            }
+          ]
+        }
+      ]
     },
     {
       "source": "src/SB/Game/zNPCTypeCommon.cpp",
@@ -222231,7 +222296,8 @@
         "VelStop": "VelStop__10zNPCCommonFv",
         "ModelAtomicFind": "ModelAtomicFind__10zNPCCommonFiiP14xModelInstance",
         "ModelAtomicShow": "ModelAtomicShow__10zNPCCommonFiP14xModelInstance",
-        "ModelAtomicHide": "ModelAtomicHide__10zNPCCommonFiP14xModelInstance"
+        "ModelAtomicHide": "ModelAtomicHide__10zNPCCommonFiP14xModelInstance",
+        "TurnToFace": "TurnToFace__10zNPCCommonFfPC5xVec3f"
       },
       "calls": [
         {
@@ -222247,6 +222313,27 @@
           "target_source": "SB/Game/zNPCTypeCommon.cpp",
           "target_function": "ModelAtomicFind@002d1570",
           "symbol": "ModelAtomicFind__10zNPCCommonFiiP14xModelInstance"
+        },
+        {
+          "function": "TurnToFace",
+          "offset": 64,
+          "target_source": "SB/Game/zNPCSupport.cpp",
+          "target_function": "NPCC_dir_toXZAng@0031bd70",
+          "symbol": "NPCC_dir_toXZAng__FPC5xVec3"
+        },
+        {
+          "function": "TurnToFace",
+          "offset": 84,
+          "target_source": "SB/Game/zNPCSupport.cpp",
+          "target_function": "NPCC_dir_toXZAng@0031bd70",
+          "symbol": "NPCC_dir_toXZAng__FPC5xVec3"
+        },
+        {
+          "function": "TurnToFace",
+          "offset": 128,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xDangleClamp@001edef0",
+          "symbol": "xDangleClamp__Ff"
         }
       ],
       "linkage_provenance": [
@@ -222481,6 +222568,161 @@
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
               "source_address": 2951376,
               "reference_sha256": "6c12d4c06234d96ee4b456a785e3f3dcc7d3028ab651ec8c6b699cc76d0ebbbf"
+            }
+          ]
+        },
+        {
+          "function": "TurnToFace",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2962592,
+          "size": 340,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2961184,
+              "reference_sha256": "bf4d077eec50dbbd4af8545ce39b27d35724f2665903638c66517b7c83e1a1a7"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2962480,
+              "reference_sha256": "55d76961a3d576f6c9aa2d833a04927c4d4382b0e03c3c98c43bc8a18e4df162"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2959168,
+              "reference_sha256": "3181748543194acaaaf3f13963964fd338c937a2049543da5cbeb6bcca9d80a7"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Game/zNPCTypeRobot.cpp",
+      "target_unit": "SB/Game/zNPCTypeRobot.cpp",
+      "object": "source/zNPCTypeRobot.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "DstSqFromHome": "DstSqFromHome__8NPCArenaFP5xVec3P5xVec3",
+        "PctFromHome": "PctFromHome__8NPCArenaFP5xVec3",
+        "IncludesPos": "IncludesPos__8NPCArenaFP5xVec3fP5xVec3",
+        "FacePos": "FacePos__9zNPCRobotFP5xVec3ff"
+      },
+      "calls": [
+        {
+          "function": "FacePos",
+          "offset": 188,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "TurnToFace@002d34a0",
+          "symbol": "TurnToFace__10zNPCCommonFfPC5xVec3f"
+        }
+      ],
+      "linkage_provenance": [
+        {
+          "function": "DstSqFromHome",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2976752,
+          "size": 144,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2975344,
+              "reference_sha256": "300eb9085096462a647760482bd463ab40de2ea880f4d0341f5ae7eaff436893"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2976640,
+              "reference_sha256": "300eb9085096462a647760482bd463ab40de2ea880f4d0341f5ae7eaff436893"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2973328,
+              "reference_sha256": "300eb9085096462a647760482bd463ab40de2ea880f4d0341f5ae7eaff436893"
+            }
+          ]
+        },
+        {
+          "function": "PctFromHome",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2976896,
+          "size": 120,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2975488,
+              "reference_sha256": "fdcd00e58cc67a95ee994022ca4d9f51ad03ade64b6236ffce148d7a5a70052c"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2976784,
+              "reference_sha256": "fdcd00e58cc67a95ee994022ca4d9f51ad03ade64b6236ffce148d7a5a70052c"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2973472,
+              "reference_sha256": "fdcd00e58cc67a95ee994022ca4d9f51ad03ade64b6236ffce148d7a5a70052c"
+            }
+          ]
+        },
+        {
+          "function": "IncludesPos",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2977024,
+          "size": 176,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2975616,
+              "reference_sha256": "ad703ecd909712fd3340d4305005a8acfee75b611791130612b86d77abf8e100"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2976912,
+              "reference_sha256": "ad703ecd909712fd3340d4305005a8acfee75b611791130612b86d77abf8e100"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2973600,
+              "reference_sha256": "ad703ecd909712fd3340d4305005a8acfee75b611791130612b86d77abf8e100"
+            }
+          ]
+        },
+        {
+          "function": "FacePos",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3020768,
+          "size": 220,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3019360,
+              "reference_sha256": "6ef29cac1afd08273545f887c83b280139745d8646f50f10da53068b2ef18df5"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3020656,
+              "reference_sha256": "8f1a0e521acf4a89bd8ef4a1a0cba4cf7afe06408c9086814e0f26c61b00f416"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3017344,
+              "reference_sha256": "e6b66e73ebb44b2763f0ba9111b671dc4c9bf215cf973fdda314dd95e54e4db5"
             }
           ]
         }
