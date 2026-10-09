@@ -868,7 +868,13 @@ F32 NPCC_aimVary(xVec3* dir_aim, xVec3* pos_src, xVec3* pos_tgt, F32 dst_vary, S
 
     dst_toFake = 0.0f;
 
+#if defined(PS2)
+    dir_toReal.x = pos_tgt->x - pos_src->x;
+    dir_toReal.y = pos_tgt->y - pos_src->y;
+    dir_toReal.z = pos_tgt->z - pos_src->z;
+#else
     xVec3Sub(&dir_toReal, pos_tgt, pos_src);
+#endif
 
     if (flg_vary & 0x10)
     {
@@ -1128,13 +1134,26 @@ U32 NPCC_LineHitsBound(xVec3* a, xVec3* b, xBound* bnd, xCollis* callers_colrec)
     {
         colrec = (xCollis*)callers_colrec;
     }
+#if defined(PS2)
+    F32 originX = a->x;
+    vec.x = b->x - originX;
+    vec.y = b->y - a->y;
+    vec.z = b->z - a->z;
+#else
     xVec3Sub(&vec, b, a);
+#endif
     len = xVec3Length(&vec);
     if (len < 0.001f)
     {
         len = 0.001f;
     }
+#if defined(PS2)
+    ray.origin.x = originX;
+    ray.origin.y = a->y;
+    ray.origin.z = a->z;
+#else
     xVec3Copy(&ray.origin, a);
+#endif
     xVec3SMul(&ray.dir, &vec, (1.0f / len));
 
     ray.min_t = 0.1f;
@@ -1460,7 +1479,13 @@ void NPCC_MakePerp(xVec3* dir_perp, const xVec3* dir_axis)
 void NPCC_MakeArbPlane(const xVec3* dir_norm, xVec3* at, xVec3* rt)
 {
     NPCC_MakePerp(at, dir_norm);
+#if defined(PS2)
+    rt->x = at->y * dir_norm->z - dir_norm->y * at->z;
+    rt->y = at->z * dir_norm->x - at->x * dir_norm->z;
+    rt->z = at->x * dir_norm->y - dir_norm->x * at->y;
+#else
     xVec3Cross(rt, at, dir_norm);
+#endif
 }
 
 U32 NPCWidget::IsLocked()
