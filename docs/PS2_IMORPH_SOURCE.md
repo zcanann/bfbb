@@ -129,3 +129,39 @@ checks every source relocation, its original within-function destination, and
 all reconstructed bytes. `checkimorph-asm-gc-all.py` and
 `imorph-asm-gc-allocations.json` retain the cross-platform control. Earlier typed
 pilot objects remain available under `imorph-pilot` and `imorph-asm-before`.
+
+## Proven internal-J relocations
+
+The target profile now represents each of the twelve independently verified
+within-function J operands as the genuine function symbol plus its label offset.
+An optional `interior_offset` applies only to an unconditional J whose named
+original destination is its own function entry, whose symbol is that function's
+existing profile symbol, and whose positive aligned label lies strictly within
+its complete original byte extent. The recorded `high` bound must agree with
+that extent. The retail opcode and decoded destination are checked before
+normalization, and inverse reconstruction must reproduce the untouched word.
+The ELF REL J field retains `interior_offset / 4`; the existing target writer
+references the already-defined function symbol. Ordinary entry J and JAL records
+retain their previous behavior and zero-addend representation.
+
+This adds 848 exact bytes / three functions in every PS2 version without changing
+source objects, identities, or denominators. The debug unit reaches 1,040 / 3,132
+bytes, five / six functions, and 98.933586%. France reaches 848 / 848 bytes and
+three / three functions at 100%. `MorphCommon` and all earlier relocation records
+are unchanged. Each target unit differs in exactly the three reviewed J fields;
+no unknown SDK/runtime operand is altered.
+
+`tools/tests/test_ps2_internal_jumps.py` checks defined-symbol ELF ownership and
+REL reconstruction; unchanged default entry J/JAL behavior; invalid, unaligned,
+negative, noninteger, zero, and out-of-bounds label claims; changed opcodes,
+symbols, cross-function destinations, inconsistent extents, and altered retail
+operands. Its original-fixture test independently replays all twelve recorded
+kernels and rejects both changed label claims and changed original instructions.
+Together with `test_ps2_target_symbols.py`, all eight tests pass using
+`BFBB_FRANCE_TEST_ORIG=C:/Projects/bfbb-bink/orig` and
+`python -m unittest tools.tests.test_ps2_internal_jumps tools.tests.test_ps2_target_symbols`.
+
+Private `build/imorph-jumps-comparison.py` / `.json` and
+`imorph-jumps-{before,after}/<version>` preserve original-only target generation,
+relocation records, full-unit reports, unchanged compiled objects, and the
+explicit three-field/previous-relocation comparison against `a44ff92f9`.

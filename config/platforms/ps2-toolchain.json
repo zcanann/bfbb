@@ -231402,6 +231402,33 @@
           "target_source": "SB/Core/p2/iModel.cpp",
           "target_function": "iModelRender",
           "symbol": "iModelRender__FP8RpAtomicP11RwMatrixTag"
+        },
+        {
+          "function": "FastS16unpack",
+          "offset": 148,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_function": "FastS16unpack",
+          "symbol": "FastS16unpack__FPfPsif",
+          "opcode": 2,
+          "interior_offset": 168
+        },
+        {
+          "function": "FastS16weight2",
+          "offset": 180,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_function": "FastS16weight2",
+          "symbol": "FastS16weight2__FPfPPsPsif",
+          "opcode": 2,
+          "interior_offset": 200
+        },
+        {
+          "function": "FastS16weight4",
+          "offset": 244,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_function": "FastS16weight4",
+          "symbol": "FastS16weight4__FPfPPsPsif",
+          "opcode": 2,
+          "interior_offset": 264
         }
       ],
       "gp_relocations": [
@@ -231933,7 +231960,35 @@
         "FastS16weight2": "FastS16weight2__FPfPPsPsif",
         "FastS16unpack": "FastS16unpack__FPfPsif"
       },
-      "calls": [],
+      "calls": [
+        {
+          "function": "FastS16unpack",
+          "offset": 148,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_function": "FastS16unpack",
+          "symbol": "FastS16unpack__FPfPsif",
+          "opcode": 2,
+          "interior_offset": 168
+        },
+        {
+          "function": "FastS16weight2",
+          "offset": 180,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_function": "FastS16weight2",
+          "symbol": "FastS16weight2__FPfPPsPsif",
+          "opcode": 2,
+          "interior_offset": 200
+        },
+        {
+          "function": "FastS16weight4",
+          "offset": 244,
+          "target_source": "SB/Core/p2/iMorph.cpp",
+          "target_function": "FastS16weight4",
+          "symbol": "FastS16weight4__FPfPPsPsif",
+          "opcode": 2,
+          "interior_offset": 264
+        }
+      ],
       "executable_sha1s": [
         "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
       ]

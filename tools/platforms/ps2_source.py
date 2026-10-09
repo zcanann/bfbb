@@ -183,17 +183,33 @@ def prepare_functions(functions: list[dict], binary: bytes, segments: list[dict]
             expected_opcode = call.get('opcode', 3)
             if expected_opcode not in (2, 3):
                 raise ValueError('Direct-transfer profile requires J or JAL')
+            interior = call.get('interior_offset', 0)
+            if 'interior_offset' in call:
+                # Handwritten kernels can use J to one of their own labels.
+                # The original function identity and complete extent establish
+                # the symbol base; the original operand establishes the label.
+                # This does not permit aliases for arbitrary interior callees.
+                if (type(interior) is not int or interior <= 0 or interior % 4 or
+                        interior >= len(retail_code[call['function']]) or
+                        function.get('high') != function['low'] + len(retail_code[call['function']]) or
+                        expected_opcode != 2 or destination != function['low'] or
+                        _source_name(call['target_source']) != unit['target_unit'] or
+                        call['symbol'] != unit['symbols'][call['function']]):
+                    raise ValueError('Internal J requires an aligned label within its own original function')
+                destination += interior
             if original >> 26 != expected_opcode or decoded != destination:
                 raise ValueError('Retail direct transfer does not reach the independently identified target')
             opcode = original & 0xfc000000
             if opcode | ((destination >> 2) & 0x03ffffff) != original:
                 raise ValueError('Restored relocation fails inverse reconstruction')
-            struct.pack_into('<I', code, offset, opcode)
+            # ELF REL stores the byte addend divided by four in the J field.
+            struct.pack_into('<I', code, offset, opcode | (interior >> 2))
             function['bytes'] = bytes(code)
             function.setdefault('relocations', []).append({'offset':offset, 'symbol':call['symbol']})
             restored.append({'function':function['name'], 'address':address,
                              'type':'R_MIPS_26', 'symbol':call['symbol'], 'target_address':destination,
-                             'original_instruction':original, 'inverse_reconstruction_verified':True})
+                             'original_instruction':original, 'inverse_reconstruction_verified':True,
+                             **({'symbol_address': function['low'], 'addend': interior} if interior else {})})
         for pair in unit.get('address_pairs', []):
             function = by_name[pair['function']]
             if 'target_data' in pair:
