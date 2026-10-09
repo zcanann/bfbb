@@ -9,6 +9,66 @@
 #include "xMath.h"
 #include "xMemMgr.h"
 
+#if defined(PS2)
+#include <rwplcore.h>
+
+struct RwModuleInfo
+{
+    RwInt32 globalsOffset;
+    RwInt32 numInstances;
+};
+
+// RenderWare's private resource-arena layout, also used by baresour.c.
+struct rwResources
+{
+    RwInt32 maxSize;
+    RwInt32 currentSize;
+    RwInt32 reusageSize;
+    void* memHeap;
+    RwLinkList entriesA;
+    RwLinkList entriesB;
+    RwLinkList* freeEntries;
+    RwLinkList* usedEntries;
+};
+
+extern RwModuleInfo resourcesModule;
+#define RWRESOURCESGLOBAL(var) \
+    (((rwResources*)((char*)RwEngineInstance + resourcesModule.globalsOffset))->var)
+
+static RwResEntry* g_RWarena_resEntry;
+static RwResEntry* g_RWarena_resOwner;
+
+void PKR_special_loadbuf_killed(RwResEntry*)
+{
+}
+
+#pragma dont_inline on
+char* PKR_specialGet_loadbuf(st_PACKER_READ_DATA* pr, S32 amount, S32 align)
+{
+    RwResourcesEmptyArena();
+    RwResourcesGetArenaSize();
+    g_RWarena_resEntry = RwResourcesAllocateResEntry(pr, &g_RWarena_resOwner, amount + align,
+                                                   PKR_special_loadbuf_killed);
+    if (!g_RWarena_resEntry)
+    {
+        return NULL;
+    }
+    char* da_mem = (char*)(((U32)(g_RWarena_resEntry + 1) + align - 1) & -align);
+    memset(da_mem, 0, amount);
+    return da_mem;
+}
+#pragma dont_inline reset
+
+static inline void PKR_specialReturn_loadbuf(st_PACKER_LTOC_NODE* layer)
+{
+    RwResEntry* entry = g_RWarena_resEntry;
+    g_RWarena_resOwner = NULL;
+    g_RWarena_resEntry = NULL;
+    RwResourcesFreeResEntry(entry);
+    layer->laymem = NULL;
+}
+#endif
+
 // The target's @stringBase0 opens with twelve strings ours lacks entirely --
 // the en_LAYER_TYPE names, plus a "<unknown>" fallback. Nothing left in the
 // unit references them, so they are the residue of a layer-type-to-name
@@ -400,6 +460,21 @@ S32 PKR_LoadStep_Async()
         if (!moretodo)
         {
             rc = 1;
+#if defined(PS2)
+            if (PKR_layerLoadDest(asynlay->laytyp) == PKR_LDDEST_RWHANDOFF)
+            {
+                RwResEntry* entry = g_RWarena_resEntry;
+                if (entry->link.next)
+                {
+                    entry->link.prev->next = entry->link.next;
+                    entry->link.next->prev = entry->link.prev;
+                    entry->link.next = RWRESOURCESGLOBAL(usedEntries)->link.next;
+                    entry->link.prev = &RWRESOURCESGLOBAL(usedEntries)->link;
+                    RWRESOURCESGLOBAL(usedEntries)->link.next->prev = &entry->link;
+                    RWRESOURCESGLOBAL(usedEntries)->link.next = &entry->link;
+                }
+            }
+#endif
         }
         else if (moretodo == 1)
         {
@@ -460,8 +535,12 @@ char* PKR_LayerMemReserve(st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* layer)
                                 &layer->laytru);
         break;
     case PKR_LDDEST_RWHANDOFF:
+#if defined(PS2)
+        mem = PKR_specialGet_loadbuf(pr, layer->laysize, 0x40);
+#else
         PKR_push_memmark();
         mem = (char*)PKR_getmem('LYR\0', layer->laysize, layer->laytyp + 0x8000, 0x40);
+#endif
         break;
     }
 
@@ -476,13 +555,26 @@ char* PKR_LayerMemReserve(st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* layer)
 #endif
 void PKR_LayerMemRelease(st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* layer)
 {
+#if defined(PS2)
+    en_PKR_LAYER_LOAD_DEST loaddest = PKR_layerLoadDest(layer->laytyp);
+    if (loaddest == PKR_LDDEST_SKIP)
+        return;
+    switch (loaddest)
+#else
     switch (PKR_layerLoadDest(layer->laytyp))
+#endif
     {
+#if !defined(PS2)
     case PKR_LDDEST_SKIP:
         break;
+#endif
     case PKR_LDDEST_RWHANDOFF:
+#if defined(PS2)
+        PKR_specialReturn_loadbuf(layer);
+#else
         PKR_relmem('LYR\0', layer->laysize, layer->laymem, layer->laytyp + 0x8000, 0);
         PKR_pop_memmark();
+#endif
         layer->laymem = NULL;
         break;
     case PKR_LDDEST_KEEPSTATIC:

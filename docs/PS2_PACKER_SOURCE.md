@@ -44,9 +44,8 @@ Other gains shared by all three versions:
 Fresh `tools/solo.py Core/x/xpkrsvc --top 3` remains 76/76 exact for GameCube.
 The PS2 header layout change requires the normal integration source gates;
 this local check is not a fresh full-project report. France has no enabled
-xpkrsvc source profile, so no French score is claimed. The allocation and
-asynchronous reader still contain unrecovered PS2 resource-arena behavior;
-these remaining deficits are explicit rather than attributed to a compiler.
+xpkrsvc source profile, so no French score is claimed. The resource-arena
+behavior left incomplete at this checkpoint is recovered below.
 
 Private evidence is under `build/packer-oct09`: original `layout-proof.json`
 and `original-calls.json`, before/after normal unit reports, and
@@ -55,3 +54,50 @@ and `original-calls.json`, before/after normal unit reports, and
 `0c3e685edc13a362d0d27a10dccb0b9698eb5597`, and Germany
 `83bf81a139ea24fdb015f1419377de85b643828a`. No registry, profile, compiler,
 runtime alias, or non-PS2 layout changes are made.
+
+## Resource-arena loading
+
+The PS2 handoff path allocates a RenderWare resource entry rather than using
+the GameCube heap mark. `PKR_specialGet_loadbuf` empties the arena, queries its
+size, allocates `amount + align` bytes, aligns the data after the 24-byte entry,
+and clears the requested amount. The original named destruction callback is
+empty. Pending asynchronous reads refresh the entry's position in the used
+list, preventing it from becoming a reuse candidate. Release clears the
+global ownership references, frees the entry, and clears the layer pointer.
+
+The new header declarations reproduce the RwResEntry size and all five member
+offsets authenticated independently in all three debug DWARFs. The private
+RwModuleInfo layout is likewise authenticated (two integers, eight bytes).
+The local rwResources layout comes from the existing vendor `baresour.c`;
+the usedEntries offset 0x24 is independently present in the original pending
+read path. This is not a claim that a complete rwResources DWARF type exists.
+The original named `g_RWarena_resEntry`, `g_RWarena_resOwner`, resourcesModule,
+and ourGlobals references provide the data identities.
+
+SDK interfaces are reconstructed as RwResourcesEmptyArena, GetArenaSize,
+AllocateResEntry, and FreeResEntry. The original bodies' arena traversal,
+size access, and allocation/free behavior support those source spellings;
+their runtime symbol identities are not added to a registry. The local
+inline `PKR_specialReturn_loadbuf` name is inferred, not authenticated. Its
+release-and-clear operation preserves the original's two layer-pointer
+clears when inlined into the common release path. The original skip guard
+is also restored explicitly.
+
+All three normal 50-function unit comparisons gain another **1,828 exact
+bytes and five functions**, with no regressions:
+
+| Function | Bytes | Previous | Now |
+| --- | ---: | ---: | ---: |
+| PKR_specialGet_loadbuf | 160 | 0% | 100% |
+| PKR_special_loadbuf_killed | 8 | 0% | 100% |
+| PKR_LayerMemReserve | 292 | 75.54794% | 100% |
+| PKR_LayerMemRelease | 288 | 74.09722% | 100% |
+| PKR_LoadStep_Async | 1080 | 79.94074% | 100% |
+
+The five complete original/source bodies also have equal lengths and equal
+raw words after masking their source relocation fields (9, 0, 5, 8, and 57
+respectively). No branch displacement, register operand, or non-relocation
+constant is masked. This audit does not prove the masked linked SDK/data
+identities. Fresh GC solo remains 76/76 exact; the shared PS2 header requires
+the full integration gates. Private evidence is `resource-layout-proof.json`,
+`resource-proof.json`, and `resource-raw-proof.json` under `build/packer-oct09`.

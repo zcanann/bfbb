@@ -271,6 +271,17 @@ extern RwUInt32 ourGlobals[4096];
 #define RwCalloc(_n, _s) ((RWSRCGLOBAL(memoryFuncs).rwcalloc)((_n), (_s)))
 #define RwRealloc(_p, _s) ((RWSRCGLOBAL(memoryFuncs).rwrealloc)((_p), (_s)))
 
+// RenderWare resource entries; the PS2 originals describe this 24-byte layout.
+typedef void (*RwResEntryDestroyNotify)(RwResEntry* resEntry);
+struct RwResEntry
+{
+    RwLLLink link;
+    RwInt32 size;
+    void* owner;
+    RwResEntry** ownerRef;
+    RwResEntryDestroyNotify destroyNotify;
+};
+
 // RenderWare SDK stream, chunk and error declarations, from include/rwsdk/rwplcore.h.
 enum RwCorePluginID
 {
@@ -396,6 +407,11 @@ RwBool RwEngineTerm(void);
 RwInt32 RwEngineGetNumVideoModes(void);
 RwBool RwEngineSetVideoMode(RwInt32 modeIndex);
 RwBool RwResourcesSetArenaSize(RwUInt32 size);
+RwInt32 RwResourcesGetArenaSize(void);
+RwBool RwResourcesEmptyArena(void);
+RwBool RwResourcesFreeResEntry(RwResEntry* entry);
+RwResEntry* RwResourcesAllocateResEntry(void* owner, RwResEntry** ownerRef, RwInt32 size,
+                                      RwResEntryDestroyNotify destroyNotify);
 }
 
 #endif
