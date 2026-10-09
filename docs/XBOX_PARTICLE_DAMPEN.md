@@ -15,3 +15,12 @@ function-boundary changes are needed. Full Xbox source linking remains pending.
 Evidence: the Xbox worktree's `build/xbox-dampen-raw-proof.json`,
 `build/xbox-dampen-{order,eu}`, `build/nonxbox-parrand/proof.json` and
 `build/nonxbox-ps2-dampen/proof.json`.
+
+The same source-order correction in `xParCmdFollow_Update` retains the original
+register and argument-slot lifetimes and raises 99.53704% to 100%. All 147
+compiled bytes match each authenticated XBE directly, with no calls or
+relocations. Together the two functions add 228 exact bytes / two functions per
+Xbox release. The other 20 compared bodies are unchanged, and the three GameCube
+and four PS2 controls pass again. Follow evidence is in
+`build/xbox-follow-raw-proof.json`, `build/xbox-follow-{order,eu}` and
+`build/nonxbox-ps2-follow/proof.json`.
