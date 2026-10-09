@@ -685,11 +685,20 @@ void zUI_Update(_zUI* ent, xScene*, F32 dt)
         {
             zEntEvent(ent, ent, eEventPadPressO);
         }
+#if defined(PS2)
+        // The original PS2 UI dispatch uses these masks for its face-button events.
+        else if (ent->uiButton & 0x40000)
+#else
         else if (ent->uiButton & XPAD_BUTTON_TRIANGLE)
+#endif
         {
             zEntEvent(ent, ent, eEventPadPressTriangle);
         }
+#if defined(PS2)
+        else if (ent->uiButton & 0x80000)
+#else
         else if (ent->uiButton & XPAD_BUTTON_SQUARE)
+#endif
         {
             zEntEvent(ent, ent, eEventPadPressSquare);
         }

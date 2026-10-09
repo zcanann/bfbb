@@ -68,3 +68,15 @@ function** to its measured subset (2/3 functions, 584/756 bytes). The parser is
 not present in that subset. No other function score decreases. GameCube keeps
 its original local declaration order; its full report is identical and the
 retail DOL SHA-1 passes. Private reports use `*-small.json`.
+
+## Face-button event dispatch
+
+The original PS2 update sends event 0x42 (Triangle) for mask 0x40000 and event
+0x40 (Square) for mask 0x80000. Restoring those two masks locally under PS2
+matches the complete 640-byte update in all three debug releases. Shared pad
+definitions remain unchanged: this establishes UI dispatch, not a global
+physical-button mapping. Each debug unit reaches 25/28 functions and 11,192
+exact bytes. France's subset does not contain this update body and is unchanged.
+
+All other function scores remain unchanged; the full GameCube USA report is
+identical and its retail DOL SHA-1 passes. Private reports use `*-buttons.json`.
