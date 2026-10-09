@@ -779,6 +779,24 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in npc_boss_animation['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Boss NPC animation adds five individually unique complete original builders. All original owner/boundary identities, 279 typed table/string/callback/initializer operands and 143 JALs are checked in each reference, using five fixed complete dependencies. Shared initializer owner selection is constrained by each authenticated function source and preserves earlier Robot proof output. No whole translation-unit or data extent is claimed.')
+    from platforms.france_npc_remaining_animation import generate_unit as generate_npc_remaining_animation
+    npc_remaining_animation = generate_npc_remaining_animation(originals, registry_dir)
+    document['functions'].extend(npc_remaining_animation['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(npc_remaining_animation['sequence_proofs'])
+    document['npc_remaining_animation_data_proofs'] = npc_remaining_animation['data_proofs']
+    for key, value in npc_remaining_animation['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Additional NPC animation adds five individually unique complete original builders. All original owners, bounds, 128 typed operands and 69 JALs are checked through five fixed complete dependencies. One scoped Sandy initializer verifies its complete bounded three-iteration copy prefix and final word; generic straight-line checks remain unchanged. No whole translation-unit or data extent is claimed.')
+    from platforms.france_npc_townsfolk_animation import generate_unit as generate_npc_townsfolk_animation
+    npc_townsfolk_animation = generate_npc_townsfolk_animation(originals, registry_dir)
+    document['functions'].extend(npc_townsfolk_animation['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(npc_townsfolk_animation['sequence_proofs'])
+    document['npc_townsfolk_animation_data_proofs'] = npc_townsfolk_animation['data_proofs']
+    for key, value in npc_townsfolk_animation['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Townsfolk animation adds nine complete original functions in two independently unique Ambient/Villager clusters. All original member orders, bounds, zero gaps, 74 typed operands and 62 transfers are checked. Three exact null-argument tail wrappers reach complete local builders; two scoped copy prefixes preserve the generic checker. No whole translation-unit or data extent is claimed.')
     return document
 
 

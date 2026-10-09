@@ -4793,6 +4793,27 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "ZNPC_AnimTable_Neptune",
+      "source": "SB/Game/zNPCTypeAmbient.cpp",
+      "address": 2945584,
+      "size": 760,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_Jelly",
+      "source": "SB/Game/zNPCTypeAmbient.cpp",
+      "address": 2946352,
+      "size": 480,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_Ambient",
+      "source": "SB/Game/zNPCTypeAmbient.cpp",
+      "address": 2946832,
+      "size": 128,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "NPCC_BuildStandardAnimTran",
       "source": "SB/Game/zNPCTypeCommon.cpp",
       "address": 2947920,
@@ -5206,11 +5227,60 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "ZNPC_AnimTable_Tiki",
+      "source": "SB/Game/zNPCTypeTiki.cpp",
+      "address": 3057152,
+      "size": 124,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "ZNPC_Tiki_Startup",
       "source": "SB/Game/zNPCTypeTiki.cpp",
       "address": 3060640,
       "size": 88,
       "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "ZNPC_AnimTable_SuperFriend",
+      "source": "SB/Game/zNPCTypeVillager.cpp",
+      "address": 3077328,
+      "size": 972,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_SuperFriend",
+      "source": "SB/Game/zNPCTypeVillager.cpp",
+      "address": 3078304,
+      "size": 8,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_BalloonBoy",
+      "source": "SB/Game/zNPCTypeVillager.cpp",
+      "address": 3078320,
+      "size": 704,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_BalloonBoy",
+      "source": "SB/Game/zNPCTypeVillager.cpp",
+      "address": 3079024,
+      "size": 8,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_Villager",
+      "source": "SB/Game/zNPCTypeVillager.cpp",
+      "address": 3079040,
+      "size": 908,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_Villager",
+      "source": "SB/Game/zNPCTypeVillager.cpp",
+      "address": 3079952,
+      "size": 8,
+      "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
       "name": "zNPCVillager_SceneTimestep",
@@ -5605,6 +5675,13 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "ZNPC_AnimTable_Test",
+      "source": "SB/Game/zNPCTypeTest.cpp",
+      "address": 3295504,
+      "size": 368,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "xUpdateCull_Reset",
       "source": "SB/Core/x/xUpdateCull.cpp",
       "address": 3314512,
@@ -5652,6 +5729,13 @@
       "address": 3317408,
       "size": 164,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "ZNPC_AnimTable_BossSandy",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3370864,
+      "size": 1852,
+      "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
       "name": "xmax3fast",
@@ -5773,6 +5857,13 @@
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
+      "name": "ZNPC_AnimTable_BossSB1",
+      "source": "SB/Game/zNPCTypeBossSB1.cpp",
+      "address": 3523648,
+      "size": 1028,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "iCameraUpdateFog",
       "source": "SB/Core/x/iCamera.cpp",
       "address": 3524912,
@@ -5826,6 +5917,13 @@
       "source": "SB/Game/zNPCTypeBossPlankton.cpp",
       "address": 3595392,
       "size": 2440,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_BossPatrick",
+      "source": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "address": 3638976,
+      "size": 1744,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {

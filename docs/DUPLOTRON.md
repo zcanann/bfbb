@@ -15047,3 +15047,36 @@ explicit. Evidence: `build/oct09-player-boss/<debug-version>` and comparison log
 `build/oct09-npc-robot-animation-replay.log`,
 `build/oct09-player-boss-<GameCube-version>.log`,
 `build/oct09-player-boss-xbox` and both regional comparison logs.
+
+The SKB/model/townsfolk follow-up adds 280 exact bytes / one function in each
+debug PS2 version through Villager's original sine-expression order. USA reaches
+1,034,068 bytes / 3,830 functions, PAL 1,026,508 / 3,817, and Germany
+1,027,576 / 3,819. Full report comparisons preserve every earlier function,
+code and data measure. Four changed units are rebuilt against the verified
+214-unit snapshots, with unchanged debug profiles and frozen source hashes.
+Overall fuzzy scores reach 65.719248%, 65.680177%, and 65.564430% respectively.
+
+Previously omitted SKB evaluation reaches 78.87838%; model animation matrices
+reach 93.62963%, and sphere culling reaches 90.19444%. Their raw VU/MMI words,
+lane masks, original locals and typed polynomial/frustum operands are checked
+independently. Lasso rendering improves 85.162766% to 88.31542%. Scheduling and
+register residuals remain scored; no compiler patch is introduced.
+
+France adds fourteen complete animation identities / 9,092 known bytes through
+five independent builders and two complete Ambient/Villager clusters. All 561
+previous function records, auxiliary proofs, sequence/call prefixes and metadata
+remain unchanged. Twenty-two original-backed tests pass. Strict full aggregate
+regeneration succeeds and all 82 enabled source units compile. Exact matching
+gains 6,524 bytes / fourteen functions, reaching 209,400 bytes / 587 functions;
+known coverage reaches 867 functions / 424,560 bytes. The four-function SKB
+profile uses unchanged authenticated boundaries and adds its 32-byte Duration
+match; incomplete Sandy/SB1 builders retain their full residuals.
+
+All three GameCube source reports/checksums and both Xbox source reports pass
+without a regression. Full CPU denominators and the source-data/full-link
+limitations remain unchanged. Evidence: `build/oct09-eval-townsfolk`, its three
+comparison logs, `build/oct09-france-eval-townsfolk` and comparison log,
+`build/oct09-npc-{remaining,townsfolk}-animation-tests.log`,
+`build/oct09-eval-townsfolk-<GameCube-version>.log`,
+`build/oct09-eval-townsfolk-xbox` and
+`build/oct09-france-townsfolk-{query,map}.json`.
