@@ -59,9 +59,8 @@ namespace
         ptank_context* endp = it + group.size;
         while (it != endp)
         {
-            ptank_context** bucket = group.buckets;
-
             RwTexture* texture = it->ptank->geometry->matList.materials[0]->texture;
+            ptank_context** bucket = group.buckets;
             if (texture == NULL)
             {
                 if (it->flags & rpPTANKDFLAGPOSITION)
@@ -141,7 +140,11 @@ namespace
         }
     }
 
-    static RpAtomic* create_ptank(U32 flags)
+    static
+#if defined(PS2)
+    inline
+#endif
+    RpAtomic* create_ptank(U32 flags)
     {
         U32 dataFlags = flags | rpPTANKDFLAGSTRUCTURE;
         RpAtomic* ptank = RpPTankAtomicCreate(MAX_PARTICLES, dataFlags, rpPTANKDFLAGNONE);
@@ -241,6 +244,9 @@ namespace
         return 0;
     }
 
+#if defined(PS2)
+    inline
+#endif
     U32 create_ptanks(group_data& group, u32 count);
 } // namespace
 
@@ -253,8 +259,12 @@ void xPTankPoolSceneEnter()
     group_data* end = groups + MAX_PGT;
     while (it != end)
     {
+#if defined(PS2)
+        F32 scaled = it->max_size * 0.25f + 0.5f;
+#else
         F64 f = it->max_size - 0.f;
         F32 scaled = F32(f) * 0.25f + 0.5f;
+#endif
         create_ptanks(*it, (U32)scaled);
 
         it++;
@@ -271,8 +281,13 @@ namespace
             count = group.max_size - initial_size;
         }
 
+#if defined(PS2)
+        ptank_context* it = group.ptanks + initial_size;
+        ptank_context* end = it + count;
+#else
         ptank_context* end = group.ptanks + initial_size + count;
         ptank_context* it = group.ptanks + initial_size;
+#endif
         while (it < end)
         {
             RpAtomic* ptank = create_ptank(group.create_flags);
@@ -421,8 +436,7 @@ void ptank_pool::flush()
         RpPTankAtomicUnlock(this->ptank);
 
         S32 oldused = RPATOMICPTANKPLUGINDATA(this->ptank)->actPCount;
-        S32 expand = ((S32)this->used < oldused) ? oldused - this->used : 0;
-        expand += 10;
+        S32 expand = 10 + (((S32)this->used < oldused) ? oldused - this->used : 0);
 
         if ((S32)(expand + this->used) > 64)
         {
