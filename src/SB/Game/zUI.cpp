@@ -797,9 +797,13 @@ void zUIRenderAll()
 }
 
 #if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
-enum { UI_SCREEN_HEIGHT = 528 };
+enum { UI_SCREEN_WIDTH = 640, UI_SCREEN_HEIGHT = 528 };
+#elif defined(VERSION_SLES_51968) || defined(VERSION_SLES_51970)
+enum { UI_SCREEN_WIDTH = 512, UI_SCREEN_HEIGHT = 512 };
+#elif defined(PS2)
+enum { UI_SCREEN_WIDTH = 640, UI_SCREEN_HEIGHT = 448 };
 #else
-enum { UI_SCREEN_HEIGHT = 480 };
+enum { UI_SCREEN_WIDTH = 640, UI_SCREEN_HEIGHT = 480 };
 #endif
 
 void zUI_Render(xEnt* ent)
@@ -836,7 +840,8 @@ void zUI_Render(xEnt* ent)
                 U8 g = 0xFF;
                 U8 b = 0xFF;
                 U8 a = 0xFF;
-                F32 w = 640.0f;
+                RwCamera* camera = globals.camera.lo_cam;
+                F32 w = (F32)UI_SCREEN_WIDTH;
                 F32 h = (F32)UI_SCREEN_HEIGHT;
 
                 F32 u1 = ui->sasset->uva[0];
@@ -847,11 +852,11 @@ void zUI_Render(xEnt* ent)
                 F32 v3 = ui->sasset->uvc[1];
                 F32 u4 = ui->sasset->uvd[0];
                 F32 v4 = ui->sasset->uvd[1];
-                // Asset coordinates retain their 640x480 basis in PAL.
-                F32 x1 = w * ui->sasset->pos.x / w;
+                // Asset coordinates retain their 640x480 basis across screen modes.
+                F32 x1 = w * ui->sasset->pos.x / 640.0f;
                 F32 y1 = h * ui->sasset->pos.y / 480.0f;
-                F32 x2 = w * (ui->sasset->pos.x + ui->sasset->dim[0]) / w;
-                F32 y2 = h * (ui->sasset->pos.y + ui->sasset->dim[1]) / 480.0f;
+                F32 x2 = (F32)UI_SCREEN_WIDTH * (ui->sasset->pos.x + ui->sasset->dim[0]) / 640.0f;
+                F32 y2 = (F32)UI_SCREEN_HEIGHT * (ui->sasset->pos.y + ui->sasset->dim[1]) / 480.0f;
 
                 F32 z = RwIm2DGetNearScreenZ();
                 F32 cz = z;
@@ -861,40 +866,50 @@ void zUI_Render(xEnt* ent)
                     cz = z >= 0.0f ? 0.00001f : -0.00001f;
                 }
 
-                RwIm2DVertexSetIntRGBA(&Vertex[0], 0xFF, 0xFF, 0xFF, 0xFF);
-                RwIm2DVertexSetIntRGBA(&Vertex[1], 0xFF, 0xFF, 0xFF, 0xFF);
-                RwIm2DVertexSetIntRGBA(&Vertex[2], 0xFF, 0xFF, 0xFF, 0xFF);
-                RwIm2DVertexSetIntRGBA(&Vertex[3], 0xFF, 0xFF, 0xFF, 0xFF);
+                F32 cooz = 1.0f / cz;
+                F32 cameraZ = RwCameraGetNearClipPlane(camera);
 
                 RwIm2DVertexSetScreenX(&Vertex[0], x1);
                 RwIm2DVertexSetScreenY(&Vertex[0], y1);
                 RwIm2DVertexSetScreenZ(&Vertex[0], cz);
+                RwIm2DVertexSetCameraZ(&Vertex[0], cameraZ);
+                RwIm2DVertexSetRecipCameraZ(&Vertex[0], cooz);
                 RwIm2DVertexSetU(&Vertex[0], u1, 0);
                 RwIm2DVertexSetV(&Vertex[0], v1, 0);
+                RwIm2DVertexSetIntRGBA(&Vertex[0], 0xFF, 0xFF, 0xFF, 0xFF);
 
                 RwIm2DVertexSetScreenX(&Vertex[1], x1);
                 RwIm2DVertexSetScreenY(&Vertex[1], y2);
                 RwIm2DVertexSetScreenZ(&Vertex[1], cz);
+                RwIm2DVertexSetCameraZ(&Vertex[1], cameraZ);
+                RwIm2DVertexSetRecipCameraZ(&Vertex[1], cooz);
                 RwIm2DVertexSetU(&Vertex[1], u4, 0);
                 RwIm2DVertexSetV(&Vertex[1], v4, 0);
+                RwIm2DVertexSetIntRGBA(&Vertex[1], 0xFF, 0xFF, 0xFF, 0xFF);
 
                 RwIm2DVertexSetScreenX(&Vertex[2], x2);
                 RwIm2DVertexSetScreenY(&Vertex[2], y2);
                 RwIm2DVertexSetScreenZ(&Vertex[2], cz);
+                RwIm2DVertexSetCameraZ(&Vertex[2], cameraZ);
+                RwIm2DVertexSetRecipCameraZ(&Vertex[2], cooz);
                 RwIm2DVertexSetU(&Vertex[2], u3, 0);
                 RwIm2DVertexSetV(&Vertex[2], v3, 0);
+                RwIm2DVertexSetIntRGBA(&Vertex[2], 0xFF, 0xFF, 0xFF, 0xFF);
 
                 RwIm2DVertexSetScreenX(&Vertex[3], x2);
                 RwIm2DVertexSetScreenY(&Vertex[3], y1);
                 RwIm2DVertexSetScreenZ(&Vertex[3], cz);
+                RwIm2DVertexSetCameraZ(&Vertex[3], cameraZ);
+                RwIm2DVertexSetRecipCameraZ(&Vertex[3], cooz);
                 RwIm2DVertexSetU(&Vertex[3], u2, 0);
                 RwIm2DVertexSetV(&Vertex[3], v2, 0);
+                RwIm2DVertexSetIntRGBA(&Vertex[3], 0xFF, 0xFF, 0xFF, 0xFF);
 
                 // For some reason this is done twice.
-                RwIm2DVertexSetIntRGBA(&Vertex[0], 0xFF, 0xFF, 0xFF, 0xFF);
-                RwIm2DVertexSetIntRGBA(&Vertex[1], 0xFF, 0xFF, 0xFF, 0xFF);
-                RwIm2DVertexSetIntRGBA(&Vertex[2], 0xFF, 0xFF, 0xFF, 0xFF);
-                RwIm2DVertexSetIntRGBA(&Vertex[3], 0xFF, 0xFF, 0xFF, 0xFF);
+                RwIm2DVertexSetIntRGBA(&Vertex[0], r, g, b, a);
+                RwIm2DVertexSetIntRGBA(&Vertex[1], r, g, b, a);
+                RwIm2DVertexSetIntRGBA(&Vertex[2], r, g, b, a);
+                RwIm2DVertexSetIntRGBA(&Vertex[3], r, g, b, a);
 
                 zRenderState(SDRS_Default);
                 RwRenderStateSet(rwRENDERSTATEFOGENABLE, 0);
@@ -918,10 +933,23 @@ void zUI_Render(xEnt* ent)
 
                 U32 srcblend = XMODELINSTANCE_GET_SRCBLEND(ui->model);
                 U32 destblend = XMODELINSTANCE_GET_DSTBLEND(ui->model);
+#if defined(PS2)
+                if (!srcblend)
+                {
+                    srcblend = rwBLENDSRCALPHA;
+                }
+                RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)srcblend);
+                if (!destblend)
+                {
+                    destblend = rwBLENDINVSRCALPHA;
+                }
+                RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)destblend);
+#else
                 RwRenderStateSet(rwRENDERSTATESRCBLEND,
                                  (void*)(srcblend ? srcblend : rwBLENDSRCALPHA));
                 RwRenderStateSet(rwRENDERSTATEDESTBLEND,
                                  (void*)(destblend ? destblend : rwBLENDINVSRCALPHA));
+#endif
 
                 if ((ui->model->PipeFlags & 0b1100) == rwBLENDINVSRCCOLOR)
                 {
