@@ -80,3 +80,13 @@ scores, 508 exact bytes and target/data controls remain unchanged, as do all
 12 exact GameCube functions. Evidence is
 `build/climate-const-final-comparison.json`, its function-delta JSON and
 `build/climate-const-gc-{before,after}.json`.
+
+Keeping the curve-array pointer local across each adjacent-node lookup brings
+the decal update to 94.67508% in all three debug regions, and complete units to
+97.83784%. This removes another two redundant loads, reducing the compiled
+update from 1300 to 1292 bytes against the 1268-byte original. Every other
+function score, exact byte count and target/data control is unchanged, as are
+France and all 46 exact GameCube functions. The complete comparisons and raw
+VU/delay-slot recheck are `build/decal-curve-final-comparison.json`, its
+function-delta JSON, `build/decal-curve-gc-{before,after}.json` and
+`build/decal-curve-compiled-proof.json`.

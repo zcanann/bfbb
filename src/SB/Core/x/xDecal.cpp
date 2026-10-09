@@ -289,8 +289,9 @@ void xDecalEmitter::update(F32 dt)
         
         update_frac(unit);
         U32 curve_index = unit.curve_index;
-        curve_node& node0 = this->curve[curve_index];
-        curve_node& node1 = this->curve[curve_index + 1];
+        curve_node* curve = this->curve;
+        curve_node& node0 = curve[curve_index];
+        curve_node& node1 = curve[curve_index + 1];
         
         F32 scale;
         lerp(scale, unit.frac, node0.scale, node1.scale);
@@ -346,8 +347,9 @@ void xDecalEmitter::update_frac(xDecalEmitter::unit_data& unit)
 
     unit.curve_index = this->curve_index;
 
-    curve_node& node0 = this->curve[this->curve_index];
-    curve_node& node1 = this->curve[this->curve_index + 1];
+    curve_node* curve = this->curve;
+    curve_node& node0 = curve[this->curve_index];
+    curve_node& node1 = curve[this->curve_index + 1];
     unit.frac = (1.0f / (node1.time - node0.time)) * (unit.age - node0.time);
 }
 
