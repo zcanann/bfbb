@@ -229118,7 +229118,11 @@
         "BoundEventCB@00333af0": "BoundEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
         "Process@0032c7c0": "Process__28zNPCGoalBossSandyClotheslineFP11en_trantypefPvP6xScene",
         "zNPCBSandy_BossDamageEffect@00335000": "zNPCBSandy_BossDamageEffect__FP14xModelInstanceUi",
-        "Process@0032db20": "Process__20zNPCGoalBossSandySitFP11en_trantypefPvP6xScene"
+        "Process@0032db20": "Process__20zNPCGoalBossSandySitFP11en_trantypefPvP6xScene",
+        "getUpCB@00330bd0": "getUpCB__FP5xGoalPvP11en_trantypefPv",
+        "elbowDropCB@00330f80": "elbowDropCB__FP5xGoalPvP11en_trantypefPv",
+        "tauntCB@00331780": "tauntCB__FP5xGoalPvP11en_trantypefPv",
+        "idleCB@003318d0": "idleCB__FP5xGoalPvP11en_trantypefPv"
       },
       "calls": [
         {
@@ -229757,6 +229761,27 @@
           "target_source": "SB/Core/x/xBehaviour.cpp",
           "target_function": "Process@002f2250",
           "symbol": "Process__5xGoalFP11en_trantypefPvP6xScene"
+        },
+        {
+          "function": "getUpCB@00330bd0",
+          "offset": 116,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "AnimTimeRemain@002d11e0",
+          "symbol": "AnimTimeRemain__10zNPCCommonFP10xAnimState"
+        },
+        {
+          "function": "elbowDropCB@00330f80",
+          "offset": 172,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "AnimTimeRemain@002d11e0",
+          "symbol": "AnimTimeRemain__10zNPCCommonFP10xAnimState"
+        },
+        {
+          "function": "tauntCB@00331780",
+          "offset": 168,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "AnimTimeRemain@002d11e0",
+          "symbol": "AnimTimeRemain__10zNPCCommonFP10xAnimState"
         }
       ],
       "linkage_provenance": [
@@ -230199,6 +230224,110 @@
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
               "source_address": 3329536,
               "reference_sha256": "9b8845a95434659c68e7e2bd2332671aa1053a53468d090218564a4bb3a4bb2d"
+            }
+          ]
+        },
+        {
+          "function": "getUpCB@00330bd0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3345360,
+          "size": 428,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3343968,
+              "reference_sha256": "0ad505753cb2b9c7b431c355be1fa5b33cb0a2892b7f27c89d05a3c0b392c67d"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3345248,
+              "reference_sha256": "1a96fbc4d064c1a0a3ee54736937a37e4d7aae36027d2391abe3f6762409889a"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3342000,
+              "reference_sha256": "c60c4eeba611762b58e793a615fdaa4dec2f22bbdce4ab1361e7a13dcbe55c44"
+            }
+          ]
+        },
+        {
+          "function": "elbowDropCB@00330f80",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3346304,
+          "size": 384,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3344912,
+              "reference_sha256": "1f8ab2faf7b56b3d33eb6269641ef49288501d2d6121438fe2fd9a3647bb6150"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3346192,
+              "reference_sha256": "a03c7282922d87a23640a377b1499ee0c8ec5284428d3747ae4459834ff4e9c7"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3342944,
+              "reference_sha256": "9eb5ed140fe280f1a29f0d1406f1853cfa702c11cff548c4c74dbac256ebcf95"
+            }
+          ]
+        },
+        {
+          "function": "tauntCB@00331780",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3348352,
+          "size": 332,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3346960,
+              "reference_sha256": "83f1924f04252a9b7e2b77a536a4da76bcc198be315facb5e1305dbabca4f904"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3348240,
+              "reference_sha256": "4e6d569dcc25c1dac9678da507d240f409528693b01109214ee16c44fe172185"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3344992,
+              "reference_sha256": "6c3dcf6eb37a9a3cea51f38f76301f39bf3a1e79780ed34bd3f73eb875efce9b"
+            }
+          ]
+        },
+        {
+          "function": "idleCB@003318d0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3348688,
+          "size": 232,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3347296,
+              "reference_sha256": "2e25227f4ab05f8fd681cab6a5e3f25293b10dc4b86f9f24340d6d70956b857b"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3348576,
+              "reference_sha256": "a0a2589100b6dfccda78869b865c31f43a9262dc9462826bd174a24d5bf6f312"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3345328,
+              "reference_sha256": "a8f271cea03fe983197c6b4b69f9b8436692254cefaba9432775ae97624d02b6"
             }
           ]
         }
