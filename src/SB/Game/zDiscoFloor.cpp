@@ -1,3 +1,7 @@
+#if defined(PS2)
+#define XMATH3_BOX_FROM_SPHERE_INLINE
+#define XMATH3_BOX_UNION_INLINE
+#endif
 #include "zDiscoFloor.h"
 
 #include "zSurface.h"

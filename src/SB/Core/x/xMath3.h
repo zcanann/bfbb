@@ -162,7 +162,20 @@ void xQuatSlerp(xQuat* o, const xQuat* a, const xQuat* b, F32 t);
 void xQuatMul(xQuat* o, const xQuat* a, const xQuat* b);
 void xQuatDiff(xQuat* o, const xQuat* a, const xQuat* b);
 
+#if defined(PS2) && defined(XMATH3_BOX_UNION_INLINE)
+inline void xBoxUnion(xBox& a, const xBox& b, const xBox& c)
+{
+    a.upper.x = MAX(b.upper.x, c.upper.x);
+    a.upper.y = MAX(b.upper.y, c.upper.y);
+    a.upper.z = MAX(b.upper.z, c.upper.z);
+
+    a.lower.x = MIN(b.lower.x, c.lower.x);
+    a.lower.y = MIN(b.lower.y, c.lower.y);
+    a.lower.z = MIN(b.lower.z, c.lower.z);
+}
+#else
 void xBoxUnion(xBox& a, const xBox& b, const xBox& c);
+#endif
 void xBoxFromCircle(xBox& box, const xVec3& center, const xVec3& dir, F32 r);
 void xQuatSMul(xQuat* q, const xQuat* a, F32 t);
 F32 xQuatLength2(const xQuat* q);
