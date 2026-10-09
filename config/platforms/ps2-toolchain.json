@@ -196679,7 +196679,15 @@
         "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
       ],
       "symbols": {
-        "xGroupGetItemPtr": "xGroupGetItemPtr__FP6xGroupUi"
+        "xGroupGetItemPtr": "xGroupGetItemPtr__FP6xGroupUi",
+        "get_any": "get_any__6xGroupFv",
+        "xGroupGetItem": "xGroupGetItem__FP6xGroupUi",
+        "xGroupGetCount": "xGroupGetCount__FP6xGroup",
+        "xGroupEventCB": "xGroupEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+        "xGroupLoad": "xGroupLoad__FP6xGroupP7xSerial",
+        "xGroupSave": "xGroupSave__FP6xGroupP7xSerial",
+        "xGroupSetup": "xGroupSetup__FP6xGroup",
+        "xGroupInit": "xGroupInit__FPvPv"
       },
       "calls": [
         {
@@ -196688,6 +196696,57 @@
           "target_source": "SB/Game/zScene.cpp",
           "target_function": "zSceneFindObject",
           "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "xGroupEventCB",
+          "offset": 84,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseReset",
+          "symbol": "xBaseReset__FP5xBaseP10xBaseAsset"
+        },
+        {
+          "function": "xGroupEventCB",
+          "offset": 132,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "xGroupLoad",
+          "offset": 0,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseLoad",
+          "symbol": "xBaseLoad__FP5xBaseP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "xGroupSave",
+          "offset": 0,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseSave",
+          "symbol": "xBaseSave__FP5xBaseP7xSerial",
+          "opcode": 2
+        },
+        {
+          "function": "xGroupSetup",
+          "offset": 72,
+          "target_source": "SB/Game/zScene.cpp",
+          "target_function": "zSceneFindObject",
+          "symbol": "zSceneFindObject__FUi"
+        },
+        {
+          "function": "xGroupInit",
+          "offset": 20,
+          "target_source": "SB/Core/x/xBase.cpp",
+          "target_function": "xBaseInit",
+          "symbol": "xBaseInit__FP5xBaseP10xBaseAsset"
+        },
+        {
+          "function": "xGroupInit",
+          "offset": 120,
+          "target_source": "SB/Core/x/xMemMgr.cpp",
+          "target_function": "xMemAlloc",
+          "symbol": "xMemAlloc__FUiUii"
         }
       ],
       "linkage_provenance": [
@@ -196710,6 +196769,257 @@
               "reference_sha256": "f50cf8847a84b2c5e669cabe3c3b94f11d4e456a80c2d9cbb2294b2ae1fc700d"
             }
           ]
+        },
+        {
+          "function": "get_any",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2752624,
+          "size": 64,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2751216,
+              "linkage_name": "get_any__6xGroupFv",
+              "reference_sha256": "a75a211220905aea1cfe7dc38ed285614c37f0dbc63b8446d10011ee20926fb9"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2752512,
+              "linkage_name": "get_any__6xGroupFv",
+              "reference_sha256": "a75a211220905aea1cfe7dc38ed285614c37f0dbc63b8446d10011ee20926fb9"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2749200,
+              "linkage_name": "get_any__6xGroupFv",
+              "reference_sha256": "a75a211220905aea1cfe7dc38ed285614c37f0dbc63b8446d10011ee20926fb9"
+            }
+          ]
+        },
+        {
+          "function": "xGroupGetItem",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2752688,
+          "size": 20,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2751280,
+              "linkage_name": "xGroupGetItem__FP6xGroupUi",
+              "reference_sha256": "215b8564b65435918da101cab98ec2077592428255c2b3c1323f15dae1719a24"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2752576,
+              "linkage_name": "xGroupGetItem__FP6xGroupUi",
+              "reference_sha256": "215b8564b65435918da101cab98ec2077592428255c2b3c1323f15dae1719a24"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2749264,
+              "linkage_name": "xGroupGetItem__FP6xGroupUi",
+              "reference_sha256": "215b8564b65435918da101cab98ec2077592428255c2b3c1323f15dae1719a24"
+            }
+          ]
+        },
+        {
+          "function": "xGroupGetCount",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2752928,
+          "size": 12,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2751520,
+              "linkage_name": "xGroupGetCount__FP6xGroup",
+              "reference_sha256": "909c11dfa3e9679b9a149ef40d2c198dfe0ea3523196bfe4f01ca4a7e4ef63f2"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2752816,
+              "linkage_name": "xGroupGetCount__FP6xGroup",
+              "reference_sha256": "909c11dfa3e9679b9a149ef40d2c198dfe0ea3523196bfe4f01ca4a7e4ef63f2"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2749504,
+              "linkage_name": "xGroupGetCount__FP6xGroup",
+              "reference_sha256": "909c11dfa3e9679b9a149ef40d2c198dfe0ea3523196bfe4f01ca4a7e4ef63f2"
+            }
+          ]
+        },
+        {
+          "function": "xGroupEventCB",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2752944,
+          "size": 712,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2751536,
+              "linkage_name": "xGroupEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+              "reference_sha256": "df150c927a2612f81a470b8c96823415049c0ccec82b12188ebf3c476bd9a436"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2752832,
+              "linkage_name": "xGroupEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+              "reference_sha256": "79bc118339722a02792f2cecfe2b98fae2e0917a239628033c8e1c175ae720ee"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2749520,
+              "linkage_name": "xGroupEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
+              "reference_sha256": "7033adfb478e6e4fc5ff9c8b6cc7b46c3bd6507ae499850ec9cb17f14407bdb7"
+            }
+          ]
+        },
+        {
+          "function": "xGroupLoad",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2753664,
+          "size": 8,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2752256,
+              "linkage_name": "xGroupLoad__FP6xGroupP7xSerial",
+              "reference_sha256": "4fb630e73eea039dd8307d9653ef699bc0c210aecc35499bd0cf9b4c6956c17d"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2753552,
+              "linkage_name": "xGroupLoad__FP6xGroupP7xSerial",
+              "reference_sha256": "2ffb8024234b0d622de07c9c86ba5a69cd863d0aee43fe91603ab1067901b0ff"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2750240,
+              "linkage_name": "xGroupLoad__FP6xGroupP7xSerial",
+              "reference_sha256": "06ea9b946eb1a419e32c7c5506932cc35b82ab496199fa7faf2f93cb1ab5877f"
+            }
+          ]
+        },
+        {
+          "function": "xGroupSave",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2753680,
+          "size": 8,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2752272,
+              "linkage_name": "xGroupSave__FP6xGroupP7xSerial",
+              "reference_sha256": "88e17a28713f7eeee80f35437e659284a195b2178e67f0307656c0895dcf5f0c"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2753568,
+              "linkage_name": "xGroupSave__FP6xGroupP7xSerial",
+              "reference_sha256": "133c5887d2cbd9b788727ca8a1e0ec4d5696f4c5973b3a8729b92ad8478a33b1"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2750256,
+              "linkage_name": "xGroupSave__FP6xGroupP7xSerial",
+              "reference_sha256": "fa8239d29782a2710907c8475899ea2339258d7e1e1d472eef2fc29f588dd7fb"
+            }
+          ]
+        },
+        {
+          "function": "xGroupSetup",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2753696,
+          "size": 156,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2752288,
+              "linkage_name": "xGroupSetup__FP6xGroup",
+              "reference_sha256": "bd9ed7e547642d6d9f30f64306e3e264c0ad96594f05f4961787731f87686990"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2753584,
+              "linkage_name": "xGroupSetup__FP6xGroup",
+              "reference_sha256": "bd9ed7e547642d6d9f30f64306e3e264c0ad96594f05f4961787731f87686990"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2750272,
+              "linkage_name": "xGroupSetup__FP6xGroup",
+              "reference_sha256": "a6a67baf9f4eb2ab67f2a3fb52d02f05eb78b830d54fcb9cd75166c3e921d3da"
+            }
+          ]
+        },
+        {
+          "function": "xGroupInit",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2753856,
+          "size": 172,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2752448,
+              "linkage_name": "xGroupInit__FPvPv",
+              "reference_sha256": "d6b29f9bc47a2453f16d4c07263cd534fd1a36435272237d93345f5be5b311ee"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2753744,
+              "linkage_name": "xGroupInit__FPvPv",
+              "reference_sha256": "e896104f4c8a53763a213a4c7a02bccfe29417ca9c6c4fcfb4d6811964572010"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2750432,
+              "linkage_name": "xGroupInit__FPvPv",
+              "reference_sha256": "eb78457af376784c30c0c1b4a99a35db7fae29cd84d331eb85a8de8e28b52dbc"
+            }
+          ]
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "xGroupInit",
+          "offset": 112,
+          "opcode": 35,
+          "target_name": "gActiveHeap",
+          "symbol": "gActiveHeap"
+        }
+      ],
+      "address_pairs": [
+        {
+          "function": "xGroupInit",
+          "hi_offset": 28,
+          "lo_offset": 32,
+          "target_source": "SB/Core/x/xGroup.cpp",
+          "target_function": "xGroupEventCB",
+          "symbol": "xGroupEventCB__FP5xBaseP5xBaseUiPCfP5xBase"
         }
       ]
     },
