@@ -122,7 +122,9 @@ char* xStrTok(char* string, const char* control, char** nextoken)
     U8* ctrl;
     U8 map[32];
     S32 count;
+#if !defined(PS2)
     U8 c;
+#endif
 
 #ifdef XBOX
     ctrl = (U8*)control;
@@ -143,16 +145,36 @@ char* xStrTok(char* string, const char* control, char** nextoken)
         map[*ctrl >> 3] |= bit;
     } while (*ctrl++ != '\0');
 
+#if defined(PS2)
+    if (string)
+    {
+        str = (U8*)string;
+    }
+    else
+    {
+        str = (U8*)*nextoken;
+    }
+#else
     str = (string) ? (U8*)string : (U8*)*nextoken;
+#endif
 
+#if defined(PS2)
+    while (map[*str >> 3] & (1 << (*str & 0x7)) && *str != '\0')
+#else
     while (map[(*str >> 3) & 0x1F] & (1 << (*str & 0x7)) && *str != '\0')
+#endif
     {
         str++;
     }
 
     string = (char*)str;
 
-#ifdef XBOX
+#if defined(PS2)
+    while (*str != '\0')
+    {
+        char c = *str;
+        if (map[c >> 3] & (1 << (c & 0x7)))
+#elif defined(XBOX)
     while (*str != '\0')
     {
         if (map[(*str >> 3) & 0x1F] & (1 << (*str & 0x7)))
@@ -172,7 +194,7 @@ char* xStrTok(char* string, const char* control, char** nextoken)
 
     *nextoken = (char*)str;
 
-#ifdef XBOX
+#if defined(XBOX) || defined(PS2)
     return string == (char*)str ? NULL : string;
 #else
     if (string == (char*)str)

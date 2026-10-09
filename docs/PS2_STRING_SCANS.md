@@ -109,3 +109,23 @@ progress report and passes the retail DOL SHA-1 check. No shared header, profile
 registry, target boundary or compiler setting changes. Private evidence is
 `build/string-oct09`, including all four before/after reports, rejected loop
 forms and `raw-hash-proof.json`.
+
+## In-place tokenizer (2026-10-09)
+
+The PS2 tokenizer now selects the restart pointer with the original if/else
+shape, tests the current input byte before creating a plain-char local, and
+returns the result directly from the empty-token comparison. Its bitmap index
+uses the unsigned byte shifted by three without the redundant five-bit mask.
+The selected PS2 compiler's unsigned-char mode keeps that index within 0..31.
+Token splitting, restart-pointer updates and empty-token behavior are unchanged.
+
+The complete 320-byte `xStrTok` body becomes exact in all four PS2 releases,
+raising each string unit to 9/12 functions and 2896/3948 exact bytes. Fuzzy
+matching rises from 95.42148% to 97.32827%, with every other function score
+unchanged. Raw source/target comparisons confirm all four bodies byte-for-byte.
+
+These forms are confined to PS2. GameCube's full USA build report remains
+identical and its retail DOL SHA-1 check passes. The buffer tokenizer remains
+unchanged: multiple restart, character, destination and counter-lifetime probes
+improved its fuzzy score but did not reproduce its whole body. Private evidence
+uses `*-token.json` and `raw-token-proof.json` under `build/string-oct09`.
