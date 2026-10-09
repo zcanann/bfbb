@@ -1225,7 +1225,11 @@ st_PACKER_LTOC_NODE* PKR_newlaynode(en_LAYER_TYPE layer, S32 refcnt)
     memset(newnode, 0, sizeof(st_PACKER_LTOC_NODE));
 
     newnode->laytyp = layer;
+#if defined(PS2)
+    XOrdInit(&newnode->assref, refcnt > 1 ? refcnt : 2, 0);
+#else
     XOrdInit(&newnode->assref, refcnt <= 1 ? 2 : refcnt, 0);
+#endif
     return newnode;
 }
 

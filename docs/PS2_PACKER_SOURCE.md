@@ -251,3 +251,17 @@ body are masked; no registers or branches are ignored. Source behavior and
 runtime identities are unchanged. Evidence is in
 `build/packer-oct09/cleanup-duplicate-proof.json`,
 `cleanup-duplicate-raw-proof.json`, and `cleanup-duplicate-locals.json`.
+
+
+## Layer-header capacity branch
+
+The PS2 `PKR_newlaynode` capacity argument uses `refcnt > 1 ? refcnt : 2`,
+recovering the original conditional sequence after inlining into
+`LOD_r_LHDR`. This is equivalent to the previous reversed comparison and
+retains the minimum capacity of two. The 588-byte layer-header parser
+improves from **98.23129% to 100%** in all three debug regions, with all
+other 49 functions unchanged and fresh GC solo 76/76 exact. Complete raw
+body words agree after 15 source relocation fields are masked; branch
+targets and registers agree unmasked. Evidence is in
+`build/packer-oct09/layer-header-proof.json` and
+`layer-header-raw-proof.json`.
