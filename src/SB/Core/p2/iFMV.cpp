@@ -4,25 +4,6 @@
 #include <stdio.h>
 #include <types.h>
 
-struct RwResEntry;
-typedef void (*RwResEntryDestroyNotify)(RwResEntry* resEntry);
-
-extern "C" {
-void RwResourcesEmptyArena(void);
-RwResEntry* RwResourcesAllocateResEntry(void* owner, RwResEntry** ownerRef, RwInt32 size,
-                                        RwResEntryDestroyNotify destroyNotify);
-void RwResourcesFreeResEntry(RwResEntry* entry);
-}
-
-struct RwResEntry
-{
-    RwLLLink link;
-    RwInt32 size;
-    void* owner;
-    RwResEntry** ownerRef;
-    RwResEntryDestroyNotify destroyNotify;
-};
-
 S32 ps2_mpeg_play(char* fname, char* work_area, S32 work_area_size, U32 buttons, F32 time);
 
 U32 iFMVPlay(char* filename, U32 buttons, F32 time, bool skippable, bool lockController)

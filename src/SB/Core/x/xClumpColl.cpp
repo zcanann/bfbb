@@ -91,15 +91,6 @@ struct RpMeshHeader
     RwUInt32 firstMeshOffset;
 };
 
-struct RwResEntry
-{
-    RwLLLink link;
-    RwInt32 size;
-    void* owner;
-    RwResEntry** ownerRef;
-    void (*destroyNotify)(RwResEntry* resEntry);
-};
-
 struct rwPS2AllResEntryHeader
 {
     RwInt32 refCnt;
