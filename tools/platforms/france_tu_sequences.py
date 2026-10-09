@@ -59,6 +59,10 @@ def gpr_writes(w):
         return {rt}
     if op in (16, 17, 18) and rs in (4, 5, 6, 8):
         return set()
+    # COP1 MOV.S has fmt=S, a reserved zero ft field and function=6.
+    # Only its FPR destination changes; both address GPR halves stay live.
+    if op == 17 and rs == 16 and rt == 0 and fn == 6:
+        return set()
     raise ValueError(f'Unsupported GPR effects: {w:#x}')
 
 
