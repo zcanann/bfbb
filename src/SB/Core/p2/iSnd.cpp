@@ -455,12 +455,6 @@ U32 iSndPlay(xSndVoiceInfo* vp)
 {
     iSndVol nvol;
     U32 voice;
-    iSndFileInfo* file;
-    U8 loop;
-    U8 paused;
-    U32 offset;
-    U32 track;
-    U32 numTracks;
     U32 pitch;
 
     gSndWhere = eSndWhere_PlayStart;
@@ -476,7 +470,7 @@ U32 iSndPlay(xSndVoiceInfo* vp)
         xSTAssetName(vp->assetID);
         gSndWhere = eSndWhere_PlaySndAsync;
 
-        file = iSndLookup(vp->assetID);
+        iSndFileInfo* file = iSndLookup(vp->assetID);
         if (file == NULL)
         {
             printf("** can't find sound asset %d (%08X)\n", vp->assetID, vp->assetID);
@@ -502,38 +496,51 @@ U32 iSndPlay(xSndVoiceInfo* vp)
         xSTAssetName(vp->assetID);
         gSndWhere = eSndWhere_PlayStream;
 
-        file = iSndLookup(vp->assetID);
+        iSndFileInfo* file = iSndLookup(vp->assetID);
         if (file == NULL)
         {
             printf("** can't find sound asset %d (%08X)\n", vp->assetID, vp->assetID);
         }
         else
         {
-            loop = (vp->flags & 0x8000) != 0;
-            paused = (vp->flags & 0x40000) != 0;
+            U8 loop = (vp->flags & 0x8000) != 0;
+            U8 paused = (vp->flags & 0x40000) != 0;
 
             if (file->stream.stream_interleave_size != 0)
             {
                 // Interleaved music: each track is one block of the interleave.
-                numTracks = file->stream.stream_interleave_count;
-                track = (vp->flags & 0x7800) >> 11;
-                offset = track * file->stream.stream_interleave_size;
+                U32 numTracks = file->stream.stream_interleave_count;
+                U32 track = (vp->flags & 0x7800) >> 11;
+                U32 offset = file->stream.stream_interleave_size;
                 gSndWhere = eSndWhere_PlayStreamAsync;
                 HISPlayStreamAsync(voice, nvol.volL, nvol.volR, (U16)pitch,
-                                   file->stream.file_index, file->stream.lsn + offset,
+                                   file->stream.file_index, file->stream.lsn + track * offset,
                                    file->stream.data_size, loop | (paused ? 2 : 0), 0, 4,
-                                   file->stream.stream_interleave_size << 11,
-                                   (numTracks - 1) * file->stream.stream_interleave_size);
+                                   offset << 11, (numTracks - 1) * offset);
             }
             else
             {
+                U32 streamFlags;
+                if (loop)
+                {
+                    if (vp->flags & 0x20000)
+                    {
+                        streamFlags = 0;
+                    }
+                    else
+                    {
+                        streamFlags = 4;
+                    }
+                }
+                else
+                {
+                    streamFlags = 0;
+                }
+                streamFlags |= loop | (paused ? 2 : 0);
                 gSndWhere = eSndWhere_PlayStreamAsync;
                 HISPlayStreamAsync(voice, nvol.volL, nvol.volR, (U16)pitch,
                                    file->stream.file_index, file->stream.lsn,
-                                   file->stream.data_size,
-                                   loop | (paused ? 2 : 0) |
-                                       (loop ? ((vp->flags & 0x20000) ? 0 : 4) : 0),
-                                   0, 4, 0x8000, 0);
+                                   file->stream.data_size, streamFlags, 0, 4, 0x8000, 0);
             }
 
             gSndWhere = eSndWhere_PlayStreamDone;
