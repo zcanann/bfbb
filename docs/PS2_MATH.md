@@ -153,3 +153,30 @@ atof declaration: the debug originals tail-call a distinct float-return
 wrapper at 0x114bb8, while xIniGetFloat calls the double wrapper at 0x114ba0
 and performs a conversion. The float wrapper's API identity remains
 unresolved; neither declaration nor source call is changed here.
+
+## Acceleration predicate materialization (2026-10-09)
+
+The six-argument PS2 xAccelMove materializes two Boolean predicates before
+selecting its arrival-time limit. Local S32 predicates restore the original
+floating comparison and the bit-sign equality followed by negation. The
+sign comparison retains `!(lhs_sign == rhs_sign)` rather than a direct
+inequality, which emits a different instruction sequence. Only this PS2
+function uses the helpers; the threshold, short-circuit behavior and
+floating arithmetic are unchanged.
+
+All four complete PS2 units improve this 744-byte routine from 95.349464%
+to 99.97312%, and whole-unit fuzzy matching from 97.2746% to 98.20432%.
+The existing 2,184 exact bytes / 13 exact functions and 3,700-byte denominator
+remain unchanged. Other function records and data measures are unchanged.
+Raw comparison reproduces 740 bytes after replaying the independently proved
+range_limit call at offset 396. The only differing word is the branch at
+108: original 0x1460000a goes through the final Boolean test at 152, while
+compiled 0x1460000c goes directly to the selected body at 160. That path's
+Boolean is already nonzero, so both select the same body. This residual is
+retained without additional control-flow scaffolding or a compiler claim.
+
+All three GameCube allocated sections remain byte-identical; both complete
+Xbox production unit reports retain their cubic-solver gain and are unchanged
+by this PS2-only follow-up. Evidence is in build/math-accel-final-comparison.json,
+build/math-accel-final-changes.json, build/math-accel-raw-proof.json and
+build/xbox-{eu-,}math-accel-{before,after}. The baseline is 87740c616.

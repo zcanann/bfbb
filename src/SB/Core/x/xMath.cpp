@@ -280,6 +280,15 @@ F32 xDangleClamp(F32 a)
 #if defined(PS2)
 #define XMATH_SIGN(f) (*(U32*)&(f) & 0x80000000)
 
+static inline S32 xMathAccelNearZero(F32 value)
+{
+    return (F32)xMathAbs(value) < 0.001f;
+}
+static inline S32 xMathAccelSignsDiffer(F32& lhs, F32& rhs)
+{
+    return !(XMATH_SIGN(lhs) == XMATH_SIGN(rhs));
+}
+
 void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
 {
     F32 offset;
@@ -294,7 +303,7 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
 
     offset = endx - x;
 
-    if ((F32)xMathAbs(v) < 0.001f || XMATH_SIGN(offset) != XMATH_SIGN(v))
+    if (xMathAccelNearZero(v) || xMathAccelSignsDiffer(offset, v))
     {
         t1 = 1e38f;
     }
