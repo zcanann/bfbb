@@ -106,3 +106,50 @@ identical function records and measures. Private evidence is
 `build/vector-source-after` and `build/vector-source-gc-check.log` in the
 regional worktree. Rejected direct-expression, temporary, initialization and
 return-flow probes are under `build/vector-source-probe*`.
+
+## Cubic solver variable lifetimes and square-root primitive (2026-10-09)
+
+The original debug records name fDiscr, fTemp, fDist and fAngle. Restoring
+those variable lifetimes removes reconstructed temporaries without changing
+the cubic algorithm. A local PS2 scalar sqrt.s primitive, with separate input
+and result variables, restores the original floating-point register use and
+constant reloads. Other platforms call their existing xsqrt implementation.
+The angle clamp now evaluates the full-turn expression where it is used,
+which preserves the original repeated constant loads in its inlined copy.
+The standalone clamp remains unchanged in every compared platform build.
+
+All four complete PS2 xMath source compilations improve SolveCubic from
+90.42918% to 100%, adding 932 code-matched bytes and one function each.
+Their complete 18-function, 3,700-byte units improve from 94.863785% to
+97.2746%, with exact coverage increasing from 1,252 bytes / 12 functions to
+2,184 bytes / 13 functions. Every other function and the data measures are
+unchanged. The French function already has independently corroborated
+explicit-transfer identity; this change adds no target identity or coverage.
+
+Independent byte comparison reproduces 896 of the 932 original bytes in each
+version after replaying the original-proved quadratic-solver call at offset
+64. The nine remaining words are unresolved runtime calls: six powf, one
+atan2f, one cosf and one sinf in the compiled object. These source names are
+not promoted to original identities. All three original sqrt.s words,
+including their source/result registers, match exactly at offsets 340, 580
+and 584. Thus the standard code report is exact, while the complete runtime
+call closure and executable link remain unproved.
+
+The actual Xbox production profile also improves its 654-byte cubic solver
+from 93.5533% to 100% in both US and EU. The full 12-function, 2,561-byte units
+improve from 96.43162% to 98.07791%, gaining 654 exact bytes / one function;
+other function records and data measures are unchanged. All three actual
+GameCube source builds retain all 18 functions / 3,252 matched bytes, and
+every allocated section is byte-identical to the baseline.
+
+Private evidence in the PS2 worktree is under build/math-cubic-final-comparison.json,
+build/math-cubic-final-changes.json, build/math-cubic-raw-proof.json,
+build/math-gc-allocations.json and build/xbox-{eu-,}math-cubic-{before,after}.
+The baseline source snapshot is ba8c4ecf3. No compiler flags, shared headers,
+profiles, relocation identities or report settings are changed.
+
+The separate xatof investigation also rules out changing the standard double
+atof declaration: the debug originals tail-call a distinct float-return
+wrapper at 0x114bb8, while xIniGetFloat calls the double wrapper at 0x114ba0
+and performs a conversion. The float wrapper's API identity remains
+unresolved; neither declaration nor source call is changed here.
