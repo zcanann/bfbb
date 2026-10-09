@@ -1368,7 +1368,7 @@ namespace
     F32 get_triangle_area(const xVec3& a, const xVec3& b, const xVec3& c);
     void eval_tri(xVec3* vert, xVec3* norm, const xMat4x3* mat, const RpGeometry* geom,
                   const RpTriangle* tri);
-    void SkinXformVertAndNormal(xVec3* dst_verts, xVec3* dst_normals, const xVec3* verts,
+    inline void SkinXformVertAndNormal(xVec3* dst_verts, xVec3* dst_normals, const xVec3* verts,
                                 const xVec3* normals, const xMat4x3* mat, const xMat4x3* bone_mats,
                                 const F32* weights, const U32* bone_idx, const U16* idx, U32 count);
     void random_point_on_triangle(xVec3& loc, xVec3& norm, const xVec3* v, const xVec3* n);
@@ -1495,10 +1495,13 @@ namespace
         norm[2].up_normalize();
     }
 
-    void SkinXformVertAndNormal(xVec3* dst_verts, xVec3* dst_normals, const xVec3* verts,
+    inline void SkinXformVertAndNormal(xVec3* dst_verts, xVec3* dst_normals, const xVec3* verts,
                                 const xVec3* normals, const xMat4x3* mat, const xMat4x3* bone_mats,
                                 const F32* weights, const U32* bone_idx, const U16* idx, U32 count)
     {
+#if defined(PS2)
+        const xMat4x3* root_mat = mat++;
+#endif
         U32 done[2] = { 0, 0 };
         xMat4x3* scratch = (xMat4x3*)giAnimScratch;
 
@@ -1514,48 +1517,78 @@ namespace
 
             for (U32 j = 0; j < 4; j++)
             {
-                U32 b = bones >> (j * 8);
-                U32 word = (b >> 5) & 7;
-                U32 bi = b & 0xff;
+                U32 b = (bones >> (j * 8)) & 0xff;
+                U32 word = b >> 5;
+                U32 bi = b;
                 if (!((1 << (b & 0x1f)) & done[word]))
                 {
                     const xMat4x3* model_bone = &mat[bi];
+#if !defined(PS2)
                     model_bone++;
+#endif
                     xMat4x3Mul(&scratch[bi], &bone_mats[bi], model_bone);
                     done[word] |= 1 << (b & 0x1f);
                 }
             }
 
+#if defined(PS2)
+            w = wt;
+            nbones = bones;
+            U32 k = 4;
+            xVec3 acc = { 0.0f, 0.0f, 0.0f };
+            for (; *w && k != 0; k--)
+#else
             xVec3 acc = { 0.0f, 0.0f, 0.0f };
 
             w = wt;
             nbones = bones;
             for (U32 k = 4; *w && k != 0; k--)
+#endif
             {
                 xVec3 tmp;
+#if defined(PS2)
+                const xMat4x3* bone = &scratch[nbones & 0xff];
+                nbones >>= 8;
+#else
                 const xMat4x3* bone = &scratch[bones & 0xff];
                 bones >>= 8;
+#endif
                 xMat4x3Toworld(&tmp, bone, vert);
                 tmp *= *w;
                 acc += tmp;
                 w++;
             }
+#if defined(PS2)
+            xMat4x3Toworld(dst_verts, root_mat, &acc);
+
+            k = 4;
+#else
             xMat4x3Toworld(dst_verts, mat, &acc);
 
             U32 k = 4;
+#endif
             acc = 0.0f;
             w = wt;
             for (; *w && k != 0; k--)
             {
                 xVec3 tmp;
+#if defined(PS2)
+                const xMat4x3* bone = &scratch[bones & 0xff];
+                bones >>= 8;
+#else
                 const xMat4x3* bone = &scratch[nbones & 0xff];
                 nbones >>= 8;
+#endif
                 xMat3x3RMulVec(&tmp, bone, norm);
                 tmp *= *w;
                 acc += tmp;
                 w++;
             }
+#if defined(PS2)
+            xMat3x3RMulVec(dst_normals, root_mat, &acc);
+#else
             xMat3x3RMulVec(dst_normals, mat, &acc);
+#endif
 
             dst_verts++;
             dst_normals++;
