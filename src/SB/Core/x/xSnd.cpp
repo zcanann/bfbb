@@ -251,24 +251,63 @@ void xSndCalculateListenerPosition()
     }
 }
 
+#if defined(PS2)
+// Retain the listener components across both distance calculations without
+// changing the value-returning vector operations and their temporaries.
+static inline xVec3 xSndListenerDelta(const xVec3& actual, const xVec3& listener,
+                                     F32& x, F32& y, F32& z)
+{
+    xVec3 delta = actual;
+    delta.x -= (x = listener.x);
+    delta.y -= (y = listener.y);
+    delta.z -= (z = listener.z);
+    return delta;
+}
+
+static inline xVec3 xSndListenerPosition(const xVec3& delta, F32 x, F32 y, F32 z)
+{
+    xVec3 position = delta;
+    position.x += x;
+    position.y += y;
+    position.z += z;
+    return position;
+}
+#endif
+
 void xSndProcessSoundPos(const xVec3* pActual, xVec3* pProcessed) {
     xVec3 temp_f;
     xVec3 playerDelta;
 
+#if defined(PS2)
+    F32 listenerX, listenerY, listenerZ;
+#endif
     F32 factor;
     F32 inwardShift;
 
     switch (gSnd.listenerMode) {
     case SND_LISTENER_MODE_PLAYER:
+#if defined(PS2)
+        temp_f = xSndListenerDelta(*pActual, gSnd.listenerMat[1].pos,
+                                  listenerX, listenerY, listenerZ);
+#else
         temp_f = *pActual - gSnd.listenerMat[1].pos;
+#endif
         playerDelta = *pActual - gSnd.listenerMat[0].pos;
         factor = xVec3Length(&temp_f);
         inwardShift = xVec3Length(&playerDelta);
         if (inwardShift < factor) {
             inwardShift = factor - inwardShift;
+#if defined(PS2)
+            inwardShift *= 0.5f;
+#else
             inwardShift /= 2.0f;
+#endif
             temp_f *= (factor - inwardShift) / factor;
+#if defined(PS2)
+            *pProcessed = xSndListenerPosition(temp_f, listenerX, listenerY, listenerZ);
+#else
             *pProcessed = temp_f + gSnd.listenerMat[1].pos;
+#endif
             break;
         }
         *pProcessed = *pActual;

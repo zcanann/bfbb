@@ -159,3 +159,26 @@ subset remains identical. The full GameCube USA report is unchanged and its
 retail DOL SHA-1 check passes. Four-region reports use the `-break.json` suffix
 under `build/sound-oct09`. Several vector-temporary and half-multiply variants
 scored lower and were discarded.
+
+## Complete position processing (2026-10-09)
+
+ProcessSoundPos now matches its complete 616-byte body in USA, Europe and
+Germany. The original retains the three listener coordinates in floating-point
+registers across both distance calculations and the final position addition.
+The previous expression form reloaded those coordinates near the end, changing
+register lifetimes throughout the body. Two PS2-only inline value-returning
+helpers explicitly retain the scalar coordinates while preserving the original
+vector temporary copies. The inward shift uses the original multiply by 0.5.
+
+This changes only ProcessSoundPos: 91.31169% becomes 100%. All three debug
+unit reports reach 37/37 exact functions and 6764/6764 exact bytes, up from
+36/37 and 6148/6764. Unit fuzzy matching rises from 99.208755% to 100%.
+France's current three-function subset remains exactly 132/132 bytes. All
+three GameCube unit reports retain identical function records and measures.
+
+Private regional-checkout evidence: `build/sound-position-source-summary.json`,
+`build/sound-position-source-after`, and `build/sound-position-gc-verify`.
+The discarded probes in `build/sound-position-source-probe` include cached
+vectors and pointers, direct memberwise operations, and changed compound
+assignments. No comparison settings, original targets, headers or compiler
+binaries changed.
