@@ -103,3 +103,22 @@ check body (308), totaling 1268 bytes. Dispatch also improves from 34.851852%
 to 68.111115%. All other scores and the full GC report remain unchanged.
 Evidence: `*-checks.json`, `checks-proof.json`, and `slot-startup-calls.json`
 in `build/save-oct09/`.
+
+## Overwrite and directory checks
+
+PS2's overwrite check shows the space prompt for result 10 and otherwise
+uses the ordinary overwrite prompt. It does not run GC's filename-validity
+test to choose a damaged-file prompt. Its 608-byte body is now exact.
+The games check uses the game-directory result directly, preserves the
+unformatted result 6, and returns immediately when no directory exists;
+it does not perform GC's extra free-space check. Its 348-byte body is exact.
+
+The 316-byte formatted-status check also becomes exact after restoring the
+DWARF declaration order and its two explicit format-result cases, with zero
+handled by the default assignment. The card prompt retains its original
+out-of-line boundary and conditional UI arguments, improving from 73.04762%
+to 98.09524%; one prompt-loop NOP placement remains different.
+
+All three debug regions gain 1272 exact bytes and three functions. These
+four scores are the only changes; the full GC report remains identical.
+Evidence: `*-overwrite.json` and `overwrite-proof.json`.

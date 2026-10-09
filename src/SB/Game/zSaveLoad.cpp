@@ -441,8 +441,17 @@ S32 zSaveLoad_CardCount()
     return 1;
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 S32 zSaveLoad_CardPrompt(S32 mode)
 {
+#if defined(PS2)
+    zSaveLoad_UIEvent(mode == 1 ? 0 : 0x15, eEventEnable);
+    zSaveLoad_UIEvent(mode == 1 ? 0 : 0x15, eEventUIFocusOff_Unselect);
+    zSaveLoad_UIEvent(mode == 1 ? 0x11 : 0x24, eEventUIFocusOn_Select);
+    zSaveLoad_UIEvent(mode == 1 ? 1 : 0x16, eEventUIFocusOff_Unselect);
+#else
     S32 i = 0x15;
     if (mode == 1)
     {
@@ -471,18 +480,23 @@ S32 zSaveLoad_CardPrompt(S32 mode)
     }
     zSaveLoad_UIEvent(i, eEventUIFocusOff_Unselect);
 
+#endif
     promptSel = -1;
     while (promptSel == -1)
     {
         zSaveLoad_Tick();
     }
 
+#if defined(PS2)
+    zSaveLoad_UIEvent(mode == 1 ? 0x11 : 0x24, eEventUIFocusOff_Unselect);
+#else
     i = 0x24;
     if (mode == 1)
     {
         i = 0x11;
     }
     zSaveLoad_UIEvent(i, eEventUIFocusOff_Unselect);
+#endif
 
     if (mode == 1)
     {
@@ -490,6 +504,9 @@ S32 zSaveLoad_CardPrompt(S32 mode)
     }
     return promptSel;
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 S32 zSaveLoad_CardPromptFormat(S32 mode)
 {
@@ -873,9 +890,14 @@ S32 zSaveLoad_CardCheckSingle(S32 num)
 
 S32 zSaveLoad_CardCheckFormattedSingle(S32 num)
 {
+#if !defined(PS2)
     S32 rc;
+#endif
     st_XSAVEGAME_DATA* ldinst = xSGInit(XSG_MODE_LOAD);
     S32 tgtmax;
+#if defined(PS2)
+    S32 rc;
+#endif
 
     rc = 0;
     switch (xSGTgtCount(ldinst, &tgtmax))
@@ -889,7 +911,9 @@ S32 zSaveLoad_CardCheckFormattedSingle(S32 num)
         case 1:
             rc = 1;
             break;
+#if !defined(PS2)
         case 0:
+#endif
         default:
             rc = 0;
             break;
@@ -912,7 +936,9 @@ S32 zSaveLoad_CardCheckFormattedSingle(S32 num)
             case 1:
                 rc = 1;
                 break;
+#if !defined(PS2)
             case 0:
+#endif
             default:
                 rc = 0;
                 break;
@@ -1012,6 +1038,13 @@ S32 zSaveLoad_CardCheckGamesSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, S32 cardN
     else
     {
         xSGTgtSelect(xsgdata, cardNumber);
+#if defined(PS2)
+        rc = xSGTgtHasGameDir(xsgdata, cardNumber);
+        if (rc == 0)
+        {
+            return 0;
+        }
+#else
         if (!xSGTgtHasGameDir(xsgdata, cardNumber))
         {
             rc = 0;
@@ -1024,6 +1057,7 @@ S32 zSaveLoad_CardCheckGamesSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, S32 cardN
                 rc = 0;
             }
         }
+#endif
     }
     return rc;
 }
@@ -1038,7 +1072,11 @@ S32 zSaveLoad_CardCheckGamesSingle(S32 num)
     {
     case 2:
         rc = zSaveLoad_CardCheckGamesSingle_doCheck(ldinst, num);
+#if defined(PS2)
+        if (rc != 6 && rc != 0)
+#else
         if (rc != 0)
+#endif
         {
             rc = 1;
         }
@@ -1325,9 +1363,18 @@ S32 zSaveLoad_CardCheckSlotOverwrite(S32 cardNumber, S32 gameNumber)
     {
         if (iVar1 == -1 || iVar1 == 10)
         {
+#if defined(PS2)
+            if (iVar1 == 10)
+            {
+                zSaveLoad_CardPromptSpace(0);
+            }
+#endif
             return iVar1;
         }
 
+#if defined(PS2)
+        iVar1 = zSaveLoad_CardPromptOverwrite();
+#else
         if (IsValidName(zSaveLoadGameTable[gameNumber].label))
         {
             iVar1 = zSaveLoad_CardPromptOverwrite();
@@ -1337,6 +1384,7 @@ S32 zSaveLoad_CardCheckSlotOverwrite(S32 cardNumber, S32 gameNumber)
             iVar1 = zSaveLoad_CardPromptOverwriteDamaged();
         }
 
+#endif
         if (iVar1 == 5)
         {
             return iVar1;
