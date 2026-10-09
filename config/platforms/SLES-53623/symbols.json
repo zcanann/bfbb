@@ -5668,6 +5668,13 @@
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
+      "name": "ZNPC_AnimTable_KingJelly",
+      "source": "SB/Game/zNPCTypeKingJelly.cpp",
+      "address": 3446800,
+      "size": 2296,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "_HISBatchSoundCommandsNoWait",
       "source": "SB/Core/p2/his/HisStubs.cpp",
       "address": 3453008,
@@ -5759,6 +5766,13 @@
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
+      "name": "ZNPC_AnimTable_BossSB2",
+      "source": "SB/Game/zNPCTypeBossSB2.cpp",
+      "address": 3509024,
+      "size": 3096,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "iCameraUpdateFog",
       "source": "SB/Core/x/iCamera.cpp",
       "address": 3524912,
@@ -5794,10 +5808,24 @@
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
+      "name": "ZNPC_AnimTable_Prawn",
+      "source": "SB/Game/zNPCTypePrawn.cpp",
+      "address": 3550528,
+      "size": 992,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "register_tweaks",
       "source": "SB/Game/zNPCTypeBossPlankton.cpp",
       "address": 3580144,
       "size": 12572,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_BossPlankton",
+      "source": "SB/Game/zNPCTypeBossPlankton.cpp",
+      "address": 3595392,
+      "size": 2440,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
@@ -5812,6 +5840,13 @@
       "source": "SB/Game/zNPCTypeDutchman.cpp",
       "address": 3824832,
       "size": 15588,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_Dutchman",
+      "source": "SB/Game/zNPCTypeDutchman.cpp",
+      "address": 3845232,
+      "size": 1648,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {

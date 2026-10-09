@@ -15012,3 +15012,38 @@ three comparison logs, `build/oct09-france-curve-animation`, its comparison log,
 `build/oct09-curve-animation-<GameCube-version>.log`,
 `build/oct09-curve-animation-xbox` and both regional comparison logs,
 plus `build/oct09-france-animation-map{,-query}.json`.
+
+The player/TRC/SKB/boss batch adds 624 exact bytes / three functions in USA and
+PAL, reaching 1,033,788 / 3,829 and 1,026,228 / 3,816 respectively. Germany
+gains 984 bytes / four functions, reaching 1,027,296 / 3,818, including its
+previously omitted goo-death control/carried-object cleanup. Regional controller
+messages, byte-color handling, validity and initialization reproduce the
+original layouts and strings without naming stripped camera SDK calls.
+
+Player movement's original TurnToFace boundary improves 75.10625% to 99.375%;
+documented slide locals/determinant order improve 35.108143% to 36.631042%.
+Original rotation state/reset ordering and the absent PS2 dot clamp improve
+80.958466% to 85.722046%. Update's two original integer-abs calls improve
+94.44583% to 94.56484%; their runtime name remains unresolved. SKB translation
+improves 28.290323% to 99.17742% through the genuine volatile abs.s primitive and
+original count/zero-array lifetimes. Eval remains missing in this snapshot and
+retains its full denominator. All three combined debug-region report comparisons
+preserve every earlier function/code/data measure.
+
+Five individually unique French boss animation builders add 10,472 exact bytes
+/ five functions, reaching 202,876 bytes / 573 functions. All original owner and
+boundary witnesses, 279 typed table/string/callback/initializer operands and
+143 calls are inventoried in every reference. The shared initializer uses the
+authenticated function owner; the previous Robot proof output stays identical.
+All 556 prior function proofs remain unchanged. Nine boss mutation tests and
+eight Robot replay tests pass; strict aggregate regeneration and all 76 French
+source units succeed. Coverage reaches 853 functions / 415,468 known bytes.
+
+All three GameCube full source reports/checksums and both Xbox source reports
+remain unchanged. CPU denominators and source-data/full-link limitations remain
+explicit. Evidence: `build/oct09-player-boss/<debug-version>` and comparison logs,
+`build/oct09-france-player-boss`, its comparison log,
+`build/oct09-npc-boss-animation-tests.log`,
+`build/oct09-npc-robot-animation-replay.log`,
+`build/oct09-player-boss-<GameCube-version>.log`,
+`build/oct09-player-boss-xbox` and both regional comparison logs.

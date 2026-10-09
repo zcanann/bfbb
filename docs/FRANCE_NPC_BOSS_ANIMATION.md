@@ -49,3 +49,12 @@ The five previously selected function records retain their exact scores,
 sizes and metadata relative to the verified `oct09-france-render-save`
 baseline. All prior profile entries and every non-French profile are unchanged.
 The source pilot is `build/npc-boss-animation-france-pilot/report.json`.
+
+Canonical production integration passes in `build/oct09-france-player-boss`:
+all aggregate evidence regenerates identically and all 76 enabled source units
+compile. All 556 previously published function proofs and earlier scores are
+preserved. These five builders add 10,472 exact bytes / five functions, reaching
+202,876 bytes / 573 functions. Coverage reaches 853 functions / 415,468 bytes;
+the CPU denominator stays 2,979,968 bytes. All nine boss tests and eight Robot
+replay tests pass after the shared initializer owner change. Source data and a
+complete original executable build remain pending.

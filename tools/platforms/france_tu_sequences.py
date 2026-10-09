@@ -770,6 +770,15 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in npc_common_animation['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Common NPC animation adds two complete original builders in an independently unique 400-byte cluster with 392 code bytes. Original member ordering, bounds and zero alignment gaps are checked separately from the Robot cluster. Complete typed names, literals, callback identity and animation callees corroborate every operand. No whole translation-unit or data extent is claimed.')
+    from platforms.france_npc_boss_animation import generate_unit as generate_npc_boss_animation
+    npc_boss_animation = generate_npc_boss_animation(originals, registry_dir)
+    document['functions'].extend(npc_boss_animation['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(npc_boss_animation['sequence_proofs'])
+    document['npc_boss_animation_data_proofs'] = npc_boss_animation['data_proofs']
+    for key, value in npc_boss_animation['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Boss NPC animation adds five individually unique complete original builders. All original owner/boundary identities, 279 typed table/string/callback/initializer operands and 143 JALs are checked in each reference, using five fixed complete dependencies. Shared initializer owner selection is constrained by each authenticated function source and preserves earlier Robot proof output. No whole translation-unit or data extent is claimed.')
     return document
 
 
