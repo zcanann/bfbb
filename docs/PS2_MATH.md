@@ -79,3 +79,30 @@ same nonblank preprocessed lines before and after the PS2-only change.
 Private evidence is under build/near265: proof.json, baseline and return regional
 reports, alignment.json, gc/proof.json and xbox/proof.json. No compiler, flags,
 shared declarations, target metadata or scoring changes accompany this fix.
+
+## Complete vector normalization (2026-10-09)
+
+Both xVec3Normalize and xVec3NormalizeFast now reproduce all 224 original
+instruction bytes in USA, PAL, Germany and France. Each complete PS2 xVec3
+unit improves from 79.16071% fuzzy, 0/2 exact functions and 0/448 exact bytes,
+to 100%, 2/2 and 448/448. The French identities come from the independently
+proven complete two-member original sequence; see `PS2_FRANCE_SOUND_PLAYBACK.md`.
+
+Original DWARF lists len, len2 and len_inv, without the reconstructed coordinate
+and square temporaries. Computing len2 directly on PS2 restores the original
+multiply/accumulator order. A local PS2 sqrt.s inline assembly primitive then
+preserves the original coordinate and constant reloads across the square root.
+The ordinary sqrtf expression let the compiler retain those values, changing
+floating-point register lifetimes and shortening both bodies. This is scoped
+to the two vector routines; shared math headers and compiler settings are
+unchanged. Plain, volatile and memory-clobber probe forms all matched; the
+retained form is volatile with explicit floating input/output operands.
+
+All four complete source compilations and reports agree, and independent ELF
+symbol extraction confirms raw 224-byte equality for both bodies in all four
+versions, without relocation masking. All three GameCube unit reports retain
+identical function records and measures. Private evidence is
+`build/vector-source-summary.json`, `build/vector-source-raw-proof.json`,
+`build/vector-source-after` and `build/vector-source-gc-check.log` in the
+regional worktree. Rejected direct-expression, temporary, initialization and
+return-flow probes are under `build/vector-source-probe*`.

@@ -17,15 +17,21 @@ const xVec3 xVec3::m_UnitAxisY = { 0.0f, 1.0f, 0.0f };
 
 F32 xVec3Normalize(xVec3* o, const xVec3* v)
 {
+#if !defined(PS2)
     F32 x = v->x;
     F32 x2 = SQR(v->x);
     F32 y = v->y;
     F32 y2 = SQR(v->y);
     F32 z = v->z;
     F32 z2 = SQR(v->z);
+#endif
 
     F32 len;
+#if defined(PS2)
+    F32 len2 = v->x * v->x + v->y * v->y + v->z * v->z;
+#else
     F32 len2 = x2 + y2 + z2;
+#endif
 
     if ((F32)iabs(len2 - 1.0f) <= 0.00001f)
     {
@@ -49,7 +55,11 @@ F32 xVec3Normalize(xVec3* o, const xVec3* v)
     }
     else
     {
+#if defined(PS2)
+        asm volatile("sqrt.s %0, %1" : "=f"(len) : "f"(len2));
+#else
         len = xsqrt(len2);
+#endif
         F32 inv_len = 1.0f / len;
         o->x = v->x * inv_len;
         o->y = v->y * inv_len;
@@ -60,15 +70,21 @@ F32 xVec3Normalize(xVec3* o, const xVec3* v)
 
 F32 xVec3NormalizeFast(xVec3* o, const xVec3* v)
 {
+#if !defined(PS2)
     F32 x = v->x;
     F32 x2 = SQR(v->x);
     F32 y = v->y;
     F32 y2 = SQR(v->y);
     F32 z = v->z;
     F32 z2 = SQR(v->z);
+#endif
 
     F32 len;
+#if defined(PS2)
+    F32 len2 = v->x * v->x + v->y * v->y + v->z * v->z;
+#else
     F32 len2 = x2 + y2 + z2;
+#endif
 
     if ((F32)iabs(len2 - 1.0f) <= 0.00001f)
     {
@@ -92,7 +108,11 @@ F32 xVec3NormalizeFast(xVec3* o, const xVec3* v)
     }
     else
     {
+#if defined(PS2)
+        asm volatile("sqrt.s %0, %1" : "=f"(len) : "f"(len2));
+#else
         xsqrtfast(len, len2);
+#endif
         F32 inv_len = 1.0f / len;
         o->x = v->x * inv_len;
         o->y = v->y * inv_len;
