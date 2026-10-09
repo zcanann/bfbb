@@ -2329,6 +2329,25 @@ static S32 SweptSphereModelCB(S32 numTriangles, S32 triOffset, void* data)
     return 1;
 }
 
+#if defined(PS2)
+// Preserve the retail matrix snapshot's word-pair copy, including padding.
+static inline void xCollideCopyMatrix(xMat4x3* dest, const xMat4x3* src)
+{
+    const U32* s = (const U32*)src;
+    U32* d = (U32*)dest;
+    S32 count = sizeof(xMat4x3) / (2 * sizeof(U32));
+    do
+    {
+        U32 a = s[0];
+        U32 b = s[1];
+        d[0] = a;
+        d[1] = b;
+        s += 2;
+        d += 2;
+    } while (--count > 0);
+}
+#endif
+
 S32 xSweptSphereToModel(xSweptSphere* sws, RpAtomic* model, RwMatrix* mat)
 {
     if (!sws->dist)
@@ -2337,7 +2356,12 @@ S32 xSweptSphereToModel(xSweptSphere* sws, RpAtomic* model, RwMatrix* mat)
     sSweptSphereHitFound = 0;
     sSwsModelMat = (xMat4x3*)mat;
 
+#if defined(PS2)
+    xMat4x3 oldinvbasis;
+    xCollideCopyMatrix(&oldinvbasis, &sws->invbasis.xm);
+#else
     xMat4x3 oldinvbasis = sws->invbasis.xm;
+#endif
     xMat4x3Mul(&sws->invbasis.xm, (xMat4x3*)mat, &sws->invbasis.xm);
 
     RpGeometry* geom = model->geometry;

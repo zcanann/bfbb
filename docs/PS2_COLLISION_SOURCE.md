@@ -435,6 +435,39 @@ Baseline: `314f23fc8`. Private evidence:
 `build/collide-oct09/capsule-proof.json`, `capsule-locals.json`, and
 `capsule-raw-proof.json`. Full production controls remain the integration gate.
 
+## Swept-model matrix snapshot (2026-10-09)
+
+`xSweptSphereToModel` originally snapshots its entire 64-byte `oldinvbasis`
+matrix using eight iterations of two 32-bit loads and stores. Original debug
+information identifies that local as `xMat4x3` at stack offset `0xd0`.
+Current aligned copy initialization instead produces quadword transfers.
+A file-local PS2 helper now expresses the observed word-pair copy. Its name
+is descriptive and does not claim an independently named original helper.
+The source matrix belongs to the caller's swept-sphere object, while the
+destination is a distinct local snapshot; these ranges cannot overlap.
+The helper uses ordinary nonvolatile accesses and copies all padding words.
+
+Symbolic execution of the complete original and compiled copy loops in all
+four PS2 regions verifies exactly eight iterations, the same 16 destination
+word offsets, and preservation of all 64 source bytes. The later 144-byte
+componentwise restore is unchanged and raw-identical. No type alignment,
+shared header, compiler option or register binding changes are involved.
+Explicit `xMat4x3Copy` generated an incorrect runtime-call boundary, and
+separate aggregate assignment forms regressed; those probes were rejected.
+
+Normal complete-unit builds in all four regions improve the 980-byte body
+from 92.09796% to 99.13878%. The other 35 scores and exact coverage of
+13,464 bytes / 23 functions remain unchanged. Five nonrelocation words still
+differ in the pair-load scheduling and temporary registers; twelve source
+relocation words are excluded from the diagnostic raw comparison. No new
+runtime identity or exact-function claim is made. Fresh GameCube solo remains
+72/75 exact, with its original copy expression preserved.
+
+Baseline: `5b5e0d367`. Private evidence:
+`build/collide-oct09/sweptmodel-proof.json`, `sweptmodel-locals.json`, and
+`sweptmodel-copy-proof.json`. Full production controls remain the integration
+gate.
+
 ## Oriented-box projected-radius lifetimes (2026-10-09)
 
 `xOBBHitsOBB` now keeps `ar` and `br` as the separate projected radii, adding
