@@ -30,3 +30,16 @@ at 99.57195% fuzzy matching, with no new exact bytes. The selected-function
 coverage increases by 11,980 bytes; the full CPU-code denominator stays
 unchanged. Other version profiles and source files are unchanged. Private
 comparison: `build/cruise-france-pilot/report.json`.
+
+The source now restores the original PS2 `xVec3 V0` zero initializer. DWARF
+names this local at stack offset `0x70`, and retail preserves its 12-byte
+initialization loop and 0x80-byte frame. This raises the function from
+99.57195% to 99.86645% in all four PS2 versions; only three inserted nops
+and one deleted nop remain. Exact counts stay unchanged. Full-unit debug
+comparisons change only this function and raise the unit from 94.53704%
+to 94.60988%, retaining 66/91 exact functions and 15,824/48,436 exact bytes.
+The local is PS2-only; all USA, PAL and German GameCube function records
+and unit measures remain unchanged. Private before/after evidence is in
+`build/cruise-source-summary.json`, `build/cruise-source-before`,
+`build/cruise-source-after`, `build/cruise-gc-verify` and
+`build/cruise-france-pilot/report-after-v0.json`.
