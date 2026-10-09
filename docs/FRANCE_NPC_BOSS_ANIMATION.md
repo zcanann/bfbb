@@ -41,3 +41,11 @@ initializer payloads, original extents, dependencies and duplicate bodies.
 Private original evidence is `build/npc-boss-animation-proof.json`; tests are
 `tools.tests.test_france_npc_boss_animation` with `BFBB_FRANCE_TEST_ORIG` and
 `BFBB_FRANCE_TEST_REGISTRY` set to authenticated originals/current registries.
+
+All five newly selected French source functions match exactly: +10,472
+exact bytes and +5 exact functions. Across the five selected source subsets,
+exact bytes rise from 2,660 to 13,132 and exact functions from one to six.
+The five previously selected function records retain their exact scores,
+sizes and metadata relative to the verified `oct09-france-render-save`
+baseline. All prior profile entries and every non-French profile are unchanged.
+The source pilot is `build/npc-boss-animation-france-pilot/report.json`.
