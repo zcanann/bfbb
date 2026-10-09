@@ -941,7 +941,11 @@ static S32 LeafNodeLinePolyIntersect(xClumpCollBSPTriangle* triangles, void* dat
                 }
             }
         }
+#if defined(PS2)
+    } while ((++triangles)[-1].flags & 0x1);
+#else
     } while ((triangles++)->flags & 0x1);
+#endif
     return 1;
 }
 
@@ -1028,7 +1032,11 @@ static S32 LeafNodeSpherePolyIntersect(xClumpCollBSPTriangle* triangles, void* d
                 }
             }
         }
+#if defined(PS2)
+    } while ((++triangles)[-1].flags & 0x1);
+#else
     } while ((triangles++)->flags & 0x1);
+#endif
     return 1;
 }
 
@@ -1084,7 +1092,11 @@ static S32 LeafNodeBoxPolyIntersect(xClumpCollBSPTriangle* triangles, void* data
                 }
             }
         }
+#if defined(PS2)
+    } while ((++triangles)[-1].flags & 0x1);
+#else
     } while ((triangles++)->flags & 0x1);
+#endif
     return 1;
 }
 

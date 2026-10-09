@@ -75,3 +75,20 @@ the restored line kernel. GameCube remains 9/9 exact with an identical full
 report. This is another fuzzy gain with no change to exact byte/function counts.
 Private evidence is `sphere-proof.json`, `sphere-raw-proof.json`, and
 `sphererawproof.py` under `build/clump-oct09`.
+
+## Triangle-list advancement
+
+All three original leaf callbacks advance the triangle pointer before loading
+the preceding triangle's continuation flag. The PS2 condition now spells this
+as `(++triangles)[-1].flags`, preserving the same flag and advancement on every
+iteration, including early `continue` paths. Other platforms retain their
+existing postincrement spelling.
+
+This source change makes `LeafNodeBoxPolyIntersect` (560 bytes) report 100%,
+and lifts line/sphere to 79.40435% and 66.27344%, respectively, in all four PS2
+regions. It adds 560 code-matched bytes and one function per region, with all
+other unit functions unchanged. The box callback still has an existing unresolved
+SDK call identity (`RtIntersectionBBoxTriangle` in the source); report equality
+does not authenticate that runtime name or claim complete linked raw bytes.
+GameCube stays 9/9 exact and its full report is unchanged. Regional before/after
+evidence is `build/clump-oct09/loops-proof.json`.
