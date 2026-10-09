@@ -81,3 +81,20 @@ audit `emitter-interp-raw-proof.py` / `.json` also checks all eight compiled jum
 table entries against the original targets and reproduces the function bytes
 except the two explicitly unresolved math-call addresses. It does not establish
 new `sinf`/`cosf` identities or change call normalization or coverage.
+
+## Signed positive particle limits
+
+All three original `xParEmitterEmit` bodies load the unsigned 16-bit particle
+limit and test it with signed `blez` branches. Express the three enabled-limit
+checks as `(S32)maxPar > 0` on PS2. This is equivalent to the prior nonzero check
+over the complete unsigned 16-bit domain, while avoiding extra compiler masks.
+The duplicate capacity check is present in the original and remains intact.
+
+Emit improves from 94.56892% to 95.37297% in all three debug versions; complete
+unit fuzzy matching rises from 97.17111% to 97.55823%, with all exact bytes,
+other function scores, and data controls unchanged. An initial shared spelling
+regressed GC Emit from 98.86503% to 98.466255%, so the final condition is scoped
+to PS2. GC then preserves every score and all 16 exact functions / 2,816 bytes.
+Evidence: `emitter-limit-original.py` / `.txt`,
+`emitter-limit-final-comparison.json`, `emitter-limit-final-changes.json`, and
+`emitter-limit-gc-{before,after}.json` in the private build directory.

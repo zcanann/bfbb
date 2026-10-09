@@ -510,17 +510,29 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
         return NULL;
     }
 
+#if defined(PS2)
+    if (((S32)ps->tasset->maxPar > 0) && (ps->group->m_num_of_particles >= (S32)ps->tasset->maxPar))
+#else
     if ((ps->tasset->maxPar != 0) && (ps->group->m_num_of_particles >= (S32)ps->tasset->maxPar))
+#endif
     {
         return NULL;
     }
 
+#if defined(PS2)
+    if (((S32)ps->tasset->maxPar > 0) && (ps->group->m_num_of_particles >= (S32)ps->tasset->maxPar))
+#else
     if ((ps->tasset->maxPar != 0) && (ps->group->m_num_of_particles >= (S32)ps->tasset->maxPar))
+#endif
     {
         return NULL;
     }
 
+#if defined(PS2)
+    if (((S32)ps->tasset->maxPar > 0) &&
+#else
     if ((ps->tasset->maxPar != 0) &&
+#endif
         (ps->group->m_num_of_particles + rate_has_elapsed >= (S32)ps->tasset->maxPar))
     {
         rate_has_elapsed = ps->tasset->maxPar - ps->group->m_num_of_particles;
