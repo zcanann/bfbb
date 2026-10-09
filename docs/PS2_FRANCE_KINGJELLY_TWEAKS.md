@@ -33,3 +33,12 @@ This original-only evidence does not establish a linked executable or
 compiled-source matching. Authenticated-original tests passed in 50.72 seconds,
 including rejection of changed instruction bits, complete strings and the
 complete color-helper context.
+
+The France source profiles add these two members while preserving all earlier
+zEnt selections and every other version profile. Authenticated source
+compilation produced a 100% exact 376-byte float-list helper and 99.72701%
+fuzzy matching for the 23,444-byte King Jelly body. Thus this addition supplies
+23,820 newly covered bytes and 376 exact bytes; the new coverage also expands
+the report denominator. Existing zEnt function comparisons are unchanged.
+Private validation is `build/kingjelly-france-pilot/report.json` in the regional
+worker checkout. No source or compiler changes were required.

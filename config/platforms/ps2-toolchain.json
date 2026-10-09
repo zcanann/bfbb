@@ -211553,7 +211553,8 @@
       "symbols": {
         "zParamGetVector": "zParamGetVector__FP16xModelAssetParamUiPCc5xVec3P5xVec3",
         "zParamGetFloat": "zParamGetFloat__FP16xModelAssetParamUiPCcf",
-        "zParamGetInt": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        "zParamGetInt": "zParamGetInt__FP16xModelAssetParamUiPCci",
+        "zParamGetFloatList": "zParamGetFloatList__FP16xModelAssetParamUiPCciPfPf"
       },
       "calls": [
         {
@@ -211590,6 +211591,20 @@
           "target_source": "SB/Core/x/xString.cpp",
           "target_function": "xStrHash@0020f260",
           "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zParamGetFloatList",
+          "offset": 48,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrHash@0020f260",
+          "symbol": "xStrHash__FPCc"
+        },
+        {
+          "function": "zParamGetFloatList",
+          "offset": 336,
+          "target_source": "SB/Core/x/xString.cpp",
+          "target_function": "xStrParseFloatList@0020eb90",
+          "symbol": "xStrParseFloatList__FPfPCci"
         }
       ],
       "linkage_provenance": [
@@ -211668,6 +211683,32 @@
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
               "source_address": 1258880,
               "reference_sha256": "b453f9f00e09cbbd335c8e5aa6a04adea4d93f9680c62fe09f97b1f6f81ee9f5"
+            }
+          ]
+        },
+        {
+          "function": "zParamGetFloatList",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 1257968,
+          "size": 376,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 1257968,
+              "reference_sha256": "ed746dea6807d16a23b8de4bed42d4a759219194a18f067049ae3d7bcae9d292"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 1257968,
+              "reference_sha256": "f34ce8def52b35a5f4c9d1e099a0777dfc6fa2233b743f8aa6b37b8156626ea1"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 1257968,
+              "reference_sha256": "e27eb0b5ded1687dd5a4fbe4355caf008ee610bdd3ddc243a98f96ff0fd181e6"
             }
           ]
         }
@@ -212989,6 +213030,1167 @@
               "source_address": 2633248,
               "linkage_name": "zEntEvent__FPcUi",
               "reference_sha256": "73e500aa60cb5f5b53b3009a715adef1219838d1d953d4929fd7e3f8c799b4a1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "src/SB/Game/zNPCTypeKingJelly.cpp",
+      "target_unit": "SB/Game/zNPCTypeKingJelly.cpp",
+      "object": "source/zNPCTypeKingJelly.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "register_tweaks": "register_tweaks__Q231@unnamed@zNPCTypeKingJelly_cpp@11tweak_groupFbP16xModelAssetParamUiPCc"
+      },
+      "calls": [
+        {
+          "function": "register_tweaks",
+          "offset": 68,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt@00133580",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 168,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 296,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 428,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 556,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 684,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 812,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 936,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 1064,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 1192,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 1328,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt@00133580",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 1420,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 1544,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 1668,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 1788,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 1912,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 2044,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 2168,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 2296,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 2424,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 2552,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 2680,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 2808,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 2936,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt@00133580",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 3040,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 3168,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 3296,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 3424,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 3552,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 3684,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 3808,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 3936,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 4064,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 4192,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 4324,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 4456,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 4584,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 4712,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 4840,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 4980,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 5116,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 5240,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 5368,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 5496,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 5624,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 5752,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 5876,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt@00133580",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 5932,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 6352,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloatList@001331f0",
+          "symbol": "zParamGetFloatList__FP16xModelAssetParamUiPCciPfPf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 6680,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 6808,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 6932,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 7060,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 7188,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt@00133580",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 7240,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 7664,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloatList@001331f0",
+          "symbol": "zParamGetFloatList__FP16xModelAssetParamUiPCciPfPf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 7992,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 8120,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 8248,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 8372,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 8500,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt@00133580",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 8552,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 8976,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloatList@001331f0",
+          "symbol": "zParamGetFloatList__FP16xModelAssetParamUiPCciPfPf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 9304,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 9432,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 9560,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 9684,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 9812,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt@00133580",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 9864,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 10288,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloatList@001331f0",
+          "symbol": "zParamGetFloatList__FP16xModelAssetParamUiPCciPfPf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 10616,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 10744,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 10872,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 11004,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 11136,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 11264,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 11392,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 11532,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 11952,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloatList@001331f0",
+          "symbol": "zParamGetFloatList__FP16xModelAssetParamUiPCciPfPf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 12280,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 12408,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 12536,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 12664,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 12792,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 13216,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloatList@001331f0",
+          "symbol": "zParamGetFloatList__FP16xModelAssetParamUiPCciPfPf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 13548,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 13672,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 13800,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 13932,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 14352,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloatList@001331f0",
+          "symbol": "zParamGetFloatList__FP16xModelAssetParamUiPCciPfPf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 14680,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 14808,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 14936,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt@00133580",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 15020,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 15144,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 15276,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 15404,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 15824,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloatList@001331f0",
+          "symbol": "zParamGetFloatList__FP16xModelAssetParamUiPCciPfPf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 16152,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 16284,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 16408,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt@00133580",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 16492,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 16624,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 16752,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 16880,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 17008,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 17136,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 17268,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 17396,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 17516,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 17640,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 17764,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt@00133580",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 17848,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 17980,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 18104,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 18232,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 18356,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt@00133580",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 18440,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 18564,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 18688,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 18816,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 18940,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt@00133580",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 19024,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 19148,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 19272,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 19400,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 19524,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt@00133580",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 19608,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 19732,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 19856,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 19984,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 20108,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt@00133580",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 20192,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 20316,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 20440,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 20568,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 20692,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt@00133580",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 20776,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 20904,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 21032,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 21156,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt@00133580",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 21240,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 21364,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 21488,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 21612,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt@00133580",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 21696,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 21820,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 21944,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 22072,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 22196,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt@00133580",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 22280,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 22404,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 22528,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 22656,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 22780,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt@00133580",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 22864,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 22988,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 23112,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 23240,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetFloat@00133420",
+          "symbol": "zParamGetFloat__FP16xModelAssetParamUiPCcf"
+        },
+        {
+          "function": "register_tweaks",
+          "offset": 23364,
+          "target_source": "SB/Game/zEnt.cpp",
+          "target_function": "zParamGetInt@00133580",
+          "symbol": "zParamGetInt__FP16xModelAssetParamUiPCci"
+        }
+      ],
+      "linkage_provenance": [
+        {
+          "function": "register_tweaks",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3420080,
+          "size": 23444,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3418704,
+              "reference_sha256": "04b783cc1618e7a9eb432e590568bd74088a910ad7a0ecba2b8a9e5cd64bf6f3"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3419968,
+              "reference_sha256": "c02598d2d5c3707f21563472a0724e3e1d31aa73dcaed800aeb399829686d820"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3416720,
+              "reference_sha256": "ab86e07bbe49488f565fbe6cb64595d4c3f8fba676bd7983a548c0e99738c06a"
             }
           ]
         }
