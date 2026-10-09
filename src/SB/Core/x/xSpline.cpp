@@ -153,9 +153,9 @@ static F32 ArcLength3(xCoef3* coef, F32 ustart, F32 uend)
         u = u + h;
     }
 
-    return (h * (sum + sqrtf(A + ustart * (B + ustart * (C + ustart * (D + E * ustart)))) +
-                 sqrtf(A + uend * (B + uend * (C + uend * (D + E * uend)))))) /
-           3.0f;
+    F32 startSpeed = sqrtf(A + ustart * (B + ustart * (C + ustart * (D + E * ustart))));
+    F32 endSpeed = sqrtf(A + uend * (B + uend * (C + uend * (D + E * uend))));
+    return (h * ((sum + startSpeed) + endSpeed)) / 3.0f;
 }
 #else
 F32 ArcLength3(xCoef3* coef, F64 ustart, F64 uend)
@@ -281,7 +281,7 @@ void EvalCoef3(xCoef3* coef, F32 u, U32 deriv, xVec3* o)
 
 void BasisToCoef3(xCoef3* coef, F32 (*N)[4], xVec3* v1, xVec3* v2, xVec3* v3, xVec3* v4)
 {
-    S32 i;
+    U32 i;
 
     for (i = 0; i < 4; i++)
     {
@@ -294,13 +294,16 @@ void BasisToCoef3(xCoef3* coef, F32 (*N)[4], xVec3* v1, xVec3* v2, xVec3* v3, xV
     }
 }
 
+#ifdef PS2
+inline
+#endif
 void CoefToUnity3(xCoef3* coef1, xCoef3* coef2, F32 f1, F32 f2)
 {
     F32 factor;
     F32 fdiff;
     xCoef* c2;
     F32 linear;
-    S32 i;
+    U32 i;
     F32 factorWork;
     F32 coef2_2;
     xCoef* c1;
@@ -309,8 +312,7 @@ void CoefToUnity3(xCoef3* coef1, xCoef3* coef2, F32 f1, F32 f2)
     fdiff = f2 - f1;
     c2 = &coef2->x;
     c1 = &coef1->x;
-    i = 3;
-    while (i)
+    for (i = 0; i < 3; i++)
     {
         F32 coef2_1;
         F32 accumulated;
@@ -339,7 +341,6 @@ void CoefToUnity3(xCoef3* coef1, xCoef3* coef2, F32 f1, F32 f2)
         c1->a[2] = accumulated;
         c1->a[3] = coef2_3 + ((coef2_2 * f1) + ((f1 * (f1 * (coef2_0 * f1))) + (f1 * (coef2_1 * f1))));
         c1++;
-        i--;
     }
 }
 
