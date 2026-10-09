@@ -27,7 +27,7 @@ Normal objdiff code results agree across all three debug releases:
 
 All original-owned functions remain in each profile. xPartition compiles without
 source changes; only its two eight-byte empty routines currently match exactly.
-xMorphRender remains at 97.637794 percent. These are standard code-match scores,
+xMorphRender initially reached 97.637794 percent. These are standard code-match scores,
 not raw whole-unit or executable link claims. The morph runtime string-length
 call lacks a reviewed runtime identity, so it stays unresolved rather than
 receiving a guessed named relocation. Completed-unit status remains false.
@@ -36,3 +36,22 @@ All 224 actual GameCube game/engine objects were recompiled with identical
 allocated sections. Private evidence in build/ps2cluster158 contains the bounded
 seven-unit inventory, original morph layout/API records, whole source objects,
 per-region target objects and normal reports, and the GameCube comparison.
+
+## Render initialization order (2026-10-08)
+
+Loading `TimeCount` before forming the times pointer restores the retail PS2
+register lifetimes. `xMorphRender` improves from 97.637794% to 98.42519% in all
+four PS2 versions. The three complete debug-region units improve from 98.92857%
+to 99.28571%; France's current profile contains only this 508-byte render body.
+Exact function and byte totals remain unchanged.
+
+Ten source forms were tested, including an explicit scanning pointer, alternate
+loop tests, loop peeling, signed indices and reuse of the cached count. None
+removed the remaining two NOPs. Compiler 3.0.1b74 regressed the improved body to
+70.944885%; 2.4, with its unsupported `bottomup` option removed, reached only
+50.133858%. These comparisons do not support a compiler patch.
+
+The initialization order is PS2-only. A full GameCube USA build has an identical
+`report.json` and passes the retail DOL SHA-1 check. Private before/after reports
+for all four PS2 versions are in `build/morph-oct08`; compiler comparisons are
+in `build/ps2-nop-oct08`.

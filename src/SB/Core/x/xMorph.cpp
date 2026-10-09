@@ -92,8 +92,13 @@ void xMorphRender(xMorphSeqFile* seq, RwMatrix* mat, F32 time)
     F32* times;
     xMorphFrame* frame;
 
+#if defined(PS2)
+    tcount = seq->TimeCount;
+    times = (F32*)(seq + 1);
+#else
     times = (F32*)(seq + 1);
     tcount = seq->TimeCount;
+#endif
     frame = (xMorphFrame*)(times + seq->TimeCount);
 
     if (time < 0.0f) time = 0.0f;
