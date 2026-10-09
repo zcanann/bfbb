@@ -232707,6 +232707,174 @@
       "calls": [],
       "gp_relocations": [],
       "inline": "auto,bottomup"
+    },
+    {
+      "source": "src/SB/Core/p2/iScrFX.cpp",
+      "target_unit": "SB/Core/p2/iScrFX.cpp",
+      "object": "source/iScrFX.o",
+      "symbols": {
+        "iScrFxDistortionRender": "iScrFxDistortionRender__FP8RwCamera",
+        "iScrFxCameraDestroyed": "iScrFxCameraDestroyed__FP8RwCamera",
+        "iScrFxMotionBlurOpen": "iScrFxMotionBlurOpen__FP8RwCamera",
+        "iCameraOverlayRender": "iCameraOverlayRender__FP8RwCameraP8RwRaster6RwRGBA",
+        "iScrFxMotionBlurCreateImmediateModeData": "iScrFxMotionBlurCreateImmediateModeData__FP8RwCameraP6RwRect",
+        "iScrFxCameraEndScene": "iScrFxCameraEndScene__FP8RwCamera",
+        "iScrFxCameraCreated": "iScrFxCameraCreated__FP8RwCamera",
+        "iCameraSetBlurriness": "iCameraSetBlurriness__Ff",
+        "iCameraMotionBlurActivate": "iCameraMotionBlurActivate__FUi",
+        "iScrFxDrawBox": "iScrFxDrawBox__FffffUcUcUcUc",
+        "iScrFxEnd": "iScrFxEnd__Fv",
+        "iScrFxBegin": "iScrFxBegin__Fv",
+        "iScrFxInit": "iScrFxInit__Fv"
+      },
+      "calls": [
+        {
+          "function": "iScrFxDistortionRender",
+          "offset": 404,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "iScrFxDistortionRender",
+          "offset": 1188,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "iScrFxDistortionRender",
+          "offset": 1248,
+          "target_source": "SB/Core/x/xDebug.cpp",
+          "target_function": "xprintf",
+          "symbol": "xprintf__FPCce"
+        },
+        {
+          "function": "iScrFxMotionBlurOpen",
+          "offset": 244,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxMotionBlurCreateImmediateModeData",
+          "symbol": "iScrFxMotionBlurCreateImmediateModeData__FP8RwCameraP6RwRect"
+        },
+        {
+          "function": "iScrFxCameraEndScene",
+          "offset": 64,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iCameraOverlayRender",
+          "symbol": "iCameraOverlayRender__FP8RwCameraP8RwRaster6RwRGBA"
+        },
+        {
+          "function": "iScrFxCameraCreated",
+          "offset": 76,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_function": "iScrFxMotionBlurOpen",
+          "symbol": "iScrFxMotionBlurOpen__FP8RwCamera",
+          "opcode": 2
+        }
+      ],
+      "gp_relocations": [
+        {
+          "function": "iScrFxDistortionRender",
+          "offset": 176,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_name": "gNumDistortionParticles",
+          "symbol": "gNumDistortionParticles"
+        },
+        {
+          "function": "iScrFxDistortionRender",
+          "offset": 248,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_name": "Im3DBufferPos",
+          "symbol": "Im3DBufferPos"
+        },
+        {
+          "function": "iScrFxDistortionRender",
+          "offset": 304,
+          "opcode": 43,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_name": "Im3DBufferPos",
+          "symbol": "Im3DBufferPos"
+        },
+        {
+          "function": "iScrFxDistortionRender",
+          "offset": 320,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_name": "Im3DBufferPos",
+          "symbol": "Im3DBufferPos"
+        },
+        {
+          "function": "iScrFxDistortionRender",
+          "offset": 2256,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_name": "gNumDistortionParticles",
+          "symbol": "gNumDistortionParticles"
+        },
+        {
+          "function": "iScrFxDistortionRender",
+          "offset": 2280,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_name": "Im3DBufferPos",
+          "symbol": "Im3DBufferPos"
+        },
+        {
+          "function": "iScrFxDistortionRender",
+          "offset": 2292,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_name": "Im3DBuffer",
+          "symbol": "Im3DBuffer"
+        },
+        {
+          "function": "iScrFxDistortionRender",
+          "offset": 2336,
+          "opcode": 43,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_name": "Im3DBufferPos",
+          "symbol": "Im3DBufferPos"
+        },
+        {
+          "function": "iScrFxCameraEndScene",
+          "offset": 8,
+          "opcode": 35,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_name": "sMotionBlurEnabled",
+          "symbol": "sMotionBlurEnabled"
+        },
+        {
+          "function": "iCameraSetBlurriness",
+          "offset": 24,
+          "opcode": 43,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_name": "sMotionBlurEnabled",
+          "symbol": "sMotionBlurEnabled"
+        },
+        {
+          "function": "iCameraSetBlurriness",
+          "offset": 68,
+          "opcode": 43,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_name": "sMotionBlurEnabled",
+          "symbol": "sMotionBlurEnabled"
+        },
+        {
+          "function": "iCameraMotionBlurActivate",
+          "offset": 4,
+          "opcode": 43,
+          "target_source": "SB/Core/p2/iScrFX.cpp",
+          "target_name": "sMotionBlurEnabled",
+          "symbol": "sMotionBlurEnabled"
+        }
+      ],
+      "executable_sha1s": [
+        "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+        "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+        "83bf81a139ea24fdb015f1419377de85b643828a"
+      ]
     }
   ]
 }
