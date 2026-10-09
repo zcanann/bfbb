@@ -5654,6 +5654,13 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "NPCC_GenSmooth",
+      "source": "SB/Game/zNPCSupport.cpp",
+      "address": 3255344,
+      "size": 508,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "NPCC_MakeArbPlane",
       "source": "SB/Game/zNPCSupport.cpp",
       "address": 3256016,

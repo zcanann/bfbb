@@ -15402,3 +15402,34 @@ GameCube checks pass unchanged. Both previously verified full Xbox source sets
 and their dependencies are unchanged by this batch. Evidence:
 `build/oct09-obb-smooth`, its four comparison logs,
 `build/oct09-obb-smooth-audit.log` and `build/oct09-obb-smooth-gc.log`.
+
+Motion-blur allocation and vertex setup raise the complete 13-function /
+5,788-byte PS2 screen comparison from 46.02626% to 58.002766%; Open (272 bytes)
+reaches 97.05882% and setup (452) reaches 94.95575%. Instruction-level symbolic
+replay checks both original width branches, real ABI call clobbers and all 44
+ordered vertex writes/arithmetic trees. The one-cell grid syntax is documented
+as a reconstruction. Unnamed SDK calls and remaining NOP/register differences
+remain unproved, and the original distortion body is still unimplemented in
+this checkpoint. Swept-box (3,084 bytes) improves from 86.446175% to 95.11284%
+in all four PS2 source comparisons. Every prior function/unit measure survives;
+debug exact totals remain unchanged. No header or compiler setting changes.
+
+One complete original French smoothing identity adds 508 known and exact bytes,
+reaching 941 identities / 453,380 known bytes and 255,208 exact bytes / 700
+functions. Three independently unique complete templates, typed sample and
+coefficient arrays, signed init ownership, complete BSS bounds and original
+reginfo/startup GP witnesses prove its address operands. The two GP words stay
+literal; no new data anchor or generic ingestion rule is needed. All 648 prior
+TU records, counts and auxiliary prefixes survive unchanged apart from the
+explicit appended proof counts. Six original-backed mutation tests pass. Fresh
+strict production regeneration and registry checks pass; one changed profile
+unit is recompiled and 86 byte-identical target/source objects are checked and
+reused, preserving all 87 source comparisons. All debug profiles remain equal
+to the preceding checkpoint. Full CPU/data/link limitations remain unchanged.
+
+Fresh full GameCube checks pass unchanged; all thirteen previously verified
+Xbox source units and their dependencies are unchanged. Evidence:
+`build/oct09-motion-box`, its four comparison logs,
+`build/oct09-motion-box-gc.log`, `build/oct09-smooth-proof-tests.log`,
+`build/oct09-france-motion-box-smooth`, its comparison log, and
+`build/oct09-motion-smooth-audit.log`.

@@ -933,6 +933,15 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in hazard_oil_splash['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Hazard OilSplash adds one complete original body through stronger full-template uniqueness. Only six inventoried JAL target fields are reconstructed from independently checked complete callees; all other original bits remain literal and exhaustive search uses zero masks. No target body bytes are copied. Original ownership, extents, padding and closed CFG remain required in all three references; unbound ambiguity is retained as negative evidence.')
+    from platforms.france_npc_smooth import generate_unit as generate_npc_smooth
+    npc_smooth = generate_npc_smooth(originals, registry_dir)
+    document['functions'].extend(npc_smooth['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(npc_smooth['sequence_proofs'])
+    document['npc_smooth_data_proofs'] = npc_smooth['data_proofs']
+    for key, value in npc_smooth['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('NPC smoothing adds one independently unique complete 508-byte original call-free leaf. Full typed sample and coefficient arrays and signed 32-bit init ownership, complete BSS ranges, original reginfo and unclobbered startup GP setup corroborate all operands in three references. The two GP words remain literal; only three inventoried address fields are reconstructed. Closed control flow, full uniqueness and zero padding remain required. No whole translation-unit, data extent or new data anchor is claimed.')
     return document
 
 

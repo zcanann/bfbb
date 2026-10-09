@@ -79,14 +79,15 @@
     "Sandy Leap adds one independently unique complete 484-byte original tail body. Two typed model-pointer loads and a fixed complete Common Enter callee corroborate every operand. The scoped verifier preserves SP/RA and checks local COP1 encodings, full body coverage and terminal J; generic boundary/unknown-opcode rules remain unchanged. All three original identities, extents and padding are checked.",
     "Particle emitters add twelve complete original members in two independently unique ordered clusters. Full typed management/parameter arrays, fixed complete ConfigPar callees and twelve literal calls to one unnamed 64-byte runtime context corroborate every operand. All original member orders, bounds, padding and strict CFGs are checked in three references. No short-seed exception, runtime identity, whole translation-unit or data extent is claimed.",
     "Hazard splashes add two independently unique complete original bodies and one complete perpendicular helper identified in a unique 264-byte anchored cluster. All calls reach fixed complete identities; no data operands change. The helper tail uses only its independently proved Normalize callee. Original ownership, bounds, zero gaps and strict CFGs are checked in all three references without weak individual seeds.",
-    "Hazard OilSplash adds one complete original body through stronger full-template uniqueness. Only six inventoried JAL target fields are reconstructed from independently checked complete callees; all other original bits remain literal and exhaustive search uses zero masks. No target body bytes are copied. Original ownership, extents, padding and closed CFG remain required in all three references; unbound ambiguity is retained as negative evidence."
+    "Hazard OilSplash adds one complete original body through stronger full-template uniqueness. Only six inventoried JAL target fields are reconstructed from independently checked complete callees; all other original bits remain literal and exhaustive search uses zero masks. No target body bytes are copied. Original ownership, extents, padding and closed CFG remain required in all three references; unbound ambiguity is retained as negative evidence.",
+    "NPC smoothing adds one independently unique complete 508-byte original call-free leaf. Full typed sample and coefficient arrays and signed 32-bit init ownership, complete BSS ranges, original reginfo and unclobbered startup GP setup corroborate all operands in three references. The two GP words remain literal; only three inventoried address fields are reconstructed. Closed control flow, full uniqueness and zero padding remain required. No whole translation-unit, data extent or new data anchor is claimed."
   ],
   "counts": {
-    "functions": 648,
-    "code_bytes": 384004,
-    "source_units": 97,
+    "functions": 649,
+    "code_bytes": 384512,
+    "source_units": 98,
     "rooted_direct_call_entries": 129,
-    "closed_return_bodies": 612,
+    "closed_return_bodies": 613,
     "reviewed_tail_wrappers": 2,
     "registered_callback_entries": 26,
     "reviewed_leaf_tail_functions": 11,
@@ -112,7 +113,7 @@
     "reviewed_pad_kill_tails": 1,
     "reviewed_hangable_tail_chains": 2,
     "reviewed_group_base_tails": 2,
-    "reviewed_complete_caller_callee_clusters": 94,
+    "reviewed_complete_caller_callee_clusters": 95,
     "reviewed_event_shuffle_tails": 5,
     "exact_null_argument_tail_wrappers": 3,
     "complete_tail_wrappers": 3,
@@ -15457,6 +15458,54 @@
           "unchanged_anchor_bytes": 1084,
           "masked_instruction_count": 0
         }
+      },
+      "terminal_alignment_bytes": 4,
+      "whole_translation_unit_claimed": false
+    },
+    {
+      "version": "SLUS-20680",
+      "source_address": 3253936,
+      "target_address": 3255344,
+      "size": 508,
+      "uniqueness": {
+        "matching_addresses": [
+          3255344
+        ],
+        "unchanged_anchor_offset": 212,
+        "unchanged_anchor_bytes": 296,
+        "masked_instruction_count": 3
+      },
+      "terminal_alignment_bytes": 4,
+      "whole_translation_unit_claimed": false
+    },
+    {
+      "version": "SLES-51968",
+      "source_address": 3255232,
+      "target_address": 3255344,
+      "size": 508,
+      "uniqueness": {
+        "matching_addresses": [
+          3255344
+        ],
+        "unchanged_anchor_offset": 212,
+        "unchanged_anchor_bytes": 296,
+        "masked_instruction_count": 3
+      },
+      "terminal_alignment_bytes": 4,
+      "whole_translation_unit_claimed": false
+    },
+    {
+      "version": "SLES-51970",
+      "source_address": 3251920,
+      "target_address": 3255344,
+      "size": 508,
+      "uniqueness": {
+        "matching_addresses": [
+          3255344
+        ],
+        "unchanged_anchor_offset": 212,
+        "unchanged_anchor_bytes": 296,
+        "masked_instruction_count": 3
       },
       "terminal_alignment_bytes": 4,
       "whole_translation_unit_claimed": false
@@ -188664,6 +188713,156 @@
           3169808,
           3170400
         ]
+      }
+    },
+    {
+      "name": "NPCC_GenSmooth",
+      "source": "SB/Game/zNPCSupport.cpp",
+      "address": 3255344,
+      "size": 508,
+      "sha256": "46efeb9cbdef711334410013146a020bedb1aa162504b1be83378f48aee186fe",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-complete-caller-callee-cluster",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3253936,
+          "source": "SB/Game/zNPCSupport.cpp",
+          "name": "NPCC_GenSmooth",
+          "linkage_name": "NPCC_GenSmooth__FPP5xVec3PP5xVec3",
+          "reference_sha256": "f9ea1fea7234e35508c58df3a1839f9eb1f0dc8b15779f1490d35b57d4d7424f",
+          "data_address_operands": [
+            {
+              "hi_offset": 12,
+              "lo_offset": 28,
+              "opcode": 9,
+              "reference_address": 5245104,
+              "target_address": 5244128,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 16,
+              "lo_offset": 32,
+              "opcode": 9,
+              "reference_address": 6117600,
+              "target_address": 6116576,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 200,
+              "lo_offset": 208,
+              "opcode": 9,
+              "reference_address": 6117600,
+              "target_address": 6116576,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3255232,
+          "source": "SB/Game/zNPCSupport.cpp",
+          "name": "NPCC_GenSmooth",
+          "linkage_name": "NPCC_GenSmooth__FPP5xVec3PP5xVec3",
+          "reference_sha256": "951678ad04d499772f8a76bcd24f3bfd72d7e9600307e8e9b4cbdc23813ef79b",
+          "data_address_operands": [
+            {
+              "hi_offset": 12,
+              "lo_offset": 28,
+              "opcode": 9,
+              "reference_address": 5243872,
+              "target_address": 5244128,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 16,
+              "lo_offset": 32,
+              "opcode": 9,
+              "reference_address": 6116320,
+              "target_address": 6116576,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 200,
+              "lo_offset": 208,
+              "opcode": 9,
+              "reference_address": 6116320,
+              "target_address": 6116576,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3251920,
+          "source": "SB/Game/zNPCSupport.cpp",
+          "name": "NPCC_GenSmooth",
+          "linkage_name": "NPCC_GenSmooth__FPP5xVec3PP5xVec3",
+          "reference_sha256": "596259c259eb58ab339b2b8b0630c8e5dc968438d1a2b4e855885276e0caa37f",
+          "data_address_operands": [
+            {
+              "hi_offset": 12,
+              "lo_offset": 28,
+              "opcode": 9,
+              "reference_address": 5242272,
+              "target_address": 5244128,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 16,
+              "lo_offset": 32,
+              "opcode": 9,
+              "reference_address": 6114784,
+              "target_address": 6116576,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 200,
+              "lo_offset": 208,
+              "opcode": 9,
+              "reference_address": 6114784,
+              "target_address": 6116576,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "proof_scope": "complete_original_smoothing_leaf_and_typed_locals",
+        "whole_translation_unit_claimed": false,
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3255844
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              3255348,
+              3255544
+            ],
+            [
+              3255532,
+              3255440
+            ],
+            [
+              3255836,
+              3255560
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 4
+        }
       }
     },
     {
@@ -467511,6 +467710,353 @@
         }
       ],
       "changed_data_operands": 0
+    }
+  ],
+  "npc_smooth_data_proofs": [
+    {
+      "version": "SLUS-20680",
+      "complete_typed_locals": {
+        "prepute": {
+          "name": "prepute",
+          "reference_address": 6117600,
+          "target_address": 6116576,
+          "size": 64,
+          "shape": [
+            4,
+            4
+          ],
+          "storage": "runtime_bss",
+          "declaration_die": 9515564,
+          "subscript_descriptor": "000a000000000003000000087200a3d09000",
+          "payload": null,
+          "data_extent_promoted": false
+        },
+        "yews": {
+          "name": "yews",
+          "reference_address": 5245104,
+          "target_address": 5244128,
+          "size": 16,
+          "shape": [
+            4
+          ],
+          "storage": "initialized_data",
+          "declaration_die": 9515616,
+          "subscript_descriptor": "000a0000000000030000000855000e00",
+          "payload": "0000803e0000003f0000403f0000803f",
+          "data_extent_promoted": false
+        },
+        "init": {
+          "name": "init",
+          "reference_address": 5308560,
+          "target_address": 5307536,
+          "size": 4,
+          "shape": [],
+          "storage": "runtime_bss",
+          "declaration_die": 9515662,
+          "subscript_descriptor": null,
+          "payload": null,
+          "data_extent_promoted": false
+        }
+      },
+      "gp_setup": [
+        {
+          "gp": 5334128,
+          "high_address": 1048904,
+          "low_address": 1048924,
+          "move_address": 1048944,
+          "complete_setup_words": [
+            1006895185,
+            1006961151,
+            1007026177,
+            1007091793,
+            1007157264,
+            612656240,
+            614793216,
+            616955904,
+            619148544,
+            621281744,
+            8445989
+          ],
+          "gp_input_preserved_until_move": true
+        },
+        {
+          "gp": 5333104,
+          "high_address": 1048904,
+          "low_address": 1048924,
+          "move_address": 1048944,
+          "complete_setup_words": [
+            1006895185,
+            1006961151,
+            1007026177,
+            1007091793,
+            1007157264,
+            612655216,
+            614793216,
+            616955904,
+            619147520,
+            621281744,
+            8445989
+          ],
+          "gp_input_preserved_until_move": true
+        }
+      ],
+      "gp_uses": [
+        [
+          {
+            "offset": 0,
+            "word": 2407767072,
+            "effective_address": 5308560
+          },
+          {
+            "offset": 24,
+            "word": 2944637984,
+            "effective_address": 5308560
+          }
+        ],
+        [
+          {
+            "offset": 0,
+            "word": 2407767072,
+            "effective_address": 5307536
+          },
+          {
+            "offset": 24,
+            "word": 2944637984,
+            "effective_address": 5307536
+          }
+        ]
+      ],
+      "gp_words_unmasked": true
+    },
+    {
+      "version": "SLES-51968",
+      "complete_typed_locals": {
+        "prepute": {
+          "name": "prepute",
+          "reference_address": 6116320,
+          "target_address": 6116576,
+          "size": 64,
+          "shape": [
+            4,
+            4
+          ],
+          "storage": "runtime_bss",
+          "declaration_die": 9516022,
+          "subscript_descriptor": "000a0000000000030000000872006dd29000",
+          "payload": null,
+          "data_extent_promoted": false
+        },
+        "yews": {
+          "name": "yews",
+          "reference_address": 5243872,
+          "target_address": 5244128,
+          "size": 16,
+          "shape": [
+            4
+          ],
+          "storage": "initialized_data",
+          "declaration_die": 9516074,
+          "subscript_descriptor": "000a0000000000030000000855000e00",
+          "payload": "0000803e0000003f0000403f0000803f",
+          "data_extent_promoted": false
+        },
+        "init": {
+          "name": "init",
+          "reference_address": 5307280,
+          "target_address": 5307536,
+          "size": 4,
+          "shape": [],
+          "storage": "runtime_bss",
+          "declaration_die": 9516120,
+          "subscript_descriptor": null,
+          "payload": null,
+          "data_extent_promoted": false
+        }
+      },
+      "gp_setup": [
+        {
+          "gp": 5332848,
+          "high_address": 1048904,
+          "low_address": 1048924,
+          "move_address": 1048944,
+          "complete_setup_words": [
+            1006895185,
+            1006961151,
+            1007026177,
+            1007091793,
+            1007157264,
+            612654960,
+            614793216,
+            616955904,
+            619147264,
+            621281744,
+            8445989
+          ],
+          "gp_input_preserved_until_move": true
+        },
+        {
+          "gp": 5333104,
+          "high_address": 1048904,
+          "low_address": 1048924,
+          "move_address": 1048944,
+          "complete_setup_words": [
+            1006895185,
+            1006961151,
+            1007026177,
+            1007091793,
+            1007157264,
+            612655216,
+            614793216,
+            616955904,
+            619147520,
+            621281744,
+            8445989
+          ],
+          "gp_input_preserved_until_move": true
+        }
+      ],
+      "gp_uses": [
+        [
+          {
+            "offset": 0,
+            "word": 2407767072,
+            "effective_address": 5307280
+          },
+          {
+            "offset": 24,
+            "word": 2944637984,
+            "effective_address": 5307280
+          }
+        ],
+        [
+          {
+            "offset": 0,
+            "word": 2407767072,
+            "effective_address": 5307536
+          },
+          {
+            "offset": 24,
+            "word": 2944637984,
+            "effective_address": 5307536
+          }
+        ]
+      ],
+      "gp_words_unmasked": true
+    },
+    {
+      "version": "SLES-51970",
+      "complete_typed_locals": {
+        "prepute": {
+          "name": "prepute",
+          "reference_address": 6114784,
+          "target_address": 6116576,
+          "size": 64,
+          "shape": [
+            4,
+            4
+          ],
+          "storage": "runtime_bss",
+          "declaration_die": 9516868,
+          "subscript_descriptor": "000a000000000003000000087200bbd59000",
+          "payload": null,
+          "data_extent_promoted": false
+        },
+        "yews": {
+          "name": "yews",
+          "reference_address": 5242272,
+          "target_address": 5244128,
+          "size": 16,
+          "shape": [
+            4
+          ],
+          "storage": "initialized_data",
+          "declaration_die": 9516920,
+          "subscript_descriptor": "000a0000000000030000000855000e00",
+          "payload": "0000803e0000003f0000403f0000803f",
+          "data_extent_promoted": false
+        },
+        "init": {
+          "name": "init",
+          "reference_address": 5305744,
+          "target_address": 5307536,
+          "size": 4,
+          "shape": [],
+          "storage": "runtime_bss",
+          "declaration_die": 9516966,
+          "subscript_descriptor": null,
+          "payload": null,
+          "data_extent_promoted": false
+        }
+      },
+      "gp_setup": [
+        {
+          "gp": 5331312,
+          "high_address": 1048904,
+          "low_address": 1048924,
+          "move_address": 1048944,
+          "complete_setup_words": [
+            1006895185,
+            1006961151,
+            1007026177,
+            1007091793,
+            1007157264,
+            612653424,
+            614793216,
+            616955904,
+            619145728,
+            621281744,
+            8445989
+          ],
+          "gp_input_preserved_until_move": true
+        },
+        {
+          "gp": 5333104,
+          "high_address": 1048904,
+          "low_address": 1048924,
+          "move_address": 1048944,
+          "complete_setup_words": [
+            1006895185,
+            1006961151,
+            1007026177,
+            1007091793,
+            1007157264,
+            612655216,
+            614793216,
+            616955904,
+            619147520,
+            621281744,
+            8445989
+          ],
+          "gp_input_preserved_until_move": true
+        }
+      ],
+      "gp_uses": [
+        [
+          {
+            "offset": 0,
+            "word": 2407767072,
+            "effective_address": 5305744
+          },
+          {
+            "offset": 24,
+            "word": 2944637984,
+            "effective_address": 5305744
+          }
+        ],
+        [
+          {
+            "offset": 0,
+            "word": 2407767072,
+            "effective_address": 5307536
+          },
+          {
+            "offset": 24,
+            "word": 2944637984,
+            "effective_address": 5307536
+          }
+        ]
+      ],
+      "gp_words_unmasked": true
     }
   ]
 }
