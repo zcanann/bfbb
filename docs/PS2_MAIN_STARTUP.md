@@ -146,3 +146,22 @@ has 108 words versus 106 original words: two additional NOPs account for the
 remaining instruction-count difference. This does not authenticate the
 masked runtime identities or establish a compiler defect. Private evidence
 is in `build/maincard-oct09/progress-alignment-proof.json`.
+
+
+## Startup option comparison semantics
+
+The four PS2 argument checks (`-hostio`, `-cdrom`, `-rebootiop`, and
+`-norebootiop`) use the existing `stricmp` interface. Original main calls
+0x11b860 at offsets 96, 128, 168, and 200 in all three debug executables.
+The complete 216-byte comparison body folds classified uppercase bytes by
+adding 0x20, compares the folded bytes, and returns their difference. The
+original classification tables independently mark ASCII A-Z as uppercase
+and leave a-z, hyphen, and NUL unmarked in all three versions. This recovers
+case-insensitive option handling; bytewise `strcmp` was semantically wrong
+even though the relocation-masked compiler score could not distinguish it.
+
+This is a source-interface reconstruction from original behavior, not a
+new authenticated runtime symbol or registry alias. Whole-unit checks keep
+all previous scores in USA, Europe, and Germany, and fresh GC solo remains
+16/16 exact. Private original call/body/table evidence is recorded in
+`build/maincard-oct09/argument-compare-proof.json`.

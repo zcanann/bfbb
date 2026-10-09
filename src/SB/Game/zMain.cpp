@@ -136,19 +136,19 @@ void main(S32 argc, char** argv)
     options |= 2;
     for (i = 1; i < argc; i++)
     {
-        if (!strcmp(argv[i], "-hostio"))
+        if (!stricmp(argv[i], "-hostio"))
         {
             options |= 1;
         }
-        else if (!strcmp(argv[i], "-cdrom"))
+        else if (!stricmp(argv[i], "-cdrom"))
         {
             options &= ~1;
         }
-        else if (!strcmp(argv[i], "-rebootiop"))
+        else if (!stricmp(argv[i], "-rebootiop"))
         {
             options |= 2;
         }
-        else if (!strcmp(argv[i], "-norebootiop"))
+        else if (!stricmp(argv[i], "-norebootiop"))
         {
             options &= ~2;
         }
