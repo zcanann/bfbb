@@ -13,7 +13,7 @@
     "candidate_analyzer": "Ghidra 11.0.1_PUBLIC",
     "registry_hash_format": "SHA256 of UTF-8 JSON with sorted keys and compact separators",
     "candidate_registry_sha256": "aea818220d5e8ee2beae846c950d35bbeb53537483589ddb7469ed98eb34e5cc",
-    "manual_registry_sha256": "4902916c6cd6672fbb13b4274164eb81dfa55d4df72449363ec29703f7ecc1b7",
+    "manual_registry_sha256": "a2d1be1df203e78efb1ad137b83d8f82d8bdd92ee99701a753466e0a3d1fca24",
     "validation_command": "python tools/platforms/xbox_boundaries.py --version XBOX-EU",
     "constraints": [
       "Contiguous body with independently decoded closed direct-branch CFG and at least one RET.",

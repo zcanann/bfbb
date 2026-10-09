@@ -86,3 +86,93 @@ The French comparison uses the independently reviewed 12-member target from
 string254. Private evidence: build/near263/{alignment.json,proof.json,
 gc/proof.json,xbox/proof.json,truth/<version>/report.json,
 french-expanded/report.json}. No additional source variants were retained.
+
+## Hash character lifetimes (2026-10-09)
+
+The PS2 hash loops now test the current byte before creating the original
+`char` local inside the loop body. Both hash overloads and HashCat update the
+accumulator before advancing the input pointer. This preserves the original
+byte narrowing and register lifetimes. Merely changing the old outer U32 local
+to char did not match: the character's scope and update order both matter.
+The bounded overload retains its unsigned limit check before reading a byte.
+
+All three complete original bodies now match: the unbounded hash (88 bytes),
+bounded hash (104), and prefixed hash (88). USA, Europe, Germany and France each
+gain 280 exact bytes and three functions. Their complete twelve-function string
+units rise from 5/12 functions and 2296/3948 exact bytes to 8/12 and 2576/3948;
+fuzzy matching improves from 92.64033% to 95.42148%. Every other function score
+is unchanged. Direct source-object/target-object body comparisons also confirm
+all twelve regional hash bodies are byte-identical, with no relocations needed.
+
+The new loop forms are PS2-only. The full GameCube USA build retains its entire
+progress report and passes the retail DOL SHA-1 check. No shared header, profile,
+registry, target boundary or compiler setting changes. Private evidence is
+`build/string-oct09`, including all four before/after reports, rejected loop
+forms and `raw-hash-proof.json`.
+
+## In-place tokenizer (2026-10-09)
+
+The PS2 tokenizer now selects the restart pointer with the original if/else
+shape, tests the current input byte before creating a plain-char local, and
+returns the result directly from the empty-token comparison. Its bitmap index
+uses the unsigned byte shifted by three without the redundant five-bit mask.
+The selected PS2 compiler's unsigned-char mode keeps that index within 0..31.
+Token splitting, restart-pointer updates and empty-token behavior are unchanged.
+
+The complete 320-byte `xStrTok` body becomes exact in all four PS2 releases,
+raising each string unit to 9/12 functions and 2896/3948 exact bytes. Fuzzy
+matching rises from 95.42148% to 97.32827%, with every other function score
+unchanged. Raw source/target comparisons confirm all four bodies byte-for-byte.
+
+These forms are confined to PS2. GameCube's full USA build report remains
+identical and its retail DOL SHA-1 check passes. The buffer tokenizer remains
+unchanged: multiple restart, character, destination and counter-lifetime probes
+improved its fuzzy score but did not reproduce its whole body. Private evidence
+uses `*-token.json` and `raw-token-proof.json` under `build/string-oct09`.
+
+## Substring comparison join (2026-10-09)
+
+PS2 now shares the existing Xbox conditional expression for the length
+tiebreak in `icompare`. This recovers the original join branch and makes its
+complete 192-byte body exact in all four PS2 releases. Each string unit rises
+to 10/12 functions and 3088/3948 exact bytes, with fuzzy matching improving
+from 97.32827% to 97.535965%. Every other function score is unchanged.
+
+Direct source/target comparisons confirm all four complete bodies. The full
+GameCube USA report remains identical and its retail DOL SHA-1 check passes.
+Private evidence uses `*-compare.json` and `raw-compare-proof.json` under
+`build/string-oct09`. No target, registry, header or compiler setting changes.
+
+## Buffer tokenizer recovery (2026-10-09)
+
+The PS2 buffer tokenizer now uses the same explicit restart branch as the
+in-place tokenizer, indexes its bitmap directly with the unsigned input byte
+shifted by three, and reads that byte directly for its token test and copy.
+These equivalent source forms improve its complete 336-byte comparison from
+73.4881% to 91.96429% in all four PS2 releases. Remaining register and scheduling
+differences prevent an exact match. No exact function or byte gain is claimed.
+
+The string-unit fuzzy score rises from 97.535965% to 99.108406%, retaining
+10/12 exact functions and 3088/3948 exact bytes. Every other function score is
+unchanged. The PS2-only branches preserve the complete GameCube USA report,
+and its retail DOL SHA-1 check passes. Private evidence uses `*-buffer.json`
+under `build/string-oct09`.
+
+## Float-list pointer assignment (2026-10-09)
+
+Separating the PS2 input-pointer assignment from its null check recovers the
+original saved-register test. All four float-parser comparisons improve from
+98.43511% to 98.47328%; only the two whitespace-loop NOPs remain different.
+Exact totals remain 10/12 functions and 3088/3948 bytes, while the string-unit
+fuzzy score reaches 99.11347%. Other function scores are unchanged. The
+GameCube form stays separate: sharing the split assignment changed its output.
+The retained PS2-only change preserves the complete GameCube USA report and
+passes the retail DOL SHA-1 check.
+
+Rejected probes covered guard spelling, whitespace condition order, for/do
+loops, explicit breaks/continues, integer and character locals, and the negate
+assignment's lifetime. Full-TU compiler probes also provided no patch evidence:
+3.0.1b74 reduced the float-parser score to 42.076336%, while 2.4 scored
+62.82443% with its unsupported bottomup inline option omitted. Neither recovered
+the original function. Private evidence is `build/string-oct09/*-float.json`
+and the source/compiler probe files in that directory.

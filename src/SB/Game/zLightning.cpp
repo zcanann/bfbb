@@ -221,7 +221,7 @@ void zLightningInit()
 
 static zLightning* FindFreeLightning()
 {
-    for (int i = 0; i != (sizeof(sLightning) / sizeof(zLightning*)); i++)
+    for (S32 i = 0; i < NUM_LIGHTNING; i++)
     {
         if (sLightning[i] != NULL)
         {
@@ -549,26 +549,18 @@ static void UpdateLightning(zLightning* l, F32 seconds)
     }
     else
     {
-        l->func.endParam[0] += seconds * (l->func.endVel[0] * sLFuncShift);
-        while (l->func.endParam[0] > sLFuncEnd[9])
+        for (S32 i = 0; i < 2; i++)
         {
-            l->func.endParam[0] -= 10.0f;
-        }
+            l->func.endParam[i] += seconds * (l->func.endVel[i] * sLFuncShift);
+            while (l->func.endParam[i] > sLFuncEnd[9])
+            {
+                l->func.endParam[i] -= 10.0f;
+            }
 
-        while (l->func.endParam[0] < 0.0f)
-        {
-            l->func.endParam[0] += 10.0f;
-        }
-
-        l->func.endParam[1] += seconds * (l->func.endVel[1] * sLFuncShift);
-        while (l->func.endParam[1] > sLFuncEnd[9])
-        {
-            l->func.endParam[1] -= 10.0f;
-        }
-
-        while (l->func.endParam[1] < 0.0f)
-        {
-            l->func.endParam[1] += 10.0f;
+            while (l->func.endParam[i] < 0.0f)
+            {
+                l->func.endParam[i] += 10.0f;
+            }
         }
     }
 }
@@ -677,6 +669,7 @@ void zLightningFunc_Render(zLightning* l)
         pieceZ[i] = sLFuncZ;
     }
 
+    U32 nvert = 0;
     vert[0] = gRenderArr.m_vertex;
     vert[1] = vert[0] + 240;
 
@@ -699,7 +692,6 @@ void zLightningFunc_Render(zLightning* l)
 
     U32 alpha = U8(xrand());
     S32 firstTex = 0;
-    U32 nvert = 0;
 
     for (i = 0; i < 2; i++)
     {
@@ -902,8 +894,7 @@ void RenderLightning(zLightning* l)
                 RwIm3DVertexSetPos(&sStripVert[verts], pt1.x, pt1.y, pt1.z);
             }
 
-            S32 odd = i & 1;
-            if (odd)
+            if (i & 1)
             {
                 sStripVert[verts].u = 1.0f;
             }
@@ -926,7 +917,7 @@ void RenderLightning(zLightning* l)
                 RwIm3DVertexSetPos(&sStripVert[verts], pt2.x, pt2.y, pt2.z);
             }
 
-            if (odd)
+            if (i & 1)
             {
                 sStripVert[verts].u = 1.0f;
             }
@@ -1055,8 +1046,7 @@ void RenderLightning(zLightning* l)
                 RwIm3DVertexSetPos(&sStripVert[verts], pt1.x, pt1.y, pt1.z);
             }
 
-            S32 odd = i & 1;
-            if (odd)
+            if (i & 1)
             {
                 sStripVert[verts].u = 1.0f;
             }
@@ -1079,7 +1069,7 @@ void RenderLightning(zLightning* l)
                 RwIm3DVertexSetPos(&sStripVert[verts], pt2.x, pt2.y, pt2.z);
             }
 
-            if (odd)
+            if (i & 1)
             {
                 sStripVert[verts].u = 1.0f;
             }

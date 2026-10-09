@@ -47,12 +47,21 @@ void Tridiag_Solve(F32* a, F32* b, F32* c, xVec3* d, xVec3* x, S32 n)
 
     for (j = 1; j < n; j++)
     {
+#ifdef PS2
+        beta = b[j] - a[j] * gamma[j - 1];
+        xVec3* previous = &delta[j - 1];
+        gamma[j] = c[j] / beta;
+        delta[j].x = (d[j].x - a[j] * previous->x) / beta;
+        delta[j].y = (d[j].y - a[j] * previous->y) / beta;
+        delta[j].z = (d[j].z - a[j] * previous->z) / beta;
+#else
         S32 previous = j - 1;
         beta = b[j] - a[j] * gamma[previous];
         gamma[j] = c[j] / beta;
         delta[j].x = (d[j].x - a[j] * delta[previous].x) / beta;
         delta[j].y = (d[j].y - a[j] * delta[previous].y) / beta;
         delta[j].z = (d[j].z - a[j] * delta[previous].z) / beta;
+#endif
     }
 
     j = n - 1;
@@ -60,6 +69,15 @@ void Tridiag_Solve(F32* a, F32* b, F32* c, xVec3* d, xVec3* x, S32 n)
     x[j].y = delta[j].y;
     x[j].z = delta[j].z;
 
+#ifdef PS2
+    for (j = n - 2; j >= 0; j--)
+    {
+        xVec3* next = &x[j + 1];
+        x[j].x = delta[j].x - gamma[j] * next->x;
+        x[j].y = delta[j].y - gamma[j] * next->y;
+        x[j].z = delta[j].z - gamma[j] * next->z;
+    }
+#else
     while (j-- > 0)
     {
         S32 next = j + 1;
@@ -67,6 +85,7 @@ void Tridiag_Solve(F32* a, F32* b, F32* c, xVec3* d, xVec3* x, S32 n)
         x[j].y = delta[j].y - gamma[j] * x[next].y;
         x[j].z = delta[j].z - gamma[j] * x[next].z;
     }
+#endif
 
     RwFree(gamma);
     RwFree(delta);
@@ -153,9 +172,9 @@ static F32 ArcLength3(xCoef3* coef, F32 ustart, F32 uend)
         u = u + h;
     }
 
-    return (h * (sum + sqrtf(A + ustart * (B + ustart * (C + ustart * (D + E * ustart)))) +
-                 sqrtf(A + uend * (B + uend * (C + uend * (D + E * uend)))))) /
-           3.0f;
+    F32 startSpeed = sqrtf(A + ustart * (B + ustart * (C + ustart * (D + E * ustart))));
+    F32 endSpeed = sqrtf(A + uend * (B + uend * (C + uend * (D + E * uend))));
+    return (h * ((sum + startSpeed) + endSpeed)) / 3.0f;
 }
 #else
 F32 ArcLength3(xCoef3* coef, F64 ustart, F64 uend)
@@ -281,7 +300,7 @@ void EvalCoef3(xCoef3* coef, F32 u, U32 deriv, xVec3* o)
 
 void BasisToCoef3(xCoef3* coef, F32 (*N)[4], xVec3* v1, xVec3* v2, xVec3* v3, xVec3* v4)
 {
-    S32 i;
+    U32 i;
 
     for (i = 0; i < 4; i++)
     {
@@ -294,13 +313,16 @@ void BasisToCoef3(xCoef3* coef, F32 (*N)[4], xVec3* v1, xVec3* v2, xVec3* v3, xV
     }
 }
 
+#ifdef PS2
+inline
+#endif
 void CoefToUnity3(xCoef3* coef1, xCoef3* coef2, F32 f1, F32 f2)
 {
     F32 factor;
     F32 fdiff;
     xCoef* c2;
     F32 linear;
-    S32 i;
+    U32 i;
     F32 factorWork;
     F32 coef2_2;
     xCoef* c1;
@@ -309,8 +331,7 @@ void CoefToUnity3(xCoef3* coef1, xCoef3* coef2, F32 f1, F32 f2)
     fdiff = f2 - f1;
     c2 = &coef2->x;
     c1 = &coef1->x;
-    i = 3;
-    while (i)
+    for (i = 0; i < 3; i++)
     {
         F32 coef2_1;
         F32 accumulated;
@@ -339,7 +360,6 @@ void CoefToUnity3(xCoef3* coef1, xCoef3* coef2, F32 f1, F32 f2)
         c1->a[2] = accumulated;
         c1->a[3] = coef2_3 + ((coef2_2 * f1) + ((f1 * (f1 * (coef2_0 * f1))) + (f1 * (coef2_1 * f1))));
         c1++;
-        i--;
     }
 }
 

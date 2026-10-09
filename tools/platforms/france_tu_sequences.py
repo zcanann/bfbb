@@ -59,6 +59,10 @@ def gpr_writes(w):
         return {rt}
     if op in (16, 17, 18) and rs in (4, 5, 6, 8):
         return set()
+    # COP1 MOV.S has fmt=S, a reserved zero ft field and function=6.
+    # Only its FPR destination changes; both address GPR halves stay live.
+    if op == 17 and rs == 16 and rt == 0 and fn == 6:
+        return set()
     raise ValueError(f'Unsupported GPR effects: {w:#x}')
 
 
@@ -553,6 +557,219 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in camera_tweak['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Camera tweak adds eleven members from the complete twelve-function sequence and the existing Reset neighbor. Original member types prove the eight-element state array and two look aggregates. Only exact eight-byte J/NOP wrappers to independently verified, strictly closed base Save/Load functions receive scoped tail handling; opaque runtime calls retain literal unmasked words and identical 64-byte context, with no new identity or extent.')
+    from platforms.france_pad_sequence import generate_unit as generate_pad
+    pad = generate_pad(originals, registry_dir)
+    document['functions'].extend(pad['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(pad['sequence_proofs'])
+    document['call_neighbors'].extend(pad['call_neighbors'])
+    document['pad_data_proofs'] = pad['data_proofs']
+    for key, value in pad['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Pad adds seven members from the complete eight-function sequence and the existing NormalizeAnalog neighbor. Original typed arrays prove four pad records and thirty-two rumble records. Only the exact eight-byte Kill J/NOP to an independently compared empty-return leaf receives scoped tail handling. Complete external platform contexts remain unpromoted; locally enumerated byte-address consumers preserve strict LUI lifetimes, and opaque runtime calls retain literal unmasked words and identical 64-byte context.')
+    from platforms.france_hangable_sequence import generate_unit as generate_hangable
+    hangable = generate_hangable(originals, registry_dir)
+    document['functions'].extend(hangable['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(hangable['sequence_proofs'])
+    document['call_neighbors'].extend(hangable['call_neighbors'])
+    document['hangable_data_proofs'] = hangable['data_proofs']
+    for key, value in hangable['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Hangable adds ten members from all eleven original functions and the existing Setup neighbor. Original typed globals, the complete circle initializer, four strings and independently verified culling callbacks corroborate changed operands. Only exact eight-byte Load/Save J/NOP chains into independently verified base bodies receive scoped tail handling; external entry prefixes remain unpromoted context, and generic CFG checks remain unchanged.')
+    from platforms.france_group_sequence import generate_unit as generate_group
+    group = generate_group(originals, registry_dir)
+    document['functions'].extend(group['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(group['sequence_proofs'])
+    document['call_neighbors'].extend(group['call_neighbors'])
+    document['group_data_proofs'] = group['data_proofs']
+    for key, value in group['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Group adds eight members from the complete nine-function sequence and the existing item-accessor neighbor. Only exact Load/Save J/NOP wrappers into independently verified base bodies receive scoped tail handling. The event wrapper remains complete unpromoted original context; generic boundary checks remain unchanged.')
+    from platforms.france_dutchman_tweaks import generate_unit as generate_dutchman
+    dutchman = generate_dutchman(originals, registry_dir)
+    document['functions'].extend(dutchman['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(dutchman['sequence_proofs'])
+    document['call_neighbors'].extend(dutchman['call_neighbors'])
+    document['dutchman_data_proofs'] = dutchman['data_proofs']
+    for key, value in dutchman['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Dutchman proves one unique complete parameter-registration caller and three complete named helpers, not the whole translation unit. All four bodies pass strict closure checks in all three originals. Complete parameter strings and known helper callees corroborate all changed operands; one unchanged runtime prefix remains unpromoted. The distinct caller-callee-cluster kind preserves this narrower proof scope.')
+    from platforms.france_event_sequence import generate_unit as generate_event
+    event = generate_event(originals, registry_dir)
+    document['functions'].extend(event['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(event['sequence_proofs'])
+    document['call_neighbors'].extend(event['call_neighbors'])
+    document['event_data_proofs'] = event['data_proofs']
+    for key, value in event['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Event adds all ten original overloads rooted in a freshly regenerated group caller. Five strictly closed bodies and five exact register-only shuffle tails preserve complete original control flow. External callees are independently known; group regeneration excludes these dependent event entries so the original context cannot become a circular anchor.')
+    from platforms.france_kingjelly_tweaks import generate_unit as generate_kingjelly
+    kingjelly = generate_kingjelly(originals, registry_dir)
+    document['functions'].extend(kingjelly['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(kingjelly['sequence_proofs'])
+    document['call_neighbors'].extend(kingjelly['call_neighbors'])
+    document['kingjelly_data_proofs'] = kingjelly['data_proofs']
+    for key, value in kingjelly['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('King Jelly proves one unique complete parameter-registration caller and its complete float-list helper. Three-version names, bounds, strict returns, all instruction bits and complete strings agree. The earlier parameter helpers are independently regenerated; the complete original color helper remains unpromoted context. No whole translation-unit or data extent is claimed.')
+    from platforms.france_sb2_tweaks import generate_unit as generate_sb2
+    sb2 = generate_sb2(originals, registry_dir)
+    document['functions'].extend(sb2['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(sb2['sequence_proofs'])
+    document['sb2_data_proofs'] = sb2['data_proofs']
+    for key, value in sb2['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('SB2 proves one unique complete parameter-registration body with all three original ownership and strict return witnesses. Complete strings, independently regenerated parameter helpers and original typed sound-array layouts corroborate every changed operand. Array element/member offsets are preserved; no whole translation-unit or data extent is claimed.')
+    from platforms.france_plankton_tweaks import generate_unit as generate_plankton
+    plankton = generate_plankton(originals, registry_dir)
+    document['functions'].extend(plankton['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(plankton['sequence_proofs'])
+    document['plankton_data_proofs'] = plankton['data_proofs']
+    for key, value in plankton['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Plankton proves one unique complete parameter-registration body in all three originals, preserving strict returns, complete strings, independently regenerated parameter helpers and original typed sound arrays. Array element/member offsets remain exact; no whole translation-unit or data extent is claimed.')
+    from platforms.france_cruise_tweaks import generate_unit as generate_cruise
+    cruise = generate_cruise(originals, registry_dir)
+    document['functions'].extend(cruise['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(cruise['sequence_proofs'])
+    document['cruise_data_proofs'] = cruise['data_proofs']
+    for key, value in cruise['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('CruiseBubble proves one unique complete parameter-registration caller in all three originals. Strict returns, all non-address instruction bits, complete strings and independently regenerated parameter helpers agree. The previously confirmed bounded hash entry remains an independently checked callee, with no duplicate extent or whole translation-unit claim.')
+    from platforms.france_prawn_tweaks import generate_unit as generate_prawn
+    prawn = generate_prawn(originals, registry_dir)
+    document['functions'].extend(prawn['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(prawn['sequence_proofs'])
+    document['prawn_data_proofs'] = prawn['data_proofs']
+    for key, value in prawn['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Prawn proves one unique complete parameter-registration caller in all three originals. Strict original/target returns, all instruction bits, complete strings including repeated empty literals, independently regenerated parameter helpers and original typed sound arrays corroborate the body. No whole translation-unit or data extent is claimed.')
+    from platforms.france_player_animation_tables import generate_unit as generate_player_tables
+    player_tables = generate_player_tables(originals, registry_dir)
+    document['functions'].extend(player_tables['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(player_tables['sequence_proofs'])
+    document['player_animation_table_data_proofs'] = player_tables['data_proofs']
+    for key, value in player_tables['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Player animation tables adds five unique complete builders using all three original ownership and strict-return witnesses. Complete strings, independently confirmed animation callees and complete callback contexts corroborate every changed operand, including German pointer relocations. The main builder remains excluded pending insertion-helper and callback evidence; no whole translation-unit or data extent is claimed.')
+    from platforms.france_cruise_animation import generate_unit as generate_cruise_animation
+    cruise_animation = generate_cruise_animation(originals, registry_dir)
+    document['functions'].extend(cruise_animation['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(cruise_animation['sequence_proofs'])
+    document['cruise_animation_data_proofs'] = cruise_animation['data_proofs']
+    for key, value in cruise_animation['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Cruise animation adds three complete functions rooted in the independently regenerated parameter-registration anchor. Complete insertion strings, typed fields/tables, callback identity and full original runtime contexts corroborate all operands. The existing parameter body is preserved, and no whole translation-unit or data extent is claimed.')
+    from platforms.france_sound_listeners import generate_unit as generate_sound_listeners
+    sound_listeners = generate_sound_listeners(originals, registry_dir)
+    document['functions'].extend(sound_listeners['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(sound_listeners['sequence_proofs'])
+    document['sound_listeners_data_proofs'] = sound_listeners['data_proofs']
+    for key, value in sound_listeners['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Sound listeners adds nine unique complete listener, voice-query and delayed-insertion bodies using all three originals. Strict control flow, the complete internal call and original typed sound arrays corroborate every changed operand. No registry identities are consumed, and no whole translation-unit or data extent is claimed.')
+    from platforms.france_sound_playback import generate_unit as generate_sound_playback
+    sound_playback = generate_sound_playback(originals, registry_dir)
+    document['functions'].extend(sound_playback['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(sound_playback['sequence_proofs'])
+    document['sound_playback_data_proofs'] = sound_playback['data_proofs']
+    for key, value in sound_playback['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Sound playback adds nine complete bodies with all three original ownership and strict-control-flow witnesses. Typed objects, complete diagnostic strings, independently proved callees and literal opaque runtime contexts corroborate every operand. Vector identity uses the unique complete two-member sequence; one scoped runtime leaf and one complete flush template retain explicitly checked sizes and operand inventories. Two HIS bodies remain coverage-only. No opaque runtime identity, whole playback translation-unit or data extent is claimed.')
+    from platforms.france_goalrobo_streaks import generate_unit as generate_goalrobo_streaks
+    goalrobo_streaks = generate_goalrobo_streaks(originals, registry_dir)
+    document['functions'].extend(goalrobo_streaks['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(goalrobo_streaks['sequence_proofs'])
+    document['goalrobo_streaks_data_proofs'] = goalrobo_streaks['data_proofs']
+    for key, value in goalrobo_streaks['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Robotic streaks adds four unique complete robotic callers and effects consumers using all three originals. Both full effects consumers agree on the original typed nested streak-array base, and every caller transfer reaches the complete update helper. No registry identities are consumed, and no whole translation-unit or data extent is claimed.')
+    from platforms.france_goalrobo_motion import generate_unit as generate_goalrobo_motion
+    goalrobo_motion = generate_goalrobo_motion(originals, registry_dir)
+    document['functions'].extend(goalrobo_motion['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(goalrobo_motion['sequence_proofs'])
+    document['goalrobo_motion_data_proofs'] = goalrobo_motion['data_proofs']
+    for key, value in goalrobo_motion['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Robotic motion adds thirty-one unique complete original motion helpers and robotic consumers. Complete literal helper bodies and exactly thirty-four proved JAL destinations close every transfer; no changed data operand is accepted. Eight fixed independently proved destinations fence later recovery dependencies. No whole translation-unit or data extent is claimed.')
+    from platforms.france_goalrobo_models import generate_unit as generate_goalrobo_models
+    goalrobo_models = generate_goalrobo_models(originals, registry_dir)
+    document['functions'].extend(goalrobo_models['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(goalrobo_models['sequence_proofs'])
+    document['goalrobo_models_data_proofs'] = goalrobo_models['data_proofs']
+    for key, value in goalrobo_models['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Robotic models adds nine unique complete original model helpers and robotic consumers. The complete find/show/hide helper graph and exactly nineteen proved JAL destinations close every transfer; no changed data operand is accepted. Three fixed independently proved destinations fence later recovery dependencies. No whole translation-unit or data extent is claimed.')
+    from platforms.france_goalrobo_facing import generate_unit as generate_goalrobo_facing
+    goalrobo_facing = generate_goalrobo_facing(originals, registry_dir)
+    document['functions'].extend(goalrobo_facing['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(goalrobo_facing['sequence_proofs'])
+    document['goalrobo_facing_data_proofs'] = goalrobo_facing['data_proofs']
+    for key, value in goalrobo_facing['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Robotic facing adds five unique complete original facing helpers and robotic consumers. Exactly sixteen original JALs, six fixed independent identities and one literal unnamed runtime context close every transfer. One complete forty-byte helper uses an exhaustive scoped twenty-byte seed with exactly one proved call operand masked; generic uniqueness thresholds are unchanged. No runtime identity, whole translation-unit or data extent is claimed.')
+    from platforms.france_npc_helpers import generate_unit as generate_npc_helpers
+    npc_helpers = generate_npc_helpers(originals, registry_dir)
+    document['functions'].extend(npc_helpers['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(npc_helpers['sequence_proofs'])
+    document['npc_helpers_data_proofs'] = npc_helpers['data_proofs']
+    for key, value in npc_helpers['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('NPC helpers adds thirty-one unique complete original navigation, collision and robotic bodies. Exactly thirty-four JAL destinations follow an acyclic complete-body graph or nineteen fixed independent identities. No changed data operand, whole translation-unit or data extent is claimed.')
+    from platforms.france_npc_player_model import generate_unit as generate_npc_player_model
+    npc_player_model = generate_npc_player_model(originals, registry_dir)
+    document['functions'].extend(npc_player_model['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(npc_player_model['sequence_proofs'])
+    document['npc_player_model_data_proofs'] = npc_player_model['data_proofs']
+    for key, value in npc_player_model['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('NPC player-model adds eight unique complete original consumers. Nine data operands follow the original typed globals.player.ent.model path and an independent complete CalcNewDir anchor; nineteen JALs close through complete identities or two literal unnamed runtime contexts. No runtime identity, whole translation-unit or data extent is claimed.')
+    from platforms.france_npc_vector_constants import generate_unit as generate_npc_vectors
+    npc_vectors = generate_npc_vectors(originals, registry_dir)
+    document['functions'].extend(npc_vectors['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(npc_vectors['sequence_proofs'])
+    document['npc_vectors_data_proofs'] = npc_vectors['data_proofs']
+    for key, value in npc_vectors['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('NPC vectors adds ten unique complete original consumers. Thirty-three data operands follow complete typed vector objects, scalar members, an independently anchored player-model field and one original local float; thirty-three JALs close through complete identities or literal unnamed runtime contexts. Twelve fixed dependencies preserve evidence across later recoveries. No runtime identity, whole translation-unit or data extent is claimed.')
+    from platforms.france_npc_animation_tables import generate_unit as generate_npc_animation
+    npc_animation = generate_npc_animation(originals, registry_dir)
+    document['functions'].extend(npc_animation['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(npc_animation['sequence_proofs'])
+    document['npc_animation_data_proofs'] = npc_animation['data_proofs']
+    for key, value in npc_animation['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('NPC animation adds seventeen complete original Robot builders in one unique contiguous 9884-byte cluster. All original member boundaries, ordering and zero alignment gaps are checked; 257 typed table/string/callback operands and 149 JALs are inventoried in each reference. Complete array-copy coverage includes call delay-slot stores. Small members are identified through the complete cluster and original DWARF order, not individual short seeds. No whole translation-unit or data extent is claimed.')
+    from platforms.france_npc_common_animation import generate_unit as generate_npc_common_animation
+    npc_common_animation = generate_npc_common_animation(originals, registry_dir)
+    document['functions'].extend(npc_common_animation['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(npc_common_animation['sequence_proofs'])
+    document['npc_common_animation_data_proofs'] = npc_common_animation['data_proofs']
+    for key, value in npc_common_animation['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Common NPC animation adds two complete original builders in an independently unique 400-byte cluster with 392 code bytes. Original member ordering, bounds and zero alignment gaps are checked separately from the Robot cluster. Complete typed names, literals, callback identity and animation callees corroborate every operand. No whole translation-unit or data extent is claimed.')
     return document
 
 

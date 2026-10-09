@@ -38,6 +38,13 @@
 
 #include <string.h>
 
+#if defined(PS2)
+static inline S32 NPCRobotTimerElapsed(F32 timer)
+{
+    return timer < 0.0f;
+}
+#endif
+
 // These structs were used in deadstripped functions.
 // This function is here to force the symbols to be linked.
 //
@@ -3461,7 +3468,11 @@ void zNPCSleepy::SnoreNZeez(F32 dt)
 
     tmr_emitzeez = MAX(-1.0f, tmr_emitzeez - dt);
 
+#if defined(PS2)
+    if (NPCRobotTimerElapsed(tmr_emitzeez))
+#else
     if (tmr_emitzeez < 0.0f)
+#endif
     {
         cnt_grpzeez -= 1.0f;
 
@@ -4059,12 +4070,10 @@ U32 zNPCArfArf::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
 
 void zNPCArfArf::DuploNotice(en_SM_NOTICES note, void* data)
 {
-    S32 i;
-
     switch (note)
     {
     case SM_NOTE_NPCALIVE:
-        for (i = 0; i < 5; i++)
+        for (S32 i = 0; i < 5; i++)
         {
             if (pup_kennel[i] == (zNPCArfDog*)data)
             {
@@ -4074,7 +4083,7 @@ void zNPCArfArf::DuploNotice(en_SM_NOTICES note, void* data)
         }
         break;
     case SM_NOTE_NPCSTANDBY:
-        for (i = 0; i < 5; i++)
+        for (S32 i = 0; i < 5; i++)
         {
             if (pup_kennel[i] == (zNPCArfDog*)data)
             {
@@ -4790,7 +4799,7 @@ S32 zNPCTubelet::Chk_IsBonked()
 
         if (hitpoints == 0)
         {
-            cnt_hurt = 1;
+            cnt_hurt++;
         }
 
         if (tub_paul == NULL)
@@ -4838,7 +4847,7 @@ S32 zNPCTubelet::Chk_IsBonked()
             Unbonk();
         }
 
-        die = (hitpoints == 0);
+        die = !hitpoints;
     }
 
     return die;
@@ -4855,7 +4864,11 @@ void zNPCTubelet::Chk_NonAlertBonk(F32 dt)
     {
         tmr_restoreHealth = MAX(-1.0f, tmr_restoreHealth - dt);
 
+#if defined(PS2)
+        if (NPCRobotTimerElapsed(tmr_restoreHealth) &&
+#else
         if (tmr_restoreHealth < 0.0f &&
+#endif
             hitpoints + tub_paul->hitpoints + tub_mary->hitpoints <= 2)
         {
             Unbonk();
@@ -5314,9 +5327,9 @@ void zNPCSlick::Damage(en_NPC_DAMAGE_TYPE dmg_type, xBase* who, const xVec3* vec
 {
     switch (dmg_type)
     {
-    case DMGTYP_ABOVE:
-    case DMGTYP_BELOW:
     case DMGTYP_SIDE:
+    case DMGTYP_BELOW:
+    case DMGTYP_ABOVE:
         if (IsShield())
         {
             zEntPlayer_DamageNPCKnockBack(this, 1, Pos());
@@ -5328,7 +5341,11 @@ void zNPCSlick::Damage(en_NPC_DAMAGE_TYPE dmg_type, xBase* who, const xVec3* vec
         break;
     }
 
+#if defined(PS2)
+    if (NPCRobotTimerElapsed(tmr_invuln))
+#else
     if (tmr_invuln < 0.0f)
+#endif
     {
         if (!IsShield())
         {
@@ -5348,7 +5365,11 @@ void zNPCSlick::ShieldUpdate(F32 dt)
 {
     tmr_repairShield = MAX(-1.0f, tmr_repairShield - dt);
 
+#if defined(PS2)
+    if (NPCRobotTimerElapsed(tmr_repairShield))
+#else
     if (tmr_repairShield < 0.0f)
+#endif
     {
         ShieldShow();
     }

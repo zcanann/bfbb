@@ -215,7 +215,16 @@ struct xLaserBoltEmitter
     {
         RwIm3DVertexSetPos(&vert, loc.x, loc.y, loc.z);
         RwIm3DVertexSetUV(&vert, u, v);
+#if defined(PS2)
+        RwRGBA color;
+        color.red = 255;
+        color.green = 255;
+        color.blue = 255;
+        color.alpha = alpha;
+        RxObjSpace3DVertexSetPreLitColor(&vert, &color);
+#else
         RwIm3DVertexSetRGBA(&vert, 255, 255, 255, alpha);
+#endif
     }
 
     void set_bolt_verts(RxObjSpace3DVertex* vert, const xVec3& pointA, const xVec3& pointB,

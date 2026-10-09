@@ -1,7 +1,8 @@
 # PS2 screen-effects renderer
 
 The complete existing `xScrFx.cpp` now compiles using the normal PS2 profile.
-No function body changes are needed. All original functions stay in the comparison:
+The initial profile needed no function body changes; subsequent source restorations
+are documented below. All original functions stay in the comparison:
 
 | Original | Functions | Original bytes | Normal matched code | Fuzzy score |
 | --- | ---: | ---: | ---: | ---: |
@@ -54,3 +55,64 @@ code matching is not a claim of raw linked-byte identity.
 Private evidence is in `build/ps2render208`: the pinned SDK header, authenticated
 original layouts, compiled layouts, `qwords-type-proof.json`, three complete
 reports/profiles, independent raw relocation proofs, and GC comparisons.
+
+## Glare reset and platform distortion rendering
+
+The glare initialization now clears all ten flags in one ordinary loop. Separating
+element zero before the remaining nine iterations produced a different PS2 unroll;
+the complete loop restores the original two groups of five stores in both inlined
+callers. `xScrFxInit` (100 bytes) and `xScrFxReset` (56 bytes) become exact.
+
+The shared distortion-render wrapper was empty. The original PS2 `xScrFxRender`
+calls the independently named `iScrFxDistortionRender`, passing the current camera
+from `ourGlobals`. The wrapper now forwards to that platform function on PS2,
+restoring all 68 original bytes of its caller. Other platforms retain the empty
+wrapper, and no header or compiler profile changes are involved.
+
+Complete debug-region reports gain three functions / 224 bytes, from 16 / 4084 to
+19 / 4308. Every other function score is unchanged, including the regional
+7648/7640-byte denominator difference. The existing French letterbox subset stays
+two functions / 116 bytes exact. A complete GU4Y78 comparison preserves every
+function score and all 30 exact functions / 4276 bytes; the shared loop therefore
+needs no platform guard.
+
+Raw verification independently applies the source object's real call, GP and
+HI16/LO16 relocations using original function records and DWARF data declarations.
+All three changed functions reproduce all 224 bytes in each debug original,
+including the `sGlare + 9 * sizeof(xGlare)` address addend and the `ourGlobals`
+current-camera load. Existing comparison and full-link limitations remain.
+
+Private artifacts in the agent worktree: `build/scrfx-full-comparison.py` and
+`.json`, `build/scrfx-proof.py` and `build/scrfx-raw-proof.json`, the scoped French
+target diagnostic, and `build/checkscrfxgc.py` with retained before/after reports.
+
+## Distortion update boundary and original fullscreen dimensions
+
+Although `xScrFxDistortionAdd` is an empty eight-byte original function, its PS2
+caller retains the out-of-line call and the frame-parity/position preparation.
+A scoped PS2 `dont_inline` pragma restores that boundary, making all 420 bytes of
+`xScrFxDistortionUpdate` exact. Independent application of its real original calls,
+GP references and DWARF-backed data-address pairs reproduces the complete function
+in all three debug releases.
+
+The original fullscreen glare dimensions are 640 by 448 in SLUS-20680 and 512 by
+512 in SLES-51968 / SLES-51970. Explicit version constants now preserve these
+values; the shared 512 constant also reproduces the European function's eight-byte
+size reduction. Other versions keep their existing dimensions. This makes
+`xScrFXFullScreenGlareRender` exact at 552 bytes in USA and 544 in Europe/Germany.
+Its normal code match still has the previously documented unresolved SDK-reference
+limits; it is not presented as an independently complete source link.
+
+The per-glare intensity expression now divides by two, matching the original PS2
+floating-point divide instead of multiplying by one half. This improves its normal
+PS2 score from 76.336% to 76.667%; GU4Y78 also improves from 98.5087% to 98.55218%,
+with every other GameCube score and all 30 exact functions / 4276 bytes preserved.
+The normalized direction and resulting intensity computation retain their inputs
+and operation order. No compiler patch or explicit register assignment is used.
+
+Complete reports now have 21 of 22 functions exact: 5280 / 7648 bytes in USA and
+5272 / 7640 in Europe/Germany. The French letterbox subset stays 116 / 116 bytes;
+no unverified French fullscreen dimensions or function identity is inferred.
+Private artifacts: `build/scrfx2-full-comparison.py` and `.json`,
+`build/scrfx-distortion-proof.py` and `build/scrfx-distortion-raw-proof.json`, plus
+`build/checkscrfx2gc.py` and its retained before/after reports.

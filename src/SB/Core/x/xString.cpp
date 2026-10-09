@@ -9,6 +9,14 @@
 U32 xStrHash(const char* str)
 {
     U32 hash = 0;
+#if defined(PS2)
+    while (*str)
+    {
+        char c = *str;
+        hash = (char)(c - (c & c >> 1 & 0x20)) + hash * 0x83;
+        str++;
+    }
+#else
 #ifdef XBOX
     char i;
 #else
@@ -24,6 +32,7 @@ U32 xStrHash(const char* str)
 #endif
         str++;
     }
+#endif
 
     return hash;
 }
@@ -32,6 +41,13 @@ U32 xStrHash(const char* str, size_t size)
 {
     U32 hash = 0;
     U32 i = 0;
+#if defined(PS2)
+    for (; i < size && *str; i++, str++)
+    {
+        char c = *str;
+        hash = (char)(c - (c & c >> 1 & 0x20)) + hash * 0x83;
+    }
+#else
 #ifdef XBOX
     char c;
 #else
@@ -54,6 +70,7 @@ U32 xStrHash(const char* str, size_t size)
         hash = (c - (c & (S32)c >> 1 & 0x20) & 0xff) + hash * 0x83;
 #endif
     }
+#endif
 
     return hash;
 }
@@ -65,6 +82,14 @@ U32 xStrHashCat(U32 prefix, const char* str)
     // match. It is still a live read of an indeterminate value anywhere the
     // parameter is not already in the accumulator's register.
     U32 hash = prefix;
+#if defined(PS2)
+    while (*str)
+    {
+        char c = *str;
+        hash = (char)(c - (c & c >> 1 & 0x20)) + hash * 0x83;
+        str++;
+    }
+#else
 #ifdef XBOX
     char i;
 #else
@@ -86,6 +111,7 @@ U32 xStrHashCat(U32 prefix, const char* str)
         hash = (i - (i & (S32)i >> 1 & 0x20) & 0xff) + hash * 0x83;
 #endif
     }
+#endif
 
     return hash;
 }
@@ -96,7 +122,9 @@ char* xStrTok(char* string, const char* control, char** nextoken)
     U8* ctrl;
     U8 map[32];
     S32 count;
+#if !defined(PS2)
     U8 c;
+#endif
 
 #ifdef XBOX
     ctrl = (U8*)control;
@@ -117,16 +145,36 @@ char* xStrTok(char* string, const char* control, char** nextoken)
         map[*ctrl >> 3] |= bit;
     } while (*ctrl++ != '\0');
 
+#if defined(PS2)
+    if (string)
+    {
+        str = (U8*)string;
+    }
+    else
+    {
+        str = (U8*)*nextoken;
+    }
+#else
     str = (string) ? (U8*)string : (U8*)*nextoken;
+#endif
 
+#if defined(PS2)
+    while (map[*str >> 3] & (1 << (*str & 0x7)) && *str != '\0')
+#else
     while (map[(*str >> 3) & 0x1F] & (1 << (*str & 0x7)) && *str != '\0')
+#endif
     {
         str++;
     }
 
     string = (char*)str;
 
-#ifdef XBOX
+#if defined(PS2)
+    while (*str != '\0')
+    {
+        char c = *str;
+        if (map[c >> 3] & (1 << (c & 0x7)))
+#elif defined(XBOX)
     while (*str != '\0')
     {
         if (map[(*str >> 3) & 0x1F] & (1 << (*str & 0x7)))
@@ -146,7 +194,7 @@ char* xStrTok(char* string, const char* control, char** nextoken)
 
     *nextoken = (char*)str;
 
-#ifdef XBOX
+#if defined(XBOX) || defined(PS2)
     return string == (char*)str ? NULL : string;
 #else
     if (string == (char*)str)
@@ -160,7 +208,9 @@ char* xStrTok(char* string, const char* control, char** nextoken)
 
 char* xStrTokBuffer(const char* string, const char* control, void* buffer)
 {
+#ifndef PS2
     U8 c;
+#endif
     U8* str;
     U8* ctrl;
     U8 map[32];
@@ -186,24 +236,49 @@ char* xStrTokBuffer(const char* string, const char* control, void* buffer)
         map[*ctrl >> 3] |= bit;
     } while (*ctrl++ != '\0');
 
+#if defined(PS2)
+    if (string)
+    {
+        str = (U8*)string;
+    }
+    else
+    {
+        str = (U8*)*(char**)buffer;
+    }
+#else
     str = (string) ? (U8*)string : (U8*)*(char**)buffer;
+#endif
 
+#if defined(PS2)
+    while (map[*str >> 3] & (1 << (*str & 0x7)) && *str != '\0')
+#else
     while (map[(*str >> 3) & 0x1F] & (1 << (*str & 0x7)) && *str != '\0')
+#endif
     {
         str++;
     }
 
     string = (char*)str;
 
+#if defined(PS2)
+    while (*str != '\0')
+    {
+        if (map[*str >> 3] & (1 << (*str & 0x7)))
+#else
     while ((c = *str) != '\0')
     {
         if (map[(c >> 3) & 0x1F] & (1 << (c & 0x7)))
+#endif
         {
             str++;
             break;
         }
 
+#if defined(PS2)
+        *dest = *str;
+#else
         *dest = c;
+#endif
         dest++;
         str++;
     }
@@ -287,7 +362,12 @@ S32 xStrParseFloatList(F32* dest, const char* strbuf, S32 max)
     char* numstart;
     char savech;
 
+#ifdef PS2
+    str = (char*)strbuf;
+    if (!str)
+#else
     if (!(str = (char*)strbuf))
+#endif
     {
         return 0;
     }
@@ -400,7 +480,7 @@ S32 icompare(const substr& s1, const substr& s2)
         }
         else
         {
-#ifdef XBOX
+#if defined(XBOX) || defined(PS2)
             result = s1.size < s2.size ? -1 : 1;
 #else
             result = 1;

@@ -51,16 +51,15 @@ MACRO_STOP
 
 #define RxObjSpace3DVertexSetPreLitColor(_vert, _col) ((_vert)->c.preLitColor = *(_col))
 
-#define RwIm3DVertexSetRGBA(_vert, _r, _g, _b, _a)                                                \
-MACRO_START                                                                                       \
-{                                                                                                 \
-    RwRGBA col;                                                                                   \
-    col.red = (_r);                                                                               \
-    col.green = (_g);                                                                             \
-    col.blue = (_b);                                                                              \
-    col.alpha = (_a);                                                                             \
-    RxObjSpace3DVertexSetPreLitColor(_vert, &col);                                                \
-}                                                                                                 \
+#define RwIm3DVertexSetRGBA(_vert, _r, _g, _b, _a)                                              \
+MACRO_START                                                                                     \
+{                                                                                               \
+    RwRGBA* const _col = &(_vert)->c.preLitColor;                                               \
+    _col->red = (_r);                                                                           \
+    _col->green = (_g);                                                                         \
+    _col->blue = (_b);                                                                          \
+    _col->alpha = (_a);                                                                         \
+}                                                                                               \
 MACRO_STOP
 
 #define RwIm3DVertexSetUV(_vert, _u, _v)                                                          \

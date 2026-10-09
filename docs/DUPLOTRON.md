@@ -14603,3 +14603,412 @@ Bink decoder match. No exact-function or completed-TU gain is claimed.
 
 Evidence: build/expand136-shift-mask.py, its candidate and raw diff directory,
 build/expand136-baseline.json, and build/parallel-136-final-validation.json.
+
+## Memory-card slot initialization order (2026-10-08)
+
+`iSG_mcidx2slot` improves from 95.671875% to 96.03125% in all three
+GameCube versions by initializing the memory-size output before the slot
+output and the readiness array afterward. The initial values, card-probing
+loop, return values, and 256-byte function extent are unchanged. This is
+a partial source improvement; initialization scheduling still differs.
+
+The bounded sweep measured all 120 orders of the five initialization groups.
+All three complete source builds and retail DOL checksums pass. Comparing
+every function and unit measure finds this function's fuzzy score is the
+only change; exact code, data, function counts, and completion are unchanged.
+USA overall fuzzy rises from 99.71828% to 99.71831%; Europe and Germany rise
+from 99.71839% to 99.71843%. The unit remains NonMatching.
+
+The two other save-card holdouts were also checked: 48 equivalent switch
+case-group/default variants do not change their scores. Stock GC/2.0, 2.5,
+2.6, and 2.7 retain the same three residuals, so these tests provide no
+new compiler-patch justification.
+
+Private evidence: `build/oct08-save-init-probe/results.json`,
+`build/oct08-save-probe/results.json`, the `oct08-save-after-<version>.json`
+reports, and `build/oct08-save-german-proof.log`.
+
+## Parallel PS2 and France matching (2026-10-09)
+
+Full reports against a fresh `8afd24dc3` baseline retain every previously
+measured function score and exact match. The USA report now has 982,784 exact
+code bytes / 3,735 exact functions, up 6,576 bytes / 24 functions. France has
+118,832 exact bytes / 431 exact functions, up 11,572 bytes / 45 functions.
+The full CPU-code denominators remain 2,978,560 and 2,979,968 bytes respectively.
+Neither report claims a fully linked retail executable.
+
+France's original-only recovery adds 42 identities / 64,332 known bytes:
+pad, Hangable, Group, Event, the Dutchman parameter caller and three helpers,
+King Jelly and its float-list helper, and the SB2 parameter caller. The combined
+registry now covers 702 functions / 299,568 bytes. The parameter bodies use a
+distinct caller/callee-cluster proof kind; they do not claim complete NPC units.
+Original typed arrays, complete literals, strict control flow, unique masked
+bodies and three authenticated reference versions establish the new extents.
+
+The final production run regenerates all three proof registries, checks the
+committed symbols/splits, compiles 66 French source units and exports the full
+region report. A dependency regression found during integration is fixed:
+Group and Hangable keep their independently compared Event contexts after the
+Event functions are registered. Original-backed tests cover both dependency
+fences. All 385 previously published TU-proof records remain unchanged.
+
+Source gains include particle loops, pad thresholds/rumble pointer reuse,
+culling and group operand order, sound voice bounds and original wrappers,
+scoped grid call boundaries and direct FFX returns, spline inlining/address induction, missing
+streaming scratch initialization, and MovePoint's shared unit-length local.
+Changed source units were compared in all four PS2 regions; direct original
+byte reconstruction corroborates the newly exact debug-region bodies where
+relocations are available. French unresolved operands remain documented in
+their unit notes. All three GameCube full source reports and retail checksums
+pass with unchanged scores after the earlier memory-card improvement.
+
+The France fuzzy tool searches large original functions and contiguous blocks
+first, uses bit-parallel LCS beyond the quadratic refinement budget, excludes
+authenticated occupied ranges, and replays tentative maps as ranking penalties.
+The final diagnostic map excludes all 299,568 verified bytes. Tentative candidates
+remain ineligible for progress. Compiler probes did not establish an earlier-bug,
+later-fix pattern; this batch adds no compiler patch.
+
+Private evidence: `build/oct08-france-final/SLES-53623`,
+`build/oct09-us-current/SLUS-20680`, `build/oct09-{france,us}-comparison.log`,
+`build/oct09-hangable-test.log`, and the per-unit artifacts cited in the PS2
+notes. The baseline worktree is `C:/Projects/bfbb-verify-oct08-before`; its USA
+baseline reused 137 completed objects from the initial serial run and compiled
+the rest against the frozen source. The interrupted compiler's partial object
+was excluded. The subsequent USA source refresh recompiles the three changed
+units against the unchanged verified targets, preserving source hashes and the
+full report/export checks.
+
+The next source-only batch adds another 992 exact bytes / six functions in
+USA and 528 bytes / four functions in France. The USA report reaches 983,776
+exact bytes / 3,741 functions; France reaches 119,360 bytes / 435 functions.
+Psyche transition/list access and the three string hashes supply the exact
+gains. Sound switch exits and the particle-manager countdown improve fuzzy
+matching. The countdown also restores the original three volatile load sites,
+removing the extra initialization read in the previous source object.
+
+Both full reports were refreshed against the unchanged verified target sets;
+every previous function score and exact match is retained. All three GameCube
+full source reports and retail checksums remain unchanged. Evidence:
+`build/oct09-{us,france}-second`, their `*-second-comparison.log` files, and
+`build/oct09-second-<GameCube-version>.log`. Compiler/scoring settings,
+function extents and all regional denominators remain unchanged.
+
+The Plankton/CruiseBubble batch adds two independently proven parameter bodies /
+24,552 known French bytes. Full original-only registry regeneration and source
+compilation pass, bringing coverage to 704 functions / 324,120 bytes and full
+CPU fuzzy matching from 8.623672% to 9.450579%. Their source comparisons improve
+after removing five vector copies and restoring an original zero-vector local.
+The `auto_tweak.h` change affects only Plankton/Prawn; both complete units were
+checked, with every Prawn score retained.
+
+Tokenizer and substring joins add another 512 exact bytes / two functions in
+both USA and France. USA reaches 984,288 exact bytes / 3,743 functions; France
+reaches 119,872 bytes / 437 functions. Psyche timer clearing and buffer-tokenizer
+scope improve fuzzy matching as well. Complete report comparisons find no
+regressions, and all three GameCube source reports/checksums remain unchanged.
+Ten original-backed parameter-proof/mutation tests pass. Private evidence:
+`build/oct09-{france,us}-npc`, their `*-npc-comparison.log` files,
+`build/oct09-npc-tests.log`, and `build/oct09-npc-<GameCube-version>.log`.
+
+The utility/serializer/Prawn batch passes another complete USA source build
+and full French registry regeneration/source build. USA adds 2,268 exact bytes /
+eight functions, reaching 986,556 bytes / 3,751 functions. France adds 4,048 bytes /
+four functions, reaching 123,920 bytes / 441 functions. The new Prawn parameter
+identity supplies 2,660 French bytes; utility classification, probability and
+CRC lifetimes make all eleven utility functions / 2,668 bytes exact in all four
+PS2 regions. Serializer inline boundaries add 880 exact bytes in each debug
+region. Prawn turning locals/sign tests, regional credits layout/color unpack,
+and float-parser pointer scope improve fuzzy matching.
+
+French coverage is now 705 functions / 326,780 bytes. Its production run compiles
+69 source units and keeps the 2,979,968-byte CPU denominator. The original ctype
+array declaration, all 257 entries including EOF, and the only PS2 profile
+consumer were audited; raw debug-region utility/serializer reconstruction uses
+genuine call, GP, paired-address and switch-table relocations. Two Prawn proof
+mutation tests pass. All previous function scores/exact matches are retained,
+and all three GameCube full source reports/checksums remain unchanged.
+Evidence: `build/oct09-{us,france}-utility`, their comparison logs,
+`build/oct09-prawn-tests.log`, and `build/oct09-utility-<GameCube-version>.log`.
+
+The textbox/screen-effects batch adds 4,676 exact USA bytes / eleven functions,
+reaching 991,232 bytes / 3,762 functions. Textbox reset/link/pointer lifetimes,
+original inline rectangle/height helpers, reciprocal vertex depth and regional
+dimensions recover five complete functions. Screen-effect initialization/reset,
+platform rendering, distortion call boundaries and regional glare geometry
+recover five more; Prawn's original decompose boundary recovers its death entry.
+Credits packed color uses the original four-byte reversed-channel unpack type.
+
+Full USA comparisons retain every previous function score and exact match;
+the French report is entirely unchanged. All three GameCube builds and retail
+checksums pass. Glare improves from 98.5087% to 98.55218% in each GameCube region,
+with no other function or code/data measure regression. Evidence:
+`build/oct09-{us,france}-ui`, their comparison logs, and
+`build/oct09-ui-<GameCube-version>.log`. The authentic RenderWare RGBA macro
+investigation remains a separate private caller sweep, outside this batch.
+
+The first player-animation batch adds three exact French builders / 7,448 bytes.
+Full canonical regeneration preserves all earlier proof records and validates
+the exact COP1 MOV.S decoder extension, including reserved-bit rejection and
+MFC1/CFC1 address-register clobbers. All six decoder/literal/original mutation
+tests pass. French coverage reaches 708 functions / 334,228 known bytes; its
+70-unit source build reports 131,368 exact bytes / 444 exact functions with
+the unchanged 2,979,968-byte CPU denominator. The other builders remain outside
+this scoped proof pending complete callback/helper evidence.
+
+The PS2 UI renderer also improves from about 57.99% to 97.62% across the debug
+regions after restoring vertex depth, reciprocal depth, regional dimensions
+and byte-color locals. USA full CPU fuzzy rises from 64.281576% to 64.316060%,
+with exact bytes/functions unchanged. Every previous function score/exact match
+is retained; all three GameCube source reports and retail checksums pass.
+Evidence: `build/oct09-france-animation`, `build/oct09-us-ui-render`, their
+comparison logs, `build/oct09-player-tables-tests.log`, and
+`build/oct09-animation-<GameCube-version>.log`.
+
+The SDK/animation-extension batch reaches 1,005,392 exact USA bytes / 3,775
+functions, adding 14,160 bytes / thirteen functions. Authentic RenderWare vertex
+color assignment, compatible laser color copies, renderer local lifetimes and
+inline boundaries, UI setup/portal/button dispatch and shadow call boundaries
+supply the exact gains. Emitter helpers, packed credits color, ribbon normals,
+and original PS2 VU shadow operations improve fuzzy matching. All VU masks are
+checked against raw words because the disassembly display omits destination masks.
+
+Five original-backed animation builders now compare exactly in France, expanding
+the earlier three without changing their records. Full callback/sound/global
+contexts corroborate the additional German pointer operands; those contexts
+remain unpromoted. Three complete CruiseBubble insertion/cheat/callback bodies
+reuse the prior parameter anchor and add another 1,148 exact bytes. Together
+with exact UI setup, France gains 27,020 exact bytes over the preceding snapshot.
+Its full production run recovers 713 functions / 360,832 known bytes and compiles
+70 source units, preserving the full CPU-code denominator and earlier scores.
+
+The SDK worker compares 69 affected unit/region pairs plus the final laser helper
+closure. Root independently completes the USA source build, all French registry
+regeneration/source/export checks and all three GameCube builds/checksums. Seven
+animation/Cruise original-backed tests pass. All function/code/data regression
+checks are clean. GameCube streak and glare fuzzy scores improve; no exact or data
+measure is lost. Evidence: `build/oct09-{us,france}-sdk`, their comparison logs,
+`build/oct09-animation-extension-tests.log`, `build/oct09-sdk-<GameCube-version>.log`,
+and the raw projection/caller artifacts cited in the unit notes.
+
+The renderer/sound follow-up adds another 2,280 exact USA bytes / three functions,
+reaching 1,007,672 bytes / 3,778 functions. Ring lifetime selection, fireworks
+setting order and original sound-position scalar lifetimes supply the exact
+gains; lightning initialization order and omitting an unused PS2-only counter
+improve fuzzy matching. All 37 sound functions / 6,764 bytes are now exact in
+the three debug PS2 regions. The fast shadow receiver is restored from original
+C/VU operations, with all 66 vector words checked raw including masks.
+
+The complete USA/French report comparisons retain every earlier score and exact
+match; the French report is entirely unchanged. All three GameCube full source
+reports/checksums pass without new regressions. Evidence:
+`build/oct09-{us,france}-render-followup`, their comparison logs, and
+`build/oct09-render-followup-<GameCube-version>.log`.
+
+The shadow/cache and effect batch adds 6,252 exact USA bytes / seven functions,
+reaching 1,013,924 bytes / 3,785 functions. Five complete shadow leaf,
+environment, entity, fill and removal bodies contribute 5,076 bytes; restoring
+texture pointer types and one-bit conditions makes bubble/shiny rendering exact
+for another 1,176 bytes. Workers validate the affected units in all three debug
+PS2 regions. Root recompiles both changed units against the previously verified
+214-unit USA snapshot and retains every earlier function/code/data measure.
+
+Nine independent original-backed French listener/voice/delayed-insertion bodies
+add 1,988 exact bytes / nine functions, reaching 160,376 bytes / 459 functions.
+All prior registry records survive unchanged. Strict production regeneration
+equals the serialized registries and all 70 enabled French source units compile.
+Coverage reaches 722 functions / 362,820 known bytes. Full CPU denominators stay
+2,978,560 bytes for USA and 2,979,968 for France; source data and full executable
+links remain pending. All three full GameCube reports/checksums retain the earlier
+streak/glare gains without further regression. Four listener mutation/duplicate/
+type-bound tests pass, and exact JSON roundtrip equality guards serialization.
+
+Evidence: `build/oct09-us-shadow-effects`, `build/oct09-france-listeners`, their
+comparison logs, `build/oct09-listeners-final-tests.log`,
+`build/oct09-france-listeners-map{,-query}.json`, and
+`build/oct09-shadow-<GameCube-version>.log`. The refreshed fuzzy map excludes
+722 proven bodies before ranking remaining large contiguous sections; candidates
+remain diagnostic and receive no matching or boundary credit.
+
+The vector/playback batch adds another 2,232 exact USA bytes / four functions,
+reaching 1,016,156 bytes / 3,789 functions. World shadow rendering and the shadow
+quad add 1,784 exact bytes; both vector normalization bodies contribute 448.
+Explicit original effect helper inline boundaries, billboard loop invariants,
+ribbon visibility and the shared lightning endpoint loop improve fuzzy matching
+without losing earlier matches. The complete USA snapshot recompiles all four
+changed units against the previously verified 214-unit target/source set.
+
+French playback proves nine further complete bodies / 4,924 bytes with all
+three reference originals, typed storage, complete strings and explicitly scoped
+runtime/vector uniqueness checks. Seven source bodies are compared; two HIS
+bodies remain coverage-only. The raw-exact vector source change and three exact
+playback bodies add 2,696 exact bytes / five functions, reaching 163,072 bytes /
+464 functions. Coverage reaches 731 functions / 367,744 bytes. The complete
+production run regenerates all registries identically and compiles 72 units.
+An initial regeneration failure identified three replaced Hangable vector
+contexts; excluding subsequent vector identities preserves the earlier proof.
+The original-backed Event/vector dependency test and seven playback tests pass.
+
+All function/code/data regression checks pass. All three GameCube full source
+reports/checksums retain their earlier measures, and both full Xbox source
+reports remain identical at 15,306 exact bytes / 81 functions. CPU denominators
+and source-data/link limitations are unchanged. Evidence:
+`build/oct09-us-vector-playback`, `build/oct09-france-playback-retry`, their
+comparison logs, `build/oct09-{playback,hangable-vector}-tests.log`,
+`build/oct09-vector-playback-<GameCube-version>.log`, and
+`build/oct09-vector-playback-xbox` with both regional comparison logs.
+
+The culling/robot batch adds 2,076 exact USA bytes / four functions, reaching
+1,018,232 bytes / 3,793 functions. Climate wind lifetime, hazard's steamy-stinky
+body and original robotic zoom/appearance operand order provide those gains.
+Restoring VU side-plane and scalar near-plane culling raises eleven NPC particle
+updates from 29-76% to 98-99.95% and decal update from 48.63% to 94.67508%.
+Original lane masks, packed comparisons and actual vmul.w branch delay slots
+are checked raw in all three debug regions. Typed hazard union locals, original
+call boundaries and PS2 rotation paths produce nine more function improvements.
+The combined USA fuzzy measure rises from 64.709509% to 65.105562% with no loss
+in any earlier function/code/data measure; all seven changed units are rebuilt
+against the previously verified 214-unit source/target snapshot.
+
+French streak/motion/model closure adds 44 complete identities / 9,716 bytes.
+All new source bodies are exact, and two previously proven support bodies gain
+source comparison. Exact matching rises by 9,892 bytes / 46 functions, reaching
+172,964 bytes / 510 functions. Strict original-backed regeneration preserves
+every earlier proof; all 76 enabled source units compile. Coverage reaches 775
+functions / 377,460 bytes. Twelve cluster mutation/duplicate/dependency tests
+pass. The refreshed largest-first fuzzy map excludes those proven bodies and
+continues to treat remaining candidates as diagnostics only.
+
+All three GameCube complete source reports/checksums preserve their earlier
+scores. The Xbox-only weighted random calculation improves xUtil_yesno from
+38.454544% to 79.84849% in both complete 13-unit production builds; exact totals
+stay 15,306 bytes / 81 functions and all other scores remain unchanged. Updating
+an explanatory reviewed-metadata sentence required a new anonymous-registry
+input digest; full re-decoding confirms every one of the 2,440 anonymous records
+is unchanged. CPU denominators, source-data and complete-link limitations remain
+unchanged for all platforms.
+
+Evidence: `build/oct09-us-culling-robots`, `build/oct09-france-culling-robots`,
+their comparison logs, `build/oct09-robot-cluster-tests.log`,
+`build/oct09-culling-robots-<GameCube-version>.log`,
+`build/oct09-culling-robots-xbox-retry`, both regional comparison logs,
+`build/oct09-urand-boundaries` and `build/oct09-france-robots-map{,-query}.json`.
+
+The save/emitter/NPC batch adds another 4,208 exact USA bytes / fourteen
+functions, reaching 1,022,440 bytes / 3,807 functions. Save selection, format,
+space/slot validation and the previously missing autosave updater add 2,800
+bytes / eight functions. Original German wrong-device prompts remain present.
+Typed emitter event/result lifetimes contribute 600 bytes / two functions;
+hazard cylinder arithmetic adds 240 / one, robot kennel counter scopes add
+168 / one, and particle-system predicates add 400 / two. Snow and sprite VU
+culling, original recursive call boundaries, emitter bound references and
+signed particle limits supply further fuzzy gains. The USA fuzzy measure rises
+from 65.105562% to 65.299311%, with all eight changed units recompiled against
+the previously verified 214-unit source/target snapshot and no earlier loss.
+Interpolation source restores the original unassigned result for unsupported
+PS2 modes; supported modes are independently checked, and GC keeps its matched
+initializer. Unnamed runtime callees remain unresolved rather than promoted.
+
+French facing/NPC/player-model closure adds 44 complete identities / 10,844
+bytes, reaching 819 functions / 388,304 known bytes. Typed nested player-model
+operands use the independent complete CalcNewDir anchor; scoped small-helper
+uniqueness preserves the generic thresholds and all opaque runtime contexts
+remain unnamed. Together with exact DuploNotice source, matching rises by
+5,672 bytes / 29 functions, reaching 178,636 bytes / 539 functions. All 76
+enabled units compile after strict aggregate evidence regeneration. Sixteen
+original-backed mutation/duplicate/dependency tests pass, and every earlier
+function/code/data score is retained.
+
+Xbox particle random inlining adds 263 exact bytes / one function in both
+complete 13-unit production builds, reaching 15,569 bytes / 82 functions.
+Three neighboring commands improve without changing any other score. The
+actual source reconstructs all 263 original bytes using eight named address
+operands; all 45 actual HIGHLOW fields across the four bodies are authenticated.
+The full GameCube reports/checksums remain unchanged in all three regions.
+CPU denominators and source-data/full-link limitations remain unchanged.
+
+Evidence: `build/oct09-us-save-npc`, `build/oct09-france-save-npc`, their
+comparison logs, `build/oct09-npc-{helper,facing}-tests.log`,
+`build/oct09-save-npc-<GameCube-version>.log`, `build/oct09-save-npc-xbox`,
+both regional comparison logs, and `build/oct09-france-npc-map{,-query}.json`.
+The private Xbox reconstruction and all-section cross-platform proofs are
+cited in `XBOX_PARTICLE_RANDOM.md`.
+
+The full-region renderer/save/robot batch rebuilds every target object and all
+214 enabled source units in USA, PAL and Germany. This validates the generic
+ELF defined-symbol correction against complete reports, including explicit
+original-DWARF/inverse-checked recursive calls. The already raw-identical
+220-byte updater becomes exact through correct comparison metadata; no source
+or compiler instruction is changed by that correction.
+
+| PS2 region | Exact bytes before | Exact bytes after | Exact functions before | Exact functions after |
+| --- | ---: | ---: | ---: | ---: |
+| USA | 1,022,440 | 1,031,720 | 3,807 | 3,822 |
+| PAL | 1,014,880 | 1,024,160 | 3,794 | 3,809 |
+| Germany | 1,015,364 | 1,024,868 | 3,794 | 3,810 |
+
+USA/PAL each gain 9,280 exact bytes / fifteen functions; Germany gains 9,504 /
+sixteen, including its original extended-character validator. Save/load result,
+autosave polling, format/overwrite/directory callbacks and original UI strings
+provide the save gains. Typed S32 timer materialization, damage/snore/bonked
+branches and death-ray order provide the robot gains. All four previously
+missing PS2 particle renderers now have source, improving the complete iParMgr
+unit from 38.355755% to 92.8517% while preserving its earlier exact functions.
+VU geometry/culling/Euler masks, packed stores, polynomial values, real delay
+slots and culled-path pivot restoration are independently checked raw. Remaining
+renderer size/register/scheduling differences stay scored.
+
+The complete debug-region comparisons reject no function/code/data regression.
+USA fuzzy matching reaches 65.527588%, PAL 65.488686%, Germany 65.362493%.
+PAL/German baselines come from independently compiled frozen commit `555924f5e`;
+the USA baseline is the previously verified complete 214-unit snapshot. The full
+CPU denominators remain 2,978,560 / 2,979,712 / 2,976,512 bytes respectively.
+
+French vector/scalar closure adds ten complete identities / 6,492 known bytes,
+reaching 829 functions / 394,796 bytes. Typed full vectors and member paths, the
+existing player-model anchor and a typed local float corroborate 33 data operands;
+all 33 JALs close through fixed complete identities or unnamed literal contexts.
+The complete 76-unit report adds 2,772 exact bytes / eight functions, reaching 181,408 /
+547. All earlier proof records and scores are preserved. Eight original-backed
+tests and three ELF-symbol tests pass. All three GameCube source reports/checksums
+and both Xbox full source reports are unchanged. Source-data/full-link limitations
+remain explicit.
+
+Evidence: `build/oct09-full-render-save/<version>`, all three comparison logs,
+`bfbb-verify-oct09-555/build/before-555` and baseline logs,
+`build/oct09-france-render-save`, its comparison log,
+`build/oct09-npc-vector-tests.log`, `build/oct09-render-save-<GameCube-version>.log`
+and `build/oct09-render-save-xbox`.
+
+The curve/pool/animation follow-up adds 1,444 report-exact bytes / four functions
+in each debug PS2 region. USA reaches 1,033,164 bytes / 3,826 functions, PAL
+1,025,604 / 3,813, and Germany 1,026,312 / 3,814. All three complete report
+comparisons preserve every earlier function/code/data measure. Three changed
+units are rebuilt against the just-verified 214-unit source/target snapshots.
+Curve interval arithmetic and the original out-of-line abs behavior contribute
+460 bytes; pool scene entry, bucket sort and flush contribute 984. The curve's
+single runtime JAL and flush's SDK JAL remain unnamed/unresolved; independent
+raw audits prove the remaining 456/460 and 256/260 bytes rather than claiming
+new callee identities. Particle transform flags and vertex/index reset order
+give further source improvements, with VU/store/delay checks replayed.
+
+French animation closure proves nineteen new complete builders / 10,200 bytes:
+seventeen Robot members in one unique 9,884-byte span and two Common members
+in an independently unique 400-byte span. All original DWARF ordering, bounds,
+zero gaps, typed table/literal/callback roles and local-array copy inventories
+are checked. Small members inherit the complete unique cluster's identity;
+generic uniqueness thresholds and whole-TU/data-extent exclusions remain intact.
+All old registry records survive unchanged and fifteen original-backed tests
+pass. The full French production gate regenerates all aggregate evidence and
+compiles 76 source units. With exact curve and bucket-sort source, matching
+gains 10,996 bytes / twenty-one functions, reaching 192,404 bytes / 568 functions.
+Coverage reaches 848 functions / 404,996 known bytes. No earlier score is lost.
+
+All three GameCube full source reports/checksums and both complete Xbox source
+reports remain unchanged. CPU denominators and source-data/full-link limits
+remain unchanged. Evidence: `build/oct09-curve-animation/<debug-version>`, the
+three comparison logs, `build/oct09-france-curve-animation`, its comparison log,
+`build/oct09-npc-{animation,common-animation}-tests.log`,
+`build/oct09-curve-animation-<GameCube-version>.log`,
+`build/oct09-curve-animation-xbox` and both regional comparison logs,
+plus `build/oct09-france-animation-map{,-query}.json`.

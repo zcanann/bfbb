@@ -124,7 +124,8 @@ S32 xGroupEventCB(xBase* to, xBase* from, U32 toEvent, const F32* toParam,
     else if (g->asset->groupFlags & 2)
     {
         index = g->last_index;
-        g->last_index = (g->last_index + 1) % g->asset->itemCount;
+        U32 count = g->asset->itemCount;
+        g->last_index = (g->last_index + 1) % count;
     }
 
     switch (toEvent)

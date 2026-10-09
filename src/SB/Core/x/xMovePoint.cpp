@@ -181,13 +181,14 @@ inline F32 xVec3Hdng(xVec3* a, const xVec3* b, const xVec3* c)
     F32 dz = c->z - b->z;
     F32 len2 = dx * dx + dy * dy + dz * dz;
     F32 len, invLen, ret;
+    F32 one = 1.0f;
 
-    if (xeq(len2, 1.0f, 0.00001f))
+    if (xeq(len2, one, 0.00001f))
     {
         a->x = dx;
         a->y = dy;
         a->z = dz;
-        ret = 1.0f;
+        ret = one;
     }
     else if (xeq(len2, 0.0f, 0.00001f))
     {

@@ -10,7 +10,7 @@
 #include "zParEmitter.h"
 #include "zParPTank.h"
 
-extern U32 gPTankDisable;
+extern const U32 gPTankDisable;
 
 _tagClimate* sClimate;
 
@@ -44,8 +44,9 @@ void xClimateInit(_tagClimate* climate)
 void xClimateInitAsset(_tagClimate* climate, xEnvAsset* easset)
 {
     sClimate = climate;
-    climate->wind.strength = 0.0f;
-    xClimateVecFromAngle(climate->wind.angle, &climate->wind.dir);
+    _tagWind* w = &climate->wind;
+    w->strength = 0.0f;
+    xClimateVecFromAngle(w->angle, &w->dir);
 
     if (easset->climateFlags == 0)
     {

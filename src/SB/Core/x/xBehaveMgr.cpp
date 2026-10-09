@@ -155,10 +155,19 @@ void xPsyche::FreshWipe()
     this->gid_safegoal = 0;
     this->pendgoal = 0;
     this->pendtype = PEND_TRAN_NONE;
+#if defined(PS2)
+    S32 i = 0;
+    do
+    {
+        this->tmr_stack[0][i] = 0.0f;
+        ++i;
+    } while (i < 5);
+#else
     for (S32 i = 0; i < 5; ++i)
     {
         this->tmr_stack[0][i] = 0.0f;
     }
+#endif
     this->clt_owner = NULL;
     this->userContext = NULL;
     this->fun_remap = NULL;
@@ -205,7 +214,11 @@ void xPsyche::Amnesia(S32 i)
     while (g != NULL)
     {
         xGoal* thisg = g;
+#if defined(PS2)
+        g = thisg->next;
+#else
         g = thisg->Next();
+#endif
 
         if ((i != 0) || (this->GIDInStack(thisg->GetID()) == 0))
         {
@@ -430,6 +443,9 @@ S32 xPsyche::GoalPush(S32 gid, S32 unk)
     return result;
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 S32 xPsyche::GoalPopToBase(S32 overpend)
 {
     if (this->flg_psyche & 4)
@@ -450,6 +466,9 @@ S32 xPsyche::GoalPopToBase(S32 overpend)
         return 1;
     }
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 S32 xPsyche::GoalPopRecover(S32 overpend)
 {
@@ -678,7 +697,11 @@ xGoal* xPsyche::FindGoal(S32 gid)
             break;
         }
 
+#if defined(PS2)
+        goal = goal->next;
+#else
         goal = goal->Next();
+#endif
     }
     if (goal == NULL)
     {

@@ -12020,7 +12020,7 @@
       "instruction_bytes": 104,
       "instruction_count": 33,
       "semantics": {
-        "identity": "Weighted yes/no checks exact0 and1, then compares weight to unsigned LCG output scaled by2^-32. Original body inlines the already reviewed rndseed multiplier1103515245/add12345 sequence; current whole-source compiler retains its genuine xurand call, so this remains partial.",
+        "identity": "Weighted yes/no checks exact0 and1, then compares weight to unsigned LCG output scaled by2^-32. Original body inlines the already reviewed rndseed multiplier1103515245/add12345 sequence.",
         "entry_evidence": "Original decoded direct-call witnesses and closed CFG; instruction-pattern source search proposed candidates only, and does not establish their boundaries."
       },
       "corroboration": {

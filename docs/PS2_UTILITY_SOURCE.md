@@ -1,6 +1,6 @@
 # PS2 utility and serializer comparisons
 
-The registered PS2 compiler now builds the complete existing xutil.cpp and xserializer.cpp sources. The serializer needs no source edits after the earlier savegame/header separation. xutil only selects the PS2 standard header and receives the ordinary C declaration int isprint(int); no replacement implementation or compiler intrinsic is invented. GameCube keeps the original includes, and its rebuilt xutil allocated sections are identical.
+The registered PS2 compiler builds the complete existing xutil.cpp and xserializer.cpp sources. The initial utility profile selected the PS2 standard header with an ordinary C declaration of `isprint`; the original table-based header form has since been restored, as documented below. See [serializer source matching](PS2_SERIALIZER_SOURCE.md) for the later inline-boundary fixes. GameCube keeps its original includes.
 
 Original DWARF owns 11 utility functions (2668 bytes) and 39 serializer functions (4212 bytes) in each of the three debug releases. All of these targets remain in each comparison. The existing utility source emits all eleven functions. The restored strtosjis adds 552 matched code bytes; BCDtoi remains nonmatching. See [text utility evidence](PS2_TEXT_UTILITIES.md). Both restored itoBCD overloads match all four PS2 originals byte-for-byte; see [BCD evidence](PS2_BCD.md). The serializer emits every original-owned function, plus ordinary compiler-emitted helpers.
 
@@ -20,3 +20,35 @@ The source profiles cover whole original translation units and are scoped to the
 The France-only xBound profile compiles the complete existing source against all three already confirmed original members: xRayHitsBound (208 bytes), xBoundOBBIsectRay (952), and xBoundGetBox (236). Their canonical linkage names agree across all three authenticated reference DWARF originals. The explicit-transfer registry records the corresponding French extents; this change adds no function identities or boundaries. Seven call relocations resolve to existing confirmed French callee symbols and pass the original-instruction inverse checks.
 
 The two nonmatching members remain in the report, and complete-unit/source-link status stays false. The profile is restricted to the French executable SHA-1; every effective debug-region profile is unchanged. This is an extension of the existing partial French comparisons, not a claim that its entire bounds unit is recovered.
+
+## Original PS2 character-classification macro
+
+The original `xUtil_idtag2string` has twelve inline character-classification lookups, each loading a byte from `_ctype_ + 1 + character` and masking it with `0x97`. The incomplete PS2 header previously emitted twelve calls to `isprint`. Restoring this ordinary table macro makes the complete 784-byte function exact in SLUS-20680, SLES-51968 and SLES-51970, with no compiler or comparison changes.
+
+Each authenticated original independently declares `_ctype_` in the `xutil.cpp` DWARF compilation unit. Its array type has an unspecified upper bound and fundamental `char` elements; the header therefore declares `extern char _ctype_[]`. The established data anchors give addresses `0x4eba38`, `0x4eb538` and `0x4eaf38`, respectively. All 257 table bytes agree across the originals: element zero is zero for EOF, and `table[character + 1] & 0x97` is nonzero exactly for character values 32 through 126. The macro evaluates its argument once, keeps the signed `int` index so EOF maps to element zero, and does not introduce an unsigned cast. The production compiler's existing unsigned-char option makes the tag's byte inputs range from 0 through 255.
+
+The complete source/include scan found only `xutil.cpp` using `isprint` or including `ctype.h` among SB sources and headers. Other repository `ctype.h` consumers belong to GameCube MSL C sources, none of which appear in the PS2 source profile. The explicit intersection with every PS2 profiled source is therefore just `src/SB/Core/x/xutil.cpp`; no other profiled PS2 unit consumes this header. GameCube and Xbox use their existing separate headers.
+
+Whole-unit before/after reports agree across all four PS2 releases: 8 exact functions / 1280 bytes become 9 / 2064 out of 11 / 2668. Every other function score is unchanged; aggregate similarity rises from 85.16642% to 99.04048%. A complete GU4Y78 comparison keeps all seven functions / 1704 bytes exact and every function score unchanged. The existing French utility profile includes all eleven independently identified members and receives the same ordinary 784-byte exact gain. French data references remain subject to their existing unresolved-reference limits; no new data identity or full-link claim is introduced.
+
+Raw verification uses the independently named original buffer and `_ctype_` data addresses, applies the source object's real HI16/LO16 relocations including the table's +1 addend, and reproduces all 784 bytes in each debug original. It also decodes the original seven-entry switch table from its guarded original address load, checks every entry against its original case block, and verifies the source table's seven real R_MIPS_32 relocations. No unresolved external reference is silently ignored.
+
+Private reproducible artifacts are `build/util-full-comparison.py` and `.json`, the corresponding `util-france-comparison` files and scoped `util-france-diagnostic.py`, `build/util-ctype-proof.py` and `build/util-ctype-raw-proof.json`, plus `build/checkutilgc.py` and `build/util-gc-{before,after}.json` in the agent worktree. Existing ownership, progress denominators, compiler flags and completed-unit status remain unchanged.
+
+## Probability helper return path
+
+Naming the `xurand()` result as an `F32` local before the existing comparison makes `xUtil_yesno` exact in all four PS2 releases. The sole original mismatch was the unconditional branch following the weight-one return: the direct comparison expression sent that branch to the padding NOP before the epilogue, while the original skips the NOP. The random value, endpoint fast paths, number of random calls and comparison semantics are unchanged. No platform conditional or compiler patch is needed.
+
+The 120-byte gain brings each complete utility-unit report to 10 exact functions / 2184 bytes out of 11 / 2668. The CRC update remains 94.752%; all other scores are unchanged. Raw source-object relocation against each original's independently identified `xurand` call reproduces all 120 bytes, including France. GU4Y78 remains seven exact functions / 1704 bytes; the full production Xbox US and EU utility profiles remain three exact functions / 532 bytes out of four / 636, with every function score unchanged.
+
+Private artifacts: `build/util-yesno-full-comparison.py` and `.json`, `build/util-yesno-proof.py` and `build/util-yesno-raw-proof.json`, `build/checkutilyesnogc.py`, and `build/checkutilyesnoxbox.py` / `checkutilyesnoxboxeu.py` with their retained before/after reports.
+
+## CRC update temporary lifetime
+
+The remaining CRC update mismatch is resolved by assigning the accumulator's high byte to the existing index local before combining it with the next input byte and masking the result. Both spellings evaluate the same unsigned shift, consume one unsigned character, and produce an index from 0 through 255. The separate assignment restores the original register reuse through all eight compiler-unrolled iterations, plus the scalar remainder. No explicit unrolling, register constraint or compiler change is introduced.
+
+The shared spelling regressed the previously exact GameCube function to 92.22222%, so this local lifetime is selected only for PS2. The final GU4Y78 unit retains seven exact functions / 1704 bytes, and both complete production Xbox profiles keep every score unchanged. All four PS2 utility units now report eleven exact functions / 2668 bytes, a further 484-byte gain with every other function unchanged.
+
+Independent raw comparison reproduces all 484 bytes in each debug original after applying the real call to `xUtil_crc_init`, the `g_crc_needinit` GP reference, and both `g_crc32_table` HI16/LO16 address pairs using their original DWARF data addresses. France receives the same ordinary exact result but retains its existing unresolved data-reference limitations. Completed-unit/source-link status is not expanded by the code score.
+
+Private artifacts: `build/util-crc-full-comparison.py` and `.json`, `build/util-crc-proof.py` and `build/util-crc-raw-proof.json`, `build/checkutilcrcgc.py`, and `build/checkutilcrcxbox.py` / `checkutilcrcxboxeu.py` with retained reports.

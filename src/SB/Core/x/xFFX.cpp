@@ -75,19 +75,14 @@ S16 xFFXAddEffect(xEnt* ent, xFFX* f)
 
 S16 xFFXAddEffect(xEnt* ent, void (*dof)(xEnt*, xScene*, F32, void*), void* fd)
 {
-    xFFX* f = (xFFX*)xFFXAlloc();
-    S16 effectID;
+    xFFX* f = xFFXAlloc();
     if (f == NULL)
     {
-        effectID = -1;
+        return -1;
     }
-    else
-    {
-        f->doEffect = dof;
-        f->fdata = fd;
-        effectID = xFFXAddEffect(ent, f);
-    }
-    return effectID;
+    f->doEffect = dof;
+    f->fdata = fd;
+    return xFFXAddEffect(ent, f);
 }
 
 #if defined(PS2)

@@ -10,6 +10,9 @@
 #if defined(PS2)
 #include <rwim2d.h>
 #include <rwim3d.h>
+
+template <> basic_rect<F32>& basic_rect<F32>::scale(F32 x, F32 y);
+template <> basic_rect<F32>& basic_rect<F32>::scale(F32 x, F32 y, F32 w, F32 h);
 #endif
 
 iColor_tag convert(const ztextbox::asset_type::color_type& color);
@@ -56,6 +59,10 @@ namespace
         basic_rect<F32> r = e.tb.font.clip;
 #if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
         r.scale(640.0f, 528.0f);
+#elif defined(VERSION_SLES_51968) || defined(VERSION_SLES_51970)
+        r.scale(512.0f, 512.0f);
+#elif defined(PS2)
+        r.scale(640.0f, 448.0f);
 #else
         r.scale(640.0f, 480.0f);
 #endif
@@ -79,6 +86,7 @@ namespace
         RwIm2DVertexSetScreenX(&vert, x);
         RwIm2DVertexSetScreenY(&vert, y);
         RwIm2DVertexSetScreenZ(&vert, nsz);
+        RwIm2DVertexSetRecipCameraZ(&vert, rcz);
         RwIm2DVertexSetU(&vert, u, rcz);
         RwIm2DVertexSetV(&vert, v, rcz);
         RwIm2DVertexSetIntRGBA(&vert, c.r, c.g, c.b, c.a);
@@ -153,8 +161,8 @@ namespace
 
         switch (event)
         {
-        case eEventReset:
         case eEventSceneEnd:
+        case eEventReset:
         {
             e.reset();
             break;
@@ -221,7 +229,7 @@ void ztextbox::load(const asset_type& a)
     asset = (asset_type*)&a;
     eventFunc = cb_dispatch;
 
-    if (linkCount)
+    if (linkCount > 0)
     {
         link = (xLinkAsset*)(&a + 1);
     }
@@ -247,6 +255,9 @@ void ztextbox::update(xScene&, F32)
 {
 }
 
+#ifdef PS2
+#pragma dont_inline on
+#endif
 void ztextbox::reset()
 {
     deactivate();
@@ -258,6 +269,9 @@ void ztextbox::reset()
     set_text(asset->text);
 }
 
+#ifdef PS2
+#pragma dont_inline reset
+#endif
 void ztextbox::render()
 {
     if (flag.dirty)
@@ -350,7 +364,8 @@ void ztextbox::set_text(U32 id)
     }
     else
     {
-        set_text(xTextAssetGetText(ta));
+        ta++;
+        set_text((char*)ta);
     }
 }
 
@@ -465,3 +480,24 @@ iColor_tag convert(const ztextbox::asset_type::color_type& color)
     c.a = color.a;
     return c;
 }
+
+#ifdef PS2
+inline F32 xtextbox::yextent(F32 max, S32& size, bool cache) const
+{
+    return yextent(max, size, temp_layout(cache), 0, -1);
+}
+
+template <> inline basic_rect<F32>& basic_rect<F32>::scale(F32 x, F32 y)
+{
+    return scale(x, y, x, y);
+}
+
+template <> inline basic_rect<F32>& basic_rect<F32>::scale(F32 x, F32 y, F32 w, F32 h)
+{
+    this->x *= x;
+    this->y *= y;
+    this->w *= w;
+    this->h *= h;
+    return *this;
+}
+#endif

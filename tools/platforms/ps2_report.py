@@ -47,6 +47,7 @@ def _target_object(functions: list[dict], elf_flags: int) -> bytes:
                  "data": b"", "align": 0, "link": 0, "info": 0, "entsize": 0}]
     symbols = bytearray(16)
     strings = bytearray(b"\0")
+    defined_symbols = {}
     for function in functions:
         index = len(sections)
         # Match the compiler's code-section name even for a one-function subset.
@@ -58,8 +59,11 @@ def _target_object(functions: list[dict], elf_flags: int) -> bytes:
         name_offset = len(strings)
         # DWARF1 gives human names, not necessarily unique linker names. Include
         # the proven address so overloads/weak copies cannot be falsely deduped.
-        name = function.get("linkage_name", f"{function['name']}@{function['low']:08x}").encode("utf-8")
-        strings.extend(name + b"\0")
+        name = function.get("linkage_name", f"{function['name']}@{function['low']:08x}")
+        if name in defined_symbols:
+            raise ValueError("Duplicate target function linkage")
+        defined_symbols[name] = len(symbols) // 16
+        strings.extend(name.encode("utf-8") + b"\0")
         symbols.extend(struct.pack("<IIIBBH", name_offset, 0,
                                    len(function["bytes"]), 0x12, 0, index))
     external_symbols = {}
@@ -68,6 +72,10 @@ def _target_object(functions: list[dict], elf_flags: int) -> bytes:
         relocations = bytearray()
         for relocation in function.get("relocations", []):
             name = relocation["symbol"]
+            if name in defined_symbols:
+                relocations.extend(struct.pack("<II", relocation["offset"],
+                                               (defined_symbols[name] << 8) | relocation.get("type", 4)))
+                continue
             if name not in external_symbols:
                 external_symbols[name] = len(symbols) // 16
                 name_offset = len(strings)
@@ -207,19 +215,20 @@ def verify_registries(generated_dir: Path, committed_dir: Path) -> None:
 
 
 def _merge_corroborated(functions: list[dict], registry: dict, expected: dict,
-                       metadata: dict, binary: bytes, loaded: list[dict], kind: str) -> int:
+                       metadata: dict, binary: bytes, loaded: list[dict], kind: str | tuple[str, ...]) -> int:
     """Merge regenerated extents through shared identity, byte and overlap checks."""
     if registry != expected:
-        raise ValueError("Corroborated registry differs from regenerated original evidence")
+        raise ValueError(f"Corroborated registry differs from regenerated original evidence ({kind})")
     if registry["executable_sha1"] != metadata["sha1"] or registry.get("coverage_complete") is not False:
         raise ValueError("Corroborated registry identity or partial scope differs")
+    allowed_kinds = (kind,) if isinstance(kind, str) else kind
     count = 0
     for entry in registry["functions"]:
         low, size = entry["address"], entry["size"]
         spans = [segment for segment in loaded if segment["address"] <= low and
                  low + size <= segment["address"] + segment["file_size"]]
         if (entry.get("boundary_confirmation") is not True or size <= 0 or low % 4 or size % 4 or
-                entry.get("confirmation_kind") != kind or len(spans) != 1):
+                entry.get("confirmation_kind") not in allowed_kinds or len(spans) != 1):
             raise ValueError("Invalid corroborated function bounds")
         offset = spans[0]["offset"] + low - spans[0]["address"]
         if hashlib.sha256(binary[offset:offset + size]).hexdigest() != entry["sha256"]:
@@ -233,7 +242,7 @@ def _merge_corroborated(functions: list[dict], registry: dict, expected: dict,
                 raise ValueError("Corroborated and existing function extents conflict")
             continue
         functions.append({"name": entry["name"], "source": entry["source"],
-                          "low": low, "high": low + size, "provenance": kind})
+                          "low": low, "high": low + size, "provenance": entry["confirmation_kind"]})
         count += 1
     return count
 
@@ -326,11 +335,12 @@ def prepare_report(executable: Path, output_dir: Path, reviewed_functions: Path 
         checked_registries.append(("relocation-corroborated-functions.json", regenerated))
     if tu_corroborated_functions is not None:
         from .france_tu_sequences import generate, KIND
+        from .france_dutchman_tweaks import CLUSTER_KIND
         registry_path = Path(tu_corroborated_functions)
         registry = json.loads(registry_path.read_text(encoding="utf-8"))
         regenerated = generate(manifest, orig_dir, registry_path.parent)
         tu_corroborated_count = _merge_corroborated(
-            functions, registry, regenerated, metadata, binary, loaded, KIND)
+            functions, registry, regenerated, metadata, binary, loaded, (KIND, CLUSTER_KIND))
         checked_registries.append(("tu-corroborated-functions.json", regenerated))
     functions.sort(key=lambda f: f["low"])
     if any(right["low"] < left["high"] for left, right in zip(functions, functions[1:])):

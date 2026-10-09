@@ -43,8 +43,9 @@ namespace
 void xSndInit()
 {
     iSndInit();
+    U32 i = 0;
     xSndVoiceInfo* voice = gSnd.voice;
-    for (S32 i = 0; i < XSND_VOICE_COUNT; i++, voice++)
+    for (; i < XSND_VOICE_COUNT; i++, voice++)
     {
         voice->flags = 0;
         voice->lock_owner = 0;
@@ -115,7 +116,7 @@ void xSndPauseAll(U32 pause_effects, U32 pause_streams)
 {
     sDelayedPaused = pause_effects;
 
-    for (U32 i = 0; i < 0x40; i++)
+    for (U32 i = 0; i < XSND_VOICE_COUNT; i++)
     {
         if (gSnd.voice[i].flags & 1)
         {
@@ -133,7 +134,7 @@ void xSndPauseAll(U32 pause_effects, U32 pause_streams)
 
 void xSndPauseCategory(U32 mask, U32 pause)
 {
-    for (U32 i = 0; i < 0x40; i++)
+    for (U32 i = 0; i < XSND_VOICE_COUNT; i++)
     {
         if ((gSnd.voice[i].flags & 1) && (mask & 1 << gSnd.voice[i].category))
         {
@@ -149,7 +150,7 @@ void xSndSetCategoryVol(sound_category category, F32 vol)
 
 void xSndStopAll(U32 mask)
 {
-    for (U32 i = 0; i < 0x40; i++)
+    for (U32 i = 0; i < XSND_VOICE_COUNT; i++)
     {
         if ((gSnd.voice[i].flags & 1) && (mask & 1 << gSnd.voice[i].category))
         {
@@ -198,7 +199,11 @@ void xSndAddDelayed(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, U32 par
 {
     _xSndDelayed* snd = &sDelayedSnd[0];
 
+#if defined(PS2)
+    for (S32 i = 0; i < 16; i++)
+#else
     for (U32 i = 0x10; i != 0; i--)
+#endif
     {
         if (snd->delay <= 0.0f)
         {
@@ -246,31 +251,70 @@ void xSndCalculateListenerPosition()
     }
 }
 
+#if defined(PS2)
+// Retain the listener components across both distance calculations without
+// changing the value-returning vector operations and their temporaries.
+static inline xVec3 xSndListenerDelta(const xVec3& actual, const xVec3& listener,
+                                     F32& x, F32& y, F32& z)
+{
+    xVec3 delta = actual;
+    delta.x -= (x = listener.x);
+    delta.y -= (y = listener.y);
+    delta.z -= (z = listener.z);
+    return delta;
+}
+
+static inline xVec3 xSndListenerPosition(const xVec3& delta, F32 x, F32 y, F32 z)
+{
+    xVec3 position = delta;
+    position.x += x;
+    position.y += y;
+    position.z += z;
+    return position;
+}
+#endif
+
 void xSndProcessSoundPos(const xVec3* pActual, xVec3* pProcessed) {
     xVec3 temp_f;
     xVec3 playerDelta;
 
+#if defined(PS2)
+    F32 listenerX, listenerY, listenerZ;
+#endif
     F32 factor;
     F32 inwardShift;
 
     switch (gSnd.listenerMode) {
     case SND_LISTENER_MODE_PLAYER:
+#if defined(PS2)
+        temp_f = xSndListenerDelta(*pActual, gSnd.listenerMat[1].pos,
+                                  listenerX, listenerY, listenerZ);
+#else
         temp_f = *pActual - gSnd.listenerMat[1].pos;
+#endif
         playerDelta = *pActual - gSnd.listenerMat[0].pos;
         factor = xVec3Length(&temp_f);
         inwardShift = xVec3Length(&playerDelta);
         if (inwardShift < factor) {
             inwardShift = factor - inwardShift;
+#if defined(PS2)
+            inwardShift *= 0.5f;
+#else
             inwardShift /= 2.0f;
+#endif
             temp_f *= (factor - inwardShift) / factor;
+#if defined(PS2)
+            *pProcessed = xSndListenerPosition(temp_f, listenerX, listenerY, listenerZ);
+#else
             *pProcessed = temp_f + gSnd.listenerMat[1].pos;
-            return;
+#endif
+            break;
         }
         *pProcessed = *pActual;
-        return;
+        break;
     case SND_LISTENER_MODE_CAMERA:
         *pProcessed = *pActual;
-        return;
+        break;
     }
 }
 
@@ -313,6 +357,10 @@ void xSndInternalUpdateVoicePos(xSndVoiceInfo* pVoice)
     }
 }
 
+#if defined(PS2)
+// Retail Suspend calls this complete update routine instead of inlining it.
+#pragma dont_inline on
+#endif
 void xSndUpdate()
 {
     xSndCalculateListenerPosition();
@@ -320,6 +368,9 @@ void xSndUpdate()
     update_faders(sTimeElapsed);
     iSndUpdate();
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 void xSndSetListenerData(sound_listener_type listenerType, const xMat4x3* pMat)
 {
@@ -573,7 +624,7 @@ void xSndStartStereo(U32 id1, U32 id2, F32 pitch)
 U32 xSndIDIsPlaying(U32 sndID)
 {
     xSndVoiceInfo* voice = gSnd.voice;
-    for (int i = 0; i < XSND_VOICE_COUNT; i++, voice++)
+    for (U32 i = 0; i < XSND_VOICE_COUNT; i++, voice++)
     {
         if (voice->flags & 1 && voice->sndID == sndID)
         {
@@ -583,6 +634,18 @@ U32 xSndIDIsPlaying(U32 sndID)
     return 0;
 }
 
+#if defined(PS2)
+U32 xSndIsReady(U32 id)
+{
+    return iSndIsReady(id);
+}
+
+void xSndLoadExternalData(U32 snd, const void* data, S32 forceBuffer)
+{
+    iSndLoadExternalData(snd, data, forceBuffer);
+}
+#endif
+
 void xSndStop(U32 snd)
 {
     iSndStop(snd);
@@ -590,8 +653,9 @@ void xSndStop(U32 snd)
 
 void xSndParentDied(U32 pid)
 {
+    U32 i = 0;
     xSndVoiceInfo* voice = gSnd.voice;
-    for (S32 i = 0; i < XSND_VOICE_COUNT; i++, voice++)
+    for (; i < XSND_VOICE_COUNT; i++, voice++)
     {
         if (voice->parentID == pid)
         {
@@ -853,7 +917,11 @@ U8 xSndStreamLock(U32 owner, sound_category kill_cat, bool kill_nonlooping)
     return 0;
 }
 
+#if defined(PS2)
+U8 xSndStreamReady(U32 owner)
+#else
 U32 xSndStreamReady(U32 owner)
+#endif
 {
     xSndVoiceInfo* begin = gSnd.voice;
     xSndVoiceInfo* end = begin + STREAM_VOICE_COUNT;

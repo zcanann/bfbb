@@ -68,3 +68,29 @@ whole objects are freshly compiled. The only changed shared headers reduce to
 identical tokens with Xbox-only branches excluded. All changed PS2 source units
 are recompiled. The final report is compared to the actual published CI artifact,
 not merely to the older object cache.
+
+## Source load-order recovery
+
+Ordering the two manager-pointer loads in `xUpdateCull_Swap`, and the active-count
+and entry-index loads in the two inlined activation helpers, restores the
+original PS2 instruction order. The helper ordering is scoped to PS2 because a
+shared reorder regressed both existing GameCube helper matches. The pointer-load
+change preserves the GameCube output without a platform branch.
+
+The actual complete source object now matches all seven functions, 3,040 of
+3,040 function bytes, in USA, PAL, Germany, and France. Relative to the immediate
+source baseline, the newly exact functions are the 164-byte swap and 940-byte
+update, adding 1,104 exact bytes per version. This is a function-code result;
+it does not establish a fully linked retail translation unit.
+
+Independent raw comparisons against all four boot ELFs reproduce all 1,104 new
+bytes after applying only the four real `R_MIPS_26` calls in update to the
+already proven local swap identity. Swap has no relocations. The actual GU4Y78
+GameCube compiler retains every function score, including all nine exact
+functions and 2,452 exact bytes. No compiler or scoring settings changed.
+
+Private evidence in the PS2 worktree includes `build/cull-raw-proof.json`,
+`build/cullproof.py`, the retained whole `ps2solo` objects, and
+`build/cull-gc-{before,after}.json`. The French target was regenerated with the
+existing reviewed identities and data anchors in a limited diagnostic build;
+the combined full canonical report remains the integration gate.

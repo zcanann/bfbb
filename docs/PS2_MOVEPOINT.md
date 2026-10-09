@@ -49,3 +49,28 @@ sections are identical under the actual compiler. Private reproduction:
 build/near253/{original-proof.json,proof.json,raw/raw-proof.json,gc/proof.json,
 candidate/<version>/report.json}. No platform guard, compiler flag, type, header,
 profile, or scoring-backend changes are required.
+
+## Shared unit-length constant
+
+Sharing the unit-length constant between the tolerance comparison and its
+return value restores the original floating-point register allocation in the
+inlined heading helper. The helper's inputs, arithmetic, tolerance and returned
+values are unchanged. `xMovePointGetNext` improves from 93.82143% to 99.39286%
+in all four PS2 versions. The three debug whole-unit reports improve from
+97.69334% to 99.77333%; all eight previously exact functions / 940 bytes remain
+exact. France currently profiles only the 560-byte GetNext function, so its
+unit percentage equals that function's percentage.
+
+All GU4Y78 GameCube function scores remain unchanged, including ten exact
+functions / 1,388 bytes. The remaining PS2 differences are two integer-register
+assignments and reuse of a materialized immediate where the original reloads
+it. Earlier/later compiler probes did not reproduce the complete original
+function and provide no basis for a compiler patch. No compiler, relocation,
+profile or scoring settings change, and this adds no new exact-function claim.
+
+Private evidence in the PS2 worktree includes
+`build/movepoint-full-comparison.json` and its replay script, retained whole
+source objects, `build/movepoint-gc-{before,after}.json`, and the fresh limited
+French target in `build/movepoint-france-diagnostic`. Declaration, return and
+argument-temporary probes are retained privately; only the shared constant
+change is applied to production source.

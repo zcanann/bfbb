@@ -1941,6 +1941,9 @@ namespace cruise_bubble
 
         void tweak_group::register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, const char*)
         {
+#if defined(PS2)
+            xVec3 V0 = { 0.0f, 0.0f, 0.0f };
+#endif
             if (init)
             {
                 this->aim_delay = 0.2f;
@@ -2803,7 +2806,12 @@ namespace cruise_bubble
             strcat(s, start_anim_states[i]);
             s += strlen(s);
             *s = ' ';
+#if defined(PS2)
+            s[1] = '\0';
+            ++s;
+#else
             *++s = '\0';
+#endif
         }
 
         shared.atran.player.aim =

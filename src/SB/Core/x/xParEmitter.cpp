@@ -210,25 +210,26 @@ void xParEmitterReset(xParEmitter* t)
 S32 xParEmitterEventCB(xBase* to, xBase* from, U32 toEvent, const F32* toParam,
                        xBase* toParamWidget)
 {
+    xParEmitter* emitter = (xParEmitter*)from;
     xParEmitterCustomSettings sp8;
 
     switch ((S32)toEvent)
     {
     case eEventReset:
-        xParEmitterReset((xParEmitter*)from);
+        xParEmitterReset(emitter);
         break;
     case eEventOn:
-        ((xParEmitter*)from)->emit_flags |= 1;
+        emitter->emit_flags |= 1;
         break;
     case eEventOff:
-        if (((xParEmitter*)from)->emit_flags & 1)
+        if (emitter->emit_flags & 1)
         {
-            ((xParEmitter*)from)->emit_flags ^= 1;
+            emitter->emit_flags ^= 1;
         }
         break;
     case eEventEmit:
         memset(&sp8, 0, sizeof(sp8));
-        xParEmitterEmitCustom((xParEmitter*)from, 0.033333335f, &sp8);
+        xParEmitterEmitCustom(emitter, 0.033333335f, &sp8);
         break;
     }
     return 1;
@@ -351,7 +352,10 @@ F32 xParInterpCompute(S32 interp_mode, xParInterp* r, F32 time, S32 time_has_ela
 {
     F32 val;
 
+#if !defined(PS2)
     val = time;
+#endif
+    // PS2 assigns val only for the interpolation modes handled below.
     switch (interp_mode)
     {
     case 0:
@@ -377,19 +381,19 @@ F32 xParInterpCompute(S32 interp_mode, xParInterp* r, F32 time, S32 time_has_ela
         }
         else
         {
-            val = ((r->val[1] - r->val[0]) * (val / r->freq)) + r->val[0];
+            val = ((r->val[1] - r->val[0]) * (time / r->freq)) + r->val[0];
         }
         break;
     case 4:
-        val = ((r->val[1] - r->val[0]) * (0.5f * isin(6.2831855f * (val * r->oofreq)) + 0.5f)) +
+        val = ((r->val[1] - r->val[0]) * (0.5f * isin(6.2831855f * (time * r->oofreq)) + 0.5f)) +
               r->val[0];
         break;
     case 5:
-        val = ((r->val[1] - r->val[0]) * (0.5f * icos(6.2831855f * (val * r->oofreq)) + 0.5f)) +
+        val = ((r->val[1] - r->val[0]) * (0.5f * icos(6.2831855f * (time * r->oofreq)) + 0.5f)) +
               r->val[0];
         break;
     case 7:
-        if ((val * r->freq) >= 0.5f)
+        if ((time * r->freq) >= 0.5f)
         {
             val = r->val[1];
         }
@@ -506,17 +510,29 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
         return NULL;
     }
 
+#if defined(PS2)
+    if (((S32)ps->tasset->maxPar > 0) && (ps->group->m_num_of_particles >= (S32)ps->tasset->maxPar))
+#else
     if ((ps->tasset->maxPar != 0) && (ps->group->m_num_of_particles >= (S32)ps->tasset->maxPar))
+#endif
     {
         return NULL;
     }
 
+#if defined(PS2)
+    if (((S32)ps->tasset->maxPar > 0) && (ps->group->m_num_of_particles >= (S32)ps->tasset->maxPar))
+#else
     if ((ps->tasset->maxPar != 0) && (ps->group->m_num_of_particles >= (S32)ps->tasset->maxPar))
+#endif
     {
         return NULL;
     }
 
+#if defined(PS2)
+    if (((S32)ps->tasset->maxPar > 0) &&
+#else
     if ((ps->tasset->maxPar != 0) &&
+#endif
         (ps->group->m_num_of_particles + rate_has_elapsed >= (S32)ps->tasset->maxPar))
     {
         rate_has_elapsed = ps->tasset->maxPar - ps->group->m_num_of_particles;

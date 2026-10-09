@@ -86,3 +86,99 @@ This is a standard code match. Raw reconstruction still distinguishes the two
 stop callees and the source xSndGetVol call from the original platform targets;
 no raw396 claim is made. Private evidence: build/near246/proof.json,
 raw/raw-proof.json and gc/proof.json. No profile, header or backend changed.
+
+## Remaining voice bounds and PS2 wrappers (2026-10-08)
+
+PauseAll, PauseCategory and StopAll still used a literal 64-voice loop after
+the earlier capacity correction. They now use `XSND_VOICE_COUNT`, as the
+other voice loops already do. Original PS2 instructions compare against 48.
+This promotes those three functions and Resume, which inlines PauseAll, for
+648 additional exact source bytes. GameCube keeps its existing 64-voice bound.
+
+The original Suspend calls the complete Update routine. The selected compiler's
+bottom-up inlining expanded Update into Suspend, producing a much larger body.
+A PS2-only `dont_inline` pragma around Update's definition preserves the original
+call while keeping its own body unchanged. Suspend's 160 bytes then match.
+The pragma resets immediately after the definition. Disabling bottom-up inlining
+for the entire unit regressed Init; that broader change was rejected.
+
+Two missing shared wrappers are also restored only for PS2. `xSndIsReady`
+returns the platform `iSndIsReady` byte result as U32, reproducing the original
+32-byte call and unsigned-byte conversion. `xSndLoadExternalData` tailcalls its
+platform counterpart, reproducing all eight bytes. Original DWARF gives the
+platform return type and parameter types; existing independently captured
+target relocations identify both callees. The declarations are in the PS2
+platform header, with the shared wrapper declarations guarded for PS2.
+
+Fresh complete-source reports agree in USA, Europe and Germany: 24/37 exact
+functions and 4668/6764 exact bytes become 31/37 and 5516/6764, a gain of seven
+functions and 848 bytes per release. Unit fuzzy matching rises from 95.61502%
+to 98.3974%. Every previously matched function stays matched. France's existing
+three-function profile gains IsReady's 32 bytes and reaches 3/3, 132/132.
+This does not establish complete French TU ownership or whole-unit linking.
+
+The full GameCube USA build preserves its complete progress report and passes
+the retail DOL SHA-1 check. Private original/after/final unit reports and rejected
+inlining probes are under `build/sound-oct08`. No comparison profile, registry,
+original target, or compiler binary was changed.
+
+## Counter lifetimes and stream-ready type (2026-10-09)
+
+Five more complete bodies now match in all three debug regions: Init (264
+bytes), ParentDied (64), IDIsPlaying (88), AddDelayed (128), and StreamReady
+(88). This adds 632 exact bytes and five functions, reaching 36/37 functions
+and 6148/6764 bytes. Fuzzy matching rises from 98.3974% to 99.09048%. Only
+ProcessSoundPos remains unmatched. Every other function score is unchanged.
+
+The three voice loops use unsigned counters, matching the original unsigned
+comparisons. Init and ParentDied initialize their counters before forming the
+voice pointer; unsigned types alone improved the bodies but did not reproduce
+their register lifetimes. These changes preserve the exact GameCube bodies.
+AddDelayed uses the original signed ascending counter on PS2 and retains the
+existing countdown loop on GameCube.
+
+StreamReady's PS2 definition now returns U8. Authenticated DWARF1 records in
+all three debug executables give fundamental type 3 (unsigned char), and its
+sole source caller in zTalkBox already declares that type. The old U32
+definition introduced an extra unsigned-byte conversion and padding. No shared
+header or caller declaration changes. GameCube retains its existing definition.
+
+All four PS2 versions were compiled before and after. France's established
+three-function subset stays exactly 132/132 bytes. The full GameCube USA build
+preserves its entire progress report and passes the retail DOL SHA-1 check.
+Private evidence is `build/sound-oct09`, including the original DWARF type
+records, per-region reports and rejected source probes. No profile, registry,
+original target or compiler binary changed.
+
+ProcessSoundPos's switch cases now break to the existing function end instead
+of returning separately. This preserves behavior and the exact GameCube body
+while improving the remaining 616-byte PS2 function from 90.012985% to
+91.31169% in USA, Europe and Germany. Unit fuzzy matching reaches 99.208755%;
+the 36 exact functions and 6148 exact bytes are unchanged. France's established
+subset remains identical. The full GameCube USA report is unchanged and its
+retail DOL SHA-1 check passes. Four-region reports use the `-break.json` suffix
+under `build/sound-oct09`. Several vector-temporary and half-multiply variants
+scored lower and were discarded.
+
+## Complete position processing (2026-10-09)
+
+ProcessSoundPos now matches its complete 616-byte body in USA, Europe and
+Germany. The original retains the three listener coordinates in floating-point
+registers across both distance calculations and the final position addition.
+The previous expression form reloaded those coordinates near the end, changing
+register lifetimes throughout the body. Two PS2-only inline value-returning
+helpers explicitly retain the scalar coordinates while preserving the original
+vector temporary copies. The inward shift uses the original multiply by 0.5.
+
+This changes only ProcessSoundPos: 91.31169% becomes 100%. All three debug
+unit reports reach 37/37 exact functions and 6764/6764 exact bytes, up from
+36/37 and 6148/6764. Unit fuzzy matching rises from 99.208755% to 100%.
+France's current three-function subset remains exactly 132/132 bytes. All
+three GameCube unit reports retain identical function records and measures.
+
+Private regional-checkout evidence: `build/sound-position-source-summary.json`,
+`build/sound-position-source-after`, and `build/sound-position-gc-verify`.
+The discarded probes in `build/sound-position-source-probe` include cached
+vectors and pointers, direct memberwise operations, and changed compound
+assignments. No comparison settings, original targets, headers or compiler
+binaries changed.

@@ -557,6 +557,45 @@ static void zParPTankSnowCreate(zParPTank* zp, U32 max_particles, zParPTankUpdat
         (snow_particle_data*)xMemAllocSize(zp->max_particles * sizeof(snow_particle_data));
 }
 
+#if defined(PS2)
+namespace
+{
+    // The original PS2 path keeps the four side planes in vf14-vf17.
+    inline void prepare_snow_culling()
+    {
+        asm volatile("lqc2 vf14, 0(%0)\n"
+                     "lqc2 vf15, 16(%0)\n"
+                     "lqc2 vf16, 32(%0)\n"
+                     "lqc2 vf17, 48(%0)\n"
+                     : : "r"(globals.camera.frustplane) : "memory");
+    }
+
+    inline S32 snow_outside_side_planes(const xVec4* loc)
+    {
+        S32 outside;
+        asm volatile("lqc2 vf8, 0(%1)\n"
+                     "vaddaw.xyzw ACC, vf17, vf8w\n"
+                     "vmsubax.xyzw ACC, vf14, vf8x\n"
+                     "vmsubay.xyzw ACC, vf15, vf8y\n"
+                     "vmsubz.xyzw vf1, vf16, vf8z\n"
+                     "qmfc2 %0, vf1\n"
+                     "pcgtw %0, $0, %0\n"
+                     "ppach %0, $0, %0\n"
+                     "vmul.w vf7, vf8, vf10\n"
+                     : "=&r"(outside) : "r"(loc) : "memory");
+        return outside;
+    }
+
+    inline F32 snow_near_plane_distance(const xVec4* loc)
+    {
+        return globals.camera.frustplane[4].x * loc->x +
+               globals.camera.frustplane[5].x * loc->y +
+               globals.camera.frustplane[6].x * loc->z -
+               globals.camera.frustplane[7].x + 0.5f * loc->w;
+    }
+}
+#endif
+
 // Equivalent: float scheduling
 static void zParPTankSnowUpdate(zParPTank* zp, float dt)
 {
@@ -567,6 +606,9 @@ static void zParPTankSnowUpdate(zParPTank* zp, float dt)
     F32 ifadein = 2550.0f * (1.0f / ilife);
     F32 ifadeout = 637.5f * (1.0f / ilife);
     snow_pool.reset();
+#if defined(PS2)
+    prepare_snow_culling();
+#endif
     snow_particle_data* it = snow_particles;
     while (it != end)
     {
@@ -581,6 +623,13 @@ static void zParPTankSnowUpdate(zParPTank* zp, float dt)
         it->loc += it->vel * dt;
         xVec4* _loc = (xVec4*)&it->loc;
         F32 par_dist;
+#if defined(PS2)
+        if (!snow_outside_side_planes(_loc))
+        {
+            par_dist = snow_near_plane_distance(_loc);
+            if (par_dist < -0.1f)
+            {
+#endif
         snow_pool.next();
         if (!snow_pool.valid())
         {
@@ -608,6 +657,10 @@ static void zParPTankSnowUpdate(zParPTank* zp, float dt)
         snow_pool.uv[0].assign(it->u, 0.875f);
         snow_pool.uv[1].assign(0.125f + snow_pool.uv[0].x, 0.125f + snow_pool.uv[0].y);
 
+#if defined(PS2)
+            }
+        }
+#endif
         it++;
     }
 

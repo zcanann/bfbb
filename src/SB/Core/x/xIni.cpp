@@ -47,12 +47,12 @@ xIniFile* xIniParse(char* buf, S32 len)
         switch (buf[i])
         {
         case '\n':
-            lastCRLF = i;
             clf++;
+            lastCRLF = i;
             break;
         case '\r':
-            lastCRLF = i;
             ccr++;
+            lastCRLF = i;
             break;
         case '[':
             copen++;

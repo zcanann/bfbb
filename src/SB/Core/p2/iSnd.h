@@ -61,6 +61,8 @@ void iSndInitSceneLoaded();
 U8 iSndIsPlaying(U32 assetID);
 U8 iSndIsPlaying(U32 assetID, U32 parid);
 U8 iSndIsPlayingByHandle(U32 handle);
+U8 iSndIsReady(U32 id);
+void iSndLoadExternalData(U32 snd, const void* data, S32 forceBuffer);
 iSndFileInfo* iSndLookup(U32 id);
 
 void iSndPause(U32 snd, U32 pause);

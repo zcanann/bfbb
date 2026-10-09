@@ -11,10 +11,14 @@
 #include "zGlobals.h"
 #include "xstransvc.h"
 
-#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
-enum { SCRFX_SCREEN_HEIGHT = 528 };
+#if defined(VERSION_SLUS_20680)
+enum { SCRFX_SCREEN_WIDTH = 640, SCRFX_SCREEN_HEIGHT = 448 };
+#elif defined(VERSION_SLES_51968) || defined(VERSION_SLES_51970)
+enum { SCRFX_SCREEN_WIDTH = 512, SCRFX_SCREEN_HEIGHT = 512 };
+#elif defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+enum { SCRFX_SCREEN_WIDTH = 640, SCRFX_SCREEN_HEIGHT = 528 };
 #else
-enum { SCRFX_SCREEN_HEIGHT = 480 };
+enum { SCRFX_SCREEN_WIDTH = 640, SCRFX_SCREEN_HEIGHT = 480 };
 #endif
 
 struct _xFadeData
@@ -297,9 +301,15 @@ void xScrFxDrawSafeArea()
     iScrFxDrawBox(right, top, right + width, bottom, 255, 0, 0, 255);
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 void xScrFxDistortionAdd(xVec3*, xVec3*, S32)
 {
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 static void xScrFxDistortionUpdate(F32 dt)
 {
@@ -336,14 +346,16 @@ static void xScrFxDistortionUpdate(F32 dt)
     }
 }
 
-static void xScrFxDistortionRender(RwCamera*)
+static void xScrFxDistortionRender(RwCamera* camera)
 {
+#if defined(PS2)
+    iScrFxDistortionRender(camera);
+#endif
 }
 
 void xScrFXGlareInit()
 {
-    sGlare->flags = 0;
-    for (S32 i = 1; i < 10; i++)
+    for (S32 i = 0; i < 10; i++)
     {
         sGlare[i].flags = 0;
     }
@@ -467,7 +479,7 @@ void xScrFXFullScreenGlareRender()
     RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
     RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDONE);
 
-    xScrFxDrawBox(0.0f, 0.0f, 640.0f, (F32)SCRFX_SCREEN_HEIGHT, color.red, color.green, color.blue, color.alpha, dp, 0.0f);
+    xScrFxDrawBox(0.0f, 0.0f, (F32)SCRFX_SCREEN_WIDTH, (F32)SCRFX_SCREEN_HEIGHT, color.red, color.green, color.blue, color.alpha, dp, 0.0f);
 }
 
 void xScrFXGlareRender(xCamera* cam)
@@ -502,7 +514,7 @@ void xScrFXGlareRender(xCamera* cam)
         glareDir.z = sGlare[i].pos.z - cam->mat.pos.z;
         xVec3Normalize(&glareDir, &glareDir);
 
-        F32 val = (1.0f + glareDir.dot(v)) * 0.5f;
+        F32 val = (1.0f + glareDir.dot(v)) / 2.0f;
         val *= val * val * val;
 
         val *= sGlare[i].intensity / xVec3Length(&glareDir);

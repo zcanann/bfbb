@@ -105,8 +105,7 @@ extern "C" RwBool RpSkyRenderStateGet(RpSkyRenderState nState, void* pParam);
 extern "C" RwBool RpSkyRenderStateSet(RpSkyRenderState nState, void* pParam);
 S32 ShadowMapCreatePipelines();
 
-// PS2 projects receiver triangles in a separate VU0 inline-asm routine; its body
-// is not recovered as C.
+// PS2 projects receiver triangles in a separate routine using VU0 inline assembly.
 static void xShadowReceiveShadowFastPS2(xEnt* ent, F32 shadowFactor, S32 shadowMode,
                                         RwMatrixTag* shadowMat, RwRaster* shadowRast);
 #endif
@@ -153,11 +152,13 @@ void xShadowInit()
     xShadowCameraCreate();
 #if defined(PS2)
     RpSkyTexCacheRasterLock(ShadowCameraRaster, TRUE);
-    ShadowMapCreatePipelines();
 #else
     gc_saveraster = RwRasterCreate(256, 256, 32, 0x504);
 #endif
     shadow_ent_count = 0;
+#if defined(PS2)
+    ShadowMapCreatePipelines();
+#endif
     ShadowLight = RpLightCreate(1);
     RpLightSetColor(ShadowLight, &ShadowLightColor);
     RwFrame* frame = RwFrameCreate();
@@ -169,6 +170,9 @@ void xShadowRender(xVec3* center, F32 radius, F32 max_dist)
     xShadowRenderWorld(center, radius, max_dist);
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 static S32 SetupShadow()
 {
     S32 res = 256;
@@ -177,7 +181,9 @@ static S32 SetupShadow()
     // equal to either display width or height.
     // On GCN, this routine normally won't happen,
     // as we're already below both dimensions.
-#if defined(PS2)
+#if defined(VERSION_SLES_51968) || defined(VERSION_SLES_51970)
+    for (; (res > 512) || (res > 512); res >>= 1);
+#elif defined(PS2)
     for (; (res > 640) || (res > 448); res >>= 1);
 #elif defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
     for (; (res > 640) || (res > 528); res >>= 1);
@@ -201,6 +207,10 @@ static S32 SetupShadow()
     ShadowCamera->frameBuffer = raster;
     return 1;
 }
+
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 void xShadowSetWorld(RpWorld* world)
 {
@@ -244,6 +254,27 @@ static S32 ShadowRender(RwCamera* shadowCamera, RwRaster* shadowRast, RpIntersec
 
 void xShadowRenderWorld(xVec3* center, F32 radius, F32 max_dist)
 {
+#if defined(PS2)
+    RpIntersection shadowZone;
+    xSphere zone;
+    RwFrame* camFrame = (RwFrame*)ShadowCamera->object.object.parent;
+    RwMatrixTag* camMatrix = &camFrame->modelling;
+    xVec3* at = (xVec3*)&camMatrix->at;
+    xVec3* up = (xVec3*)&camMatrix->up;
+    xVec3* rt = (xVec3*)&camMatrix->right;
+    xRay3 R[1];
+    xCollis entcoll[1];
+    xCollis envcoll[1];
+    const F32 sf[3][2] = { { 0.0f, 0.0f }, { 0.0f, 0.5f }, { 0.0f, -0.5f } };
+    U32 hit_env;
+    U32 hit_ent;
+    F32 ent_dist;
+    F32 env_dist;
+    xVec3 ent_pos;
+    xVec3 env_pos;
+    S32 i;
+    xQCData q;
+#else
     RwFrame* camFrame = (RwFrame*)ShadowCamera->object.object.parent;
     RwMatrixTag* camMatrix = &camFrame->modelling;
     xVec3* at = (xVec3*)&camMatrix->at;
@@ -263,6 +294,8 @@ void xShadowRenderWorld(xVec3* center, F32 radius, F32 max_dist)
     F32 ent_dist;
     F32 env_dist;
     S32 i;
+
+#endif
 
     gShadowFlags = 0;
     hit_env = 0;
@@ -311,7 +344,11 @@ void xShadowRenderWorld(xVec3* center, F32 radius, F32 max_dist)
 
         if (entcoll[i].flags & 0x1)
         {
+#if defined(PS2)
+            hit_ent++;
+#else
             hit_ent = 1;
+#endif
             if (entcoll[i].dist < ent_dist)
             {
                 ent_dist = entcoll[i].dist;
@@ -322,7 +359,11 @@ void xShadowRenderWorld(xVec3* center, F32 radius, F32 max_dist)
 
         if (envcoll[i].flags & 0x1)
         {
+#if defined(PS2)
+            hit_env++;
+#else
             hit_env = 1;
+#endif
             if (envcoll[i].dist < env_dist)
             {
                 env_dist = envcoll[i].dist;
@@ -669,6 +710,349 @@ void xShadowReceiveShadow(xEnt* ent, F32 shadowFactor, S32 shadowMode, RwMatrixT
     }
 }
 
+#if defined(PS2)
+static void xShadowReceiveShadowFastPS2(xEnt* ent, F32 shadowFactor, S32 shadowMode,
+                                      RwMatrixTag* shadowMat, RwRaster* shadowRast)
+{
+    RwCamera* shadowCamera = ShadowCamera;
+    F32 radius;
+    F32 fadeDist = 0.0f;
+    RwMatrixTag invMatrix;
+    RwV3d at __attribute__((aligned(16)));
+    RwV3d scl;
+    RwV3d tr;
+
+    if (shadowRast != NULL)
+    {
+        RwRenderStateSet(rwRENDERSTATETEXTURERASTER, shadowRast);
+    }
+    else
+    {
+        RwRenderStateSet(rwRENDERSTATETEXTURERASTER, shadowCamera->frameBuffer);
+    }
+
+    RwRenderStateSet(rwRENDERSTATETEXTUREADDRESS, (void*)rwTEXTUREADDRESSCLAMP);
+    RwRenderStateSet(rwRENDERSTATEVERTEXALPHAENABLE, (void*)1);
+
+    switch (shadowMode)
+    {
+    case 1:
+        RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
+        break;
+    case 0:
+    default:
+        RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDZERO);
+        break;
+    }
+
+    if (shadowFactor < 0.0f)
+    {
+        shadowFactor = -shadowFactor;
+
+        switch (shadowMode)
+        {
+        case 1:
+            RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDINVSRCALPHA);
+            RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDSRCALPHA);
+            break;
+        case 0:
+        default:
+            RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDSRCALPHA);
+            break;
+        }
+    }
+    else
+    {
+        switch (shadowMode)
+        {
+        case 1:
+            RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCALPHA);
+            break;
+        case 0:
+        default:
+            RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCALPHA);
+            break;
+        }
+    }
+
+
+    RwMatrixTag* shadowMatrix;
+    if (shadowMat != NULL)
+    {
+        shadowMatrix = shadowMat;
+    }
+    else
+    {
+        shadowMatrix = &((RwFrame*)shadowCamera->object.object.parent)->modelling;
+    }
+
+    at = shadowMatrix->at;
+
+    radius = gShadowObjectRadius;
+
+    RwMatrixInvert(&invMatrix, shadowMatrix);
+
+    scl.x = scl.y = -0.5f / radius;
+    scl.z = 1.0f / (fadeDist + radius);
+    RwMatrixScale(&invMatrix, &scl, rwCOMBINEPOSTCONCAT);
+
+    tr.x = tr.y = 0.5f;
+    tr.z = 0.0f;
+    RwMatrixTranslate(&invMatrix, &tr, rwCOMBINEPOSTCONCAT);
+
+    asm volatile("lqc2 vf28, 0x0(%0)\n"
+                 "lqc2 vf29, 0x10(%0)\n"
+                 "lqc2 vf30, 0x20(%0)\n"
+                 "lqc2 vf31, 0x30(%0)\n"
+                 : : "r"(&invMatrix) : "memory");
+
+    U32 i;
+    U32 num_verts;
+    xVec3* xvert;
+    RpTriangle* tri;
+    RpGeometry* geom;
+    U8 val = (U8)(255.0f * shadowFactor);
+    U32 vertex_color = (val << 24) | (val << 16) | (val << 8) | val;
+    xModelInstance* model = ent->model;
+    U32 max_verts = 0;
+    U32 model_num = 0;
+    U32 ent_id = ent->id;
+
+    for (; model != NULL; model = model->Next)
+    {
+        RpAtomic* atomic = model->Data;
+        model_num++;
+        // Retail keeps this atomic/model diagnostic snapshot in EE registers.
+        asm volatile("addiu $10, %0, 0x0\n"
+                     "addiu $11, %1, 0x0\n"
+                     "lw $12, 0x0(%2)\n"
+                     "lw $13, 0x4(%2)\n"
+                     "pextlw $12, $13, $12\n"
+                     "lw $13, 0x8(%2)\n"
+                     "lw $14, 0xc(%2)\n"
+                     "pextlw $13, $14, $13\n"
+                     "lw $14, 0x10(%2)\n"
+                     "lw $15, 0x14(%2)\n"
+                     "pextlw $14, $15, $14\n"
+                     "lw $15, 0x18(%2)\n"
+                     "lw $24, 0x1c(%2)\n"
+                     "pextlw $15, $24, $15\n"
+                     : : "r"(model_num), "r"(ent_id), "r"(atomic)
+                     : "$10", "$11", "$12", "$13", "$14", "$15", "$24");
+
+        geom = atomic->geometry;
+        num_verts = geom->numVertices;
+        if (num_verts > max_verts)
+        {
+            max_verts = num_verts;
+        }
+    }
+
+    xvert = (xVec3*)xMemPushTemp(max_verts * sizeof(xVec3));
+    if (xvert != NULL)
+    {
+        Im3DBuffer = gRenderBuffer.m_vertex;
+        asm volatile("lqc2 vf20, 0x0(%0)\n"
+                     "vmulx.w vf20, vf0, vf20x\n"
+                     "vmuly.w vf21, vf0, vf20y\n"
+                     "vmulz.w vf22, vf0, vf20z\n"
+                     : : "r"(&at) : "memory");
+
+        for (model = ent->model; model != NULL; model = model->Next)
+        {
+            geom = model->Data->geometry;
+            iModelVertEval(model->Data, 0, geom->numVertices, model->Mat, NULL, xvert);
+            tri = geom->triangles;
+            for (i = 0; i < geom->numTriangles; i++, tri++)
+            {
+                if (Im3DBufferPos > 0x1dd)
+                {
+                    if (RwIm3DTransform(Im3DBuffer, Im3DBufferPos, NULL,
+                                        rwIM3D_VERTEXUV | rwIM3D_VERTEXXYZ | rwIM3D_VERTEXRGBA))
+                    {
+                        RwIm3DRenderPrimitive(rwPRIMTYPETRILIST);
+                        RwIm3DEnd();
+                    }
+                    Im3DBufferPos = 0;
+                }
+
+                RxObjSpace3DVertex* imv = &Im3DBuffer[Im3DBufferPos];
+                xVec3* v0 = &xvert[tri->vertIndex[0]];
+                xVec3* v1 = &xvert[tri->vertIndex[1]];
+                xVec3* v2 = &xvert[tri->vertIndex[2]];
+
+                U32 clip;
+                // Project into shadow UV space and reject a shared outside clip plane.
+                asm volatile("lwu $8, 0x0(%1)\n"
+                             "lui $9, 0xbf00\n"
+                             "qmtc2 $9, vf24\n"
+                             "lwu $9, 0x4(%1)\n"
+                             "lwu $10, 0x8(%1)\n"
+                             "pextlw $8, $9, $8\n"
+                             "pcpyld $8, $10, $8\n"
+                             "qmtc2 $8, vf1\n"
+                             "lwu $8, 0x0(%2)\n"
+                             "vaddx.yzw vf24, vf0, vf24x\n"
+                             "lwu $9, 0x4(%2)\n"
+                             "lwu $10, 0x8(%2)\n"
+                             "pextlw $8, $9, $8\n"
+                             "pcpyld $8, $10, $8\n"
+                             "qmtc2 $8, vf2\n"
+                             "lwu $8, 0x0(%3)\n"
+                             "lwu $9, 0x4(%3)\n"
+                             "lwu $10, 0x8(%3)\n"
+                             "pextlw $8, $9, $8\n"
+                             "pcpyld $8, $10, $8\n"
+                             "qmtc2 $8, vf3\n"
+                             "vmulax.xyz ACC, vf28, vf1x\n"
+                             "vmadday.xyz ACC, vf29, vf1y\n"
+                             "vmaddaz.xyz ACC, vf30, vf1z\n"
+                             "vmaddw.xyz vf4, vf31, vf0w\n"
+                             "vmulax.xyz ACC, vf28, vf2x\n"
+                             "vmadday.xyz ACC, vf29, vf2y\n"
+                             "vmaddaz.xyz ACC, vf30, vf2z\n"
+                             "vmaddw.xyz vf5, vf31, vf0w\n"
+                             "vmulax.xyz ACC, vf28, vf3x\n"
+                             "vmadday.xyz ACC, vf29, vf3y\n"
+                             "vmaddaz.xyz ACC, vf30, vf3z\n"
+                             "vmaddw.xyz vf6, vf31, vf0w\n"
+                             "vadd.xyz vf25, vf4, vf24\n"
+                             "vadd.xyz vf26, vf5, vf24\n"
+                             "vadd.xyz vf27, vf6, vf24\n"
+                             "vsub vf7, vf2, vf1\n"
+                             "vclipw.xyz vf25, vf24w\n"
+                             "vclipw.xyz vf26, vf24w\n"
+                             "vclipw.xyz vf27, vf24w\n"
+                             "vsub vf8, vf3, vf1\n"
+                             "vnop\n"
+                             "vnop\n"
+                             "vnop\n"
+                             "vnop\n"
+                             "vnop\n"
+                             "cfc2 $8, vi18\n"
+                             "srl $9, $8, 6\n"
+                             "srl $10, $8, 12\n"
+                             "and $8, $8, $9\n"
+                             "and $8, $8, $10\n"
+                             "andi %0, $8, 0x2f\n"
+                             : "=r"(clip) : "r"(v0), "r"(v1), "r"(v2)
+                             : "$8", "$9", "$10", "memory");
+                if (clip != 0)
+                {
+                    continue;
+                }
+
+                asm volatile("vopmula.xyz ACC, vf7, vf8\n"
+                             "vopmsub.xyz vf27, vf8, vf7\n"
+                             : : : "memory");
+
+                F32 local_SHADOW_BIAS_AMT = 0.002f;
+                F32 local_SHADOW_MINNORMY = 0.00017431141f;
+                // Start the reciprocal square root while testing the unnormalized facing dot.
+                asm volatile("vmul vf22, vf27, vf27\n"
+                             "vmulax.w ACC, vf20, vf27x\n"
+                             "vmadday.w ACC, vf21, vf27y\n"
+                             "vmaddz.w vf24, vf22, vf27z\n"
+                             "vaddy.x vf24, vf22, vf22y\n"
+                             "vnop\n"
+                             "vnop\n"
+                             "vnop\n"
+                             "vaddz.x vf24, vf24, vf22z\n"
+                             "vnop\n"
+                             "vnop\n"
+                             "vnop\n"
+                             "lw $8, 0x0(%1)\n"
+                             "vnop\n"
+                             "qmtc2 $8, vf23\n"
+                             "vrsqrt Q, vf23x, vf24x\n"
+                             "qmfc2 $8, vf24\n"
+                             "mtsah $0, 0x6\n"
+                             "qfsrv $8, $8, $8\n"
+                             "mtc1 $8, %0\n"
+                             : "=f"(shadowFactor) : "r"(&local_SHADOW_BIAS_AMT)
+                             : "$8", "memory");
+
+                if (!(shadowFactor <= 0.0f))
+                {
+                    continue;
+                }
+
+                asm volatile("vwaitq\n"
+                             "vmulq vf27, vf27, Q\n"
+                             "vnop\n"
+                             "vnop\n"
+                             "lw $9, 0x0(%1)\n"
+                             "qmfc2 $10, vf27\n"
+                             "vadd vf1, vf1, vf27\n"
+                             "vadd vf2, vf2, vf27\n"
+                             "vadd vf3, vf3, vf27\n"
+                             "dsrl32 $10, $10, 0\n"
+                             "sltu %0, $10, $9\n"
+                             : "=r"(clip) : "r"(&local_SHADOW_MINNORMY)
+                             : "$8", "$9", "$10", "memory");
+                if (clip != 0)
+                {
+                    continue;
+                }
+
+                // Store biased world positions and the original projected UV coordinates.
+                asm volatile("qmfc2 $8, vf1\n"
+                             "dsrl32 $9, $8, 0\n"
+                             "pcpyud $10, $8, $8\n"
+                             "sw $8, 0x0(%0)\n"
+                             "sw $9, 0x4(%0)\n"
+                             "sw $10, 0x8(%0)\n"
+                             "qmfc2 $8, vf2\n"
+                             "dsrl32 $9, $8, 0\n"
+                             "pcpyud $10, $8, $8\n"
+                             "sw $8, 0x24(%0)\n"
+                             "sw $9, 0x28(%0)\n"
+                             "sw $10, 0x2c(%0)\n"
+                             "qmfc2 $8, vf3\n"
+                             "dsrl32 $9, $8, 0\n"
+                             "pcpyud $10, $8, $8\n"
+                             "sw $8, 0x48(%0)\n"
+                             "sw $9, 0x4c(%0)\n"
+                             "sw $10, 0x50(%0)\n"
+                             "qmfc2 $8, vf4\n"
+                             "dsrl32 $9, $8, 0\n"
+                             "sw $8, 0x1c(%0)\n"
+                             "sw $9, 0x20(%0)\n"
+                             "qmfc2 $8, vf5\n"
+                             "dsrl32 $9, $8, 0\n"
+                             "sw $8, 0x40(%0)\n"
+                             "sw $9, 0x44(%0)\n"
+                             "qmfc2 $8, vf6\n"
+                             "dsrl32 $9, $8, 0\n"
+                             "sw $8, 0x64(%0)\n"
+                             "sw $9, 0x68(%0)\n"
+                             : : "r"(imv) : "$8", "$9", "$10", "memory");
+
+                *(U32*)&imv[0].c = vertex_color;
+                *(U32*)&imv[1].c = vertex_color;
+                *(U32*)&imv[2].c = vertex_color;
+                Im3DBufferPos += 3;
+            }
+
+            if (Im3DBufferPos != 0)
+            {
+                if (RwIm3DTransform(Im3DBuffer, Im3DBufferPos, NULL,
+                                    rwIM3D_VERTEXUV | rwIM3D_VERTEXXYZ | rwIM3D_VERTEXRGBA))
+                {
+                    RwIm3DRenderPrimitive(rwPRIMTYPETRILIST);
+                    RwIm3DEnd();
+                }
+                Im3DBufferPos = 0;
+            }
+        }
+
+        xMemPopTemp(xvert);
+        RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCALPHA);
+        RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
+    }
+}
+#endif
+
 void xShadowRender(xEnt* ent, F32 max_dist)
 {
     xVec3 center;
@@ -688,11 +1072,17 @@ int Im2DRenderQuad(float x1, float y1, float x2, float y2, float z, float recipC
 {
     RwIm2DVertex v[4];
 
+#if defined(PS2)
+    RwIm2DVertexSetIntRGBA(&v[0], 255, 255, 255, 255);
+#endif
+
     RwIm2DVertexSetScreenX(&v[0], x1);
     RwIm2DVertexSetScreenY(&v[0], y1);
     RwIm2DVertexSetScreenZ(&v[0], z);
     RwIm2DVertexSetRecipCameraZ(&v[0], recipCamZ);
+#if !defined(PS2)
     RwIm2DVertexSetIntRGBA(&v[0], 255, 255, 255, 255);
+#endif
     RwIm2DVertexSetU(&v[0], uvOffset, recipCamZ);
     RwIm2DVertexSetV(&v[0], uvOffset, recipCamZ);
 
@@ -925,11 +1315,66 @@ static RpCollisionTriangle* ShadowRenderTriangleCB(RpIntersection* isx, RpWorldS
         return collTriangle;
     }
 
+#if defined(PS2)
+    // Project three unaligned input positions using the matrix in vf28-vf31.
+    asm volatile("lwu $8, 0(%0)\n"
+                 "lwu $9, 4(%0)\n"
+                 "lwu $10, 8(%0)\n"
+                 "pextlw $8, $9, $8\n"
+                 "pcpyld $8, $10, $8\n"
+                 "qmtc2 $8, vf1\n"
+                 "lwu $8, 0(%1)\n"
+                 "lwu $9, 4(%1)\n"
+                 "lwu $10, 8(%1)\n"
+                 "pextlw $8, $9, $8\n"
+                 "pcpyld $8, $10, $8\n"
+                 "qmtc2 $8, vf2\n"
+                 "lwu $8, 0(%2)\n"
+                 "lwu $9, 4(%2)\n"
+                 "lwu $10, 8(%2)\n"
+                 "pextlw $8, $9, $8\n"
+                 "pcpyld $8, $10, $8\n"
+                 "qmtc2 $8, vf3\n"
+                 "vmulax.xyz ACC, vf28, vf1x\n"
+                 "vmadday.xyz ACC, vf29, vf1y\n"
+                 "vmaddaz.xyz ACC, vf30, vf1z\n"
+                 "vmaddw.xyz vf1, vf31, vf0w\n"
+                 "vmulax.xyz ACC, vf28, vf2x\n"
+                 "vmadday.xyz ACC, vf29, vf2y\n"
+                 "vmaddaz.xyz ACC, vf30, vf2z\n"
+                 "vmaddw.xyz vf2, vf31, vf0w\n"
+                 "vmulax.xyz ACC, vf28, vf3x\n"
+                 "vmadday.xyz ACC, vf29, vf3y\n"
+                 "vmaddaz.xyz ACC, vf30, vf3z\n"
+                 "vmaddw.xyz vf3, vf31, vf0w\n"
+                 "qmfc2 $8, vf1\n"
+                 "dsrl32 $9, $8, 0\n"
+                 "pcpyud $10, $8, $8\n"
+                 "sw $8, 0(%3)\n"
+                 "sw $9, 4(%3)\n"
+                 "sw $10, 8(%3)\n"
+                 "qmfc2 $8, vf2\n"
+                 "dsrl32 $9, $8, 0\n"
+                 "pcpyud $10, $8, $8\n"
+                 "sw $8, 12(%3)\n"
+                 "sw $9, 16(%3)\n"
+                 "sw $10, 20(%3)\n"
+                 "qmfc2 $8, vf3\n"
+                 "dsrl32 $9, $8, 0\n"
+                 "pcpyud $10, $8, $8\n"
+                 "sw $8, 24(%3)\n"
+                 "sw $9, 28(%3)\n"
+                 "sw $10, 32(%3)"
+                 : : "r"(collTriangle->vertices[0]), "r"(collTriangle->vertices[1]),
+                     "r"(collTriangle->vertices[2]), "r"(vShadOut)
+                 : "$8", "$9", "$10", "memory");
+#else
     vShad[0] = *collTriangle->vertices[0];
     vShad[1] = *collTriangle->vertices[1];
     vShad[2] = *collTriangle->vertices[2];
 
     RwV3dTransformPoints(vShadOut, vShad, 3, &param->invMatrix);
+#endif
 
     if (((vShadOut[0].z < 0.0f) && (vShadOut[1].z < 0.0f) && (vShadOut[2].z < 0.0f)) ||
         ((vShadOut[0].x < 0.0f) && (vShadOut[1].x < 0.0f) && (vShadOut[2].x < 0.0f)) ||
@@ -952,6 +1397,26 @@ static RpCollisionTriangle* ShadowRenderTriangleCB(RpIntersection* isx, RpWorldS
         Im3DBufferPos = 0;
     }
 
+#if defined(PS2)
+    RxObjSpace3DVertex* imv = &Im3DBuffer[Im3DBufferPos];
+    xVec3 c;
+
+    c.x = 0.002f * collTriangle->normal.x;
+    c.y = 0.002f * collTriangle->normal.y;
+    c.z = 0.002f * collTriangle->normal.z;
+
+    RwIm3DVertexSetPos(&imv[0], collTriangle->vertices[0]->x + c.x,
+                      collTriangle->vertices[0]->y + c.y,
+                      collTriangle->vertices[0]->z + c.z);
+
+    RwIm3DVertexSetPos(&imv[1], collTriangle->vertices[1]->x + c.x,
+                      collTriangle->vertices[1]->y + c.y,
+                      collTriangle->vertices[1]->z + c.z);
+
+    RwIm3DVertexSetPos(&imv[2], collTriangle->vertices[2]->x + c.x,
+                      collTriangle->vertices[2]->y + c.y,
+                      collTriangle->vertices[2]->z + c.z);
+#else
     RwV3d* v = collTriangle->vertices[0];
     RxObjSpace3DVertex* imv = &Im3DBuffer[Im3DBufferPos];
     xVec3 c;
@@ -968,6 +1433,8 @@ static RpCollisionTriangle* ShadowRenderTriangleCB(RpIntersection* isx, RpWorldS
     v = collTriangle->vertices[2];
     RwIm3DVertexSetPos(&imv[2], v->x + c.x, v->y + c.y, v->z + c.z);
 
+#endif
+
     imv[0].u = vShadOut[0].x;
     imv[1].u = vShadOut[1].x;
     imv[2].u = vShadOut[2].x;
@@ -975,11 +1442,18 @@ static RpCollisionTriangle* ShadowRenderTriangleCB(RpIntersection* isx, RpWorldS
     imv[1].v = vShadOut[1].y;
     imv[2].v = vShadOut[2].y;
 
+#if defined(PS2)
+    U32 sw = param->shadowWord;
+    *(U32*)&imv[0].c = sw;
+    *(U32*)&imv[1].c = sw;
+    *(U32*)&imv[2].c = sw;
+#else
     U8 sw = param->shadowValue;
 
     RwIm3DVertexSetRGBA(&imv[0], sw, sw, sw, sw);
     RwIm3DVertexSetRGBA(&imv[1], sw, sw, sw, sw);
     RwIm3DVertexSetRGBA(&imv[2], sw, sw, sw, sw);
+#endif
 
     Im3DBufferPos += 3;
 
@@ -1053,8 +1527,12 @@ static S32 ShadowRender(RwCamera* shadowCamera, RwRaster* shadowRast, RpIntersec
     RwMatrixTranslate(&param.invMatrix, &tr, rwCOMBINEPOSTCONCAT);
 
 #if defined(PS2)
-    // Retail loads param.invMatrix into VU0 vf28-vf31 here with inline asm for
-    // ShadowRenderTriangleCB; not recovered as C.
+    // The original callbacks use this persistent VU0 projection matrix.
+    asm volatile("lqc2 vf28, 0(%0)\n"
+                 "lqc2 vf29, 16(%0)\n"
+                 "lqc2 vf30, 32(%0)\n"
+                 "lqc2 vf31, 48(%0)"
+                 : : "r"(&param.invMatrix) : "memory");
 #else
     RwRenderStateGet(rwRENDERSTATEFOGENABLE, &fogstate);
     RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)0);
@@ -1474,12 +1952,23 @@ static RpCollisionTriangle* shadowCacheEnvCB(RpIntersection* isx, RpWorldSector*
         cache->polyRayDepth[1] = MAX(0.5f * dydx * cache->radius + depth0, cache->polyRayDepth[1]);
     }
 
+#if defined(PS2)
+    if ((n0d - 0.5f * n0x * cache->radius <= 1e-05f) &&
+        (n1d - 0.5f * n1x * cache->radius <= 1e-05f) &&
+        (n2d - 0.5f * n2x * cache->radius <= 1e-05f))
+#else
     if ((-(0.5f * n0x * cache->radius - n0d) <= 1e-05f) &&
         (-(0.5f * n1x * cache->radius - n1d) <= 1e-05f) &&
         (-(0.5f * n2x * cache->radius - n2d) <= 1e-05f))
+#endif
     {
+#if defined(PS2)
+        cache->polyRayDepth[2] =
+            MAX(depth0 - 0.5f * dydx * cache->radius, cache->polyRayDepth[2]);
+#else
         cache->polyRayDepth[2] =
             MAX(-(0.5f * dydx * cache->radius - depth0), cache->polyRayDepth[2]);
+#endif
     }
 
     if ((0.5f * n0z * cache->radius + n0d <= 1e-05f) &&
@@ -1489,12 +1978,23 @@ static RpCollisionTriangle* shadowCacheEnvCB(RpIntersection* isx, RpWorldSector*
         cache->polyRayDepth[3] = MAX(0.5f * dydz * cache->radius + depth0, cache->polyRayDepth[3]);
     }
 
+#if defined(PS2)
+    if ((n0d - 0.5f * n0z * cache->radius <= 1e-05f) &&
+        (n1d - 0.5f * n1z * cache->radius <= 1e-05f) &&
+        (n2d - 0.5f * n2z * cache->radius <= 1e-05f))
+#else
     if ((-(0.5f * n0z * cache->radius - n0d) <= 1e-05f) &&
         (-(0.5f * n1z * cache->radius - n1d) <= 1e-05f) &&
         (-(0.5f * n2z * cache->radius - n2d) <= 1e-05f))
+#endif
     {
+#if defined(PS2)
+        cache->polyRayDepth[4] =
+            MAX(depth0 - 0.5f * dydz * cache->radius, cache->polyRayDepth[4]);
+#else
         cache->polyRayDepth[4] =
             MAX(-(0.5f * dydz * cache->radius - depth0), cache->polyRayDepth[4]);
+#endif
     }
 
     return collTriangle;
@@ -1510,6 +2010,10 @@ static S32 shadowCacheLeafCB(S32 numTriangles, S32 triOffset, void* data)
     RpTriangle* triangles = geometry->triangles;
     S32 triSlot;
     U16* triIndex = RpCollisionGeometryGetData(geometry)->triangleMap + triOffset;
+
+#if defined(PS2)
+    S32 i;
+#endif
 
     while (numTriangles--)
     {
@@ -1532,6 +2036,44 @@ static S32 shadowCacheLeafCB(S32 numTriangles, S32 triOffset, void* data)
         F32 startX = cbparam->capsuleStart.x;
         F32 startZ = cbparam->capsuleStart.z;
 
+#if defined(PS2)
+        for (i = 0; i < 3; i++)
+        {
+            xVec3* vert0 = &worldV[i];
+            xVec3* vert1 = &worldV[(i == 2) ? 0 : i + 1];
+            F32 nz = vert0->z - vert1->z;
+            F32 nx = vert1->x - vert0->x;
+            F32 nmag2 = nz * nz + nx * nx;
+            F32 pdot = nz * (startX - vert0->x) + nx * (startZ - vert0->z);
+
+            if ((pdot > 0.0f) &&
+                (pdot * pdot >=
+                 nmag2 * (cbparam->capsuleRadius * cbparam->capsuleRadius)))
+            {
+                goto next_tri;
+            }
+        }
+
+        for (i = 0; i < 3; i++)
+        {
+            xVec3* vert0 = &worldV[i];
+            xVec3* vert1 = &worldV[(i + 1) % 3];
+            xVec3* vert2 = &worldV[(i + 2) % 3];
+            F32 dotA = (vert1->z - vert0->z) * (startZ - vert0->z) +
+                       (vert1->x - vert0->x) * (startX - vert0->x);
+            F32 dotB = (vert2->z - vert0->z) * (startZ - vert0->z) +
+                       (vert2->x - vert0->x) * (startX - vert0->x);
+
+            if ((dotA < 0.0f) && (dotB < 0.0f) &&
+                ((startZ - vert0->z) * (startZ - vert0->z) +
+                     (startX - vert0->x) * (startX - vert0->x) >
+                 cbparam->capsuleRadius * cbparam->capsuleRadius))
+            {
+                goto next_tri;
+            }
+        }
+
+#else
         wv = worldV;
 
         U32 j;
@@ -1572,6 +2114,7 @@ static S32 shadowCacheLeafCB(S32 numTriangles, S32 triOffset, void* data)
             }
         }
 
+#endif
         cbparam->polyFound++;
 
         {
@@ -1599,6 +2142,8 @@ static S32 shadowCacheLeafCB(S32 numTriangles, S32 triOffset, void* data)
             F32 n2z = worldV[0].x - worldV[2].x;
             F32 n2d = n2x * (cache->pos.x - worldV[2].x) + n2z * (cache->pos.z - worldV[2].z);
 
+            F32 denom;
+
             if ((n0d <= 1e-05f) && (n1d <= 1e-05f) && (n2d <= 1e-05f) &&
                 (depth0 > cache->polyRayDepth[0]))
             {
@@ -1610,25 +2155,35 @@ static S32 shadowCacheLeafCB(S32 numTriangles, S32 triOffset, void* data)
                 (0.5f * n1x * cache->radius + n1d <= 1e-05f) &&
                 (0.5f * n2x * cache->radius + n2d <= 1e-05f))
             {
-                F32 depth1 = 0.5f * dydx * cache->radius + depth0;
+                denom = 0.5f * dydx * cache->radius + depth0;
 
-                if (depth1 > cache->polyRayDepth[1])
+                if (denom > cache->polyRayDepth[1])
                 {
                     cbparam->rayCloser[1] = cbparam->ent;
-                    cache->polyRayDepth[1] = depth1;
+                    cache->polyRayDepth[1] = denom;
                 }
             }
 
+#if defined(PS2)
+            if ((n0d - 0.5f * n0x * cache->radius <= 1e-05f) &&
+                (n1d - 0.5f * n1x * cache->radius <= 1e-05f) &&
+                (n2d - 0.5f * n2x * cache->radius <= 1e-05f))
+#else
             if ((-(0.5f * n0x * cache->radius - n0d) <= 1e-05f) &&
                 (-(0.5f * n1x * cache->radius - n1d) <= 1e-05f) &&
                 (-(0.5f * n2x * cache->radius - n2d) <= 1e-05f))
+#endif
             {
-                F32 depth2 = -(0.5f * dydx * cache->radius - depth0);
+#if defined(PS2)
+                denom = depth0 - 0.5f * dydx * cache->radius;
+#else
+                denom = -(0.5f * dydx * cache->radius - depth0);
+#endif
 
-                if (depth2 > cache->polyRayDepth[2])
+                if (denom > cache->polyRayDepth[2])
                 {
                     cbparam->rayCloser[2] = cbparam->ent;
-                    cache->polyRayDepth[2] = depth2;
+                    cache->polyRayDepth[2] = denom;
                 }
             }
 
@@ -1636,25 +2191,35 @@ static S32 shadowCacheLeafCB(S32 numTriangles, S32 triOffset, void* data)
                 (0.5f * n1z * cache->radius + n1d <= 1e-05f) &&
                 (0.5f * n2z * cache->radius + n2d <= 1e-05f))
             {
-                F32 depth3 = 0.5f * dydz * cache->radius + depth0;
+                denom = 0.5f * dydz * cache->radius + depth0;
 
-                if (depth3 > cache->polyRayDepth[3])
+                if (denom > cache->polyRayDepth[3])
                 {
                     cbparam->rayCloser[3] = cbparam->ent;
-                    cache->polyRayDepth[3] = depth3;
+                    cache->polyRayDepth[3] = denom;
                 }
             }
 
+#if defined(PS2)
+            if ((n0d - 0.5f * n0z * cache->radius <= 1e-05f) &&
+                (n1d - 0.5f * n1z * cache->radius <= 1e-05f) &&
+                (n2d - 0.5f * n2z * cache->radius <= 1e-05f))
+#else
             if ((-(0.5f * n0z * cache->radius - n0d) <= 1e-05f) &&
                 (-(0.5f * n1z * cache->radius - n1d) <= 1e-05f) &&
                 (-(0.5f * n2z * cache->radius - n2d) <= 1e-05f))
+#endif
             {
-                F32 depth4 = -(0.5f * dydz * cache->radius - depth0);
+#if defined(PS2)
+                denom = depth0 - 0.5f * dydz * cache->radius;
+#else
+                denom = -(0.5f * dydz * cache->radius - depth0);
+#endif
 
-                if (depth4 > cache->polyRayDepth[4])
+                if (denom > cache->polyRayDepth[4])
                 {
                     cbparam->rayCloser[4] = cbparam->ent;
-                    cache->polyRayDepth[4] = depth4;
+                    cache->polyRayDepth[4] = denom;
                 }
             }
         }
@@ -1733,27 +2298,18 @@ static S32 shadowCacheEntityCB(xEnt* ent, void* cbdata)
 
             memset(cbparam->rayCloser, 0, sizeof(cbparam->rayCloser));
 
-            recip = 0.0f;
-            if (cbparam->localDelta.x != 0.0f)
-            {
-                recip = 1.0f / cbparam->localDelta.x;
-            }
+            recip =
+                (cbparam->localDelta.x != 0.0f) ? (1.0f / cbparam->localDelta.x) : 0.0f;
             grad.dydx = cbparam->localDelta.y * recip;
             grad.dzdx = cbparam->localDelta.z * recip;
 
-            recip = 0.0f;
-            if (cbparam->localDelta.y != 0.0f)
-            {
-                recip = 1.0f / cbparam->localDelta.y;
-            }
+            recip =
+                (cbparam->localDelta.y != 0.0f) ? (1.0f / cbparam->localDelta.y) : 0.0f;
             grad.dxdy = cbparam->localDelta.x * recip;
             grad.dzdy = cbparam->localDelta.z * recip;
 
-            recip = 0.0f;
-            if (cbparam->localDelta.z != 0.0f)
-            {
-                recip = 1.0f / cbparam->localDelta.z;
-            }
+            recip =
+                (cbparam->localDelta.z != 0.0f) ? (1.0f / cbparam->localDelta.z) : 0.0f;
             grad.dxdz = cbparam->localDelta.x * recip;
             grad.dydz = cbparam->localDelta.y * recip;
 
@@ -1777,10 +2333,15 @@ static S32 shadowCacheEntityCB(xEnt* ent, void* cbdata)
 
 void xShadowVertical_FillCache(xShadowCache* cache, xVec3* pos, F32 r, F32 depth, F32 minNormY)
 {
+#if !defined(PS2)
     ShadowCBParam cbparam;
+#endif
     RpIntersection isx;
     F32 sortRayDepth[5];
     xQCData qcd;
+#if defined(PS2)
+    ShadowCBParam cbparam;
+#endif
     ShadowCacheContext context;
 
     cache->pos = *pos;
@@ -1851,12 +2412,12 @@ void xShadowVertical_FillCache(xShadowCache* cache, xVec3* pos, F32 r, F32 depth
     cbparam.capsuleStart.x = pos->x;
     cbparam.capsuleStart.y = pos->y;
     cbparam.capsuleStart.z = pos->z;
-    cbparam.capsuleEnd.x = cbparam.capsuleStart.x;
+    cbparam.capsuleEnd.x = pos->x;
     cbparam.capsuleEnd.y = endY;
-    cbparam.capsuleEnd.z = cbparam.capsuleStart.z;
+    cbparam.capsuleEnd.z = pos->z;
     cbparam.capsuleRadius = r;
 
-    xQuickCullForBox(&qcd, (xBox*)cbparam.isx);
+    xQuickCullForBox(&qcd, (xBox*)&isx);
 
     xGridCheckPosition(&colls_grid, (xVec3*)&isx, &qcd, shadowCacheEntityCB, &cbparam);
     xGridCheckPosition(&colls_oso_grid, (xVec3*)&isx, &qcd, shadowCacheEntityCB, &cbparam);
@@ -1979,8 +2540,12 @@ void xShadowVertical_DrawCache(xShadowCache* cache, F32 shadowFactor, F32 fadeDi
     RwMatrixTranslate(&param.invMatrix, &tr, rwCOMBINEPOSTCONCAT);
 
 #if defined(PS2)
-    // Retail loads param.invMatrix into VU0 vf28-vf31 here with inline asm for
-    // ShadowRenderTriangleCB; not recovered as C.
+    // The original callbacks use this persistent VU0 projection matrix.
+    asm volatile("lqc2 vf28, 0(%0)\n"
+                 "lqc2 vf29, 16(%0)\n"
+                 "lqc2 vf30, 32(%0)\n"
+                 "lqc2 vf31, 48(%0)"
+                 : : "r"(&param.invMatrix) : "memory");
 #else
     RwRenderStateGet(rwRENDERSTATEFOGENABLE, &fogstate);
     RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)0);
@@ -2032,6 +2597,9 @@ void xShadowManager_Reset()
     sMgrCount = 0;
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 void xShadowManager_Add(xEnt* ent)
 {
     for (int i = 0; i < sMgrCount; i++)
@@ -2052,8 +2620,33 @@ void xShadowManager_Add(xEnt* ent)
     }
 }
 
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
+
 void xShadowManager_Remove(xEnt* ent)
 {
+#if defined(PS2)
+    S32 i;
+    for (i = 6; i < sMgrCount; i++)
+    {
+        sMgrList[i].cache = NULL;
+    }
+
+    i = 0;
+    while (i < sMgrCount)
+    {
+        if (ent == sMgrList[i].ent)
+        {
+            sMgrList[i] = sMgrList[sMgrCount - 1];
+            sMgrCount--;
+        }
+        else
+        {
+            i++;
+        }
+    }
+#else
     int a = 0;
     for (int i = 6; i < sMgrCount; i++)
     {
@@ -2076,6 +2669,7 @@ void xShadowManager_Remove(xEnt* ent)
             a++;
         }
     }
+#endif
 }
 
 static S32 CmpShadowMgr(const void* a, const void* b)
@@ -2268,13 +2862,56 @@ void xShadowManager_Render()
                 ent->model->Next = NULL;
             }
 
+#if defined(PS2)
+            {
+                S32 material;
+                RpMaterialList* list = &ent->model->Data->geometry->matList;
+                for (material = 0; material < list->numMaterials; material++)
+                {
+                    if (list->materials[material]->pipeline == a4dSkinPipe)
+                    {
+                        list->materials[material]->pipeline = adlSkinPipe;
+                    }
+                    if (list->materials[material]->pipeline == a4dSkinPipeADC)
+                    {
+                        list->materials[material]->pipeline = adlSkinPipeADC;
+                    }
+                }
+            }
+#endif
+
             xShadowCameraUpdate(ent->model, (void (*)(void*))xModelRender, &center, radius, 0);
+
+#if defined(PS2)
+            {
+                S32 material;
+                RpMaterialList* list = &ent->model->Data->geometry->matList;
+                for (material = 0; material < list->numMaterials; material++)
+                {
+                    if (list->materials[material]->pipeline == adlSkinPipe)
+                    {
+                        list->materials[material]->pipeline = a4dSkinPipe;
+                    }
+                    if (list->materials[material]->pipeline == adlSkinPipeADC)
+                    {
+                        list->materials[material]->pipeline = a4dSkinPipeADC;
+                    }
+                }
+            }
+#endif
 
             if (old_model != NULL)
             {
                 ent->model->Data = old_model;
                 ent->model->Next = old_mnext;
             }
+
+#if defined(PS2)
+            if (i == 0)
+            {
+                xShadowSetVolume(ShadowCamera, &center, 10.0f);
+            }
+#endif
 
             xShadowVertical_DrawCache(sMgrList[i].cache, ShadowStrength, 0.0f, 0, NULL, NULL);
 
@@ -2313,6 +2950,12 @@ void xShadowManager_Render()
                     }
                 }
             }
+#if defined(PS2)
+            if (i == 0)
+            {
+                RpSkyRenderStateSet(rpSKYRENDERSTATEATEST_1, (void*)skyOldTest);
+            }
+#endif
         }
         else
         {
@@ -2394,6 +3037,9 @@ static void xShadow_PickByRayCast(xShadowMgr* mgr)
     }
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 static void xShadow_PickEntForNPC(xShadowMgr* mgr)
 {
     if (mgr->cache->entCount >= 2)
@@ -2405,3 +3051,7 @@ static void xShadow_PickEntForNPC(xShadowMgr* mgr)
         }
     }
 }
+
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
