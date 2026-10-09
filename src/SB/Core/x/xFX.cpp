@@ -1615,13 +1615,13 @@ void xFXFireworksUpdate(F32 dt)
                 sFirework[i].vel.y += 15.0f * dt;
             }
             xParEmitterCustomSettings trail_info;
-            trail_info.custom_flags = eParEmitterCustomPos;
             F32 vx = sFirework[i].vel.x;
             sFirework[i].pos.x += vx * dt;
             F32 vy = sFirework[i].vel.y;
             sFirework[i].pos.y += vy * dt;
             F32 vz = sFirework[i].vel.z;
             sFirework[i].pos.z += vz * dt;
+            trail_info.custom_flags = eParEmitterCustomPos;
             trail_info.pos = sFirework[i].pos;
             xParEmitterEmitCustom(sFireworkTrailEmit, dt, &trail_info);
 

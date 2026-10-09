@@ -110,3 +110,14 @@ DWARF-backed data relocations reproduce all three original functions byte for
 byte (`build/ring-update-proof.py` and `ring-update-raw-proof.json`). Complete
 regional and GameCube evidence is `build/ring-update-final-comparison.json`,
 its function-delta JSON, and `build/ring-update-gc-{before,after}.json`.
+
+The fireworks update initializes its local trail-emitter flags after updating
+the firework position and immediately before copying that position into the
+emitter settings. This is the original store order; no call occurs between
+these local operations. It restores the 1472-byte function from 98.75% to exact
+in all three debug regions, raising complete `xFX` units to 16032 exact bytes.
+All other regional function scores, size/data controls, the French profile and
+every GameCube score remain unchanged. Evidence is
+`build/fireworks-update-final-comparison.json`, its function-delta JSON and
+`build/fireworks-update-gc-{before,after}.json`. Existing unresolved SDK call
+limitations remain in place.
