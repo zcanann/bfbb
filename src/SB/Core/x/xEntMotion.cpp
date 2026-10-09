@@ -402,6 +402,10 @@ void xEntMPGetNext(xEntMotion* motion, xMovePoint* prev, xScene* sc)
 
 U32 xQuatEquals(const xQuat* a, const xQuat* b); // Should be linked weakly
 
+#if defined(PS2)
+// The banking expression expands through four levels of vector helpers.
+#pragma inline_depth(4)
+#endif
 static void xEntMPMove(xEntMotion* motion, xScene* sc, F32 dt, xEntFrame* frame)
 {
     xEntMPData* mp = &motion->mp;
@@ -477,7 +481,7 @@ static void xEntMPMove(xEntMotion* motion, xScene* sc, F32 dt, xEntFrame* frame)
             {
                 xVec3 gravity = { 0.0f, -sc->gravity, 0.0f };
 
-                bank = bank * mp->speed * 0.01f + gravity;
+                bank = bank * motion->mp.speed * 0.01f + gravity;
                 dir.normalize();
                 bank -= dir * bank.dot(dir);
                 bank.normalize();
@@ -533,6 +537,9 @@ static void xEntMPMove(xEntMotion* motion, xScene* sc, F32 dt, xEntFrame* frame)
     frame->dpos.z = tgt.z - frame->mat.pos.z;
 }
 
+#if defined(PS2)
+#pragma inline_depth reset
+#endif
 static void xEntPenMove(xEntMotion* motion, xScene* sc, F32 dt, xEntFrame* frame)
 {
     xEntPenData* pen = &motion->pen;
