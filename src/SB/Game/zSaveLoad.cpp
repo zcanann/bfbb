@@ -22,6 +22,9 @@
 #if defined(PS2)
 #include <libmc.h>
 #define strcmpi stricmp
+#define SAVE_LOAD_CORRUPT_LABEL "Corrupt Game File\n\n"
+#else
+#define SAVE_LOAD_CORRUPT_LABEL "Corrupt Save File\n\n"
 #endif
 
 #if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
@@ -1121,8 +1124,8 @@ S32 zSaveLoad_CardCheckSlotEmpty_hasGame_doCheck(st_XSAVEGAME_DATA* xsgdata, S32
         xSGTgtSelect(xsgdata, num);
         rc = xSGGameIsEmpty(xsgdata, game);
 #if defined(PS2)
-        if (strcmp(zSaveLoadGameTable[game].label, "Corrupt Game File\n\n") == 0 &&
-            strcmp(zSaveLoadGameTable[game].date, "Corrupt Game File\n\n") == 0)
+        if (strcmp(zSaveLoadGameTable[game].label, SAVE_LOAD_CORRUPT_LABEL) == 0 &&
+            strcmp(zSaveLoadGameTable[game].date, SAVE_LOAD_CORRUPT_LABEL) == 0)
         {
             return 1;
         }
@@ -1604,6 +1607,19 @@ bool IsValidName(char* name)
         return 0;
     }
 
+#if defined(PS2)
+    for (S32 i = 0; name[i] != NULL; i++)
+    {
+        if ((name[i] < 'A' || name[i] > 'z') && (name[i] < '0' || name[i] > '9') &&
+#if defined(VERSION_SLES_51970)
+            (name[i] < 0xc0 || name[i] > 0xfe) &&
+#endif
+            (name[i] != ' ' && name[i] != '\''))
+        {
+            return 0;
+        }
+    }
+#else
     for (char* p = name; *p != NULL; p++)
     {
         if ((*p < 'A' || *p > 'z') && (*p < '0' || *p > '9') && (*p != ' ' && *p != '\''))
@@ -1611,6 +1627,7 @@ bool IsValidName(char* name)
             return 0;
         }
     }
+#endif
     return 1;
 }
 
@@ -1621,9 +1638,13 @@ void BuildIt(char* build_txt, S32 i)
     char biggerbuf[256] = {};
     char displaySizeUnit[32];
 
+#if defined(PS2)
+    if (!IsValidName(zSaveLoadGameTable[i].label))
+#else
     if (IsValidName(zSaveLoadGameTable[i].label) == 0)
+#endif
     {
-        strcpy(build_txt, "Corrupt Save File\n\n");
+        strcpy(build_txt, SAVE_LOAD_CORRUPT_LABEL);
     }
     else
     {
@@ -1636,6 +1657,11 @@ void BuildIt(char* build_txt, S32 i)
         date2[31] = NULL;
 
         memset(displaySizeUnit, 0, sizeof(displaySizeUnit));
+#if defined(PS2)
+        strcpy(displaySizeUnit, "");
+        sprintf(biggerbuf, "%d%%  %s    \n%s", zSaveLoadGameTable[i].progress, date2,
+                zSaveLoadGameTable[i].label);
+#else
         if (zSaveLoadGameTable[i].size == 1)
         {
             strcpy(displaySizeUnit, "block");
@@ -1647,6 +1673,7 @@ void BuildIt(char* build_txt, S32 i)
 
         sprintf(biggerbuf, "%d%%  %s    (%d %s)\n%s", zSaveLoadGameTable[i].progress, date2,
                 zSaveLoadGameTable[i].size, displaySizeUnit, zSaveLoadGameTable[i].label);
+#endif
         strncpy(build_txt, biggerbuf, 0x80);
         date1[31] = NULL;
     }
@@ -1664,7 +1691,7 @@ void zSaveLoad_BuildName(char* name_txt, S32 idx)
     {
         BuildIt(current_name, i);
         if (strcmp(zSaveLoadGameTable[i].label, zSaveLoadGameTable[idx].label) == 0 &&
-            strcmp(current_name, "Corrupt Save File\n\n") != 0)
+            strcmp(current_name, SAVE_LOAD_CORRUPT_LABEL) != 0)
         {
             counter++;
         }
@@ -1766,8 +1793,8 @@ S32 zSaveLoad_GameSelect(S32 mode)
         xSGTgtSelect(svinst, use_tgt);
         if (iSGIsGameCorrupt(svinst->isgsess, 0) && emptyCount >= 3)
         {
-            strcpy(zSaveLoadGameTable[0].label, "Corrupt Game File\n\n");
-            strcpy(zSaveLoadGameTable[0].date, "Corrupt Game File\n\n");
+            strcpy(zSaveLoadGameTable[0].label, SAVE_LOAD_CORRUPT_LABEL);
+            strcpy(zSaveLoadGameTable[0].date, SAVE_LOAD_CORRUPT_LABEL);
             if (mode == 1)
             {
                 zSaveLoad_UIEvent(6, eEventEnable);

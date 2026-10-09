@@ -122,3 +122,23 @@ to 98.09524%; one prompt-loop NOP placement remains different.
 All three debug regions gain 1272 exact bytes and three functions. These
 four scores are the only changes; the full GC report remains identical.
 Evidence: `*-overwrite.json` and `overwrite-proof.json`.
+
+## Label formatting and German names
+
+PS2 displays progress, date and label without GC's block count, and uses
+`Corrupt Game File` for both invalid labels and duplicate-name filtering.
+The original BuildName string pointer was checked independently of its
+already-exact instruction score, which ignores this relocation difference.
+
+The German name validator accepts bytes 0xc0 through 0xfe in addition to
+the ordinary letter, digit, space and apostrophe ranges. Its indexed loop
+and upper-bound comparison now reproduce the complete 224-byte body.
+USA/Europe retain their narrower accepted character range and inline it.
+BuildIt improves from 71.89552% to 98.50746% in USA/Europe and from
+31.760416% to 97.916664% in Germany. Its two zero-initialization-loop NOP
+placements remain different; the reduced loop has the same issue in the
+current compiler and 3.0.1b74, so this does not support a compiler patch.
+
+Germany gains 224 exact bytes and one function. No other function scores
+regress, and the full GC report remains identical. Evidence is recorded in
+`build/save-oct09/*-labels.json` and `labels-proof.json`.
