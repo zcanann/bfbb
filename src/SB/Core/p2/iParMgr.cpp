@@ -850,3 +850,213 @@ void iParMgrRenderParSys_Ground(void* data, xParGroup* ps)
 
     iRenderFlush();
 }
+
+
+namespace
+{
+    inline void prepare_sprite_culling()
+    {
+        prepare_ground_culling();
+        // Keep camera right/up in xyz; vf10.w supplies the half-size scale.
+        U32 half = 0x3f000000;
+        asm volatile("qmtc2 %0, vf9\n"
+                     "lqc2 vf10, 0(%1)\n"
+                     "lqc2 vf11, 0(%2)\n"
+                     "vmulx.w vf10, vf0, vf9x\n"
+                     : : "r"(half), "r"(&gRenderBuffer.m_camViewR),
+                         "r"(&gRenderBuffer.m_camViewU) : "memory");
+    }
+
+    inline S32 sprite_outside_side_planes(const xPar* p, const xPar* next, U32& color)
+    {
+        asm volatile("lqc2 vf8, 16(%1)\n"
+                     "lw %0, 12(%1)\n"
+                     "vaddaw.xyzw ACC, vf17, vf8w\n"
+                     "vmsubax.xyzw ACC, vf14, vf8x\n"
+                     "vmsubay.xyzw ACC, vf15, vf8y\n"
+                     "vmsubz.xyzw vf1, vf16, vf8z\n"
+                     "vmul.w vf7, vf8, vf10\n"
+                     : "=&r"(color) : "r"(p) : "memory");
+        if (next)
+        {
+            asm volatile("pref 0, 0(%0)\n" : : "r"(next));
+        }
+        S32 outside;
+        asm volatile("qmfc2 %0, vf1\n"
+                     "pcgtw %0, $0, %0\n"
+                     "ppach %0, $0, %0\n"
+                     "vadda.xyz ACC, vf0, vf8\n"
+                     : "=&r"(outside) : : "memory");
+        return outside;
+    }
+
+    inline void write_sprite_vertices(RxObjSpace3DVertex* vertices, U32 color)
+    {
+        U64 first, second;
+        asm volatile("vmsubaw.xyz ACC, vf11, vf7w\n"
+                     "vmsubw.xyz vf1, vf10, vf7w\n"
+                     "vmaddw.xyz vf3, vf10, vf7w\n"
+                     "vadda.xyz ACC, vf0, vf8\n"
+                     "vmaddaw.xyz ACC, vf11, vf7w\n"
+                     "vmaddw.xyz vf2, vf10, vf7w\n"
+                     "vmsubw.xyz vf4, vf10, vf7w\n"
+                     "qmfc2 %0, vf1\n"
+                     "qmfc2 %1, vf2\n"
+                     "sd %0, 0(%2)\n"
+                     "pcpyud %0, %0, $0\n"
+                     "sw %0, 8(%2)\n"
+                     "sw %3, 12(%2)\n"
+                     "sw %1, 36(%2)\n"
+                     "prot3w %1, %1\n"
+                     "sd %1, 40(%2)\n"
+                     "sw %3, 48(%2)\n"
+                     "qmfc2 %0, vf3\n"
+                     "qmfc2 %1, vf4\n"
+                     "sd %0, 72(%2)\n"
+                     "pcpyud %0, %0, $0\n"
+                     "sw %0, 80(%2)\n"
+                     "sw %3, 84(%2)\n"
+                     "sw %1, 108(%2)\n"
+                     "prot3w %1, %1\n"
+                     "sd %1, 112(%2)\n"
+                     "sw %3, 120(%2)\n"
+                     : "=&r"(first), "=&r"(second)
+                     : "r"(vertices), "r"(color) : "memory");
+    }
+}
+
+void iParMgrRenderParSys_Sprite(void* data, xParGroup* ps)
+{
+    xPar* idx = ps->m_root;
+    zParSys* s;
+    RwTexture* texture;
+    RwRaster* raster;
+    S32 indexCount;
+    S32 vertexCount;
+    U16* i3d;
+    RxObjSpace3DVertex* v3d;
+    xParCmdTex* tex;
+    U32 pivot;
+
+    iRenderSetCameraViewMatrix(NULL);
+
+    s = (zParSys*)data;
+
+    texture = s->txtr_particle;
+    if (texture != NULL)
+    {
+        raster = texture->raster;
+        if (raster != NULL)
+        {
+            RwRenderStateSet(rwRENDERSTATETEXTURERASTER, raster);
+        }
+    }
+
+    tex = ps->m_cmdTex;
+
+    indexCount = 0;
+    vertexCount = 0;
+    i3d = gRenderBuffer.m_index;
+    v3d = gRenderBuffer.m_vertex;
+    pivot = s->tasset->parFlags;
+
+    xVec3 offset = {};
+    if (pivot & 0x8)
+    {
+        offset += *(xVec3*)&gRenderBuffer.m_camViewR * 0.5f;
+    }
+    else if (pivot & 0x20)
+    {
+        offset -= *(xVec3*)&gRenderBuffer.m_camViewR * 0.5f;
+    }
+    if (pivot & 0x10)
+    {
+        offset += *(xVec3*)&gRenderBuffer.m_camViewU * 0.5f;
+    }
+    else if (pivot & 0x40)
+    {
+        offset -= *(xVec3*)&gRenderBuffer.m_camViewU * 0.5f;
+    }
+    prepare_sprite_culling();
+
+    while (idx != NULL)
+    {
+        xPar* p = idx;
+        idx = idx->m_next;
+
+        xVec3 pivotOffset;
+        if (pivot & 0x78)
+        {
+            // Retail applies the pivot to the particle and subtracts it again
+            // after rendering or culling, preserving that operation order.
+            pivotOffset = offset * p->m_size;
+            p->m_pos += pivotOffset;
+        }
+
+        U32 color;
+        if (!sprite_outside_side_planes(p, idx, color))
+        {
+            write_sprite_vertices(v3d, color);
+
+            if (tex != NULL)
+            {
+                F32 u1 = tex->x1 + p->m_texIdx[0] * tex->unit_width;
+                F32 v1 = tex->y1 + p->m_texIdx[1] * tex->unit_height;
+                F32 u2 = tex->x1 + (p->m_texIdx[0] + 1) * tex->unit_width;
+                F32 v2 = tex->y1 + (p->m_texIdx[1] + 1) * tex->unit_height;
+
+                v3d[0].u = u1;
+                v3d[0].v = v1;
+                v3d[1].u = u2;
+                v3d[1].v = v2;
+                v3d[2].u = u2;
+                v3d[2].v = v1;
+                v3d[3].u = u1;
+                v3d[3].v = v2;
+            }
+            else
+            {
+                v3d[0].u = 0.0f;
+                v3d[0].v = 0.0f;
+                v3d[1].u = 1.0f;
+                v3d[1].v = 1.0f;
+                v3d[2].u = 1.0f;
+                v3d[2].v = 0.0f;
+                v3d[3].u = 0.0f;
+                v3d[3].v = 1.0f;
+            }
+
+            i3d[0] = vertexCount;
+            i3d[1] = vertexCount + 1;
+            i3d[2] = vertexCount + 2;
+            i3d[3] = vertexCount + 3;
+            i3d[4] = vertexCount;
+            i3d[5] = vertexCount + 1;
+
+            i3d += 6;
+            v3d += 4;
+            indexCount += 6;
+            vertexCount += 4;
+
+            if ((indexCount > 960 - 6) || (vertexCount > 480 - 4))
+            {
+                gRenderBuffer.m_indexCount = indexCount;
+                gRenderBuffer.m_vertexCount = vertexCount;
+                v3d = gRenderBuffer.m_vertex;
+                i3d = gRenderBuffer.m_index;
+                iRenderFlush();
+                indexCount = 0;
+                vertexCount = 0;
+                prepare_sprite_culling();
+            }
+        }
+        if (pivot & 0x78)
+        {
+            p->m_pos -= pivotOffset;
+        }
+    }
+
+    gRenderBuffer.m_indexCount = indexCount;
+    gRenderBuffer.m_vertexCount = vertexCount;
+    iRenderFlush();
+}

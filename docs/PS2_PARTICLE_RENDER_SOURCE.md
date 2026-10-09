@@ -84,3 +84,40 @@ Evidence: `par-quad-original.py` / `.txt`, `par-ground-proof.py` / `.json`,
 `.json`, and `par-ground-final-changes.json`. GC and Xbox renderer sources remain
 unchanged; this PS2 unit still has no France profile selection. Sprite remains
 the sole missing function in the measured unit.
+
+## Sprite renderer
+
+Restore the final missing 2,032-byte Sprite renderer. Its pivot offset is a
+zero-initialized vector, shifted by half of camera right/up according to the
+asset flags. For each particle, retail adds the scaled pivot offset to the
+particle position, performs packed side-plane culling and quad construction,
+then subtracts that offset even when culled. The restoration preserves those
+floating-point operations and their side effects; it does not replace them
+with a separate render-only center.
+
+The original preloads camera right/up into vf10/vf11 and sets vf10.w to 0.5.
+The side-plane test prefetches the next particle when present. Four corners and
+their packed colors use the original VU arithmetic and 64/32-bit store pattern.
+Atlas UVs and the `{0, 1, 2, 3, 0, 1}` index pattern retain the original vertex
+ordering. All VU state reloads after an intermediate RenderWare flush.
+
+Sprite improves from missing to 94.82874% in USA, Europe, and Germany. The
+complete unit improves from 73.33266% to 92.8517%, with all other scores and
+all five exact functions / 844 bytes unchanged. Relative to the initial unit
+before these four restorations, fuzzy matching rises from 38.355755% to
+92.8517%. All 13 measured functions now have source bodies.
+
+The compiled Sprite body is 2,016 bytes versus 2,032 original bytes. GPR choices,
+initialization-loop NOPs and scheduling remain counted. The actual prefetch
+branch's `vmul.w` delay slot and culling branch's `vadda.xyz` delay slot agree
+with the originals, as do every arithmetic opcode and lane mask. The compiler
+moves the initial half-size setup into the loop-entry branch delay slot; that
+remaining difference is recorded. Symbolic inspection verifies every packed
+position/color store and that the culling branch still reaches pivot restoration.
+
+Evidence: `par-sprite-proof.py` / `.json`,
+`par-sprite-render-compiled-proof.py` / `.json`,
+`par-sprite-render-final-comparison.py` / `.json`, and
+`par-sprite-render-final-changes.json`. These audits cover all three debug
+originals and actual compiled objects. No shared renderer source, comparison
+mask, compiler, France profile, or identity registry changes are included.
