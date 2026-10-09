@@ -187,3 +187,13 @@ GameCube scores remain unchanged. Evidence is
 `build/billboard-gc-{before,after}.json`, and
 `build/billboard-original-frame.json`. The function remains outside the current
 French profile, and unresolved SDK call identities remain unchanged.
+
+`xFXRibbon::need_update` directly returns its visibility/debug disjunction.
+This removes a redundant boolean conversion in the inlined PS2 update and
+raises its 1060-byte function from 98.30189% to 99.830185% in each debug region.
+The remaining instruction differences are register allocation for iterator
+temporaries. Every other function score, all 17208 exact bytes, size/data
+controls, France and all GameCube scores remain unchanged. Evidence is
+`build/ribbon-update-final-comparison.json`, its function-delta JSON and
+`build/ribbon-update-gc-{before,after}.json`. The shared expression needs no
+platform conditional.

@@ -3308,14 +3308,7 @@ void xFXRibbon::debug_update_curve()
 
 bool xFXRibbon::need_update() const
 {
-    bool result = false;
-
-    if (visible() || debug_need_update())
-    {
-        result = true;
-    }
-
-    return result;
+    return visible() || debug_need_update();
 }
 
 bool xFXRibbon::debug_need_update() const
