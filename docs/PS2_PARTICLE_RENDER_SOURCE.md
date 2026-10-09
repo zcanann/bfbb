@@ -49,3 +49,38 @@ Private reproducible evidence in `build/`:
   stores, branch delay slot and remaining size/NOP differences in all regions.
 - `par-streak-final-comparison.py` / `.json` and
   `par-streak-final-changes.json`: full before/after unit comparisons.
+
+## Ground renderer
+
+Restore the missing 2,384-byte Ground renderer with its original packed sphere
+culling, VU Euler polynomial, temporary vectors, four-vertex geometry, atlas UVs,
+six-index copy loop, and buffer flush behavior. The cached texture follows the
+same independently proved layout as the streak renderers. The original static
+index array is `{0, 1, 2, 3, 0, 1}` in all three regions.
+
+Ground's original matrix path wraps each particle angle above pi by subtracting
+two pi, then evaluates the VU polynomial and writes three matrix rows. The
+separate scalar `xMat3x3Euler` call was a poor reconstruction of this path and
+is not used by the restored function. The local assembly helper reproduces the
+actual original arithmetic and lane masks; it does not change shared headers.
+
+Original DWARF independently identifies `cosSinPolynomial` as an external F32
+array in this unit and a 16-element F32 definition in `SB/Core/p2/iMath.cpp`.
+Its addresses are 0x416de0, 0x4168e0, and 0x4162c0 in USA, Europe, and Germany.
+All 64 original coefficient bytes agree. The compiled helper references that
+same named table through its actual HI/LO relocations; no new constant table,
+symbol alias, or normalization rule is introduced.
+
+Ground improves from missing to 89.23322% in every debug region. The complete
+unit rises from 51.78363% to 73.33266%; every other function score and all exact
+code/data controls remain unchanged. The compiled function is 2,520 bytes
+versus 2,384 original bytes. Register allocation, stack layout, scalar scheduling,
+and three transfer hazard NOPs remain different. The VU arithmetic and lane
+masks agree exactly, and the culling `vmul.w` occupies the actual branch delay
+slot as in the original. No compiler-version explanation is assumed.
+
+Evidence: `par-quad-original.py` / `.txt`, `par-ground-proof.py` / `.json`,
+`par-ground-compiled-proof.py` / `.json`, `par-ground-final-comparison.py` /
+`.json`, and `par-ground-final-changes.json`. GC and Xbox renderer sources remain
+unchanged; this PS2 unit still has no France profile selection. Sprite remains
+the sole missing function in the measured unit.

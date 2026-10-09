@@ -584,3 +584,269 @@ void iParMgrRenderParSys_InvStreak(void* data, xParGroup* ps)
 
     iRenderFlush();
 }
+
+
+namespace
+{
+    inline void prepare_ground_culling()
+    {
+        asm volatile("lqc2 vf14, 0(%0)\n"
+                     "lqc2 vf15, 16(%0)\n"
+                     "lqc2 vf16, 32(%0)\n"
+                     "lqc2 vf17, 48(%0)\n"
+                     : : "r"(globals.camera.frustplane) : "memory");
+    }
+
+    inline S32 ground_outside_side_planes(const xPar* p)
+    {
+        S32 outside;
+        asm volatile("lqc2 vf8, 16(%1)\n"
+                     "vaddaw.xyzw ACC, vf17, vf8w\n"
+                     "vmsubax.xyzw ACC, vf14, vf8x\n"
+                     "vmsubay.xyzw ACC, vf15, vf8y\n"
+                     "vmsubz.xyzw vf1, vf16, vf8z\n"
+                     "qmfc2 %0, vf1\n"
+                     "pcgtw %0, $0, %0\n"
+                     "ppach %0, $0, %0\n"
+                     "vmul.w vf7, vf8, vf10\n"
+                     : "=&r"(outside) : "r"(p) : "memory");
+        return outside;
+    }
+}
+
+// Original coefficient table owned by the PS2 math implementation.
+extern F32 cosSinPolynomial[];
+
+namespace
+{
+    inline void ground_euler(xMat3x3* m, F32 yaw, F32 pitch, F32 roll)
+    {
+        // Particle angles begin in [0, 2*pi]; the polynomial takes [-pi, pi].
+        if (yaw > PI)
+            yaw -= 2.0f * PI;
+        if (pitch > PI)
+            pitch -= 2.0f * PI;
+        if (roll > PI)
+            roll -= 2.0f * PI;
+
+        U32 scratch;
+        asm volatile("lqc2 vf1, 0(%1)\n"
+                     "lqc2 vf2, 16(%1)\n"
+                     "lqc2 vf3, 32(%1)\n"
+                     "lqc2 vf4, 48(%1)\n"
+                     "vaddx.xyz vf20, vf0, vf1x\n"
+                     "vaddy.xyz vf21, vf0, vf1y\n"
+                     "vaddz.xyz vf22, vf0, vf1z\n"
+                     "vaddw.xyz vf23, vf0, vf1w\n"
+                     "vaddx.xyz vf24, vf0, vf2x\n"
+                     "vaddy.xyz vf25, vf0, vf2y\n"
+                     "vaddz.xyz vf26, vf0, vf2z\n"
+                     "vaddw.xyz vf27, vf0, vf2w\n"
+                     "vaddx.xyz vf28, vf0, vf3x\n"
+                     "vaddy.xyz vf29, vf0, vf3y\n"
+                     "vaddz.xyz vf30, vf0, vf3z\n"
+                     "vaddw.xyz vf31, vf0, vf3w\n"
+                     "vaddx.xyz vf18, vf0, vf4x\n"
+                     "vaddy.xyz vf19, vf0, vf4y\n"
+                     "mfc1 %0, %3\n"
+                     "qmtc2 %0, vf1\n"
+                     "mfc1 %0, %4\n"
+                     "qmtc2 %0, vf2\n"
+                     "mfc1 %0, %5\n"
+                     "qmtc2 %0, vf3\n"
+                     "vaddx.y vf1, vf0, vf2x\n"
+                     "vaddx.z vf1, vf0, vf3x\n"
+                     "vmul.xyz vf2, vf1, vf1\n"
+                     "vmul.xyz vf5, vf2, vf25\n"
+                     "vmula.xyz ACC, vf2, vf24\n"
+                     "vmul.xyz vf3, vf2, vf2\n"
+                     "vmadd.xyz vf5, vf2, vf5\n"
+                     "vmula.xyz ACC, vf2, vf22\n"
+                     "vmadd.xyz vf6, vf3, vf23\n"
+                     "vadda.xyz ACC, vf0, vf19\n"
+                     "vmul.xyz vf4, vf3, vf3\n"
+                     "vmadda.xyz ACC, vf2, vf20\n"
+                     "vmadda.xyz ACC, vf3, vf21\n"
+                     "vmadda.xyz ACC, vf3, vf6\n"
+                     "vmadd.xyz vf8, vf4, vf5\n"
+                     "vmula.xyz ACC, vf3, vf31\n"
+                     "vmadd.xyz vf5, vf2, vf30\n"
+                     "vmula.xyz ACC, vf3, vf29\n"
+                     "vmadd.xyz vf6, vf2, vf28\n"
+                     "vadda.xyz ACC, vf0, vf18\n"
+                     "vmadd.xyz vf8, vf8, vf2\n"
+                     "vmadda.xyz ACC, vf3, vf27\n"
+                     "vmadda.xyz ACC, vf2, vf26\n"
+                     "vmadda.xyz ACC, vf3, vf6\n"
+                     "vmadd.xyz vf9, vf4, vf5\n"
+                     "vmul.xyz vf9, vf9, vf1\n"
+                     "vaddx.x vf1, vf0, vf8x\n"
+                     "vaddx.z vf12, vf0, vf8x\n"
+                     "vopmula.xyz ACC, vf8, vf9\n"
+                     "vmadd.xyz vf3, vf0, vf0\n"
+                     "vmuly.x vf3, vf9, vf9y\n"
+                     "vadd.y vf3, vf0, vf8\n"
+                     "vsubx.z vf1, vf0, vf9x\n"
+                     "vaddx.x vf12, vf0, vf9x\n"
+                     "vsuby.y vf12, vf0, vf9y\n"
+                     "vmulaz.xyz ACC, vf3, vf9z\n"
+                     "vmaddaz.xz ACC, vf1, vf8z\n"
+                     "vmadd.xyz vf10, vf0, vf0\n"
+                     "vmulaz.xyz ACC, vf3, vf8z\n"
+                     "vmsubaz.xz ACC, vf1, vf9z\n"
+                     "vmadd.xyz vf11, vf0, vf0\n"
+                     "vmuly.xz vf12, vf12, vf8y\n"
+                     "sqc2 vf10, 0(%2)\n"
+                     "sqc2 vf11, 16(%2)\n"
+                     "sqc2 vf12, 32(%2)\n"
+                     : "=&r"(scratch)
+                     : "r"(cosSinPolynomial), "r"(m), "f"(yaw), "f"(pitch), "f"(roll)
+                     : "memory");
+        m->flags = 0;
+    }
+}
+
+void iParMgrRenderParSys_Ground(void* data, xParGroup* ps)
+{
+    xPar* idx = ps->m_root;
+    zParSys* s;
+    RwTexture* texture;
+    RwRaster* raster;
+    xParCmdTex* tex;
+    static RxObjSpace3DVertex v3d[4];
+    static U16 i3d[6] = { 0, 1, 2, 3, 0, 1 };
+
+    iRenderSetCameraViewMatrix(NULL);
+
+    s = (zParSys*)data;
+
+    texture = s->txtr_particle;
+    if (texture != NULL)
+    {
+        raster = texture->raster;
+        if (raster != NULL)
+        {
+            RwRenderStateSet(rwRENDERSTATETEXTURERASTER, raster);
+        }
+    }
+
+    prepare_ground_culling();
+
+    for (; idx != NULL; idx = idx->m_next)
+    {
+        tex = ps->m_cmdTex;
+        void* vertices = v3d;
+        U16* indices = i3d;
+        S32 vertexCount = 4;
+        S32 indexCount = 6;
+
+        if ((indexCount + gRenderBuffer.m_indexCount > 960) ||
+            (vertexCount + gRenderBuffer.m_vertexCount > 480))
+        {
+            iRenderFlush();
+            prepare_ground_culling();
+        }
+
+        F32 size = 0.5f * idx->m_size;
+        if (ground_outside_side_planes(idx))
+        {
+            continue;
+        }
+
+        U8 r = idx->m_c[0];
+        U8 g = idx->m_c[1];
+        U8 b = idx->m_c[2];
+        U8 a = idx->m_c[3];
+        xMat3x3 groundmat;
+        F32 angx = 0.0f;
+        F32 angy = 0.0f;
+        F32 angz = 0.0f;
+
+        if (idx->m_rotdeg[0])
+        {
+            angx = 6.2831855f * (idx->m_rotdeg[0] / 255.0f);
+        }
+
+        if (idx->m_rotdeg[1])
+        {
+            angy = 6.2831855f * (idx->m_rotdeg[1] / 255.0f);
+        }
+
+        if (idx->m_rotdeg[2])
+        {
+            angz = 6.2831855f * (idx->m_rotdeg[2] / 255.0f);
+        }
+
+        ground_euler(&groundmat, angx, angy, angz);
+
+        xVec3 vert[4];
+        xVec3 zdir = { groundmat.at.x * size, groundmat.at.y * size, groundmat.at.z * size };
+        xVec3 xdir = { groundmat.right.x * size, groundmat.right.y * size,
+                       groundmat.right.z * size };
+        xVec3 centre = { idx->m_pos.x, idx->m_pos.y, idx->m_pos.z };
+
+        vert[0].x = centre.x - xdir.x - zdir.x;
+        vert[0].y = centre.y - xdir.y - zdir.y;
+        vert[0].z = centre.z - xdir.z - zdir.z;
+        vert[1].x = zdir.x + (centre.x + xdir.x);
+        vert[1].y = zdir.y + (centre.y + xdir.y);
+        vert[1].z = zdir.z + (centre.z + xdir.z);
+        vert[2].x = centre.x + xdir.x - zdir.x;
+        vert[2].y = centre.y + xdir.y - zdir.y;
+        vert[2].z = centre.z + xdir.z - zdir.z;
+        vert[3].x = zdir.x + (centre.x - xdir.x);
+        vert[3].y = zdir.y + (centre.y - xdir.y);
+        vert[3].z = zdir.z + (centre.z - xdir.z);
+
+        RwIm3DVertexSetRGBA(&v3d[0], r, g, b, a);
+        RwIm3DVertexSetRGBA(&v3d[1], r, g, b, a);
+        RwIm3DVertexSetRGBA(&v3d[2], r, g, b, a);
+        RwIm3DVertexSetRGBA(&v3d[3], r, g, b, a);
+        RwIm3DVertexSetPos(&v3d[0], vert[0].x, vert[0].y, vert[0].z);
+        RwIm3DVertexSetPos(&v3d[1], vert[1].x, vert[1].y, vert[1].z);
+        RwIm3DVertexSetPos(&v3d[2], vert[2].x, vert[2].y, vert[2].z);
+        RwIm3DVertexSetPos(&v3d[3], vert[3].x, vert[3].y, vert[3].z);
+
+        if (tex != NULL)
+        {
+            F32 u1 = tex->x1 + idx->m_texIdx[0] * tex->unit_width;
+            F32 v1 = tex->y1 + idx->m_texIdx[1] * tex->unit_height;
+            F32 u2 = tex->x1 + (idx->m_texIdx[0] + 1) * tex->unit_width;
+            F32 v2 = tex->y1 + (idx->m_texIdx[1] + 1) * tex->unit_height;
+
+            v3d[0].u = u1;
+            v3d[0].v = v1;
+            v3d[1].u = u2;
+            v3d[2].u = u2;
+            v3d[1].v = v2;
+            v3d[2].v = v1;
+            v3d[3].u = u1;
+            v3d[3].v = v2;
+        }
+        else
+        {
+            v3d[0].u = 0.0f;
+            v3d[0].v = 0.0f;
+            v3d[1].u = 1.0f;
+            v3d[1].v = 1.0f;
+            v3d[2].u = 1.0f;
+            v3d[2].v = 0.0f;
+            v3d[3].u = 0.0f;
+            v3d[3].v = 1.0f;
+        }
+
+        U16* src = indices;
+        U16* dst = &gRenderBuffer.m_index[gRenderBuffer.m_indexCount];
+        for (S32 i = 0; i < indexCount; i++)
+        {
+            *dst++ = gRenderBuffer.m_vertexCount + *src++;
+        }
+        memcpy((U8*)gRenderBuffer.m_vertex +
+                   gRenderBuffer.m_vertexTypeSize * gRenderBuffer.m_vertexCount,
+               vertices, gRenderBuffer.m_vertexTypeSize * vertexCount);
+        gRenderBuffer.m_indexCount += indexCount;
+        gRenderBuffer.m_vertexCount += vertexCount;
+    }
+
+    iRenderFlush();
+}
