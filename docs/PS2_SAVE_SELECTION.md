@@ -61,3 +61,23 @@ Across all three debug regions, CardPick's 1464-byte body improves from
 the conditional UI index in its inlined prompt. These are the only two
 function-score changes; other scores and the full GC report remain unchanged.
 Evidence: `build/save-oct09/*-pick.json` and `pick-proof.json`.
+
+## Autosave-status update
+
+The previously missing PS2 `zSaveLoadAutoSaveUpdate` is restored from its
+576-byte original body. It polls card status, requests card information
+when idle, and selects the original saving/unformatted/no-space/changed/
+failure UI. Terminal failure paths disable autosaving and stall the game.
+The four persistent polling values (`ps2Result`, `ps2Formatted`,
+`ps2CardType`, `ps2FreeSpace`) have named, typed DWARF records in all three
+debug executables; their addresses and GP displacements are recorded in
+`build/save-oct09/autosave-globals.json`.
+
+Caching the physical slot and returning from completed status cases restores
+the original lifetimes and exit branches. The function is exact in USA,
+Europe and Germany, adding 576 exact bytes and one function in each. Every
+other unit score and the full GC source report remain unchanged. Reports
+are `*-auto.json`, with comparisons in `auto-proof.json`.
+
+The SDK calls use the existing `libmc.h` reconstruction of `sceMcSync` and
+`sceMcGetInfo`. This change adds no SDK identity records or registry entries.

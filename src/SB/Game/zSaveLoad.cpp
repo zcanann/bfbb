@@ -20,6 +20,7 @@
 #include "xutil.h"
 
 #if defined(PS2)
+#include <libmc.h>
 #define strcmpi stricmp
 #endif
 
@@ -1947,6 +1948,97 @@ void zSaveLoadAutoSaveUpdate()
             }
             globals.autoSaveFeature = 0;
             zSaveLoadPreAutoSave(0);
+            break;
+        }
+    }
+}
+#else
+static S32 ps2Result;
+static S32 ps2Formatted;
+static S32 ps2CardType;
+static S32 ps2FreeSpace;
+
+void zSaveLoadAutoSaveUpdate()
+{
+    xBase* sendTo;
+    if (globals.autoSaveFeature == 0 || gGameMode == eGameMode_Pause)
+    {
+        return;
+    }
+    if (preAutoSaving == 0)
+    {
+        return;
+    }
+
+    XSGAutoData* autodata = xSGAutoSave_GetCache();
+    S32 physicalSlot = autodata->LastPhysicalSlot();
+    if (physicalSlot >= 0)
+    {
+        autoSaveCard = physicalSlot;
+        S32 result = sceMcSync(physicalSlot, NULL, &ps2Result);
+        switch (result)
+        {
+        case sceMcExecIdle:
+            if (sceMcGetInfo(physicalSlot, 0, &ps2CardType, &ps2FreeSpace,
+                             &ps2Formatted))
+            {
+                return;
+            }
+            break;
+        case sceMcExecRun:
+            break;
+        case sceMcExecFinish:
+            if (ps2Formatted == 0 && ps2CardType == sceMcTypePS2)
+            {
+                sendTo = zSceneFindObject(xStrHash("MNU4 AUTO SAVE FAILED UNFORMATTED"));
+                if (sendTo != NULL)
+                {
+                    zEntEvent(sendTo, eEventVisible);
+                }
+                globals.autoSaveFeature = 0;
+                zSaveLoadPreAutoSave(0);
+                zGameStall();
+                break;
+            }
+            switch (ps2Result)
+            {
+            case 0:
+                sendTo = zSceneFindObject(xStrHash("SAVING GAME ICON UI"));
+                if (sendTo != NULL)
+                {
+                    zEntEvent(sendTo, eEventVisible);
+                }
+                return;
+            case -1:
+                if (ps2FreeSpace < 145 && !iSGCheckForGameFiles(physicalSlot))
+                {
+                    sendTo = zSceneFindObject(xStrHash("MNU4 AUTO SAVE FAILED NOSPACE"));
+                }
+                else
+                {
+                    sendTo = zSceneFindObject(xStrHash("MNU4 AUTO SAVE CHANGED"));
+                }
+                if (sendTo != NULL)
+                {
+                    zEntEvent(sendTo, eEventVisible);
+                }
+                globals.autoSaveFeature = 0;
+                zSaveLoadPreAutoSave(0);
+                zGameStall();
+                return;
+            case -2:
+            case -5:
+            default:
+                sendTo = zSceneFindObject(xStrHash("MNU4 AUTO SAVE FAILED"));
+                if (sendTo != NULL)
+                {
+                    zEntEvent(sendTo, eEventVisible);
+                }
+                globals.autoSaveFeature = 0;
+                zSaveLoadPreAutoSave(0);
+                zGameStall();
+                return;
+            }
             break;
         }
     }
