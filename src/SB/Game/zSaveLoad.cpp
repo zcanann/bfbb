@@ -27,7 +27,8 @@
 #define SAVE_LOAD_CORRUPT_LABEL "Corrupt Save File\n\n"
 #endif
 
-#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78) || defined(VERSION_SLES_51968) || \
+    defined(VERSION_SLES_51970)
 #define SAVE_LOAD_FRAME_TIME (1.0f / 50.0f)
 #else
 #define SAVE_LOAD_FRAME_TIME (1.0f / 60.0f)
@@ -190,7 +191,9 @@ void zSaveLoad_Tick()
 #if !defined(PS2)
     iTRCDisk::CheckDVDAndResetState();
 #endif
+#if !defined(PS2)
     xDrawBegin();
+#endif
     xParMgrUpdate(time_elapsed);
     zSceneUpdate(time_elapsed);
 
@@ -210,7 +213,9 @@ void zSaveLoad_Tick()
     zUpdateThumbIcon();
     zSceneRender();
     xDebugUpdate();
+#if !defined(PS2)
     xDrawEnd();
+#endif
     xCameraEnd(&globals.camera, time_elapsed, 1);
     iEnvEndRenderFX(0);
     xCameraShowRaster(&globals.camera);
@@ -2718,17 +2723,25 @@ void zSaveLoad_DispatchCB(U32 dispatchEvent, const F32* toParam)
     case 0xa8:
         promptSel = 4;
         break;
+#if defined(PS2)
+    case 0xa9:
+        break;
+#endif
     case 0xaa:
         promptSel = 3;
         break;
     case 0xab:
     {
         currentCard = (int)*toParam;
+#if defined(PS2)
+        en_SAVEGAME_MODE mode = gGameMode == eGameMode_Save ? XSG_MODE_SAVE : XSG_MODE_LOAD;
+#else
         en_SAVEGAME_MODE mode = XSG_MODE_LOAD;
         if (gGameMode == eGameMode_Save)
         {
             mode = XSG_MODE_SAVE;
         }
+#endif
         st_XSAVEGAME_DATA* inst = xSGInit(mode);
         zSaveLoad_CardCheckSpaceSingle_doCheck(inst, currentCard);
         xSGDone(inst);
@@ -2752,6 +2765,9 @@ S32 xSGT_SaveInfoCB(void* vp, st_XSAVEGAME_DATA* xsgdata, S32* need, S32* most)
 
 S32 xSGT_SaveProcCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt)
 {
+#if defined(PS2)
+    S32 sum = 0;
+#endif
     if (globals.sceneCur->sceneID == 'PG12')
     {
         strcpy(currSceneStr, xUtil_idtag2string('HB01', 0));
@@ -2760,7 +2776,12 @@ S32 xSGT_SaveProcCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONT
     {
         strcpy(currSceneStr, xUtil_idtag2string(globals.sceneCur->sceneID, 0));
     }
+#if defined(PS2)
+    sum += xSGWriteData(xsgdata, wctxt, currSceneStr, 1, strlen(currSceneStr));
+    return sum + 1;
+#else
     return xSGWriteData(xsgdata, wctxt, currSceneStr, 1, strlen(currSceneStr)) + 1;
+#endif
 }
 
 S32 xSGT_SaveInfoPrefsCB(void* p1, st_XSAVEGAME_DATA* data, S32* i, S32* j)
@@ -2802,9 +2823,15 @@ S32 xSGT_LoadLoadCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTE
 S32 xSGT_LoadPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, U32 ui,
                      S32 i)
 {
+#if defined(PS2)
+    char bigbuf[32] = {};
+
+    xSGReadData(xsgdata, rctxt, &gSnd.stereo, 1);
+#else
     U32 stereo;
 
     xSGReadData(xsgdata, rctxt, &stereo, 1);
+#endif
     xSGReadData(xsgdata, rctxt, &gSnd.categoryVolFader[2], 1);
     xSGReadData(xsgdata, rctxt, &gSnd.categoryVolFader[0], 1);
     xSGReadData(xsgdata, rctxt, &globals.option_vibration, 1);

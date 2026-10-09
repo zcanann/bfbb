@@ -142,3 +142,25 @@ current compiler and 3.0.1b74, so this does not support a compiler patch.
 Germany gains 224 exact bytes and one function. No other function scores
 regress, and the full GC report remains identical. Evidence is recorded in
 `build/save-oct09/*-labels.json` and `labels-proof.json`.
+
+## Save callbacks and tick calls
+
+The original dispatch uses a six-entry jump table, with an explicit no-op
+entry for event 0xa9, and a conditional save/load mode expression. These
+forms restore its exact 216-byte body. The save callback retains an integer
+sum across its scene-name calls and adds the write result; restoring that
+local makes its 192-byte body exact as well.
+
+The preferences callback reads stereo into `gSnd.stereo`, rather than the
+unused local in the GC path, and retains the original DWARF `bigbuf` local.
+It improves from 82.43104% to 96.55173%; the remaining difference is the
+known zero-initialization-loop NOP placement. The PS2 tick calls the particle
+manager directly, without GC's draw-begin/end calls, and Europe/Germany use
+a 1/50 second fallback time. These original call targets and float bits were
+checked in all three debug executables. Tick improves to 79.59677%; its
+remaining matrix-copy discrepancy is not attributed to a compiler version.
+
+All three regions gain 408 exact bytes and two functions, with only these
+four function scores changing. The full GC source report remains identical.
+Evidence: `*-callbacks.json`, `callbacks-proof.json`, and
+`callback-original-calls.json` in `build/save-oct09/`.
