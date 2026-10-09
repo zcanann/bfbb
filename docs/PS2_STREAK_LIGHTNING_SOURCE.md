@@ -216,3 +216,13 @@ is `build/lightning-loop-final-comparison.json`, its function-delta JSON and
 `build/lightning-loop-gc-{before,after}.json`. This function is not currently
 profiled for France. Existing unresolved calls and raw delay-slot checks remain
 unchanged.
+
+The free-lightning search uses a signed less-than bound against
+`NUM_LIGHTNING`, matching the original `slti` loop test instead of introducing
+an equality test and extra live limit register. The inlined change improves
+the 2152-byte `zLightningAdd` from 97.49071% to 99.18216% in each debug region.
+Complete lightning units reach 98.9409%; all 7208 exact bytes, other function
+scores and size/data controls remain unchanged. GameCube remains 17/17 exact
+(12448 bytes). The existing French profile does not contain this function.
+Evidence is `build/lightning-free-final-comparison.json`, its function-delta
+JSON and `build/lightning-free-gc-{before,after}.json`.

@@ -221,7 +221,7 @@ void zLightningInit()
 
 static zLightning* FindFreeLightning()
 {
-    for (int i = 0; i != (sizeof(sLightning) / sizeof(zLightning*)); i++)
+    for (S32 i = 0; i < NUM_LIGHTNING; i++)
     {
         if (sLightning[i] != NULL)
         {
