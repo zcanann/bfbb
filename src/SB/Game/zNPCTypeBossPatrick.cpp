@@ -2341,7 +2341,13 @@ void zNPCBPatrick::ParabolaHitsConveyors(xParabola* path, xCollis* colls)
                 xVec3 pos;
                 xVec3 disp;
 
+#if defined(PS2)
+                xVec3Copy(&pos, &path->initPos);
+                xVec3AddScaled(&pos, &path->initVel, t[j]);
+                pos.y -= 0.5f * path->gravity * t[j] * t[j];
+#else
                 xParabolaEvalPos(path, &pos, t[j]);
+#endif
                 xVec3Sub(&disp, &pos, &mat->pos);
 
                 F32 a = xVec3Length2(&mat->right);
