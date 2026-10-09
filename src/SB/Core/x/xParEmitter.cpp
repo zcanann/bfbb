@@ -210,25 +210,26 @@ void xParEmitterReset(xParEmitter* t)
 S32 xParEmitterEventCB(xBase* to, xBase* from, U32 toEvent, const F32* toParam,
                        xBase* toParamWidget)
 {
+    xParEmitter* emitter = (xParEmitter*)from;
     xParEmitterCustomSettings sp8;
 
     switch ((S32)toEvent)
     {
     case eEventReset:
-        xParEmitterReset((xParEmitter*)from);
+        xParEmitterReset(emitter);
         break;
     case eEventOn:
-        ((xParEmitter*)from)->emit_flags |= 1;
+        emitter->emit_flags |= 1;
         break;
     case eEventOff:
-        if (((xParEmitter*)from)->emit_flags & 1)
+        if (emitter->emit_flags & 1)
         {
-            ((xParEmitter*)from)->emit_flags ^= 1;
+            emitter->emit_flags ^= 1;
         }
         break;
     case eEventEmit:
         memset(&sp8, 0, sizeof(sp8));
-        xParEmitterEmitCustom((xParEmitter*)from, 0.033333335f, &sp8);
+        xParEmitterEmitCustom(emitter, 0.033333335f, &sp8);
         break;
     }
     return 1;

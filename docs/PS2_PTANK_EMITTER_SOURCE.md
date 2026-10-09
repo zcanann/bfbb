@@ -36,3 +36,23 @@ function score. The compiled function is 1,424 bytes, so this is not an exact
 match. GC preserves all scores and 26 exact functions / 7,096 bytes. The private
 France profile has no supported source compile for this unit; no France match
 claim is made. No targets, profiles, comparison rules, or compiler were changed.
+
+## Emitter event callback
+
+Cache the receiving object as a typed `xParEmitter*` and use it throughout
+`xParEmitterEventCB`. This removes the compiler's extra saved member-address
+register and recovers the original stack layout and member accesses. Event
+ordering, reset behavior, flags, and custom emission arguments are unchanged.
+
+The 196-byte callback improves from 83.87755% to 100% in all three debug
+versions. Complete-unit exact matching rises from 772 to 968 bytes (six to seven
+functions), and fuzzy matching rises from 96.549774% to 97.06376%. Every other
+function score and data control remains unchanged. GC retains every score and
+16 exact functions / 2,816 bytes. France is outside this unit's source profile.
+
+Private evidence: `emitter-event-final-comparison.json`,
+`emitter-event-final-changes.json`, and `emitter-event-gc-{before,after}.json`.
+`emitter-event-raw-proof.py` / `.json` independently reproduces all 196 original
+bytes in each debug executable after applying actual call addresses from
+original linkage identities and the existing reviewed `memset` runtime anchor.
+No relocation is inferred from the compiled call's position.
