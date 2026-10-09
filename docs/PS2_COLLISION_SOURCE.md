@@ -412,3 +412,29 @@ used. Baseline: `26ccab6cb` (the swept-box change on staging `5cb49a1a2`).
 Private evidence: `build/collide-oct09/mgc-proof.json`, `mgc-locals.json`,
 `mgc-raw-proof.json`, and the four regional reports. Full production checks
 remain the integration gate.
+
+## Oriented-box projected-radius lifetimes (2026-10-09)
+
+`xOBBHitsOBB` now keeps `ar` and `br` as the separate projected radii, adding
+them in the separating-axis comparisons. The previous source reused these
+locals for the combined radius, extending their register lifetimes into
+unrelated tests. Original debug information assigns `ar`, `br` and `r` to
+FPR7, FPR1 and FPR6 respectively. The revised ordinary expressions recover
+those allocations and the original arithmetic sequence. The shared rewrite
+also retains the exact GameCube body.
+
+Normal complete-unit builds in all four PS2 regions improve the 2,768-byte
+body from 96.786125% to 99.71098%, with all other 35 function scores unchanged.
+Exact coverage remains 12,968 bytes / 22 functions. The compiled body has
+two additional alignment NOPs (2,776 bytes). All 663 non-NOP instructions
+match after accounting for branch displacements, with all 42 branch
+destinations and their delay-slot words checked independently. There are no
+relocations. The alignment residual is retained without source padding or a
+compiler-version attribution; it does not count as an exact function.
+
+Fresh GameCube solo remains 72/75 exact. The Xbox profile does not compile
+`xCollide.cpp` as either a unit or dependency, so no Xbox body comparison or
+gain is claimed. Full regional production controls remain the integration
+gate. Baseline: `b1a9832ac`. Private evidence:
+`build/collide-oct09/obb2-proof.json`, `obb2-locals.json`, and
+`obb2-alignment-proof.json`.
