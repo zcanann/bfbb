@@ -14654,7 +14654,7 @@ fences. All 385 previously published TU-proof records remain unchanged.
 
 Source gains include particle loops, pad thresholds/rumble pointer reuse,
 culling and group operand order, sound voice bounds and original wrappers,
-scoped grid/FFX call boundaries, spline inlining/address induction, missing
+scoped grid call boundaries and direct FFX returns, spline inlining/address induction, missing
 streaming scratch initialization, and MovePoint's shared unit-length local.
 Changed source units were compared in all four PS2 regions; direct original
 byte reconstruction corroborates the newly exact debug-region bodies where
@@ -14678,3 +14678,18 @@ the rest against the frozen source. The interrupted compiler's partial object
 was excluded. The subsequent USA source refresh recompiles the three changed
 units against the unchanged verified targets, preserving source hashes and the
 full report/export checks.
+
+The next source-only batch adds another 992 exact bytes / six functions in
+USA and 528 bytes / four functions in France. The USA report reaches 983,776
+exact bytes / 3,741 functions; France reaches 119,360 bytes / 435 functions.
+Psyche transition/list access and the three string hashes supply the exact
+gains. Sound switch exits and the particle-manager countdown improve fuzzy
+matching. The countdown also restores the original three volatile load sites,
+removing the extra initialization read in the previous source object.
+
+Both full reports were refreshed against the unchanged verified target sets;
+every previous function score and exact match is retained. All three GameCube
+full source reports and retail checksums remain unchanged. Evidence:
+`build/oct09-{us,france}-second`, their `*-second-comparison.log` files, and
+`build/oct09-second-<GameCube-version>.log`. Compiler/scoring settings,
+function extents and all regional denominators remain unchanged.
