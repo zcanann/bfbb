@@ -15374,3 +15374,31 @@ normal compiler and section exporter. Every previous French function/unit
 measure survives. Evidence: `build/oct09-screen-collision-France-resume.log`,
 `build/oct09-screen-collision-compare-SLES-53623.log` and
 `build/oct09-screen-checkpoint-audit.log`.
+
+The OBB/smoothing checkpoint adds another 3,116 exact bytes / five functions
+per debug release: nonuniform sphere/OBB (1,508), swept-sphere preparation
+(932), NPC smoothing (508), and two screen camera lifecycle helpers (168).
+USA reaches 1,062,156 / 3,894, PAL 1,054,596 / 3,881 and Germany 1,058,032 /
+3,885. Full original replay of the OBB and preparation calls/data operands
+reproduces all 2,440 bytes in all three references without excluded words.
+Original normalization boundaries and named local lifetimes restore the source
+behavior; no compiler patch or artificial padding is introduced.
+
+NPC search improves from 62.519802% to 98.935646% after restoring the literal
+original ABS.S, found guard and initialization placement. Line of sight improves
+from 90.128716% to 98.0198% through component-copy lifetimes. Screen overlay
+reaches 99.65035%, retaining the independently authenticated otherwise-unused
+RwRect initializer; remaining NOP/branch differences and unnamed SDK operands
+stay unproved. All original screen bodies retain the 5,788-byte denominator.
+
+France's already-proven OBB/preparation source adds 2,440 exact bytes / two
+functions, reaching 254,700 / 699 with unchanged 940 identities / 452,872 known
+bytes. No new French identity is inferred from a source match. All four reports
+retain every earlier function/unit measure. Only three changed debug units and
+two changed French units are recompiled against their preceding verified full
+target sets; headers, profiles, target registries and global compiler settings
+are unchanged, and source hashes remain frozen at `be9e88d35`. Fresh full
+GameCube checks pass unchanged. Both previously verified full Xbox source sets
+and their dependencies are unchanged by this batch. Evidence:
+`build/oct09-obb-smooth`, its four comparison logs,
+`build/oct09-obb-smooth-audit.log` and `build/oct09-obb-smooth-gc.log`.
