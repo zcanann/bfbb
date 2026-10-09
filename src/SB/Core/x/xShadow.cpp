@@ -153,11 +153,13 @@ void xShadowInit()
     xShadowCameraCreate();
 #if defined(PS2)
     RpSkyTexCacheRasterLock(ShadowCameraRaster, TRUE);
-    ShadowMapCreatePipelines();
 #else
     gc_saveraster = RwRasterCreate(256, 256, 32, 0x504);
 #endif
     shadow_ent_count = 0;
+#if defined(PS2)
+    ShadowMapCreatePipelines();
+#endif
     ShadowLight = RpLightCreate(1);
     RpLightSetColor(ShadowLight, &ShadowLightColor);
     RwFrame* frame = RwFrameCreate();
@@ -169,6 +171,9 @@ void xShadowRender(xVec3* center, F32 radius, F32 max_dist)
     xShadowRenderWorld(center, radius, max_dist);
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 static S32 SetupShadow()
 {
     S32 res = 256;
@@ -201,6 +206,10 @@ static S32 SetupShadow()
     ShadowCamera->frameBuffer = raster;
     return 1;
 }
+
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 void xShadowSetWorld(RpWorld* world)
 {
@@ -2032,6 +2041,9 @@ void xShadowManager_Reset()
     sMgrCount = 0;
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 void xShadowManager_Add(xEnt* ent)
 {
     for (int i = 0; i < sMgrCount; i++)
@@ -2051,6 +2063,10 @@ void xShadowManager_Add(xEnt* ent)
         sMgrCount++;
     }
 }
+
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 void xShadowManager_Remove(xEnt* ent)
 {
