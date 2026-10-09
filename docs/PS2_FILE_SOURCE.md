@@ -33,3 +33,29 @@ compiler logs and reports. Comparison/changes are in
 `ifile-debug-changes.json`; original-only layout/data and actual-object raw
 replays are `ifile-debug-layout-data-proof.py` / `.json` and
 `ifile-debug-raw-proof.py` / `.json`.
+
+## Loader index lifetime
+
+Declaring the once-assigned file index as a constant local restores the original
+register lifetime across the failure guard: the successful path reuses the name
+register only after the diagnostic-return path has ended. `iFileLoad` becomes
+exact at 264 bytes in all three debug versions, with unchanged signed alignment
+arithmetic, allocation, block-loading arguments and returned size.
+
+The full unit advances from 3,060 to 3,324 exact bytes and thirteen to fourteen
+exact functions, with 99.77169% fuzzy matching. Every other function/data result
+is unchanged; the sole remaining body is the 180-byte `iFileFullPath` at
+95.55556%. Moving declarations, reversing or spelling out the guard, and using
+an assignment inside the condition were tested separately before retaining the
+constant-local form. The existing source is otherwise unchanged.
+
+Raw replay agrees for 256 / 264 bytes. The two remaining original transfer
+identities at offsets 36 and 60 are not established by this proof (the compiler
+spells them `HISGetFileIndex` and `printf`); no target alias is inferred. The
+other original calls, allocator-data relocation, diagnostic bytes and every
+arithmetic/control-flow instruction replay exactly. Normal production scoring
+and exporter rules stay unchanged.
+
+Private evidence: `build/ifile-load/<version>/` frozen objects/reports,
+`ifile-load-comparison.json`, `ifile-load-changes.json`, and
+`ifile-load-raw-proof.py` / `.json`. The source parent is `fbca61fba`.

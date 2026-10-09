@@ -135,11 +135,10 @@ void iFileExit()
 
 U32* iFileLoad(char* name, U32* buffer, U32* size)
 {
-    S32 index;
     S32 fileSize;
     S32 alignedSize;
 
-    index = HISGetFileIndex(name);
+    const S32 index = HISGetFileIndex(name);
     if (index == -1)
     {
         printf("----> iFileLoad: Cannot find %s\n", name);
