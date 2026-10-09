@@ -15332,3 +15332,45 @@ measures; no data or full-link credit is added. Evidence:
 `build/oct09-full-morph-resource-final`, its three full build logs,
 `build/oct09-morph-resource-compare-<debug-version>.log` and
 `build/oct09-morph-checkpoint-audit.log`.
+
+The screen/collision checkpoint adds seven typed screen helpers (1,356 bytes),
+three memory-card call-boundary fixes (452 bytes) and the NPC bound-ray routine
+(240 bytes). Each debug PS2 release gains 2,048 exact bytes / eleven functions:
+USA reaches 1,059,040 / 3,889, PAL 1,051,480 / 3,876 and Germany 1,054,916 /
+3,880. The full original screen denominator remains thirteen functions / 5,788
+bytes; its six unimplemented bodies remain zero. Seventeen SDK instruction
+words in the implemented screen helpers remain unnamed in the independent raw
+proof; no runtime identity is invented from their comparison scores.
+
+The original swept-triangle VU transform and vector lifetimes improve the
+2,536-byte body from 66.03155% to 98.33438%. The parabola callback improves from
+76.75598% to 88.61005%, restoring its original 0xb0 frame, and model-sphere
+collision improves from 97.12057% to 99.858154%. NPC aim and arbitrary-plane
+lifetimes improve without exact credit. Full VU lane/pack/scatter and original
+call boundaries are independently checked; the remaining scheduling and
+register differences stay scored. No artificial padding or compiler patch is
+introduced.
+
+Targets are freshly regenerated from originals. Only source objects whose
+source, enabled profile, target object bytes and frozen object hash agree with
+the preceding full gate are reused. All four changed debug units are compiled;
+212 unchanged objects are checked and reused, preserving the complete 216-unit
+source comparison. Global compiler settings stay identical. Source/profile is
+frozen at `51ce479dc`, and every previous debug function/unit measure survives.
+Fresh full GameCube and Xbox source reports pass without regressions. Evidence:
+`build/oct09-screen-collision`, its `reuse-validation.json` documents and three
+debug comparison logs, `build/oct09-screen-collision-gc.log`,
+`build/oct09-screen-collision-xbox` and both Xbox comparison logs.
+
+France gains 564 exact bytes / three functions from the same bound-ray and
+format-helper source, reaching 252,260 / 697. Known coverage remains 940
+identities / 452,872 bytes. Strict original regeneration and registry comparison
+pass; three changed units compile and 84 unchanged objects are checked/reused.
+The private validation wrapper initially counted enabled profiles lacking a
+recovered French target unit. Its assertion now counts represented units and
+requires every prior compiled source to survive. The successful original target
+stage is retained unchanged, and source/report stages are completed with the
+normal compiler and section exporter. Every previous French function/unit
+measure survives. Evidence: `build/oct09-screen-collision-France-resume.log`,
+`build/oct09-screen-collision-compare-SLES-53623.log` and
+`build/oct09-screen-checkpoint-audit.log`.
