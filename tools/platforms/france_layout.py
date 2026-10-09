@@ -17,7 +17,7 @@ REGISTRIES = {
     "reviewed-functions.json": None,
     "corroborated-functions.json": "machine-corroborated-static-cfg",
     "relocation-corroborated-functions.json": "machine-corroborated-explicit-transfers",
-    "tu-corroborated-functions.json": "reviewed-whole-tu-sequence",
+    "tu-corroborated-functions.json": ("reviewed-whole-tu-sequence", "reviewed-complete-caller-callee-cluster"),
 }
 
 
@@ -78,7 +78,8 @@ def verified_functions(config: Path, executable_sha1: str, region: dict,
             start, size = entry["address"], entry["size"]
             if (entry.get("boundary_confirmation") is not True or size <= 0 or
                     start % 4 or size % 4 or
-                    (kind is not None and entry.get("confirmation_kind") != kind)):
+                    (kind is not None and entry.get("confirmation_kind") not in
+                     ((kind,) if isinstance(kind, str) else kind))):
                 raise ValueError(f"{filename}: missing independent boundary confirmation")
             offset = start - region["address"]
             if offset < 0 or offset + size > len(region_body):

@@ -92,6 +92,24 @@ class LayoutTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 layout.verified_functions(Path(directory), "expected", region, body)
 
+    def test_only_proven_cluster_kind_can_occupy_the_tu_registry(self):
+        region, body = {"address": 100, "size": 16}, bytes(range(16))
+        entry = {"name": "a", "source": "A", "address": 100, "size": 8,
+                 "sha256": hashlib.sha256(body[:8]).hexdigest(), "boundary_confirmation": True,
+                 "confirmation_kind": "reviewed-complete-caller-callee-cluster"}
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "tu-corroborated-functions.json"
+            document = {"executable_sha1": "expected", "functions": [entry]}
+            path.write_text(json.dumps(document))
+            verified, _ = layout.verified_functions(Path(directory), "expected", region, body)
+            self.assertEqual(len(verified), 1)
+            self.assertTrue(layout.OccupiedRanges([(v["address"], v["address"] + v["size"])
+                                                 for v in verified]).overlaps(100, 108))
+            entry["confirmation_kind"] = "fuzzy-candidate"
+            path.write_text(json.dumps(document))
+            with self.assertRaises(ValueError):
+                layout.verified_functions(Path(directory), "expected", region, body)
+
     def test_soft_anchors_reorder_but_never_remove_ambiguous_candidates(self):
         candidates = [{"candidate_address": address, "candidate_size": 40,
                        "lcs_dice_percent": score, "edit_similarity_percent": None}
