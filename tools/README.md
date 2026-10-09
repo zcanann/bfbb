@@ -15,6 +15,12 @@ Build plumbing plus the analysis tools used to work the decompilation.
 
 ## Analysis
 
+`platforms/france_fuzzy.py` ranks stripped-France PS2 function candidates from
+authenticated debug-region originals using normalized instruction seeds,
+gapped alignment and LCS. It caches expensive inputs and emits review evidence
+without promoting symbols or changing progress. See
+[PS2_FRANCE_FUZZY.md](../docs/PS2_FRANCE_FUZZY.md) for filters, budgets and tests.
+
 These read `objdiff.json` and `build.ninja`, so run `configure.py` first.
 They compile through `cwexec.py`, which takes the launcher, the sjiswrap
 wrapper and the compiler path from the `mwcc`/`mwcc_sjis` rules rather than
