@@ -277,3 +277,30 @@ unit. Baseline: `3b6725643`. Evidence is
 `build/collide-oct09/parabola-proof.json`, `parabola-locals.json`, and
 `parabola-entry-proof.json`. Full regional production checks are deferred to
 the integration gate, and no runtime identity or registry evidence changes.
+
+
+## Model-sphere normal square-root boundary (2026-10-09)
+
+`xSphereHitsModel` independently exhibits the same explicit PS2 `sqrt.s`
+boundary as the swept-triangle edges. Reusing the file-local helper restores
+the normal's register lifetime and the original reload of the reciprocal
+constant. The helper moves before this caller and is renamed `xCollideSqrt`;
+its triangle consumers are unchanged. Explicitly expressing the three center
+subtractions before `xMat3x3Tolocal` also restores the original first-component
+load order. The non-PS2 path retains its existing helpers.
+
+All three normal regional unit builds improve this 1,128-byte body from
+97.12057% to 99.858154%, with the other 35 scores unchanged. Fresh GameCube
+solo retains 72/75 exact functions. Exact PS2 coverage is unchanged. The raw
+comparison has 1,068 equal bytes, 44 bytes excluded as relocated words, and
+16 differing non-relocated bytes in the animation-collision restore sequence.
+That sequence retains the original behavior but exchanges the two scratch
+GPRs; a pointer-temporary source probe did not change its allocation and was
+reverted. Existing SDK/global identities are not promoted by this comparison.
+
+Baseline: `f20a1f899`. Private evidence:
+`build/collide-oct09/model-proof.json` and `model-raw-proof.json`. Complete
+production checks remain the integration gate. The adjacent near-exact
+`xCollideCalcTri` was also inspected: its residual is alignment NOP placement
+and consequent branch displacement changes, so no artificial padding was
+introduced there.

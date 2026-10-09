@@ -325,6 +325,17 @@ static RpCollisionTriangle* sphereHitsModelCB(RpIntersection* isx, RpCollisionTr
     return sphereHitsEnvCB(&context->localx, NULL, tri, dist, context->coll);
 }
 
+#if defined(PS2)
+static inline F32 xCollideSqrt(F32 value)
+{
+    F32 result;
+    asm volatile("sqrt.s %0, %1" : "=f"(result) : "f"(value));
+    return result;
+}
+#else
+#define xCollideSqrt xsqrt
+#endif
+
 U32 xSphereHitsModel(const xSphere* b, const xModelInstance* m, xCollis* coll)
 {
     RpIntersection isx;
@@ -345,7 +356,15 @@ U32 xSphereHitsModel(const xSphere* b, const xModelInstance* m, xCollis* coll)
     RwFrameTransform(frame, (RwMatrix*)mat, rwCOMBINEREPLACE);
 
     F32 mscale = xVec3Length(&mat->right);
+#if defined(PS2)
+    context.localx.t.sphere.center.x = b->center.x - mat->pos.x;
+    context.localx.t.sphere.center.y = b->center.y - mat->pos.y;
+    context.localx.t.sphere.center.z = b->center.z - mat->pos.z;
+    xMat3x3Tolocal((xVec3*)&context.localx.t.sphere.center, mat,
+                   (xVec3*)&context.localx.t.sphere.center);
+#else
     xMat4x3Tolocal((xVec3*)&context.localx.t.sphere.center, mat, &b->center);
+#endif
     context.localx.t.sphere.radius = b->r / mscale;
 
     coll->flags &= ~k_HIT_IT;
@@ -384,7 +403,7 @@ U32 xSphereHitsModel(const xSphere* b, const xModelInstance* m, xCollis* coll)
         F32 mag2 = coll->norm.length2();
         if (!xeq(mag2, 1.0f, 1e-5f))
         {
-            coll->norm *= 1.0f / xsqrt(mag2);
+            coll->norm *= 1.0f / xCollideSqrt(mag2);
         }
     }
 
@@ -1488,16 +1507,6 @@ static inline void xSweptSphereTransformTriangle(xVec3* out, const xMat4x3* mat,
 }
 #endif
 
-#if defined(PS2)
-static inline F32 xSweptSphereTriangleSqrt(F32 value)
-{
-    F32 result;
-    asm volatile("sqrt.s %0, %1" : "=f"(result) : "f"(value));
-    return result;
-}
-#else
-#define xSweptSphereTriangleSqrt xsqrt
-#endif
 
 S32 xSweptSphereToTriangle(xSweptSphere* sws, xVec3* v0, xVec3* v1, xVec3* v2)
 {
@@ -1660,7 +1669,7 @@ S32 xSweptSphereToTriangle(xSweptSphere* sws, xVec3* v0, xVec3* v1, xVec3* v2)
             uu.z = magNsqr;
             F32 ulen;
 #if defined(PS2)
-            ulen = xSweptSphereTriangleSqrt(SQR(uu.x) + SQR(uu.y) + SQR(uu.z));
+            ulen = xCollideSqrt(SQR(uu.x) + SQR(uu.y) + SQR(uu.z));
 #else
             xsqrtfast(ulen, SQR(uu.x) + SQR(uu.y) + SQR(uu.z));
 #endif
@@ -1679,7 +1688,7 @@ S32 xSweptSphereToTriangle(xSweptSphere* sws, xVec3* v0, xVec3* v1, xVec3* v2)
                     testdist = 1.0f / uu.z *
 #endif
                                (uu.x * pt.x + uu.y * pt.y + uu.z * pt.z -
-                                xSweptSphereTriangleSqrt(radsqr - dsqr));
+                                xCollideSqrt(radsqr - dsqr));
                     if (testdist >= sws->curdist)
                         continue;
                     if (!(testdist <= -rad))
@@ -1701,7 +1710,7 @@ S32 xSweptSphereToTriangle(xSweptSphere* sws, xVec3* v0, xVec3* v1, xVec3* v2)
         F32 distzsqr = radsqr - SQR(xform[i].x) - SQR(xform[i].y);
         if (!(distzsqr <= 0.0f))
         {
-            testdist = pt.z - xSweptSphereTriangleSqrt(distzsqr);
+            testdist = pt.z - xCollideSqrt(distzsqr);
             if (!(testdist >= sws->curdist) && !(testdist <= -rad))
             {
                 sws->curdist = testdist;
@@ -1713,7 +1722,7 @@ S32 xSweptSphereToTriangle(xSweptSphere* sws, xVec3* v0, xVec3* v1, xVec3* v2)
         testdist = radsqr - SQR(xform[i].x) - SQR(xform[i].y);
         if (!(testdist <= 0.0f))
         {
-            F32 distzsqr = pt.z - xSweptSphereTriangleSqrt(testdist);
+            F32 distzsqr = pt.z - xCollideSqrt(testdist);
             if (!(distzsqr >= sws->curdist) && !(distzsqr <= -rad))
             {
                 sws->curdist = distzsqr;
@@ -1748,7 +1757,7 @@ S32 xSweptSphereToTriangle(xSweptSphere* sws, xVec3* v0, xVec3* v1, xVec3* v2)
 }
 
 #if !defined(PS2)
-#undef xSweptSphereTriangleSqrt
+#undef xCollideSqrt
 #endif
 
 S32 xSweptSphereToSphere(xSweptSphere* sws, xSphere* sph)
