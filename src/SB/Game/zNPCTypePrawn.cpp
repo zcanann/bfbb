@@ -1322,6 +1322,10 @@ inline void zNPCPrawn::update_round()
     }
 }
 
+#if defined(PS2)
+// Retail retains calls to this body from Reset and the death goal's Enter.
+#pragma dont_inline on
+#endif
 void zNPCPrawn::decompose()
 {
     vanish();
@@ -1347,6 +1351,9 @@ void zNPCPrawn::decompose()
         boss_cam.stop();
     }
 }
+#if defined(PS2)
+#pragma dont_inline off
+#endif
 
 zNPCSpawner* zNPCPrawn::make_spawner(S32 i)
 {

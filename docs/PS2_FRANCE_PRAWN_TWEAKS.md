@@ -60,3 +60,15 @@ with exact counts unchanged. All three GameCube reports remain unchanged.
 These comparisons are recorded in `build/prawn-condition-source-summary.json`
 and the corresponding `build/prawn-condition-source-before` / `after`
 directories.
+
+Retail retains calls to `decompose` from `Reset` and the death goal's
+`Enter`. A PS2-only `dont_inline` pragma around that definition preserves
+those boundaries without changing the unit's compiler flags or callee body.
+All three debug versions gain one exact function (84 bytes), and `Reset`
+improves from 60.662163% to 98.64865%. Only these two records change; the
+selected unit reaches 95.38663%, with 30/53 exact functions and
+9,480/25,544 exact bytes. The GameCube unit remains unchanged in all three
+regions. Broad `auto`, `deferred`, and `auto,deferred` unit options were
+tested and rejected because they regress other functions. Private evidence:
+`build/prawn-decompose-source-summary.json` and the corresponding
+`build/prawn-decompose-source-before` / `after` reports.
