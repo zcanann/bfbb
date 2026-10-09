@@ -231012,6 +231012,128 @@
         }
       ],
       "selector": "name_address"
+    },
+    {
+      "source": "src/SB/Core/x/iCamera.cpp",
+      "target_unit": "SB/Core/x/iCamera.cpp",
+      "object": "source/iCamera.o",
+      "executable_sha1s": [
+        "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
+      ],
+      "symbols": {
+        "iCameraUpdateFog@0035c930": "iCameraUpdateFog__FP8RwCameral",
+        "iCameraSetNearFarClip@0035d230": "iCameraSetNearFarClip__Fff",
+        "iCamGetViewMatrix@0035d270": "iCamGetViewMatrix__FP8RwCameraP7xMat4x3",
+        "iCameraFrustumPlanes@0035d430": "iCameraFrustumPlanes__FP8RwCameraP5xVec4"
+      },
+      "calls": [],
+      "linkage_provenance": [
+        {
+          "function": "iCameraUpdateFog@0035c930",
+          "registry": "relocation-corroborated-functions.json",
+          "france_address": 3524912,
+          "size": 1672,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3523536,
+              "reference_sha256": "cf4e6d8ad08afa2eb04b35d6f0e5961f4697654784467b8e2f2bd09382f9b4c1"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3524800,
+              "reference_sha256": "562a2206b8bd788105d9cfc4839086a75a018c75cedf38da22c2579971e35728"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3521552,
+              "reference_sha256": "86fdbe676dfba4aacc5ad50837fdd6334231d66510896f5800a028bb261900a7"
+            }
+          ]
+        },
+        {
+          "function": "iCameraSetNearFarClip@0035d230",
+          "registry": "corroborated-functions.json",
+          "france_address": 3527216,
+          "size": 64,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3527104,
+              "reference_sha256": "dbd1e19186218636bebcf25ae241ad48bc29c07bf8bab02cd9a6f8168c7b59cd"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3523856,
+              "reference_sha256": "dbd1e19186218636bebcf25ae241ad48bc29c07bf8bab02cd9a6f8168c7b59cd"
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3525840,
+              "reference_sha256": "dbd1e19186218636bebcf25ae241ad48bc29c07bf8bab02cd9a6f8168c7b59cd"
+            }
+          ]
+        },
+        {
+          "function": "iCamGetViewMatrix@0035d270",
+          "registry": "corroborated-functions.json",
+          "france_address": 3527280,
+          "size": 156,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3527168,
+              "reference_sha256": "0cb51af78a0a494f957ca16e311d2f46646c9139f94572394dd411e748248695"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3523920,
+              "reference_sha256": "0cb51af78a0a494f957ca16e311d2f46646c9139f94572394dd411e748248695"
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3525904,
+              "reference_sha256": "0cb51af78a0a494f957ca16e311d2f46646c9139f94572394dd411e748248695"
+            }
+          ]
+        },
+        {
+          "function": "iCameraFrustumPlanes@0035d430",
+          "registry": "corroborated-functions.json",
+          "france_address": 3527728,
+          "size": 396,
+          "references": [
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3527616,
+              "reference_sha256": "b60072ec82c9ae297f72aee1482e9c78c7a899e8b64c11507f4db5ad10747bba"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3524368,
+              "reference_sha256": "b60072ec82c9ae297f72aee1482e9c78c7a899e8b64c11507f4db5ad10747bba"
+            },
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3526352,
+              "reference_sha256": "b60072ec82c9ae297f72aee1482e9c78c7a899e8b64c11507f4db5ad10747bba"
+            }
+          ]
+        }
+      ],
+      "selector": "name_address"
     }
   ]
 }
