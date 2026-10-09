@@ -40,3 +40,20 @@ compiled objects and complete function scores. These are ordinary source-code
 comparison results; unresolved RenderWare call identities and data references
 retain their existing limits, and no full-link claim is made. Profiles, identities,
 relocation rules and compiler patches remain unchanged.
+
+The subsequent ribbon comparison fix restores an actual out-of-line call:
+the original `compare_ribbons` calls `xFXRibbon::render_compare`, while the
+reconstructed compiler settings inline it. A PS2-only `dont_inline` scope around
+that definition preserves the original call structure. Both `compare_ribbons`
+(84 bytes) and `xFXRibbonRender` (308 bytes) become exact in all three debug
+regions, adding another 392 bytes per region. Complete `xFX` comparisons advance
+from 12864 to 13256 exact bytes with every other score and all size/data controls
+unchanged; the French profile remains at 1820 exact bytes.
+
+The 84-byte comparator also reproduces each debug original byte for byte after
+applying its actual JAL relocation to the independently identified callee.
+The private proof is `build/ribbon-comparator-proof.py` and its JSON result;
+complete unit evidence is `build/ribbon-call-final-comparison.json` and
+`build/ribbon-call-final-changes.json`. The guarded pragma preserves every
+GameCube function score (`build/ribbon-call-gc-{before,after}.json`). This does
+not expand the existing identity claims for the other renderer's SDK calls.

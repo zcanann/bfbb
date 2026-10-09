@@ -2726,6 +2726,9 @@ namespace
     }
 } // namespace
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 S32 xFXRibbon::render_compare(const xFXRibbon& c) const
 {
     if (raster < c.raster)
@@ -2760,6 +2763,10 @@ S32 xFXRibbon::render_compare(const xFXRibbon& c) const
 
     return 0;
 }
+
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 // Carrier, not recovered code. These eleven RwBlendFunction names are present
 // in the target's @stringBase0 right here, between "fx_streak1" and
