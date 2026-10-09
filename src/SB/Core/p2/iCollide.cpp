@@ -206,20 +206,21 @@ static void properSphereIsectTri(const xVec3* center, F32 radius, xVec3* tohit, 
     xVec3 temp;
 
     dist = *dist_ptr;
-    dist2plane = xVec3Dot((xVec3*)&tri->normal, center);
-    radius2 = xVec3Dot((xVec3*)&tri->normal, (xVec3*)&tri->point);
+    dist2plane = xVec3Dot((xVec3*)&tri->normal, (xVec3*)&tri->point) -
+                 xVec3Dot((xVec3*)&tri->normal, center);
 
-    xVec3SMul(&projPoint, (xVec3*)&tri->normal, radius2 - dist2plane);
+    xVec3SMul(&projPoint, (xVec3*)&tri->normal, dist2plane);
     xVec3Copy(tohit, &projPoint);
     xVec3AddTo(&projPoint, center);
 
     if (PointWithinTriangle(&projPoint, (xVec3**)&tri->vertices, (xVec3*)&tri->normal))
     {
-        dist = iabs(radius2 - dist2plane);
+        dist = iabs(dist2plane);
     }
     else
     {
         dist2 = SQR(dist);
+        radius2 = SQR(radius);
         for (i = 0; i < 3; i++)
         {
             FindNearestPointOnLine(&vertClosestPoint, &projPoint, (xVec3*)tri->vertices[i],
@@ -227,13 +228,13 @@ static void properSphereIsectTri(const xVec3* center, F32 radius, xVec3* tohit, 
             xVec3Sub(&temp, &vertClosestPoint, center);
             vertDist2 = xVec3Length2(&temp);
 
-            if (vertDist2 < dist2 && vertDist2 < SQR(radius))
+            if (vertDist2 < dist2 && vertDist2 < radius2)
             {
                 dist2 = vertDist2;
                 xVec3Copy(tohit, &temp);
             }
         }
-        dist = xsqrt(dist2);
+        asm volatile("sqrt.s %0, %1" : "=f"(dist) : "f"(dist2));
     }
     *dist_ptr = dist;
 }

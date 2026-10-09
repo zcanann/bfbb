@@ -131,3 +131,26 @@ Private evidence is build/icollide-ray-final-comparison.json,
 build/icollide-ray-final-changes.json, build/icollide-ray-raw-proof.json and
 build/icollide-anim-global-proof.json in the PS2 worktree. The baseline
 snapshot is cdab1fcf7. Compiler settings, profiles and scoring are unchanged.
+
+## Sphere-triangle distance lifetimes (2026-10-09)
+
+properSphereIsectTri now computes the complete plane-distance difference in
+its original dist2plane local, keeps radius2 as the squared radius before
+the edge loop, and uses the original scalar sqrt.s boundary for the final
+distance. The previous reconstruction kept both plane dot products alive
+across the triangle test and recomputed the squared radius inside the loop.
+Original DWARF confirms the float locals and their shared register lifetimes:
+dist2plane/dist2 use f21, while dist/radius2 use f20 in all three releases.
+
+All three complete iCollide source units gain this entire 552-byte function,
+which improves from 88.108696% to 100%. Whole-unit fuzzy matching increases
+from 97.69807% to 98.321304%, with exact coverage rising from 3,888 bytes /
+15 functions to 4,440 bytes / 16 functions. All other function records and
+data measures are unchanged. Independent original relocation replay proves
+all 552 bytes exactly, including the square-root word and both named calls
+(PointWithinTriangle and FindNearestPointOnLine), without unresolved runtime
+operands in this function. The platform scope remains debug PS2 only.
+
+Private evidence is build/icollide-sphere-final-comparison.json,
+build/icollide-sphere-final-changes.json, build/icollide-sphere-raw-proof.json
+and build/icollide-sphere-locals-proof.json. The baseline is c73f98aa6.
