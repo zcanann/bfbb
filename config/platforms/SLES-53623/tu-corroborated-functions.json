@@ -39,14 +39,15 @@
     "Bounds adds six members from all nine original functions and three independent neighbors. The complete platform-geometry dependency is independently replayed for external calls; original DWARF proves the 60-byte quick-cull global, with no data extent promotion.",
     "Scalar math adds nine members from all eighteen original functions and nine independent neighbors. Only the exact 60-byte EndPoints leaf tail and eight-byte literal xatof J/NOP have scoped boundary rules; generic CFG checks stay unchanged. Opaque runtime transfer words remain unmasked, unnamed context, and the two overloaded acceleration functions retain distinct original linkage identities.",
     "Utility adds eight members from all eleven original functions and three independent neighbors. Its exact seven-entry dispatch is scoped locally; unsigned-byte lookup dataflow bounds twelve observed table reads. Original typed arrays and independently witnessed animation pointer operands corroborate changed addresses. Opaque runtime caller words remain unmasked, and no runtime identity or data extent is promoted.",
-    "Camera tweak adds eleven members from the complete twelve-function sequence and the existing Reset neighbor. Original member types prove the eight-element state array and two look aggregates. Only exact eight-byte J/NOP wrappers to independently verified, strictly closed base Save/Load functions receive scoped tail handling; opaque runtime calls retain literal unmasked words and identical 64-byte context, with no new identity or extent."
+    "Camera tweak adds eleven members from the complete twelve-function sequence and the existing Reset neighbor. Original member types prove the eight-element state array and two look aggregates. Only exact eight-byte J/NOP wrappers to independently verified, strictly closed base Save/Load functions receive scoped tail handling; opaque runtime calls retain literal unmasked words and identical 64-byte context, with no new identity or extent.",
+    "Pad adds seven members from the complete eight-function sequence and the existing NormalizeAnalog neighbor. Original typed arrays prove four pad records and thirty-two rumble records. Only the exact eight-byte Kill J/NOP to an independently compared empty-return leaf receives scoped tail handling. Complete external platform contexts remain unpromoted; locally enumerated byte-address consumers preserve strict LUI lifetimes, and opaque runtime calls retain literal unmasked words and identical 64-byte context."
   ],
   "counts": {
-    "functions": 368,
-    "code_bytes": 166368,
-    "source_units": 23,
+    "functions": 375,
+    "code_bytes": 169216,
+    "source_units": 24,
     "rooted_direct_call_entries": 129,
-    "closed_return_bodies": 350,
+    "closed_return_bodies": 356,
     "reviewed_tail_wrappers": 2,
     "registered_callback_entries": 26,
     "reviewed_leaf_tail_functions": 11,
@@ -68,7 +69,8 @@
     "reviewed_particle_pool_arrays": 1,
     "reviewed_scalar_math_tails": 2,
     "reviewed_utility_dispatches": 1,
-    "reviewed_camera_tweak_tails": 2
+    "reviewed_camera_tweak_tails": 2,
+    "reviewed_pad_kill_tails": 1
   },
   "sequence_proofs": [
     {
@@ -3261,6 +3263,57 @@
         "unchanged_anchor_offset": 264,
         "unchanged_anchor_bytes": 224,
         "masked_instruction_count": 30
+      }
+    },
+    {
+      "version": "SLUS-20680",
+      "source": "SB/Core/x/xPad.cpp",
+      "source_start": 2044928,
+      "target_start": 2046288,
+      "complete_original_members": 8,
+      "previously_confirmed_members": 1,
+      "sequence_bytes_with_alignment": 3572,
+      "uniqueness": {
+        "matching_addresses": [
+          2046288
+        ],
+        "unchanged_anchor_offset": 2104,
+        "unchanged_anchor_bytes": 908,
+        "masked_instruction_count": 31
+      }
+    },
+    {
+      "version": "SLES-51968",
+      "source": "SB/Core/x/xPad.cpp",
+      "source_start": 2046176,
+      "target_start": 2046288,
+      "complete_original_members": 8,
+      "previously_confirmed_members": 1,
+      "sequence_bytes_with_alignment": 3572,
+      "uniqueness": {
+        "matching_addresses": [
+          2046288
+        ],
+        "unchanged_anchor_offset": 2104,
+        "unchanged_anchor_bytes": 908,
+        "masked_instruction_count": 31
+      }
+    },
+    {
+      "version": "SLES-51970",
+      "source": "SB/Core/x/xPad.cpp",
+      "source_start": 2042816,
+      "target_start": 2046288,
+      "complete_original_members": 8,
+      "previously_confirmed_members": 1,
+      "sequence_bytes_with_alignment": 3572,
+      "uniqueness": {
+        "matching_addresses": [
+          2046288
+        ],
+        "unchanged_anchor_offset": 2104,
+        "unchanged_anchor_bytes": 908,
+        "masked_instruction_count": 31
       }
     }
   ],
@@ -16086,6 +16139,1356 @@
       "caller_word_unmasked": true,
       "no_identity_or_extent_claim": true,
       "promoted_as_named_anchor": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 1617792,
+      "target_address": 1617792,
+      "reference_name": "zMenuRunning",
+      "reference_source": "SB/Game/zMenu.cpp",
+      "size": 8,
+      "reference_sha256": "990f7d9fb5c4cfd8b0039edef0397769e5d5e4dcae953aba6a3b6294c2174829",
+      "target_sha256": "990f7d9fb5c4cfd8b0039edef0397769e5d5e4dcae953aba6a3b6294c2174829",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 1666112,
+      "target_address": 1666112,
+      "reference_name": "zScene_ScreenAdjustMode",
+      "reference_source": "SB/Game/zScene.cpp",
+      "size": 8,
+      "reference_sha256": "9ab13168cee736aa5443f1cdbebc710acda9bbf9570a85f5466f6f524e270ea6",
+      "target_sha256": "9ab13168cee736aa5443f1cdbebc710acda9bbf9570a85f5466f6f524e270ea6",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 1769584,
+      "target_address": 1770880,
+      "reference_name": "iPadKill",
+      "reference_source": "SB/Core/p2/iPad.cpp",
+      "size": 8,
+      "reference_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+      "target_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 1769600,
+      "target_address": 1770896,
+      "reference_name": "iPadStartRumble",
+      "reference_source": "SB/Core/p2/iPad.cpp",
+      "size": 284,
+      "reference_sha256": "feaf56182df9b97f9d00565bfa6784734bee2693df984f5153c903ceaa4c132b",
+      "target_sha256": "8ef6e543aab773e61b145485718613556f8e5c79ea0e76da9e2558fa2ec351f0",
+      "data_address_operands": [
+        {
+          "hi_offset": 16,
+          "lo_offset": 24,
+          "opcode": 9,
+          "reference_address": 5207136,
+          "target_address": 5206160,
+          "storage": "file_backed"
+        },
+        {
+          "hi_offset": 244,
+          "lo_offset": 248,
+          "opcode": 9,
+          "reference_address": 5453120,
+          "target_address": 5452096,
+          "storage": "zero_fill"
+        }
+      ],
+      "direct_transfers": [
+        {
+          "offset": 276,
+          "opcode": 2,
+          "reference_address": 1106720,
+          "target_address": 1106720
+        }
+      ],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 1769888,
+      "target_address": 1771184,
+      "reference_name": "iPadStopRumble",
+      "reference_source": "SB/Core/p2/iPad.cpp",
+      "size": 28,
+      "reference_sha256": "b5a6bb79db80491873cd813677b756d39496377a8fe0c19a628932a7a792dca9",
+      "target_sha256": "b5a6bb79db80491873cd813677b756d39496377a8fe0c19a628932a7a792dca9",
+      "data_address_operands": [],
+      "direct_transfers": [
+        {
+          "offset": 20,
+          "opcode": 2,
+          "reference_address": 1106720,
+          "target_address": 1106720
+        }
+      ],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 1769920,
+      "target_address": 1771216,
+      "reference_name": "iPadRumbleFx",
+      "reference_source": "SB/Core/p2/iPad.cpp",
+      "size": 172,
+      "reference_sha256": "d2b06e833272a53bac972a7d6f1474fc540821305d44d8746eb289ae2f7761d5",
+      "target_sha256": "998547f4b98ecacf3d5067a32b7375ac075a2297e44d81cbe0be5024f2419f15",
+      "data_address_operands": [
+        {
+          "hi_offset": 40,
+          "lo_offset": 48,
+          "opcode": 9,
+          "reference_address": 5453120,
+          "target_address": 5452096,
+          "storage": "zero_fill"
+        }
+      ],
+      "direct_transfers": [
+        {
+          "offset": 148,
+          "opcode": 3,
+          "reference_address": 1106720,
+          "target_address": 1106720
+        }
+      ],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 1770096,
+      "target_address": 1771392,
+      "reference_name": "iPadUpdate",
+      "reference_source": "SB/Core/p2/iPad.cpp",
+      "size": 868,
+      "reference_sha256": "bff8abea7da8d5993a4f7b43b6c71770e03e42fafbde1dd054ebfead8ead3125",
+      "target_sha256": "e2204ba8f1a58ed712411e0642be19adecdc291e5dc8b23fc24d8d95ad735306",
+      "data_address_operands": [
+        {
+          "hi_offset": 36,
+          "lo_offset": 44,
+          "opcode": 9,
+          "reference_address": 6007160,
+          "target_address": 6006136,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 132,
+          "lo_offset": 144,
+          "opcode": 9,
+          "reference_address": 5452032,
+          "target_address": 5451008,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 168,
+          "lo_offset": 172,
+          "opcode": 36,
+          "reference_address": 5452038,
+          "target_address": 5451014,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 180,
+          "lo_offset": 188,
+          "opcode": 36,
+          "reference_address": 5452039,
+          "target_address": 5451015,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 228,
+          "lo_offset": 232,
+          "opcode": 36,
+          "reference_address": 5452036,
+          "target_address": 5451012,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 240,
+          "lo_offset": 248,
+          "opcode": 36,
+          "reference_address": 5452037,
+          "target_address": 5451013,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 280,
+          "lo_offset": 296,
+          "opcode": 36,
+          "reference_address": 5452042,
+          "target_address": 5451018,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 304,
+          "lo_offset": 308,
+          "opcode": 36,
+          "reference_address": 5452040,
+          "target_address": 5451016,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 316,
+          "lo_offset": 320,
+          "opcode": 36,
+          "reference_address": 5452043,
+          "target_address": 5451019,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 328,
+          "lo_offset": 332,
+          "opcode": 36,
+          "reference_address": 5452041,
+          "target_address": 5451017,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 340,
+          "lo_offset": 344,
+          "opcode": 36,
+          "reference_address": 5452048,
+          "target_address": 5451024,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 352,
+          "lo_offset": 356,
+          "opcode": 36,
+          "reference_address": 5452050,
+          "target_address": 5451026,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 364,
+          "lo_offset": 376,
+          "opcode": 36,
+          "reference_address": 5452049,
+          "target_address": 5451025,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 384,
+          "lo_offset": 388,
+          "opcode": 36,
+          "reference_address": 5452051,
+          "target_address": 5451027,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 396,
+          "lo_offset": 408,
+          "opcode": 36,
+          "reference_address": 5452046,
+          "target_address": 5451022,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 416,
+          "lo_offset": 420,
+          "opcode": 36,
+          "reference_address": 5452045,
+          "target_address": 5451021,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 428,
+          "lo_offset": 432,
+          "opcode": 36,
+          "reference_address": 5452044,
+          "target_address": 5451020,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 440,
+          "lo_offset": 444,
+          "opcode": 36,
+          "reference_address": 5452047,
+          "target_address": 5451023,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 452,
+          "lo_offset": 464,
+          "opcode": 36,
+          "reference_address": 5452034,
+          "target_address": 5451010,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 468,
+          "lo_offset": 476,
+          "opcode": 36,
+          "reference_address": 5452035,
+          "target_address": 5451011,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 480,
+          "lo_offset": 488,
+          "opcode": 40,
+          "reference_address": 5452034,
+          "target_address": 5451010,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 492,
+          "lo_offset": 496,
+          "opcode": 40,
+          "reference_address": 5452035,
+          "target_address": 5451011,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 500,
+          "lo_offset": 504,
+          "opcode": 36,
+          "reference_address": 5452034,
+          "target_address": 5451010,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 520,
+          "lo_offset": 552,
+          "opcode": 36,
+          "reference_address": 5452035,
+          "target_address": 5451011,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 776,
+          "lo_offset": 784,
+          "opcode": 9,
+          "reference_address": 6007152,
+          "target_address": 6006128,
+          "storage": "zero_fill"
+        }
+      ],
+      "direct_transfers": [
+        {
+          "offset": 72,
+          "opcode": 3,
+          "reference_address": 1770976,
+          "target_address": 1772272
+        },
+        {
+          "offset": 120,
+          "opcode": 3,
+          "reference_address": 1149520,
+          "target_address": 1149520
+        },
+        {
+          "offset": 140,
+          "opcode": 3,
+          "reference_address": 1105104,
+          "target_address": 1105104
+        },
+        {
+          "offset": 832,
+          "opcode": 3,
+          "reference_address": 2159296,
+          "target_address": 2160704
+        }
+      ],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 1771280,
+      "target_address": 1772576,
+      "reference_name": "iPadEnable",
+      "reference_source": "SB/Core/p2/iPad.cpp",
+      "size": 108,
+      "reference_sha256": "26d3955c45d9100f093be9c5c63d55df9bde60c09724495dcdd7da0bcca548eb",
+      "target_sha256": "56edc0a7c90fc382831a980d9ec153e1326e89e1322800882a5e0d4ce81acf9a",
+      "data_address_operands": [],
+      "direct_transfers": [
+        {
+          "offset": 44,
+          "opcode": 3,
+          "reference_address": 1771392,
+          "target_address": 1772688
+        }
+      ],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLUS-20680",
+      "reference_address": 1772304,
+      "target_address": 1773600,
+      "reference_name": "iPadInit",
+      "reference_source": "SB/Core/p2/iPad.cpp",
+      "size": 68,
+      "reference_sha256": "ce1223ee28357ec3f981b18f518833d27e48a6cb1e0111eb4950f045786171f3",
+      "target_sha256": "d18bc7dd0c7cda1d6de019ffa6f61e669afa6d4c7f0d3f59675fe029de603630",
+      "data_address_operands": [
+        {
+          "hi_offset": 4,
+          "lo_offset": 12,
+          "opcode": 9,
+          "reference_address": 5207232,
+          "target_address": 5206256,
+          "storage": "file_backed"
+        },
+        {
+          "hi_offset": 24,
+          "lo_offset": 32,
+          "opcode": 9,
+          "reference_address": 5207244,
+          "target_address": 5206268,
+          "storage": "file_backed"
+        },
+        {
+          "hi_offset": 28,
+          "lo_offset": 40,
+          "opcode": 9,
+          "reference_address": 5207255,
+          "target_address": 5206279,
+          "storage": "file_backed"
+        }
+      ],
+      "direct_transfers": [
+        {
+          "offset": 16,
+          "opcode": 3,
+          "reference_address": 1809504,
+          "target_address": 1810800
+        },
+        {
+          "offset": 36,
+          "opcode": 3,
+          "reference_address": 1809504,
+          "target_address": 1810800
+        },
+        {
+          "offset": 44,
+          "opcode": 3,
+          "reference_address": 1103648,
+          "target_address": 1103648
+        }
+      ],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 1617792,
+      "target_address": 1617792,
+      "reference_name": "zMenuRunning",
+      "reference_source": "SB/Game/zMenu.cpp",
+      "size": 8,
+      "reference_sha256": "990f7d9fb5c4cfd8b0039edef0397769e5d5e4dcae953aba6a3b6294c2174829",
+      "target_sha256": "990f7d9fb5c4cfd8b0039edef0397769e5d5e4dcae953aba6a3b6294c2174829",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 1666112,
+      "target_address": 1666112,
+      "reference_name": "zScene_ScreenAdjustMode",
+      "reference_source": "SB/Game/zScene.cpp",
+      "size": 8,
+      "reference_sha256": "9ab13168cee736aa5443f1cdbebc710acda9bbf9570a85f5466f6f524e270ea6",
+      "target_sha256": "9ab13168cee736aa5443f1cdbebc710acda9bbf9570a85f5466f6f524e270ea6",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 1770880,
+      "target_address": 1770880,
+      "reference_name": "iPadKill",
+      "reference_source": "SB/Core/p2/iPad.cpp",
+      "size": 8,
+      "reference_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+      "target_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 1770896,
+      "target_address": 1770896,
+      "reference_name": "iPadStartRumble",
+      "reference_source": "SB/Core/p2/iPad.cpp",
+      "size": 284,
+      "reference_sha256": "c34a9ad878f6097d54900dda2bc14d2788f05fa390c8d69fe9fb3f5e1a0c7131",
+      "target_sha256": "8ef6e543aab773e61b145485718613556f8e5c79ea0e76da9e2558fa2ec351f0",
+      "data_address_operands": [
+        {
+          "hi_offset": 16,
+          "lo_offset": 24,
+          "opcode": 9,
+          "reference_address": 5205904,
+          "target_address": 5206160,
+          "storage": "file_backed"
+        },
+        {
+          "hi_offset": 244,
+          "lo_offset": 248,
+          "opcode": 9,
+          "reference_address": 5451840,
+          "target_address": 5452096,
+          "storage": "zero_fill"
+        }
+      ],
+      "direct_transfers": [
+        {
+          "offset": 276,
+          "opcode": 2,
+          "reference_address": 1106720,
+          "target_address": 1106720
+        }
+      ],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 1771184,
+      "target_address": 1771184,
+      "reference_name": "iPadStopRumble",
+      "reference_source": "SB/Core/p2/iPad.cpp",
+      "size": 28,
+      "reference_sha256": "b5a6bb79db80491873cd813677b756d39496377a8fe0c19a628932a7a792dca9",
+      "target_sha256": "b5a6bb79db80491873cd813677b756d39496377a8fe0c19a628932a7a792dca9",
+      "data_address_operands": [],
+      "direct_transfers": [
+        {
+          "offset": 20,
+          "opcode": 2,
+          "reference_address": 1106720,
+          "target_address": 1106720
+        }
+      ],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 1771216,
+      "target_address": 1771216,
+      "reference_name": "iPadRumbleFx",
+      "reference_source": "SB/Core/p2/iPad.cpp",
+      "size": 172,
+      "reference_sha256": "aa4e1016e2300a1c0073d5cfdddc62811017bb30fa99c476e8164d94f00f7939",
+      "target_sha256": "998547f4b98ecacf3d5067a32b7375ac075a2297e44d81cbe0be5024f2419f15",
+      "data_address_operands": [
+        {
+          "hi_offset": 40,
+          "lo_offset": 48,
+          "opcode": 9,
+          "reference_address": 5451840,
+          "target_address": 5452096,
+          "storage": "zero_fill"
+        }
+      ],
+      "direct_transfers": [
+        {
+          "offset": 148,
+          "opcode": 3,
+          "reference_address": 1106720,
+          "target_address": 1106720
+        }
+      ],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 1771392,
+      "target_address": 1771392,
+      "reference_name": "iPadUpdate",
+      "reference_source": "SB/Core/p2/iPad.cpp",
+      "size": 868,
+      "reference_sha256": "d9a7454e4c92a98ef1d051c7a9ec4b4f8c99aa7b4cafc1368157feb3d3bc3608",
+      "target_sha256": "e2204ba8f1a58ed712411e0642be19adecdc291e5dc8b23fc24d8d95ad735306",
+      "data_address_operands": [
+        {
+          "hi_offset": 36,
+          "lo_offset": 44,
+          "opcode": 9,
+          "reference_address": 6005880,
+          "target_address": 6006136,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 132,
+          "lo_offset": 144,
+          "opcode": 9,
+          "reference_address": 5450752,
+          "target_address": 5451008,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 168,
+          "lo_offset": 172,
+          "opcode": 36,
+          "reference_address": 5450758,
+          "target_address": 5451014,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 180,
+          "lo_offset": 188,
+          "opcode": 36,
+          "reference_address": 5450759,
+          "target_address": 5451015,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 228,
+          "lo_offset": 232,
+          "opcode": 36,
+          "reference_address": 5450756,
+          "target_address": 5451012,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 240,
+          "lo_offset": 248,
+          "opcode": 36,
+          "reference_address": 5450757,
+          "target_address": 5451013,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 280,
+          "lo_offset": 296,
+          "opcode": 36,
+          "reference_address": 5450762,
+          "target_address": 5451018,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 304,
+          "lo_offset": 308,
+          "opcode": 36,
+          "reference_address": 5450760,
+          "target_address": 5451016,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 316,
+          "lo_offset": 320,
+          "opcode": 36,
+          "reference_address": 5450763,
+          "target_address": 5451019,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 328,
+          "lo_offset": 332,
+          "opcode": 36,
+          "reference_address": 5450761,
+          "target_address": 5451017,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 340,
+          "lo_offset": 344,
+          "opcode": 36,
+          "reference_address": 5450768,
+          "target_address": 5451024,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 352,
+          "lo_offset": 356,
+          "opcode": 36,
+          "reference_address": 5450770,
+          "target_address": 5451026,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 364,
+          "lo_offset": 376,
+          "opcode": 36,
+          "reference_address": 5450769,
+          "target_address": 5451025,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 384,
+          "lo_offset": 388,
+          "opcode": 36,
+          "reference_address": 5450771,
+          "target_address": 5451027,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 396,
+          "lo_offset": 408,
+          "opcode": 36,
+          "reference_address": 5450766,
+          "target_address": 5451022,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 416,
+          "lo_offset": 420,
+          "opcode": 36,
+          "reference_address": 5450765,
+          "target_address": 5451021,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 428,
+          "lo_offset": 432,
+          "opcode": 36,
+          "reference_address": 5450764,
+          "target_address": 5451020,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 440,
+          "lo_offset": 444,
+          "opcode": 36,
+          "reference_address": 5450767,
+          "target_address": 5451023,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 452,
+          "lo_offset": 464,
+          "opcode": 36,
+          "reference_address": 5450754,
+          "target_address": 5451010,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 468,
+          "lo_offset": 476,
+          "opcode": 36,
+          "reference_address": 5450755,
+          "target_address": 5451011,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 480,
+          "lo_offset": 488,
+          "opcode": 40,
+          "reference_address": 5450754,
+          "target_address": 5451010,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 492,
+          "lo_offset": 496,
+          "opcode": 40,
+          "reference_address": 5450755,
+          "target_address": 5451011,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 500,
+          "lo_offset": 504,
+          "opcode": 36,
+          "reference_address": 5450754,
+          "target_address": 5451010,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 520,
+          "lo_offset": 552,
+          "opcode": 36,
+          "reference_address": 5450755,
+          "target_address": 5451011,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 776,
+          "lo_offset": 784,
+          "opcode": 9,
+          "reference_address": 6005872,
+          "target_address": 6006128,
+          "storage": "zero_fill"
+        }
+      ],
+      "direct_transfers": [
+        {
+          "offset": 72,
+          "opcode": 3,
+          "reference_address": 1772272,
+          "target_address": 1772272
+        },
+        {
+          "offset": 120,
+          "opcode": 3,
+          "reference_address": 1149520,
+          "target_address": 1149520
+        },
+        {
+          "offset": 140,
+          "opcode": 3,
+          "reference_address": 1105104,
+          "target_address": 1105104
+        },
+        {
+          "offset": 832,
+          "opcode": 3,
+          "reference_address": 2160592,
+          "target_address": 2160704
+        }
+      ],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 1772576,
+      "target_address": 1772576,
+      "reference_name": "iPadEnable",
+      "reference_source": "SB/Core/p2/iPad.cpp",
+      "size": 108,
+      "reference_sha256": "56edc0a7c90fc382831a980d9ec153e1326e89e1322800882a5e0d4ce81acf9a",
+      "target_sha256": "56edc0a7c90fc382831a980d9ec153e1326e89e1322800882a5e0d4ce81acf9a",
+      "data_address_operands": [],
+      "direct_transfers": [
+        {
+          "offset": 44,
+          "opcode": 3,
+          "reference_address": 1772688,
+          "target_address": 1772688
+        }
+      ],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLES-51968",
+      "reference_address": 1773600,
+      "target_address": 1773600,
+      "reference_name": "iPadInit",
+      "reference_source": "SB/Core/p2/iPad.cpp",
+      "size": 68,
+      "reference_sha256": "d0c3da50efe62909a92a0580d316dbd1a43a10491d3912ba13435d7ef064bf59",
+      "target_sha256": "d18bc7dd0c7cda1d6de019ffa6f61e669afa6d4c7f0d3f59675fe029de603630",
+      "data_address_operands": [
+        {
+          "hi_offset": 4,
+          "lo_offset": 12,
+          "opcode": 9,
+          "reference_address": 5206000,
+          "target_address": 5206256,
+          "storage": "file_backed"
+        },
+        {
+          "hi_offset": 24,
+          "lo_offset": 32,
+          "opcode": 9,
+          "reference_address": 5206012,
+          "target_address": 5206268,
+          "storage": "file_backed"
+        },
+        {
+          "hi_offset": 28,
+          "lo_offset": 40,
+          "opcode": 9,
+          "reference_address": 5206023,
+          "target_address": 5206279,
+          "storage": "file_backed"
+        }
+      ],
+      "direct_transfers": [
+        {
+          "offset": 16,
+          "opcode": 3,
+          "reference_address": 1810800,
+          "target_address": 1810800
+        },
+        {
+          "offset": 36,
+          "opcode": 3,
+          "reference_address": 1810800,
+          "target_address": 1810800
+        },
+        {
+          "offset": 44,
+          "opcode": 3,
+          "reference_address": 1103648,
+          "target_address": 1103648
+        }
+      ],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 1614208,
+      "target_address": 1617792,
+      "reference_name": "zMenuRunning",
+      "reference_source": "SB/Game/zMenu.cpp",
+      "size": 8,
+      "reference_sha256": "990f7d9fb5c4cfd8b0039edef0397769e5d5e4dcae953aba6a3b6294c2174829",
+      "target_sha256": "990f7d9fb5c4cfd8b0039edef0397769e5d5e4dcae953aba6a3b6294c2174829",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 1662752,
+      "target_address": 1666112,
+      "reference_name": "zScene_ScreenAdjustMode",
+      "reference_source": "SB/Game/zScene.cpp",
+      "size": 8,
+      "reference_sha256": "9ab13168cee736aa5443f1cdbebc710acda9bbf9570a85f5466f6f524e270ea6",
+      "target_sha256": "9ab13168cee736aa5443f1cdbebc710acda9bbf9570a85f5466f6f524e270ea6",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 1767520,
+      "target_address": 1770880,
+      "reference_name": "iPadKill",
+      "reference_source": "SB/Core/p2/iPad.cpp",
+      "size": 8,
+      "reference_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+      "target_sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1",
+      "data_address_operands": [],
+      "direct_transfers": [],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 1767536,
+      "target_address": 1770896,
+      "reference_name": "iPadStartRumble",
+      "reference_source": "SB/Core/p2/iPad.cpp",
+      "size": 284,
+      "reference_sha256": "b5fbcd56e499ae326c72960715053a811085a613a2418b584293c05164084afc",
+      "target_sha256": "8ef6e543aab773e61b145485718613556f8e5c79ea0e76da9e2558fa2ec351f0",
+      "data_address_operands": [
+        {
+          "hi_offset": 16,
+          "lo_offset": 24,
+          "opcode": 9,
+          "reference_address": 5204416,
+          "target_address": 5206160,
+          "storage": "file_backed"
+        },
+        {
+          "hi_offset": 244,
+          "lo_offset": 248,
+          "opcode": 9,
+          "reference_address": 5450304,
+          "target_address": 5452096,
+          "storage": "zero_fill"
+        }
+      ],
+      "direct_transfers": [
+        {
+          "offset": 276,
+          "opcode": 2,
+          "reference_address": 1106720,
+          "target_address": 1106720
+        }
+      ],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 1767824,
+      "target_address": 1771184,
+      "reference_name": "iPadStopRumble",
+      "reference_source": "SB/Core/p2/iPad.cpp",
+      "size": 28,
+      "reference_sha256": "b5a6bb79db80491873cd813677b756d39496377a8fe0c19a628932a7a792dca9",
+      "target_sha256": "b5a6bb79db80491873cd813677b756d39496377a8fe0c19a628932a7a792dca9",
+      "data_address_operands": [],
+      "direct_transfers": [
+        {
+          "offset": 20,
+          "opcode": 2,
+          "reference_address": 1106720,
+          "target_address": 1106720
+        }
+      ],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 1767856,
+      "target_address": 1771216,
+      "reference_name": "iPadRumbleFx",
+      "reference_source": "SB/Core/p2/iPad.cpp",
+      "size": 172,
+      "reference_sha256": "4db835c9049ab11e37fc07a527127572da11a25338eb1b55cd0329c4e60f721d",
+      "target_sha256": "998547f4b98ecacf3d5067a32b7375ac075a2297e44d81cbe0be5024f2419f15",
+      "data_address_operands": [
+        {
+          "hi_offset": 40,
+          "lo_offset": 48,
+          "opcode": 9,
+          "reference_address": 5450304,
+          "target_address": 5452096,
+          "storage": "zero_fill"
+        }
+      ],
+      "direct_transfers": [
+        {
+          "offset": 148,
+          "opcode": 3,
+          "reference_address": 1106720,
+          "target_address": 1106720
+        }
+      ],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 1768032,
+      "target_address": 1771392,
+      "reference_name": "iPadUpdate",
+      "reference_source": "SB/Core/p2/iPad.cpp",
+      "size": 868,
+      "reference_sha256": "10edec12a66555748d729fc0ff0a833e736a3cee453162876620811f3735bdd5",
+      "target_sha256": "e2204ba8f1a58ed712411e0642be19adecdc291e5dc8b23fc24d8d95ad735306",
+      "data_address_operands": [
+        {
+          "hi_offset": 36,
+          "lo_offset": 44,
+          "opcode": 9,
+          "reference_address": 6004344,
+          "target_address": 6006136,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 132,
+          "lo_offset": 144,
+          "opcode": 9,
+          "reference_address": 5449216,
+          "target_address": 5451008,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 168,
+          "lo_offset": 172,
+          "opcode": 36,
+          "reference_address": 5449222,
+          "target_address": 5451014,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 180,
+          "lo_offset": 188,
+          "opcode": 36,
+          "reference_address": 5449223,
+          "target_address": 5451015,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 228,
+          "lo_offset": 232,
+          "opcode": 36,
+          "reference_address": 5449220,
+          "target_address": 5451012,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 240,
+          "lo_offset": 248,
+          "opcode": 36,
+          "reference_address": 5449221,
+          "target_address": 5451013,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 280,
+          "lo_offset": 296,
+          "opcode": 36,
+          "reference_address": 5449226,
+          "target_address": 5451018,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 304,
+          "lo_offset": 308,
+          "opcode": 36,
+          "reference_address": 5449224,
+          "target_address": 5451016,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 316,
+          "lo_offset": 320,
+          "opcode": 36,
+          "reference_address": 5449227,
+          "target_address": 5451019,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 328,
+          "lo_offset": 332,
+          "opcode": 36,
+          "reference_address": 5449225,
+          "target_address": 5451017,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 340,
+          "lo_offset": 344,
+          "opcode": 36,
+          "reference_address": 5449232,
+          "target_address": 5451024,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 352,
+          "lo_offset": 356,
+          "opcode": 36,
+          "reference_address": 5449234,
+          "target_address": 5451026,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 364,
+          "lo_offset": 376,
+          "opcode": 36,
+          "reference_address": 5449233,
+          "target_address": 5451025,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 384,
+          "lo_offset": 388,
+          "opcode": 36,
+          "reference_address": 5449235,
+          "target_address": 5451027,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 396,
+          "lo_offset": 408,
+          "opcode": 36,
+          "reference_address": 5449230,
+          "target_address": 5451022,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 416,
+          "lo_offset": 420,
+          "opcode": 36,
+          "reference_address": 5449229,
+          "target_address": 5451021,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 428,
+          "lo_offset": 432,
+          "opcode": 36,
+          "reference_address": 5449228,
+          "target_address": 5451020,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 440,
+          "lo_offset": 444,
+          "opcode": 36,
+          "reference_address": 5449231,
+          "target_address": 5451023,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 452,
+          "lo_offset": 464,
+          "opcode": 36,
+          "reference_address": 5449218,
+          "target_address": 5451010,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 468,
+          "lo_offset": 476,
+          "opcode": 36,
+          "reference_address": 5449219,
+          "target_address": 5451011,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 480,
+          "lo_offset": 488,
+          "opcode": 40,
+          "reference_address": 5449218,
+          "target_address": 5451010,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 492,
+          "lo_offset": 496,
+          "opcode": 40,
+          "reference_address": 5449219,
+          "target_address": 5451011,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 500,
+          "lo_offset": 504,
+          "opcode": 36,
+          "reference_address": 5449218,
+          "target_address": 5451010,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 520,
+          "lo_offset": 552,
+          "opcode": 36,
+          "reference_address": 5449219,
+          "target_address": 5451011,
+          "storage": "zero_fill"
+        },
+        {
+          "hi_offset": 776,
+          "lo_offset": 784,
+          "opcode": 9,
+          "reference_address": 6004336,
+          "target_address": 6006128,
+          "storage": "zero_fill"
+        }
+      ],
+      "direct_transfers": [
+        {
+          "offset": 72,
+          "opcode": 3,
+          "reference_address": 1768912,
+          "target_address": 1772272
+        },
+        {
+          "offset": 120,
+          "opcode": 3,
+          "reference_address": 1149520,
+          "target_address": 1149520
+        },
+        {
+          "offset": 140,
+          "opcode": 3,
+          "reference_address": 1105104,
+          "target_address": 1105104
+        },
+        {
+          "offset": 832,
+          "opcode": 3,
+          "reference_address": 2157248,
+          "target_address": 2160704
+        }
+      ],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 1769216,
+      "target_address": 1772576,
+      "reference_name": "iPadEnable",
+      "reference_source": "SB/Core/p2/iPad.cpp",
+      "size": 108,
+      "reference_sha256": "55f002ad6683d6c11ea3772f7748227d07fec88cdaada028a814f31cb46242cf",
+      "target_sha256": "56edc0a7c90fc382831a980d9ec153e1326e89e1322800882a5e0d4ce81acf9a",
+      "data_address_operands": [],
+      "direct_transfers": [
+        {
+          "offset": 44,
+          "opcode": 3,
+          "reference_address": 1769328,
+          "target_address": 1772688
+        }
+      ],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
+    },
+    {
+      "version": "SLES-51970",
+      "reference_address": 1770240,
+      "target_address": 1773600,
+      "reference_name": "iPadInit",
+      "reference_source": "SB/Core/p2/iPad.cpp",
+      "size": 68,
+      "reference_sha256": "1cd9e0260e2b2ba54eb0e5cb99d6546506959539ef831c1818f6eb69680e3710",
+      "target_sha256": "d18bc7dd0c7cda1d6de019ffa6f61e669afa6d4c7f0d3f59675fe029de603630",
+      "data_address_operands": [
+        {
+          "hi_offset": 4,
+          "lo_offset": 12,
+          "opcode": 9,
+          "reference_address": 5204512,
+          "target_address": 5206256,
+          "storage": "file_backed"
+        },
+        {
+          "hi_offset": 24,
+          "lo_offset": 32,
+          "opcode": 9,
+          "reference_address": 5204524,
+          "target_address": 5206268,
+          "storage": "file_backed"
+        },
+        {
+          "hi_offset": 28,
+          "lo_offset": 40,
+          "opcode": 9,
+          "reference_address": 5204535,
+          "target_address": 5206279,
+          "storage": "file_backed"
+        }
+      ],
+      "direct_transfers": [
+        {
+          "offset": 16,
+          "opcode": 3,
+          "reference_address": 1807440,
+          "target_address": 1810800
+        },
+        {
+          "offset": 36,
+          "opcode": 3,
+          "reference_address": 1807440,
+          "target_address": 1810800
+        },
+        {
+          "offset": 44,
+          "opcode": 3,
+          "reference_address": 1103648,
+          "target_address": 1103648
+        }
+      ],
+      "promoted_as_named_anchor": false,
+      "target_extent_claimed": false
     }
   ],
   "functions": [
@@ -54525,6 +55928,1918 @@
         },
         "direct_rooted_call_sites": [
           1814928
+        ]
+      }
+    },
+    {
+      "name": "xPadAddRumble",
+      "source": "SB/Core/x/xPad.cpp",
+      "address": 2046288,
+      "size": 448,
+      "sha256": "237ea9943108f6ec17998e843dbb6e008b7eb6b939189387ddf8a217a4ff8a17",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2044928,
+          "name": "xPadAddRumble",
+          "source": "SB/Core/x/xPad.cpp",
+          "linkage_name": "xPadAddRumble__Fi14_tagRumbleTypefiUi",
+          "reference_sha256": "d1c0821b2281c67c14e2d0cd02f4bb51fdf7bff7958fc34a22db3251f06e4199",
+          "data_address_operands": [
+            {
+              "hi_offset": 28,
+              "lo_offset": 44,
+              "opcode": 9,
+              "reference_address": 5672560,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 248,
+              "lo_offset": 256,
+              "opcode": 9,
+              "reference_address": 5672048,
+              "target_address": 5671024,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 272,
+              "lo_offset": 280,
+              "opcode": 9,
+              "reference_address": 5672048,
+              "target_address": 5671024,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 136,
+              "opcode": 3,
+              "reference_address": 1769888,
+              "target_address": 1771184
+            },
+            {
+              "offset": 168,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            },
+            {
+              "offset": 296,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            },
+            {
+              "offset": 392,
+              "opcode": 3,
+              "reference_address": 1769600,
+              "target_address": 1770896
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2046176,
+          "name": "xPadAddRumble",
+          "source": "SB/Core/x/xPad.cpp",
+          "linkage_name": "xPadAddRumble__Fi14_tagRumbleTypefiUi",
+          "reference_sha256": "4d4a5bcfdbe5eb2319c1862e36de6f83a27751574ae3657d14bb5bc1a4e2fc43",
+          "data_address_operands": [
+            {
+              "hi_offset": 28,
+              "lo_offset": 44,
+              "opcode": 9,
+              "reference_address": 5671280,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 248,
+              "lo_offset": 256,
+              "opcode": 9,
+              "reference_address": 5670768,
+              "target_address": 5671024,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 272,
+              "lo_offset": 280,
+              "opcode": 9,
+              "reference_address": 5670768,
+              "target_address": 5671024,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 136,
+              "opcode": 3,
+              "reference_address": 1771184,
+              "target_address": 1771184
+            },
+            {
+              "offset": 168,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            },
+            {
+              "offset": 296,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            },
+            {
+              "offset": 392,
+              "opcode": 3,
+              "reference_address": 1770896,
+              "target_address": 1770896
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2042816,
+          "name": "xPadAddRumble",
+          "source": "SB/Core/x/xPad.cpp",
+          "linkage_name": "xPadAddRumble__Fi14_tagRumbleTypefiUi",
+          "reference_sha256": "ce2de3931d9c38f319e4a6dfd984bb1b08bcc10ffcc4912ed1daf65681c2da3d",
+          "data_address_operands": [
+            {
+              "hi_offset": 28,
+              "lo_offset": 44,
+              "opcode": 9,
+              "reference_address": 5669744,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 248,
+              "lo_offset": 256,
+              "opcode": 9,
+              "reference_address": 5669232,
+              "target_address": 5671024,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 272,
+              "lo_offset": 280,
+              "opcode": 9,
+              "reference_address": 5669232,
+              "target_address": 5671024,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 136,
+              "opcode": 3,
+              "reference_address": 1767824,
+              "target_address": 1771184
+            },
+            {
+              "offset": 168,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            },
+            {
+              "offset": 296,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            },
+            {
+              "offset": 392,
+              "opcode": 3,
+              "reference_address": 1767536,
+              "target_address": 1770896
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2046728
+          ],
+          "direct_or_indirect_calls": [
+            2046424,
+            2046456,
+            2046584,
+            2046680
+          ],
+          "branches": [
+            [
+              2046372,
+              2046392
+            ],
+            [
+              2046380,
+              2046696
+            ],
+            [
+              2046396,
+              2046416
+            ],
+            [
+              2046404,
+              2046696
+            ],
+            [
+              2046416,
+              2046488
+            ],
+            [
+              2046436,
+              2046480
+            ],
+            [
+              2046468,
+              2046448
+            ],
+            [
+              2046496,
+              2046520
+            ],
+            [
+              2046504,
+              2046520
+            ],
+            [
+              2046528,
+              2046512
+            ],
+            [
+              2046556,
+              2046600
+            ],
+            [
+              2046592,
+              2046624
+            ],
+            [
+              2046608,
+              2046552
+            ],
+            [
+              2046624,
+              2046640
+            ],
+            [
+              2046632,
+              2046696
+            ],
+            [
+              2046668,
+              2046688
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2046288,
+              -128
+            ],
+            [
+              2046732,
+              128
+            ]
+          ],
+          "ra_saves": [
+            [
+              2046296,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              2046696,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [
+            2046388,
+            2046412
+          ],
+          "following_zero_alignment": 0
+        },
+        "previously_confirmed_neighbor_entries": [
+          2046896
+        ]
+      }
+    },
+    {
+      "name": "xPadDestroyRumbleChain",
+      "source": "SB/Core/x/xPad.cpp",
+      "address": 2046736,
+      "size": 136,
+      "sha256": "c20413169b4c6a2738d9e77b47e99a89295e03a46e04e33aa8b48eb62a681026",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2045376,
+          "name": "xPadDestroyRumbleChain",
+          "source": "SB/Core/x/xPad.cpp",
+          "linkage_name": "xPadDestroyRumbleChain__Fi",
+          "reference_sha256": "58446590ce509af5bf7624a2951c80bfefc75b24bb66a939a1f52d044b749998",
+          "data_address_operands": [
+            {
+              "hi_offset": 24,
+              "lo_offset": 36,
+              "opcode": 9,
+              "reference_address": 5672560,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 52,
+              "lo_offset": 56,
+              "opcode": 9,
+              "reference_address": 5672636,
+              "target_address": 5671612,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 44,
+              "opcode": 3,
+              "reference_address": 1769888,
+              "target_address": 1771184
+            },
+            {
+              "offset": 88,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2046624,
+          "name": "xPadDestroyRumbleChain",
+          "source": "SB/Core/x/xPad.cpp",
+          "linkage_name": "xPadDestroyRumbleChain__Fi",
+          "reference_sha256": "efb292c705bb486d7f364c4613655f64c24f38916d4dbf9d0808144534911f7c",
+          "data_address_operands": [
+            {
+              "hi_offset": 24,
+              "lo_offset": 36,
+              "opcode": 9,
+              "reference_address": 5671280,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 52,
+              "lo_offset": 56,
+              "opcode": 9,
+              "reference_address": 5671356,
+              "target_address": 5671612,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 44,
+              "opcode": 3,
+              "reference_address": 1771184,
+              "target_address": 1771184
+            },
+            {
+              "offset": 88,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2043264,
+          "name": "xPadDestroyRumbleChain",
+          "source": "SB/Core/x/xPad.cpp",
+          "linkage_name": "xPadDestroyRumbleChain__Fi",
+          "reference_sha256": "a3f3a9cc4b5bd34dfacc311b006aaa55d3db5375cbed00b270405edc9bf87f66",
+          "data_address_operands": [
+            {
+              "hi_offset": 24,
+              "lo_offset": 36,
+              "opcode": 9,
+              "reference_address": 5669744,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 52,
+              "lo_offset": 56,
+              "opcode": 9,
+              "reference_address": 5669820,
+              "target_address": 5671612,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 44,
+              "opcode": 3,
+              "reference_address": 1767824,
+              "target_address": 1771184
+            },
+            {
+              "offset": 88,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2046864
+          ],
+          "direct_or_indirect_calls": [
+            2046780,
+            2046824
+          ],
+          "branches": [
+            [
+              2046804,
+              2046848
+            ],
+            [
+              2046836,
+              2046816
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2046736,
+              -48
+            ],
+            [
+              2046868,
+              48
+            ]
+          ],
+          "ra_saves": [
+            [
+              2046748,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              2046852,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          2046896
+        ]
+      }
+    },
+    {
+      "name": "xPadKill",
+      "source": "SB/Core/x/xPad.cpp",
+      "address": 2046880,
+      "size": 8,
+      "sha256": "16d5b7072265084ed3399b824aa6d5da13fe327c6029c3b6d4886340031d1ef8",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2045520,
+          "name": "xPadKill",
+          "source": "SB/Core/x/xPad.cpp",
+          "linkage_name": "xPadKill__Fv",
+          "reference_sha256": "f22fc55e01843a4852ab9d5c75fde09de40c0426f691755f3d55a61880b880fa",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 0,
+              "opcode": 2,
+              "reference_address": 1769584,
+              "target_address": 1770880
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2046768,
+          "name": "xPadKill",
+          "source": "SB/Core/x/xPad.cpp",
+          "linkage_name": "xPadKill__Fv",
+          "reference_sha256": "16d5b7072265084ed3399b824aa6d5da13fe327c6029c3b6d4886340031d1ef8",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 0,
+              "opcode": 2,
+              "reference_address": 1770880,
+              "target_address": 1770880
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2043408,
+          "name": "xPadKill",
+          "source": "SB/Core/x/xPad.cpp",
+          "linkage_name": "xPadKill__Fv",
+          "reference_sha256": "2bbf228d3570967792dddd78ccde8ff7a49003090bcedb1ce57bb7ba368cab24",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 0,
+              "opcode": 2,
+              "reference_address": 1767520,
+              "target_address": 1770880
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "boundary_kind": "reviewed-pad-kill-j-nop-to-empty-return-leaf",
+          "target_context_address": 1770880,
+          "target_context_bytes": 8,
+          "callee_identity_promoted": false,
+          "unchanged_sp_ra": true
+        },
+        "previously_confirmed_neighbor_entries": [
+          2046896
+        ]
+      }
+    },
+    {
+      "name": "xPadUpdate",
+      "source": "SB/Core/x/xPad.cpp",
+      "address": 2047584,
+      "size": 1672,
+      "sha256": "974fd168df3c2bf9717b65c9cd70f68e44830547eef5e558800ec946d94f5670",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2046224,
+          "name": "xPadUpdate",
+          "source": "SB/Core/x/xPad.cpp",
+          "linkage_name": "xPadUpdate__Fif",
+          "reference_sha256": "5f5629417e4604a6d5dfbc7ee51d91cdc10150f00c797edc6f89bbf020dbbc69",
+          "data_address_operands": [
+            {
+              "hi_offset": 64,
+              "lo_offset": 72,
+              "opcode": 9,
+              "reference_address": 5672560,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 280,
+              "lo_offset": 288,
+              "opcode": 9,
+              "reference_address": 5672560,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 440,
+              "lo_offset": 448,
+              "opcode": 9,
+              "reference_address": 5672560,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 612,
+              "lo_offset": 620,
+              "opcode": 9,
+              "reference_address": 5672560,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 1666112,
+              "target_address": 1666112
+            },
+            {
+              "offset": 224,
+              "opcode": 3,
+              "reference_address": 1617792,
+              "target_address": 1617792
+            },
+            {
+              "offset": 240,
+              "opcode": 3,
+              "reference_address": 1557056,
+              "target_address": 1557040
+            },
+            {
+              "offset": 256,
+              "opcode": 3,
+              "reference_address": 1560288,
+              "target_address": 1560272
+            },
+            {
+              "offset": 720,
+              "opcode": 3,
+              "reference_address": 1769888,
+              "target_address": 1771184
+            },
+            {
+              "offset": 748,
+              "opcode": 3,
+              "reference_address": 1769600,
+              "target_address": 1770896
+            },
+            {
+              "offset": 776,
+              "opcode": 3,
+              "reference_address": 1769920,
+              "target_address": 1771216
+            },
+            {
+              "offset": 804,
+              "opcode": 3,
+              "reference_address": 1770096,
+              "target_address": 1771392
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2047472,
+          "name": "xPadUpdate",
+          "source": "SB/Core/x/xPad.cpp",
+          "linkage_name": "xPadUpdate__Fif",
+          "reference_sha256": "59ee85381ca7928002cab9703bca4ee15a738bb9af72ad8ca9dfe0bcdcbb7078",
+          "data_address_operands": [
+            {
+              "hi_offset": 64,
+              "lo_offset": 72,
+              "opcode": 9,
+              "reference_address": 5671280,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 280,
+              "lo_offset": 288,
+              "opcode": 9,
+              "reference_address": 5671280,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 440,
+              "lo_offset": 448,
+              "opcode": 9,
+              "reference_address": 5671280,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 612,
+              "lo_offset": 620,
+              "opcode": 9,
+              "reference_address": 5671280,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 1666112,
+              "target_address": 1666112
+            },
+            {
+              "offset": 224,
+              "opcode": 3,
+              "reference_address": 1617792,
+              "target_address": 1617792
+            },
+            {
+              "offset": 240,
+              "opcode": 3,
+              "reference_address": 1557040,
+              "target_address": 1557040
+            },
+            {
+              "offset": 256,
+              "opcode": 3,
+              "reference_address": 1560272,
+              "target_address": 1560272
+            },
+            {
+              "offset": 720,
+              "opcode": 3,
+              "reference_address": 1771184,
+              "target_address": 1771184
+            },
+            {
+              "offset": 748,
+              "opcode": 3,
+              "reference_address": 1770896,
+              "target_address": 1770896
+            },
+            {
+              "offset": 776,
+              "opcode": 3,
+              "reference_address": 1771216,
+              "target_address": 1771216
+            },
+            {
+              "offset": 804,
+              "opcode": 3,
+              "reference_address": 1771392,
+              "target_address": 1771392
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2044112,
+          "name": "xPadUpdate",
+          "source": "SB/Core/x/xPad.cpp",
+          "linkage_name": "xPadUpdate__Fif",
+          "reference_sha256": "96dfe061f1e3f7626c94da13aa81e3776d6193438640617a076aa1f8c63d8215",
+          "data_address_operands": [
+            {
+              "hi_offset": 64,
+              "lo_offset": 72,
+              "opcode": 9,
+              "reference_address": 5669744,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 280,
+              "lo_offset": 288,
+              "opcode": 9,
+              "reference_address": 5669744,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 440,
+              "lo_offset": 448,
+              "opcode": 9,
+              "reference_address": 5669744,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 612,
+              "lo_offset": 620,
+              "opcode": 9,
+              "reference_address": 5669744,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 1662752,
+              "target_address": 1666112
+            },
+            {
+              "offset": 224,
+              "opcode": 3,
+              "reference_address": 1614208,
+              "target_address": 1617792
+            },
+            {
+              "offset": 240,
+              "opcode": 3,
+              "reference_address": 1557296,
+              "target_address": 1557040
+            },
+            {
+              "offset": 256,
+              "opcode": 3,
+              "reference_address": 1560528,
+              "target_address": 1560272
+            },
+            {
+              "offset": 720,
+              "opcode": 3,
+              "reference_address": 1767824,
+              "target_address": 1771184
+            },
+            {
+              "offset": 748,
+              "opcode": 3,
+              "reference_address": 1767536,
+              "target_address": 1770896
+            },
+            {
+              "offset": 776,
+              "opcode": 3,
+              "reference_address": 1767856,
+              "target_address": 1771216
+            },
+            {
+              "offset": 804,
+              "opcode": 3,
+              "reference_address": 1768032,
+              "target_address": 1771392
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2049248
+          ],
+          "direct_or_indirect_calls": [
+            2047624,
+            2047808,
+            2047824,
+            2047840,
+            2048304,
+            2048332,
+            2048360,
+            2048388
+          ],
+          "branches": [
+            [
+              2047608,
+              2047624
+            ],
+            [
+              2047616,
+              2049232
+            ],
+            [
+              2047632,
+              2047808
+            ],
+            [
+              2047640,
+              2048184
+            ],
+            [
+              2047712,
+              2047728
+            ],
+            [
+              2047752,
+              2047768
+            ],
+            [
+              2047792,
+              2048184
+            ],
+            [
+              2047800,
+              2048184
+            ],
+            [
+              2047816,
+              2047856
+            ],
+            [
+              2047832,
+              2047856
+            ],
+            [
+              2047848,
+              2048016
+            ],
+            [
+              2047856,
+              2048184
+            ],
+            [
+              2047924,
+              2047936
+            ],
+            [
+              2047960,
+              2047976
+            ],
+            [
+              2048000,
+              2048184
+            ],
+            [
+              2048008,
+              2048184
+            ],
+            [
+              2048016,
+              2048184
+            ],
+            [
+              2048088,
+              2048104
+            ],
+            [
+              2048128,
+              2048144
+            ],
+            [
+              2048168,
+              2048184
+            ],
+            [
+              2048224,
+              2048384
+            ],
+            [
+              2048232,
+              2048384
+            ],
+            [
+              2048244,
+              2048384
+            ],
+            [
+              2048276,
+              2048352
+            ],
+            [
+              2048292,
+              2048320
+            ],
+            [
+              2048312,
+              2048376
+            ],
+            [
+              2048340,
+              2048376
+            ],
+            [
+              2048368,
+              2048384
+            ],
+            [
+              2048376,
+              2048256
+            ],
+            [
+              2048396,
+              2048416
+            ],
+            [
+              2048404,
+              2049232
+            ],
+            [
+              2048424,
+              2048816
+            ],
+            [
+              2048432,
+              2048592
+            ],
+            [
+              2048448,
+              2048464
+            ],
+            [
+              2048456,
+              2048480
+            ],
+            [
+              2048468,
+              2048480
+            ],
+            [
+              2048488,
+              2048504
+            ],
+            [
+              2048496,
+              2048520
+            ],
+            [
+              2048508,
+              2048520
+            ],
+            [
+              2048520,
+              2048536
+            ],
+            [
+              2048528,
+              2048592
+            ],
+            [
+              2048556,
+              2048592
+            ],
+            [
+              2048600,
+              2048816
+            ],
+            [
+              2048616,
+              2048664
+            ],
+            [
+              2048624,
+              2048664
+            ],
+            [
+              2048640,
+              2048664
+            ],
+            [
+              2048648,
+              2048664
+            ],
+            [
+              2048656,
+              2048816
+            ],
+            [
+              2048684,
+              2048816
+            ],
+            [
+              2048712,
+              2048736
+            ],
+            [
+              2048728,
+              2048760
+            ],
+            [
+              2048740,
+              2048760
+            ],
+            [
+              2048768,
+              2048792
+            ],
+            [
+              2048784,
+              2048816
+            ],
+            [
+              2048796,
+              2048816
+            ],
+            [
+              2048892,
+              2048912
+            ],
+            [
+              2048900,
+              2048936
+            ],
+            [
+              2048920,
+              2048936
+            ],
+            [
+              2048944,
+              2048968
+            ],
+            [
+              2048960,
+              2048984
+            ],
+            [
+              2048992,
+              2048880
+            ],
+            [
+              2049008,
+              2049224
+            ],
+            [
+              2049024,
+              2049072
+            ],
+            [
+              2049032,
+              2049072
+            ],
+            [
+              2049044,
+              2049072
+            ],
+            [
+              2049052,
+              2049072
+            ],
+            [
+              2049060,
+              2049224
+            ],
+            [
+              2049092,
+              2049224
+            ],
+            [
+              2049120,
+              2049144
+            ],
+            [
+              2049136,
+              2049168
+            ],
+            [
+              2049148,
+              2049168
+            ],
+            [
+              2049176,
+              2049200
+            ],
+            [
+              2049192,
+              2049224
+            ],
+            [
+              2049204,
+              2049224
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2047584,
+              -80
+            ],
+            [
+              2049252,
+              80
+            ]
+          ],
+          "ra_saves": [
+            [
+              2047588,
+              -32
+            ]
+          ],
+          "ra_loads": [
+            [
+              2049232,
+              -32
+            ]
+          ],
+          "unreachable_zero_words": [
+            2048348,
+            2048412,
+            2048908,
+            2049068
+          ],
+          "following_zero_alignment": 8
+        },
+        "previously_confirmed_neighbor_entries": [
+          2046896
+        ]
+      }
+    },
+    {
+      "name": "xPadRumbleEnable",
+      "source": "SB/Core/x/xPad.cpp",
+      "address": 2049264,
+      "size": 212,
+      "sha256": "aa1d40e6956c2cf0ebb93ea4a878669da34fbb26d5198c2c7c1a9b0ccd64e3f4",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2047904,
+          "name": "xPadRumbleEnable",
+          "source": "SB/Core/x/xPad.cpp",
+          "linkage_name": "xPadRumbleEnable__Fii",
+          "reference_sha256": "70e889be729489ef14c799d7c39858d9291e8a763db78c0ea210276f91e3f419",
+          "data_address_operands": [
+            {
+              "hi_offset": 24,
+              "lo_offset": 36,
+              "opcode": 9,
+              "reference_address": 5672560,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 128,
+              "opcode": 3,
+              "reference_address": 1769888,
+              "target_address": 1771184
+            },
+            {
+              "offset": 160,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2049152,
+          "name": "xPadRumbleEnable",
+          "source": "SB/Core/x/xPad.cpp",
+          "linkage_name": "xPadRumbleEnable__Fii",
+          "reference_sha256": "16d744bd05cc764edaa1e7dbc38ea184d1916f1e71672ed7b9ed86489edfe7d8",
+          "data_address_operands": [
+            {
+              "hi_offset": 24,
+              "lo_offset": 36,
+              "opcode": 9,
+              "reference_address": 5671280,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 128,
+              "opcode": 3,
+              "reference_address": 1771184,
+              "target_address": 1771184
+            },
+            {
+              "offset": 160,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2045792,
+          "name": "xPadRumbleEnable",
+          "source": "SB/Core/x/xPad.cpp",
+          "linkage_name": "xPadRumbleEnable__Fii",
+          "reference_sha256": "42bbb57d10cdf58fb4ee2a88d3a4c447602088d65a9b1790d6719724b2630cfd",
+          "data_address_operands": [
+            {
+              "hi_offset": 24,
+              "lo_offset": 36,
+              "opcode": 9,
+              "reference_address": 5669744,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 128,
+              "opcode": 3,
+              "reference_address": 1767824,
+              "target_address": 1771184
+            },
+            {
+              "offset": 160,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2049468
+          ],
+          "direct_or_indirect_calls": [
+            2049392,
+            2049424
+          ],
+          "branches": [
+            [
+              2049320,
+              2049336
+            ],
+            [
+              2049336,
+              2049368
+            ],
+            [
+              2049352,
+              2049456
+            ],
+            [
+              2049360,
+              2049456
+            ],
+            [
+              2049376,
+              2049456
+            ],
+            [
+              2049404,
+              2049448
+            ],
+            [
+              2049436,
+              2049416
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2049268,
+              -48
+            ],
+            [
+              2049472,
+              48
+            ]
+          ],
+          "ra_saves": [
+            [
+              2049276,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              2049456,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 12
+        },
+        "previously_confirmed_neighbor_entries": [
+          2046896
+        ]
+      }
+    },
+    {
+      "name": "xPadEnable",
+      "source": "SB/Core/x/xPad.cpp",
+      "address": 2049488,
+      "size": 272,
+      "sha256": "f44cba8ce5fbed0c86af6e48758b857bc6d5347ae1804e99d9466a7f5f47bd1b",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2048128,
+          "name": "xPadEnable",
+          "source": "SB/Core/x/xPad.cpp",
+          "linkage_name": "xPadEnable__Fi",
+          "reference_sha256": "9f38e19631c8fee56e6e722b8d042ea82fd78399d662c49feb2c0b35b05f1729",
+          "data_address_operands": [
+            {
+              "hi_offset": 28,
+              "lo_offset": 40,
+              "opcode": 9,
+              "reference_address": 5672560,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 96,
+              "opcode": 3,
+              "reference_address": 1771280,
+              "target_address": 1772576
+            },
+            {
+              "offset": 180,
+              "opcode": 3,
+              "reference_address": 1769888,
+              "target_address": 1771184
+            },
+            {
+              "offset": 208,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2049376,
+          "name": "xPadEnable",
+          "source": "SB/Core/x/xPad.cpp",
+          "linkage_name": "xPadEnable__Fi",
+          "reference_sha256": "7cc7d7f2abb7512099a71d45d9cdf30f316b50aa03de024308b52841ab2c248a",
+          "data_address_operands": [
+            {
+              "hi_offset": 28,
+              "lo_offset": 40,
+              "opcode": 9,
+              "reference_address": 5671280,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 96,
+              "opcode": 3,
+              "reference_address": 1772576,
+              "target_address": 1772576
+            },
+            {
+              "offset": 180,
+              "opcode": 3,
+              "reference_address": 1771184,
+              "target_address": 1771184
+            },
+            {
+              "offset": 208,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2046016,
+          "name": "xPadEnable",
+          "source": "SB/Core/x/xPad.cpp",
+          "linkage_name": "xPadEnable__Fi",
+          "reference_sha256": "bd8548dbeea6a783afa6b732138cbad822744d23530d54991bc3fbe955115abc",
+          "data_address_operands": [
+            {
+              "hi_offset": 28,
+              "lo_offset": 40,
+              "opcode": 9,
+              "reference_address": 5669744,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 96,
+              "opcode": 3,
+              "reference_address": 1769216,
+              "target_address": 1772576
+            },
+            {
+              "offset": 180,
+              "opcode": 3,
+              "reference_address": 1767824,
+              "target_address": 1771184
+            },
+            {
+              "offset": 208,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2049752
+          ],
+          "direct_or_indirect_calls": [
+            2049584,
+            2049668,
+            2049696
+          ],
+          "branches": [
+            [
+              2049544,
+              2049560
+            ],
+            [
+              2049552,
+              2049736
+            ],
+            [
+              2049560,
+              2049576
+            ],
+            [
+              2049568,
+              2049736
+            ],
+            [
+              2049604,
+              2049616
+            ],
+            [
+              2049616,
+              2049648
+            ],
+            [
+              2049632,
+              2049728
+            ],
+            [
+              2049640,
+              2049728
+            ],
+            [
+              2049656,
+              2049728
+            ],
+            [
+              2049680,
+              2049720
+            ],
+            [
+              2049708,
+              2049688
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2049488,
+              -64
+            ],
+            [
+              2049756,
+              64
+            ]
+          ],
+          "ra_saves": [
+            [
+              2049500,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              2049736,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 0
+        },
+        "previously_confirmed_neighbor_entries": [
+          2046896
+        ]
+      }
+    },
+    {
+      "name": "xPadInit",
+      "source": "SB/Core/x/xPad.cpp",
+      "address": 2049760,
+      "size": 100,
+      "sha256": "f52d9e73e8261f9da54e825756010854773d5c99dca15f095d4de8a9d4ad7580",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-whole-tu-sequence",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2048400,
+          "name": "xPadInit",
+          "source": "SB/Core/x/xPad.cpp",
+          "linkage_name": "xPadInit__Fv",
+          "reference_sha256": "7cf72a73e39030e9a546d469a3b86eb9c6a4e506ebf84824d0d6c1f6ed993548",
+          "data_address_operands": [
+            {
+              "hi_offset": 4,
+              "lo_offset": 12,
+              "opcode": 9,
+              "reference_address": 5672560,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 28,
+              "lo_offset": 36,
+              "opcode": 9,
+              "reference_address": 5672048,
+              "target_address": 5671024,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 72,
+              "lo_offset": 76,
+              "opcode": 9,
+              "reference_address": 5672560,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 20,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            },
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            },
+            {
+              "offset": 48,
+              "opcode": 3,
+              "reference_address": 1772304,
+              "target_address": 1773600
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2049648,
+          "name": "xPadInit",
+          "source": "SB/Core/x/xPad.cpp",
+          "linkage_name": "xPadInit__Fv",
+          "reference_sha256": "24cf940eea44391d81107d43eaf528c45d7449fdef44451b30e2f625e0b7e9ab",
+          "data_address_operands": [
+            {
+              "hi_offset": 4,
+              "lo_offset": 12,
+              "opcode": 9,
+              "reference_address": 5671280,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 28,
+              "lo_offset": 36,
+              "opcode": 9,
+              "reference_address": 5670768,
+              "target_address": 5671024,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 72,
+              "lo_offset": 76,
+              "opcode": 9,
+              "reference_address": 5671280,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 20,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            },
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            },
+            {
+              "offset": 48,
+              "opcode": 3,
+              "reference_address": 1773600,
+              "target_address": 1773600
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2046288,
+          "name": "xPadInit",
+          "source": "SB/Core/x/xPad.cpp",
+          "linkage_name": "xPadInit__Fv",
+          "reference_sha256": "f9956aee9e1d44ff4e6d9c36a7dfa6dc67b7640346b7645e8bdbdf22eeb65390",
+          "data_address_operands": [
+            {
+              "hi_offset": 4,
+              "lo_offset": 12,
+              "opcode": 9,
+              "reference_address": 5669744,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 28,
+              "lo_offset": 36,
+              "opcode": 9,
+              "reference_address": 5669232,
+              "target_address": 5671024,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 72,
+              "lo_offset": 76,
+              "opcode": 9,
+              "reference_address": 5669744,
+              "target_address": 5671536,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 20,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            },
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 1149960,
+              "target_address": 1149960,
+              "opaque_context_bytes": 64,
+              "opaque_context_sha256": "0c36391b9572b52c77a7870d104a3c4fbd11d6cf740bec5c0b42f84f66f36421",
+              "caller_word_unmasked": true,
+              "no_identity_or_extent_claim": true
+            },
+            {
+              "offset": 48,
+              "opcode": 3,
+              "reference_address": 1770240,
+              "target_address": 1773600
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2049852
+          ],
+          "direct_or_indirect_calls": [
+            2049780,
+            2049800,
+            2049808
+          ],
+          "branches": [
+            [
+              2049816,
+              2049832
+            ],
+            [
+              2049824,
+              2049848
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2049760,
+              -16
+            ],
+            [
+              2049856,
+              16
+            ]
+          ],
+          "ra_saves": [
+            [
+              2049768,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              2049848,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 12
+        },
+        "previously_confirmed_neighbor_entries": [
+          2046896
         ]
       }
     },
@@ -111350,6 +114665,104 @@
               "no_identity_or_extent_claim": true
             }
           ]
+        }
+      ],
+      "data_extents_promoted": false
+    }
+  ],
+  "pad_data_proofs": [
+    {
+      "version": "SLUS-20680",
+      "typed_globals": [
+        {
+          "name": "mPad",
+          "reference_address": 5672560,
+          "declaration_die": 5065758,
+          "type_die": 5067083,
+          "element_die": 5065915,
+          "element_name": "_tagxPad",
+          "element_bytes": 328,
+          "elements": 4,
+          "size": 1312,
+          "descriptor": "000a000000000003000000087200bb4c4d00",
+          "target_address": 5671536
+        },
+        {
+          "name": "mRumbleList",
+          "reference_address": 5672048,
+          "declaration_die": 5065717,
+          "type_die": 5067429,
+          "element_die": 5066648,
+          "element_name": "_tagxRumble",
+          "element_bytes": 16,
+          "elements": 32,
+          "size": 512,
+          "descriptor": "000a00000000001f000000087200984f4d00",
+          "target_address": 5671024
+        }
+      ],
+      "data_extents_promoted": false
+    },
+    {
+      "version": "SLES-51968",
+      "typed_globals": [
+        {
+          "name": "mPad",
+          "reference_address": 5671280,
+          "declaration_die": 5066216,
+          "type_die": 5067541,
+          "element_die": 5066373,
+          "element_name": "_tagxPad",
+          "element_bytes": 328,
+          "elements": 4,
+          "size": 1312,
+          "descriptor": "000a000000000003000000087200854e4d00",
+          "target_address": 5671536
+        },
+        {
+          "name": "mRumbleList",
+          "reference_address": 5670768,
+          "declaration_die": 5066175,
+          "type_die": 5067887,
+          "element_die": 5067106,
+          "element_name": "_tagxRumble",
+          "element_bytes": 16,
+          "elements": 32,
+          "size": 512,
+          "descriptor": "000a00000000001f00000008720062514d00",
+          "target_address": 5671024
+        }
+      ],
+      "data_extents_promoted": false
+    },
+    {
+      "version": "SLES-51970",
+      "typed_globals": [
+        {
+          "name": "mPad",
+          "reference_address": 5669744,
+          "declaration_die": 5067062,
+          "type_die": 5068387,
+          "element_die": 5067219,
+          "element_name": "_tagxPad",
+          "element_bytes": 328,
+          "elements": 4,
+          "size": 1312,
+          "descriptor": "000a000000000003000000087200d3514d00",
+          "target_address": 5671536
+        },
+        {
+          "name": "mRumbleList",
+          "reference_address": 5669232,
+          "declaration_die": 5067021,
+          "type_die": 5068733,
+          "element_die": 5067952,
+          "element_name": "_tagxRumble",
+          "element_bytes": 16,
+          "elements": 32,
+          "size": 512,
+          "descriptor": "000a00000000001f000000087200b0544d00",
+          "target_address": 5671024
         }
       ],
       "data_extents_promoted": false

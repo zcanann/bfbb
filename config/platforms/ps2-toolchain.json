@@ -192370,7 +192370,14 @@
         "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
       ],
       "symbols": {
-        "xPadNormalizeAnalog": "xPadNormalizeAnalog__FR8_tagxPadii"
+        "xPadNormalizeAnalog": "xPadNormalizeAnalog__FR8_tagxPadii",
+        "xPadAddRumble": "xPadAddRumble__Fi14_tagRumbleTypefiUi",
+        "xPadDestroyRumbleChain": "xPadDestroyRumbleChain__Fi",
+        "xPadKill": "xPadKill__Fv",
+        "xPadUpdate": "xPadUpdate__Fif",
+        "xPadRumbleEnable": "xPadRumbleEnable__Fii",
+        "xPadEnable": "xPadEnable__Fi",
+        "xPadInit": "xPadInit__Fv"
       },
       "calls": [
         {
@@ -192379,6 +192386,27 @@
           "target_source": "SB/Core/x/xMath.cpp",
           "target_function": "xAngleClampFast",
           "symbol": "xAngleClampFast__Ff"
+        },
+        {
+          "function": "xPadUpdate",
+          "offset": 240,
+          "target_source": "SB/Game/zGame.cpp",
+          "target_function": "zGameIsPaused",
+          "symbol": "zGameIsPaused__Fv"
+        },
+        {
+          "function": "xPadUpdate",
+          "offset": 256,
+          "target_source": "SB/Game/zGameExtras.cpp",
+          "target_function": "zGame_HackIsGallery",
+          "symbol": "zGame_HackIsGallery__Fv"
+        },
+        {
+          "function": "xPadEnable",
+          "offset": 96,
+          "target_source": "SB/Core/p2/iPad.cpp",
+          "target_function": "iPadEnable",
+          "symbol": "iPadEnable__FP8_tagxPads"
         }
       ],
       "linkage_provenance": [
@@ -192405,6 +192433,188 @@
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
               "source_address": 2043424,
               "reference_sha256": "4a1564d2bc086288cea9626b998e2be42ff75b6e2f9c5967ab6d38991ccf92ae"
+            }
+          ]
+        },
+        {
+          "function": "xPadAddRumble",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2046288,
+          "size": 448,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2044928,
+              "reference_sha256": "d1c0821b2281c67c14e2d0cd02f4bb51fdf7bff7958fc34a22db3251f06e4199"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2046176,
+              "reference_sha256": "4d4a5bcfdbe5eb2319c1862e36de6f83a27751574ae3657d14bb5bc1a4e2fc43"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2042816,
+              "reference_sha256": "ce2de3931d9c38f319e4a6dfd984bb1b08bcc10ffcc4912ed1daf65681c2da3d"
+            }
+          ]
+        },
+        {
+          "function": "xPadDestroyRumbleChain",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2046736,
+          "size": 136,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2045376,
+              "reference_sha256": "58446590ce509af5bf7624a2951c80bfefc75b24bb66a939a1f52d044b749998"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2046624,
+              "reference_sha256": "efb292c705bb486d7f364c4613655f64c24f38916d4dbf9d0808144534911f7c"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2043264,
+              "reference_sha256": "a3f3a9cc4b5bd34dfacc311b006aaa55d3db5375cbed00b270405edc9bf87f66"
+            }
+          ]
+        },
+        {
+          "function": "xPadKill",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2046880,
+          "size": 8,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2045520,
+              "reference_sha256": "f22fc55e01843a4852ab9d5c75fde09de40c0426f691755f3d55a61880b880fa"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2046768,
+              "reference_sha256": "16d5b7072265084ed3399b824aa6d5da13fe327c6029c3b6d4886340031d1ef8"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2043408,
+              "reference_sha256": "2bbf228d3570967792dddd78ccde8ff7a49003090bcedb1ce57bb7ba368cab24"
+            }
+          ]
+        },
+        {
+          "function": "xPadUpdate",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2047584,
+          "size": 1672,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2046224,
+              "reference_sha256": "5f5629417e4604a6d5dfbc7ee51d91cdc10150f00c797edc6f89bbf020dbbc69"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2047472,
+              "reference_sha256": "59ee85381ca7928002cab9703bca4ee15a738bb9af72ad8ca9dfe0bcdcbb7078"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2044112,
+              "reference_sha256": "96dfe061f1e3f7626c94da13aa81e3776d6193438640617a076aa1f8c63d8215"
+            }
+          ]
+        },
+        {
+          "function": "xPadRumbleEnable",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2049264,
+          "size": 212,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2047904,
+              "reference_sha256": "70e889be729489ef14c799d7c39858d9291e8a763db78c0ea210276f91e3f419"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2049152,
+              "reference_sha256": "16d744bd05cc764edaa1e7dbc38ea184d1916f1e71672ed7b9ed86489edfe7d8"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2045792,
+              "reference_sha256": "42bbb57d10cdf58fb4ee2a88d3a4c447602088d65a9b1790d6719724b2630cfd"
+            }
+          ]
+        },
+        {
+          "function": "xPadEnable",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2049488,
+          "size": 272,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2048128,
+              "reference_sha256": "9f38e19631c8fee56e6e722b8d042ea82fd78399d662c49feb2c0b35b05f1729"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2049376,
+              "reference_sha256": "7cc7d7f2abb7512099a71d45d9cdf30f316b50aa03de024308b52841ab2c248a"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2046016,
+              "reference_sha256": "bd8548dbeea6a783afa6b732138cbad822744d23530d54991bc3fbe955115abc"
+            }
+          ]
+        },
+        {
+          "function": "xPadInit",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2049760,
+          "size": 100,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2048400,
+              "reference_sha256": "7cf72a73e39030e9a546d469a3b86eb9c6a4e506ebf84824d0d6c1f6ed993548"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2049648,
+              "reference_sha256": "24cf940eea44391d81107d43eaf528c45d7449fdef44451b30e2f625e0b7e9ab"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2046288,
+              "reference_sha256": "f9956aee9e1d44ff4e6d9c36a7dfa6dc67b7640346b7645e8bdbdf22eeb65390"
             }
           ]
         }

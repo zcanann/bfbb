@@ -2448,11 +2448,60 @@
       "provenance": "manual-reviewed"
     },
     {
+      "name": "xPadAddRumble",
+      "source": "SB/Core/x/xPad.cpp",
+      "address": 2046288,
+      "size": 448,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xPadDestroyRumbleChain",
+      "source": "SB/Core/x/xPad.cpp",
+      "address": 2046736,
+      "size": 136,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xPadKill",
+      "source": "SB/Core/x/xPad.cpp",
+      "address": 2046880,
+      "size": 8,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
       "name": "xPadNormalizeAnalog",
       "source": "SB/Core/x/xPad.cpp",
       "address": 2046896,
       "size": 688,
       "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "xPadUpdate",
+      "source": "SB/Core/x/xPad.cpp",
+      "address": 2047584,
+      "size": 1672,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xPadRumbleEnable",
+      "source": "SB/Core/x/xPad.cpp",
+      "address": 2049264,
+      "size": 212,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xPadEnable",
+      "source": "SB/Core/x/xPad.cpp",
+      "address": 2049488,
+      "size": 272,
+      "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xPadInit",
+      "source": "SB/Core/x/xPad.cpp",
+      "address": 2049760,
+      "size": 100,
+      "provenance": "reviewed-whole-tu-sequence"
     },
     {
       "name": "xParInit",

@@ -553,6 +553,16 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in camera_tweak['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Camera tweak adds eleven members from the complete twelve-function sequence and the existing Reset neighbor. Original member types prove the eight-element state array and two look aggregates. Only exact eight-byte J/NOP wrappers to independently verified, strictly closed base Save/Load functions receive scoped tail handling; opaque runtime calls retain literal unmasked words and identical 64-byte context, with no new identity or extent.')
+    from platforms.france_pad_sequence import generate_unit as generate_pad
+    pad = generate_pad(originals, registry_dir)
+    document['functions'].extend(pad['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(pad['sequence_proofs'])
+    document['call_neighbors'].extend(pad['call_neighbors'])
+    document['pad_data_proofs'] = pad['data_proofs']
+    for key, value in pad['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Pad adds seven members from the complete eight-function sequence and the existing NormalizeAnalog neighbor. Original typed arrays prove four pad records and thirty-two rumble records. Only the exact eight-byte Kill J/NOP to an independently compared empty-return leaf receives scoped tail handling. Complete external platform contexts remain unpromoted; locally enumerated byte-address consumers preserve strict LUI lifetimes, and opaque runtime calls retain literal unmasked words and identical 64-byte context.')
     return document
 
 
