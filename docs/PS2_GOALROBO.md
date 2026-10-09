@@ -19,3 +19,15 @@ Fresh builds of all three GameCube units preserve every function record and
 unit measure. The platform conditional retains their existing expression.
 Evidence: `build/goalrobo-zoom-source-summary.json`, the regional before/after
 reports, and `build/goalrobo-zoom-gc-check.log`.
+
+`zNPCGoalRespawn::DoAppearFX` also matches exactly after restoring the original
+PS2 addition operand order for the box-bound height. The previous expression
+added the half-dimension before the offset; the original adds the offset first.
+This changes the floating-point register assignment in six instructions.
+The 940-byte function improves from 99.85107% to 100% in all three debug regions,
+with no other full-unit function changes. USA reaches 194/229 exact functions
+and 63,408 exact bytes (98.26499% fuzzy); PAL and German reach 193/229 and
+62,672 exact bytes (98.26491%). The existing French selected profile is unaffected.
+All three GameCube unit reports remain unchanged. Evidence is
+`build/goalrobo-appear-source-summary.json` and
+`build/goalrobo-appear-gc-check.log`.

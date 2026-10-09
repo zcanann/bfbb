@@ -7224,7 +7224,11 @@ void zNPCGoalRespawn::DoAppearFX(F32 dt)
 
     if (cfg->useBoxBound)
     {
+#if defined(PS2)
+        hyt = cfg->off_bound.y + 0.5f * cfg->dim_bound.y;
+#else
         hyt = 0.5f * cfg->dim_bound.y + cfg->off_bound.y;
+#endif
     }
     else
     {
