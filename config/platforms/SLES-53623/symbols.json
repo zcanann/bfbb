@@ -4794,6 +4794,13 @@
     },
     {
       "name": "register_tweaks",
+      "source": "SB/Game/zNPCTypePrawn.cpp",
+      "address": 3544320,
+      "size": 2660,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "register_tweaks",
       "source": "SB/Game/zNPCTypeBossPlankton.cpp",
       "address": 3580144,
       "size": 12572,

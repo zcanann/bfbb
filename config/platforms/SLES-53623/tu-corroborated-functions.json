@@ -48,14 +48,15 @@
     "King Jelly proves one unique complete parameter-registration caller and its complete float-list helper. Three-version names, bounds, strict returns, all instruction bits and complete strings agree. The earlier parameter helpers are independently regenerated; the complete original color helper remains unpromoted context. No whole translation-unit or data extent is claimed.",
     "SB2 proves one unique complete parameter-registration body with all three original ownership and strict return witnesses. Complete strings, independently regenerated parameter helpers and original typed sound-array layouts corroborate every changed operand. Array element/member offsets are preserved; no whole translation-unit or data extent is claimed.",
     "Plankton proves one unique complete parameter-registration body in all three originals, preserving strict returns, complete strings, independently regenerated parameter helpers and original typed sound arrays. Array element/member offsets remain exact; no whole translation-unit or data extent is claimed.",
-    "CruiseBubble proves one unique complete parameter-registration caller in all three originals. Strict returns, all non-address instruction bits, complete strings and independently regenerated parameter helpers agree. The previously confirmed bounded hash entry remains an independently checked callee, with no duplicate extent or whole translation-unit claim."
+    "CruiseBubble proves one unique complete parameter-registration caller in all three originals. Strict returns, all non-address instruction bits, complete strings and independently regenerated parameter helpers agree. The previously confirmed bounded hash entry remains an independently checked callee, with no duplicate extent or whole translation-unit claim.",
+    "Prawn proves one unique complete parameter-registration caller in all three originals. Strict original/target returns, all instruction bits, complete strings including repeated empty literals, independently regenerated parameter helpers and original typed sound arrays corroborate the body. No whole translation-unit or data extent is claimed."
   ],
   "counts": {
-    "functions": 412,
-    "code_bytes": 255252,
-    "source_units": 34,
+    "functions": 413,
+    "code_bytes": 257912,
+    "source_units": 35,
     "rooted_direct_call_entries": 129,
-    "closed_return_bodies": 384,
+    "closed_return_bodies": 385,
     "reviewed_tail_wrappers": 2,
     "registered_callback_entries": 26,
     "reviewed_leaf_tail_functions": 11,
@@ -81,7 +82,7 @@
     "reviewed_pad_kill_tails": 1,
     "reviewed_hangable_tail_chains": 2,
     "reviewed_group_base_tails": 2,
-    "reviewed_complete_caller_callee_clusters": 5,
+    "reviewed_complete_caller_callee_clusters": 6,
     "reviewed_event_shuffle_tails": 5
   },
   "sequence_proofs": [
@@ -3859,6 +3860,54 @@
         "unchanged_anchor_offset": 1516,
         "unchanged_anchor_bytes": 188,
         "masked_instruction_count": 188
+      },
+      "whole_translation_unit_claimed": false
+    },
+    {
+      "version": "SLUS-20680",
+      "source": "SB/Game/zNPCTypePrawn.cpp",
+      "source_start": 3542944,
+      "target_start": 3544320,
+      "complete_body_bytes": 2660,
+      "uniqueness": {
+        "matching_addresses": [
+          3544320
+        ],
+        "unchanged_anchor_offset": 2064,
+        "unchanged_anchor_bytes": 124,
+        "masked_instruction_count": 54
+      },
+      "whole_translation_unit_claimed": false
+    },
+    {
+      "version": "SLES-51968",
+      "source": "SB/Game/zNPCTypePrawn.cpp",
+      "source_start": 3544208,
+      "target_start": 3544320,
+      "complete_body_bytes": 2660,
+      "uniqueness": {
+        "matching_addresses": [
+          3544320
+        ],
+        "unchanged_anchor_offset": 2064,
+        "unchanged_anchor_bytes": 124,
+        "masked_instruction_count": 54
+      },
+      "whole_translation_unit_claimed": false
+    },
+    {
+      "version": "SLES-51970",
+      "source": "SB/Game/zNPCTypePrawn.cpp",
+      "source_start": 3540960,
+      "target_start": 3544320,
+      "complete_body_bytes": 2660,
+      "uniqueness": {
+        "matching_addresses": [
+          3544320
+        ],
+        "unchanged_anchor_offset": 2064,
+        "unchanged_anchor_bytes": 124,
+        "masked_instruction_count": 54
       },
       "whole_translation_unit_claimed": false
     }
@@ -128999,6 +129048,1610 @@
     },
     {
       "name": "register_tweaks",
+      "source": "SB/Game/zNPCTypePrawn.cpp",
+      "address": 3544320,
+      "size": 2660,
+      "sha256": "f34404b0c4f5d8dcc65201cf6685c13c62b4529e2b27b06edd0527e16cfabeff",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-complete-caller-callee-cluster",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3542944,
+          "source": "SB/Game/zNPCTypePrawn.cpp",
+          "name": "register_tweaks",
+          "linkage_name": "register_tweaks__Q227@unnamed@zNPCTypePrawn_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "reference_sha256": "76bab64b12a3560808550609fb425d0d2b8335a93ca2b22cd69ed80a9ac4a14b",
+          "data_address_operands": [
+            {
+              "hi_offset": 48,
+              "lo_offset": 72,
+              "opcode": 9,
+              "reference_address": 5260391,
+              "target_address": 5259415,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 132,
+              "lo_offset": 156,
+              "opcode": 9,
+              "reference_address": 5260416,
+              "target_address": 5259440,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 260,
+              "lo_offset": 284,
+              "opcode": 9,
+              "reference_address": 5260440,
+              "target_address": 5259464,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 388,
+              "lo_offset": 412,
+              "opcode": 9,
+              "reference_address": 5260469,
+              "target_address": 5259493,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 516,
+              "lo_offset": 536,
+              "opcode": 9,
+              "reference_address": 5260498,
+              "target_address": 5259522,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 636,
+              "lo_offset": 660,
+              "opcode": 9,
+              "reference_address": 5260521,
+              "target_address": 5259545,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 764,
+              "lo_offset": 788,
+              "opcode": 9,
+              "reference_address": 5260552,
+              "target_address": 5259576,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 892,
+              "lo_offset": 916,
+              "opcode": 9,
+              "reference_address": 5260588,
+              "target_address": 5259612,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1020,
+              "lo_offset": 1048,
+              "opcode": 9,
+              "reference_address": 5260624,
+              "target_address": 5259648,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1148,
+              "lo_offset": 1176,
+              "opcode": 9,
+              "reference_address": 5260654,
+              "target_address": 5259678,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1276,
+              "lo_offset": 1300,
+              "opcode": 9,
+              "reference_address": 5260684,
+              "target_address": 5259708,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1404,
+              "lo_offset": 1428,
+              "opcode": 9,
+              "reference_address": 5260719,
+              "target_address": 5259743,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1532,
+              "lo_offset": 1556,
+              "opcode": 9,
+              "reference_address": 5260754,
+              "target_address": 5259778,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1660,
+              "lo_offset": 1684,
+              "opcode": 9,
+              "reference_address": 5260783,
+              "target_address": 5259807,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1788,
+              "lo_offset": 1812,
+              "opcode": 9,
+              "reference_address": 5260816,
+              "target_address": 5259840,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1916,
+              "lo_offset": 1936,
+              "opcode": 9,
+              "reference_address": 5260841,
+              "target_address": 5259865,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 2036,
+              "lo_offset": 2060,
+              "opcode": 9,
+              "reference_address": 5260871,
+              "target_address": 5259895,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 2164,
+              "lo_offset": 2192,
+              "opcode": 9,
+              "reference_address": 5260901,
+              "target_address": 5259925,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 2292,
+              "lo_offset": 2320,
+              "opcode": 9,
+              "reference_address": 5260925,
+              "target_address": 5259949,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 2412,
+              "lo_offset": 2420,
+              "opcode": 35,
+              "reference_address": 6179296,
+              "target_address": 6178272,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 2416,
+              "lo_offset": 2424,
+              "opcode": 9,
+              "reference_address": 5258640,
+              "target_address": 5257664,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 2452,
+              "lo_offset": 2456,
+              "opcode": 43,
+              "reference_address": 6179408,
+              "target_address": 6178384,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 2468,
+              "lo_offset": 2476,
+              "opcode": 35,
+              "reference_address": 6179320,
+              "target_address": 6178296,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 2472,
+              "lo_offset": 2480,
+              "opcode": 9,
+              "reference_address": 5258640,
+              "target_address": 5257664,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 2508,
+              "lo_offset": 2512,
+              "opcode": 43,
+              "reference_address": 6179424,
+              "target_address": 6178400,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 2524,
+              "lo_offset": 2532,
+              "opcode": 35,
+              "reference_address": 6179344,
+              "target_address": 6178320,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 2528,
+              "lo_offset": 2536,
+              "opcode": 9,
+              "reference_address": 5258640,
+              "target_address": 5257664,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 2564,
+              "lo_offset": 2568,
+              "opcode": 43,
+              "reference_address": 6179440,
+              "target_address": 6178416,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 2580,
+              "lo_offset": 2588,
+              "opcode": 35,
+              "reference_address": 6179368,
+              "target_address": 6178344,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 2584,
+              "lo_offset": 2592,
+              "opcode": 9,
+              "reference_address": 5258640,
+              "target_address": 5257664,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 2620,
+              "lo_offset": 2624,
+              "opcode": 43,
+              "reference_address": 6179456,
+              "target_address": 6178432,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 68,
+              "opcode": 3,
+              "reference_address": 1258880,
+              "target_address": 1258880
+            },
+            {
+              "offset": 152,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 280,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 408,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 532,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 656,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 784,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 912,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 1044,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 1172,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 1296,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 1424,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 1552,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 1680,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 1808,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 1932,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 2056,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 2188,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 2316,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 2444,
+              "opcode": 3,
+              "reference_address": 2157792,
+              "target_address": 2159200
+            },
+            {
+              "offset": 2500,
+              "opcode": 3,
+              "reference_address": 2157792,
+              "target_address": 2159200
+            },
+            {
+              "offset": 2556,
+              "opcode": 3,
+              "reference_address": 2157792,
+              "target_address": 2159200
+            },
+            {
+              "offset": 2612,
+              "opcode": 3,
+              "reference_address": 2157792,
+              "target_address": 2159200
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3544208,
+          "source": "SB/Game/zNPCTypePrawn.cpp",
+          "name": "register_tweaks",
+          "linkage_name": "register_tweaks__Q227@unnamed@zNPCTypePrawn_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "reference_sha256": "3789caf3a1a2fa63cbc17f8fdacac8fb8576cd2b60b22cf20e2b33eaa0b4bb26",
+          "data_address_operands": [
+            {
+              "hi_offset": 48,
+              "lo_offset": 72,
+              "opcode": 9,
+              "reference_address": 5259159,
+              "target_address": 5259415,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 132,
+              "lo_offset": 156,
+              "opcode": 9,
+              "reference_address": 5259184,
+              "target_address": 5259440,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 260,
+              "lo_offset": 284,
+              "opcode": 9,
+              "reference_address": 5259208,
+              "target_address": 5259464,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 388,
+              "lo_offset": 412,
+              "opcode": 9,
+              "reference_address": 5259237,
+              "target_address": 5259493,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 516,
+              "lo_offset": 536,
+              "opcode": 9,
+              "reference_address": 5259266,
+              "target_address": 5259522,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 636,
+              "lo_offset": 660,
+              "opcode": 9,
+              "reference_address": 5259289,
+              "target_address": 5259545,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 764,
+              "lo_offset": 788,
+              "opcode": 9,
+              "reference_address": 5259320,
+              "target_address": 5259576,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 892,
+              "lo_offset": 916,
+              "opcode": 9,
+              "reference_address": 5259356,
+              "target_address": 5259612,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1020,
+              "lo_offset": 1048,
+              "opcode": 9,
+              "reference_address": 5259392,
+              "target_address": 5259648,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1148,
+              "lo_offset": 1176,
+              "opcode": 9,
+              "reference_address": 5259422,
+              "target_address": 5259678,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1276,
+              "lo_offset": 1300,
+              "opcode": 9,
+              "reference_address": 5259452,
+              "target_address": 5259708,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1404,
+              "lo_offset": 1428,
+              "opcode": 9,
+              "reference_address": 5259487,
+              "target_address": 5259743,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1532,
+              "lo_offset": 1556,
+              "opcode": 9,
+              "reference_address": 5259522,
+              "target_address": 5259778,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1660,
+              "lo_offset": 1684,
+              "opcode": 9,
+              "reference_address": 5259551,
+              "target_address": 5259807,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1788,
+              "lo_offset": 1812,
+              "opcode": 9,
+              "reference_address": 5259584,
+              "target_address": 5259840,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1916,
+              "lo_offset": 1936,
+              "opcode": 9,
+              "reference_address": 5259609,
+              "target_address": 5259865,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 2036,
+              "lo_offset": 2060,
+              "opcode": 9,
+              "reference_address": 5259639,
+              "target_address": 5259895,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 2164,
+              "lo_offset": 2192,
+              "opcode": 9,
+              "reference_address": 5259669,
+              "target_address": 5259925,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 2292,
+              "lo_offset": 2320,
+              "opcode": 9,
+              "reference_address": 5259693,
+              "target_address": 5259949,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 2412,
+              "lo_offset": 2420,
+              "opcode": 35,
+              "reference_address": 6178016,
+              "target_address": 6178272,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 2416,
+              "lo_offset": 2424,
+              "opcode": 9,
+              "reference_address": 5257408,
+              "target_address": 5257664,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 2452,
+              "lo_offset": 2456,
+              "opcode": 43,
+              "reference_address": 6178128,
+              "target_address": 6178384,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 2468,
+              "lo_offset": 2476,
+              "opcode": 35,
+              "reference_address": 6178040,
+              "target_address": 6178296,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 2472,
+              "lo_offset": 2480,
+              "opcode": 9,
+              "reference_address": 5257408,
+              "target_address": 5257664,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 2508,
+              "lo_offset": 2512,
+              "opcode": 43,
+              "reference_address": 6178144,
+              "target_address": 6178400,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 2524,
+              "lo_offset": 2532,
+              "opcode": 35,
+              "reference_address": 6178064,
+              "target_address": 6178320,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 2528,
+              "lo_offset": 2536,
+              "opcode": 9,
+              "reference_address": 5257408,
+              "target_address": 5257664,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 2564,
+              "lo_offset": 2568,
+              "opcode": 43,
+              "reference_address": 6178160,
+              "target_address": 6178416,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 2580,
+              "lo_offset": 2588,
+              "opcode": 35,
+              "reference_address": 6178088,
+              "target_address": 6178344,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 2584,
+              "lo_offset": 2592,
+              "opcode": 9,
+              "reference_address": 5257408,
+              "target_address": 5257664,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 2620,
+              "lo_offset": 2624,
+              "opcode": 43,
+              "reference_address": 6178176,
+              "target_address": 6178432,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 68,
+              "opcode": 3,
+              "reference_address": 1258880,
+              "target_address": 1258880
+            },
+            {
+              "offset": 152,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 280,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 408,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 532,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 656,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 784,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 912,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 1044,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 1172,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 1296,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 1424,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 1552,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 1680,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 1808,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 1932,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 2056,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 2188,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 2316,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 2444,
+              "opcode": 3,
+              "reference_address": 2159088,
+              "target_address": 2159200
+            },
+            {
+              "offset": 2500,
+              "opcode": 3,
+              "reference_address": 2159088,
+              "target_address": 2159200
+            },
+            {
+              "offset": 2556,
+              "opcode": 3,
+              "reference_address": 2159088,
+              "target_address": 2159200
+            },
+            {
+              "offset": 2612,
+              "opcode": 3,
+              "reference_address": 2159088,
+              "target_address": 2159200
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3540960,
+          "source": "SB/Game/zNPCTypePrawn.cpp",
+          "name": "register_tweaks",
+          "linkage_name": "register_tweaks__Q227@unnamed@zNPCTypePrawn_cpp@11tweak_groupFbP16xModelAssetParamUiPCc",
+          "reference_sha256": "173815872b11b07d2ed9dcf1fe4f39d085b08a50fc4a063a9a16d1958c482972",
+          "data_address_operands": [
+            {
+              "hi_offset": 48,
+              "lo_offset": 72,
+              "opcode": 9,
+              "reference_address": 5257591,
+              "target_address": 5259415,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 132,
+              "lo_offset": 156,
+              "opcode": 9,
+              "reference_address": 5257616,
+              "target_address": 5259440,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 260,
+              "lo_offset": 284,
+              "opcode": 9,
+              "reference_address": 5257640,
+              "target_address": 5259464,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 388,
+              "lo_offset": 412,
+              "opcode": 9,
+              "reference_address": 5257669,
+              "target_address": 5259493,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 516,
+              "lo_offset": 536,
+              "opcode": 9,
+              "reference_address": 5257698,
+              "target_address": 5259522,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 636,
+              "lo_offset": 660,
+              "opcode": 9,
+              "reference_address": 5257721,
+              "target_address": 5259545,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 764,
+              "lo_offset": 788,
+              "opcode": 9,
+              "reference_address": 5257752,
+              "target_address": 5259576,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 892,
+              "lo_offset": 916,
+              "opcode": 9,
+              "reference_address": 5257788,
+              "target_address": 5259612,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1020,
+              "lo_offset": 1048,
+              "opcode": 9,
+              "reference_address": 5257824,
+              "target_address": 5259648,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1148,
+              "lo_offset": 1176,
+              "opcode": 9,
+              "reference_address": 5257854,
+              "target_address": 5259678,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1276,
+              "lo_offset": 1300,
+              "opcode": 9,
+              "reference_address": 5257884,
+              "target_address": 5259708,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1404,
+              "lo_offset": 1428,
+              "opcode": 9,
+              "reference_address": 5257919,
+              "target_address": 5259743,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1532,
+              "lo_offset": 1556,
+              "opcode": 9,
+              "reference_address": 5257954,
+              "target_address": 5259778,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1660,
+              "lo_offset": 1684,
+              "opcode": 9,
+              "reference_address": 5257983,
+              "target_address": 5259807,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1788,
+              "lo_offset": 1812,
+              "opcode": 9,
+              "reference_address": 5258016,
+              "target_address": 5259840,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1916,
+              "lo_offset": 1936,
+              "opcode": 9,
+              "reference_address": 5258041,
+              "target_address": 5259865,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 2036,
+              "lo_offset": 2060,
+              "opcode": 9,
+              "reference_address": 5258071,
+              "target_address": 5259895,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 2164,
+              "lo_offset": 2192,
+              "opcode": 9,
+              "reference_address": 5258101,
+              "target_address": 5259925,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 2292,
+              "lo_offset": 2320,
+              "opcode": 9,
+              "reference_address": 5258125,
+              "target_address": 5259949,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 2412,
+              "lo_offset": 2420,
+              "opcode": 35,
+              "reference_address": 6176480,
+              "target_address": 6178272,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 2416,
+              "lo_offset": 2424,
+              "opcode": 9,
+              "reference_address": 5255840,
+              "target_address": 5257664,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 2452,
+              "lo_offset": 2456,
+              "opcode": 43,
+              "reference_address": 6176592,
+              "target_address": 6178384,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 2468,
+              "lo_offset": 2476,
+              "opcode": 35,
+              "reference_address": 6176504,
+              "target_address": 6178296,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 2472,
+              "lo_offset": 2480,
+              "opcode": 9,
+              "reference_address": 5255840,
+              "target_address": 5257664,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 2508,
+              "lo_offset": 2512,
+              "opcode": 43,
+              "reference_address": 6176608,
+              "target_address": 6178400,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 2524,
+              "lo_offset": 2532,
+              "opcode": 35,
+              "reference_address": 6176528,
+              "target_address": 6178320,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 2528,
+              "lo_offset": 2536,
+              "opcode": 9,
+              "reference_address": 5255840,
+              "target_address": 5257664,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 2564,
+              "lo_offset": 2568,
+              "opcode": 43,
+              "reference_address": 6176624,
+              "target_address": 6178416,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 2580,
+              "lo_offset": 2588,
+              "opcode": 35,
+              "reference_address": 6176552,
+              "target_address": 6178344,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 2584,
+              "lo_offset": 2592,
+              "opcode": 9,
+              "reference_address": 5255840,
+              "target_address": 5257664,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 2620,
+              "lo_offset": 2624,
+              "opcode": 43,
+              "reference_address": 6176640,
+              "target_address": 6178432,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 68,
+              "opcode": 3,
+              "reference_address": 1258880,
+              "target_address": 1258880
+            },
+            {
+              "offset": 152,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 280,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 408,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 532,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 656,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 784,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 912,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 1044,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 1172,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 1296,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 1424,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 1552,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 1680,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 1808,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 1932,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 2056,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 2188,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 2316,
+              "opcode": 3,
+              "reference_address": 1258528,
+              "target_address": 1258528
+            },
+            {
+              "offset": 2444,
+              "opcode": 3,
+              "reference_address": 2155744,
+              "target_address": 2159200
+            },
+            {
+              "offset": 2500,
+              "opcode": 3,
+              "reference_address": 2155744,
+              "target_address": 2159200
+            },
+            {
+              "offset": 2556,
+              "opcode": 3,
+              "reference_address": 2155744,
+              "target_address": 2159200
+            },
+            {
+              "offset": 2612,
+              "opcode": 3,
+              "reference_address": 2155744,
+              "target_address": 2159200
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "proof_scope": "complete_caller_with_independently_proven_callees",
+        "unique_complete_caller": 3544320,
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3546972
+          ],
+          "direct_or_indirect_calls": [
+            3544388,
+            3544472,
+            3544600,
+            3544728,
+            3544852,
+            3544976,
+            3545104,
+            3545232,
+            3545364,
+            3545492,
+            3545616,
+            3545744,
+            3545872,
+            3546000,
+            3546128,
+            3546252,
+            3546376,
+            3546508,
+            3546636,
+            3546764,
+            3546820,
+            3546876,
+            3546932
+          ],
+          "branches": [
+            [
+              3544356,
+              3544440
+            ],
+            [
+              3544400,
+              3544416
+            ],
+            [
+              3544408,
+              3544432
+            ],
+            [
+              3544420,
+              3544432
+            ],
+            [
+              3544440,
+              3544568
+            ],
+            [
+              3544492,
+              3544512
+            ],
+            [
+              3544500,
+              3544544
+            ],
+            [
+              3544528,
+              3544544
+            ],
+            [
+              3544568,
+              3544696
+            ],
+            [
+              3544620,
+              3544640
+            ],
+            [
+              3544628,
+              3544672
+            ],
+            [
+              3544660,
+              3544672
+            ],
+            [
+              3544696,
+              3544824
+            ],
+            [
+              3544748,
+              3544768
+            ],
+            [
+              3544756,
+              3544800
+            ],
+            [
+              3544788,
+              3544800
+            ],
+            [
+              3544824,
+              3544944
+            ],
+            [
+              3544872,
+              3544888
+            ],
+            [
+              3544880,
+              3544920
+            ],
+            [
+              3544908,
+              3544920
+            ],
+            [
+              3544944,
+              3545072
+            ],
+            [
+              3544996,
+              3545016
+            ],
+            [
+              3545004,
+              3545048
+            ],
+            [
+              3545032,
+              3545048
+            ],
+            [
+              3545072,
+              3545200
+            ],
+            [
+              3545124,
+              3545144
+            ],
+            [
+              3545132,
+              3545176
+            ],
+            [
+              3545164,
+              3545176
+            ],
+            [
+              3545200,
+              3545328
+            ],
+            [
+              3545252,
+              3545272
+            ],
+            [
+              3545260,
+              3545304
+            ],
+            [
+              3545292,
+              3545304
+            ],
+            [
+              3545328,
+              3545456
+            ],
+            [
+              3545384,
+              3545400
+            ],
+            [
+              3545392,
+              3545432
+            ],
+            [
+              3545420,
+              3545432
+            ],
+            [
+              3545456,
+              3545584
+            ],
+            [
+              3545512,
+              3545528
+            ],
+            [
+              3545520,
+              3545560
+            ],
+            [
+              3545544,
+              3545560
+            ],
+            [
+              3545584,
+              3545712
+            ],
+            [
+              3545636,
+              3545656
+            ],
+            [
+              3545644,
+              3545688
+            ],
+            [
+              3545676,
+              3545688
+            ],
+            [
+              3545712,
+              3545840
+            ],
+            [
+              3545764,
+              3545784
+            ],
+            [
+              3545772,
+              3545816
+            ],
+            [
+              3545804,
+              3545816
+            ],
+            [
+              3545840,
+              3545968
+            ],
+            [
+              3545892,
+              3545912
+            ],
+            [
+              3545900,
+              3545944
+            ],
+            [
+              3545932,
+              3545944
+            ],
+            [
+              3545968,
+              3546096
+            ],
+            [
+              3546020,
+              3546040
+            ],
+            [
+              3546028,
+              3546072
+            ],
+            [
+              3546060,
+              3546072
+            ],
+            [
+              3546096,
+              3546224
+            ],
+            [
+              3546148,
+              3546168
+            ],
+            [
+              3546156,
+              3546200
+            ],
+            [
+              3546184,
+              3546200
+            ],
+            [
+              3546224,
+              3546344
+            ],
+            [
+              3546272,
+              3546288
+            ],
+            [
+              3546280,
+              3546320
+            ],
+            [
+              3546308,
+              3546320
+            ],
+            [
+              3546344,
+              3546472
+            ],
+            [
+              3546396,
+              3546416
+            ],
+            [
+              3546404,
+              3546448
+            ],
+            [
+              3546436,
+              3546448
+            ],
+            [
+              3546472,
+              3546600
+            ],
+            [
+              3546528,
+              3546544
+            ],
+            [
+              3546536,
+              3546576
+            ],
+            [
+              3546564,
+              3546576
+            ],
+            [
+              3546600,
+              3546728
+            ],
+            [
+              3546656,
+              3546672
+            ],
+            [
+              3546664,
+              3546704
+            ],
+            [
+              3546692,
+              3546704
+            ],
+            [
+              3546728,
+              3546784
+            ],
+            [
+              3546784,
+              3546840
+            ],
+            [
+              3546840,
+              3546896
+            ],
+            [
+              3546896,
+              3546952
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              3544320,
+              -80
+            ],
+            [
+              3546976,
+              80
+            ]
+          ],
+          "ra_saves": [
+            [
+              3544324,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              3546952,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [
+            3544508,
+            3544636,
+            3544764,
+            3545012,
+            3545140,
+            3545268,
+            3545652,
+            3545780,
+            3545908,
+            3546036,
+            3546164,
+            3546412
+          ],
+          "following_zero_alignment": 12
+        },
+        "whole_translation_unit_claimed": false
+      }
+    },
+    {
+      "name": "register_tweaks",
       "source": "SB/Game/zNPCTypeBossPlankton.cpp",
       "address": 3580144,
       "size": 12572,
@@ -186562,6 +188215,1265 @@
           "text": "rainbowfilm_smooth32"
         }
       ],
+      "data_extents_promoted": false
+    }
+  ],
+  "prawn_data_proofs": [
+    {
+      "version": "SLUS-20680",
+      "source": "SB/Game/zNPCTypePrawn.cpp",
+      "complete_strings": [
+        {
+          "hi_offset": 48,
+          "lo_offset": 72,
+          "opcode": 9,
+          "reference_address": 5260391,
+          "target_address": 5259415,
+          "storage": "file_backed",
+          "size": 25,
+          "sha256": "c25a62730bf2dac2ebe048367638b2a17e3ec0d7ac3602d05f1b5313e0754497",
+          "text": "beam.fire.sound_interval"
+        },
+        {
+          "hi_offset": 132,
+          "lo_offset": 156,
+          "opcode": 9,
+          "reference_address": 5260416,
+          "target_address": 5259440,
+          "storage": "file_backed",
+          "size": 24,
+          "sha256": "5650e821d47209f760c262b5ab3dbd8b6737d3bcbb658d885f0f2d04523473ac",
+          "text": "sound[SOUND_HIT].volume"
+        },
+        {
+          "hi_offset": 260,
+          "lo_offset": 284,
+          "opcode": 9,
+          "reference_address": 5260440,
+          "target_address": 5259464,
+          "storage": "file_backed",
+          "size": 29,
+          "sha256": "6793dad988493516565fe0204cb5b1ad43ce242add1e112ab91dc5d2771773cb",
+          "text": "sound[SOUND_HIT].range_inner"
+        },
+        {
+          "hi_offset": 388,
+          "lo_offset": 412,
+          "opcode": 9,
+          "reference_address": 5260469,
+          "target_address": 5259493,
+          "storage": "file_backed",
+          "size": 29,
+          "sha256": "10879b1d97c98b976bae49e589f2c8bc8388e532ef78583b55eb993926edf97f",
+          "text": "sound[SOUND_HIT].range_outer"
+        },
+        {
+          "hi_offset": 516,
+          "lo_offset": 536,
+          "opcode": 9,
+          "reference_address": 5260498,
+          "target_address": 5259522,
+          "storage": "file_backed",
+          "size": 23,
+          "sha256": "c3c194325f59c58ed40805ecdcd9608a960c913e10676d187ddb425d61e372db",
+          "text": "sound[SOUND_HIT].delay"
+        },
+        {
+          "hi_offset": 636,
+          "lo_offset": 660,
+          "opcode": 9,
+          "reference_address": 5260521,
+          "target_address": 5259545,
+          "storage": "file_backed",
+          "size": 31,
+          "sha256": "24d96c4e47c7380a660de04b0772f4028a6511e395d274a9da023a976039ba8e",
+          "text": "sound[SOUND_BEAM_BEGIN].volume"
+        },
+        {
+          "hi_offset": 764,
+          "lo_offset": 788,
+          "opcode": 9,
+          "reference_address": 5260552,
+          "target_address": 5259576,
+          "storage": "file_backed",
+          "size": 36,
+          "sha256": "f35220bc4fe76b0543331da065d465f44e22f2032ab539d348c3b9f7243a0d68",
+          "text": "sound[SOUND_BEAM_BEGIN].range_inner"
+        },
+        {
+          "hi_offset": 892,
+          "lo_offset": 916,
+          "opcode": 9,
+          "reference_address": 5260588,
+          "target_address": 5259612,
+          "storage": "file_backed",
+          "size": 36,
+          "sha256": "a59baa3b0927cee9a22ceee5676e1f4d6dbc3a912ab364ec6188b48da8f93e9d",
+          "text": "sound[SOUND_BEAM_BEGIN].range_outer"
+        },
+        {
+          "hi_offset": 1020,
+          "lo_offset": 1048,
+          "opcode": 9,
+          "reference_address": 5260624,
+          "target_address": 5259648,
+          "storage": "file_backed",
+          "size": 30,
+          "sha256": "5b69f37e7ab38c1351386ae69bc34fa5f738b0a49ced253599c744d7f664ba39",
+          "text": "sound[SOUND_BEAM_BEGIN].delay"
+        },
+        {
+          "hi_offset": 1148,
+          "lo_offset": 1176,
+          "opcode": 9,
+          "reference_address": 5260654,
+          "target_address": 5259678,
+          "storage": "file_backed",
+          "size": 30,
+          "sha256": "49cc4212e52df47838293fdf8dc5d3b111a9cd8c0d2cb8f7166764ba4572ec7d",
+          "text": "sound[SOUND_BEAM_LOOP].volume"
+        },
+        {
+          "hi_offset": 1276,
+          "lo_offset": 1300,
+          "opcode": 9,
+          "reference_address": 5260684,
+          "target_address": 5259708,
+          "storage": "file_backed",
+          "size": 35,
+          "sha256": "2d76dd3c2dbe570e3d00f4f55b187778e474b5ece5c44a604becafa1ce006f75",
+          "text": "sound[SOUND_BEAM_LOOP].range_inner"
+        },
+        {
+          "hi_offset": 1404,
+          "lo_offset": 1428,
+          "opcode": 9,
+          "reference_address": 5260719,
+          "target_address": 5259743,
+          "storage": "file_backed",
+          "size": 35,
+          "sha256": "59d7a48d1e180a1bf1fd2a7cb272f009dbb86d0024b5b81c7fb5ea8f5c576a0c",
+          "text": "sound[SOUND_BEAM_LOOP].range_outer"
+        },
+        {
+          "hi_offset": 1532,
+          "lo_offset": 1556,
+          "opcode": 9,
+          "reference_address": 5260754,
+          "target_address": 5259778,
+          "storage": "file_backed",
+          "size": 29,
+          "sha256": "e24f72bf3d5410d537f8c600080ef349c0fc9796b03cc3f18d1c3583536ad8a9",
+          "text": "sound[SOUND_BEAM_LOOP].delay"
+        },
+        {
+          "hi_offset": 1660,
+          "lo_offset": 1684,
+          "opcode": 9,
+          "reference_address": 5260783,
+          "target_address": 5259807,
+          "storage": "file_backed",
+          "size": 33,
+          "sha256": "0e0c7331fd4ab5020e1b9f05e32ff02438c14fa90b4a716b9fa4beaa1606ec4d",
+          "text": "sound[SOUND_BEAM_LOOP].fade_time"
+        },
+        {
+          "hi_offset": 1788,
+          "lo_offset": 1812,
+          "opcode": 9,
+          "reference_address": 5260816,
+          "target_address": 5259840,
+          "storage": "file_backed",
+          "size": 25,
+          "sha256": "b5bbd502076029cd21cbd7efc29ce4aec05a239b03d94b4bcccf3d25069d514b",
+          "text": "sound[SOUND_RING].volume"
+        },
+        {
+          "hi_offset": 1916,
+          "lo_offset": 1936,
+          "opcode": 9,
+          "reference_address": 5260841,
+          "target_address": 5259865,
+          "storage": "file_backed",
+          "size": 30,
+          "sha256": "b35a747f34c2ebb5b6733770ecc47a321dac11d4f76caa305520b55e4adaf113",
+          "text": "sound[SOUND_RING].range_inner"
+        },
+        {
+          "hi_offset": 2036,
+          "lo_offset": 2060,
+          "opcode": 9,
+          "reference_address": 5260871,
+          "target_address": 5259895,
+          "storage": "file_backed",
+          "size": 30,
+          "sha256": "c99684ab8623eacb30194c6fff71e4d7aa7d4cdd410d45ca5db7b67d107240e2",
+          "text": "sound[SOUND_RING].range_outer"
+        },
+        {
+          "hi_offset": 2164,
+          "lo_offset": 2192,
+          "opcode": 9,
+          "reference_address": 5260901,
+          "target_address": 5259925,
+          "storage": "file_backed",
+          "size": 24,
+          "sha256": "3052bdd141a33558a1992a027ad52a2722444b7f2166a7ab5710824338cba987",
+          "text": "sound[SOUND_RING].delay"
+        },
+        {
+          "hi_offset": 2292,
+          "lo_offset": 2320,
+          "opcode": 9,
+          "reference_address": 5260925,
+          "target_address": 5259949,
+          "storage": "file_backed",
+          "size": 28,
+          "sha256": "9037af38aba339c0863dc1eb3ef4875796813daf58ce38dc9e217757077fd695",
+          "text": "sound[SOUND_RING].fade_time"
+        },
+        {
+          "hi_offset": 2416,
+          "lo_offset": 2424,
+          "opcode": 9,
+          "reference_address": 5258640,
+          "target_address": 5257664,
+          "storage": "file_backed",
+          "size": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "text": ""
+        },
+        {
+          "hi_offset": 2472,
+          "lo_offset": 2480,
+          "opcode": 9,
+          "reference_address": 5258640,
+          "target_address": 5257664,
+          "storage": "file_backed",
+          "size": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "text": ""
+        },
+        {
+          "hi_offset": 2528,
+          "lo_offset": 2536,
+          "opcode": 9,
+          "reference_address": 5258640,
+          "target_address": 5257664,
+          "storage": "file_backed",
+          "size": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "text": ""
+        },
+        {
+          "hi_offset": 2584,
+          "lo_offset": 2592,
+          "opcode": 9,
+          "reference_address": 5258640,
+          "target_address": 5257664,
+          "storage": "file_backed",
+          "size": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "text": ""
+        }
+      ],
+      "typed_original_arrays": {
+        "sound_asset_ids": {
+          "reference_address": 6179296,
+          "size": 96,
+          "count": 4,
+          "stride": 24,
+          "declaration_die": 11022625,
+          "type_die": 11116910,
+          "element_die": 11116836,
+          "subscript_descriptor": "000a00000000000300000008720024a1a900"
+        },
+        "sound_data": {
+          "reference_address": 6179408,
+          "size": 64,
+          "count": 4,
+          "stride": 16,
+          "declaration_die": 11022827,
+          "type_die": 11097767,
+          "element_die": 11056491,
+          "subscript_descriptor": "000a0000000000030000000872006bb5a800",
+          "element_layout": {
+            "die_offset": 11056491,
+            "tag": 2,
+            "size": 16,
+            "members": [
+              {
+                "name": "id",
+                "offset": 0,
+                "die_offset": 11056527,
+                "location": "040000000007",
+                "type_attributes": {
+                  "5": 9
+                }
+              },
+              {
+                "name": "handle",
+                "offset": 4,
+                "die_offset": 11056558,
+                "location": "040400000007",
+                "type_attributes": {
+                  "5": 9
+                }
+              },
+              {
+                "name": "loc",
+                "offset": 8,
+                "die_offset": 11056593,
+                "location": "040800000007",
+                "type_attributes": {
+                  "8": "01e73da800"
+                }
+              },
+              {
+                "name": "volume",
+                "offset": 12,
+                "die_offset": 11056630,
+                "location": "040c00000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              }
+            ]
+          }
+        }
+      },
+      "array_fields": [
+        {
+          "hi_offset": 2412,
+          "lo_offset": 2420,
+          "opcode": 35,
+          "reference_address": 6179296,
+          "target_address": 6178272,
+          "storage": "zero_fill",
+          "array": "sound_asset_ids",
+          "array_offset": 0,
+          "complete_array_size": 96
+        },
+        {
+          "hi_offset": 2452,
+          "lo_offset": 2456,
+          "opcode": 43,
+          "reference_address": 6179408,
+          "target_address": 6178384,
+          "storage": "zero_fill",
+          "array": "sound_data",
+          "array_offset": 0,
+          "complete_array_size": 64
+        },
+        {
+          "hi_offset": 2468,
+          "lo_offset": 2476,
+          "opcode": 35,
+          "reference_address": 6179320,
+          "target_address": 6178296,
+          "storage": "zero_fill",
+          "array": "sound_asset_ids",
+          "array_offset": 24,
+          "complete_array_size": 96
+        },
+        {
+          "hi_offset": 2508,
+          "lo_offset": 2512,
+          "opcode": 43,
+          "reference_address": 6179424,
+          "target_address": 6178400,
+          "storage": "zero_fill",
+          "array": "sound_data",
+          "array_offset": 16,
+          "complete_array_size": 64
+        },
+        {
+          "hi_offset": 2524,
+          "lo_offset": 2532,
+          "opcode": 35,
+          "reference_address": 6179344,
+          "target_address": 6178320,
+          "storage": "zero_fill",
+          "array": "sound_asset_ids",
+          "array_offset": 48,
+          "complete_array_size": 96
+        },
+        {
+          "hi_offset": 2564,
+          "lo_offset": 2568,
+          "opcode": 43,
+          "reference_address": 6179440,
+          "target_address": 6178416,
+          "storage": "zero_fill",
+          "array": "sound_data",
+          "array_offset": 32,
+          "complete_array_size": 64
+        },
+        {
+          "hi_offset": 2580,
+          "lo_offset": 2588,
+          "opcode": 35,
+          "reference_address": 6179368,
+          "target_address": 6178344,
+          "storage": "zero_fill",
+          "array": "sound_asset_ids",
+          "array_offset": 72,
+          "complete_array_size": 96
+        },
+        {
+          "hi_offset": 2620,
+          "lo_offset": 2624,
+          "opcode": 43,
+          "reference_address": 6179456,
+          "target_address": 6178432,
+          "storage": "zero_fill",
+          "array": "sound_data",
+          "array_offset": 48,
+          "complete_array_size": 64
+        }
+      ],
+      "target_array_bases": {
+        "sound_asset_ids": 6178272,
+        "sound_data": 6178384
+      },
+      "data_extents_promoted": false
+    },
+    {
+      "version": "SLES-51968",
+      "source": "SB/Game/zNPCTypePrawn.cpp",
+      "complete_strings": [
+        {
+          "hi_offset": 48,
+          "lo_offset": 72,
+          "opcode": 9,
+          "reference_address": 5259159,
+          "target_address": 5259415,
+          "storage": "file_backed",
+          "size": 25,
+          "sha256": "c25a62730bf2dac2ebe048367638b2a17e3ec0d7ac3602d05f1b5313e0754497",
+          "text": "beam.fire.sound_interval"
+        },
+        {
+          "hi_offset": 132,
+          "lo_offset": 156,
+          "opcode": 9,
+          "reference_address": 5259184,
+          "target_address": 5259440,
+          "storage": "file_backed",
+          "size": 24,
+          "sha256": "5650e821d47209f760c262b5ab3dbd8b6737d3bcbb658d885f0f2d04523473ac",
+          "text": "sound[SOUND_HIT].volume"
+        },
+        {
+          "hi_offset": 260,
+          "lo_offset": 284,
+          "opcode": 9,
+          "reference_address": 5259208,
+          "target_address": 5259464,
+          "storage": "file_backed",
+          "size": 29,
+          "sha256": "6793dad988493516565fe0204cb5b1ad43ce242add1e112ab91dc5d2771773cb",
+          "text": "sound[SOUND_HIT].range_inner"
+        },
+        {
+          "hi_offset": 388,
+          "lo_offset": 412,
+          "opcode": 9,
+          "reference_address": 5259237,
+          "target_address": 5259493,
+          "storage": "file_backed",
+          "size": 29,
+          "sha256": "10879b1d97c98b976bae49e589f2c8bc8388e532ef78583b55eb993926edf97f",
+          "text": "sound[SOUND_HIT].range_outer"
+        },
+        {
+          "hi_offset": 516,
+          "lo_offset": 536,
+          "opcode": 9,
+          "reference_address": 5259266,
+          "target_address": 5259522,
+          "storage": "file_backed",
+          "size": 23,
+          "sha256": "c3c194325f59c58ed40805ecdcd9608a960c913e10676d187ddb425d61e372db",
+          "text": "sound[SOUND_HIT].delay"
+        },
+        {
+          "hi_offset": 636,
+          "lo_offset": 660,
+          "opcode": 9,
+          "reference_address": 5259289,
+          "target_address": 5259545,
+          "storage": "file_backed",
+          "size": 31,
+          "sha256": "24d96c4e47c7380a660de04b0772f4028a6511e395d274a9da023a976039ba8e",
+          "text": "sound[SOUND_BEAM_BEGIN].volume"
+        },
+        {
+          "hi_offset": 764,
+          "lo_offset": 788,
+          "opcode": 9,
+          "reference_address": 5259320,
+          "target_address": 5259576,
+          "storage": "file_backed",
+          "size": 36,
+          "sha256": "f35220bc4fe76b0543331da065d465f44e22f2032ab539d348c3b9f7243a0d68",
+          "text": "sound[SOUND_BEAM_BEGIN].range_inner"
+        },
+        {
+          "hi_offset": 892,
+          "lo_offset": 916,
+          "opcode": 9,
+          "reference_address": 5259356,
+          "target_address": 5259612,
+          "storage": "file_backed",
+          "size": 36,
+          "sha256": "a59baa3b0927cee9a22ceee5676e1f4d6dbc3a912ab364ec6188b48da8f93e9d",
+          "text": "sound[SOUND_BEAM_BEGIN].range_outer"
+        },
+        {
+          "hi_offset": 1020,
+          "lo_offset": 1048,
+          "opcode": 9,
+          "reference_address": 5259392,
+          "target_address": 5259648,
+          "storage": "file_backed",
+          "size": 30,
+          "sha256": "5b69f37e7ab38c1351386ae69bc34fa5f738b0a49ced253599c744d7f664ba39",
+          "text": "sound[SOUND_BEAM_BEGIN].delay"
+        },
+        {
+          "hi_offset": 1148,
+          "lo_offset": 1176,
+          "opcode": 9,
+          "reference_address": 5259422,
+          "target_address": 5259678,
+          "storage": "file_backed",
+          "size": 30,
+          "sha256": "49cc4212e52df47838293fdf8dc5d3b111a9cd8c0d2cb8f7166764ba4572ec7d",
+          "text": "sound[SOUND_BEAM_LOOP].volume"
+        },
+        {
+          "hi_offset": 1276,
+          "lo_offset": 1300,
+          "opcode": 9,
+          "reference_address": 5259452,
+          "target_address": 5259708,
+          "storage": "file_backed",
+          "size": 35,
+          "sha256": "2d76dd3c2dbe570e3d00f4f55b187778e474b5ece5c44a604becafa1ce006f75",
+          "text": "sound[SOUND_BEAM_LOOP].range_inner"
+        },
+        {
+          "hi_offset": 1404,
+          "lo_offset": 1428,
+          "opcode": 9,
+          "reference_address": 5259487,
+          "target_address": 5259743,
+          "storage": "file_backed",
+          "size": 35,
+          "sha256": "59d7a48d1e180a1bf1fd2a7cb272f009dbb86d0024b5b81c7fb5ea8f5c576a0c",
+          "text": "sound[SOUND_BEAM_LOOP].range_outer"
+        },
+        {
+          "hi_offset": 1532,
+          "lo_offset": 1556,
+          "opcode": 9,
+          "reference_address": 5259522,
+          "target_address": 5259778,
+          "storage": "file_backed",
+          "size": 29,
+          "sha256": "e24f72bf3d5410d537f8c600080ef349c0fc9796b03cc3f18d1c3583536ad8a9",
+          "text": "sound[SOUND_BEAM_LOOP].delay"
+        },
+        {
+          "hi_offset": 1660,
+          "lo_offset": 1684,
+          "opcode": 9,
+          "reference_address": 5259551,
+          "target_address": 5259807,
+          "storage": "file_backed",
+          "size": 33,
+          "sha256": "0e0c7331fd4ab5020e1b9f05e32ff02438c14fa90b4a716b9fa4beaa1606ec4d",
+          "text": "sound[SOUND_BEAM_LOOP].fade_time"
+        },
+        {
+          "hi_offset": 1788,
+          "lo_offset": 1812,
+          "opcode": 9,
+          "reference_address": 5259584,
+          "target_address": 5259840,
+          "storage": "file_backed",
+          "size": 25,
+          "sha256": "b5bbd502076029cd21cbd7efc29ce4aec05a239b03d94b4bcccf3d25069d514b",
+          "text": "sound[SOUND_RING].volume"
+        },
+        {
+          "hi_offset": 1916,
+          "lo_offset": 1936,
+          "opcode": 9,
+          "reference_address": 5259609,
+          "target_address": 5259865,
+          "storage": "file_backed",
+          "size": 30,
+          "sha256": "b35a747f34c2ebb5b6733770ecc47a321dac11d4f76caa305520b55e4adaf113",
+          "text": "sound[SOUND_RING].range_inner"
+        },
+        {
+          "hi_offset": 2036,
+          "lo_offset": 2060,
+          "opcode": 9,
+          "reference_address": 5259639,
+          "target_address": 5259895,
+          "storage": "file_backed",
+          "size": 30,
+          "sha256": "c99684ab8623eacb30194c6fff71e4d7aa7d4cdd410d45ca5db7b67d107240e2",
+          "text": "sound[SOUND_RING].range_outer"
+        },
+        {
+          "hi_offset": 2164,
+          "lo_offset": 2192,
+          "opcode": 9,
+          "reference_address": 5259669,
+          "target_address": 5259925,
+          "storage": "file_backed",
+          "size": 24,
+          "sha256": "3052bdd141a33558a1992a027ad52a2722444b7f2166a7ab5710824338cba987",
+          "text": "sound[SOUND_RING].delay"
+        },
+        {
+          "hi_offset": 2292,
+          "lo_offset": 2320,
+          "opcode": 9,
+          "reference_address": 5259693,
+          "target_address": 5259949,
+          "storage": "file_backed",
+          "size": 28,
+          "sha256": "9037af38aba339c0863dc1eb3ef4875796813daf58ce38dc9e217757077fd695",
+          "text": "sound[SOUND_RING].fade_time"
+        },
+        {
+          "hi_offset": 2416,
+          "lo_offset": 2424,
+          "opcode": 9,
+          "reference_address": 5257408,
+          "target_address": 5257664,
+          "storage": "file_backed",
+          "size": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "text": ""
+        },
+        {
+          "hi_offset": 2472,
+          "lo_offset": 2480,
+          "opcode": 9,
+          "reference_address": 5257408,
+          "target_address": 5257664,
+          "storage": "file_backed",
+          "size": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "text": ""
+        },
+        {
+          "hi_offset": 2528,
+          "lo_offset": 2536,
+          "opcode": 9,
+          "reference_address": 5257408,
+          "target_address": 5257664,
+          "storage": "file_backed",
+          "size": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "text": ""
+        },
+        {
+          "hi_offset": 2584,
+          "lo_offset": 2592,
+          "opcode": 9,
+          "reference_address": 5257408,
+          "target_address": 5257664,
+          "storage": "file_backed",
+          "size": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "text": ""
+        }
+      ],
+      "typed_original_arrays": {
+        "sound_asset_ids": {
+          "reference_address": 6178016,
+          "size": 96,
+          "count": 4,
+          "stride": 24,
+          "declaration_die": 11023083,
+          "type_die": 11117368,
+          "element_die": 11117294,
+          "subscript_descriptor": "000a000000000003000000087200eea2a900"
+        },
+        "sound_data": {
+          "reference_address": 6178128,
+          "size": 64,
+          "count": 4,
+          "stride": 16,
+          "declaration_die": 11023285,
+          "type_die": 11097962,
+          "element_die": 11056949,
+          "subscript_descriptor": "000a00000000000300000008720035b7a800",
+          "element_layout": {
+            "die_offset": 11056949,
+            "tag": 2,
+            "size": 16,
+            "members": [
+              {
+                "name": "id",
+                "offset": 0,
+                "die_offset": 11056985,
+                "location": "040000000007",
+                "type_attributes": {
+                  "5": 9
+                }
+              },
+              {
+                "name": "handle",
+                "offset": 4,
+                "die_offset": 11057016,
+                "location": "040400000007",
+                "type_attributes": {
+                  "5": 9
+                }
+              },
+              {
+                "name": "loc",
+                "offset": 8,
+                "die_offset": 11057051,
+                "location": "040800000007",
+                "type_attributes": {
+                  "8": "016e40a800"
+                }
+              },
+              {
+                "name": "volume",
+                "offset": 12,
+                "die_offset": 11057088,
+                "location": "040c00000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              }
+            ]
+          }
+        }
+      },
+      "array_fields": [
+        {
+          "hi_offset": 2412,
+          "lo_offset": 2420,
+          "opcode": 35,
+          "reference_address": 6178016,
+          "target_address": 6178272,
+          "storage": "zero_fill",
+          "array": "sound_asset_ids",
+          "array_offset": 0,
+          "complete_array_size": 96
+        },
+        {
+          "hi_offset": 2452,
+          "lo_offset": 2456,
+          "opcode": 43,
+          "reference_address": 6178128,
+          "target_address": 6178384,
+          "storage": "zero_fill",
+          "array": "sound_data",
+          "array_offset": 0,
+          "complete_array_size": 64
+        },
+        {
+          "hi_offset": 2468,
+          "lo_offset": 2476,
+          "opcode": 35,
+          "reference_address": 6178040,
+          "target_address": 6178296,
+          "storage": "zero_fill",
+          "array": "sound_asset_ids",
+          "array_offset": 24,
+          "complete_array_size": 96
+        },
+        {
+          "hi_offset": 2508,
+          "lo_offset": 2512,
+          "opcode": 43,
+          "reference_address": 6178144,
+          "target_address": 6178400,
+          "storage": "zero_fill",
+          "array": "sound_data",
+          "array_offset": 16,
+          "complete_array_size": 64
+        },
+        {
+          "hi_offset": 2524,
+          "lo_offset": 2532,
+          "opcode": 35,
+          "reference_address": 6178064,
+          "target_address": 6178320,
+          "storage": "zero_fill",
+          "array": "sound_asset_ids",
+          "array_offset": 48,
+          "complete_array_size": 96
+        },
+        {
+          "hi_offset": 2564,
+          "lo_offset": 2568,
+          "opcode": 43,
+          "reference_address": 6178160,
+          "target_address": 6178416,
+          "storage": "zero_fill",
+          "array": "sound_data",
+          "array_offset": 32,
+          "complete_array_size": 64
+        },
+        {
+          "hi_offset": 2580,
+          "lo_offset": 2588,
+          "opcode": 35,
+          "reference_address": 6178088,
+          "target_address": 6178344,
+          "storage": "zero_fill",
+          "array": "sound_asset_ids",
+          "array_offset": 72,
+          "complete_array_size": 96
+        },
+        {
+          "hi_offset": 2620,
+          "lo_offset": 2624,
+          "opcode": 43,
+          "reference_address": 6178176,
+          "target_address": 6178432,
+          "storage": "zero_fill",
+          "array": "sound_data",
+          "array_offset": 48,
+          "complete_array_size": 64
+        }
+      ],
+      "target_array_bases": {
+        "sound_asset_ids": 6178272,
+        "sound_data": 6178384
+      },
+      "data_extents_promoted": false
+    },
+    {
+      "version": "SLES-51970",
+      "source": "SB/Game/zNPCTypePrawn.cpp",
+      "complete_strings": [
+        {
+          "hi_offset": 48,
+          "lo_offset": 72,
+          "opcode": 9,
+          "reference_address": 5257591,
+          "target_address": 5259415,
+          "storage": "file_backed",
+          "size": 25,
+          "sha256": "c25a62730bf2dac2ebe048367638b2a17e3ec0d7ac3602d05f1b5313e0754497",
+          "text": "beam.fire.sound_interval"
+        },
+        {
+          "hi_offset": 132,
+          "lo_offset": 156,
+          "opcode": 9,
+          "reference_address": 5257616,
+          "target_address": 5259440,
+          "storage": "file_backed",
+          "size": 24,
+          "sha256": "5650e821d47209f760c262b5ab3dbd8b6737d3bcbb658d885f0f2d04523473ac",
+          "text": "sound[SOUND_HIT].volume"
+        },
+        {
+          "hi_offset": 260,
+          "lo_offset": 284,
+          "opcode": 9,
+          "reference_address": 5257640,
+          "target_address": 5259464,
+          "storage": "file_backed",
+          "size": 29,
+          "sha256": "6793dad988493516565fe0204cb5b1ad43ce242add1e112ab91dc5d2771773cb",
+          "text": "sound[SOUND_HIT].range_inner"
+        },
+        {
+          "hi_offset": 388,
+          "lo_offset": 412,
+          "opcode": 9,
+          "reference_address": 5257669,
+          "target_address": 5259493,
+          "storage": "file_backed",
+          "size": 29,
+          "sha256": "10879b1d97c98b976bae49e589f2c8bc8388e532ef78583b55eb993926edf97f",
+          "text": "sound[SOUND_HIT].range_outer"
+        },
+        {
+          "hi_offset": 516,
+          "lo_offset": 536,
+          "opcode": 9,
+          "reference_address": 5257698,
+          "target_address": 5259522,
+          "storage": "file_backed",
+          "size": 23,
+          "sha256": "c3c194325f59c58ed40805ecdcd9608a960c913e10676d187ddb425d61e372db",
+          "text": "sound[SOUND_HIT].delay"
+        },
+        {
+          "hi_offset": 636,
+          "lo_offset": 660,
+          "opcode": 9,
+          "reference_address": 5257721,
+          "target_address": 5259545,
+          "storage": "file_backed",
+          "size": 31,
+          "sha256": "24d96c4e47c7380a660de04b0772f4028a6511e395d274a9da023a976039ba8e",
+          "text": "sound[SOUND_BEAM_BEGIN].volume"
+        },
+        {
+          "hi_offset": 764,
+          "lo_offset": 788,
+          "opcode": 9,
+          "reference_address": 5257752,
+          "target_address": 5259576,
+          "storage": "file_backed",
+          "size": 36,
+          "sha256": "f35220bc4fe76b0543331da065d465f44e22f2032ab539d348c3b9f7243a0d68",
+          "text": "sound[SOUND_BEAM_BEGIN].range_inner"
+        },
+        {
+          "hi_offset": 892,
+          "lo_offset": 916,
+          "opcode": 9,
+          "reference_address": 5257788,
+          "target_address": 5259612,
+          "storage": "file_backed",
+          "size": 36,
+          "sha256": "a59baa3b0927cee9a22ceee5676e1f4d6dbc3a912ab364ec6188b48da8f93e9d",
+          "text": "sound[SOUND_BEAM_BEGIN].range_outer"
+        },
+        {
+          "hi_offset": 1020,
+          "lo_offset": 1048,
+          "opcode": 9,
+          "reference_address": 5257824,
+          "target_address": 5259648,
+          "storage": "file_backed",
+          "size": 30,
+          "sha256": "5b69f37e7ab38c1351386ae69bc34fa5f738b0a49ced253599c744d7f664ba39",
+          "text": "sound[SOUND_BEAM_BEGIN].delay"
+        },
+        {
+          "hi_offset": 1148,
+          "lo_offset": 1176,
+          "opcode": 9,
+          "reference_address": 5257854,
+          "target_address": 5259678,
+          "storage": "file_backed",
+          "size": 30,
+          "sha256": "49cc4212e52df47838293fdf8dc5d3b111a9cd8c0d2cb8f7166764ba4572ec7d",
+          "text": "sound[SOUND_BEAM_LOOP].volume"
+        },
+        {
+          "hi_offset": 1276,
+          "lo_offset": 1300,
+          "opcode": 9,
+          "reference_address": 5257884,
+          "target_address": 5259708,
+          "storage": "file_backed",
+          "size": 35,
+          "sha256": "2d76dd3c2dbe570e3d00f4f55b187778e474b5ece5c44a604becafa1ce006f75",
+          "text": "sound[SOUND_BEAM_LOOP].range_inner"
+        },
+        {
+          "hi_offset": 1404,
+          "lo_offset": 1428,
+          "opcode": 9,
+          "reference_address": 5257919,
+          "target_address": 5259743,
+          "storage": "file_backed",
+          "size": 35,
+          "sha256": "59d7a48d1e180a1bf1fd2a7cb272f009dbb86d0024b5b81c7fb5ea8f5c576a0c",
+          "text": "sound[SOUND_BEAM_LOOP].range_outer"
+        },
+        {
+          "hi_offset": 1532,
+          "lo_offset": 1556,
+          "opcode": 9,
+          "reference_address": 5257954,
+          "target_address": 5259778,
+          "storage": "file_backed",
+          "size": 29,
+          "sha256": "e24f72bf3d5410d537f8c600080ef349c0fc9796b03cc3f18d1c3583536ad8a9",
+          "text": "sound[SOUND_BEAM_LOOP].delay"
+        },
+        {
+          "hi_offset": 1660,
+          "lo_offset": 1684,
+          "opcode": 9,
+          "reference_address": 5257983,
+          "target_address": 5259807,
+          "storage": "file_backed",
+          "size": 33,
+          "sha256": "0e0c7331fd4ab5020e1b9f05e32ff02438c14fa90b4a716b9fa4beaa1606ec4d",
+          "text": "sound[SOUND_BEAM_LOOP].fade_time"
+        },
+        {
+          "hi_offset": 1788,
+          "lo_offset": 1812,
+          "opcode": 9,
+          "reference_address": 5258016,
+          "target_address": 5259840,
+          "storage": "file_backed",
+          "size": 25,
+          "sha256": "b5bbd502076029cd21cbd7efc29ce4aec05a239b03d94b4bcccf3d25069d514b",
+          "text": "sound[SOUND_RING].volume"
+        },
+        {
+          "hi_offset": 1916,
+          "lo_offset": 1936,
+          "opcode": 9,
+          "reference_address": 5258041,
+          "target_address": 5259865,
+          "storage": "file_backed",
+          "size": 30,
+          "sha256": "b35a747f34c2ebb5b6733770ecc47a321dac11d4f76caa305520b55e4adaf113",
+          "text": "sound[SOUND_RING].range_inner"
+        },
+        {
+          "hi_offset": 2036,
+          "lo_offset": 2060,
+          "opcode": 9,
+          "reference_address": 5258071,
+          "target_address": 5259895,
+          "storage": "file_backed",
+          "size": 30,
+          "sha256": "c99684ab8623eacb30194c6fff71e4d7aa7d4cdd410d45ca5db7b67d107240e2",
+          "text": "sound[SOUND_RING].range_outer"
+        },
+        {
+          "hi_offset": 2164,
+          "lo_offset": 2192,
+          "opcode": 9,
+          "reference_address": 5258101,
+          "target_address": 5259925,
+          "storage": "file_backed",
+          "size": 24,
+          "sha256": "3052bdd141a33558a1992a027ad52a2722444b7f2166a7ab5710824338cba987",
+          "text": "sound[SOUND_RING].delay"
+        },
+        {
+          "hi_offset": 2292,
+          "lo_offset": 2320,
+          "opcode": 9,
+          "reference_address": 5258125,
+          "target_address": 5259949,
+          "storage": "file_backed",
+          "size": 28,
+          "sha256": "9037af38aba339c0863dc1eb3ef4875796813daf58ce38dc9e217757077fd695",
+          "text": "sound[SOUND_RING].fade_time"
+        },
+        {
+          "hi_offset": 2416,
+          "lo_offset": 2424,
+          "opcode": 9,
+          "reference_address": 5255840,
+          "target_address": 5257664,
+          "storage": "file_backed",
+          "size": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "text": ""
+        },
+        {
+          "hi_offset": 2472,
+          "lo_offset": 2480,
+          "opcode": 9,
+          "reference_address": 5255840,
+          "target_address": 5257664,
+          "storage": "file_backed",
+          "size": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "text": ""
+        },
+        {
+          "hi_offset": 2528,
+          "lo_offset": 2536,
+          "opcode": 9,
+          "reference_address": 5255840,
+          "target_address": 5257664,
+          "storage": "file_backed",
+          "size": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "text": ""
+        },
+        {
+          "hi_offset": 2584,
+          "lo_offset": 2592,
+          "opcode": 9,
+          "reference_address": 5255840,
+          "target_address": 5257664,
+          "storage": "file_backed",
+          "size": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "text": ""
+        }
+      ],
+      "typed_original_arrays": {
+        "sound_asset_ids": {
+          "reference_address": 6176480,
+          "size": 96,
+          "count": 4,
+          "stride": 24,
+          "declaration_die": 11024070,
+          "type_die": 11118355,
+          "element_die": 11118281,
+          "subscript_descriptor": "000a000000000003000000087200c9a6a900"
+        },
+        "sound_data": {
+          "reference_address": 6176592,
+          "size": 64,
+          "count": 4,
+          "stride": 16,
+          "declaration_die": 11024272,
+          "type_die": 11098949,
+          "element_die": 11057936,
+          "subscript_descriptor": "000a00000000000300000008720010bba800",
+          "element_layout": {
+            "die_offset": 11057936,
+            "tag": 2,
+            "size": 16,
+            "members": [
+              {
+                "name": "id",
+                "offset": 0,
+                "die_offset": 11057972,
+                "location": "040000000007",
+                "type_attributes": {
+                  "5": 9
+                }
+              },
+              {
+                "name": "handle",
+                "offset": 4,
+                "die_offset": 11058003,
+                "location": "040400000007",
+                "type_attributes": {
+                  "5": 9
+                }
+              },
+              {
+                "name": "loc",
+                "offset": 8,
+                "die_offset": 11058038,
+                "location": "040800000007",
+                "type_attributes": {
+                  "8": "014944a800"
+                }
+              },
+              {
+                "name": "volume",
+                "offset": 12,
+                "die_offset": 11058075,
+                "location": "040c00000007",
+                "type_attributes": {
+                  "5": 14
+                }
+              }
+            ]
+          }
+        }
+      },
+      "array_fields": [
+        {
+          "hi_offset": 2412,
+          "lo_offset": 2420,
+          "opcode": 35,
+          "reference_address": 6176480,
+          "target_address": 6178272,
+          "storage": "zero_fill",
+          "array": "sound_asset_ids",
+          "array_offset": 0,
+          "complete_array_size": 96
+        },
+        {
+          "hi_offset": 2452,
+          "lo_offset": 2456,
+          "opcode": 43,
+          "reference_address": 6176592,
+          "target_address": 6178384,
+          "storage": "zero_fill",
+          "array": "sound_data",
+          "array_offset": 0,
+          "complete_array_size": 64
+        },
+        {
+          "hi_offset": 2468,
+          "lo_offset": 2476,
+          "opcode": 35,
+          "reference_address": 6176504,
+          "target_address": 6178296,
+          "storage": "zero_fill",
+          "array": "sound_asset_ids",
+          "array_offset": 24,
+          "complete_array_size": 96
+        },
+        {
+          "hi_offset": 2508,
+          "lo_offset": 2512,
+          "opcode": 43,
+          "reference_address": 6176608,
+          "target_address": 6178400,
+          "storage": "zero_fill",
+          "array": "sound_data",
+          "array_offset": 16,
+          "complete_array_size": 64
+        },
+        {
+          "hi_offset": 2524,
+          "lo_offset": 2532,
+          "opcode": 35,
+          "reference_address": 6176528,
+          "target_address": 6178320,
+          "storage": "zero_fill",
+          "array": "sound_asset_ids",
+          "array_offset": 48,
+          "complete_array_size": 96
+        },
+        {
+          "hi_offset": 2564,
+          "lo_offset": 2568,
+          "opcode": 43,
+          "reference_address": 6176624,
+          "target_address": 6178416,
+          "storage": "zero_fill",
+          "array": "sound_data",
+          "array_offset": 32,
+          "complete_array_size": 64
+        },
+        {
+          "hi_offset": 2580,
+          "lo_offset": 2588,
+          "opcode": 35,
+          "reference_address": 6176552,
+          "target_address": 6178344,
+          "storage": "zero_fill",
+          "array": "sound_asset_ids",
+          "array_offset": 72,
+          "complete_array_size": 96
+        },
+        {
+          "hi_offset": 2620,
+          "lo_offset": 2624,
+          "opcode": 43,
+          "reference_address": 6176640,
+          "target_address": 6178432,
+          "storage": "zero_fill",
+          "array": "sound_data",
+          "array_offset": 48,
+          "complete_array_size": 64
+        }
+      ],
+      "target_array_bases": {
+        "sound_asset_ids": 6178272,
+        "sound_data": 6178384
+      },
       "data_extents_promoted": false
     }
   ]

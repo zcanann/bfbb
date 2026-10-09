@@ -14710,3 +14710,23 @@ regressions, and all three GameCube source reports/checksums remain unchanged.
 Ten original-backed parameter-proof/mutation tests pass. Private evidence:
 `build/oct09-{france,us}-npc`, their `*-npc-comparison.log` files,
 `build/oct09-npc-tests.log`, and `build/oct09-npc-<GameCube-version>.log`.
+
+The utility/serializer/Prawn batch passes another complete USA source build
+and full French registry regeneration/source build. USA adds 2,268 exact bytes /
+eight functions, reaching 986,556 bytes / 3,751 functions. France adds 4,048 bytes /
+four functions, reaching 123,920 bytes / 441 functions. The new Prawn parameter
+identity supplies 2,660 French bytes; utility classification, probability and
+CRC lifetimes make all eleven utility functions / 2,668 bytes exact in all four
+PS2 regions. Serializer inline boundaries add 880 exact bytes in each debug
+region. Prawn turning locals/sign tests, regional credits layout/color unpack,
+and float-parser pointer scope improve fuzzy matching.
+
+French coverage is now 705 functions / 326,780 bytes. Its production run compiles
+69 source units and keeps the 2,979,968-byte CPU denominator. The original ctype
+array declaration, all 257 entries including EOF, and the only PS2 profile
+consumer were audited; raw debug-region utility/serializer reconstruction uses
+genuine call, GP, paired-address and switch-table relocations. Two Prawn proof
+mutation tests pass. All previous function scores/exact matches are retained,
+and all three GameCube full source reports/checksums remain unchanged.
+Evidence: `build/oct09-{us,france}-utility`, their comparison logs,
+`build/oct09-prawn-tests.log`, and `build/oct09-utility-<GameCube-version>.log`.
