@@ -223940,7 +223940,24 @@
         "FaceAntiPlayer@002e16e0": "FaceAntiPlayer__9zNPCRobotFff",
         "TurnThemHeads@002e18c0": "TurnThemHeads__9zNPCRobotFv",
         "SetHome@002d6520": "SetHome__8NPCArenaFP10zNPCCommonP10zMovePoint",
-        "CornerOfArena@002e1360": "CornerOfArena__9zNPCRobotFP5xVec3f"
+        "CornerOfArena@002e1360": "CornerOfArena__9zNPCRobotFP5xVec3f",
+        "ZNPC_AnimTable_Slick@002e3980": "ZNPC_AnimTable_Slick__Fv",
+        "ZNPC_AnimTable_SlickShield@002e3b20": "ZNPC_AnimTable_SlickShield__Fv",
+        "ZNPC_AnimTable_FloatDevice@002e3ba0": "ZNPC_AnimTable_FloatDevice__Fv",
+        "ZNPC_AnimTable_Tubelet@002e3c20": "ZNPC_AnimTable_Tubelet__Fv",
+        "ZNPC_AnimTable_Chuck@002e3ce0": "ZNPC_AnimTable_Chuck__Fv",
+        "ZNPC_AnimTable_ArfArf@002e3f10": "ZNPC_AnimTable_ArfArf__Fv",
+        "ZNPC_AnimTable_ArfDog@002e4190": "ZNPC_AnimTable_ArfDog__Fv",
+        "ZNPC_AnimTable_SleepyTime@002e46a0": "ZNPC_AnimTable_SleepyTime__Fv",
+        "ZNPC_AnimTable_NightLight@002e47b0": "ZNPC_AnimTable_NightLight__Fv",
+        "ZNPC_AnimTable_ThunderCloud@002e4860": "ZNPC_AnimTable_ThunderCloud__Fv",
+        "ZNPC_AnimTable_Monsoon@002e4970": "ZNPC_AnimTable_Monsoon__Fv",
+        "ZNPC_AnimTable_GLove@002e4b60": "ZNPC_AnimTable_GLove__Fv",
+        "ZNPC_AnimTable_TTSauce@002e4eb0": "ZNPC_AnimTable_TTSauce__Fv",
+        "ZNPC_AnimTable_TarTar@002e4f30": "ZNPC_AnimTable_TarTar__Fv",
+        "ZNPC_AnimTable_Hammer@002e5160": "ZNPC_AnimTable_Hammer__Fv",
+        "ZNPC_AnimTable_Fodder@002e53e0": "ZNPC_AnimTable_Fodder__Fv",
+        "ZNPC_AnimTable_RobotBase@002e59c0": "ZNPC_AnimTable_RobotBase__FP10xAnimTable"
       },
       "calls": [
         {
@@ -224082,6 +224099,1049 @@
           "target_source": "SB/Core/x/xMath.cpp",
           "target_function": "xrand@001ee540",
           "symbol": "xrand__Fv"
+        },
+        {
+          "function": "ZNPC_AnimTable_Slick@002e3980",
+          "offset": 44,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew@00214070",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "ZNPC_AnimTable_Slick@002e3980",
+          "offset": 56,
+          "target_source": "SB/Game/zNPCTypeRobot.cpp",
+          "target_function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "symbol": "ZNPC_AnimTable_RobotBase__FP10xAnimTable"
+        },
+        {
+          "function": "ZNPC_AnimTable_Slick@002e3980",
+          "offset": 128,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Slick@002e3980",
+          "offset": 200,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Slick@002e3980",
+          "offset": 272,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Slick@002e3980",
+          "offset": 308,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "NPCC_BuildStandardAnimTran@002cfb50",
+          "symbol": "NPCC_BuildStandardAnimTran__FP10xAnimTablePPcPiif"
+        },
+        {
+          "function": "ZNPC_AnimTable_Slick@002e3980",
+          "offset": 380,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_SlickShield@002e3b20",
+          "offset": 24,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew@00214070",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "ZNPC_AnimTable_SlickShield@002e3b20",
+          "offset": 96,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_FloatDevice@002e3ba0",
+          "offset": 24,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew@00214070",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "ZNPC_AnimTable_FloatDevice@002e3ba0",
+          "offset": 96,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Tubelet@002e3c20",
+          "offset": 36,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew@00214070",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "ZNPC_AnimTable_Tubelet@002e3c20",
+          "offset": 48,
+          "target_source": "SB/Game/zNPCTypeRobot.cpp",
+          "target_function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "symbol": "ZNPC_AnimTable_RobotBase__FP10xAnimTable"
+        },
+        {
+          "function": "ZNPC_AnimTable_Tubelet@002e3c20",
+          "offset": 120,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Tubelet@002e3c20",
+          "offset": 156,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "NPCC_BuildStandardAnimTran@002cfb50",
+          "symbol": "NPCC_BuildStandardAnimTran__FP10xAnimTablePPcPiif"
+        },
+        {
+          "function": "ZNPC_AnimTable_Chuck@002e3ce0",
+          "offset": 44,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew@00214070",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "ZNPC_AnimTable_Chuck@002e3ce0",
+          "offset": 56,
+          "target_source": "SB/Game/zNPCTypeRobot.cpp",
+          "target_function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "symbol": "ZNPC_AnimTable_RobotBase__FP10xAnimTable"
+        },
+        {
+          "function": "ZNPC_AnimTable_Chuck@002e3ce0",
+          "offset": 128,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Chuck@002e3ce0",
+          "offset": 200,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Chuck@002e3ce0",
+          "offset": 272,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Chuck@002e3ce0",
+          "offset": 308,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "NPCC_BuildStandardAnimTran@002cfb50",
+          "symbol": "NPCC_BuildStandardAnimTran__FP10xAnimTablePPcPiif"
+        },
+        {
+          "function": "ZNPC_AnimTable_Chuck@002e3ce0",
+          "offset": 380,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_Chuck@002e3ce0",
+          "offset": 452,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_Chuck@002e3ce0",
+          "offset": 524,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfArf@002e3f10",
+          "offset": 60,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew@00214070",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfArf@002e3f10",
+          "offset": 72,
+          "target_source": "SB/Game/zNPCTypeRobot.cpp",
+          "target_function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "symbol": "ZNPC_AnimTable_RobotBase__FP10xAnimTable"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfArf@002e3f10",
+          "offset": 144,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfArf@002e3f10",
+          "offset": 216,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfArf@002e3f10",
+          "offset": 288,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfArf@002e3f10",
+          "offset": 360,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfArf@002e3f10",
+          "offset": 432,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfArf@002e3f10",
+          "offset": 504,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfArf@002e3f10",
+          "offset": 540,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "NPCC_BuildStandardAnimTran@002cfb50",
+          "symbol": "NPCC_BuildStandardAnimTran__FP10xAnimTablePPcPiif"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfArf@002e3f10",
+          "offset": 612,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfDog@002e4190",
+          "offset": 76,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew@00214070",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfDog@002e4190",
+          "offset": 152,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfDog@002e4190",
+          "offset": 224,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfDog@002e4190",
+          "offset": 296,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfDog@002e4190",
+          "offset": 368,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfDog@002e4190",
+          "offset": 440,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfDog@002e4190",
+          "offset": 512,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfDog@002e4190",
+          "offset": 584,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfDog@002e4190",
+          "offset": 656,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfDog@002e4190",
+          "offset": 728,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfDog@002e4190",
+          "offset": 800,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfDog@002e4190",
+          "offset": 872,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfDog@002e4190",
+          "offset": 944,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfDog@002e4190",
+          "offset": 1016,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfDog@002e4190",
+          "offset": 1088,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfDog@002e4190",
+          "offset": 1160,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfDog@002e4190",
+          "offset": 1232,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfDog@002e4190",
+          "offset": 1268,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "NPCC_BuildStandardAnimTran@002cfb50",
+          "symbol": "NPCC_BuildStandardAnimTran__FP10xAnimTablePPcPiif"
+        },
+        {
+          "function": "ZNPC_AnimTable_SleepyTime@002e46a0",
+          "offset": 52,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew@00214070",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "ZNPC_AnimTable_SleepyTime@002e46a0",
+          "offset": 64,
+          "target_source": "SB/Game/zNPCTypeRobot.cpp",
+          "target_function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "symbol": "ZNPC_AnimTable_RobotBase__FP10xAnimTable"
+        },
+        {
+          "function": "ZNPC_AnimTable_SleepyTime@002e46a0",
+          "offset": 136,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_SleepyTime@002e46a0",
+          "offset": 208,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_SleepyTime@002e46a0",
+          "offset": 244,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "NPCC_BuildStandardAnimTran@002cfb50",
+          "symbol": "NPCC_BuildStandardAnimTran__FP10xAnimTablePPcPiif"
+        },
+        {
+          "function": "ZNPC_AnimTable_NightLight@002e47b0",
+          "offset": 36,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew@00214070",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "ZNPC_AnimTable_NightLight@002e47b0",
+          "offset": 108,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_NightLight@002e47b0",
+          "offset": 140,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "NPCC_BuildStandardAnimTran@002cfb50",
+          "symbol": "NPCC_BuildStandardAnimTran__FP10xAnimTablePPcPiif"
+        },
+        {
+          "function": "ZNPC_AnimTable_ThunderCloud@002e4860",
+          "offset": 52,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew@00214070",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "ZNPC_AnimTable_ThunderCloud@002e4860",
+          "offset": 128,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_ThunderCloud@002e4860",
+          "offset": 200,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_ThunderCloud@002e4860",
+          "offset": 236,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "NPCC_BuildStandardAnimTran@002cfb50",
+          "symbol": "NPCC_BuildStandardAnimTran__FP10xAnimTablePPcPiif"
+        },
+        {
+          "function": "ZNPC_AnimTable_Monsoon@002e4970",
+          "offset": 52,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew@00214070",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "ZNPC_AnimTable_Monsoon@002e4970",
+          "offset": 64,
+          "target_source": "SB/Game/zNPCTypeRobot.cpp",
+          "target_function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "symbol": "ZNPC_AnimTable_RobotBase__FP10xAnimTable"
+        },
+        {
+          "function": "ZNPC_AnimTable_Monsoon@002e4970",
+          "offset": 136,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Monsoon@002e4970",
+          "offset": 208,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Monsoon@002e4970",
+          "offset": 280,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Monsoon@002e4970",
+          "offset": 352,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Monsoon@002e4970",
+          "offset": 388,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "NPCC_BuildStandardAnimTran@002cfb50",
+          "symbol": "NPCC_BuildStandardAnimTran__FP10xAnimTablePPcPiif"
+        },
+        {
+          "function": "ZNPC_AnimTable_Monsoon@002e4970",
+          "offset": 460,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_GLove@002e4b60",
+          "offset": 52,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew@00214070",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "ZNPC_AnimTable_GLove@002e4b60",
+          "offset": 64,
+          "target_source": "SB/Game/zNPCTypeRobot.cpp",
+          "target_function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "symbol": "ZNPC_AnimTable_RobotBase__FP10xAnimTable"
+        },
+        {
+          "function": "ZNPC_AnimTable_GLove@002e4b60",
+          "offset": 136,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_GLove@002e4b60",
+          "offset": 208,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_GLove@002e4b60",
+          "offset": 280,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_GLove@002e4b60",
+          "offset": 352,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_GLove@002e4b60",
+          "offset": 424,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_GLove@002e4b60",
+          "offset": 496,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_GLove@002e4b60",
+          "offset": 568,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_GLove@002e4b60",
+          "offset": 604,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "NPCC_BuildStandardAnimTran@002cfb50",
+          "symbol": "NPCC_BuildStandardAnimTran__FP10xAnimTablePPcPiif"
+        },
+        {
+          "function": "ZNPC_AnimTable_GLove@002e4b60",
+          "offset": 676,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_GLove@002e4b60",
+          "offset": 748,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_GLove@002e4b60",
+          "offset": 820,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_TTSauce@002e4eb0",
+          "offset": 24,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew@00214070",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "ZNPC_AnimTable_TTSauce@002e4eb0",
+          "offset": 96,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_TarTar@002e4f30",
+          "offset": 44,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew@00214070",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "ZNPC_AnimTable_TarTar@002e4f30",
+          "offset": 56,
+          "target_source": "SB/Game/zNPCTypeRobot.cpp",
+          "target_function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "symbol": "ZNPC_AnimTable_RobotBase__FP10xAnimTable"
+        },
+        {
+          "function": "ZNPC_AnimTable_TarTar@002e4f30",
+          "offset": 128,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_TarTar@002e4f30",
+          "offset": 200,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_TarTar@002e4f30",
+          "offset": 272,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_TarTar@002e4f30",
+          "offset": 308,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "NPCC_BuildStandardAnimTran@002cfb50",
+          "symbol": "NPCC_BuildStandardAnimTran__FP10xAnimTablePPcPiif"
+        },
+        {
+          "function": "ZNPC_AnimTable_TarTar@002e4f30",
+          "offset": 380,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_TarTar@002e4f30",
+          "offset": 452,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_TarTar@002e4f30",
+          "offset": 524,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_Hammer@002e5160",
+          "offset": 52,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew@00214070",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "ZNPC_AnimTable_Hammer@002e5160",
+          "offset": 64,
+          "target_source": "SB/Game/zNPCTypeRobot.cpp",
+          "target_function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "symbol": "ZNPC_AnimTable_RobotBase__FP10xAnimTable"
+        },
+        {
+          "function": "ZNPC_AnimTable_Hammer@002e5160",
+          "offset": 136,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Hammer@002e5160",
+          "offset": 208,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Hammer@002e5160",
+          "offset": 280,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Hammer@002e5160",
+          "offset": 352,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Hammer@002e5160",
+          "offset": 424,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Hammer@002e5160",
+          "offset": 460,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "NPCC_BuildStandardAnimTran@002cfb50",
+          "symbol": "NPCC_BuildStandardAnimTran__FP10xAnimTablePPcPiif"
+        },
+        {
+          "function": "ZNPC_AnimTable_Hammer@002e5160",
+          "offset": 532,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_Hammer@002e5160",
+          "offset": 604,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_Fodder@002e53e0",
+          "offset": 68,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew@00214070",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "ZNPC_AnimTable_Fodder@002e53e0",
+          "offset": 144,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Fodder@002e53e0",
+          "offset": 216,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Fodder@002e53e0",
+          "offset": 288,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Fodder@002e53e0",
+          "offset": 360,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Fodder@002e53e0",
+          "offset": 432,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Fodder@002e53e0",
+          "offset": 504,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Fodder@002e53e0",
+          "offset": 576,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Fodder@002e53e0",
+          "offset": 648,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Fodder@002e53e0",
+          "offset": 720,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Fodder@002e53e0",
+          "offset": 792,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Fodder@002e53e0",
+          "offset": 864,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Fodder@002e53e0",
+          "offset": 936,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Fodder@002e53e0",
+          "offset": 1008,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Fodder@002e53e0",
+          "offset": 1080,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Fodder@002e53e0",
+          "offset": 1152,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_Fodder@002e53e0",
+          "offset": 1188,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "NPCC_BuildStandardAnimTran@002cfb50",
+          "symbol": "NPCC_BuildStandardAnimTran__FP10xAnimTablePPcPiif"
+        },
+        {
+          "function": "ZNPC_AnimTable_Fodder@002e53e0",
+          "offset": 1260,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_Fodder@002e53e0",
+          "offset": 1332,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_Fodder@002e53e0",
+          "offset": 1404,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_Fodder@002e53e0",
+          "offset": 1476,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "offset": 128,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "offset": 200,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "offset": 272,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "offset": 344,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "offset": 416,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "offset": 488,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "offset": 560,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "offset": 632,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "offset": 704,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "offset": 776,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "offset": 848,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "offset": 920,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "offset": 992,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "offset": 1064,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "offset": 1136,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "offset": 1208,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "offset": 1244,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "NPCC_BuildStandardAnimTran@002cfb50",
+          "symbol": "NPCC_BuildStandardAnimTran__FP10xAnimTablePPcPiif"
+        },
+        {
+          "function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "offset": 1316,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "offset": 1388,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "offset": 1460,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "offset": 1532,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "offset": 1604,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
         }
       ],
       "linkage_provenance": [
@@ -224628,6 +225688,448 @@
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
               "source_address": 3016192,
               "reference_sha256": "61b0230adc8d73f056772a7b351636791ce194d4f1fe9e6f71317cf4defae979"
+            }
+          ]
+        },
+        {
+          "function": "ZNPC_AnimTable_Slick@002e3980",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3029376,
+          "size": 408,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3027968,
+              "reference_sha256": "6fa17ff5544f4e88fa9376fed82de220f989e17d905011d115bb8c73862e3507"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3029264,
+              "reference_sha256": "5eccffbb7138b99e5a506c72dbecf26aa77bdb533614c17132a28b12477ea85c"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3025952,
+              "reference_sha256": "e6a6a7801de27ad5bfa6808e9135c13e2896748f9c523a0e06c7ced8e47ef89d"
+            }
+          ]
+        },
+        {
+          "function": "ZNPC_AnimTable_SlickShield@002e3b20",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3029792,
+          "size": 124,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3028384,
+              "reference_sha256": "c36d144731be5878aac9fc5e7a7c9b69079d22b0cd739b79ed443eb3cbf1b33b"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3029680,
+              "reference_sha256": "1bca986cea728788f04e950c30008fe8ba76bd149b6e8e8c15fed117ea048d03"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3026368,
+              "reference_sha256": "bbef132e66ba204085a50f062310f9f77f3b33264cc73623ab75efacba1d88ba"
+            }
+          ]
+        },
+        {
+          "function": "ZNPC_AnimTable_FloatDevice@002e3ba0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3029920,
+          "size": 124,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3028512,
+              "reference_sha256": "86f700f1a6a41cef33bc4234f255cbe0e212ff86d0bd5ee518ba83568ea673ab"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3029808,
+              "reference_sha256": "929cc015b1489aed9e69e6a6c2a78449444758d8af379e4af2f02950f210d2e4"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3026496,
+              "reference_sha256": "26d6fd1854c6458e6583dba016f24f46d5c80826daaa5b01e17909cf8a6eaa53"
+            }
+          ]
+        },
+        {
+          "function": "ZNPC_AnimTable_Tubelet@002e3c20",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3030048,
+          "size": 184,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3028640,
+              "reference_sha256": "d7c25b6ec968d5315c3982657c3a058e46b1d78baab6cfd38965e2145f1b04d5"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3029936,
+              "reference_sha256": "d8efd29162405933e1ae9a673151af5d04df9256c6b7c4b4e8725200859abcbc"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3026624,
+              "reference_sha256": "2cd4cccd539950cacf1a1a79f4dc3cbe146ea28aa0d66991ac7428532c704c01"
+            }
+          ]
+        },
+        {
+          "function": "ZNPC_AnimTable_Chuck@002e3ce0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3030240,
+          "size": 552,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3028832,
+              "reference_sha256": "fb775ef0ef7f05d1f083c7e8d495ffcda82c30a9b3c7e870dac0f283e6705e77"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3030128,
+              "reference_sha256": "dd0eafb3a46805b8b7e954998e0b991a2f0105522b3b784e06bfd08acd1b64d2"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3026816,
+              "reference_sha256": "4c0fe6f926693ac5ed08d7521a84265657fa4ecc5e0410660cc2d9dd8617774a"
+            }
+          ]
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfArf@002e3f10",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3030800,
+          "size": 640,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3029392,
+              "reference_sha256": "0c75ed18a21e48f31f2243c8b1c7ec4e961ee5ea9327b48ba5fe019b9e783ef0"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3030688,
+              "reference_sha256": "57e8e950d46c30ca4334349d2f3bbdd053e2c72e7d6942652b410d925eb3e61c"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3027376,
+              "reference_sha256": "132c5f17997e0e0c242456318fa6685d70308a634406d661c9498e1b2b61a2c5"
+            }
+          ]
+        },
+        {
+          "function": "ZNPC_AnimTable_ArfDog@002e4190",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3031440,
+          "size": 1296,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3030032,
+              "reference_sha256": "2777d1fc1106e5b4ac9df7c1ad62174ed8eee33a7b0bed10d474d14bb12cffc7"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3031328,
+              "reference_sha256": "0c3e76a136b66b3b8cdd7cd0cb0196eb98cb4a587607024fe2466a9cc4a8ba4c"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3028016,
+              "reference_sha256": "de55526a3366caa22c33ab9305cd7f04e44c8813845f69badb3f9ee8e15775d8"
+            }
+          ]
+        },
+        {
+          "function": "ZNPC_AnimTable_SleepyTime@002e46a0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3032736,
+          "size": 272,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3031328,
+              "reference_sha256": "b868dad39f76db9381916c73e11535873ef791bb9649f14b15c4e2ba252c6c7a"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3032624,
+              "reference_sha256": "1ddd6a095f7ba3c97cc4915af2ee6127c66e1ffc8ad0cc80bde0267d0357f89a"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3029312,
+              "reference_sha256": "91192c1ecd0cc4b31135a1f52fe7ef515074bc29ee37256ff0553553148462bd"
+            }
+          ]
+        },
+        {
+          "function": "ZNPC_AnimTable_NightLight@002e47b0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3033008,
+          "size": 168,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3031600,
+              "reference_sha256": "bc0c9904c7cfc68634608ee0f4b55dbbadebdfa65fda9055505c7888c6d7b77d"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3032896,
+              "reference_sha256": "2497cc6d74a4ca1c2a2979a3f8ea455227b6c47de14ab6fffdfe6bf0c4e07850"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3029584,
+              "reference_sha256": "9dd01ec73ec57b91b4f13e801a346ed74c92e987c8cfe666a07a5a2e9836cc8a"
+            }
+          ]
+        },
+        {
+          "function": "ZNPC_AnimTable_ThunderCloud@002e4860",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3033184,
+          "size": 264,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3031776,
+              "reference_sha256": "b9efd360b7a28a2b853ef4306508bdee67912fdb0dd806991b43770974b531ee"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3033072,
+              "reference_sha256": "0f4a5fe3d53946f686775d7c71e23a390a1fa11402b900da68494660680a8172"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3029760,
+              "reference_sha256": "32d1398d7bfa86fa25d65ccaa4c28de24b68c8ddec98d6f7e08dbcf1f832e674"
+            }
+          ]
+        },
+        {
+          "function": "ZNPC_AnimTable_Monsoon@002e4970",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3033456,
+          "size": 488,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3032048,
+              "reference_sha256": "07861770b710d1f86772a738339f4cafe8d7b7219e8449a4e1f6662be36613eb"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3033344,
+              "reference_sha256": "48457bdaac68883a561fda9d2c773b5b15a2726fd6e07b5c9e5786859f48a1ae"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3030032,
+              "reference_sha256": "88d9024b755ea8fdb228bd7f025b548410e8edc2e7e125050521d3620ad21c73"
+            }
+          ]
+        },
+        {
+          "function": "ZNPC_AnimTable_GLove@002e4b60",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3033952,
+          "size": 848,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3032544,
+              "reference_sha256": "edeb2c4b6cecebeaeb3c6b62cae9137857b9d21eab1337fd90d80e32188a13b3"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3033840,
+              "reference_sha256": "2a963034857361c8dc30512ce173224b88c1961fe46ae1ce779226016b8ddd0d"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3030528,
+              "reference_sha256": "5b82c77bfbb89f73555116ba3c8a58a1d9b4b8627e6aaf0ee60926432f1b635c"
+            }
+          ]
+        },
+        {
+          "function": "ZNPC_AnimTable_TTSauce@002e4eb0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3034800,
+          "size": 124,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3033392,
+              "reference_sha256": "129623760845361f611b93821985b08232f23682e06cd514fd7684760515318a"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3034688,
+              "reference_sha256": "ca9d0f80afba15c37100f70ab5a742ce4214fcef6eff7faed4bbb4df58e3c299"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3031376,
+              "reference_sha256": "2a9d2e370f10d9172d8f62976d039deb59f42ac8058cd125f2d065fb5a090f1f"
+            }
+          ]
+        },
+        {
+          "function": "ZNPC_AnimTable_TarTar@002e4f30",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3034928,
+          "size": 552,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3033520,
+              "reference_sha256": "9d7f7049ebf1de577c76739537899554d408c98c41bcf430039c5e386180632f"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3034816,
+              "reference_sha256": "e30a8ab9489222f97559f1e41790d6db67e858413a2d20e0a0e501013267b67b"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3031504,
+              "reference_sha256": "c122fcfd5a432ce6c59767ff8861abd8ed78409f623a8ba46ce99cd864481922"
+            }
+          ]
+        },
+        {
+          "function": "ZNPC_AnimTable_Hammer@002e5160",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3035488,
+          "size": 632,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3034080,
+              "reference_sha256": "ec839d9d428541d09b27ffd1f17596785cb1d398c4552ffa18b75f69c95f8a7f"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3035376,
+              "reference_sha256": "f27d7c39f042332679924bf37dc7cf3c8d7d2a78e75418a600e583318d08a2b2"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3032064,
+              "reference_sha256": "111deef0ef628e8ba044e177371bdeff6ec8e7479f91309254297db4807b2fa2"
+            }
+          ]
+        },
+        {
+          "function": "ZNPC_AnimTable_Fodder@002e53e0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3036128,
+          "size": 1504,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3034720,
+              "reference_sha256": "cc042aec7d0751586893f5e16a5dcc645d3d966a842eeec91bef6717f177f520"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3036016,
+              "reference_sha256": "563544e6096597d57d689642cac53453f08bfe3ba715ce86d7b42cad7ea25688"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3032704,
+              "reference_sha256": "d1035583d5e9db9c39ec9ae33ab3b6747c3b79af8027b502613a0635a69c42ed"
+            }
+          ]
+        },
+        {
+          "function": "ZNPC_AnimTable_RobotBase@002e59c0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3037632,
+          "size": 1628,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3036224,
+              "reference_sha256": "a29517b932ce46a8f1eb0e309a2d5192000777f67fe74f909e23cfb716fb61cc"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3037520,
+              "reference_sha256": "50240d767e036698f4575083c1a61ad45308087b40efc2d70068b1924e0e9f4f"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3034208,
+              "reference_sha256": "dec58acb42ebd9a46ec87ceaee96823792f71ce503751ba7e0718aed9290640f"
             }
           ]
         }
