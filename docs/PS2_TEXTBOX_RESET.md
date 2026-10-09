@@ -39,3 +39,23 @@ unit to 18/21 functions and 2,704 exact bytes. USA fuzzy matching reaches
 unchanged, as is the entire GameCube USA report; its retail DOL SHA-1 passes.
 Private evidence uses `*-pointer.json` in the same directory. An explicit text
 local and byte-pointer arithmetic did not reproduce the same register lifetime.
+
+## Textured backdrop
+
+Three omitted source details account for the backdrop mismatch. PS2 vertices
+need their reciprocal camera depth written explicitly; its UV setters do not
+perform that write. Original screen scaling is 640 by 448 in USA and 512 by
+512 in Europe/Germany. Finally, the original rectangle scaling overloads inline
+into this caller, so the TU now supplies their existing definitions from
+`xFont.cpp` under PS2. The original instructions independently show the depth
+store, scale constants and four component multiplications.
+
+The complete backdrop body becomes exact: 1,560 bytes in USA and 1,552 in
+Europe/Germany. Units reach 19/21 exact functions, with 4,264/4,924 exact bytes
+in USA and 4,256/4,916 in Europe/Germany. Fuzzy matching reaches 98.90495% and
+98.903175% respectively. Every other function score is unchanged.
+
+The depth setter is a no-op on GameCube; its existing dimensions and external
+rectangle helper remain intact. The full GameCube USA report is identical and
+its retail DOL SHA-1 passes. Private evidence uses `*-backdrop.json` in
+`build/textbox-oct09`. No shared header, profile, target or registry changes.
