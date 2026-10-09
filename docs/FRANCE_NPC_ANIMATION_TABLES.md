@@ -45,3 +45,14 @@ The private French source pilot matches all 17 new functions exactly, adding
 and 34 exact functions, with 99.03137% fuzzy matching. No source edit is part
 of this recovery. Private evidence is `build/npc-animation-proof.json`,
 `build/npc-animation-tests.log` and `build/npc-animation-france-pilot/report.json`.
+
+Production integration passes in `build/oct09-france-curve-animation`: all
+aggregate original evidence regenerates identically, all 76 enabled source
+units compile, and all prior function/code/data scores are preserved. These
+seventeen builders and the independently proved Common pair add 10,200 exact
+bytes / nineteen functions. Including curve and bucket-sort source gains, the
+complete report adds 10,996 exact bytes / twenty-one functions, reaching
+192,404 bytes / 568 functions. Recovered coverage is 848 functions / 404,996
+bytes; the full CPU denominator remains 2,979,968 bytes. Source data and a full
+original executable link remain pending. All fifteen original-backed animation
+tests pass. No old function proof record changes.

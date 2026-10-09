@@ -4800,6 +4800,20 @@
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
+      "name": "ZNPC_AnimTable_LassoGuide",
+      "source": "SB/Game/zNPCTypeCommon.cpp",
+      "address": 2948448,
+      "size": 264,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_Common",
+      "source": "SB/Game/zNPCTypeCommon.cpp",
+      "address": 2948720,
+      "size": 128,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "LassoSyncAnims",
       "source": "SB/Game/zNPCTypeCommon.cpp",
       "address": 2949712,
@@ -5063,6 +5077,125 @@
       "source": "SB/Game/zNPCTypeRobot.cpp",
       "address": 3020992,
       "size": 444,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_Slick",
+      "source": "SB/Game/zNPCTypeRobot.cpp",
+      "address": 3029376,
+      "size": 408,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_SlickShield",
+      "source": "SB/Game/zNPCTypeRobot.cpp",
+      "address": 3029792,
+      "size": 124,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_FloatDevice",
+      "source": "SB/Game/zNPCTypeRobot.cpp",
+      "address": 3029920,
+      "size": 124,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_Tubelet",
+      "source": "SB/Game/zNPCTypeRobot.cpp",
+      "address": 3030048,
+      "size": 184,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_Chuck",
+      "source": "SB/Game/zNPCTypeRobot.cpp",
+      "address": 3030240,
+      "size": 552,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_ArfArf",
+      "source": "SB/Game/zNPCTypeRobot.cpp",
+      "address": 3030800,
+      "size": 640,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_ArfDog",
+      "source": "SB/Game/zNPCTypeRobot.cpp",
+      "address": 3031440,
+      "size": 1296,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_SleepyTime",
+      "source": "SB/Game/zNPCTypeRobot.cpp",
+      "address": 3032736,
+      "size": 272,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_NightLight",
+      "source": "SB/Game/zNPCTypeRobot.cpp",
+      "address": 3033008,
+      "size": 168,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_ThunderCloud",
+      "source": "SB/Game/zNPCTypeRobot.cpp",
+      "address": 3033184,
+      "size": 264,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_Monsoon",
+      "source": "SB/Game/zNPCTypeRobot.cpp",
+      "address": 3033456,
+      "size": 488,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_GLove",
+      "source": "SB/Game/zNPCTypeRobot.cpp",
+      "address": 3033952,
+      "size": 848,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_TTSauce",
+      "source": "SB/Game/zNPCTypeRobot.cpp",
+      "address": 3034800,
+      "size": 124,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_TarTar",
+      "source": "SB/Game/zNPCTypeRobot.cpp",
+      "address": 3034928,
+      "size": 552,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_Hammer",
+      "source": "SB/Game/zNPCTypeRobot.cpp",
+      "address": 3035488,
+      "size": 632,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_Fodder",
+      "source": "SB/Game/zNPCTypeRobot.cpp",
+      "address": 3036128,
+      "size": 1504,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_RobotBase",
+      "source": "SB/Game/zNPCTypeRobot.cpp",
+      "address": 3037632,
+      "size": 1628,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {

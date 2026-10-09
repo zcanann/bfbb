@@ -752,6 +752,24 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in npc_vectors['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('NPC vectors adds ten unique complete original consumers. Thirty-three data operands follow complete typed vector objects, scalar members, an independently anchored player-model field and one original local float; thirty-three JALs close through complete identities or literal unnamed runtime contexts. Twelve fixed dependencies preserve evidence across later recoveries. No runtime identity, whole translation-unit or data extent is claimed.')
+    from platforms.france_npc_animation_tables import generate_unit as generate_npc_animation
+    npc_animation = generate_npc_animation(originals, registry_dir)
+    document['functions'].extend(npc_animation['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(npc_animation['sequence_proofs'])
+    document['npc_animation_data_proofs'] = npc_animation['data_proofs']
+    for key, value in npc_animation['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('NPC animation adds seventeen complete original Robot builders in one unique contiguous 9884-byte cluster. All original member boundaries, ordering and zero alignment gaps are checked; 257 typed table/string/callback operands and 149 JALs are inventoried in each reference. Complete array-copy coverage includes call delay-slot stores. Small members are identified through the complete cluster and original DWARF order, not individual short seeds. No whole translation-unit or data extent is claimed.')
+    from platforms.france_npc_common_animation import generate_unit as generate_npc_common_animation
+    npc_common_animation = generate_npc_common_animation(originals, registry_dir)
+    document['functions'].extend(npc_common_animation['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(npc_common_animation['sequence_proofs'])
+    document['npc_common_animation_data_proofs'] = npc_common_animation['data_proofs']
+    for key, value in npc_common_animation['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Common NPC animation adds two complete original builders in an independently unique 400-byte cluster with 392 code bytes. Original member ordering, bounds and zero alignment gaps are checked separately from the Robot cluster. Complete typed names, literals, callback identity and animation callees corroborate every operand. No whole translation-unit or data extent is claimed.')
     return document
 
 

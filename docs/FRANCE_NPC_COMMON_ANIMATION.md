@@ -29,3 +29,10 @@ bytes and 17 to 19 exact functions; fuzzy matching rises from 99.88757% to
 99.89926%. All eighteen prior function scores, sizes and metadata remain
 unchanged. Only their offsets within the expanded target object move.
 All non-French source profiles are unchanged.
+
+The independent Common-pair proof passes canonical production integration
+together with the Robot cluster in `build/oct09-france-curve-animation`.
+All seven Common tests and eight Robot tests pass; the full 76-unit source
+report retains every earlier score. The two Common bodies contribute their
+392 exact bytes / two functions without expanding the Robot proof's scope.
+Source data and a full original executable link remain pending.

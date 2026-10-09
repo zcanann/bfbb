@@ -14979,3 +14979,36 @@ Evidence: `build/oct09-full-render-save/<version>`, all three comparison logs,
 `build/oct09-france-render-save`, its comparison log,
 `build/oct09-npc-vector-tests.log`, `build/oct09-render-save-<GameCube-version>.log`
 and `build/oct09-render-save-xbox`.
+
+The curve/pool/animation follow-up adds 1,444 report-exact bytes / four functions
+in each debug PS2 region. USA reaches 1,033,164 bytes / 3,826 functions, PAL
+1,025,604 / 3,813, and Germany 1,026,312 / 3,814. All three complete report
+comparisons preserve every earlier function/code/data measure. Three changed
+units are rebuilt against the just-verified 214-unit source/target snapshots.
+Curve interval arithmetic and the original out-of-line abs behavior contribute
+460 bytes; pool scene entry, bucket sort and flush contribute 984. The curve's
+single runtime JAL and flush's SDK JAL remain unnamed/unresolved; independent
+raw audits prove the remaining 456/460 and 256/260 bytes rather than claiming
+new callee identities. Particle transform flags and vertex/index reset order
+give further source improvements, with VU/store/delay checks replayed.
+
+French animation closure proves nineteen new complete builders / 10,200 bytes:
+seventeen Robot members in one unique 9,884-byte span and two Common members
+in an independently unique 400-byte span. All original DWARF ordering, bounds,
+zero gaps, typed table/literal/callback roles and local-array copy inventories
+are checked. Small members inherit the complete unique cluster's identity;
+generic uniqueness thresholds and whole-TU/data-extent exclusions remain intact.
+All old registry records survive unchanged and fifteen original-backed tests
+pass. The full French production gate regenerates all aggregate evidence and
+compiles 76 source units. With exact curve and bucket-sort source, matching
+gains 10,996 bytes / twenty-one functions, reaching 192,404 bytes / 568 functions.
+Coverage reaches 848 functions / 404,996 known bytes. No earlier score is lost.
+
+All three GameCube full source reports/checksums and both complete Xbox source
+reports remain unchanged. CPU denominators and source-data/full-link limits
+remain unchanged. Evidence: `build/oct09-curve-animation/<debug-version>`, the
+three comparison logs, `build/oct09-france-curve-animation`, its comparison log,
+`build/oct09-npc-{animation,common-animation}-tests.log`,
+`build/oct09-curve-animation-<GameCube-version>.log`,
+`build/oct09-curve-animation-xbox` and both regional comparison logs,
+plus `build/oct09-france-animation-map{,-query}.json`.
