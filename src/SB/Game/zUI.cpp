@@ -342,6 +342,10 @@ namespace
         return xModelInstanceAlloc((RpAtomic*)data, NULL, 0, 0, NULL);
     }
 
+// The PS2 initializer calls this complete helper.
+#if defined(PS2)
+#pragma dont_inline on
+#endif
     void load_anim_list(_zUI& ui)
     {
         if (ui.model)
@@ -374,6 +378,9 @@ namespace
             }
         }
     }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 } // namespace
 
 void zUI_Init(_zUI* ent, xEntAsset* asset)
@@ -1747,8 +1754,8 @@ void zUI_ScenePortalInit(zScene* zsc)
     {
         if (c > '9')
         {
-            c = '0';
             tempString[15]++;
+            c = '0';
         }
 
         tempString[16] = c;
@@ -2030,3 +2037,11 @@ void zUI_ScenePortalLoad(xSerial* s)
     }
 }
 
+
+#if defined(PS2)
+// Original portal scans inline this validity test, defined in zScene.cpp.
+inline U32 xBaseIsValid(xBase* xb)
+{
+    return xb->baseFlags & 0x4;
+}
+#endif

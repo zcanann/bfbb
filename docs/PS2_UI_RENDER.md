@@ -33,3 +33,23 @@ branch layout and alignment; they are not attributed to a compiler version.
 
 Private evidence is `build/ui-oct09/*-{before,after}.json`, source snapshots
 and instruction diffs for the separate camera, color, constant and blend probes.
+
+## Initializer call and inline boundaries
+
+The original entity initializer calls `load_anim_list`; automatic inlining had
+expanded it in the caller. A PS2-only `dont_inline` scope restores that call,
+raising the 664-byte initializer from 79.48795% to 98.79518% in all three debug
+releases. Its remaining difference is two extra loop-alignment NOPs.
+
+Conversely, original portal scans inline `xBaseIsValid`. Supplying its existing
+`zScene.cpp` definition locally under PS2 removes the repeated external calls.
+The pause-task name carry increments the preceding digit before resetting the
+current digit, matching the original load/store order. The complete 3,408-byte
+portal initializer becomes exact in all three debug releases.
+
+Each debug unit gains **3,408 exact bytes and one function**, reaching 22/28
+functions and 9,712 bytes. USA unit fuzzy matching reaches 99.2933%; Europe
+and Germany reach 99.293686%. Every other function score remains unchanged,
+as does France's complete three-function report. The full GameCube USA report
+remains identical and its retail DOL SHA-1 passes. Private reports use the
+`*-inline.json` suffix.
