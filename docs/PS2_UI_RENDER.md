@@ -53,3 +53,18 @@ and Germany reach 99.293686%. Every other function score remains unchanged,
 as does France's complete three-function report. The full GameCube USA report
 remains identical and its retail DOL SHA-1 passes. Private reports use the
 `*-inline.json` suffix.
+
+## Manager setup and menu INI names
+
+Declaring the count before the allocation size under PS2 restores the setup
+function's saved-register assignment. Separating the menu-name digit increment
+from its comparison and carrying the preceding digit before resetting the
+current one restores the original parser loads and stores. The 416-byte setup
+and 424-byte parser become exact in all three debug releases: **840 bytes and
+two functions** each. Units reach 24/28 functions and 10,552 exact bytes.
+
+France's existing setup body also becomes exact, adding **416 bytes and one
+function** to its measured subset (2/3 functions, 584/756 bytes). The parser is
+not present in that subset. No other function score decreases. GameCube keeps
+its original local declaration order; its full report is identical and the
+retail DOL SHA-1 passes. Private reports use `*-small.json`.

@@ -172,8 +172,13 @@ void zUIMgr::Update(zScene* s, F32 dt)
 void zUIMgr::Setup(zScene* s)
 {
     _zUI* ui;
+#if defined(PS2)
+    U32 count;
+    U32 arraySize;
+#else
     U32 arraySize;
     U32 count;
+#endif
     U32 i;
 
     count = s->baseCount[eBaseTypeUI];
@@ -1321,10 +1326,11 @@ void zUI_ParseINI(xIniFile* ini)
     {
         U32 j;
 
-        if (++itemName[5] > '9')
+        itemName[5]++;
+        if (itemName[5] > '9')
         {
-            itemName[5] = '0';
             itemName[4]++;
+            itemName[5] = '0';
         }
 
         value = xIniGetString(ini, itemName, NULL);
