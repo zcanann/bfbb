@@ -51,10 +51,17 @@ S32 xSerialShutdown()
 
 void xSerialTraverse(S32 (*func)(U32, xSerial*))
 {
+#if defined(PS2)
+    S32 i = 0;
+#endif
     st_XSERIAL_DATA_PRIV* xsd = &g_xserdata;
     xSerial xser;
 
+#if defined(PS2)
+    for (; i < xsd->cltlist.cnt; i++)
+#else
     for (S32 i = 0; i < xsd->cltlist.cnt; i++)
+#endif
     {
         st_SERIAL_CLIENTINFO* clt = (st_SERIAL_CLIENTINFO*)xsd->cltlist.list[i];
         xser.setClient(clt->idtag);
@@ -64,6 +71,9 @@ void xSerialTraverse(S32 (*func)(U32, xSerial*))
     }
 }
 
+#if defined(PS2)
+#pragma auto_inline on
+#endif
 xSerial::xSerial()
 {
 }
@@ -76,6 +86,9 @@ xSerial::~xSerial()
     }
 }
 
+#if defined(PS2)
+inline
+#endif
 void xSerial::operator delete(void*)
 {
 }
@@ -84,6 +97,9 @@ void xSerial::setClient(U32 idtag)
 {
     prepare(idtag);
 }
+#if defined(PS2)
+#pragma auto_inline reset
+#endif
 
 S32 xSerial::Write(char* data, S32 elesize, S32 n)
 {
@@ -312,7 +328,11 @@ S32 xSerial::rdbit()
         return 0;
     }
 
+#if defined(PS2)
+    S32 is_on = (ctxtdata->membuf[curele] & g_tbl_onbit[bitidx]) != 0;
+#else
     bool is_on = ctxtdata->membuf[curele] & g_tbl_onbit[bitidx];
+#endif
 
     bitidx++;
     if (bitidx == 32)
@@ -325,6 +345,9 @@ S32 xSerial::rdbit()
     return is_on;
 }
 
+#if defined(PS2)
+inline
+#endif
 void xSerial::prepare(U32 idtag)
 {
     st_SERIAL_CLIENTINFO* clt = XSER_get_client(idtag);
@@ -342,6 +365,9 @@ void xSerialWipeMainBuffer()
     memset(g_xserdata.bitbuf, 0, g_xserdata.buf_bytcnt);
 }
 
+#if defined(PS2)
+inline
+#endif
 static void xSER_init_tables()
 {
     for (S32 i = 0; i < 32; i++)
