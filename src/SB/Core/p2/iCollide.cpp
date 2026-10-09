@@ -85,25 +85,11 @@ S32 PointWithinTriangle(xVec3* _pt, xVec3** _tri, xVec3* _normal)
 
     if (absZ > absY)
     {
-        if (absZ > absX)
-        {
-            dimension = ZDIM;
-        }
-        else
-        {
-            dimension = XDIM;
-        }
+        dimension = (absZ > absX) ? ZDIM : XDIM;
     }
     else
     {
-        if (absY > absX)
-        {
-            dimension = YDIM;
-        }
-        else
-        {
-            dimension = XDIM;
-        }
+        dimension = (absY > absX) ? YDIM : XDIM;
     }
 
     switch (dimension)
@@ -781,8 +767,7 @@ S32 iSphereHitsEnv4(const xSphere* b, const xEnv* env, const xMat3x3* mat, xColl
         }
 
         numcs++;
-        F32 s = 1.0f;
-        s /= c->dist;
+        F32 s = 1.0f / c->dist;
         c->hdng.x = c->tohit.x * s;
         c->hdng.y = c->tohit.y * s;
         c->hdng.z = c->tohit.z * s;

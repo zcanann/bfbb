@@ -175,3 +175,28 @@ PS2-only platform source scope is unchanged.
 Evidence is build/icollide-floor-final-comparison.json,
 build/icollide-floor-final-changes.json and build/icollide-floor-raw-proof.json.
 The baseline is 678797b54.
+
+## Environment contact reciprocal and triangle projection choice (2026-10-09)
+
+Initializing the contact scale directly as 1.0f / c->dist restores the
+original reciprocal lifetime in iSphereHitsEnv4. Conditional assignments for
+the dominant triangle-projection dimension restore the original nested branch
+joins in PointWithinTriangle. Both changes preserve the previous comparisons,
+constants and arithmetic.
+
+All three full source units gain iSphereHitsEnv4's 636 bytes, improving it
+from 96.06918% to 100%. PointWithinTriangle912 improves from 97.34649% to
+99.12281%. Whole-unit fuzzy matching rises from 98.90847% to 99.29966%, and
+exact coverage from 6,244 bytes / 17 functions to 6,880 bytes / 18 functions.
+Other function records and data measures are unchanged.
+
+Independent relocation replay reproduces 624 of iSphereHitsEnv4's 636 bytes;
+three unresolved runtime/SDK calls remain excluded from raw equality.
+PointWithinTriangle reproduces 904 of 912 bytes directly. Only the order of
+two independent instructions at offsets 4 and 8 differs: clearing v0 and
+loading the normal's y component. No artificial scheduling operation or
+compiler change is added for this residual.
+
+Evidence is build/icollide-env4-final-comparison.json,
+build/icollide-env4-final-changes.json, build/icollide-env4-raw-proof.json and
+build/icollide-dimension-raw-proof.json. The baseline is c54b12b9e.
