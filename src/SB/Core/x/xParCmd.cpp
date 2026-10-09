@@ -95,12 +95,12 @@ xParCmdUpdateFunc xParCmdGetUpdateFunc(U32 parType)
 
 void xParCmdKillSlow_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
-#if !defined(XBOX)
+#if !defined(XBOX) && !defined(PS2)
     xPar* p = ps->m_root;
 #endif
     xParCmdKillSlow* cmd = (xParCmdKillSlow*)c->tasset;
     F32 speedLimit = cmd->speedLimitSqr * dt;
-#if defined(XBOX)
+#if defined(XBOX) || defined(PS2)
     xPar* p = ps->m_root;
 #endif
 
@@ -132,11 +132,11 @@ void xParCmdKillSlow_Update(xParCmd* c, xParGroup* ps, F32 dt)
 
 void xParCmdAge_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
-#if !defined(XBOX)
+#if !defined(XBOX) && !defined(PS2)
     xPar* p = ps->m_root;
 #endif
     F32 age_rate = ((xParCmdAge*)c->tasset)->unknown * dt;
-#if defined(XBOX)
+#if defined(XBOX) || defined(PS2)
     xPar* p = ps->m_root;
 #endif
 
@@ -174,9 +174,10 @@ void xParCmdFollow_Update(xParCmd* c, xParGroup* ps, F32 dt)
 
 void xParCmdOrbitPoint_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
-    xPar* p = ps->m_root;
+    xPar* p;
     xParCmdOrbitPoint* cmd = (xParCmdOrbitPoint*)c->tasset;
     F32 mdt = cmd->gravity * dt;
+    p = ps->m_root;
 
     while (p)
     {
@@ -203,9 +204,10 @@ void xParCmdOrbitPoint_Update(xParCmd* c, xParGroup* ps, F32 dt)
 
 void xParCmdOrbitLine_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
-    xPar* p = ps->m_root;
+    xPar* p;
     xParCmdOrbitLine* cmd = (xParCmdOrbitLine*)c->tasset;
     F32 mdt = cmd->gravity * dt;
+    p = ps->m_root;
 
     while (p)
     {
@@ -304,8 +306,9 @@ void xParCmdMoveRandomPar_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     xPar* p = ps->m_root;
     xParCmdMoveRandomPar* cmd = (xParCmdMoveRandomPar*)c->tasset;
-    F32 f31 = cmd->dim.x * (dt / 2.0f);
-    F32 f30 = cmd->dim.z * (dt / 2.0f);
+    dt *= 0.5f;
+    F32 f31 = cmd->dim.x * dt;
+    F32 f30 = cmd->dim.z * dt;
 
     while (p)
     {
@@ -768,8 +771,6 @@ void xParCmd_SizeInOut_Update(xParCmd* c, xParGroup* ps, F32 dt)
 
     if (cmd->enabled)
     {
-        p = ps->m_root;
-
         S32 i, seg;
         F32 slope_size[3];
         F32 frac;
@@ -777,6 +778,8 @@ void xParCmd_SizeInOut_Update(xParCmd* c, xParGroup* ps, F32 dt)
         slope_size[0] = 3.0f * (cmd->custSize[1] - cmd->custSize[0]);
         slope_size[1] = 3.0f * (cmd->custSize[2] - cmd->custSize[1]);
         slope_size[2] = 3.0f * (cmd->custSize[3] - cmd->custSize[2]);
+
+        p = ps->m_root;
 
         while (p)
         {
@@ -796,7 +799,7 @@ void xParCmd_SizeInOut_Update(xParCmd* c, xParGroup* ps, F32 dt)
                 seg = 2;
             }
 
-            for (i = seg; i > 0; i--)
+            for (i = seg; i-- > 0;)
             {
                 frac -= 0.33333334f;
             }
@@ -815,8 +818,6 @@ void xParCmd_AlphaInOut_Update(xParCmd* c, xParGroup* ps, F32 dt)
 
     if (cmd->enabled)
     {
-        p = ps->m_root;
-
         S32 i, seg;
         F32 slope_alfa[3];
         F32 frac;
@@ -825,6 +826,8 @@ void xParCmd_AlphaInOut_Update(xParCmd* c, xParGroup* ps, F32 dt)
         slope_alfa[0] = 3.0f * (cmd->custAlpha[1] - cmd->custAlpha[0]);
         slope_alfa[1] = 3.0f * (cmd->custAlpha[2] - cmd->custAlpha[1]);
         slope_alfa[2] = 3.0f * (cmd->custAlpha[3] - cmd->custAlpha[2]);
+
+        p = ps->m_root;
 
         while (p)
         {
@@ -844,7 +847,7 @@ void xParCmd_AlphaInOut_Update(xParCmd* c, xParGroup* ps, F32 dt)
                 seg = 2;
             }
 
-            for (i = seg; i > 0; i--)
+            for (i = seg; i-- > 0;)
             {
                 frac -= 0.33333334f;
             }
@@ -921,7 +924,7 @@ void xParCmd_Shaper_Update(xParCmd* c, xParGroup* ps, F32 dt)
                 seg = 2;
             }
 
-            for (i = seg; i > 0; i--)
+            for (i = seg; i-- > 0;)
             {
                 frac -= 0.33333334f;
             }
