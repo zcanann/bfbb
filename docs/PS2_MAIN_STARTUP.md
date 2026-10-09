@@ -60,3 +60,43 @@ ELF/DWARF data audit `original-proof.json`, normal-unit comparisons
 SHA-1 values are USA `32e3b7dda09fd8d7fcba4eb769fa17c08cea05df`, Europe
 `0c3e685edc13a362d0d27a10dccb0b9698eb5597`, and Germany
 `83bf81a139ea24fdb015f1419377de85b643828a`.
+
+## PS2 splash screen
+
+`zMainFirstScreen` previously compiled the GameCube legal-text renderer for
+PS2, scoring 0% against the 576-byte original. The PS2 path now decodes the
+original palette-indexed RLE splash image, converts it to a raster, draws it,
+and releases its temporary image/raster. The two-frame presentation and the
+five-second wait follow the original: 300 vblanks in USA, 250 in PAL.
+Normal whole-unit builds score **95.173615% in all three debug regions**,
+with every other reported function unchanged and no exact-count increase.
+Fresh GC solo remains 16/16 exact.
+
+DWARF directly identifies the data names, array element types, and bounds:
+
+| Region | Function address | RlePalette (U32) | RleData (U8) | Decoded pixels |
+| --- | --- | --- | --- | ---: |
+| USA | 0x1861f0 | 101 at 0x408bb0 | 52247 at 0x408d50 | 640 x 448 |
+| Europe | 0x1861e0 | 104 at 0x409030 | 49821 at 0x4091d0 | 512 x 512 |
+| Germany | 0x1862e0 | 104 at 0x4083b0 | 51445 at 0x408550 | 512 x 512 |
+
+The declarations refer to original data; this change does not reconstruct or
+embed the asset definitions and does not establish a linked PS2 executable.
+An independent original-data decoder consumed each complete stream, checked
+every palette index, and produced exactly the pixel counts above. A high-bit
+entry repeats its palette color `next_byte + 2` times; other entries emit one
+pixel. The row-padding mask and byte counter follow the original instructions.
+
+The original raster-render callee dispatches through standard-function slot
+17 (globals offset 0x8c, table offset 0x48), consistent with `RwRasterRender`.
+Push/pop context use slot 11. This rules out the initially considered
+`RwRasterRenderFast` spelling; no runtime alias or proof-registry identity is
+added. Remaining differences are principally decoder register allocation
+and NOP placement. Signed division for row padding added extra branches;
+typed-pixel and declaration-order alternatives did not recover the complete
+original allocation. No compiler defect is asserted.
+
+Private original data bounds, hashes, and decode counts are recorded in
+`build/maincard-oct09/first-original-proof.json`; the normal regional
+comparisons are in `first-proof.json`. France still has no enabled source
+profile for this unit, and full integration gates remain separate.

@@ -1009,6 +1009,25 @@ void zMainReadINI()
     RwFree(buf);
 }
 
+#if defined(PS2)
+#if defined(VERSION_SLES_51968)
+extern U32 RlePalette[104];
+extern U8 RleData[49821];
+#elif defined(VERSION_SLES_51970)
+extern U32 RlePalette[104];
+extern U8 RleData[51445];
+#else
+extern U32 RlePalette[101];
+extern U8 RleData[52247];
+#endif
+extern "C" {
+RwRaster* RwRasterSetFromImage(RwRaster* raster, RwImage* image);
+RwRaster* RwRasterPushContext(RwRaster* raster);
+RwRaster* RwRasterPopContext();
+RwRaster* RwRasterRender(RwRaster* raster, RwInt32 x, RwInt32 y);
+}
+#endif
+
 void zMainFirstScreen(S32 mode)
 {
     RwCamera* cam = iCameraCreate(MAIN_SCREEN_WIDTH, MAIN_SCREEN_HEIGHT, 0);
@@ -1023,6 +1042,52 @@ void zMainFirstScreen(S32 mode)
 
         if (mode)
         {
+#if defined(PS2)
+            RwImage* image = RwImageCreate(MAIN_SCREEN_WIDTH, MAIN_SCREEN_HEIGHT, 32);
+            RwImageAllocatePixels(image);
+            U8* pixels = image->cpPixels;
+            S32 stride = (image->stride - MAIN_SCREEN_WIDTH * 4) & ~3;
+            S32 remaining = MAIN_SCREEN_WIDTH * 4;
+            for (U32 index = 0; index < sizeof(RleData); index++)
+            {
+                U32 entry = RleData[index];
+                if (entry & 0x80)
+                {
+                    S32 count = RleData[index + 1] + 2;
+                    entry = RlePalette[entry & 0x7f];
+                    for (S32 repeat = 0; repeat < count; repeat++)
+                    {
+                        *(U32*)pixels = entry;
+                        pixels += sizeof(U32);
+                        remaining -= 4;
+                        if (remaining <= 0)
+                        {
+                            remaining = MAIN_SCREEN_WIDTH * 4;
+                            pixels += stride;
+                        }
+                    }
+                    index++;
+                }
+                else
+                {
+                    *(U32*)pixels = RlePalette[entry];
+                    pixels += sizeof(U32);
+                    remaining -= 4;
+                    if (remaining <= 0)
+                    {
+                        remaining = MAIN_SCREEN_WIDTH * 4;
+                        pixels += stride;
+                    }
+                }
+            }
+            RwRaster* raster = RwRasterSetFromImage(
+                RwRasterCreate(image->width, image->height, 0, 0), image);
+            RwImageDestroy(image);
+            RwRasterPushContext(RwCameraGetRaster(cam));
+            RwRasterRender(raster, 0, 0);
+            RwRasterPopContext();
+            RwRasterDestroy(raster);
+#else
             char text[617] =
                 "Game and Software \xa9 2003 THQ Inc. \xa9 2003 Viacom International Inc. All "
                 "rights reserved.\n"
@@ -1050,13 +1115,18 @@ void zMainFirstScreen(S32 mode)
             tb.bounds.h = tb.yextent(1);
             tb.bounds.y = 0.5f - 0.5f * tb.bounds.h;
             tb.render(1);
+#endif
         }
 
         RwCameraEndUpdate(cam);
         RwCameraShowRaster(cam, NULL, 1);
     }
 
+#if defined(PS2)
+    vbl = 5 * MAIN_VBLANKS_PER_SECOND;
+#else
     vbl = 3 * MAIN_VBLANKS_PER_SECOND;
+#endif
     while (--vbl)
     {
 #if !defined(PS2)
