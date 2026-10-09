@@ -10,7 +10,7 @@
 #include "zParEmitter.h"
 #include "zParPTank.h"
 
-extern U32 gPTankDisable;
+extern const U32 gPTankDisable;
 
 _tagClimate* sClimate;
 

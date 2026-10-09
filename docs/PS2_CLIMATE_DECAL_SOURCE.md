@@ -66,3 +66,17 @@ other score, exact byte count and size/data control unchanged. France and all
 `build/decal-index-final-comparison.json`, its function-delta JSON,
 `build/decal-index-gc-{before,after}.json`, and the repeated compiled VU
 lane/delay-slot audit in `build/decal-index-compiled-proof.json`.
+
+The climate declaration of `gPTankDisable` now agrees with its existing
+`extern const U32` definition in `zParPTank.cpp`. This restores the original
+HI/LO address load instead of an incorrect GP-relative access. Both original
+translation units identify the same unsigned 32-bit object and zero initial
+value in each debug version (`build/climate-ptank-type.json`); their DWARF
+records do not separately establish a const qualifier. The correction is
+bounded to this consumer, without changing the object or other declarations.
+
+`UpdateRain` improves from 93.83189% to 94.44348% in each debug region. All other
+scores, 508 exact bytes and target/data controls remain unchanged, as do all
+12 exact GameCube functions. Evidence is
+`build/climate-const-final-comparison.json`, its function-delta JSON and
+`build/climate-const-gc-{before,after}.json`.
