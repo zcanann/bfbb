@@ -15160,3 +15160,39 @@ denominators and source-data/full-link limitations remain unchanged. Evidence:
 `build/oct09-npc-particle-kernels-tests.log`,
 `build/oct09-math-particle-laser-<GameCube-version>.log`, and
 `build/oct09-math-particle-laser-pow-final-xbox` with both comparison logs.
+
+The collision/disco/voice batch adds 5,172 exact bytes / six functions in each
+debug PS2 region. Four collision routines contribute 3,712 bytes, voice selection
+900, and the clump box callback 560. USA reaches 1,045,304 / 3,846, PAL
+1,037,744 / 3,833, and Germany 1,038,812 / 3,835. The Disco-only PS2 header
+visibility change is gated by fresh compilation of all 214 source units in
+each region; every earlier function/code/data measure survives the comparisons.
+All debug profiles/global compiler settings remain unchanged, and root source
+is held at `7b209eae1` throughout these builds.
+
+The restored 920-byte VU line callback improves 3.1086957% to 79.40435%; the
+512-byte sphere callback improves 0% to 66.27344%. All 28 arithmetic words/lane
+masks and hardware min/max dependencies are audited independently. Remaining
+GPR/FPR scheduling differences stay scored without forced register bindings.
+Disco refresh_bound improves 65.172485% to 91.72279% and now has the original
+call-free shape. Collision ray/sphere lifetimes, hardware boundaries and floor
+index ordering provide further gains. Unproved SDK calls remain explicit in
+the raw audits; no compiler patch or target alias is introduced.
+
+Twenty-four complete French boss goal kernels and three anchored sound wrappers
+add 7,552 known bytes, reaching 907 identities / 436,888 bytes. All 588 prior TU
+function records, auxiliary proofs and sequence/limitation prefixes survive
+unchanged. Thirteen original-backed tests pass. Small sound tails are identified
+through one full independently unique cluster, preserving exact argument,
+terminal-jump and delay-slot inventories; generic uniqueness rules stay intact.
+Full aggregate regeneration and all 84 source compilations succeed. Boss goals,
+sound wrappers, voice selection and clump box source add 8,428 exact bytes /
+28 functions, reaching 223,992 / 629, with no earlier score lost.
+
+All three fresh GameCube source reports/checksums and both full 13-unit Xbox
+source reports pass unchanged. Full CPU denominators and source-data/full-link
+limitations remain unchanged. Evidence: `build/oct09-full-clump-collision-disco`
+and its three comparison logs, `build/oct09-france-clump-collision-disco` and
+comparison log, `build/oct09-boss-sound-tests.log`,
+`build/oct09-clump-collision-disco-<GameCube-version>.log` and
+`build/oct09-clump-collision-disco-xbox`.

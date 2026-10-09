@@ -3232,6 +3232,27 @@
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
+      "name": "xSndPlay3D",
+      "source": "SB/Core/x/xSnd.cpp",
+      "address": 2138816,
+      "size": 72,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "xSndPlay3D",
+      "source": "SB/Core/x/xSnd.cpp",
+      "address": 2138896,
+      "size": 24,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "xSndPlay",
+      "source": "SB/Core/x/xSnd.cpp",
+      "address": 2138928,
+      "size": 28,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "xSndExit",
       "source": "SB/Core/x/xSnd.cpp",
       "address": 2138960,
@@ -5759,6 +5780,97 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "Process",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3331248,
+      "size": 544,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3331792,
+      "size": 704,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Exit",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3332800,
+      "size": 88,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3337296,
+      "size": 812,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3341728,
+      "size": 632,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Exit",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3342368,
+      "size": 104,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3342848,
+      "size": 536,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3343456,
+      "size": 476,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3344208,
+      "size": 592,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "leapCB",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3346112,
+      "size": 184,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "noHeadCB",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3346688,
+      "size": 148,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "hiddenByCutscene",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3352208,
+      "size": 520,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "BoundEventCB",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3357424,
+      "size": 128,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "ZNPC_AnimTable_BossSandy",
       "source": "SB/Game/zNPCTypeBossSandy.cpp",
       "address": 3370864,
@@ -5945,6 +6057,83 @@
       "source": "SB/Game/zNPCTypeBossPlankton.cpp",
       "address": 3595392,
       "size": 2440,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "address": 3602288,
+      "size": 120,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "address": 3609248,
+      "size": 100,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "address": 3612080,
+      "size": 108,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "address": 3612240,
+      "size": 120,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "address": 3614240,
+      "size": 116,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Exit",
+      "source": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "address": 3614368,
+      "size": 128,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "address": 3616048,
+      "size": 108,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ParabolaHitsConveyors",
+      "source": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "address": 3620112,
+      "size": 584,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "gotoRound",
+      "source": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "address": 3621264,
+      "size": 448,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "canSpawnChucks",
+      "source": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "address": 3621712,
+      "size": 64,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "DuploNotice",
+      "source": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "address": 3626560,
+      "size": 64,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {

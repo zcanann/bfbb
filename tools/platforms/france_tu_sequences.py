@@ -816,6 +816,25 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in npc_particle_kernels['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Particle and hazard kernels add nine independently unique complete original functions. Complete fixed xurand and streak callees and a typed full zero vector prove every changed operand. Original ownership, bounds, zero alignment and strict control flow are checked in all three references. Duplicate builders remain unpromoted. No whole translation-unit or data extent is claimed.')
+    from platforms.france_boss_goal_kernels import generate_unit as generate_boss_goal_kernels
+    boss_goal_kernels = generate_boss_goal_kernels(originals, registry_dir)
+    document['functions'].extend(boss_goal_kernels['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(boss_goal_kernels['sequence_proofs'])
+    document['boss_goal_kernels_data_proofs'] = boss_goal_kernels['data_proofs']
+    document['boss_goal_kernels_call_proofs'] = boss_goal_kernels['call_proofs']
+    for key, value in boss_goal_kernels['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Boss goal kernels add 24 independently unique complete Sandy and Patrick bodies. Eight fixed dependencies prove 41 calls and seven typed player-model operands. Original owners, bounds, alignment and strict control flow are checked in all three references. Duplicate exits and bone-position consumers remain unpromoted. No whole translation-unit or data extent is claimed.')
+    from platforms.france_sound_wrappers import generate_unit as generate_sound_wrappers
+    sound_wrappers = generate_sound_wrappers(originals, registry_dir)
+    document['functions'].extend(sound_wrappers['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(sound_wrappers['sequence_proofs'])
+    document['sound_wrappers_data_proofs'] = sound_wrappers['data_proofs']
+    for key, value in sound_wrappers['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Sound wrappers add three complete original entries in one independently unique 1520-byte cluster with an already-proved 1376-byte anchor. Tiny tail wrappers have exact complete argument, terminal jump and delay-slot inventories, preserve SP/RA, and mask only the fixed known callee. All three original owners, bounds and alignment gaps are checked. No whole translation-unit or data extent is claimed.')
     return document
 
 
