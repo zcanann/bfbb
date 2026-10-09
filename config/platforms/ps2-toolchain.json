@@ -225435,7 +225435,8 @@
         "On": "On__9NPCWidgetFPC10zNPCCommoni",
         "NPCC_DstSqPlyrToPos": "NPCC_DstSqPlyrToPos__FPC5xVec3",
         "NPCC_aimVary": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
-        "NPCC_MakePerp": "NPCC_MakePerp__FP5xVec3PC5xVec3"
+        "NPCC_MakePerp": "NPCC_MakePerp__FP5xVec3PC5xVec3",
+        "NPCC_GenSmooth": "NPCC_GenSmooth__FPP5xVec3PP5xVec3"
       },
       "calls": [
         {
@@ -226001,6 +226002,32 @@
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
               "source_address": 3252800,
               "reference_sha256": "3beb38744417946dc0a14a6b71f905409577371f905505bcd683ba49e5d586cd"
+            }
+          ]
+        },
+        {
+          "function": "NPCC_GenSmooth",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3255344,
+          "size": 508,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3253936,
+              "reference_sha256": "f9ea1fea7234e35508c58df3a1839f9eb1f0dc8b15779f1490d35b57d4d7424f"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3255232,
+              "reference_sha256": "951678ad04d499772f8a76bcd24f3bfd72d7e9600307e8e9b4cbdc23813ef79b"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3251920,
+              "reference_sha256": "596259c259eb58ab339b2b8b0630c8e5dc968438d1a2b4e855885276e0caa37f"
             }
           ]
         }
