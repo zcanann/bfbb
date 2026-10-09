@@ -32,6 +32,45 @@ static void par_sprite_begin()
     par_offset_up = globals.camera.mat.up * 0.5f;
 }
 
+#if defined(PS2)
+namespace
+{
+    // The original PS2 path keeps the four side planes in vf14-vf17.
+    inline void prepare_sprite_culling()
+    {
+        asm volatile("lqc2 vf14, 0(%0)\n"
+                     "lqc2 vf15, 16(%0)\n"
+                     "lqc2 vf16, 32(%0)\n"
+                     "lqc2 vf17, 48(%0)\n"
+                     : : "r"(globals.camera.frustplane) : "memory");
+    }
+
+    inline S32 sprite_outside_side_planes(const xVec4* loc)
+    {
+        S32 outside;
+        asm volatile("lqc2 vf8, 0(%1)\n"
+                     "vaddaw.xyzw ACC, vf17, vf8w\n"
+                     "vmsubax.xyzw ACC, vf14, vf8x\n"
+                     "vmsubay.xyzw ACC, vf15, vf8y\n"
+                     "vmsubz.xyzw vf1, vf16, vf8z\n"
+                     "qmfc2 %0, vf1\n"
+                     "pcgtw %0, $0, %0\n"
+                     "ppach %0, $0, %0\n"
+                     "vmul.w vf7, vf8, vf10\n"
+                     : "=&r"(outside) : "r"(loc) : "memory");
+        return outside;
+    }
+
+    inline F32 sprite_near_plane_distance(const xVec4* loc)
+    {
+        return globals.camera.frustplane[4].x * loc->x +
+               globals.camera.frustplane[5].x * loc->y +
+               globals.camera.frustplane[6].x * loc->z -
+               globals.camera.frustplane[7].x + 0.5f * loc->w;
+    }
+}
+#endif
+
 static void par_sprite_update(xParSys& sys, xParGroup& group)
 {
     if (!using_ptank_render(*sys.tasset))
@@ -75,15 +114,26 @@ static void par_sprite_update(xParSys& sys, xParGroup& group)
     pool.rs.flags = 0x0;
     pool.reset();
     
+#if defined(PS2)
+    prepare_sprite_culling();
+#endif
     xParCmdTex* tex = group.m_cmdTex;
     xPar* p = group.m_root;
     while (p != NULL)
     {
+#if defined(PS2)
+        xVec4* loc = (xVec4*)&p->m_pos;
+        if (!sprite_outside_side_planes(loc))
+        {
+            F32 par_dist = sprite_near_plane_distance(loc);
+            if (par_dist < -0.1f)
+#else
         RwSphere testSphere;
         testSphere.center = *(RwV3d*)&p->m_pos;
         testSphere.radius = p->m_size;
         
         if (RwCameraFrustumTestSphere(globals.camera.lo_cam, &testSphere))
+#endif
         {
             pool.next();
             
@@ -119,6 +169,9 @@ static void par_sprite_update(xParSys& sys, xParGroup& group)
             }
         }
         
+#if defined(PS2)
+        }
+#endif
         p = p->m_next;
     }
 
@@ -131,7 +184,7 @@ static void par_sprite_update(xParSys& sys, xParGroup& group)
 // first caller.
 inline bool using_ptank_render(const xParSysAsset& tasset)
 {
-    return (tasset.parFlags >> 7) & 0x1;
+    return tasset.parFlags & 0x80;
 }
 
 static void render_par_sprite(void* data, xParGroup* ps)
@@ -325,6 +378,9 @@ void xParSysUpdate(xBase* to, xScene* scn, F32 dt)
     }
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 static void xParGroupUpdateR(xParSys* s, xParGroup* g, F32 dt)
 {
     if (s->parent != NULL)
@@ -351,6 +407,9 @@ static void xParGroupUpdateR(xParSys* s, xParGroup* g, F32 dt)
     }
 }
 
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 static void xParGroupUpdate(xParSys* s, xParGroup* g, F32 dt)
 {
     for (U32 i = 0; i < s->cmdCount; i++)
