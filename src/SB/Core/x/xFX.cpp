@@ -390,12 +390,7 @@ static void xFXRingUpdate(F32 dt)
             continue;
         }
 
-        F32 lifetime = ring->lifetime;
-
-        if (lifetime < dt)
-        {
-            lifetime = dt;
-        }
+        F32 lifetime = ring->lifetime < dt ? dt : ring->lifetime;
 
         ring->time += dt;
 

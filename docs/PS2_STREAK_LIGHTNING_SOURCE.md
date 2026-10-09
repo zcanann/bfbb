@@ -100,3 +100,13 @@ unchanged. The GameCube unit remains 17/17 exact (12448 bytes). Evidence is
 `build/lightning-init-final-comparison.json`, its function-delta JSON, and
 `build/lightning-init-gc-{before,after}.json`. The French source profile does not
 currently contain this function, so this change makes no French score claim.
+
+The ring update's minimum-lifetime choice now initializes its local with the
+equivalent conditional expression. This restores the original branch shape and
+makes all 192 bytes exact in each debug region (formerly 95.833336%). Complete
+`xFX` units advance from 14368 to 14560 exact bytes without other score or
+size/data changes. France and every GameCube score remain unchanged. Actual
+DWARF-backed data relocations reproduce all three original functions byte for
+byte (`build/ring-update-proof.py` and `ring-update-raw-proof.json`). Complete
+regional and GameCube evidence is `build/ring-update-final-comparison.json`,
+its function-delta JSON, and `build/ring-update-gc-{before,after}.json`.
