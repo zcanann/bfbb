@@ -221513,7 +221513,14 @@
         "CalcAttackVector@002be350": "CalcAttackVector__18zNPCGoalAlertGloveFv",
         "MoveEvade@002bfe10": "MoveEvade__19zNPCGoalAlertHammerFf",
         "CalcEvadePos@002c1100": "CalcEvadePos__20zNPCGoalAlertChomperFP5xVec3",
-        "Process@002c4f30": "Process__14zNPCGoalNoticeFP11en_trantypefPvP6xScene"
+        "Process@002c4f30": "Process__14zNPCGoalNoticeFP11en_trantypefPvP6xScene",
+        "MoveTryToEscape@002af3f0": "MoveTryToEscape__17zNPCGoalTubeLassoFf",
+        "MoveFrolic@002b01e0": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+        "Enter@002b89c0": "Enter__20zNPCGoalAttackTarTarFfPv",
+        "MoveCorner@002ba540": "MoveCorner__18zNPCGoalAlertSlickFf",
+        "MoveCorner@002bd160": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+        "Enter@002c1c90": "Enter__20zNPCGoalAlertChomperFfPv",
+        "Enter@002c31d0": "Enter__20zNPCGoalAlertFodBzztFfPv"
       },
       "calls": [
         {
@@ -222068,6 +222075,160 @@
           "target_source": "SB/Game/zNPCGoalStd.cpp",
           "target_function": "Process@002ca1d0",
           "symbol": "Process__16zNPCGoalPushAnimFP11en_trantypefPvP6xScene"
+        },
+        {
+          "function": "MoveTryToEscape@002af3f0",
+          "offset": 552,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize@00210d10",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "MoveTryToEscape@002af3f0",
+          "offset": 1104,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "TurnToFace@002d34a0",
+          "symbol": "TurnToFace__10zNPCCommonFfPC5xVec3f"
+        },
+        {
+          "function": "MoveFrolic@002b01e0",
+          "offset": 572,
+          "target_source": "SB/Game/zNPCSupport.cpp",
+          "target_function": "NPCC_TmrCycle@0031afe0",
+          "symbol": "NPCC_TmrCycle__FPfff"
+        },
+        {
+          "function": "MoveFrolic@002b01e0",
+          "offset": 592,
+          "target_source": "SB/Game/zNPCSupport.cpp",
+          "target_function": "NPCC_TmrCycle@0031afe0",
+          "symbol": "NPCC_TmrCycle__FPfff"
+        },
+        {
+          "function": "Enter@002b89c0",
+          "offset": 36,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "VelStop@002d3920",
+          "symbol": "VelStop__10zNPCCommonFv"
+        },
+        {
+          "function": "Enter@002b89c0",
+          "offset": 112,
+          "target_source": "SB/Game/zNPCGoalStd.cpp",
+          "target_function": "Enter@002ca3a0",
+          "symbol": "Enter__16zNPCGoalPushAnimFfPv"
+        },
+        {
+          "function": "MoveCorner@002ba540",
+          "offset": 232,
+          "target_source": "SB/Game/zNPCTypeRobot.cpp",
+          "target_function": "CornerOfArena@002e1360",
+          "symbol": "CornerOfArena__9zNPCRobotFP5xVec3f"
+        },
+        {
+          "function": "MoveCorner@002ba540",
+          "offset": 388,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ThrottleAdjust@002d3810",
+          "symbol": "ThrottleAdjust__10zNPCCommonFfff"
+        },
+        {
+          "function": "MoveCorner@002ba540",
+          "offset": 448,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ThrottleAdjust@002d3810",
+          "symbol": "ThrottleAdjust__10zNPCCommonFfff"
+        },
+        {
+          "function": "MoveCorner@002ba540",
+          "offset": 484,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ThrottleAdjust@002d3810",
+          "symbol": "ThrottleAdjust__10zNPCCommonFfff"
+        },
+        {
+          "function": "MoveCorner@002ba540",
+          "offset": 556,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize@00210d10",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "MoveCorner@002ba540",
+          "offset": 576,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ThrottleApply@002d3600",
+          "symbol": "ThrottleApply__10zNPCCommonFfPC5xVec3i"
+        },
+        {
+          "function": "MoveCorner@002bd160",
+          "offset": 232,
+          "target_source": "SB/Game/zNPCTypeRobot.cpp",
+          "target_function": "CornerOfArena@002e1360",
+          "symbol": "CornerOfArena__9zNPCRobotFP5xVec3f"
+        },
+        {
+          "function": "MoveCorner@002bd160",
+          "offset": 388,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ThrottleAdjust@002d3810",
+          "symbol": "ThrottleAdjust__10zNPCCommonFfff"
+        },
+        {
+          "function": "MoveCorner@002bd160",
+          "offset": 448,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ThrottleAdjust@002d3810",
+          "symbol": "ThrottleAdjust__10zNPCCommonFfff"
+        },
+        {
+          "function": "MoveCorner@002bd160",
+          "offset": 484,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ThrottleAdjust@002d3810",
+          "symbol": "ThrottleAdjust__10zNPCCommonFfff"
+        },
+        {
+          "function": "MoveCorner@002bd160",
+          "offset": 556,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize@00210d10",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "MoveCorner@002bd160",
+          "offset": 576,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "ThrottleApply@002d3600",
+          "symbol": "ThrottleApply__10zNPCCommonFfPC5xVec3i"
+        },
+        {
+          "function": "Enter@002c1c90",
+          "offset": 40,
+          "target_source": "SB/Game/zNPCTypeCommon.cpp",
+          "target_function": "VelStop@002d3920",
+          "symbol": "VelStop__10zNPCCommonFv"
+        },
+        {
+          "function": "Enter@002c1c90",
+          "offset": 100,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter@002cb490",
+          "symbol": "Enter__14zNPCGoalCommonFfPv"
+        },
+        {
+          "function": "Enter@002c31d0",
+          "offset": 44,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand@001ee540",
+          "symbol": "xrand__Fv"
+        },
+        {
+          "function": "Enter@002c31d0",
+          "offset": 208,
+          "target_source": "SB/Game/zNPCGoalCommon.cpp",
+          "target_function": "Enter@002cb490",
+          "symbol": "Enter__14zNPCGoalCommonFfPv"
         }
       ],
       "linkage_provenance": [
@@ -223006,6 +223167,188 @@
               "reference_sha256": "c108e6a18436d6273ab7dc342c09ff914cd43a043b5f6449caee1db21a82f869"
             }
           ]
+        },
+        {
+          "function": "MoveTryToEscape@002af3f0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2814960,
+          "size": 1132,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2813552,
+              "reference_sha256": "e4f5b2831791c482bd337ff56ece1581325d979f5819f9d6876df3165a0ccbbf"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2814848,
+              "reference_sha256": "28e93e1ed27d99fde9c24763ae86659dfb8458881ca688761a7b6130f34a681f"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2811536,
+              "reference_sha256": "b7c77026ea17a3402eb77e0ebb75eb38d4c7ed0c845fdc40c0f7e664d472dc75"
+            }
+          ]
+        },
+        {
+          "function": "MoveFrolic@002b01e0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2818528,
+          "size": 1240,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2817120,
+              "reference_sha256": "e5759cb11ef937737335e34b36137dccaf5a5d8d42985464867eb42862f28a3d"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2818416,
+              "reference_sha256": "2cdd7b331dfca99ad35142e04a96f4e3a91027ef6c287c6a3980edf7c691ed15"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2815104,
+              "reference_sha256": "c20a64fa8983be1055e36249d1066cd9f3c33df28914e79cae3f2257eeba7b1a"
+            }
+          ]
+        },
+        {
+          "function": "Enter@002b89c0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2853312,
+          "size": 144,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2851904,
+              "reference_sha256": "9ca13e809b00a2b6b3faaf9663a742a5ea468deb6955ec558a8574693b387ca1"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2853200,
+              "reference_sha256": "23b1b0bc7b48f179aa4e367cca834e8ceafd1aafed57f4846ef0cdb0c56eeebb"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2849888,
+              "reference_sha256": "2a8492a6f6262762164d8106924eecc0e27da485a33f2d92e1def0f2c0d2bcfe"
+            }
+          ]
+        },
+        {
+          "function": "MoveCorner@002ba540",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2860352,
+          "size": 608,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2858944,
+              "reference_sha256": "79e03e513635eb569d572ac9d8ddfd9769feafb212acbde408ac7480419fd7e1"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2860240,
+              "reference_sha256": "6d8a296bc9c8e8ff1d32013dd5c7cffd57c137b2e3d6adc09502cb539268e841"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2856928,
+              "reference_sha256": "334ca137a664580e2dab06c0ee8aa6499a7d53ddbf0030d57692f77bb11ccb42"
+            }
+          ]
+        },
+        {
+          "function": "MoveCorner@002bd160",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2871648,
+          "size": 608,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2870240,
+              "reference_sha256": "12be0a15912c62bd40fdc540bc31c931d3deaa112eafc20b13338ea3e6af135a"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2871536,
+              "reference_sha256": "a82f6b2213d4c40345d21357a2e5dead934b0d50f19bda4371d43cd4ca1dda5c"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2868224,
+              "reference_sha256": "a977ed046e64aa4a1b8fdd0d98dfe05abdc48603ae8bf11001aac9ebc2ab24a6"
+            }
+          ]
+        },
+        {
+          "function": "Enter@002c1c90",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2890896,
+          "size": 132,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2889488,
+              "reference_sha256": "4d9c09a95e0bf5ff0cc61e9f459bdd6868fa4e9b19fcdf06729801b2d75ed5a4"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2890784,
+              "reference_sha256": "0aa5f33ff508ff1b4a361d9f1a9e7fd677b12d74a04ee0c775c64cba04ab23b4"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2887472,
+              "reference_sha256": "3be6ed55701b66b69b13c5c7e66452e8ef789315b356e7102f41b0bea21b2845"
+            }
+          ]
+        },
+        {
+          "function": "Enter@002c31d0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2896336,
+          "size": 240,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2894928,
+              "reference_sha256": "d724b19fc60dfaa119e16d10da6ec028c51ba80f2425434c5837ed2682251da0"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2896224,
+              "reference_sha256": "e0b6210df3435c290d39af918e1b3a8e83ff2d4a61bf353258d562e14ceb69ca"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2892912,
+              "reference_sha256": "e0786abd2a842c05c51442ae4b7a8fec0329ee1c3241f83dcea0b9de4bf512b4"
+            }
+          ]
         }
       ],
       "selector": "name_address"
@@ -223031,7 +223374,8 @@
         "Update": "Update__10NPCBlinkerFffff",
         "Off": "Off__9NPCWidgetFPC10zNPCCommoni",
         "On": "On__9NPCWidgetFPC10zNPCCommoni",
-        "NPCC_DstSqPlyrToPos": "NPCC_DstSqPlyrToPos__FPC5xVec3"
+        "NPCC_DstSqPlyrToPos": "NPCC_DstSqPlyrToPos__FPC5xVec3",
+        "NPCC_aimVary": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3"
       },
       "calls": [
         {
@@ -223131,6 +223475,48 @@
           "target_source": "SB/Core/x/xEvent.cpp",
           "target_function": "zEntEvent@00283ab0",
           "symbol": "zEntEvent__FP5xBaseUi"
+        },
+        {
+          "function": "NPCC_aimVary",
+          "offset": 460,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize@00210d10",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
+        },
+        {
+          "function": "NPCC_aimVary",
+          "offset": 696,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "NPCC_aimVary",
+          "offset": 756,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "NPCC_aimVary",
+          "offset": 812,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "NPCC_aimVary",
+          "offset": 844,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "NPCC_aimVary",
+          "offset": 1128,
+          "target_source": "SB/Core/x/xVec3.cpp",
+          "target_function": "xVec3Normalize@00210d10",
+          "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
         }
       ],
       "linkage_provenance": [
@@ -223497,6 +223883,32 @@
               "reference_sha256": "e1097eb147644475c8dd29e1d1af4cee96cfffb0f859cf10a79adf19a97beac3"
             }
           ]
+        },
+        {
+          "function": "NPCC_aimVary",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3258496,
+          "size": 1248,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3257088,
+              "reference_sha256": "c25f887a92abbf987d76a3b790cc1fd2df6b2152b23ebd080ff54aa3afcd07e5"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3258384,
+              "reference_sha256": "3d08050b6ce9a9d22f62255de7aa10279df39c50fe56c3122ebae2a7f4d56756"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3255072,
+              "reference_sha256": "7b45efd52f35681a07149d0c21eb19ab97d0318092aaa2ac5e417da7c75a1b33"
+            }
+          ]
         }
       ]
     },
@@ -223508,157 +223920,173 @@
         "ef675520304c2ce0df9cbfa03222e42fb2e7a09e"
       ],
       "symbols": {
-        "DstSqFromHome": "DstSqFromHome__8NPCArenaFP5xVec3P5xVec3",
-        "PctFromHome": "PctFromHome__8NPCArenaFP5xVec3",
-        "IncludesPos": "IncludesPos__8NPCArenaFP5xVec3fP5xVec3",
-        "FacePos": "FacePos__9zNPCRobotFP5xVec3ff",
-        "SetHome": "SetHome__8NPCArenaFP10zNPCCommonP5xVec3f",
-        "NextBestNav": "NextBestNav__8NPCArenaFP10zNPCCommonP10zMovePoint",
-        "NeedToCycle": "NeedToCycle__8NPCArenaFP10zNPCCommon",
-        "ShieldUpdate": "ShieldUpdate__9zNPCSlickFf",
-        "PosStacked": "PosStacked__13zNPCTubeSlaveFP5xVec3",
-        "Notice": "Notice__10TubeNoticeF10en_psynoteP5xGoalPv",
-        "Chk_IsBonked": "Chk_IsBonked__11zNPCTubeletFv",
-        "Unbonk": "Unbonk__11zNPCTubeletFv",
-        "AdoptADoggie": "AdoptADoggie__10zNPCArfArfFv",
-        "DuploNotice": "DuploNotice__10zNPCArfArfF13en_SM_NOTICESPv",
-        "RepelMissile": "RepelMissile__10zNPCSleepyFf",
-        "BlinkerUpdate": "BlinkerUpdate__11zNPCFodBombFff",
-        "MoveTowardsArena": "MoveTowardsArena__9zNPCRobotFff",
-        "FaceAntiPlayer": "FaceAntiPlayer__9zNPCRobotFff",
-        "TurnThemHeads": "TurnThemHeads__9zNPCRobotFv"
+        "DstSqFromHome@002d6bf0": "DstSqFromHome__8NPCArenaFP5xVec3P5xVec3",
+        "PctFromHome@002d6c80": "PctFromHome__8NPCArenaFP5xVec3",
+        "IncludesPos@002d6d00": "IncludesPos__8NPCArenaFP5xVec3fP5xVec3",
+        "FacePos@002e17e0": "FacePos__9zNPCRobotFP5xVec3ff",
+        "SetHome@002d64c0": "SetHome__8NPCArenaFP10zNPCCommonP5xVec3f",
+        "NextBestNav@002d6620": "NextBestNav__8NPCArenaFP10zNPCCommonP10zMovePoint",
+        "NeedToCycle@002d6ac0": "NeedToCycle__8NPCArenaFP10zNPCCommon",
+        "ShieldUpdate@002d87e0": "ShieldUpdate__9zNPCSlickFf",
+        "PosStacked@002d9380": "PosStacked__13zNPCTubeSlaveFP5xVec3",
+        "Notice@002d99b0": "Notice__10TubeNoticeF10en_psynoteP5xGoalPv",
+        "Chk_IsBonked@002d9ad0": "Chk_IsBonked__11zNPCTubeletFv",
+        "Unbonk@002d9c40": "Unbonk__11zNPCTubeletFv",
+        "AdoptADoggie@002db8a0": "AdoptADoggie__10zNPCArfArfFv",
+        "DuploNotice@002db900": "DuploNotice__10zNPCArfArfF13en_SM_NOTICESPv",
+        "RepelMissile@002dd240": "RepelMissile__10zNPCSleepyFf",
+        "BlinkerUpdate@002e0600": "BlinkerUpdate__11zNPCFodBombFff",
+        "MoveTowardsArena@002e1250": "MoveTowardsArena__9zNPCRobotFff",
+        "FaceAntiPlayer@002e16e0": "FaceAntiPlayer__9zNPCRobotFff",
+        "TurnThemHeads@002e18c0": "TurnThemHeads__9zNPCRobotFv",
+        "SetHome@002d6520": "SetHome__8NPCArenaFP10zNPCCommonP10zMovePoint",
+        "CornerOfArena@002e1360": "CornerOfArena__9zNPCRobotFP5xVec3f"
       },
       "calls": [
         {
-          "function": "FacePos",
+          "function": "FacePos@002e17e0",
           "offset": 188,
           "target_source": "SB/Game/zNPCTypeCommon.cpp",
           "target_function": "TurnToFace@002d34a0",
           "symbol": "TurnToFace__10zNPCCommonFfPC5xVec3f"
         },
         {
-          "function": "ShieldUpdate",
+          "function": "ShieldUpdate@002d87e0",
           "offset": 400,
           "target_source": "SB/Game/zNPCTypeCommon.cpp",
           "target_function": "ModelAtomicFind@002d1570",
           "symbol": "ModelAtomicFind__10zNPCCommonFiiP14xModelInstance"
         },
         {
-          "function": "ShieldUpdate",
+          "function": "ShieldUpdate@002d87e0",
           "offset": 448,
           "target_source": "SB/Game/zNPCTypeCommon.cpp",
           "target_function": "ModelAtomicHide@002d1630",
           "symbol": "ModelAtomicHide__10zNPCCommonFiP14xModelInstance"
         },
         {
-          "function": "ShieldUpdate",
+          "function": "ShieldUpdate@002d87e0",
           "offset": 472,
           "target_source": "SB/Game/zNPCTypeCommon.cpp",
           "target_function": "ModelAtomicShow@002d15c0",
           "symbol": "ModelAtomicShow__10zNPCCommonFiP14xModelInstance"
         },
         {
-          "function": "Chk_IsBonked",
+          "function": "Chk_IsBonked@002d9ad0",
           "offset": 260,
           "target_source": "SB/Game/zNPCTypeCommon.cpp",
           "target_function": "ModelAtomicShow@002d15c0",
           "symbol": "ModelAtomicShow__10zNPCCommonFiP14xModelInstance"
         },
         {
-          "function": "Chk_IsBonked",
+          "function": "Chk_IsBonked@002d9ad0",
           "offset": 276,
           "target_source": "SB/Game/zNPCTypeCommon.cpp",
           "target_function": "ModelAtomicHide@002d1630",
           "symbol": "ModelAtomicHide__10zNPCCommonFiP14xModelInstance"
         },
         {
-          "function": "Chk_IsBonked",
+          "function": "Chk_IsBonked@002d9ad0",
           "offset": 292,
           "target_source": "SB/Game/zNPCTypeCommon.cpp",
           "target_function": "ModelAtomicHide@002d1630",
           "symbol": "ModelAtomicHide__10zNPCCommonFiP14xModelInstance"
         },
         {
-          "function": "Unbonk",
+          "function": "Unbonk@002d9c40",
           "offset": 20,
           "target_source": "SB/Game/zNPCTypeCommon.cpp",
           "target_function": "ModelAtomicShow@002d15c0",
           "symbol": "ModelAtomicShow__10zNPCCommonFiP14xModelInstance"
         },
         {
-          "function": "Unbonk",
+          "function": "Unbonk@002d9c40",
           "offset": 36,
           "target_source": "SB/Game/zNPCTypeCommon.cpp",
           "target_function": "ModelAtomicHide@002d1630",
           "symbol": "ModelAtomicHide__10zNPCCommonFiP14xModelInstance"
         },
         {
-          "function": "Unbonk",
+          "function": "Unbonk@002d9c40",
           "offset": 52,
           "target_source": "SB/Game/zNPCTypeCommon.cpp",
           "target_function": "ModelAtomicHide@002d1630",
           "symbol": "ModelAtomicHide__10zNPCCommonFiP14xModelInstance"
         },
         {
-          "function": "BlinkerUpdate",
+          "function": "BlinkerUpdate@002e0600",
           "offset": 52,
           "target_source": "SB/Game/zNPCSupport.cpp",
           "target_function": "Update@0031c800",
           "symbol": "Update__10NPCBlinkerFffff"
         },
         {
-          "function": "MoveTowardsArena",
+          "function": "MoveTowardsArena@002e1250",
           "offset": 212,
           "target_source": "SB/Game/zNPCTypeCommon.cpp",
           "target_function": "ThrottleAdjust@002d3810",
           "symbol": "ThrottleAdjust__10zNPCCommonFfff"
         },
         {
-          "function": "MoveTowardsArena",
+          "function": "MoveTowardsArena@002e1250",
           "offset": 232,
           "target_source": "SB/Game/zNPCTypeCommon.cpp",
           "target_function": "ThrottleApply@002d3600",
           "symbol": "ThrottleApply__10zNPCCommonFfPC5xVec3i"
         },
         {
-          "function": "FaceAntiPlayer",
+          "function": "FaceAntiPlayer@002e16e0",
           "offset": 224,
           "target_source": "SB/Game/zNPCTypeCommon.cpp",
           "target_function": "TurnToFace@002d34a0",
           "symbol": "TurnToFace__10zNPCCommonFfPC5xVec3f"
         },
         {
-          "function": "TurnThemHeads",
+          "function": "TurnThemHeads@002e18c0",
           "offset": 224,
           "target_source": "SB/Core/x/xVec3.cpp",
           "target_function": "xVec3Normalize@00210d10",
           "symbol": "xVec3Normalize__FP5xVec3PC5xVec3"
         },
         {
-          "function": "TurnThemHeads",
+          "function": "TurnThemHeads@002e18c0",
           "offset": 372,
           "target_source": "SB/Core/x/xMath3.cpp",
           "target_function": "xMat3x3LookVec@001ef910",
           "symbol": "xMat3x3LookVec__FP7xMat3x3PC5xVec3"
         },
         {
-          "function": "TurnThemHeads",
+          "function": "TurnThemHeads@002e18c0",
           "offset": 388,
           "target_source": "SB/Core/x/xMath3.cpp",
           "target_function": "xMat3x3Transpose@001ef330",
           "symbol": "xMat3x3Transpose__FP7xMat3x3PC7xMat3x3"
         },
         {
-          "function": "TurnThemHeads",
+          "function": "TurnThemHeads@002e18c0",
           "offset": 404,
           "target_source": "SB/Core/x/xMath3.cpp",
           "target_function": "xMat3x3Mul@001ef150",
           "symbol": "xMat3x3Mul__FP7xMat3x3PC7xMat3x3PC7xMat3x3"
+        },
+        {
+          "function": "SetHome@002d6520",
+          "offset": 80,
+          "target_source": "SB/Game/zNPCTypeRobot.cpp",
+          "target_function": "NextBestNav@002d6620",
+          "symbol": "NextBestNav__8NPCArenaFP10zNPCCommonP10zMovePoint"
+        },
+        {
+          "function": "CornerOfArena@002e1360",
+          "offset": 824,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xrand@001ee540",
+          "symbol": "xrand__Fv"
         }
       ],
       "linkage_provenance": [
         {
-          "function": "DstSqFromHome",
+          "function": "DstSqFromHome@002d6bf0",
           "registry": "tu-corroborated-functions.json",
           "france_address": 2976752,
           "size": 144,
@@ -223684,7 +224112,7 @@
           ]
         },
         {
-          "function": "PctFromHome",
+          "function": "PctFromHome@002d6c80",
           "registry": "tu-corroborated-functions.json",
           "france_address": 2976896,
           "size": 120,
@@ -223710,7 +224138,7 @@
           ]
         },
         {
-          "function": "IncludesPos",
+          "function": "IncludesPos@002d6d00",
           "registry": "tu-corroborated-functions.json",
           "france_address": 2977024,
           "size": 176,
@@ -223736,7 +224164,7 @@
           ]
         },
         {
-          "function": "FacePos",
+          "function": "FacePos@002e17e0",
           "registry": "tu-corroborated-functions.json",
           "france_address": 3020768,
           "size": 220,
@@ -223762,7 +224190,7 @@
           ]
         },
         {
-          "function": "SetHome",
+          "function": "SetHome@002d64c0",
           "registry": "tu-corroborated-functions.json",
           "france_address": 2974912,
           "size": 92,
@@ -223788,7 +224216,7 @@
           ]
         },
         {
-          "function": "NextBestNav",
+          "function": "NextBestNav@002d6620",
           "registry": "tu-corroborated-functions.json",
           "france_address": 2975264,
           "size": 296,
@@ -223814,7 +224242,7 @@
           ]
         },
         {
-          "function": "NeedToCycle",
+          "function": "NeedToCycle@002d6ac0",
           "registry": "tu-corroborated-functions.json",
           "france_address": 2976448,
           "size": 304,
@@ -223840,7 +224268,7 @@
           ]
         },
         {
-          "function": "ShieldUpdate",
+          "function": "ShieldUpdate@002d87e0",
           "registry": "tu-corroborated-functions.json",
           "france_address": 2983904,
           "size": 608,
@@ -223866,7 +224294,7 @@
           ]
         },
         {
-          "function": "PosStacked",
+          "function": "PosStacked@002d9380",
           "registry": "tu-corroborated-functions.json",
           "france_address": 2986880,
           "size": 92,
@@ -223892,7 +224320,7 @@
           ]
         },
         {
-          "function": "Notice",
+          "function": "Notice@002d99b0",
           "registry": "tu-corroborated-functions.json",
           "france_address": 2988464,
           "size": 264,
@@ -223918,7 +224346,7 @@
           ]
         },
         {
-          "function": "Chk_IsBonked",
+          "function": "Chk_IsBonked@002d9ad0",
           "registry": "tu-corroborated-functions.json",
           "france_address": 2988752,
           "size": 368,
@@ -223944,7 +224372,7 @@
           ]
         },
         {
-          "function": "Unbonk",
+          "function": "Unbonk@002d9c40",
           "registry": "tu-corroborated-functions.json",
           "france_address": 2989120,
           "size": 108,
@@ -223970,7 +224398,7 @@
           ]
         },
         {
-          "function": "AdoptADoggie",
+          "function": "AdoptADoggie@002db8a0",
           "registry": "tu-corroborated-functions.json",
           "france_address": 2996384,
           "size": 88,
@@ -223996,7 +224424,7 @@
           ]
         },
         {
-          "function": "DuploNotice",
+          "function": "DuploNotice@002db900",
           "registry": "tu-corroborated-functions.json",
           "france_address": 2996480,
           "size": 168,
@@ -224022,7 +224450,7 @@
           ]
         },
         {
-          "function": "RepelMissile",
+          "function": "RepelMissile@002dd240",
           "registry": "tu-corroborated-functions.json",
           "france_address": 3002944,
           "size": 120,
@@ -224048,7 +224476,7 @@
           ]
         },
         {
-          "function": "BlinkerUpdate",
+          "function": "BlinkerUpdate@002e0600",
           "registry": "tu-corroborated-functions.json",
           "france_address": 3016192,
           "size": 88,
@@ -224074,7 +224502,7 @@
           ]
         },
         {
-          "function": "MoveTowardsArena",
+          "function": "MoveTowardsArena@002e1250",
           "registry": "tu-corroborated-functions.json",
           "france_address": 3019344,
           "size": 272,
@@ -224100,7 +224528,7 @@
           ]
         },
         {
-          "function": "FaceAntiPlayer",
+          "function": "FaceAntiPlayer@002e16e0",
           "registry": "tu-corroborated-functions.json",
           "france_address": 3020512,
           "size": 252,
@@ -224126,7 +224554,7 @@
           ]
         },
         {
-          "function": "TurnThemHeads",
+          "function": "TurnThemHeads@002e18c0",
           "registry": "tu-corroborated-functions.json",
           "france_address": 3020992,
           "size": 444,
@@ -224150,8 +224578,61 @@
               "reference_sha256": "17a810a8296a7c6d1d617059874e09b28e1f21956aa126e40ea7b9638a86a38f"
             }
           ]
+        },
+        {
+          "function": "SetHome@002d6520",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2975008,
+          "size": 244,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2973600,
+              "reference_sha256": "0ff5c6c44780c6e5927f4e663e341351dd8aca25e8d33c5d6655f7bca205379f"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2974896,
+              "reference_sha256": "9e9dbfd35de14e9f1dfa23d25cb9a7344c5f7e2cc0451f27177ab976ed81f07a"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2971584,
+              "reference_sha256": "13a882d27331611f09b5b703bb4d652b93570361cff9325bfbc65fc135329d5f"
+            }
+          ]
+        },
+        {
+          "function": "CornerOfArena@002e1360",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3019616,
+          "size": 896,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3018208,
+              "reference_sha256": "3a80da9d49d920b2ce84ded4e493e83fd384888bfc4af95a64c6039d1d281a8e"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3019504,
+              "reference_sha256": "0c3d06df67d3be20f86859e44f79acd98f4ff6a25f1b5d1f1452ca07dd2fb994"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3016192,
+              "reference_sha256": "61b0230adc8d73f056772a7b351636791ce194d4f1fe9e6f71317cf4defae979"
+            }
+          ]
         }
-      ]
+      ],
+      "selector": "name_address"
     }
   ]
 }
