@@ -74,14 +74,15 @@
     "Sound stop wrapper adds one complete eight-byte tail within an independently unique 176-byte cluster of three complete authenticated original members. Original ownership, member order, bounds, zero gaps and complete known anchors/callee are rechecked in all three references. Only the fixed iSndStop terminal jump target is masked; generic short-seed uniqueness rules are unchanged.",
     "Sandy clothesline adds one independently unique complete original goal. Twenty-five fixed complete calls and 35 typed spring-object, bounded sound-array and complete-string operands are checked in all three references. Original ownership, bounds, alignment and strict control flow remain required. No whole translation-unit or data extent is claimed.",
     "Sandy damage effect adds one independently unique complete call-free original body. The full four-element BDE record array and model RGB/Next member paths are checked through original declarations, array bounds and types in all three references. Original ownership, bounds, alignment and strict control flow are preserved. No data extent or whole translation-unit is claimed.",
-    "Sandy sit adds one independently unique complete original goal. Fourteen fixed complete calls and typed player carry/model paths, complete bone/sound arrays and strings corroborate every changed operand in all three references. Original ownership, bounds, alignment and strict control flow remain required. No whole translation-unit or data extent is claimed."
+    "Sandy sit adds one independently unique complete original goal. Fourteen fixed complete calls and typed player carry/model paths, complete bone/sound arrays and strings corroborate every changed operand in all three references. Original ownership, bounds, alignment and strict control flow remain required. No whole translation-unit or data extent is claimed.",
+    "Sandy control callbacks add four independently unique complete original bodies. Typed original ControlOff and model-pointer paths and fixed complete CalcNewDir/AnimTimeRemain dependencies corroborate every operand in all three references. Original ownership, bounds, zero alignment and strict control flow are rechecked. No whole translation-unit or data extent is claimed."
   ],
   "counts": {
-    "functions": 627,
-    "code_bytes": 375020,
-    "source_units": 91,
+    "functions": 631,
+    "code_bytes": 376396,
+    "source_units": 92,
     "rooted_direct_call_entries": 129,
-    "closed_return_bodies": 593,
+    "closed_return_bodies": 597,
     "reviewed_tail_wrappers": 2,
     "registered_callback_entries": 26,
     "reviewed_leaf_tail_functions": 11,
@@ -107,7 +108,7 @@
     "reviewed_pad_kill_tails": 1,
     "reviewed_hangable_tail_chains": 2,
     "reviewed_group_base_tails": 2,
-    "reviewed_complete_caller_callee_clusters": 85,
+    "reviewed_complete_caller_callee_clusters": 89,
     "reviewed_event_shuffle_tails": 5,
     "exact_null_argument_tail_wrappers": 3,
     "complete_tail_wrappers": 3
@@ -14731,6 +14732,216 @@
             "masked_instruction_count": 22
           },
           "terminal_alignment_bytes": 0
+        }
+      ],
+      "whole_translation_unit_claimed": false
+    },
+    {
+      "version": "SLUS-20680",
+      "complete_bodies": [
+        {
+          "source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "linkage_name": "getUpCB__FP5xGoalPvP11en_trantypefPv",
+          "source_address": 3343968,
+          "target_address": 3345360,
+          "size": 428,
+          "uniqueness": {
+            "matching_addresses": [
+              3345360
+            ],
+            "unchanged_anchor_offset": 256,
+            "unchanged_anchor_bytes": 172,
+            "masked_instruction_count": 3
+          },
+          "terminal_alignment_bytes": 4
+        },
+        {
+          "source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "linkage_name": "elbowDropCB__FP5xGoalPvP11en_trantypefPv",
+          "source_address": 3344912,
+          "target_address": 3346304,
+          "size": 384,
+          "uniqueness": {
+            "matching_addresses": [
+              3346304
+            ],
+            "unchanged_anchor_offset": 216,
+            "unchanged_anchor_bytes": 168,
+            "masked_instruction_count": 3
+          },
+          "terminal_alignment_bytes": 0
+        },
+        {
+          "source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "linkage_name": "tauntCB__FP5xGoalPvP11en_trantypefPv",
+          "source_address": 3346960,
+          "target_address": 3348352,
+          "size": 332,
+          "uniqueness": {
+            "matching_addresses": [
+              3348352
+            ],
+            "unchanged_anchor_offset": 212,
+            "unchanged_anchor_bytes": 120,
+            "masked_instruction_count": 3
+          },
+          "terminal_alignment_bytes": 4
+        },
+        {
+          "source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "linkage_name": "idleCB__FP5xGoalPvP11en_trantypefPv",
+          "source_address": 3347296,
+          "target_address": 3348688,
+          "size": 232,
+          "uniqueness": {
+            "matching_addresses": [
+              3348688
+            ],
+            "unchanged_anchor_offset": 116,
+            "unchanged_anchor_bytes": 116,
+            "masked_instruction_count": 2
+          },
+          "terminal_alignment_bytes": 8
+        }
+      ],
+      "whole_translation_unit_claimed": false
+    },
+    {
+      "version": "SLES-51968",
+      "complete_bodies": [
+        {
+          "source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "linkage_name": "getUpCB__FP5xGoalPvP11en_trantypefPv",
+          "source_address": 3345248,
+          "target_address": 3345360,
+          "size": 428,
+          "uniqueness": {
+            "matching_addresses": [
+              3345360
+            ],
+            "unchanged_anchor_offset": 256,
+            "unchanged_anchor_bytes": 172,
+            "masked_instruction_count": 3
+          },
+          "terminal_alignment_bytes": 4
+        },
+        {
+          "source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "linkage_name": "elbowDropCB__FP5xGoalPvP11en_trantypefPv",
+          "source_address": 3346192,
+          "target_address": 3346304,
+          "size": 384,
+          "uniqueness": {
+            "matching_addresses": [
+              3346304
+            ],
+            "unchanged_anchor_offset": 216,
+            "unchanged_anchor_bytes": 168,
+            "masked_instruction_count": 3
+          },
+          "terminal_alignment_bytes": 0
+        },
+        {
+          "source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "linkage_name": "tauntCB__FP5xGoalPvP11en_trantypefPv",
+          "source_address": 3348240,
+          "target_address": 3348352,
+          "size": 332,
+          "uniqueness": {
+            "matching_addresses": [
+              3348352
+            ],
+            "unchanged_anchor_offset": 212,
+            "unchanged_anchor_bytes": 120,
+            "masked_instruction_count": 3
+          },
+          "terminal_alignment_bytes": 4
+        },
+        {
+          "source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "linkage_name": "idleCB__FP5xGoalPvP11en_trantypefPv",
+          "source_address": 3348576,
+          "target_address": 3348688,
+          "size": 232,
+          "uniqueness": {
+            "matching_addresses": [
+              3348688
+            ],
+            "unchanged_anchor_offset": 116,
+            "unchanged_anchor_bytes": 116,
+            "masked_instruction_count": 2
+          },
+          "terminal_alignment_bytes": 8
+        }
+      ],
+      "whole_translation_unit_claimed": false
+    },
+    {
+      "version": "SLES-51970",
+      "complete_bodies": [
+        {
+          "source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "linkage_name": "getUpCB__FP5xGoalPvP11en_trantypefPv",
+          "source_address": 3342000,
+          "target_address": 3345360,
+          "size": 428,
+          "uniqueness": {
+            "matching_addresses": [
+              3345360
+            ],
+            "unchanged_anchor_offset": 256,
+            "unchanged_anchor_bytes": 172,
+            "masked_instruction_count": 3
+          },
+          "terminal_alignment_bytes": 4
+        },
+        {
+          "source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "linkage_name": "elbowDropCB__FP5xGoalPvP11en_trantypefPv",
+          "source_address": 3342944,
+          "target_address": 3346304,
+          "size": 384,
+          "uniqueness": {
+            "matching_addresses": [
+              3346304
+            ],
+            "unchanged_anchor_offset": 216,
+            "unchanged_anchor_bytes": 168,
+            "masked_instruction_count": 3
+          },
+          "terminal_alignment_bytes": 0
+        },
+        {
+          "source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "linkage_name": "tauntCB__FP5xGoalPvP11en_trantypefPv",
+          "source_address": 3344992,
+          "target_address": 3348352,
+          "size": 332,
+          "uniqueness": {
+            "matching_addresses": [
+              3348352
+            ],
+            "unchanged_anchor_offset": 212,
+            "unchanged_anchor_bytes": 120,
+            "masked_instruction_count": 3
+          },
+          "terminal_alignment_bytes": 4
+        },
+        {
+          "source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "linkage_name": "idleCB__FP5xGoalPvP11en_trantypefPv",
+          "source_address": 3345328,
+          "target_address": 3348688,
+          "size": 232,
+          "uniqueness": {
+            "matching_addresses": [
+              3348688
+            ],
+            "unchanged_anchor_offset": 116,
+            "unchanged_anchor_bytes": 116,
+            "masked_instruction_count": 2
+          },
+          "terminal_alignment_bytes": 8
         }
       ],
       "whole_translation_unit_claimed": false
@@ -194881,6 +195092,217 @@
       }
     },
     {
+      "name": "getUpCB",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3345360,
+      "size": 428,
+      "sha256": "0286f80d44fb7a3658ab976d91235ea58909713c73ae4f6e9cb8699286a2df85",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-complete-caller-callee-cluster",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3343968,
+          "source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "name": "getUpCB",
+          "linkage_name": "getUpCB__FP5xGoalPvP11en_trantypefPv",
+          "reference_sha256": "0ad505753cb2b9c7b431c355be1fa5b33cb0a2892b7f27c89d05a3c0b392c67d",
+          "data_address_operands": [
+            {
+              "hi_offset": 4,
+              "lo_offset": 56,
+              "opcode": 35,
+              "reference_address": 5427220,
+              "target_address": 5426196,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 248,
+              "lo_offset": 252,
+              "opcode": 35,
+              "reference_address": 5431528,
+              "target_address": 5430504,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 116,
+              "opcode": 3,
+              "reference_address": 2952288,
+              "target_address": 2953696
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3345248,
+          "source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "name": "getUpCB",
+          "linkage_name": "getUpCB__FP5xGoalPvP11en_trantypefPv",
+          "reference_sha256": "1a96fbc4d064c1a0a3ee54736937a37e4d7aae36027d2391abe3f6762409889a",
+          "data_address_operands": [
+            {
+              "hi_offset": 4,
+              "lo_offset": 56,
+              "opcode": 35,
+              "reference_address": 5425940,
+              "target_address": 5426196,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 248,
+              "lo_offset": 252,
+              "opcode": 35,
+              "reference_address": 5430248,
+              "target_address": 5430504,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 116,
+              "opcode": 3,
+              "reference_address": 2953584,
+              "target_address": 2953696
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3342000,
+          "source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "name": "getUpCB",
+          "linkage_name": "getUpCB__FP5xGoalPvP11en_trantypefPv",
+          "reference_sha256": "c60c4eeba611762b58e793a615fdaa4dec2f22bbdce4ab1361e7a13dcbe55c44",
+          "data_address_operands": [
+            {
+              "hi_offset": 4,
+              "lo_offset": 56,
+              "opcode": 35,
+              "reference_address": 5424404,
+              "target_address": 5426196,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 248,
+              "lo_offset": 252,
+              "opcode": 35,
+              "reference_address": 5428712,
+              "target_address": 5430504,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 116,
+              "opcode": 3,
+              "reference_address": 2950272,
+              "target_address": 2953696
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "proof_scope": "complete_original_sandy_control_callbacks",
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3345780
+          ],
+          "direct_or_indirect_calls": [
+            3345476
+          ],
+          "branches": [
+            [
+              3345508,
+              3345752
+            ],
+            [
+              3345524,
+              3345552
+            ],
+            [
+              3345540,
+              3345624
+            ],
+            [
+              3345556,
+              3345584
+            ],
+            [
+              3345572,
+              3345624
+            ],
+            [
+              3345588,
+              3345608
+            ],
+            [
+              3345600,
+              3345624
+            ],
+            [
+              3345616,
+              3345648
+            ],
+            [
+              3345636,
+              3345752
+            ],
+            [
+              3345656,
+              3345696
+            ],
+            [
+              3345684,
+              3345752
+            ],
+            [
+              3345712,
+              3345736
+            ],
+            [
+              3345728,
+              3345752
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              3345360,
+              -80
+            ],
+            [
+              3345784,
+              80
+            ]
+          ],
+          "ra_saves": [
+            [
+              3345368,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              3345756,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [
+            3345644,
+            3345692
+          ],
+          "following_zero_alignment": 4
+        },
+        "whole_translation_unit_claimed": false
+      }
+    },
+    {
       "name": "leapCB",
       "source": "SB/Game/zNPCTypeBossSandy.cpp",
       "address": 3346112,
@@ -195004,6 +195426,204 @@
       }
     },
     {
+      "name": "elbowDropCB",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3346304,
+      "size": 384,
+      "sha256": "a16bda77f761741ff88c17d24929065b05700402c4c15aec9e32746c2e41a002",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-complete-caller-callee-cluster",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3344912,
+          "source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "name": "elbowDropCB",
+          "linkage_name": "elbowDropCB__FP5xGoalPvP11en_trantypefPv",
+          "reference_sha256": "1f8ab2faf7b56b3d33eb6269641ef49288501d2d6121438fe2fd9a3647bb6150",
+          "data_address_operands": [
+            {
+              "hi_offset": 104,
+              "lo_offset": 116,
+              "opcode": 35,
+              "reference_address": 5427220,
+              "target_address": 5426196,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 208,
+              "lo_offset": 212,
+              "opcode": 35,
+              "reference_address": 5431528,
+              "target_address": 5430504,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 172,
+              "opcode": 3,
+              "reference_address": 2952288,
+              "target_address": 2953696
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3346192,
+          "source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "name": "elbowDropCB",
+          "linkage_name": "elbowDropCB__FP5xGoalPvP11en_trantypefPv",
+          "reference_sha256": "a03c7282922d87a23640a377b1499ee0c8ec5284428d3747ae4459834ff4e9c7",
+          "data_address_operands": [
+            {
+              "hi_offset": 104,
+              "lo_offset": 116,
+              "opcode": 35,
+              "reference_address": 5425940,
+              "target_address": 5426196,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 208,
+              "lo_offset": 212,
+              "opcode": 35,
+              "reference_address": 5430248,
+              "target_address": 5430504,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 172,
+              "opcode": 3,
+              "reference_address": 2953584,
+              "target_address": 2953696
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3342944,
+          "source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "name": "elbowDropCB",
+          "linkage_name": "elbowDropCB__FP5xGoalPvP11en_trantypefPv",
+          "reference_sha256": "9eb5ed140fe280f1a29f0d1406f1853cfa702c11cff548c4c74dbac256ebcf95",
+          "data_address_operands": [
+            {
+              "hi_offset": 104,
+              "lo_offset": 116,
+              "opcode": 35,
+              "reference_address": 5424404,
+              "target_address": 5426196,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 208,
+              "lo_offset": 212,
+              "opcode": 35,
+              "reference_address": 5428712,
+              "target_address": 5430504,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 172,
+              "opcode": 3,
+              "reference_address": 2950272,
+              "target_address": 2953696
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "proof_scope": "complete_original_sandy_control_callbacks",
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3346680
+          ],
+          "direct_or_indirect_calls": [
+            3346476
+          ],
+          "branches": [
+            [
+              3346368,
+              3346408
+            ],
+            [
+              3346384,
+              3346408
+            ],
+            [
+              3346400,
+              3346656
+            ],
+            [
+              3346508,
+              3346648
+            ],
+            [
+              3346520,
+              3346544
+            ],
+            [
+              3346536,
+              3346648
+            ],
+            [
+              3346552,
+              3346592
+            ],
+            [
+              3346580,
+              3346648
+            ],
+            [
+              3346608,
+              3346632
+            ],
+            [
+              3346624,
+              3346648
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              3346304,
+              -80
+            ],
+            [
+              3346684,
+              80
+            ]
+          ],
+          "ra_saves": [
+            [
+              3346312,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              3346656,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [
+            3346588
+          ],
+          "following_zero_alignment": 0
+        },
+        "whole_translation_unit_claimed": false
+      }
+    },
+    {
       "name": "noHeadCB",
       "source": "SB/Game/zNPCTypeBossSandy.cpp",
       "address": 3346688,
@@ -195116,6 +195736,349 @@
           ],
           "unreachable_zero_words": [],
           "following_zero_alignment": 12
+        },
+        "whole_translation_unit_claimed": false
+      }
+    },
+    {
+      "name": "tauntCB",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3348352,
+      "size": 332,
+      "sha256": "70ca17b6c05bf64b29f59b99e2947f035fb13217197a48631b5c25cd0e6ea2ab",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-complete-caller-callee-cluster",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3346960,
+          "source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "name": "tauntCB",
+          "linkage_name": "tauntCB__FP5xGoalPvP11en_trantypefPv",
+          "reference_sha256": "83f1924f04252a9b7e2b77a536a4da76bcc198be315facb5e1305dbabca4f904",
+          "data_address_operands": [
+            {
+              "hi_offset": 104,
+              "lo_offset": 116,
+              "opcode": 35,
+              "reference_address": 5427220,
+              "target_address": 5426196,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 204,
+              "lo_offset": 208,
+              "opcode": 35,
+              "reference_address": 5431528,
+              "target_address": 5430504,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 168,
+              "opcode": 3,
+              "reference_address": 2952288,
+              "target_address": 2953696
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3348240,
+          "source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "name": "tauntCB",
+          "linkage_name": "tauntCB__FP5xGoalPvP11en_trantypefPv",
+          "reference_sha256": "4e6d569dcc25c1dac9678da507d240f409528693b01109214ee16c44fe172185",
+          "data_address_operands": [
+            {
+              "hi_offset": 104,
+              "lo_offset": 116,
+              "opcode": 35,
+              "reference_address": 5425940,
+              "target_address": 5426196,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 204,
+              "lo_offset": 208,
+              "opcode": 35,
+              "reference_address": 5430248,
+              "target_address": 5430504,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 168,
+              "opcode": 3,
+              "reference_address": 2953584,
+              "target_address": 2953696
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3344992,
+          "source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "name": "tauntCB",
+          "linkage_name": "tauntCB__FP5xGoalPvP11en_trantypefPv",
+          "reference_sha256": "6c3dcf6eb37a9a3cea51f38f76301f39bf3a1e79780ed34bd3f73eb875efce9b",
+          "data_address_operands": [
+            {
+              "hi_offset": 104,
+              "lo_offset": 116,
+              "opcode": 35,
+              "reference_address": 5424404,
+              "target_address": 5426196,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 204,
+              "lo_offset": 208,
+              "opcode": 35,
+              "reference_address": 5428712,
+              "target_address": 5430504,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 168,
+              "opcode": 3,
+              "reference_address": 2950272,
+              "target_address": 2953696
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "proof_scope": "complete_original_sandy_control_callbacks",
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3348676
+          ],
+          "direct_or_indirect_calls": [
+            3348520
+          ],
+          "branches": [
+            [
+              3348412,
+              3348456
+            ],
+            [
+              3348428,
+              3348456
+            ],
+            [
+              3348444,
+              3348656
+            ],
+            [
+              3348552,
+              3348648
+            ],
+            [
+              3348564,
+              3348592
+            ],
+            [
+              3348580,
+              3348648
+            ],
+            [
+              3348608,
+              3348632
+            ],
+            [
+              3348624,
+              3348648
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              3348352,
+              -64
+            ],
+            [
+              3348680,
+              64
+            ]
+          ],
+          "ra_saves": [
+            [
+              3348360,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              3348656,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [
+            3348452,
+            3348588
+          ],
+          "following_zero_alignment": 4
+        },
+        "whole_translation_unit_claimed": false
+      }
+    },
+    {
+      "name": "idleCB",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3348688,
+      "size": 232,
+      "sha256": "5d9ae65248ed60ac76fc4da24e87fab8edc6f96a0533e1da8640d6b18ae52628",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-complete-caller-callee-cluster",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3347296,
+          "source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "name": "idleCB",
+          "linkage_name": "idleCB__FP5xGoalPvP11en_trantypefPv",
+          "reference_sha256": "2e25227f4ab05f8fd681cab6a5e3f25293b10dc4b86f9f24340d6d70956b857b",
+          "data_address_operands": [
+            {
+              "hi_offset": 32,
+              "lo_offset": 36,
+              "opcode": 35,
+              "reference_address": 5431528,
+              "target_address": 5430504,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 88,
+              "lo_offset": 112,
+              "opcode": 35,
+              "reference_address": 5427220,
+              "target_address": 5426196,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3348576,
+          "source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "name": "idleCB",
+          "linkage_name": "idleCB__FP5xGoalPvP11en_trantypefPv",
+          "reference_sha256": "a0a2589100b6dfccda78869b865c31f43a9262dc9462826bd174a24d5bf6f312",
+          "data_address_operands": [
+            {
+              "hi_offset": 32,
+              "lo_offset": 36,
+              "opcode": 35,
+              "reference_address": 5430248,
+              "target_address": 5430504,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 88,
+              "lo_offset": 112,
+              "opcode": 35,
+              "reference_address": 5425940,
+              "target_address": 5426196,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3345328,
+          "source": "SB/Game/zNPCTypeBossSandy.cpp",
+          "name": "idleCB",
+          "linkage_name": "idleCB__FP5xGoalPvP11en_trantypefPv",
+          "reference_sha256": "a8f271cea03fe983197c6b4b69f9b8436692254cefaba9432775ae97624d02b6",
+          "data_address_operands": [
+            {
+              "hi_offset": 32,
+              "lo_offset": 36,
+              "opcode": 35,
+              "reference_address": 5428712,
+              "target_address": 5430504,
+              "storage": "zero_fill"
+            },
+            {
+              "hi_offset": 88,
+              "lo_offset": 112,
+              "opcode": 35,
+              "reference_address": 5424404,
+              "target_address": 5426196,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": []
+        }
+      ],
+      "corroboration": {
+        "proof_scope": "complete_original_sandy_control_callbacks",
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3348912
+          ],
+          "direct_or_indirect_calls": [],
+          "branches": [
+            [
+              3348704,
+              3348720
+            ],
+            [
+              3348712,
+              3348912
+            ],
+            [
+              3348728,
+              3348744
+            ],
+            [
+              3348736,
+              3348912
+            ],
+            [
+              3348748,
+              3348768
+            ],
+            [
+              3348756,
+              3348912
+            ],
+            [
+              3348848,
+              3348912
+            ],
+            [
+              3348872,
+              3348896
+            ],
+            [
+              3348888,
+              3348912
+            ]
+          ],
+          "stack_adjustments": [],
+          "ra_saves": [],
+          "ra_loads": [],
+          "unreachable_zero_words": [
+            3348764
+          ],
+          "following_zero_alignment": 8
         },
         "whole_translation_unit_claimed": false
       }
@@ -456923,6 +457886,1099 @@
             "address": 3088976,
             "size": 56,
             "sha256": "e0769ce26a0fad5734ed48ea0151238a716c55e78fef9f0dcc5788c274a0fe8b"
+          }
+        }
+      ]
+    }
+  ],
+  "sandy_control_callbacks_data_proofs": [
+    {
+      "version": "SLUS-20680",
+      "typed_player_fields": {
+        "model_field": {
+          "reference_address": 5427220,
+          "target_address": 5426196,
+          "globals": {
+            "reference_address": 5425392,
+            "type": "zGlobals",
+            "size": 8272,
+            "declaration_die": 6593303
+          },
+          "path": [
+            {
+              "owner": "zGlobals",
+              "member": "player",
+              "offset": 1792,
+              "type_attributes": {
+                "7": 6609022
+              }
+            },
+            {
+              "owner": "zPlayerGlobals",
+              "member": "ent",
+              "offset": 0,
+              "type_attributes": {
+                "7": 6594108
+              }
+            },
+            {
+              "owner": "zEnt",
+              "base": "xEnt",
+              "offset": 0,
+              "type_die": 6594476
+            },
+            {
+              "owner": "xEnt",
+              "member": "model",
+              "offset": 36,
+              "type_attributes": {
+                "8": "01e7346500"
+              }
+            }
+          ],
+          "component_offset": 1828,
+          "field_size": 4,
+          "data_extent_promoted": false,
+          "anchor": {
+            "source": "SB/Game/zNPCGoalStd.cpp",
+            "name": "CalcNewDir",
+            "address": 2912416,
+            "size": 624,
+            "sha256": "9ec0e90e42c2657dc34eb4105c443ea96cd6497ea5802fc8c0a48db7d1cea3c0"
+          }
+        },
+        "control_field": {
+          "reference_address": 5431528,
+          "target_address": 5430504,
+          "member": {
+            "name": "ControlOff",
+            "offset": 4344,
+            "die_offset": 984695,
+            "location": "04f810000007",
+            "type_attributes": {
+              "5": 9
+            },
+            "owner": "zPlayerGlobals",
+            "absolute_offset": 6136
+          },
+          "path": [
+            "globals",
+            "player",
+            "ControlOff"
+          ],
+          "component_offsets": [
+            1792,
+            4344
+          ],
+          "field_size": 4,
+          "data_extent_promoted": false
+        }
+      },
+      "operands": [
+        {
+          "caller": "getUpCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3345360,
+          "path": [
+            {
+              "owner": "zGlobals",
+              "member": "player",
+              "offset": 1792,
+              "type_attributes": {
+                "7": 6609022
+              }
+            },
+            {
+              "owner": "zPlayerGlobals",
+              "member": "ent",
+              "offset": 0,
+              "type_attributes": {
+                "7": 6594108
+              }
+            },
+            {
+              "owner": "zEnt",
+              "base": "xEnt",
+              "offset": 0,
+              "type_die": 6594476
+            },
+            {
+              "owner": "xEnt",
+              "member": "model",
+              "offset": 36,
+              "type_attributes": {
+                "8": "01e7346500"
+              }
+            }
+          ],
+          "hi_offset": 4,
+          "lo_offset": 56,
+          "opcode": 35,
+          "reference_address": 5427220,
+          "target_address": 5426196,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "getUpCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3345360,
+          "path": [
+            "globals",
+            "player",
+            "ControlOff"
+          ],
+          "hi_offset": 248,
+          "lo_offset": 252,
+          "opcode": 35,
+          "reference_address": 5431528,
+          "target_address": 5430504,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "elbowDropCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3346304,
+          "path": [
+            {
+              "owner": "zGlobals",
+              "member": "player",
+              "offset": 1792,
+              "type_attributes": {
+                "7": 6609022
+              }
+            },
+            {
+              "owner": "zPlayerGlobals",
+              "member": "ent",
+              "offset": 0,
+              "type_attributes": {
+                "7": 6594108
+              }
+            },
+            {
+              "owner": "zEnt",
+              "base": "xEnt",
+              "offset": 0,
+              "type_die": 6594476
+            },
+            {
+              "owner": "xEnt",
+              "member": "model",
+              "offset": 36,
+              "type_attributes": {
+                "8": "01e7346500"
+              }
+            }
+          ],
+          "hi_offset": 104,
+          "lo_offset": 116,
+          "opcode": 35,
+          "reference_address": 5427220,
+          "target_address": 5426196,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "elbowDropCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3346304,
+          "path": [
+            "globals",
+            "player",
+            "ControlOff"
+          ],
+          "hi_offset": 208,
+          "lo_offset": 212,
+          "opcode": 35,
+          "reference_address": 5431528,
+          "target_address": 5430504,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "tauntCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3348352,
+          "path": [
+            {
+              "owner": "zGlobals",
+              "member": "player",
+              "offset": 1792,
+              "type_attributes": {
+                "7": 6609022
+              }
+            },
+            {
+              "owner": "zPlayerGlobals",
+              "member": "ent",
+              "offset": 0,
+              "type_attributes": {
+                "7": 6594108
+              }
+            },
+            {
+              "owner": "zEnt",
+              "base": "xEnt",
+              "offset": 0,
+              "type_die": 6594476
+            },
+            {
+              "owner": "xEnt",
+              "member": "model",
+              "offset": 36,
+              "type_attributes": {
+                "8": "01e7346500"
+              }
+            }
+          ],
+          "hi_offset": 104,
+          "lo_offset": 116,
+          "opcode": 35,
+          "reference_address": 5427220,
+          "target_address": 5426196,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "tauntCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3348352,
+          "path": [
+            "globals",
+            "player",
+            "ControlOff"
+          ],
+          "hi_offset": 204,
+          "lo_offset": 208,
+          "opcode": 35,
+          "reference_address": 5431528,
+          "target_address": 5430504,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "idleCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3348688,
+          "path": [
+            "globals",
+            "player",
+            "ControlOff"
+          ],
+          "hi_offset": 32,
+          "lo_offset": 36,
+          "opcode": 35,
+          "reference_address": 5431528,
+          "target_address": 5430504,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "idleCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3348688,
+          "path": [
+            {
+              "owner": "zGlobals",
+              "member": "player",
+              "offset": 1792,
+              "type_attributes": {
+                "7": 6609022
+              }
+            },
+            {
+              "owner": "zPlayerGlobals",
+              "member": "ent",
+              "offset": 0,
+              "type_attributes": {
+                "7": 6594108
+              }
+            },
+            {
+              "owner": "zEnt",
+              "base": "xEnt",
+              "offset": 0,
+              "type_die": 6594476
+            },
+            {
+              "owner": "xEnt",
+              "member": "model",
+              "offset": 36,
+              "type_attributes": {
+                "8": "01e7346500"
+              }
+            }
+          ],
+          "hi_offset": 88,
+          "lo_offset": 112,
+          "opcode": 35,
+          "reference_address": 5427220,
+          "target_address": 5426196,
+          "storage": "zero_fill"
+        }
+      ]
+    },
+    {
+      "version": "SLES-51968",
+      "typed_player_fields": {
+        "model_field": {
+          "reference_address": 5425940,
+          "target_address": 5426196,
+          "globals": {
+            "reference_address": 5424112,
+            "type": "zGlobals",
+            "size": 8272,
+            "declaration_die": 6593761
+          },
+          "path": [
+            {
+              "owner": "zGlobals",
+              "member": "player",
+              "offset": 1792,
+              "type_attributes": {
+                "7": 6609480
+              }
+            },
+            {
+              "owner": "zPlayerGlobals",
+              "member": "ent",
+              "offset": 0,
+              "type_attributes": {
+                "7": 6594566
+              }
+            },
+            {
+              "owner": "zEnt",
+              "base": "xEnt",
+              "offset": 0,
+              "type_die": 6594934
+            },
+            {
+              "owner": "xEnt",
+              "member": "model",
+              "offset": 36,
+              "type_attributes": {
+                "8": "01b1366500"
+              }
+            }
+          ],
+          "component_offset": 1828,
+          "field_size": 4,
+          "data_extent_promoted": false,
+          "anchor": {
+            "source": "SB/Game/zNPCGoalStd.cpp",
+            "name": "CalcNewDir",
+            "address": 2912416,
+            "size": 624,
+            "sha256": "9ec0e90e42c2657dc34eb4105c443ea96cd6497ea5802fc8c0a48db7d1cea3c0"
+          }
+        },
+        "control_field": {
+          "reference_address": 5430248,
+          "target_address": 5430504,
+          "member": {
+            "name": "ControlOff",
+            "offset": 4344,
+            "die_offset": 984654,
+            "location": "04f810000007",
+            "type_attributes": {
+              "5": 9
+            },
+            "owner": "zPlayerGlobals",
+            "absolute_offset": 6136
+          },
+          "path": [
+            "globals",
+            "player",
+            "ControlOff"
+          ],
+          "component_offsets": [
+            1792,
+            4344
+          ],
+          "field_size": 4,
+          "data_extent_promoted": false
+        }
+      },
+      "operands": [
+        {
+          "caller": "getUpCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3345360,
+          "path": [
+            {
+              "owner": "zGlobals",
+              "member": "player",
+              "offset": 1792,
+              "type_attributes": {
+                "7": 6609480
+              }
+            },
+            {
+              "owner": "zPlayerGlobals",
+              "member": "ent",
+              "offset": 0,
+              "type_attributes": {
+                "7": 6594566
+              }
+            },
+            {
+              "owner": "zEnt",
+              "base": "xEnt",
+              "offset": 0,
+              "type_die": 6594934
+            },
+            {
+              "owner": "xEnt",
+              "member": "model",
+              "offset": 36,
+              "type_attributes": {
+                "8": "01b1366500"
+              }
+            }
+          ],
+          "hi_offset": 4,
+          "lo_offset": 56,
+          "opcode": 35,
+          "reference_address": 5425940,
+          "target_address": 5426196,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "getUpCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3345360,
+          "path": [
+            "globals",
+            "player",
+            "ControlOff"
+          ],
+          "hi_offset": 248,
+          "lo_offset": 252,
+          "opcode": 35,
+          "reference_address": 5430248,
+          "target_address": 5430504,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "elbowDropCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3346304,
+          "path": [
+            {
+              "owner": "zGlobals",
+              "member": "player",
+              "offset": 1792,
+              "type_attributes": {
+                "7": 6609480
+              }
+            },
+            {
+              "owner": "zPlayerGlobals",
+              "member": "ent",
+              "offset": 0,
+              "type_attributes": {
+                "7": 6594566
+              }
+            },
+            {
+              "owner": "zEnt",
+              "base": "xEnt",
+              "offset": 0,
+              "type_die": 6594934
+            },
+            {
+              "owner": "xEnt",
+              "member": "model",
+              "offset": 36,
+              "type_attributes": {
+                "8": "01b1366500"
+              }
+            }
+          ],
+          "hi_offset": 104,
+          "lo_offset": 116,
+          "opcode": 35,
+          "reference_address": 5425940,
+          "target_address": 5426196,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "elbowDropCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3346304,
+          "path": [
+            "globals",
+            "player",
+            "ControlOff"
+          ],
+          "hi_offset": 208,
+          "lo_offset": 212,
+          "opcode": 35,
+          "reference_address": 5430248,
+          "target_address": 5430504,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "tauntCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3348352,
+          "path": [
+            {
+              "owner": "zGlobals",
+              "member": "player",
+              "offset": 1792,
+              "type_attributes": {
+                "7": 6609480
+              }
+            },
+            {
+              "owner": "zPlayerGlobals",
+              "member": "ent",
+              "offset": 0,
+              "type_attributes": {
+                "7": 6594566
+              }
+            },
+            {
+              "owner": "zEnt",
+              "base": "xEnt",
+              "offset": 0,
+              "type_die": 6594934
+            },
+            {
+              "owner": "xEnt",
+              "member": "model",
+              "offset": 36,
+              "type_attributes": {
+                "8": "01b1366500"
+              }
+            }
+          ],
+          "hi_offset": 104,
+          "lo_offset": 116,
+          "opcode": 35,
+          "reference_address": 5425940,
+          "target_address": 5426196,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "tauntCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3348352,
+          "path": [
+            "globals",
+            "player",
+            "ControlOff"
+          ],
+          "hi_offset": 204,
+          "lo_offset": 208,
+          "opcode": 35,
+          "reference_address": 5430248,
+          "target_address": 5430504,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "idleCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3348688,
+          "path": [
+            "globals",
+            "player",
+            "ControlOff"
+          ],
+          "hi_offset": 32,
+          "lo_offset": 36,
+          "opcode": 35,
+          "reference_address": 5430248,
+          "target_address": 5430504,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "idleCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3348688,
+          "path": [
+            {
+              "owner": "zGlobals",
+              "member": "player",
+              "offset": 1792,
+              "type_attributes": {
+                "7": 6609480
+              }
+            },
+            {
+              "owner": "zPlayerGlobals",
+              "member": "ent",
+              "offset": 0,
+              "type_attributes": {
+                "7": 6594566
+              }
+            },
+            {
+              "owner": "zEnt",
+              "base": "xEnt",
+              "offset": 0,
+              "type_die": 6594934
+            },
+            {
+              "owner": "xEnt",
+              "member": "model",
+              "offset": 36,
+              "type_attributes": {
+                "8": "01b1366500"
+              }
+            }
+          ],
+          "hi_offset": 88,
+          "lo_offset": 112,
+          "opcode": 35,
+          "reference_address": 5425940,
+          "target_address": 5426196,
+          "storage": "zero_fill"
+        }
+      ]
+    },
+    {
+      "version": "SLES-51970",
+      "typed_player_fields": {
+        "model_field": {
+          "reference_address": 5424404,
+          "target_address": 5426196,
+          "globals": {
+            "reference_address": 5422576,
+            "type": "zGlobals",
+            "size": 8272,
+            "declaration_die": 6594607
+          },
+          "path": [
+            {
+              "owner": "zGlobals",
+              "member": "player",
+              "offset": 1792,
+              "type_attributes": {
+                "7": 6610326
+              }
+            },
+            {
+              "owner": "zPlayerGlobals",
+              "member": "ent",
+              "offset": 0,
+              "type_attributes": {
+                "7": 6595412
+              }
+            },
+            {
+              "owner": "zEnt",
+              "base": "xEnt",
+              "offset": 0,
+              "type_die": 6595780
+            },
+            {
+              "owner": "xEnt",
+              "member": "model",
+              "offset": 36,
+              "type_attributes": {
+                "8": "01ff396500"
+              }
+            }
+          ],
+          "component_offset": 1828,
+          "field_size": 4,
+          "data_extent_promoted": false,
+          "anchor": {
+            "source": "SB/Game/zNPCGoalStd.cpp",
+            "name": "CalcNewDir",
+            "address": 2912416,
+            "size": 624,
+            "sha256": "9ec0e90e42c2657dc34eb4105c443ea96cd6497ea5802fc8c0a48db7d1cea3c0"
+          }
+        },
+        "control_field": {
+          "reference_address": 5428712,
+          "target_address": 5430504,
+          "member": {
+            "name": "ControlOff",
+            "offset": 4344,
+            "die_offset": 980454,
+            "location": "04f810000007",
+            "type_attributes": {
+              "5": 9
+            },
+            "owner": "zPlayerGlobals",
+            "absolute_offset": 6136
+          },
+          "path": [
+            "globals",
+            "player",
+            "ControlOff"
+          ],
+          "component_offsets": [
+            1792,
+            4344
+          ],
+          "field_size": 4,
+          "data_extent_promoted": false
+        }
+      },
+      "operands": [
+        {
+          "caller": "getUpCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3345360,
+          "path": [
+            {
+              "owner": "zGlobals",
+              "member": "player",
+              "offset": 1792,
+              "type_attributes": {
+                "7": 6610326
+              }
+            },
+            {
+              "owner": "zPlayerGlobals",
+              "member": "ent",
+              "offset": 0,
+              "type_attributes": {
+                "7": 6595412
+              }
+            },
+            {
+              "owner": "zEnt",
+              "base": "xEnt",
+              "offset": 0,
+              "type_die": 6595780
+            },
+            {
+              "owner": "xEnt",
+              "member": "model",
+              "offset": 36,
+              "type_attributes": {
+                "8": "01ff396500"
+              }
+            }
+          ],
+          "hi_offset": 4,
+          "lo_offset": 56,
+          "opcode": 35,
+          "reference_address": 5424404,
+          "target_address": 5426196,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "getUpCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3345360,
+          "path": [
+            "globals",
+            "player",
+            "ControlOff"
+          ],
+          "hi_offset": 248,
+          "lo_offset": 252,
+          "opcode": 35,
+          "reference_address": 5428712,
+          "target_address": 5430504,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "elbowDropCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3346304,
+          "path": [
+            {
+              "owner": "zGlobals",
+              "member": "player",
+              "offset": 1792,
+              "type_attributes": {
+                "7": 6610326
+              }
+            },
+            {
+              "owner": "zPlayerGlobals",
+              "member": "ent",
+              "offset": 0,
+              "type_attributes": {
+                "7": 6595412
+              }
+            },
+            {
+              "owner": "zEnt",
+              "base": "xEnt",
+              "offset": 0,
+              "type_die": 6595780
+            },
+            {
+              "owner": "xEnt",
+              "member": "model",
+              "offset": 36,
+              "type_attributes": {
+                "8": "01ff396500"
+              }
+            }
+          ],
+          "hi_offset": 104,
+          "lo_offset": 116,
+          "opcode": 35,
+          "reference_address": 5424404,
+          "target_address": 5426196,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "elbowDropCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3346304,
+          "path": [
+            "globals",
+            "player",
+            "ControlOff"
+          ],
+          "hi_offset": 208,
+          "lo_offset": 212,
+          "opcode": 35,
+          "reference_address": 5428712,
+          "target_address": 5430504,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "tauntCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3348352,
+          "path": [
+            {
+              "owner": "zGlobals",
+              "member": "player",
+              "offset": 1792,
+              "type_attributes": {
+                "7": 6610326
+              }
+            },
+            {
+              "owner": "zPlayerGlobals",
+              "member": "ent",
+              "offset": 0,
+              "type_attributes": {
+                "7": 6595412
+              }
+            },
+            {
+              "owner": "zEnt",
+              "base": "xEnt",
+              "offset": 0,
+              "type_die": 6595780
+            },
+            {
+              "owner": "xEnt",
+              "member": "model",
+              "offset": 36,
+              "type_attributes": {
+                "8": "01ff396500"
+              }
+            }
+          ],
+          "hi_offset": 104,
+          "lo_offset": 116,
+          "opcode": 35,
+          "reference_address": 5424404,
+          "target_address": 5426196,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "tauntCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3348352,
+          "path": [
+            "globals",
+            "player",
+            "ControlOff"
+          ],
+          "hi_offset": 204,
+          "lo_offset": 208,
+          "opcode": 35,
+          "reference_address": 5428712,
+          "target_address": 5430504,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "idleCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3348688,
+          "path": [
+            "globals",
+            "player",
+            "ControlOff"
+          ],
+          "hi_offset": 32,
+          "lo_offset": 36,
+          "opcode": 35,
+          "reference_address": 5428712,
+          "target_address": 5430504,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "idleCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3348688,
+          "path": [
+            {
+              "owner": "zGlobals",
+              "member": "player",
+              "offset": 1792,
+              "type_attributes": {
+                "7": 6610326
+              }
+            },
+            {
+              "owner": "zPlayerGlobals",
+              "member": "ent",
+              "offset": 0,
+              "type_attributes": {
+                "7": 6595412
+              }
+            },
+            {
+              "owner": "zEnt",
+              "base": "xEnt",
+              "offset": 0,
+              "type_die": 6595780
+            },
+            {
+              "owner": "xEnt",
+              "member": "model",
+              "offset": 36,
+              "type_attributes": {
+                "8": "01ff396500"
+              }
+            }
+          ],
+          "hi_offset": 88,
+          "lo_offset": 112,
+          "opcode": 35,
+          "reference_address": 5424404,
+          "target_address": 5426196,
+          "storage": "zero_fill"
+        }
+      ]
+    }
+  ],
+  "sandy_control_callbacks_call_proofs": [
+    {
+      "version": "SLUS-20680",
+      "complete_callees": [
+        {
+          "caller": "getUpCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3345360,
+          "offset": 116,
+          "opcode": 3,
+          "reference_address": 2952288,
+          "target_address": 2953696,
+          "callee": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "AnimTimeRemain",
+            "address": 2953696,
+            "size": 104,
+            "sha256": "52d1688dac93c46a1423f3f0d813dbad0694bc17aa5e8973fb5909dd678d54a8"
+          }
+        },
+        {
+          "caller": "elbowDropCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3346304,
+          "offset": 172,
+          "opcode": 3,
+          "reference_address": 2952288,
+          "target_address": 2953696,
+          "callee": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "AnimTimeRemain",
+            "address": 2953696,
+            "size": 104,
+            "sha256": "52d1688dac93c46a1423f3f0d813dbad0694bc17aa5e8973fb5909dd678d54a8"
+          }
+        },
+        {
+          "caller": "tauntCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3348352,
+          "offset": 168,
+          "opcode": 3,
+          "reference_address": 2952288,
+          "target_address": 2953696,
+          "callee": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "AnimTimeRemain",
+            "address": 2953696,
+            "size": 104,
+            "sha256": "52d1688dac93c46a1423f3f0d813dbad0694bc17aa5e8973fb5909dd678d54a8"
+          }
+        }
+      ]
+    },
+    {
+      "version": "SLES-51968",
+      "complete_callees": [
+        {
+          "caller": "getUpCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3345360,
+          "offset": 116,
+          "opcode": 3,
+          "reference_address": 2953584,
+          "target_address": 2953696,
+          "callee": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "AnimTimeRemain",
+            "address": 2953696,
+            "size": 104,
+            "sha256": "52d1688dac93c46a1423f3f0d813dbad0694bc17aa5e8973fb5909dd678d54a8"
+          }
+        },
+        {
+          "caller": "elbowDropCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3346304,
+          "offset": 172,
+          "opcode": 3,
+          "reference_address": 2953584,
+          "target_address": 2953696,
+          "callee": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "AnimTimeRemain",
+            "address": 2953696,
+            "size": 104,
+            "sha256": "52d1688dac93c46a1423f3f0d813dbad0694bc17aa5e8973fb5909dd678d54a8"
+          }
+        },
+        {
+          "caller": "tauntCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3348352,
+          "offset": 168,
+          "opcode": 3,
+          "reference_address": 2953584,
+          "target_address": 2953696,
+          "callee": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "AnimTimeRemain",
+            "address": 2953696,
+            "size": 104,
+            "sha256": "52d1688dac93c46a1423f3f0d813dbad0694bc17aa5e8973fb5909dd678d54a8"
+          }
+        }
+      ]
+    },
+    {
+      "version": "SLES-51970",
+      "complete_callees": [
+        {
+          "caller": "getUpCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3345360,
+          "offset": 116,
+          "opcode": 3,
+          "reference_address": 2950272,
+          "target_address": 2953696,
+          "callee": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "AnimTimeRemain",
+            "address": 2953696,
+            "size": 104,
+            "sha256": "52d1688dac93c46a1423f3f0d813dbad0694bc17aa5e8973fb5909dd678d54a8"
+          }
+        },
+        {
+          "caller": "elbowDropCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3346304,
+          "offset": 172,
+          "opcode": 3,
+          "reference_address": 2950272,
+          "target_address": 2953696,
+          "callee": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "AnimTimeRemain",
+            "address": 2953696,
+            "size": 104,
+            "sha256": "52d1688dac93c46a1423f3f0d813dbad0694bc17aa5e8973fb5909dd678d54a8"
+          }
+        },
+        {
+          "caller": "tauntCB__FP5xGoalPvP11en_trantypefPv",
+          "caller_address": 3348352,
+          "offset": 168,
+          "opcode": 3,
+          "reference_address": 2950272,
+          "target_address": 2953696,
+          "callee": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "AnimTimeRemain",
+            "address": 2953696,
+            "size": 104,
+            "sha256": "52d1688dac93c46a1423f3f0d813dbad0694bc17aa5e8973fb5909dd678d54a8"
           }
         }
       ]

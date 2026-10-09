@@ -5920,6 +5920,13 @@
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
+      "name": "getUpCB",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3345360,
+      "size": 428,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "leapCB",
       "source": "SB/Game/zNPCTypeBossSandy.cpp",
       "address": 3346112,
@@ -5927,10 +5934,31 @@
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
+      "name": "elbowDropCB",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3346304,
+      "size": 384,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "noHeadCB",
       "source": "SB/Game/zNPCTypeBossSandy.cpp",
       "address": 3346688,
       "size": 148,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "tauntCB",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3348352,
+      "size": 332,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "idleCB",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3348688,
+      "size": 232,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {

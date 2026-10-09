@@ -15242,3 +15242,40 @@ comparison logs, `build/oct09-france-camera-main-sandy` and comparison log,
 `build/oct09-controls-sandy-tests.log`, `build/oct09-dwarf-cache-benchmark.json`,
 `build/oct09-camera-main-sandy-<GameCube-version>.log` and
 `build/oct09-camera-main-sandy-xbox`.
+
+The packer/geometry batch adds 2,600 exact bytes / seven functions in each debug
+PS2 release. USA reaches 1,050,984 / 3,860, PAL 1,043,424 / 3,847 and Germany
+1,046,860 / 3,851. The complete iMath3 unit is now 15/15 and 5,944/5,944,
+contributing 1,852 bytes; four packer functions contribute 748. All 214 source
+units are freshly compiled in each region because xpkrsvc.h restores the
+original PS2 asset-name field: char[32] at offset 0x40 and structure size 96.
+All prior function/code/data measures survive, debug profiles/global compiler
+settings are unchanged, and root source is frozen at `1866f1e7d`.
+
+Packer helper lifetimes and original call boundaries also improve asynchronous
+load/read paths. Hardware box intersection control and per-axis temporaries
+restore the geometry bodies. The sphere-bound routine's two runtime calls stay
+unnamed in its 308/316-byte independent raw proof. German progress rendering
+restores the exact localized text, float proportion and original char[11]
+declaration; its original 15-byte copy overrun is documented rather than silently
+changing the source layout. Remaining NOP and runtime-identity gaps stay scored.
+No compiler patch or artificial register binding is introduced.
+
+Four independently unique complete French Sandy callbacks add 1,376 known
+bytes, reaching 923 identities / 445,264 bytes. Original typed ControlOff and
+model paths plus fixed complete CalcNewDir/AnimTimeRemain identities prove
+every changed operand. All 627 prior TU proof records and auxiliary fields
+remain unchanged; seven original-backed tests pass. Full aggregate regeneration
+and all 85 source compilations succeed. Callback and geometry source add 3,228
+exact bytes / seven functions, reaching 237,184 / 654, without an earlier score
+decline. The updated largest-first map skips 874 verified reference identities;
+its remaining candidates stay diagnostic-only.
+
+Fresh full GameCube source reports/checksums and both complete Xbox source
+reports pass unchanged. Full CPU denominators and source-data/full-link limits
+remain unchanged. Evidence: `build/oct09-full-packer-geometry` and its three
+comparison logs, `build/oct09-france-packer-geometry` and comparison log,
+`build/oct09-sandy-control-callbacks-tests.log`,
+`build/oct09-packer-geometry-<GameCube-version>.log`,
+`build/oct09-packer-geometry-xbox` and
+`build/oct09-france-packer-geometry-{query,map}.json`.

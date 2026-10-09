@@ -883,6 +883,16 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in sandy_sit['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Sandy sit adds one independently unique complete original goal. Fourteen fixed complete calls and typed player carry/model paths, complete bone/sound arrays and strings corroborate every changed operand in all three references. Original ownership, bounds, alignment and strict control flow remain required. No whole translation-unit or data extent is claimed.')
+    from platforms.france_sandy_control_callbacks import generate_unit as generate_sandy_control_callbacks
+    sandy_control_callbacks = generate_sandy_control_callbacks(originals, registry_dir)
+    document['functions'].extend(sandy_control_callbacks['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(sandy_control_callbacks['sequence_proofs'])
+    document['sandy_control_callbacks_data_proofs'] = sandy_control_callbacks['data_proofs']
+    document['sandy_control_callbacks_call_proofs'] = sandy_control_callbacks['call_proofs']
+    for key, value in sandy_control_callbacks['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Sandy control callbacks add four independently unique complete original bodies. Typed original ControlOff and model-pointer paths and fixed complete CalcNewDir/AnimTimeRemain dependencies corroborate every operand in all three references. Original ownership, bounds, zero alignment and strict control flow are rechecked. No whole translation-unit or data extent is claimed.')
     return document
 
 
