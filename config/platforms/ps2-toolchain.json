@@ -220911,7 +220911,9 @@
         "MvptReset": "MvptReset__10zNPCCommonFP10zMovePoint",
         "ParseProps": "ParseProps__10zNPCCommonFv",
         "ThrottleAccel": "ThrottleAccel__10zNPCCommonFfif",
-        "BoundAsRadius": "BoundAsRadius__10zNPCCommonCFi"
+        "BoundAsRadius": "BoundAsRadius__10zNPCCommonCFi",
+        "ZNPC_AnimTable_LassoGuide": "ZNPC_AnimTable_LassoGuide__Fv",
+        "ZNPC_AnimTable_Common": "ZNPC_AnimTable_Common__Fv"
       },
       "calls": [
         {
@@ -220997,6 +220999,48 @@
           "target_source": "SB/Core/x/xAnim.cpp",
           "target_function": "xAnimPlaySetState@002125d0",
           "symbol": "xAnimPlaySetState__FP11xAnimSingleP10xAnimStatef"
+        },
+        {
+          "function": "ZNPC_AnimTable_LassoGuide",
+          "offset": 24,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew@00214070",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "ZNPC_AnimTable_LassoGuide",
+          "offset": 100,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_LassoGuide",
+          "offset": 172,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
+        },
+        {
+          "function": "ZNPC_AnimTable_LassoGuide",
+          "offset": 236,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewTransition@002131f0",
+          "symbol": "xAnimTableNewTransition__FP10xAnimTablePCcPCcPFP15xAnimTransitionP11xAnimSinglePv_UiPFP15xAnimTransitionP11xAnimSinglePv_UiUiUiffUsUsfPUs"
+        },
+        {
+          "function": "ZNPC_AnimTable_Common",
+          "offset": 24,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNew@00214070",
+          "symbol": "xAnimTableNew__FPCcPP10xAnimTableUi"
+        },
+        {
+          "function": "ZNPC_AnimTable_Common",
+          "offset": 100,
+          "target_source": "SB/Core/x/xAnim.cpp",
+          "target_function": "xAnimTableNewState@00213da0",
+          "symbol": "xAnimTableNewState__FP10xAnimTablePCcUiUifPfPffPUsPvPFP9xAnimPlayP10xAnimState_vPFP10xAnimStateP11xAnimSinglePv_vPFP9xAnimPlayP5xQuatP5xVec3i_v"
         }
       ],
       "linkage_provenance": [
@@ -221465,6 +221509,58 @@
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
               "source_address": 2964288,
               "reference_sha256": "09800e6e9d7f1804a1ef95c7b5e03db289d7017f04c694e537281e570c28809c"
+            }
+          ]
+        },
+        {
+          "function": "ZNPC_AnimTable_LassoGuide",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2948448,
+          "size": 264,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2947040,
+              "reference_sha256": "f6fd31fa92d8c82134eb4ce44d6e76f5fa8f4f38cd80a905b90eb5b3d4e789c3"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2948336,
+              "reference_sha256": "a16e0d5c4b6ebb31f4f15fb43a1ee4b61adf05ee24576cb4232fb59ff03441a4"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2945024,
+              "reference_sha256": "2d7d2ff52db91f1cf542e5fe060a7e324f6fc2ca62b066983a1310f8bf72ed83"
+            }
+          ]
+        },
+        {
+          "function": "ZNPC_AnimTable_Common",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2948720,
+          "size": 128,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2947312,
+              "reference_sha256": "d466a36dc7308876e7475c9ff4c5406d46ce10e604b0a17773d5db67c57c3aa4"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2948608,
+              "reference_sha256": "62b6733d72137f79142b975ef104d9ab9e93da731001be77d494f5037256801d"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2945296,
+              "reference_sha256": "68922ddfc1290e6ded9ed447dda57e91c1721e63da57b35a7922614212723bbf"
             }
           ]
         }

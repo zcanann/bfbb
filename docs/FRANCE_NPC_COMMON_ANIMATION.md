@@ -22,3 +22,10 @@ types, missing/altered dependencies, and a duplicate complete cluster. JSON
 round-trip identity is required. Private replay and test evidence is
 `build/npc-common-animation-proof.json` and
 `build/npc-common-animation-tests.log`.
+
+Both source bodies are exact in the private French pilot, adding 392 exact
+bytes and two functions. The Common subset grows from 3,040 to 3,432 exact
+bytes and 17 to 19 exact functions; fuzzy matching rises from 99.88757% to
+99.89926%. All eighteen prior function scores, sizes and metadata remain
+unchanged. Only their offsets within the expanded target object move.
+All non-French source profiles are unchanged.
