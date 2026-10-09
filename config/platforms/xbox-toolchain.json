@@ -2667,6 +2667,23 @@
           },
           "object": "xutil.obj",
           "size": 1024
+        },
+        "rndseed": {
+          "linkage_name": "?rndseed@@3IA",
+          "size": 4,
+          "object": "xMath.obj"
+        },
+        "float:4f800000": {
+          "linkage_name": "__real@4f800000",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "0000804f"
+        },
+        "float:2f800000": {
+          "linkage_name": "__real@2f800000",
+          "size": 4,
+          "object": "xMath.obj",
+          "value_hex": "0000802f"
         }
       },
       "direct_calls": {
@@ -2674,17 +2691,10 @@
         "xUtil_crc_update(U32,char*,S32)": [
           "xUtil_crc_init()"
         ],
-        "xUtil_yesno(F32)": [
-          "xurand()"
-        ],
+        "xUtil_yesno(F32)": [],
         "xUtil_wtadjust(F32*,S32,F32)": []
       },
-      "call_symbols": {
-        "xurand()": {
-          "linkage_name": "?xurand@@YAMXZ",
-          "object": "xMath.obj"
-        }
-      },
+      "call_symbols": {},
       "address_expressions": {
         "xUtil_crc_init()": [
           {
@@ -2732,6 +2742,34 @@
             "field": "displacement",
             "prefix": "d905",
             "addend": 0
+          },
+          {
+            "symbol": "rndseed",
+            "field": "displacement",
+            "prefix": "a1",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "rndseed",
+            "field": "displacement",
+            "prefix": "a3",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "float:4f800000",
+            "field": "displacement",
+            "prefix": "d805",
+            "addend": 0,
+            "count": 1
+          },
+          {
+            "symbol": "float:2f800000",
+            "field": "displacement",
+            "prefix": "d80d",
+            "addend": 0,
+            "count": 1
           }
         ],
         "xUtil_wtadjust(F32*,S32,F32)": [

@@ -237,6 +237,21 @@ U32 xUtil_crc_update(U32 crc_accum, char* data, S32 datasize)
 
 S32 xUtil_yesno(F32 wt_yes)
 {
+#if defined(XBOX)
+    // Retail embeds the shared LCG and float scaling in this body.
+    if (wt_yes == 0.0f)
+    {
+        return 0;
+    }
+
+    if (wt_yes != 1.0f)
+    {
+        F32 random = xrand() * 2.3283064e-10f;
+        return random <= wt_yes;
+    }
+
+    return 1;
+#else
     if (0.0f == wt_yes)
     {
         return 0;
@@ -249,6 +264,7 @@ S32 xUtil_yesno(F32 wt_yes)
 
     F32 random = xurand();
     return random <= wt_yes;
+#endif
 }
 
 void xUtil_wtadjust(F32* wts, S32 cnt, F32 arbref)

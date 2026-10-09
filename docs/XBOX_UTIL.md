@@ -16,7 +16,7 @@ static CRT startup dependencies. Host/runtime bodies receive no source credit.
 | --- | --- | ---: | --- |
 | `xUtil_crc_init` | `0x164400` | 175 | Exact after named relocations |
 | `xUtil_crc_update` | `0x1644b0` | 61 | Exact after named relocations |
-| `xUtil_yesno` | `0x1644f0` | 104 | Partial, 38.454544% |
+| `xUtil_yesno` | `0x1644f0` | 104 | Partial, 79.84849% |
 | `xUtil_wtadjust` | `0x164560` | 296 | Exact after named relocations |
 
 These four independently reviewed extents total 636 bytes; three reconstructed
@@ -38,8 +38,9 @@ Its eight-byte internal alignment gap belongs to the independently recovered
 296-byte extent; trailing alignment receives no credit.
 
 The original yes/no body contains the already reviewed random LCG inline.
-Current source calls real `xurand`, so that instruction difference remains
-visible. No shape or compiler-option trial was used to hide it.
+The initial source called real `xurand`; the Xbox-only source now computes the
+same float from the existing inline `xrand`. Branch-layout differences remain
+visible. Compiler flags, target bytes and function extents are unchanged.
 
 ## Validation
 
@@ -59,3 +60,33 @@ their previous source preprocessing branches.
 Private reproducibility artifacts: `build/xbox188/` contains the twenty-TU
 compile inventory, full utility compile/link logs, original/source disassembly,
 caller evidence, relocation proof, final reports, and regression validation.
+
+## Inline random calculation (2026-10-09)
+
+The Xbox-only source now uses the existing inline xrand update and the same
+2^-32 float scaling as xurand. Comparing the weight before the constants restores
+the original floating-stack operand order. The exact zero/one short circuits
+retain their original behavior, including avoiding a random update in both
+cases; other values, including NaN, update the seed once and use the same
+ordered comparison. The complete body improves from 38.454544% to 79.84849% in
+both authenticated releases. Its original and compiled CFG extents are both
+104 bytes. Remaining return-block ordering differences stay visible.
+
+Source comparison declares the real named rndseed and two already reviewed
+float literals from xMath.obj. Actual MAP ownership, literal bytes and PE HIGHLOW
+fields identify every new source operand; inverse reconstruction remains
+mandatory. The source has no xurand call now, so its obsolete source-only callee
+declaration is removed. Target instructions, address expressions, boundaries,
+hashes, compiler flags and scoring settings remain unchanged.
+
+Both complete 13-unit production builds in `build/urand-full` retain 15,306 exact
+bytes / 81 functions and improve only xUtil_yesno. All other function, code and
+data measures are preserved. Private shape probes cover 26 comparison/return
+forms plus the initial direct expression. An inline declaration without a body
+failed to link and was discarded; shared math declarations remain unchanged.
+All three GameCube unit comparisons preserve every code/data symbol score.
+Before/after PS2 source compilations in all four regions preserve every allocated
+section byte and size. Evidence: `build/urand-{shapes,flows}.json`,
+`build/urand-full`, `build/nonxbox/proof.json` and `build/nonxbox-ps2/proof.json`
+in the Xbox worktree. This is a partial function improvement; source data and
+a complete original Xbox executable build remain pending.
