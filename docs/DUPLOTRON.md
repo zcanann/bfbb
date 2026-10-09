@@ -15279,3 +15279,43 @@ comparison logs, `build/oct09-france-packer-geometry` and comparison log,
 `build/oct09-packer-geometry-<GameCube-version>.log`,
 `build/oct09-packer-geometry-xbox` and
 `build/oct09-france-packer-geometry-{query,map}.json`.
+
+The morph/resource checkpoint restores typed PS2 morph source and all three
+original handwritten unpack kernels. Their 848 bytes are independently exact
+in USA, PAL, Germany and France. Three real self-J relocations per unit retain
+their aligned interior offsets through the defined source symbol; the bounded
+target metadata change requires opcode J, complete original bounds and the
+canonical own symbol, and checks the reconstructed original operand. Existing
+entry calls and other relocation behavior remain unchanged. Twelve original
+kernel fixtures and eight internal-J/ELF tests pass, including negative cases.
+
+Packer work restores the original 24-byte resource entry, allocation counters,
+2048-byte sector size, cleanup and layer-header behavior. Full rebuilds found
+duplicate declarations in xClumpColl and iFMV; those now use the canonical
+header, with a direct rwplcore.h include in iFMV. The resource functions'
+original return values are ignored by these callers. Source and profiles are
+frozen at `1c61239d4` for the final full debug rebuilds. Command-line option
+comparisons use the independently verified casefold routine; its runtime
+identity is not promoted through a target alias. No compiler patch is added.
+
+Seventeen independently corroborated French identities add 7,608 known bytes,
+reaching 940 functions / 452,872 bytes. Complete Sandy Leap, particle-emitter
+clusters, splash/helper bodies and OilSplash retain full original ownership,
+bounds, padding and dependency checks. OilSplash uses exhaustive zero-mask
+uniqueness after reconstructing only six inventoried calls from complete
+verified callees. All 631 prior TU function records and auxiliary prefixes
+remain unchanged. The strict production regeneration and all 87 source units
+pass. Together with morph and the already-proved memory-card source, France
+gains 14,512 exact bytes / 40 functions, reaching 251,696 / 694, without losing
+any previous matches. Its memory-card product prefix is corroborated from the
+original name-builder context. Twenty-five original-backed identity/mutation
+tests pass. Unproved SDK/runtime identities remain unregistered.
+
+Fresh GameCube source reports/checksums and both full Xbox source reports pass
+without regressions. CPU denominators, source-data credit and full-link limits
+remain unchanged. Evidence: `build/oct09-france-morph-resource-fixed`,
+`build/oct09-morph-resource-compare-france.log`,
+`build/oct09-morph-resource-proof-tests.log`,
+`build/oct09-morph-internal-j-tests.log`,
+`build/oct09-morph-resource-<GameCube-version>.log`,
+`build/oct09-morph-resource-xbox` and both Xbox comparison logs.

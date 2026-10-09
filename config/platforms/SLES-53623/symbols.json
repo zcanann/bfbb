@@ -5661,6 +5661,13 @@
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
+      "name": "NPCC_MakePerp",
+      "source": "SB/Game/zNPCSupport.cpp",
+      "address": 3256224,
+      "size": 56,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "NPCC_TmrCycle",
       "source": "SB/Game/zNPCSupport.cpp",
       "address": 3256288,
@@ -5875,6 +5882,13 @@
       "source": "SB/Game/zNPCTypeBossSandy.cpp",
       "address": 3332896,
       "size": 2336,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3336768,
+      "size": 484,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
@@ -6382,6 +6396,90 @@
       "provenance": "reviewed-whole-tu-sequence"
     },
     {
+      "name": "NPAR_EmitH2OTrail",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3885232,
+      "size": 204,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPAR_EmitH2OSpray",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3885440,
+      "size": 216,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPAR_EmitH2ODrops",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3885664,
+      "size": 216,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPAR_EmitH2ODrips",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3885888,
+      "size": 216,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPAR_EmitTubeSparklies",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3886560,
+      "size": 216,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPAR_EmitTubeConfetti",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3886784,
+      "size": 216,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPAR_EmitTubeSpiralCin",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3887008,
+      "size": 396,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPAR_EmitTubeSpiral",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3887408,
+      "size": 396,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPAR_EmitOilSplash",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3887808,
+      "size": 216,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPAR_EmitOilVapors",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3888032,
+      "size": 204,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPAR_EmitOilTrailz",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3888240,
+      "size": 204,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPAR_EmitOilShieldPop",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3888448,
+      "size": 204,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "ConfigPar",
       "source": "SB/Game/zNPCSupplement.cpp",
       "address": 3899632,
@@ -6421,6 +6519,27 @@
       "source": "SB/Game/zNPCHazard.cpp",
       "address": 3933648,
       "size": 544,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "OilSplash",
+      "source": "SB/Game/zNPCHazard.cpp",
+      "address": 3942672,
+      "size": 1084,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "WavesOfEvil",
+      "source": "SB/Game/zNPCHazard.cpp",
+      "address": 3949920,
+      "size": 908,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "WaterSplash",
+      "source": "SB/Game/zNPCHazard.cpp",
+      "address": 3950832,
+      "size": 2172,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {

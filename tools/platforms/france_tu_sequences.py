@@ -893,6 +893,46 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in sandy_control_callbacks['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Sandy control callbacks add four independently unique complete original bodies. Typed original ControlOff and model-pointer paths and fixed complete CalcNewDir/AnimTimeRemain dependencies corroborate every operand in all three references. Original ownership, bounds, zero alignment and strict control flow are rechecked. No whole translation-unit or data extent is claimed.')
+    from platforms.france_sandy_leap import generate_unit as generate_sandy_leap
+    sandy_leap = generate_sandy_leap(originals, registry_dir)
+    document['functions'].extend(sandy_leap['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(sandy_leap['sequence_proofs'])
+    document['sandy_leap_data_proofs'] = sandy_leap['data_proofs']
+    document['sandy_leap_call_proofs'] = sandy_leap['call_proofs']
+    for key, value in sandy_leap['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Sandy Leap adds one independently unique complete 484-byte original tail body. Two typed model-pointer loads and a fixed complete Common Enter callee corroborate every operand. The scoped verifier preserves SP/RA and checks local COP1 encodings, full body coverage and terminal J; generic boundary/unknown-opcode rules remain unchanged. All three original identities, extents and padding are checked.')
+    from platforms.france_npc_particle_emitters import generate_unit as generate_npc_particle_emitters
+    npc_particle_emitters = generate_npc_particle_emitters(originals, registry_dir)
+    document['functions'].extend(npc_particle_emitters['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(npc_particle_emitters['sequence_proofs'])
+    document['npc_particle_emitters_data_proofs'] = npc_particle_emitters['data_proofs']
+    document['npc_particle_emitters_call_proofs'] = npc_particle_emitters['call_proofs']
+    for key, value in npc_particle_emitters['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Particle emitters add twelve complete original members in two independently unique ordered clusters. Full typed management/parameter arrays, fixed complete ConfigPar callees and twelve literal calls to one unnamed 64-byte runtime context corroborate every operand. All original member orders, bounds, padding and strict CFGs are checked in three references. No short-seed exception, runtime identity, whole translation-unit or data extent is claimed.')
+    from platforms.france_hazard_splashes import generate_unit as generate_hazard_splashes
+    hazard_splashes = generate_hazard_splashes(originals, registry_dir)
+    document['functions'].extend(hazard_splashes['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(hazard_splashes['sequence_proofs'])
+    document['hazard_splashes_data_proofs'] = hazard_splashes['data_proofs']
+    document['hazard_splashes_call_proofs'] = hazard_splashes['call_proofs']
+    for key, value in hazard_splashes['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Hazard splashes add two independently unique complete original bodies and one complete perpendicular helper identified in a unique 264-byte anchored cluster. All calls reach fixed complete identities; no data operands change. The helper tail uses only its independently proved Normalize callee. Original ownership, bounds, zero gaps and strict CFGs are checked in all three references without weak individual seeds.')
+    from platforms.france_hazard_oil_splash import generate_unit as generate_hazard_oil_splash
+    hazard_oil_splash = generate_hazard_oil_splash(originals, registry_dir)
+    document['functions'].extend(hazard_oil_splash['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(hazard_oil_splash['sequence_proofs'])
+    document['hazard_oil_splash_data_proofs'] = hazard_oil_splash['data_proofs']
+    document['hazard_oil_splash_call_proofs'] = hazard_oil_splash['call_proofs']
+    for key, value in hazard_oil_splash['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Hazard OilSplash adds one complete original body through stronger full-template uniqueness. Only six inventoried JAL target fields are reconstructed from independently checked complete callees; all other original bits remain literal and exhaustive search uses zero masks. No target body bytes are copied. Original ownership, extents, padding and closed CFG remain required in all three references; unbound ambiguity is retained as negative evidence.')
     return document
 
 
