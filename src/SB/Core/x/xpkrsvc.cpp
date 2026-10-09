@@ -315,12 +315,20 @@ S32 PKR_SetActive(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer)
             continue;
         }
 
+#if defined(PS2)
+        j = 0;
+        while (j < laynode->assref.cnt)
+#else
         for (j = 0; j < laynode->assref.cnt; j++)
+#endif
         {
             assnode = (st_PACKER_ATOC_NODE*)laynode->assref.list[j];
             result = assnode->loadflag & 0x80000;
             if (assnode->loadflag & 0x10000 || result == 0)
             {
+#if defined(PS2)
+                j++;
+#endif
                 continue;
             }
 
@@ -341,6 +349,9 @@ S32 PKR_SetActive(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer)
                     assnode->loadflag |= 0x10000;
                 }
             }
+#if defined(PS2)
+            j++;
+#endif
         }
     }
 

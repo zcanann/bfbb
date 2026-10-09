@@ -136,3 +136,19 @@ Register operands, non-relocation constants, and branch conditions are
 unchanged. This is not proof of the masked runtime identities or a compiler
 defect. Private evidence is in `build/packer-oct09/platform-original.json`,
 `platform-proof.json`, and `platform-raw-proof.json`.
+
+
+## Asset activation loop
+
+The PS2 inner asset loop in `PKR_SetActive` now uses an explicit `while`
+index, advancing it both after normal processing and before the existing
+skip. This preserves empty-layer behavior and all callback/flag semantics.
+It removes the compiler's separate byte-offset induction register and
+restores the original 0x90-byte frame and per-iteration shifted index. The
+372-byte target improves from **78.29032% to 90.10753%** in all three debug
+regions. All other 49 functions retain their scores, with fresh GC solo
+76/76 exact. The original still differs in entry-test placement, flag-test
+scheduling, and saved-register assignment; no exact or compiler-defect claim
+is made. Positive-body nesting and a break-at-top `for` form scored worse,
+and moving initialization past the declarations made no difference.
+Private whole-unit comparisons are in `build/packer-oct09/active-proof.json`.
