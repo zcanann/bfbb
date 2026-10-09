@@ -14829,3 +14829,31 @@ comparison logs, `build/oct09-listeners-final-tests.log`,
 `build/oct09-shadow-<GameCube-version>.log`. The refreshed fuzzy map excludes
 722 proven bodies before ranking remaining large contiguous sections; candidates
 remain diagnostic and receive no matching or boundary credit.
+
+The vector/playback batch adds another 2,232 exact USA bytes / four functions,
+reaching 1,016,156 bytes / 3,789 functions. World shadow rendering and the shadow
+quad add 1,784 exact bytes; both vector normalization bodies contribute 448.
+Explicit original effect helper inline boundaries, billboard loop invariants,
+ribbon visibility and the shared lightning endpoint loop improve fuzzy matching
+without losing earlier matches. The complete USA snapshot recompiles all four
+changed units against the previously verified 214-unit target/source set.
+
+French playback proves nine further complete bodies / 4,924 bytes with all
+three reference originals, typed storage, complete strings and explicitly scoped
+runtime/vector uniqueness checks. Seven source bodies are compared; two HIS
+bodies remain coverage-only. The raw-exact vector source change and three exact
+playback bodies add 2,696 exact bytes / five functions, reaching 163,072 bytes /
+464 functions. Coverage reaches 731 functions / 367,744 bytes. The complete
+production run regenerates all registries identically and compiles 72 units.
+An initial regeneration failure identified three replaced Hangable vector
+contexts; excluding subsequent vector identities preserves the earlier proof.
+The original-backed Event/vector dependency test and seven playback tests pass.
+
+All function/code/data regression checks pass. All three GameCube full source
+reports/checksums retain their earlier measures, and both full Xbox source
+reports remain identical at 15,306 exact bytes / 81 functions. CPU denominators
+and source-data/link limitations are unchanged. Evidence:
+`build/oct09-us-vector-playback`, `build/oct09-france-playback-retry`, their
+comparison logs, `build/oct09-{playback,hangable-vector}-tests.log`,
+`build/oct09-vector-playback-<GameCube-version>.log`, and
+`build/oct09-vector-playback-xbox` with both regional comparison logs.

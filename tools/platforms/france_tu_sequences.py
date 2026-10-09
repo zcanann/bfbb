@@ -680,6 +680,15 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in sound_listeners['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Sound listeners adds nine unique complete listener, voice-query and delayed-insertion bodies using all three originals. Strict control flow, the complete internal call and original typed sound arrays corroborate every changed operand. No registry identities are consumed, and no whole translation-unit or data extent is claimed.')
+    from platforms.france_sound_playback import generate_unit as generate_sound_playback
+    sound_playback = generate_sound_playback(originals, registry_dir)
+    document['functions'].extend(sound_playback['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(sound_playback['sequence_proofs'])
+    document['sound_playback_data_proofs'] = sound_playback['data_proofs']
+    for key, value in sound_playback['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Sound playback adds nine complete bodies with all three original ownership and strict-control-flow witnesses. Typed objects, complete diagnostic strings, independently proved callees and literal opaque runtime contexts corroborate every operand. Vector identity uses the unique complete two-member sequence; one scoped runtime leaf and one complete flush template retain explicitly checked sizes and operand inventories. Two HIS bodies remain coverage-only. No opaque runtime identity, whole playback translation-unit or data extent is claimed.')
     return document
 
 

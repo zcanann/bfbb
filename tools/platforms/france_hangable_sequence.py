@@ -155,10 +155,10 @@ def generate_unit(originals, registry_dir):
         for f in json.loads(path.read_text())["functions"]:
             if f["source"] == SOURCE and f["name"] != "HangableSetup":
                 continue  # Regeneration must not prove new members using itself.
-            if f["source"] == "SB/Core/x/xEvent.cpp":
-                # This proof checks its own original Event entry/tail context.
-                # Later Event recovery must not replace that evidence or make
-                # this earlier proof depend on the subsequently recovered TU.
+            if f["source"] in ("SB/Core/x/xEvent.cpp", "SB/Core/x/xVec3.cpp"):
+                # This proof checks its own original Event/vector entry contexts.
+                # Later recoveries must not replace that evidence or make this
+                # earlier proof depend on subsequently recovered functions.
                 continue
             if f["address"] in known:
                 require(all(known[f["address"]][k] == f[k] for k in ("name", "source", "size", "sha256")),

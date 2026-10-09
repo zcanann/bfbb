@@ -73,3 +73,18 @@ duplicate runtime/flush/vector sequences, changed literal caller transfers,
 changed complete diagnostic strings and altered original file-array bounds.
 The private pilot and standalone proof do not replace the canonical aggregate
 regeneration and full French source-report integration gate.
+
+The production gate passes in `build/oct09-france-playback-retry`: all aggregate
+registries regenerate identically and 72 enabled source units compile. Together
+with the independently raw-exact vector source change, this adds 2,696 exact
+bytes / five functions, reaching 163,072 bytes / 464 functions. Recovered
+coverage reaches 731 functions / 367,744 bytes; the full CPU denominator stays
+2,979,968 bytes. Both HIS bodies retain coverage-only status, and source data
+and the full executable link remain pending.
+
+Publishing the vector identities initially replaced three earlier Hangable
+entry-context records. Hangable now excludes subsequent vector identities from
+its dependency set, preserving its original independent evidence. An original-
+backed test removes Event and vector records separately and together; the full
+Hangable proof and its three contexts per callee remain identical. The complete
+French report retains every earlier function and exact code/data measure.

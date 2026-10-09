@@ -740,6 +740,34 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "iSndFindFreeVoice",
+      "source": "SB/Core/p2/iSnd.cpp",
+      "address": 1805504,
+      "size": 900,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "iSndPlay",
+      "source": "SB/Core/p2/iSnd.cpp",
+      "address": 1807008,
+      "size": 1120,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "iSndCalcVol",
+      "source": "SB/Core/p2/iSnd.cpp",
+      "address": 1809136,
+      "size": 776,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "iSndLookup",
+      "source": "SB/Core/p2/iSnd.cpp",
+      "address": 1810688,
+      "size": 96,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "iProfileClear",
       "source": "SB/Core/p2/iTime.cpp",
       "address": 1815520,
@@ -3155,6 +3183,13 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xSndPlayInternal",
+      "source": "SB/Core/x/xSnd.cpp",
+      "address": 2137440,
+      "size": 1376,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "xSndExit",
       "source": "SB/Core/x/xSnd.cpp",
       "address": 2138960,
@@ -3601,6 +3636,20 @@
       "address": 2165760,
       "size": 48,
       "provenance": "reviewed-whole-tu-sequence"
+    },
+    {
+      "name": "xVec3NormalizeFast",
+      "source": "SB/Core/x/xVec3.cpp",
+      "address": 2165808,
+      "size": 224,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "xVec3Normalize",
+      "source": "SB/Core/x/xVec3.cpp",
+      "address": 2166032,
+      "size": 224,
+      "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
       "name": "xAnimPoolFree",
@@ -4804,6 +4853,20 @@
       "source": "SB/Game/zNPCTypeKingJelly.cpp",
       "address": 3420080,
       "size": 23444,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "_HISBatchSoundCommandsNoWait",
+      "source": "SB/Core/p2/his/HisStubs.cpp",
+      "address": 3453008,
+      "size": 124,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "HISFlushAsyncRequestsNoWait",
+      "source": "SB/Core/p2/his/HISAPI.cpp",
+      "address": 3455744,
+      "size": 84,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
