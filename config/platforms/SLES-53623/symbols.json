@@ -3883,6 +3883,13 @@
       "provenance": "reviewed-whole-tu-sequence"
     },
     {
+      "name": "register_tweaks",
+      "source": "SB/Game/zEntCruiseBubble.cpp",
+      "address": 2757952,
+      "size": 11980,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "NPCMessage",
       "source": "SB/Game/zNPCGoalStd.cpp",
       "address": 2908864,
@@ -4784,6 +4791,13 @@
       "address": 3527728,
       "size": 396,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "register_tweaks",
+      "source": "SB/Game/zNPCTypeBossPlankton.cpp",
+      "address": 3580144,
+      "size": 12572,
+      "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
       "name": "zParPTankSpawnSnow",

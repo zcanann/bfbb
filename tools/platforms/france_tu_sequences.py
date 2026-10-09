@@ -622,6 +622,24 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in sb2['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('SB2 proves one unique complete parameter-registration body with all three original ownership and strict return witnesses. Complete strings, independently regenerated parameter helpers and original typed sound-array layouts corroborate every changed operand. Array element/member offsets are preserved; no whole translation-unit or data extent is claimed.')
+    from platforms.france_plankton_tweaks import generate_unit as generate_plankton
+    plankton = generate_plankton(originals, registry_dir)
+    document['functions'].extend(plankton['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(plankton['sequence_proofs'])
+    document['plankton_data_proofs'] = plankton['data_proofs']
+    for key, value in plankton['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Plankton proves one unique complete parameter-registration body in all three originals, preserving strict returns, complete strings, independently regenerated parameter helpers and original typed sound arrays. Array element/member offsets remain exact; no whole translation-unit or data extent is claimed.')
+    from platforms.france_cruise_tweaks import generate_unit as generate_cruise
+    cruise = generate_cruise(originals, registry_dir)
+    document['functions'].extend(cruise['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(cruise['sequence_proofs'])
+    document['cruise_data_proofs'] = cruise['data_proofs']
+    for key, value in cruise['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('CruiseBubble proves one unique complete parameter-registration caller in all three originals. Strict returns, all non-address instruction bits, complete strings and independently regenerated parameter helpers agree. The previously confirmed bounded hash entry remains an independently checked callee, with no duplicate extent or whole translation-unit claim.')
     return document
 
 

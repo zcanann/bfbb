@@ -14693,3 +14693,20 @@ full source reports and retail checksums remain unchanged. Evidence:
 `build/oct09-{us,france}-second`, their `*-second-comparison.log` files, and
 `build/oct09-second-<GameCube-version>.log`. Compiler/scoring settings,
 function extents and all regional denominators remain unchanged.
+
+The Plankton/CruiseBubble batch adds two independently proven parameter bodies /
+24,552 known French bytes. Full original-only registry regeneration and source
+compilation pass, bringing coverage to 704 functions / 324,120 bytes and full
+CPU fuzzy matching from 8.623672% to 9.450579%. Their source comparisons improve
+after removing five vector copies and restoring an original zero-vector local.
+The `auto_tweak.h` change affects only Plankton/Prawn; both complete units were
+checked, with every Prawn score retained.
+
+Tokenizer and substring joins add another 512 exact bytes / two functions in
+both USA and France. USA reaches 984,288 exact bytes / 3,743 functions; France
+reaches 119,872 bytes / 437 functions. Psyche timer clearing and buffer-tokenizer
+scope improve fuzzy matching as well. Complete report comparisons find no
+regressions, and all three GameCube source reports/checksums remain unchanged.
+Ten original-backed parameter-proof/mutation tests pass. Private evidence:
+`build/oct09-{france,us}-npc`, their `*-npc-comparison.log` files,
+`build/oct09-npc-tests.log`, and `build/oct09-npc-<GameCube-version>.log`.
