@@ -2163,6 +2163,17 @@ S32 zSaveLoad_DoAutoSave()
     en_XSGASYNC_STATUS asstat = XSG_ASTAT_NOOP;
     st_XSAVEGAME_DATA* svinst;
 
+#if defined(PS2)
+    S32 physicalSlot = xSGAutoSave_GetCache()->LastPhysicalSlot();
+    if (preAutoSaving && physicalSlot >= 0)
+    {
+        S32 result = sceMcSync(physicalSlot, NULL, &ps2Result);
+        while (result != -1)
+        {
+            result = sceMcSync(physicalSlot, NULL, &ps2Result);
+        }
+    }
+#endif
     XSGAutoData* autodata = xSGAutoSave_GetCache();
     if (autodata == NULL)
     {
@@ -2227,6 +2238,10 @@ S32 zSaveLoad_DoAutoSave()
         {
             switch (asstat)
             {
+#if defined(PS2)
+            case XSG_ASTAT_NOOP:
+                break;
+#endif
             case XSG_ASTAT_INPROG:
                 break;
             case XSG_ASTAT_SUCCESS:
@@ -2254,7 +2269,11 @@ S32 zSaveLoad_DoAutoSave()
         if (autodata != NULL)
         {
             S32 idx = xSGTgtPhysSlotIdx(svinst, use_tgt);
+#if defined(PS2)
+            autodata->SetCache(use_tgt, lastGame, currentCard);
+#else
             autodata->SetCache(use_tgt, lastGame, idx);
+#endif
             globals.autoSaveFeature = 1;
         }
         return 1;

@@ -164,3 +164,17 @@ All three regions gain 408 exact bytes and two functions, with only these
 four function scores changing. The full GC source report remains identical.
 Evidence: `*-callbacks.json`, `callbacks-proof.json`, and
 `callback-original-calls.json` in `build/save-oct09/`.
+
+## Autosave polling completion
+
+DoAutoSave waits for an outstanding PS2 card operation before opening the
+save session. Restoring the initial poll and result-controlled polling loop,
+the explicit no-op asynchronous status, and the original cache update with
+`currentCard` makes the complete 852-byte function exact in all three debug
+regions. The physical-slot lookup call remains present even though its
+return value is unused by that original cache update.
+
+This uses the existing `sceMcSync` SDK reconstruction and adds no SDK
+identity or registry records. It is the only changed function score, with
+no regressions; the full GC report remains identical. Evidence is in
+`*-dosave.json` and `dosave-proof.json` in `build/save-oct09/`.
