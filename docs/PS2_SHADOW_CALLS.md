@@ -190,3 +190,25 @@ Totals reach 26/34 functions, 11,508/20,044 exact bytes, and
 98.97446% fuzzy matching. Every other function and the full GameCube USA
 report are unchanged; the retail DOL SHA-1 passes. Evidence uses
 `*-world.json` and `world-proof.json`.
+
+
+## Exact quad renderer and remaining probes
+
+The 216-byte `Im2DRenderQuad` becomes exact when PS2 initializes its first
+vertex color before the position fields. This order is PS2-only: the shared
+change altered GameCube's generated code, so its original order is retained.
+USA, Europe and Germany improve from 96.25926% to 100%. Unit totals reach
+27/34 functions, 11,724/20,044 exact bytes, and
+99.01477% fuzzy matching. Every other function and the full GameCube USA
+report remain unchanged; the retail DOL SHA-1 passes. Evidence uses
+`*-quad.json` and `quad-proof.json`.
+
+Discarded volume probes: reordering the three dot-product declarations did
+not improve 98.44%; inline `xVec3Dot` calls regressed to 88.04%, and
+expanding the cached scalar expressions regressed to 81.29%. The original
+source was restored. A precise read-only matrix memory constraint did not
+change the remaining shadow-render branch padding. Compiler 3.0.1b74 fills
+that delay slot in the full body, but a reduced C example also fills it in
+current 3.0b38; no compiler-patch conclusion follows. Compiler 2.4 rejects the
+full TU's newer multiline VU assembly syntax. Private diagnostic objects and
+reproducers are under `build/shadow-oct09/mwcps2-*`.

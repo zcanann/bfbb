@@ -105,8 +105,7 @@ extern "C" RwBool RpSkyRenderStateGet(RpSkyRenderState nState, void* pParam);
 extern "C" RwBool RpSkyRenderStateSet(RpSkyRenderState nState, void* pParam);
 S32 ShadowMapCreatePipelines();
 
-// PS2 projects receiver triangles in a separate VU0 inline-asm routine; its body
-// is not recovered as C.
+// PS2 projects receiver triangles in a separate routine using VU0 inline assembly.
 static void xShadowReceiveShadowFastPS2(xEnt* ent, F32 shadowFactor, S32 shadowMode,
                                         RwMatrixTag* shadowMat, RwRaster* shadowRast);
 #endif
@@ -1073,11 +1072,17 @@ int Im2DRenderQuad(float x1, float y1, float x2, float y2, float z, float recipC
 {
     RwIm2DVertex v[4];
 
+#if defined(PS2)
+    RwIm2DVertexSetIntRGBA(&v[0], 255, 255, 255, 255);
+#endif
+
     RwIm2DVertexSetScreenX(&v[0], x1);
     RwIm2DVertexSetScreenY(&v[0], y1);
     RwIm2DVertexSetScreenZ(&v[0], z);
     RwIm2DVertexSetRecipCameraZ(&v[0], recipCamZ);
+#if !defined(PS2)
     RwIm2DVertexSetIntRGBA(&v[0], 255, 255, 255, 255);
+#endif
     RwIm2DVertexSetU(&v[0], uvOffset, recipCamZ);
     RwIm2DVertexSetV(&v[0], uvOffset, recipCamZ);
 
