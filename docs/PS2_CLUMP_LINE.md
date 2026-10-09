@@ -52,3 +52,26 @@ claimed here.
 exact, and the complete GQPE78 report is identical to the validated baseline.
 Private before/after reports and raw-word checks are in `build/clump-oct09`,
 particularly `after-proof.json`, `raw-proof.json`, and `rawproof.py`.
+
+## Sphere broad phase
+
+The neighboring 512-byte `LeafNodeSpherePolyIntersect` also lacked the PS2
+hardware minimum/maximum operations. Replacing comparison-and-select macros
+with a bounded `SphereMinMax` inline helper, and retaining the loaded vertex,
+centre, and radius values across each axis test, improves this function from
+0% to 65.359375% in all four PS2 versions. It does not change the detailed
+`FastIntersectSphereTriangle` test or its call boundary.
+
+For each axis, the original computes `min(a,b)`, `max(a,b)`, `min(lo,c)`, and
+`max(hi,c)`, rejecting when `centre + radius <= lo` or
+`hi <= centre - radius`. It then records the vertex coordinates relative to
+the sphere centre. Raw-word inspection verifies all twelve hardware min/max
+instructions and their operand dependencies in the source and each original.
+The remaining register allocation, instruction scheduling, and temporary-store
+ordering differences are retained as source work, not a compiler diagnosis.
+
+The normal four-region unit checks preserve the other ten functions, including
+the restored line kernel. GameCube remains 9/9 exact with an identical full
+report. This is another fuzzy gain with no change to exact byte/function counts.
+Private evidence is `sphere-proof.json`, `sphere-raw-proof.json`, and
+`sphererawproof.py` under `build/clump-oct09`.

@@ -949,12 +949,31 @@ static S32 LeafNodeLinePolyIntersect(xClumpCollBSPTriangle* triangles, void* dat
 static RwBool FastIntersectSphereTriangle(RwSphere* sphere, RwV3d* v0, RwV3d* v1, RwV3d* v2,
                                           RwV3d* normal, RwReal* distance, RwV3d* vc);
 
-#define SphereMin(_a, _b) (((_a) < (_b)) ? (_a) : (_b))
-#define SphereMax(_a, _b) (((_a) > (_b)) ? (_a) : (_b))
+// The PS2 broad phase uses hardware min/max, not comparison-and-select branches.
+static inline void SphereMinMax(F32 a, F32 b, F32 c, F32& lo, F32& hi)
+{
+    asm volatile("min.s %0, %2, %3\n"
+                 "max.s %1, %2, %3\n"
+                 "min.s %0, %0, %4\n"
+                 "max.s %1, %1, %4\n"
+                 : "=&f"(lo), "=&f"(hi) : "f"(a), "f"(b), "f"(c));
+}
 
 // Reject the triangle when it lies wholly beyond the sphere along one axis, otherwise
 // record its vertices relative to the sphere centre.
-#define SphereAxisReject(_axis)                                                                        if (testSphere->sphere->center._axis + testSphere->sphere->radius <=                                       SphereMin(SphereMin(v0->_axis, v1->_axis), v2->_axis) ||                                       SphereMax(SphereMax(v0->_axis, v1->_axis), v2->_axis) <=                                               testSphere->sphere->center._axis - testSphere->sphere->radius)                             {                                                                                                      continue;                                                                                      }                                                                                                  vc[0]._axis = v0->_axis - testSphere->sphere->center._axis;                                        vc[1]._axis = v1->_axis - testSphere->sphere->center._axis;                                        vc[2]._axis = v2->_axis - testSphere->sphere->center._axis
+#define SphereAxisReject(_axis)                                                    \
+    {                                                                              \
+        F32 a = v0->_axis, b = v1->_axis, c = v2->_axis;                           \
+        F32 centre = sphere->center._axis;                                         \
+        F32 lo, hi;                                                                \
+        SphereMinMax(a, b, c, lo, hi);                                             \
+        if (centre + radius <= lo) continue;                                       \
+        if (hi <= centre - radius) continue;                                       \
+        vc[0]._axis = a - centre;                                                  \
+        vc[1]._axis = b - centre;                                                  \
+        vc[2]._axis = c - centre;                                                  \
+    }
+
 #endif
 
 static S32 LeafNodeSpherePolyIntersect(xClumpCollBSPTriangle* triangles, void* data)
@@ -982,6 +1001,8 @@ static S32 LeafNodeSpherePolyIntersect(xClumpCollBSPTriangle* triangles, void* d
             }
 #if defined(PS2)
             RwV3d vc[3];
+            const RwSphere* sphere = testSphere->sphere;
+            F32 radius = sphere->radius;
 
             SphereAxisReject(x);
             SphereAxisReject(y);
