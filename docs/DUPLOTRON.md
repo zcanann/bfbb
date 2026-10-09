@@ -15319,3 +15319,16 @@ remain unchanged. Evidence: `build/oct09-france-morph-resource-fixed`,
 `build/oct09-morph-internal-j-tests.log`,
 `build/oct09-morph-resource-<GameCube-version>.log`,
 `build/oct09-morph-resource-xbox` and both Xbox comparison logs.
+The refreshed largest-first French map skips 891 verified reference identities;
+its remaining Player, Dutchman and SB2 block candidates remain diagnostic-only.
+Evidence: `build/oct09-france-morph-resource-{query,map}.json`.
+
+The final debug rebuilds freshly compile all 215 source units per release and
+pass every prior function/unit comparison. Each gains 6,008 exact bytes /
+eighteen functions: USA reaches 1,056,992 / 3,878, PAL 1,049,432 / 3,865 and
+Germany 1,052,868 / 3,869. Packer contributes 4,560 bytes, morph 1,040 and the
+memory-card space query 408. The canonical resource callers retain their prior
+measures; no data or full-link credit is added. Evidence:
+`build/oct09-full-morph-resource-final`, its three full build logs,
+`build/oct09-morph-resource-compare-<debug-version>.log` and
+`build/oct09-morph-checkpoint-audit.log`.
