@@ -27,7 +27,8 @@ static void iRenderInit()
 
 static void iRenderTrianglesImmediate(S32 vertType, S32 vertTypeSize, void* data, S32 dataSize, U16* index, S32 indexSize)
 {
-    if (RwIm3DTransform((RwIm3DVertex *)data, dataSize, NULL, 1) != NULL)
+    U32 transformFlags = rwIM3D_VERTEXUV;
+    if (RwIm3DTransform((RwIm3DVertex *)data, dataSize, NULL, transformFlags) != NULL)
     {
         if (indexSize != 0)
         {
@@ -49,8 +50,8 @@ static void iRenderFlush()
         iRenderTrianglesImmediate(gRenderBuffer.m_vertexType, gRenderBuffer.m_vertexTypeSize, gRenderBuffer.m_vertex, gRenderBuffer.m_vertexCount, gRenderBuffer.m_index, gRenderBuffer.m_indexCount);
     }
 
-    gRenderBuffer.m_indexCount  = 0;
     gRenderBuffer.m_vertexCount = 0;
+    gRenderBuffer.m_indexCount  = 0;
 }
 
 void iParMgrInit()

@@ -121,3 +121,25 @@ Evidence: `par-sprite-proof.py` / `.json`,
 `par-sprite-render-final-changes.json`. These audits cover all three debug
 originals and actual compiled objects. No shared renderer source, comparison
 mask, compiler, France profile, or identity registry changes are included.
+
+## Flush flags and reset order
+
+Restore the U32 `transformFlags` local used for immediate rendering. The
+original Streak debug scope names this local in all three versions. Reset the
+vertex count before the index count, matching every original inlined flush in
+all eight callers. Actual HI/LO relocation audits reproduce that field order
+for all 24 compiled function/region pairs; its raw improvement alone does not
+change the current report score and is not claimed as extra matched bytes.
+
+The flags local improves Ground from 89.23322% to 89.6359%, both streaks from
+91.04395% to 92.36264%, and Sprite from 94.82874% to 95.30118% in every debug
+region. Complete-unit matching rises from 92.8517% to 93.240685%, preserving
+all other scores, five exact functions / 844 bytes, and data controls. All
+four restored functions' raw VU, delay-slot and packed-store audits were replayed
+against these final compiled objects and still pass.
+
+Evidence: `par-render-flush-proof.py` / `.json`,
+`par-render-flush-compiled-proof.py` / `.json`,
+`par-render-flush-final-comparison.py` / `.json`,
+`par-render-flush-final-changes.json`, and the three
+`par-render-flush-par-*-compiled-proof.json` replay reports.
