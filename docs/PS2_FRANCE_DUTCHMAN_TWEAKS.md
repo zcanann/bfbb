@@ -41,3 +41,12 @@ changed complete strings and changed opaque runtime context. Synthetic
 ingestion tests reject unsupported labels, stale proof output, wrong identity,
 missing boundaries, changed body hashes and conflicting extents. No whole
 translation-unit or linked executable claim follows from this cluster proof.
+
+Two France-only source profiles select these four proven members and restore
+125 independently verified direct calls. Authenticated source compilation and
+comparison produced two exact helpers / 336 exact bytes out of 16,252 selected
+bytes, with 99.655426% fuzzy matching. Dutchman register_tweaks is 99.69207% and
+the vector helper is 97.560974%. These newly covered functions were previously
+absent from the France report; adding verified coverage changes its denominator.
+Existing source and other version profiles are unchanged. Private validation:
+`build/dutchman-france-pilot/report.json` in the regional worker checkout.
