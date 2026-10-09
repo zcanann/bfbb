@@ -4059,12 +4059,10 @@ U32 zNPCArfArf::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
 
 void zNPCArfArf::DuploNotice(en_SM_NOTICES note, void* data)
 {
-    S32 i;
-
     switch (note)
     {
     case SM_NOTE_NPCALIVE:
-        for (i = 0; i < 5; i++)
+        for (S32 i = 0; i < 5; i++)
         {
             if (pup_kennel[i] == (zNPCArfDog*)data)
             {
@@ -4074,7 +4072,7 @@ void zNPCArfArf::DuploNotice(en_SM_NOTICES note, void* data)
         }
         break;
     case SM_NOTE_NPCSTANDBY:
-        for (i = 0; i < 5; i++)
+        for (S32 i = 0; i < 5; i++)
         {
             if (pup_kennel[i] == (zNPCArfDog*)data)
             {
