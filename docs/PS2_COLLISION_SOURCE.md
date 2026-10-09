@@ -246,3 +246,34 @@ no compiler patch or compiler-version attribution is proposed.
 Baseline: `3ac9a9a80`. Private evidence: `build/collide-oct09/triangle-proof.json`,
 `triangle-locals.json`, `triangle-kernel-proof.json`, and
 `triangle-raw-differences.json`. No registry or runtime aliases change.
+
+
+## Parabola callback component lifetimes (2026-10-09)
+
+`xParabolaEnvCB` originally uses a 0xb0-byte frame with seven saved general
+registers and the named normal at stack offset 0xa0. The reconstructed helper
+forms retained pointers to individual vertex and initial-position components
+across `xVec3Normalize`, expanding the frame to 0xf0. PS2-local explicit
+component copies, subtraction and plane-distance arithmetic remove those
+unnecessary pointer lifetimes. The existing member dot operation expresses
+the two parabola coefficients. No shared vector helper changes, register
+bindings or padding are introduced; non-PS2 expressions are preserved.
+
+The normal complete-unit checks for USA, Europe and Germany improve the
+1,672-byte callback from 76.75598% to 88.61005%. The other 35 function scores,
+including the preceding triangle gain, remain unchanged. Exact coverage
+remains 10,528 bytes / 20 functions. The rebuilt callback has 1,652 bytes and
+retains arithmetic load/register ordering and instruction scheduling residuals;
+this is not an exact-byte claim. All three versions directly reproduce the
+first 96 prologue bytes and the 0xb0 frame. The existing normalization call
+and filter-global relocation remain at their original offsets 0x1e4 and 0x64.
+Fresh GameCube solo validation retains the previous 72/75 exact result.
+
+Direct versus free/member dot helpers, coefficient/plane-distance evaluation
+order and component operand order were separately tested. Several equivalent
+forms regressed; none establishes a compiler-version defect. The private
+fast-probe snapshot was followed by normal builds of each complete regional
+unit. Baseline: `3b6725643`. Evidence is
+`build/collide-oct09/parabola-proof.json`, `parabola-locals.json`, and
+`parabola-entry-proof.json`. Full regional production checks are deferred to
+the integration gate, and no runtime identity or registry evidence changes.

@@ -484,10 +484,19 @@ static S32 xParabolaEnvCB(xClumpCollBSPTriangle* triangles, void* data)
                     F32 d11, d12, d22;
                     F32 p1, p2;
                     xVec3 pp;
+#if defined(PS2)
+                    pdist = -(N.x * v0->x + N.y * v0->y + N.z * v0->z);
+#else
                     pdist = -xVec3Dot(&N, v0);
+#endif
                     a = -N.y * p->gravity * 0.5f;
+#if defined(PS2)
+                    b = N.dot(p->initVel);
+                    c = N.dot(p->initPos) + pdist;
+#else
                     b = N.x * p->initVel.x + N.y * p->initVel.y + N.z * p->initVel.z;
                     c = N.x * p->initPos.x + N.y * p->initPos.y + N.z * p->initPos.z + pdist;
+#endif
                     if (a < 1e-5f && a > -1e-5f)
                     {
                         if (b > 1e-5f || b < -1e-5f)
@@ -513,10 +522,22 @@ static S32 xParabolaEnvCB(xClumpCollBSPTriangle* triangles, void* data)
                     d22 = xVec3Dot(&v2p, &v2p);
                     if (t1 >= p->minTime && t1 < p->maxTime && t1 < pd->colls->dist)
                     {
+#if defined(PS2)
+                        s1.x = p->initPos.x;
+                        s1.y = p->initPos.y;
+                        s1.z = p->initPos.z;
+#else
                         xVec3Copy(&s1, &p->initPos);
+#endif
                         xVec3AddScaled(&s1, &p->initVel, t1);
                         s1.y -= 0.5f * p->gravity * t1 * t1;
+#if defined(PS2)
+                        pp.x = s1.x - v0->x;
+                        pp.y = s1.y - v0->y;
+                        pp.z = s1.z - v0->z;
+#else
                         xVec3Sub(&pp, &s1, v0);
+#endif
                         p1 = xVec3Dot(&pp, &v1p);
                         p2 = xVec3Dot(&pp, &v2p);
                         c1 = (p1 * d22 - p2 * d12) / (d11 * d22 - d12 * d12);
@@ -531,10 +552,22 @@ static S32 xParabolaEnvCB(xClumpCollBSPTriangle* triangles, void* data)
                     }
                     if (t2 >= p->minTime && t2 < p->maxTime && t2 < pd->colls->dist)
                     {
+#if defined(PS2)
+                        s2.x = p->initPos.x;
+                        s2.y = p->initPos.y;
+                        s2.z = p->initPos.z;
+#else
                         xVec3Copy(&s2, &p->initPos);
+#endif
                         xVec3AddScaled(&s2, &p->initVel, t2);
                         s2.y -= 0.5f * p->gravity * t2 * t2;
+#if defined(PS2)
+                        pp.x = s2.x - v0->x;
+                        pp.y = s2.y - v0->y;
+                        pp.z = s2.z - v0->z;
+#else
                         xVec3Sub(&pp, &s2, v0);
+#endif
                         p1 = xVec3Dot(&pp, &v1p);
                         p2 = xVec3Dot(&pp, &v2p);
                         c1 = (p1 * d22 - p2 * d12) / (d11 * d22 - d12 * d12);
