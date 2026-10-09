@@ -782,7 +782,7 @@ U32 xBoxHitsSphere(const xBox* a, const xSphere* b, xCollis* coll)
         F32 _mag = SQR((v)->x) + SQR((v)->y) + SQR((v)->z);                                        \
         if (xabs(_mag - 1.0f) > 0.000001f && _mag > 0.00001f)                                      \
         {                                                                                          \
-            _mag = xsqrt(_mag);                                                                    \
+            _mag = xCollideSqrt(_mag);                                                             \
             *(s) *= _mag;                                                                          \
             _mag = 1.0f / _mag;                                                                    \
             (v)->x *= _mag;                                                                        \
@@ -828,16 +828,26 @@ static U32 Mgc_BoxBoxTest(const xBox* a, const xMat4x3* matA, const xBox* b, con
     xMat4x3Toworld(&centB, matB, &centB);
 
     xVec3 kD;
+#ifdef PS2
+    kD.y = centB.y - centA.y;
+    kD.x = centB.x - centA.x;
+#else
     kD.x = centB.x - centA.x;
     kD.y = centB.y - centA.y;
+#endif
     kD.z = centB.z - centA.z;
 
     F32 aafC[3][3], aafAbsC[3][3];
     F32 afAD[3];
     F32 fR0, fR1, fR, fR01;
 
+#ifdef PS2
+    aafC[0][1] = akA[0].x * akB[1].x + akA[0].y * akB[1].y + akA[0].z * akB[1].z;
+    aafC[0][0] = akA[0].x * akB[0].x + akA[0].y * akB[0].y + akA[0].z * akB[0].z;
+#else
     aafC[0][0] = akA[0].x * akB[0].x + akA[0].y * akB[0].y + akA[0].z * akB[0].z;
     aafC[0][1] = akA[0].x * akB[1].x + akA[0].y * akB[1].y + akA[0].z * akB[1].z;
+#endif
     aafC[0][2] = akA[0].x * akB[2].x + akA[0].y * akB[2].y + akA[0].z * akB[2].z;
     afAD[0] = akA[0].x * kD.x + akA[0].y * kD.y + akA[0].z * kD.z;
     aafAbsC[0][0] = xabs(aafC[0][0]);

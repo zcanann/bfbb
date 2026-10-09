@@ -384,3 +384,31 @@ artificial padding, header changes or compiler-version attribution are added.
 Baseline: `4a4debed7`. Private evidence is
 `build/collide-oct09/box-proof.json`, `box-locals.json`, and the retained
 regional reports. Full production checks remain the integration gate.
+
+## Box-box separating-axis normalization (2026-10-09)
+
+The six axis normalizations in `Mgc_BoxBoxTest` use the same explicit PS2
+square-root boundary already recovered in the other collision routines.
+Original debug locals independently identify six `_mag` temporaries and the
+axis, extent, center and coefficient arrays. Reusing the local square-root
+helper raises the pilot from 88.954796% to 98.85443%. Ordering the independent
+center-difference and first coefficient assignments improves it to 99.70615%.
+Those assignment changes are PS2-only; the helper remains an `xsqrt` alias
+on other platforms.
+
+Normal complete-unit builds for USA, Europe, Germany and France all retain
+99.70615% for this 4,424-byte body. The other 35 function scores are unchanged;
+exact coverage remains 12,968 bytes / 22 functions. Fresh GameCube solo
+retains 72/75 exact functions and the same three residuals. Raw comparison
+in each PS2 region finds 4,300 bytes in identical instruction words, including
+all six square roots at identical offsets; the function has no relocations.
+The remaining 31 words concern coefficient loads, register allocation and
+scheduling. This is a fuzzy gain, not an exact-function claim.
+
+Alternative absolute-value ordering, moving the first distance-dot calculation,
+and vector helper forms were measured separately and rejected. No forced
+register binding, artificial padding, compiler patch or header change is
+used. Baseline: `26ccab6cb` (the swept-box change on staging `5cb49a1a2`).
+Private evidence: `build/collide-oct09/mgc-proof.json`, `mgc-locals.json`,
+`mgc-raw-proof.json`, and the four regional reports. Full production checks
+remain the integration gate.
