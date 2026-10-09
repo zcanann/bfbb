@@ -384,3 +384,203 @@ void iParMgrRenderParSys_Flat(void* data, xParGroup* ps)
     }
     iRenderFlush();
 }
+
+namespace
+{
+    // VU registers are restored after RenderWare calls, which may overwrite them.
+    inline void prepare_streak_culling()
+    {
+        asm volatile("lqc2 vf14, 0(%0)\n"
+                     "lqc2 vf15, 16(%0)\n"
+                     "lqc2 vf16, 32(%0)\n"
+                     "lqc2 vf17, 48(%0)\n"
+                     : : "r"(globals.camera.frustplane) : "memory");
+        asm volatile("lqc2 vf10, 0(%0)\n"
+                     : : "r"(&gRenderBuffer.m_camViewR) : "memory");
+    }
+
+    inline S32 prepare_streak_vertices(const xPar* p, F32 length)
+    {
+        // Form the tail and its two width offsets. Cull only when the head and
+        // tail are outside the same packed side plane.
+        S32 outside;
+        U32 other;
+        U32 factor;
+        asm volatile("lqc2 vf8, 16(%3)\n"
+                     "lqc2 vf9, 32(%3)\n"
+                     "mfc1 %2, %4\n"
+                     "qmtc2 %2, vf7\n"
+                     "vadda.xyz ACC, vf0, vf8\n"
+                     "vmsubx.xyz vf9, vf9, vf7x\n"
+                     "vaddax.xyzw ACC, vf17, vf0x\n"
+                     "vmsubax.xyzw ACC, vf14, vf8x\n"
+                     "vmsubay.xyzw ACC, vf15, vf8y\n"
+                     "vmsubz.xyzw vf1, vf16, vf8z\n"
+                     "vaddaw.xyzw ACC, vf17, vf8w\n"
+                     "vmsubax.xyzw ACC, vf14, vf9x\n"
+                     "vmsubay.xyzw ACC, vf15, vf9y\n"
+                     "qmfc2 %0, vf1\n"
+                     "vmsubz.xyzw vf2, vf16, vf9z\n"
+                     "vadda.xyz ACC, vf9, vf0\n"
+                     "vmsubw.xyz vf6, vf10, vf8w\n"
+                     "vmaddw.xyz vf7, vf10, vf8w\n"
+                     "qmfc2 %1, vf2\n"
+                     "pand %0, %0, %1\n"
+                     "pcgtw %0, $0, %0\n"
+                     "ppach %0, $0, %0\n"
+                     : "=&r"(outside), "=&r"(other), "=&r"(factor)
+                     : "r"(p), "f"(length) : "memory");
+        return outside;
+    }
+
+    inline void write_streak_vertices(RxObjSpace3DVertex* vertices, const xPar* p)
+    {
+        // The original PS2 layout is head, tail-minus-width, tail-plus-width.
+        U32 head;
+        U32 tail;
+        U32 color;
+        asm volatile("qmfc2 %0, vf8\n"
+                     "lw %2, 12(%4)\n"
+                     "sw %0, 0(%3)\n"
+                     "prot3w %0, %0\n"
+                     "sw %0, 4(%3)\n"
+                     "prot3w %0, %0\n"
+                     "sw %0, 8(%3)\n"
+                     "qmfc2 %1, vf6\n"
+                     "sw %2, 12(%3)\n"
+                     "sw %1, 36(%3)\n"
+                     "prot3w %1, %1\n"
+                     "sw %1, 40(%3)\n"
+                     "prot3w %1, %1\n"
+                     "sw %1, 44(%3)\n"
+                     "qmfc2 %0, vf7\n"
+                     "sw %2, 48(%3)\n"
+                     "sw %0, 72(%3)\n"
+                     "prot3w %0, %0\n"
+                     "sw %0, 76(%3)\n"
+                     "prot3w %0, %0\n"
+                     "sw %0, 80(%3)\n"
+                     "sw %2, 84(%3)\n"
+                     : "=&r"(head), "=&r"(tail), "=&r"(color)
+                     : "r"(vertices), "r"(p) : "memory");
+    }
+}
+
+void iParMgrRenderParSys_Streak(void* data, xParGroup* ps)
+{
+    xPar* idx = ps->m_root;
+    zParSys* s;
+    RwTexture* texture;
+    RwRaster* raster;
+    RxObjSpace3DVertex* v3d;
+
+    iRenderSetCameraViewMatrix(NULL);
+
+    s = (zParSys*)data;
+
+    texture = s->txtr_particle;
+    if (texture != NULL)
+    {
+        raster = texture->raster;
+        if (raster != NULL)
+        {
+            RwRenderStateSet(rwRENDERSTATETEXTURERASTER, raster);
+        }
+    }
+    else
+    {
+        RwRenderStateSet(rwRENDERSTATETEXTURERASTER, NULL);
+    }
+
+    prepare_streak_culling();
+    v3d = gRenderBuffer.m_vertex;
+
+    for (; idx != NULL; idx = idx->m_next)
+    {
+        if (prepare_streak_vertices(idx, 5.0f))
+        {
+            continue;
+        }
+        write_streak_vertices(v3d, idx);
+
+        // Write the original IEEE UV words alongside the packed vertex data.
+        *(U32*)&v3d[0].u = 0x3f000000;
+        *(U32*)&v3d[0].v = 0x3f800000;
+        *(U32*)&v3d[1].u = 0;
+        *(U32*)&v3d[1].v = 0;
+        *(U32*)&v3d[2].u = 0x3f800000;
+        *(U32*)&v3d[2].v = 0;
+
+        v3d += 3;
+
+        gRenderBuffer.m_vertexCount += 3;
+
+        if (gRenderBuffer.m_vertexCount + 3 > 477)
+        {
+            iRenderFlush();
+            v3d = gRenderBuffer.m_vertex;
+            prepare_streak_culling();
+        }
+    }
+
+    iRenderFlush();
+}
+
+void iParMgrRenderParSys_InvStreak(void* data, xParGroup* ps)
+{
+    xPar* idx = ps->m_root;
+    zParSys* s;
+    RwTexture* texture;
+    RwRaster* raster;
+    RxObjSpace3DVertex* v3d;
+
+    iRenderSetCameraViewMatrix(NULL);
+
+    s = (zParSys*)data;
+
+    texture = s->txtr_particle;
+    if (texture != NULL)
+    {
+        raster = texture->raster;
+        if (raster != NULL)
+        {
+            RwRenderStateSet(rwRENDERSTATETEXTURERASTER, raster);
+        }
+    }
+    else
+    {
+        RwRenderStateSet(rwRENDERSTATETEXTURERASTER, NULL);
+    }
+
+    prepare_streak_culling();
+    v3d = gRenderBuffer.m_vertex;
+
+    for (; idx != NULL; idx = idx->m_next)
+    {
+        if (prepare_streak_vertices(idx, -5.0f))
+        {
+            continue;
+        }
+        write_streak_vertices(v3d, idx);
+
+        *(U32*)&v3d[0].u = 0x3f000000;
+        *(U32*)&v3d[0].v = 0x3f800000;
+        *(U32*)&v3d[1].u = 0;
+        *(U32*)&v3d[1].v = 0;
+        *(U32*)&v3d[2].u = 0x3f800000;
+        *(U32*)&v3d[2].v = 0;
+
+        v3d += 3;
+
+        gRenderBuffer.m_vertexCount += 3;
+
+        if (gRenderBuffer.m_vertexCount + 3 > 477)
+        {
+            iRenderFlush();
+            v3d = gRenderBuffer.m_vertex;
+            prepare_streak_culling();
+        }
+    }
+
+    iRenderFlush();
+}
