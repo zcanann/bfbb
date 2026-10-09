@@ -53,3 +53,24 @@ Private regional reports use `*-vu.json`. `vu-raw-proof.json` records original
 executable hashes, original core addresses and source-object hashes for the
 raw-byte checks; the 192-byte proof is not a claim that the whole callback is
 exact.
+
+## Shadow manager material and render state
+
+The original PS2 manager changes each shadow model's material pipelines from
+the a4d skin variants to the corresponding adl variants before rendering the
+shadow camera, then restores them afterward. Both ordinary and ADC variants
+are handled. The reconstructed loops use the original global pipelines,
+independently identified by their DWARF addresses. Manager index zero also
+sets a ten-unit shadow volume before drawing and restores the saved PS2 alpha
+test afterward. These operations were absent from the shared source.
+
+The manager's NPC receiver selection remains a call to the complete
+`xShadow_PickEntForNPC` helper under PS2. Together, these restorations raise
+the complete 2,640-byte manager from 83.33182% to 99.84091% in all three debug
+releases. Europe/Germany setup also restores the original 512x512 resolution
+limits, raising that body's score from 97.072464% to 97.10145%.
+
+Exact totals remain 20/34 functions and 4,864 bytes; every other score is
+unchanged. The full GameCube USA report remains identical and its retail DOL
+SHA-1 passes. France has no enabled profile. Private reports use
+`*-manager.json`; the remaining manager differences are register assignments.

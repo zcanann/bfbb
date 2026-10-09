@@ -182,7 +182,9 @@ static S32 SetupShadow()
     // equal to either display width or height.
     // On GCN, this routine normally won't happen,
     // as we're already below both dimensions.
-#if defined(PS2)
+#if defined(VERSION_SLES_51968) || defined(VERSION_SLES_51970)
+    for (; (res > 512) || (res > 512); res >>= 1);
+#elif defined(PS2)
     for (; (res > 640) || (res > 448); res >>= 1);
 #elif defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
     for (; (res > 640) || (res > 528); res >>= 1);
@@ -2376,13 +2378,56 @@ void xShadowManager_Render()
                 ent->model->Next = NULL;
             }
 
+#if defined(PS2)
+            {
+                S32 material;
+                RpMaterialList* list = &ent->model->Data->geometry->matList;
+                for (material = 0; material < list->numMaterials; material++)
+                {
+                    if (list->materials[material]->pipeline == a4dSkinPipe)
+                    {
+                        list->materials[material]->pipeline = adlSkinPipe;
+                    }
+                    if (list->materials[material]->pipeline == a4dSkinPipeADC)
+                    {
+                        list->materials[material]->pipeline = adlSkinPipeADC;
+                    }
+                }
+            }
+#endif
+
             xShadowCameraUpdate(ent->model, (void (*)(void*))xModelRender, &center, radius, 0);
+
+#if defined(PS2)
+            {
+                S32 material;
+                RpMaterialList* list = &ent->model->Data->geometry->matList;
+                for (material = 0; material < list->numMaterials; material++)
+                {
+                    if (list->materials[material]->pipeline == adlSkinPipe)
+                    {
+                        list->materials[material]->pipeline = a4dSkinPipe;
+                    }
+                    if (list->materials[material]->pipeline == adlSkinPipeADC)
+                    {
+                        list->materials[material]->pipeline = a4dSkinPipeADC;
+                    }
+                }
+            }
+#endif
 
             if (old_model != NULL)
             {
                 ent->model->Data = old_model;
                 ent->model->Next = old_mnext;
             }
+
+#if defined(PS2)
+            if (i == 0)
+            {
+                xShadowSetVolume(ShadowCamera, &center, 10.0f);
+            }
+#endif
 
             xShadowVertical_DrawCache(sMgrList[i].cache, ShadowStrength, 0.0f, 0, NULL, NULL);
 
@@ -2421,6 +2466,12 @@ void xShadowManager_Render()
                     }
                 }
             }
+#if defined(PS2)
+            if (i == 0)
+            {
+                RpSkyRenderStateSet(rpSKYRENDERSTATEATEST_1, (void*)skyOldTest);
+            }
+#endif
         }
         else
         {
@@ -2502,6 +2553,9 @@ static void xShadow_PickByRayCast(xShadowMgr* mgr)
     }
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 static void xShadow_PickEntForNPC(xShadowMgr* mgr)
 {
     if (mgr->cache->entCount >= 2)
@@ -2513,3 +2567,7 @@ static void xShadow_PickEntForNPC(xShadowMgr* mgr)
         }
     }
 }
+
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
