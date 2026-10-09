@@ -14730,3 +14730,19 @@ mutation tests pass. All previous function scores/exact matches are retained,
 and all three GameCube full source reports/checksums remain unchanged.
 Evidence: `build/oct09-{us,france}-utility`, their comparison logs,
 `build/oct09-prawn-tests.log`, and `build/oct09-utility-<GameCube-version>.log`.
+
+The textbox/screen-effects batch adds 4,676 exact USA bytes / eleven functions,
+reaching 991,232 bytes / 3,762 functions. Textbox reset/link/pointer lifetimes,
+original inline rectangle/height helpers, reciprocal vertex depth and regional
+dimensions recover five complete functions. Screen-effect initialization/reset,
+platform rendering, distortion call boundaries and regional glare geometry
+recover five more; Prawn's original decompose boundary recovers its death entry.
+Credits packed color uses the original four-byte reversed-channel unpack type.
+
+Full USA comparisons retain every previous function score and exact match;
+the French report is entirely unchanged. All three GameCube builds and retail
+checksums pass. Glare improves from 98.5087% to 98.55218% in each GameCube region,
+with no other function or code/data measure regression. Evidence:
+`build/oct09-{us,france}-ui`, their comparison logs, and
+`build/oct09-ui-<GameCube-version>.log`. The authentic RenderWare RGBA macro
+investigation remains a separate private caller sweep, outside this batch.
