@@ -671,6 +671,15 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in cruise_animation['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Cruise animation adds three complete functions rooted in the independently regenerated parameter-registration anchor. Complete insertion strings, typed fields/tables, callback identity and full original runtime contexts corroborate all operands. The existing parameter body is preserved, and no whole translation-unit or data extent is claimed.')
+    from platforms.france_sound_listeners import generate_unit as generate_sound_listeners
+    sound_listeners = generate_sound_listeners(originals, registry_dir)
+    document['functions'].extend(sound_listeners['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(sound_listeners['sequence_proofs'])
+    document['sound_listeners_data_proofs'] = sound_listeners['data_proofs']
+    for key, value in sound_listeners['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Sound listeners adds nine unique complete listener, voice-query and delayed-insertion bodies using all three originals. Strict control flow, the complete internal call and original typed sound arrays corroborate every changed operand. No registry identities are consumed, and no whole translation-unit or data extent is claimed.')
     return document
 
 

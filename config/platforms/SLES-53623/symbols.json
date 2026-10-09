@@ -3120,6 +3120,34 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "xSndStreamUnlock",
+      "source": "SB/Core/x/xSnd.cpp",
+      "address": 2135376,
+      "size": 72,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "xSndStreamReady",
+      "source": "SB/Core/x/xSnd.cpp",
+      "address": 2135456,
+      "size": 88,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "xSndParentDied",
+      "source": "SB/Core/x/xSnd.cpp",
+      "address": 2137216,
+      "size": 64,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "xSndIDIsPlaying",
+      "source": "SB/Core/x/xSnd.cpp",
+      "address": 2137296,
+      "size": 88,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "xSndIsReady",
       "source": "SB/Core/x/xSnd.cpp",
       "address": 2137408,
@@ -3132,6 +3160,41 @@
       "address": 2138960,
       "size": 32,
       "provenance": "machine-corroborated-static-cfg"
+    },
+    {
+      "name": "xSndSetListenerData",
+      "source": "SB/Core/x/xSnd.cpp",
+      "address": 2139008,
+      "size": 232,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "xSndInternalUpdateVoicePos",
+      "source": "SB/Core/x/xSnd.cpp",
+      "address": 2139440,
+      "size": 284,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "xSndProcessSoundPos",
+      "source": "SB/Core/x/xSnd.cpp",
+      "address": 2139728,
+      "size": 616,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "xSndCalculateListenerPosition",
+      "source": "SB/Core/x/xSnd.cpp",
+      "address": 2140352,
+      "size": 416,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "xSndAddDelayed",
+      "source": "SB/Core/x/xSnd.cpp",
+      "address": 2140768,
+      "size": 128,
+      "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
       "name": "xSndSetEnvironmentalEffect",

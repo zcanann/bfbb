@@ -49,3 +49,12 @@ The tests replay all originals and reject an altered instruction, typed operand,
 internal call target, duplicate complete body, and changed original voice-array
 bound. Production integration must regenerate the canonical aggregate registry
 and run the full French source report; the private pilot is not that final gate.
+
+Production integration passes that gate in `build/oct09-france-listeners`:
+all aggregate registries regenerate identically, all 70 enabled source units
+compile, and the section report reaches 160,376 exact bytes / 459 exact
+functions. This adds 1,988 bytes / nine functions with no earlier score loss.
+Recovered coverage is 722 functions / 362,820 bytes; the full CPU denominator
+remains 2,979,968 bytes. Source data and a full executable link remain pending.
+The listener proof also survives an exact JSON roundtrip, including typed-path
+keys, so serialized evidence equals fresh regeneration.

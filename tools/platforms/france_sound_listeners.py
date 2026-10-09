@@ -87,7 +87,7 @@ def original_data(original):
         member("xSndGlobals",n,off,vec)
         for k,axis in enumerate(("x","y","z")):
             paths[off+4*k] = {"path":[n,axis],"opcodes":[49,57]}
-    snd["paths"] = paths
+    snd["paths"] = {str(offset): path for offset, path in paths.items()}
     declarations = [(off,a) for off,tag,owner,a in rows if tag == 12 and
                     owner.replace("\\","/").endswith(SOURCE) and a.get(3) == "sDelayedSnd"]
     require(len(declarations) == 1,"Original delayed array declaration ambiguous")
@@ -124,7 +124,7 @@ def generate_unit(originals, registry_dir):
                     require(off == 0 and p["opcode"] == 9,"Delayed sound operand is not its original array base")
                     path = {"path":["sDelayedSnd"],"opcodes":[9]}
                 else:
-                    path = snd["paths"].get(off)
+                    path = snd["paths"].get(str(off))
                     require(path is not None and p["opcode"] in path["opcodes"],"Unreviewed sound field operand")
                 require(p["storage"] == "zero_fill","Sound global storage differs")
                 require(mapping.setdefault(ra,tb) == tb,"Sound operand mapping is inconsistent")

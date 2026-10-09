@@ -14804,3 +14804,28 @@ match; the French report is entirely unchanged. All three GameCube full source
 reports/checksums pass without new regressions. Evidence:
 `build/oct09-{us,france}-render-followup`, their comparison logs, and
 `build/oct09-render-followup-<GameCube-version>.log`.
+
+The shadow/cache and effect batch adds 6,252 exact USA bytes / seven functions,
+reaching 1,013,924 bytes / 3,785 functions. Five complete shadow leaf,
+environment, entity, fill and removal bodies contribute 5,076 bytes; restoring
+texture pointer types and one-bit conditions makes bubble/shiny rendering exact
+for another 1,176 bytes. Workers validate the affected units in all three debug
+PS2 regions. Root recompiles both changed units against the previously verified
+214-unit USA snapshot and retains every earlier function/code/data measure.
+
+Nine independent original-backed French listener/voice/delayed-insertion bodies
+add 1,988 exact bytes / nine functions, reaching 160,376 bytes / 459 functions.
+All prior registry records survive unchanged. Strict production regeneration
+equals the serialized registries and all 70 enabled French source units compile.
+Coverage reaches 722 functions / 362,820 known bytes. Full CPU denominators stay
+2,978,560 bytes for USA and 2,979,968 for France; source data and full executable
+links remain pending. All three full GameCube reports/checksums retain the earlier
+streak/glare gains without further regression. Four listener mutation/duplicate/
+type-bound tests pass, and exact JSON roundtrip equality guards serialization.
+
+Evidence: `build/oct09-us-shadow-effects`, `build/oct09-france-listeners`, their
+comparison logs, `build/oct09-listeners-final-tests.log`,
+`build/oct09-france-listeners-map{,-query}.json`, and
+`build/oct09-shadow-<GameCube-version>.log`. The refreshed fuzzy map excludes
+722 proven bodies before ranking remaining large contiguous sections; candidates
+remain diagnostic and receive no matching or boundary credit.

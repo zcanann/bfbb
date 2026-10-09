@@ -25,6 +25,7 @@ class SoundListenerOriginalTests(unittest.TestCase):
         cls.proof=generate_unit(cls.originals,None)
 
     def test_all_originals_unique_closed_and_independent(self):
+        self.assertEqual(json.loads(json.dumps(self.proof)), self.proof)
         self.assertEqual(self.proof["counts"]["code_bytes"],1988)
         self.assertEqual(len(self.proof["functions"]),9)
         for f in self.proof["functions"]:
