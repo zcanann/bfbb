@@ -69,3 +69,27 @@ compiler result, complete report, and three-reference linkage proof;
 `save-france-product-proof.json`, `save-france-product-context.json`,
 `save-france-space-raw-proof.json`, and `save-france-profile-preservation.json`
 record original strings/uses, raw comparison limits, and preservation checks.
+
+## Formatting helper boundaries
+
+The originals also keep `iSG_mc_isformatted` out of line when called by the
+format/unformat helpers. A scoped `dont_inline` around that definition restores
+both original bodies: `iSG_mca_fmt` (196 bytes) and `iSG_mca_unfmt` (128 bytes).
+All four complete-unit comparisons gain 324 exact bytes and two functions,
+with every other function and the data result unchanged. The debug units reach
+11,688 / 13,984 exact bytes and 45 / 53 functions, at 98.93278% fuzzy matching
+(Germany: 98.932495%). France reaches 6,864 / 7,044 bytes and 23 / 24 functions,
+at 99.90914%.
+
+Raw replay confirms 192 / 196 format bytes and 124 / 128 unformat bytes in each
+debug original; each retains one unnamed SDK call. France independently replays
+184 / 196 and 120 / 128 bytes using only already registered callees. Its remaining
+calls include the unregistered async/error helpers and unknown SDK destinations.
+The source correction adds no relocation metadata. The formatted-state predicate
+itself still differs by two scheduling NOPs; ternary, positive-first, explicit
+else, and local-result spellings did not improve it and were reverted.
+
+Private evidence: `save-format-final-comparison.json`,
+`save-format-final-changes.json`, `save-format-originals.txt`, and the four
+`save-format-*-raw-proof.json` artifacts under `build`. The source parent for
+these comparisons is `4551a6669`.

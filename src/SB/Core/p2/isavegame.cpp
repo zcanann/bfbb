@@ -1321,6 +1321,7 @@ S32 iSG_mc_exists(st_ISG_MEMCARD_DATA* mcdata, S32 mcidx)
     return result;
 }
 
+#pragma dont_inline on
 S32 iSG_mc_isformatted(st_ISG_MEMCARD_DATA* mcdata, S32 mcidx)
 {
     S32 result = 1;
@@ -1348,6 +1349,7 @@ S32 iSG_mc_isformatted(st_ISG_MEMCARD_DATA* mcdata, S32 mcidx)
     return is_fmtd;
 }
 
+#pragma dont_inline reset
 S32 iSG_mc_isPSIIcard(st_ISG_MEMCARD_DATA* mcdata, S32 mcidx)
 {
     S32 result = 1;
