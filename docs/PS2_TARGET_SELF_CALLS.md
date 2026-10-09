@@ -32,3 +32,11 @@ Production integration must rebuild target objects and compare full reports
 against earlier snapshots before claiming the gain. This does not recover new
 function boundaries, change source code/data, identify unnamed runtime callees
 or prove a complete executable link.
+
+Production integration passes full target/source regeneration in USA, PAL and
+Germany, with all 214 enabled units compiled per region and no earlier
+function/code/data score lost. The same updater reaches 100% in every report,
+adding 220 exact bytes / one function per debug region through proven metadata.
+Evidence: `build/oct09-full-render-save/<version>/report.json` and the three
+full comparison logs. PAL/German baselines are independently built from frozen
+commit `555924f5e` in `bfbb-verify-oct09-555/build/before-555`.

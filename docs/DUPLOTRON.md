@@ -14933,3 +14933,49 @@ comparison logs, `build/oct09-npc-{helper,facing}-tests.log`,
 both regional comparison logs, and `build/oct09-france-npc-map{,-query}.json`.
 The private Xbox reconstruction and all-section cross-platform proofs are
 cited in `XBOX_PARTICLE_RANDOM.md`.
+
+The full-region renderer/save/robot batch rebuilds every target object and all
+214 enabled source units in USA, PAL and Germany. This validates the generic
+ELF defined-symbol correction against complete reports, including explicit
+original-DWARF/inverse-checked recursive calls. The already raw-identical
+220-byte updater becomes exact through correct comparison metadata; no source
+or compiler instruction is changed by that correction.
+
+| PS2 region | Exact bytes before | Exact bytes after | Exact functions before | Exact functions after |
+| --- | ---: | ---: | ---: | ---: |
+| USA | 1,022,440 | 1,031,720 | 3,807 | 3,822 |
+| PAL | 1,014,880 | 1,024,160 | 3,794 | 3,809 |
+| Germany | 1,015,364 | 1,024,868 | 3,794 | 3,810 |
+
+USA/PAL each gain 9,280 exact bytes / fifteen functions; Germany gains 9,504 /
+sixteen, including its original extended-character validator. Save/load result,
+autosave polling, format/overwrite/directory callbacks and original UI strings
+provide the save gains. Typed S32 timer materialization, damage/snore/bonked
+branches and death-ray order provide the robot gains. All four previously
+missing PS2 particle renderers now have source, improving the complete iParMgr
+unit from 38.355755% to 92.8517% while preserving its earlier exact functions.
+VU geometry/culling/Euler masks, packed stores, polynomial values, real delay
+slots and culled-path pivot restoration are independently checked raw. Remaining
+renderer size/register/scheduling differences stay scored.
+
+The complete debug-region comparisons reject no function/code/data regression.
+USA fuzzy matching reaches 65.527588%, PAL 65.488686%, Germany 65.362493%.
+PAL/German baselines come from independently compiled frozen commit `555924f5e`;
+the USA baseline is the previously verified complete 214-unit snapshot. The full
+CPU denominators remain 2,978,560 / 2,979,712 / 2,976,512 bytes respectively.
+
+French vector/scalar closure adds ten complete identities / 6,492 known bytes,
+reaching 829 functions / 394,796 bytes. Typed full vectors and member paths, the
+existing player-model anchor and a typed local float corroborate 33 data operands;
+all 33 JALs close through fixed complete identities or unnamed literal contexts.
+The complete 76-unit report adds 2,772 exact bytes / eight functions, reaching 181,408 /
+547. All earlier proof records and scores are preserved. Eight original-backed
+tests and three ELF-symbol tests pass. All three GameCube source reports/checksums
+and both Xbox full source reports are unchanged. Source-data/full-link limitations
+remain explicit.
+
+Evidence: `build/oct09-full-render-save/<version>`, all three comparison logs,
+`bfbb-verify-oct09-555/build/before-555` and baseline logs,
+`build/oct09-france-render-save`, its comparison log,
+`build/oct09-npc-vector-tests.log`, `build/oct09-render-save-<GameCube-version>.log`
+and `build/oct09-render-save-xbox`.

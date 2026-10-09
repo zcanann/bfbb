@@ -59,14 +59,15 @@
     "Robotic models adds nine unique complete original model helpers and robotic consumers. The complete find/show/hide helper graph and exactly nineteen proved JAL destinations close every transfer; no changed data operand is accepted. Three fixed independently proved destinations fence later recovery dependencies. No whole translation-unit or data extent is claimed.",
     "Robotic facing adds five unique complete original facing helpers and robotic consumers. Exactly sixteen original JALs, six fixed independent identities and one literal unnamed runtime context close every transfer. One complete forty-byte helper uses an exhaustive scoped twenty-byte seed with exactly one proved call operand masked; generic uniqueness thresholds are unchanged. No runtime identity, whole translation-unit or data extent is claimed.",
     "NPC helpers adds thirty-one unique complete original navigation, collision and robotic bodies. Exactly thirty-four JAL destinations follow an acyclic complete-body graph or nineteen fixed independent identities. No changed data operand, whole translation-unit or data extent is claimed.",
-    "NPC player-model adds eight unique complete original consumers. Nine data operands follow the original typed globals.player.ent.model path and an independent complete CalcNewDir anchor; nineteen JALs close through complete identities or two literal unnamed runtime contexts. No runtime identity, whole translation-unit or data extent is claimed."
+    "NPC player-model adds eight unique complete original consumers. Nine data operands follow the original typed globals.player.ent.model path and an independent complete CalcNewDir anchor; nineteen JALs close through complete identities or two literal unnamed runtime contexts. No runtime identity, whole translation-unit or data extent is claimed.",
+    "NPC vectors adds ten unique complete original consumers. Thirty-three data operands follow complete typed vector objects, scalar members, an independently anchored player-model field and one original local float; thirty-three JALs close through complete identities or literal unnamed runtime contexts. Twelve fixed dependencies preserve evidence across later recoveries. No runtime identity, whole translation-unit or data extent is claimed."
   ],
   "counts": {
-    "functions": 527,
-    "code_bytes": 319436,
-    "source_units": 63,
+    "functions": 537,
+    "code_bytes": 325928,
+    "source_units": 66,
     "rooted_direct_call_entries": 129,
-    "closed_return_bodies": 499,
+    "closed_return_bodies": 509,
     "reviewed_tail_wrappers": 2,
     "registered_callback_entries": 26,
     "reviewed_leaf_tail_functions": 11,
@@ -92,7 +93,7 @@
     "reviewed_pad_kill_tails": 1,
     "reviewed_hangable_tail_chains": 2,
     "reviewed_group_base_tails": 2,
-    "reviewed_complete_caller_callee_clusters": 20,
+    "reviewed_complete_caller_callee_clusters": 21,
     "reviewed_event_shuffle_tails": 5
   },
   "sequence_proofs": [
@@ -8842,6 +8843,444 @@
             "unchanged_anchor_offset": 72,
             "unchanged_anchor_bytes": 112,
             "masked_instruction_count": 5
+          }
+        }
+      ],
+      "whole_translation_units_claimed": false
+    },
+    {
+      "version": "SLUS-20680",
+      "complete_bodies": [
+        {
+          "source": "SB/Game/zNPCTypeRobot.cpp",
+          "linkage_name": "SetHome__8NPCArenaFP10zNPCCommonP10zMovePoint",
+          "address": 2975008,
+          "size": 244,
+          "uniqueness": {
+            "matching_addresses": [
+              2975008
+            ],
+            "unchanged_anchor_offset": 84,
+            "unchanged_anchor_bytes": 96,
+            "masked_instruction_count": 4
+          }
+        },
+        {
+          "source": "SB/Game/zNPCTypeRobot.cpp",
+          "linkage_name": "CornerOfArena__9zNPCRobotFP5xVec3f",
+          "address": 3019616,
+          "size": 896,
+          "uniqueness": {
+            "matching_addresses": [
+              3019616
+            ],
+            "unchanged_anchor_offset": 348,
+            "unchanged_anchor_bytes": 476,
+            "masked_instruction_count": 5
+          }
+        },
+        {
+          "source": "SB/Game/zNPCSupport.cpp",
+          "linkage_name": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "address": 3258496,
+          "size": 1248,
+          "uniqueness": {
+            "matching_addresses": [
+              3258496
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 460,
+            "masked_instruction_count": 15
+          }
+        },
+        {
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "linkage_name": "MoveTryToEscape__17zNPCGoalTubeLassoFf",
+          "address": 2814960,
+          "size": 1132,
+          "uniqueness": {
+            "matching_addresses": [
+              2814960
+            ],
+            "unchanged_anchor_offset": 108,
+            "unchanged_anchor_bytes": 444,
+            "masked_instruction_count": 5
+          }
+        },
+        {
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "linkage_name": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "address": 2818528,
+          "size": 1240,
+          "uniqueness": {
+            "matching_addresses": [
+              2818528
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 572,
+            "masked_instruction_count": 4
+          }
+        },
+        {
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "linkage_name": "Enter__20zNPCGoalAttackTarTarFfPv",
+          "address": 2853312,
+          "size": 144,
+          "uniqueness": {
+            "matching_addresses": [
+              2853312
+            ],
+            "unchanged_anchor_offset": 40,
+            "unchanged_anchor_bytes": 44,
+            "masked_instruction_count": 5
+          }
+        },
+        {
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "linkage_name": "MoveCorner__18zNPCGoalAlertSlickFf",
+          "address": 2860352,
+          "size": 608,
+          "uniqueness": {
+            "matching_addresses": [
+              2860352
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 232,
+            "masked_instruction_count": 6
+          }
+        },
+        {
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "linkage_name": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+          "address": 2871648,
+          "size": 608,
+          "uniqueness": {
+            "matching_addresses": [
+              2871648
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 232,
+            "masked_instruction_count": 6
+          }
+        },
+        {
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "linkage_name": "Enter__20zNPCGoalAlertChomperFfPv",
+          "address": 2890896,
+          "size": 132,
+          "uniqueness": {
+            "matching_addresses": [
+              2890896
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 40,
+            "masked_instruction_count": 5
+          }
+        },
+        {
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "linkage_name": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "address": 2896336,
+          "size": 240,
+          "uniqueness": {
+            "matching_addresses": [
+              2896336
+            ],
+            "unchanged_anchor_offset": 48,
+            "unchanged_anchor_bytes": 96,
+            "masked_instruction_count": 8
+          }
+        }
+      ],
+      "whole_translation_units_claimed": false
+    },
+    {
+      "version": "SLES-51968",
+      "complete_bodies": [
+        {
+          "source": "SB/Game/zNPCTypeRobot.cpp",
+          "linkage_name": "SetHome__8NPCArenaFP10zNPCCommonP10zMovePoint",
+          "address": 2975008,
+          "size": 244,
+          "uniqueness": {
+            "matching_addresses": [
+              2975008
+            ],
+            "unchanged_anchor_offset": 84,
+            "unchanged_anchor_bytes": 96,
+            "masked_instruction_count": 4
+          }
+        },
+        {
+          "source": "SB/Game/zNPCTypeRobot.cpp",
+          "linkage_name": "CornerOfArena__9zNPCRobotFP5xVec3f",
+          "address": 3019616,
+          "size": 896,
+          "uniqueness": {
+            "matching_addresses": [
+              3019616
+            ],
+            "unchanged_anchor_offset": 348,
+            "unchanged_anchor_bytes": 476,
+            "masked_instruction_count": 5
+          }
+        },
+        {
+          "source": "SB/Game/zNPCSupport.cpp",
+          "linkage_name": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "address": 3258496,
+          "size": 1248,
+          "uniqueness": {
+            "matching_addresses": [
+              3258496
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 460,
+            "masked_instruction_count": 15
+          }
+        },
+        {
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "linkage_name": "MoveTryToEscape__17zNPCGoalTubeLassoFf",
+          "address": 2814960,
+          "size": 1132,
+          "uniqueness": {
+            "matching_addresses": [
+              2814960
+            ],
+            "unchanged_anchor_offset": 108,
+            "unchanged_anchor_bytes": 444,
+            "masked_instruction_count": 5
+          }
+        },
+        {
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "linkage_name": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "address": 2818528,
+          "size": 1240,
+          "uniqueness": {
+            "matching_addresses": [
+              2818528
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 572,
+            "masked_instruction_count": 4
+          }
+        },
+        {
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "linkage_name": "Enter__20zNPCGoalAttackTarTarFfPv",
+          "address": 2853312,
+          "size": 144,
+          "uniqueness": {
+            "matching_addresses": [
+              2853312
+            ],
+            "unchanged_anchor_offset": 40,
+            "unchanged_anchor_bytes": 44,
+            "masked_instruction_count": 5
+          }
+        },
+        {
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "linkage_name": "MoveCorner__18zNPCGoalAlertSlickFf",
+          "address": 2860352,
+          "size": 608,
+          "uniqueness": {
+            "matching_addresses": [
+              2860352
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 232,
+            "masked_instruction_count": 6
+          }
+        },
+        {
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "linkage_name": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+          "address": 2871648,
+          "size": 608,
+          "uniqueness": {
+            "matching_addresses": [
+              2871648
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 232,
+            "masked_instruction_count": 6
+          }
+        },
+        {
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "linkage_name": "Enter__20zNPCGoalAlertChomperFfPv",
+          "address": 2890896,
+          "size": 132,
+          "uniqueness": {
+            "matching_addresses": [
+              2890896
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 40,
+            "masked_instruction_count": 5
+          }
+        },
+        {
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "linkage_name": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "address": 2896336,
+          "size": 240,
+          "uniqueness": {
+            "matching_addresses": [
+              2896336
+            ],
+            "unchanged_anchor_offset": 48,
+            "unchanged_anchor_bytes": 96,
+            "masked_instruction_count": 8
+          }
+        }
+      ],
+      "whole_translation_units_claimed": false
+    },
+    {
+      "version": "SLES-51970",
+      "complete_bodies": [
+        {
+          "source": "SB/Game/zNPCTypeRobot.cpp",
+          "linkage_name": "SetHome__8NPCArenaFP10zNPCCommonP10zMovePoint",
+          "address": 2975008,
+          "size": 244,
+          "uniqueness": {
+            "matching_addresses": [
+              2975008
+            ],
+            "unchanged_anchor_offset": 84,
+            "unchanged_anchor_bytes": 96,
+            "masked_instruction_count": 4
+          }
+        },
+        {
+          "source": "SB/Game/zNPCTypeRobot.cpp",
+          "linkage_name": "CornerOfArena__9zNPCRobotFP5xVec3f",
+          "address": 3019616,
+          "size": 896,
+          "uniqueness": {
+            "matching_addresses": [
+              3019616
+            ],
+            "unchanged_anchor_offset": 348,
+            "unchanged_anchor_bytes": 476,
+            "masked_instruction_count": 5
+          }
+        },
+        {
+          "source": "SB/Game/zNPCSupport.cpp",
+          "linkage_name": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "address": 3258496,
+          "size": 1248,
+          "uniqueness": {
+            "matching_addresses": [
+              3258496
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 460,
+            "masked_instruction_count": 15
+          }
+        },
+        {
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "linkage_name": "MoveTryToEscape__17zNPCGoalTubeLassoFf",
+          "address": 2814960,
+          "size": 1132,
+          "uniqueness": {
+            "matching_addresses": [
+              2814960
+            ],
+            "unchanged_anchor_offset": 108,
+            "unchanged_anchor_bytes": 444,
+            "masked_instruction_count": 5
+          }
+        },
+        {
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "linkage_name": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "address": 2818528,
+          "size": 1240,
+          "uniqueness": {
+            "matching_addresses": [
+              2818528
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 572,
+            "masked_instruction_count": 4
+          }
+        },
+        {
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "linkage_name": "Enter__20zNPCGoalAttackTarTarFfPv",
+          "address": 2853312,
+          "size": 144,
+          "uniqueness": {
+            "matching_addresses": [
+              2853312
+            ],
+            "unchanged_anchor_offset": 40,
+            "unchanged_anchor_bytes": 44,
+            "masked_instruction_count": 5
+          }
+        },
+        {
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "linkage_name": "MoveCorner__18zNPCGoalAlertSlickFf",
+          "address": 2860352,
+          "size": 608,
+          "uniqueness": {
+            "matching_addresses": [
+              2860352
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 232,
+            "masked_instruction_count": 6
+          }
+        },
+        {
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "linkage_name": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+          "address": 2871648,
+          "size": 608,
+          "uniqueness": {
+            "matching_addresses": [
+              2871648
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 232,
+            "masked_instruction_count": 6
+          }
+        },
+        {
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "linkage_name": "Enter__20zNPCGoalAlertChomperFfPv",
+          "address": 2890896,
+          "size": 132,
+          "uniqueness": {
+            "matching_addresses": [
+              2890896
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 40,
+            "masked_instruction_count": 5
+          }
+        },
+        {
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "linkage_name": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "address": 2896336,
+          "size": 240,
+          "uniqueness": {
+            "matching_addresses": [
+              2896336
+            ],
+            "unchanged_anchor_offset": 48,
+            "unchanged_anchor_bytes": 96,
+            "masked_instruction_count": 8
           }
         }
       ],
@@ -139179,6 +139618,237 @@
       }
     },
     {
+      "name": "MoveTryToEscape",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2814960,
+      "size": 1132,
+      "sha256": "249dfbb538f411bf019bf3947006306d948d5f59c2a594b31216620f28bfc17d",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-complete-caller-callee-cluster",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2813552,
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "name": "MoveTryToEscape",
+          "linkage_name": "MoveTryToEscape__17zNPCGoalTubeLassoFf",
+          "reference_sha256": "e4f5b2831791c482bd337ff56ece1581325d979f5819f9d6876df3165a0ccbbf",
+          "data_address_operands": [
+            {
+              "hi_offset": 92,
+              "lo_offset": 104,
+              "opcode": 57,
+              "reference_address": 5228760,
+              "target_address": 5227784,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 640,
+              "lo_offset": 644,
+              "opcode": 49,
+              "reference_address": 5228760,
+              "target_address": 5227784,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 676,
+              "lo_offset": 748,
+              "opcode": 49,
+              "reference_address": 5228760,
+              "target_address": 5227784,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 552,
+              "opcode": 3,
+              "reference_address": 2164624,
+              "target_address": 2166032
+            },
+            {
+              "offset": 1104,
+              "opcode": 3,
+              "reference_address": 2961184,
+              "target_address": 2962592
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2814848,
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "name": "MoveTryToEscape",
+          "linkage_name": "MoveTryToEscape__17zNPCGoalTubeLassoFf",
+          "reference_sha256": "28e93e1ed27d99fde9c24763ae86659dfb8458881ca688761a7b6130f34a681f",
+          "data_address_operands": [
+            {
+              "hi_offset": 92,
+              "lo_offset": 104,
+              "opcode": 57,
+              "reference_address": 5227528,
+              "target_address": 5227784,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 640,
+              "lo_offset": 644,
+              "opcode": 49,
+              "reference_address": 5227528,
+              "target_address": 5227784,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 676,
+              "lo_offset": 748,
+              "opcode": 49,
+              "reference_address": 5227528,
+              "target_address": 5227784,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 552,
+              "opcode": 3,
+              "reference_address": 2165920,
+              "target_address": 2166032
+            },
+            {
+              "offset": 1104,
+              "opcode": 3,
+              "reference_address": 2962480,
+              "target_address": 2962592
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2811536,
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "name": "MoveTryToEscape",
+          "linkage_name": "MoveTryToEscape__17zNPCGoalTubeLassoFf",
+          "reference_sha256": "b7c77026ea17a3402eb77e0ebb75eb38d4c7ed0c845fdc40c0f7e664d472dc75",
+          "data_address_operands": [
+            {
+              "hi_offset": 92,
+              "lo_offset": 104,
+              "opcode": 57,
+              "reference_address": 5225928,
+              "target_address": 5227784,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 640,
+              "lo_offset": 644,
+              "opcode": 49,
+              "reference_address": 5225928,
+              "target_address": 5227784,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 676,
+              "lo_offset": 748,
+              "opcode": 49,
+              "reference_address": 5225928,
+              "target_address": 5227784,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 552,
+              "opcode": 3,
+              "reference_address": 2162608,
+              "target_address": 2166032
+            },
+            {
+              "offset": 1104,
+              "opcode": 3,
+              "reference_address": 2959168,
+              "target_address": 2962592
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "proof_scope": "complete_npc_callers_with_typed_vector_constants_local_float_and_anchored_player_model",
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2816084
+          ],
+          "direct_or_indirect_calls": [
+            2815512,
+            2816064
+          ],
+          "branches": [
+            [
+              2814996,
+              2815024
+            ],
+            [
+              2815012,
+              2815032
+            ],
+            [
+              2815036,
+              2815072
+            ],
+            [
+              2815540,
+              2815600
+            ],
+            [
+              2815588,
+              2816048
+            ],
+            [
+              2815612,
+              2815992
+            ],
+            [
+              2815980,
+              2816048
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2814960,
+              -240
+            ],
+            [
+              2816088,
+              240
+            ]
+          ],
+          "ra_saves": [
+            [
+              2814968,
+              -208
+            ]
+          ],
+          "ra_loads": [
+            [
+              2816072,
+              -208
+            ]
+          ],
+          "unreachable_zero_words": [
+            2815020,
+            2815596,
+            2815988
+          ],
+          "following_zero_alignment": 4
+        },
+        "whole_translation_unit_claimed": false
+      }
+    },
+    {
       "name": "DuckStackInterp",
       "source": "SB/Game/zNPCGoalRobo.cpp",
       "address": 2818032,
@@ -139326,6 +139996,313 @@
           ],
           "unreachable_zero_words": [],
           "following_zero_alignment": 12
+        },
+        "whole_translation_unit_claimed": false
+      }
+    },
+    {
+      "name": "MoveFrolic",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2818528,
+      "size": 1240,
+      "sha256": "8ad9708387db87a5e2b6d2d024af3c04d0d363357e0a3b758a81ae9c41c1a31e",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-complete-caller-callee-cluster",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2817120,
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "name": "MoveFrolic",
+          "linkage_name": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "reference_sha256": "e5759cb11ef937737335e34b36137dccaf5a5d8d42985464867eb42862f28a3d",
+          "data_address_operands": [
+            {
+              "hi_offset": 660,
+              "lo_offset": 668,
+              "opcode": 9,
+              "reference_address": 5213600,
+              "target_address": 5212624,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 664,
+              "lo_offset": 700,
+              "opcode": 9,
+              "reference_address": 5213568,
+              "target_address": 5212592,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 572,
+              "opcode": 3,
+              "reference_address": 3254880,
+              "target_address": 3256288
+            },
+            {
+              "offset": 592,
+              "opcode": 3,
+              "reference_address": 3254880,
+              "target_address": 3256288
+            },
+            {
+              "offset": 632,
+              "opcode": 3,
+              "reference_address": 1132848,
+              "target_address": 1132848
+            },
+            {
+              "offset": 652,
+              "opcode": 3,
+              "reference_address": 1132848,
+              "target_address": 1132848
+            },
+            {
+              "offset": 932,
+              "opcode": 3,
+              "reference_address": 1132848,
+              "target_address": 1132848
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2818416,
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "name": "MoveFrolic",
+          "linkage_name": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "reference_sha256": "2cdd7b331dfca99ad35142e04a96f4e3a91027ef6c287c6a3980edf7c691ed15",
+          "data_address_operands": [
+            {
+              "hi_offset": 660,
+              "lo_offset": 668,
+              "opcode": 9,
+              "reference_address": 5212368,
+              "target_address": 5212624,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 664,
+              "lo_offset": 700,
+              "opcode": 9,
+              "reference_address": 5212336,
+              "target_address": 5212592,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 572,
+              "opcode": 3,
+              "reference_address": 3256176,
+              "target_address": 3256288
+            },
+            {
+              "offset": 592,
+              "opcode": 3,
+              "reference_address": 3256176,
+              "target_address": 3256288
+            },
+            {
+              "offset": 632,
+              "opcode": 3,
+              "reference_address": 1132848,
+              "target_address": 1132848
+            },
+            {
+              "offset": 652,
+              "opcode": 3,
+              "reference_address": 1132848,
+              "target_address": 1132848
+            },
+            {
+              "offset": 932,
+              "opcode": 3,
+              "reference_address": 1132848,
+              "target_address": 1132848
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2815104,
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "name": "MoveFrolic",
+          "linkage_name": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "reference_sha256": "c20a64fa8983be1055e36249d1066cd9f3c33df28914e79cae3f2257eeba7b1a",
+          "data_address_operands": [
+            {
+              "hi_offset": 660,
+              "lo_offset": 668,
+              "opcode": 9,
+              "reference_address": 5210880,
+              "target_address": 5212624,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 664,
+              "lo_offset": 700,
+              "opcode": 9,
+              "reference_address": 5210848,
+              "target_address": 5212592,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 572,
+              "opcode": 3,
+              "reference_address": 3252864,
+              "target_address": 3256288
+            },
+            {
+              "offset": 592,
+              "opcode": 3,
+              "reference_address": 3252864,
+              "target_address": 3256288
+            },
+            {
+              "offset": 632,
+              "opcode": 3,
+              "reference_address": 1132848,
+              "target_address": 1132848
+            },
+            {
+              "offset": 652,
+              "opcode": 3,
+              "reference_address": 1132848,
+              "target_address": 1132848
+            },
+            {
+              "offset": 932,
+              "opcode": 3,
+              "reference_address": 1132848,
+              "target_address": 1132848
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "proof_scope": "complete_npc_callers_with_typed_vector_constants_local_float_and_anchored_player_model",
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2819760
+          ],
+          "direct_or_indirect_calls": [
+            2819100,
+            2819120,
+            2819160,
+            2819180,
+            2819460
+          ],
+          "branches": [
+            [
+              2818604,
+              2818624
+            ],
+            [
+              2818612,
+              2818632
+            ],
+            [
+              2818676,
+              2818840
+            ],
+            [
+              2818688,
+              2818784
+            ],
+            [
+              2818696,
+              2818712
+            ],
+            [
+              2818704,
+              2818840
+            ],
+            [
+              2818740,
+              2818752
+            ],
+            [
+              2818772,
+              2818840
+            ],
+            [
+              2818812,
+              2818824
+            ],
+            [
+              2818860,
+              2818872
+            ],
+            [
+              2818876,
+              2819056
+            ],
+            [
+              2818900,
+              2818912
+            ],
+            [
+              2818924,
+              2818940
+            ],
+            [
+              2818932,
+              2818972
+            ],
+            [
+              2818952,
+              2818968
+            ],
+            [
+              2818960,
+              2818968
+            ],
+            [
+              2819076,
+              2819088
+            ],
+            [
+              2819508,
+              2819568
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2818528,
+              -208
+            ],
+            [
+              2819764,
+              208
+            ]
+          ],
+          "ra_saves": [
+            [
+              2818536,
+              -128
+            ]
+          ],
+          "ra_loads": [
+            [
+              2819720,
+              -128
+            ]
+          ],
+          "unreachable_zero_words": [
+            2818620,
+            2818780
+          ],
+          "following_zero_alignment": 8
         },
         "whole_translation_unit_claimed": false
       }
@@ -141278,6 +142255,204 @@
       }
     },
     {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2853312,
+      "size": 144,
+      "sha256": "98daee47b7069794e057db10a5e7dbf65838f0a1273b71e1ad16ab241783c401",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-complete-caller-callee-cluster",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2851904,
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "name": "Enter",
+          "linkage_name": "Enter__20zNPCGoalAttackTarTarFfPv",
+          "reference_sha256": "9ca13e809b00a2b6b3faaf9663a742a5ea468deb6955ec558a8574693b387ca1",
+          "data_address_operands": [
+            {
+              "hi_offset": 52,
+              "lo_offset": 84,
+              "opcode": 49,
+              "reference_address": 5213552,
+              "target_address": 5212576,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 92,
+              "lo_offset": 96,
+              "opcode": 49,
+              "reference_address": 5213556,
+              "target_address": 5212580,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 104,
+              "lo_offset": 108,
+              "opcode": 49,
+              "reference_address": 5213560,
+              "target_address": 5212584,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 36,
+              "opcode": 3,
+              "reference_address": 2962336,
+              "target_address": 2963744
+            },
+            {
+              "offset": 112,
+              "opcode": 3,
+              "reference_address": 2924064,
+              "target_address": 2925472
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2853200,
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "name": "Enter",
+          "linkage_name": "Enter__20zNPCGoalAttackTarTarFfPv",
+          "reference_sha256": "23b1b0bc7b48f179aa4e367cca834e8ceafd1aafed57f4846ef0cdb0c56eeebb",
+          "data_address_operands": [
+            {
+              "hi_offset": 52,
+              "lo_offset": 84,
+              "opcode": 49,
+              "reference_address": 5212320,
+              "target_address": 5212576,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 92,
+              "lo_offset": 96,
+              "opcode": 49,
+              "reference_address": 5212324,
+              "target_address": 5212580,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 104,
+              "lo_offset": 108,
+              "opcode": 49,
+              "reference_address": 5212328,
+              "target_address": 5212584,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 36,
+              "opcode": 3,
+              "reference_address": 2963632,
+              "target_address": 2963744
+            },
+            {
+              "offset": 112,
+              "opcode": 3,
+              "reference_address": 2925360,
+              "target_address": 2925472
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2849888,
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "name": "Enter",
+          "linkage_name": "Enter__20zNPCGoalAttackTarTarFfPv",
+          "reference_sha256": "2a8492a6f6262762164d8106924eecc0e27da485a33f2d92e1def0f2c0d2bcfe",
+          "data_address_operands": [
+            {
+              "hi_offset": 52,
+              "lo_offset": 84,
+              "opcode": 49,
+              "reference_address": 5210832,
+              "target_address": 5212576,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 92,
+              "lo_offset": 96,
+              "opcode": 49,
+              "reference_address": 5210836,
+              "target_address": 5212580,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 104,
+              "lo_offset": 108,
+              "opcode": 49,
+              "reference_address": 5210840,
+              "target_address": 5212584,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 36,
+              "opcode": 3,
+              "reference_address": 2960320,
+              "target_address": 2963744
+            },
+            {
+              "offset": 112,
+              "opcode": 3,
+              "reference_address": 2922048,
+              "target_address": 2925472
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "proof_scope": "complete_npc_callers_with_typed_vector_constants_local_float_and_anchored_player_model",
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2853448
+          ],
+          "direct_or_indirect_calls": [
+            2853348,
+            2853424
+          ],
+          "branches": [],
+          "stack_adjustments": [
+            [
+              2853312,
+              -64
+            ],
+            [
+              2853452,
+              64
+            ]
+          ],
+          "ra_saves": [
+            [
+              2853316,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              2853432,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 0
+        },
+        "whole_translation_unit_claimed": false
+      }
+    },
+    {
       "name": "FXStreakUpdate",
       "source": "SB/Game/zNPCGoalRobo.cpp",
       "address": 2853456,
@@ -141802,6 +142977,248 @@
             2860172
           ],
           "following_zero_alignment": 4
+        },
+        "whole_translation_unit_claimed": false
+      }
+    },
+    {
+      "name": "MoveCorner",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2860352,
+      "size": 608,
+      "sha256": "592bd61e7203a4cd3ed4cc402dec6779e07104f0b96cc33fd41ece1ffdc74f80",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-complete-caller-callee-cluster",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2858944,
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "name": "MoveCorner",
+          "linkage_name": "MoveCorner__18zNPCGoalAlertSlickFf",
+          "reference_sha256": "79e03e513635eb569d572ac9d8ddfd9769feafb212acbde408ac7480419fd7e1",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 232,
+              "opcode": 3,
+              "reference_address": 3018208,
+              "target_address": 3019616
+            },
+            {
+              "offset": 388,
+              "opcode": 3,
+              "reference_address": 2962064,
+              "target_address": 2963472
+            },
+            {
+              "offset": 448,
+              "opcode": 3,
+              "reference_address": 2962064,
+              "target_address": 2963472
+            },
+            {
+              "offset": 484,
+              "opcode": 3,
+              "reference_address": 2962064,
+              "target_address": 2963472
+            },
+            {
+              "offset": 556,
+              "opcode": 3,
+              "reference_address": 2164624,
+              "target_address": 2166032
+            },
+            {
+              "offset": 576,
+              "opcode": 3,
+              "reference_address": 2961536,
+              "target_address": 2962944
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2860240,
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "name": "MoveCorner",
+          "linkage_name": "MoveCorner__18zNPCGoalAlertSlickFf",
+          "reference_sha256": "6d8a296bc9c8e8ff1d32013dd5c7cffd57c137b2e3d6adc09502cb539268e841",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 232,
+              "opcode": 3,
+              "reference_address": 3019504,
+              "target_address": 3019616
+            },
+            {
+              "offset": 388,
+              "opcode": 3,
+              "reference_address": 2963360,
+              "target_address": 2963472
+            },
+            {
+              "offset": 448,
+              "opcode": 3,
+              "reference_address": 2963360,
+              "target_address": 2963472
+            },
+            {
+              "offset": 484,
+              "opcode": 3,
+              "reference_address": 2963360,
+              "target_address": 2963472
+            },
+            {
+              "offset": 556,
+              "opcode": 3,
+              "reference_address": 2165920,
+              "target_address": 2166032
+            },
+            {
+              "offset": 576,
+              "opcode": 3,
+              "reference_address": 2962832,
+              "target_address": 2962944
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2856928,
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "name": "MoveCorner",
+          "linkage_name": "MoveCorner__18zNPCGoalAlertSlickFf",
+          "reference_sha256": "334ca137a664580e2dab06c0ee8aa6499a7d53ddbf0030d57692f77bb11ccb42",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 232,
+              "opcode": 3,
+              "reference_address": 3016192,
+              "target_address": 3019616
+            },
+            {
+              "offset": 388,
+              "opcode": 3,
+              "reference_address": 2960048,
+              "target_address": 2963472
+            },
+            {
+              "offset": 448,
+              "opcode": 3,
+              "reference_address": 2960048,
+              "target_address": 2963472
+            },
+            {
+              "offset": 484,
+              "opcode": 3,
+              "reference_address": 2960048,
+              "target_address": 2963472
+            },
+            {
+              "offset": 556,
+              "opcode": 3,
+              "reference_address": 2162608,
+              "target_address": 2166032
+            },
+            {
+              "offset": 576,
+              "opcode": 3,
+              "reference_address": 2959520,
+              "target_address": 2962944
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "proof_scope": "complete_npc_callers_with_typed_vector_constants_local_float_and_anchored_player_model",
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2860952
+          ],
+          "direct_or_indirect_calls": [
+            2860584,
+            2860740,
+            2860800,
+            2860836,
+            2860908,
+            2860928
+          ],
+          "branches": [
+            [
+              2860388,
+              2860936
+            ],
+            [
+              2860412,
+              2860424
+            ],
+            [
+              2860428,
+              2860936
+            ],
+            [
+              2860460,
+              2860936
+            ],
+            [
+              2860568,
+              2860680
+            ],
+            [
+              2860696,
+              2860760
+            ],
+            [
+              2860716,
+              2860760
+            ],
+            [
+              2860748,
+              2860848
+            ],
+            [
+              2860776,
+              2860816
+            ],
+            [
+              2860808,
+              2860848
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2860352,
+              -112
+            ],
+            [
+              2860956,
+              112
+            ]
+          ],
+          "ra_saves": [
+            [
+              2860356,
+              -64
+            ]
+          ],
+          "ra_loads": [
+            [
+              2860936,
+              -64
+            ]
+          ],
+          "unreachable_zero_words": [
+            2860756
+          ],
+          "following_zero_alignment": 0
         },
         "whole_translation_unit_claimed": false
       }
@@ -142409,6 +143826,248 @@
           ],
           "unreachable_zero_words": [],
           "following_zero_alignment": 8
+        },
+        "whole_translation_unit_claimed": false
+      }
+    },
+    {
+      "name": "MoveCorner",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2871648,
+      "size": 608,
+      "sha256": "67caddf63239e7ff2d1d26f45e61de53adc019174e5d83d78519afabc64e22bd",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-complete-caller-callee-cluster",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2870240,
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "name": "MoveCorner",
+          "linkage_name": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+          "reference_sha256": "12be0a15912c62bd40fdc540bc31c931d3deaa112eafc20b13338ea3e6af135a",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 232,
+              "opcode": 3,
+              "reference_address": 3018208,
+              "target_address": 3019616
+            },
+            {
+              "offset": 388,
+              "opcode": 3,
+              "reference_address": 2962064,
+              "target_address": 2963472
+            },
+            {
+              "offset": 448,
+              "opcode": 3,
+              "reference_address": 2962064,
+              "target_address": 2963472
+            },
+            {
+              "offset": 484,
+              "opcode": 3,
+              "reference_address": 2962064,
+              "target_address": 2963472
+            },
+            {
+              "offset": 556,
+              "opcode": 3,
+              "reference_address": 2164624,
+              "target_address": 2166032
+            },
+            {
+              "offset": 576,
+              "opcode": 3,
+              "reference_address": 2961536,
+              "target_address": 2962944
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2871536,
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "name": "MoveCorner",
+          "linkage_name": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+          "reference_sha256": "a82f6b2213d4c40345d21357a2e5dead934b0d50f19bda4371d43cd4ca1dda5c",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 232,
+              "opcode": 3,
+              "reference_address": 3019504,
+              "target_address": 3019616
+            },
+            {
+              "offset": 388,
+              "opcode": 3,
+              "reference_address": 2963360,
+              "target_address": 2963472
+            },
+            {
+              "offset": 448,
+              "opcode": 3,
+              "reference_address": 2963360,
+              "target_address": 2963472
+            },
+            {
+              "offset": 484,
+              "opcode": 3,
+              "reference_address": 2963360,
+              "target_address": 2963472
+            },
+            {
+              "offset": 556,
+              "opcode": 3,
+              "reference_address": 2165920,
+              "target_address": 2166032
+            },
+            {
+              "offset": 576,
+              "opcode": 3,
+              "reference_address": 2962832,
+              "target_address": 2962944
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2868224,
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "name": "MoveCorner",
+          "linkage_name": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+          "reference_sha256": "a977ed046e64aa4a1b8fdd0d98dfe05abdc48603ae8bf11001aac9ebc2ab24a6",
+          "data_address_operands": [],
+          "direct_transfers": [
+            {
+              "offset": 232,
+              "opcode": 3,
+              "reference_address": 3016192,
+              "target_address": 3019616
+            },
+            {
+              "offset": 388,
+              "opcode": 3,
+              "reference_address": 2960048,
+              "target_address": 2963472
+            },
+            {
+              "offset": 448,
+              "opcode": 3,
+              "reference_address": 2960048,
+              "target_address": 2963472
+            },
+            {
+              "offset": 484,
+              "opcode": 3,
+              "reference_address": 2960048,
+              "target_address": 2963472
+            },
+            {
+              "offset": 556,
+              "opcode": 3,
+              "reference_address": 2162608,
+              "target_address": 2166032
+            },
+            {
+              "offset": 576,
+              "opcode": 3,
+              "reference_address": 2959520,
+              "target_address": 2962944
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "proof_scope": "complete_npc_callers_with_typed_vector_constants_local_float_and_anchored_player_model",
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2872248
+          ],
+          "direct_or_indirect_calls": [
+            2871880,
+            2872036,
+            2872096,
+            2872132,
+            2872204,
+            2872224
+          ],
+          "branches": [
+            [
+              2871684,
+              2872232
+            ],
+            [
+              2871708,
+              2871720
+            ],
+            [
+              2871724,
+              2872232
+            ],
+            [
+              2871756,
+              2872232
+            ],
+            [
+              2871864,
+              2871976
+            ],
+            [
+              2871992,
+              2872056
+            ],
+            [
+              2872012,
+              2872056
+            ],
+            [
+              2872044,
+              2872144
+            ],
+            [
+              2872072,
+              2872112
+            ],
+            [
+              2872104,
+              2872144
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2871648,
+              -112
+            ],
+            [
+              2872252,
+              112
+            ]
+          ],
+          "ra_saves": [
+            [
+              2871652,
+              -64
+            ]
+          ],
+          "ra_loads": [
+            [
+              2872232,
+              -64
+            ]
+          ],
+          "unreachable_zero_words": [
+            2872052
+          ],
+          "following_zero_alignment": 0
         },
         "whole_translation_unit_claimed": false
       }
@@ -143056,6 +144715,485 @@
           ],
           "unreachable_zero_words": [],
           "following_zero_alignment": 12
+        },
+        "whole_translation_unit_claimed": false
+      }
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2890896,
+      "size": 132,
+      "sha256": "8beec46f0f6282318a56fc86258b95d9cef9d078f42379e20e4beddf776d2fc3",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-complete-caller-callee-cluster",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2889488,
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "name": "Enter",
+          "linkage_name": "Enter__20zNPCGoalAlertChomperFfPv",
+          "reference_sha256": "4d9c09a95e0bf5ff0cc61e9f459bdd6868fa4e9b19fcdf06729801b2d75ed5a4",
+          "data_address_operands": [
+            {
+              "hi_offset": 48,
+              "lo_offset": 56,
+              "opcode": 49,
+              "reference_address": 5213552,
+              "target_address": 5212576,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 76,
+              "lo_offset": 80,
+              "opcode": 49,
+              "reference_address": 5213556,
+              "target_address": 5212580,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 88,
+              "lo_offset": 92,
+              "opcode": 49,
+              "reference_address": 5213560,
+              "target_address": 5212584,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 2962336,
+              "target_address": 2963744
+            },
+            {
+              "offset": 100,
+              "opcode": 3,
+              "reference_address": 2928400,
+              "target_address": 2929808
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2890784,
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "name": "Enter",
+          "linkage_name": "Enter__20zNPCGoalAlertChomperFfPv",
+          "reference_sha256": "0aa5f33ff508ff1b4a361d9f1a9e7fd677b12d74a04ee0c775c64cba04ab23b4",
+          "data_address_operands": [
+            {
+              "hi_offset": 48,
+              "lo_offset": 56,
+              "opcode": 49,
+              "reference_address": 5212320,
+              "target_address": 5212576,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 76,
+              "lo_offset": 80,
+              "opcode": 49,
+              "reference_address": 5212324,
+              "target_address": 5212580,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 88,
+              "lo_offset": 92,
+              "opcode": 49,
+              "reference_address": 5212328,
+              "target_address": 5212584,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 2963632,
+              "target_address": 2963744
+            },
+            {
+              "offset": 100,
+              "opcode": 3,
+              "reference_address": 2929696,
+              "target_address": 2929808
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2887472,
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "name": "Enter",
+          "linkage_name": "Enter__20zNPCGoalAlertChomperFfPv",
+          "reference_sha256": "3be6ed55701b66b69b13c5c7e66452e8ef789315b356e7102f41b0bea21b2845",
+          "data_address_operands": [
+            {
+              "hi_offset": 48,
+              "lo_offset": 56,
+              "opcode": 49,
+              "reference_address": 5210832,
+              "target_address": 5212576,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 76,
+              "lo_offset": 80,
+              "opcode": 49,
+              "reference_address": 5210836,
+              "target_address": 5212580,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 88,
+              "lo_offset": 92,
+              "opcode": 49,
+              "reference_address": 5210840,
+              "target_address": 5212584,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 40,
+              "opcode": 3,
+              "reference_address": 2960320,
+              "target_address": 2963744
+            },
+            {
+              "offset": 100,
+              "opcode": 3,
+              "reference_address": 2926384,
+              "target_address": 2929808
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "proof_scope": "complete_npc_callers_with_typed_vector_constants_local_float_and_anchored_player_model",
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2891020
+          ],
+          "direct_or_indirect_calls": [
+            2890936,
+            2890996
+          ],
+          "branches": [],
+          "stack_adjustments": [
+            [
+              2890896,
+              -64
+            ],
+            [
+              2891024,
+              64
+            ]
+          ],
+          "ra_saves": [
+            [
+              2890900,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              2891004,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [],
+          "following_zero_alignment": 12
+        },
+        "whole_translation_unit_claimed": false
+      }
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2896336,
+      "size": 240,
+      "sha256": "dd8b2a4cd75e45b7c82a4fcced7de36fc8c36a7315ac2db0dce280e4b706df58",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-complete-caller-callee-cluster",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2894928,
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "name": "Enter",
+          "linkage_name": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "reference_sha256": "d724b19fc60dfaa119e16d10da6ec028c51ba80f2425434c5837ed2682251da0",
+          "data_address_operands": [
+            {
+              "hi_offset": 100,
+              "lo_offset": 144,
+              "opcode": 49,
+              "reference_address": 5213552,
+              "target_address": 5212576,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 152,
+              "lo_offset": 156,
+              "opcode": 49,
+              "reference_address": 5213556,
+              "target_address": 5212580,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 164,
+              "lo_offset": 168,
+              "opcode": 49,
+              "reference_address": 5213560,
+              "target_address": 5212584,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 176,
+              "lo_offset": 180,
+              "opcode": 49,
+              "reference_address": 5213552,
+              "target_address": 5212576,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 188,
+              "lo_offset": 192,
+              "opcode": 49,
+              "reference_address": 5213556,
+              "target_address": 5212580,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 200,
+              "lo_offset": 204,
+              "opcode": 49,
+              "reference_address": 5213560,
+              "target_address": 5212584,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 44,
+              "opcode": 3,
+              "reference_address": 2023408,
+              "target_address": 2024768
+            },
+            {
+              "offset": 208,
+              "opcode": 3,
+              "reference_address": 2928400,
+              "target_address": 2929808
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2896224,
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "name": "Enter",
+          "linkage_name": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "reference_sha256": "e0b6210df3435c290d39af918e1b3a8e83ff2d4a61bf353258d562e14ceb69ca",
+          "data_address_operands": [
+            {
+              "hi_offset": 100,
+              "lo_offset": 144,
+              "opcode": 49,
+              "reference_address": 5212320,
+              "target_address": 5212576,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 152,
+              "lo_offset": 156,
+              "opcode": 49,
+              "reference_address": 5212324,
+              "target_address": 5212580,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 164,
+              "lo_offset": 168,
+              "opcode": 49,
+              "reference_address": 5212328,
+              "target_address": 5212584,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 176,
+              "lo_offset": 180,
+              "opcode": 49,
+              "reference_address": 5212320,
+              "target_address": 5212576,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 188,
+              "lo_offset": 192,
+              "opcode": 49,
+              "reference_address": 5212324,
+              "target_address": 5212580,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 200,
+              "lo_offset": 204,
+              "opcode": 49,
+              "reference_address": 5212328,
+              "target_address": 5212584,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 44,
+              "opcode": 3,
+              "reference_address": 2024656,
+              "target_address": 2024768
+            },
+            {
+              "offset": 208,
+              "opcode": 3,
+              "reference_address": 2929696,
+              "target_address": 2929808
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2892912,
+          "source": "SB/Game/zNPCGoalRobo.cpp",
+          "name": "Enter",
+          "linkage_name": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "reference_sha256": "e0786abd2a842c05c51442ae4b7a8fec0329ee1c3241f83dcea0b9de4bf512b4",
+          "data_address_operands": [
+            {
+              "hi_offset": 100,
+              "lo_offset": 144,
+              "opcode": 49,
+              "reference_address": 5210832,
+              "target_address": 5212576,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 152,
+              "lo_offset": 156,
+              "opcode": 49,
+              "reference_address": 5210836,
+              "target_address": 5212580,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 164,
+              "lo_offset": 168,
+              "opcode": 49,
+              "reference_address": 5210840,
+              "target_address": 5212584,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 176,
+              "lo_offset": 180,
+              "opcode": 49,
+              "reference_address": 5210832,
+              "target_address": 5212576,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 188,
+              "lo_offset": 192,
+              "opcode": 49,
+              "reference_address": 5210836,
+              "target_address": 5212580,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 200,
+              "lo_offset": 204,
+              "opcode": 49,
+              "reference_address": 5210840,
+              "target_address": 5212584,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 44,
+              "opcode": 3,
+              "reference_address": 2021296,
+              "target_address": 2024768
+            },
+            {
+              "offset": 208,
+              "opcode": 3,
+              "reference_address": 2926384,
+              "target_address": 2929808
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "proof_scope": "complete_npc_callers_with_typed_vector_constants_local_float_and_anchored_player_model",
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2896568
+          ],
+          "direct_or_indirect_calls": [
+            2896380,
+            2896544
+          ],
+          "branches": [
+            [
+              2896396,
+              2896416
+            ],
+            [
+              2896404,
+              2896424
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2896336,
+              -64
+            ],
+            [
+              2896572,
+              64
+            ]
+          ],
+          "ra_saves": [
+            [
+              2896340,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              2896552,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [
+            2896412
+          ],
+          "following_zero_alignment": 0
         },
         "whole_translation_unit_claimed": false
       }
@@ -157649,6 +159787,212 @@
       }
     },
     {
+      "name": "SetHome",
+      "source": "SB/Game/zNPCTypeRobot.cpp",
+      "address": 2975008,
+      "size": 244,
+      "sha256": "4e7df621cf0a582676fdc660c34356b29c29da785e1eaae1f0358a9bfc9e2f84",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-complete-caller-callee-cluster",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 2973600,
+          "source": "SB/Game/zNPCTypeRobot.cpp",
+          "name": "SetHome",
+          "linkage_name": "SetHome__8NPCArenaFP10zNPCCommonP10zMovePoint",
+          "reference_sha256": "0ff5c6c44780c6e5927f4e663e341351dd8aca25e8d33c5d6655f7bca205379f",
+          "data_address_operands": [
+            {
+              "hi_offset": 176,
+              "lo_offset": 180,
+              "opcode": 49,
+              "reference_address": 5213552,
+              "target_address": 5212576,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 192,
+              "lo_offset": 196,
+              "opcode": 49,
+              "reference_address": 5213556,
+              "target_address": 5212580,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 204,
+              "lo_offset": 208,
+              "opcode": 49,
+              "reference_address": 5213560,
+              "target_address": 5212584,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 80,
+              "opcode": 3,
+              "reference_address": 2973856,
+              "target_address": 2975264
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 2974896,
+          "source": "SB/Game/zNPCTypeRobot.cpp",
+          "name": "SetHome",
+          "linkage_name": "SetHome__8NPCArenaFP10zNPCCommonP10zMovePoint",
+          "reference_sha256": "9e9dbfd35de14e9f1dfa23d25cb9a7344c5f7e2cc0451f27177ab976ed81f07a",
+          "data_address_operands": [
+            {
+              "hi_offset": 176,
+              "lo_offset": 180,
+              "opcode": 49,
+              "reference_address": 5212320,
+              "target_address": 5212576,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 192,
+              "lo_offset": 196,
+              "opcode": 49,
+              "reference_address": 5212324,
+              "target_address": 5212580,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 204,
+              "lo_offset": 208,
+              "opcode": 49,
+              "reference_address": 5212328,
+              "target_address": 5212584,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 80,
+              "opcode": 3,
+              "reference_address": 2975152,
+              "target_address": 2975264
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 2971584,
+          "source": "SB/Game/zNPCTypeRobot.cpp",
+          "name": "SetHome",
+          "linkage_name": "SetHome__8NPCArenaFP10zNPCCommonP10zMovePoint",
+          "reference_sha256": "13a882d27331611f09b5b703bb4d652b93570361cff9325bfbc65fc135329d5f",
+          "data_address_operands": [
+            {
+              "hi_offset": 176,
+              "lo_offset": 180,
+              "opcode": 49,
+              "reference_address": 5210832,
+              "target_address": 5212576,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 192,
+              "lo_offset": 196,
+              "opcode": 49,
+              "reference_address": 5210836,
+              "target_address": 5212580,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 204,
+              "lo_offset": 208,
+              "opcode": 49,
+              "reference_address": 5210840,
+              "target_address": 5212584,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 80,
+              "opcode": 3,
+              "reference_address": 2971840,
+              "target_address": 2975264
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "proof_scope": "complete_npc_callers_with_typed_vector_constants_local_float_and_anchored_player_model",
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            2975244
+          ],
+          "direct_or_indirect_calls": [
+            2975088
+          ],
+          "branches": [
+            [
+              2975032,
+              2975048
+            ],
+            [
+              2975040,
+              2975104
+            ],
+            [
+              2975068,
+              2975088
+            ],
+            [
+              2975076,
+              2975104
+            ],
+            [
+              2975128,
+              2975184
+            ],
+            [
+              2975176,
+              2975232
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              2975008,
+              -48
+            ],
+            [
+              2975248,
+              48
+            ]
+          ],
+          "ra_saves": [
+            [
+              2975012,
+              -16
+            ]
+          ],
+          "ra_loads": [
+            [
+              2975232,
+              -16
+            ]
+          ],
+          "unreachable_zero_words": [
+            2975084
+          ],
+          "following_zero_alignment": 12
+        },
+        "whole_translation_unit_claimed": false
+      }
+    },
+    {
       "name": "NextBestNav",
       "source": "SB/Game/zNPCTypeRobot.cpp",
       "address": 2975264,
@@ -159414,6 +161758,261 @@
             ]
           ],
           "unreachable_zero_words": [],
+          "following_zero_alignment": 0
+        },
+        "whole_translation_unit_claimed": false
+      }
+    },
+    {
+      "name": "CornerOfArena",
+      "source": "SB/Game/zNPCTypeRobot.cpp",
+      "address": 3019616,
+      "size": 896,
+      "sha256": "78f7171f6bbe872a5245f9b5ed384e535e18e62a7777385fe668012d18d3b4d8",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-complete-caller-callee-cluster",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3018208,
+          "source": "SB/Game/zNPCTypeRobot.cpp",
+          "name": "CornerOfArena",
+          "linkage_name": "CornerOfArena__9zNPCRobotFP5xVec3f",
+          "reference_sha256": "3a80da9d49d920b2ce84ded4e493e83fd384888bfc4af95a64c6039d1d281a8e",
+          "data_address_operands": [
+            {
+              "hi_offset": 144,
+              "lo_offset": 148,
+              "opcode": 49,
+              "reference_address": 5213592,
+              "target_address": 5212616,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 184,
+              "lo_offset": 188,
+              "opcode": 49,
+              "reference_address": 5213588,
+              "target_address": 5212612,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 196,
+              "lo_offset": 200,
+              "opcode": 49,
+              "reference_address": 5213584,
+              "target_address": 5212608,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 336,
+              "lo_offset": 344,
+              "opcode": 9,
+              "reference_address": 5427220,
+              "target_address": 5426196,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 824,
+              "opcode": 3,
+              "reference_address": 2023408,
+              "target_address": 2024768
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3019504,
+          "source": "SB/Game/zNPCTypeRobot.cpp",
+          "name": "CornerOfArena",
+          "linkage_name": "CornerOfArena__9zNPCRobotFP5xVec3f",
+          "reference_sha256": "0c3d06df67d3be20f86859e44f79acd98f4ff6a25f1b5d1f1452ca07dd2fb994",
+          "data_address_operands": [
+            {
+              "hi_offset": 144,
+              "lo_offset": 148,
+              "opcode": 49,
+              "reference_address": 5212360,
+              "target_address": 5212616,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 184,
+              "lo_offset": 188,
+              "opcode": 49,
+              "reference_address": 5212356,
+              "target_address": 5212612,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 196,
+              "lo_offset": 200,
+              "opcode": 49,
+              "reference_address": 5212352,
+              "target_address": 5212608,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 336,
+              "lo_offset": 344,
+              "opcode": 9,
+              "reference_address": 5425940,
+              "target_address": 5426196,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 824,
+              "opcode": 3,
+              "reference_address": 2024656,
+              "target_address": 2024768
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3016192,
+          "source": "SB/Game/zNPCTypeRobot.cpp",
+          "name": "CornerOfArena",
+          "linkage_name": "CornerOfArena__9zNPCRobotFP5xVec3f",
+          "reference_sha256": "61b0230adc8d73f056772a7b351636791ce194d4f1fe9e6f71317cf4defae979",
+          "data_address_operands": [
+            {
+              "hi_offset": 144,
+              "lo_offset": 148,
+              "opcode": 49,
+              "reference_address": 5210872,
+              "target_address": 5212616,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 184,
+              "lo_offset": 188,
+              "opcode": 49,
+              "reference_address": 5210868,
+              "target_address": 5212612,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 196,
+              "lo_offset": 200,
+              "opcode": 49,
+              "reference_address": 5210864,
+              "target_address": 5212608,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 336,
+              "lo_offset": 344,
+              "opcode": 9,
+              "reference_address": 5424404,
+              "target_address": 5426196,
+              "storage": "zero_fill"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 824,
+              "opcode": 3,
+              "reference_address": 2021296,
+              "target_address": 2024768
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "proof_scope": "complete_npc_callers_with_typed_vector_constants_local_float_and_anchored_player_model",
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3020504
+          ],
+          "direct_or_indirect_calls": [
+            3020440
+          ],
+          "branches": [
+            [
+              3019712,
+              3019736
+            ],
+            [
+              3019728,
+              3019760
+            ],
+            [
+              3019888,
+              3019952
+            ],
+            [
+              3019932,
+              3019948
+            ],
+            [
+              3019940,
+              3019948
+            ],
+            [
+              3020316,
+              3020376
+            ],
+            [
+              3020336,
+              3020376
+            ],
+            [
+              3020364,
+              3020496
+            ],
+            [
+              3020380,
+              3020440
+            ],
+            [
+              3020400,
+              3020440
+            ],
+            [
+              3020428,
+              3020496
+            ],
+            [
+              3020456,
+              3020468
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              3019616,
+              -96
+            ],
+            [
+              3020508,
+              96
+            ]
+          ],
+          "ra_saves": [
+            [
+              3019624,
+              -80
+            ]
+          ],
+          "ra_loads": [
+            [
+              3020496,
+              -80
+            ]
+          ],
+          "unreachable_zero_words": [
+            3020372,
+            3020436
+          ],
           "following_zero_alignment": 0
         },
         "whole_translation_unit_claimed": false
@@ -163536,6 +166135,544 @@
           ],
           "unreachable_zero_words": [],
           "following_zero_alignment": 8
+        },
+        "whole_translation_unit_claimed": false
+      }
+    },
+    {
+      "name": "NPCC_aimVary",
+      "source": "SB/Game/zNPCSupport.cpp",
+      "address": 3258496,
+      "size": 1248,
+      "sha256": "6fa9a73a4650f26d03138c8d7856dc4774e4ac014c7baad3da459e3a22545c3c",
+      "boundary_confirmation": true,
+      "confirmation_kind": "reviewed-complete-caller-callee-cluster",
+      "provenance": [
+        {
+          "version": "SLUS-20680",
+          "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+          "source_address": 3257088,
+          "source": "SB/Game/zNPCSupport.cpp",
+          "name": "NPCC_aimVary",
+          "linkage_name": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "reference_sha256": "c25f887a92abbf987d76a3b790cc1fd2df6b2152b23ebd080ff54aa3afcd07e5",
+          "data_address_operands": [
+            {
+              "hi_offset": 480,
+              "lo_offset": 484,
+              "opcode": 49,
+              "reference_address": 5213568,
+              "target_address": 5212592,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 492,
+              "lo_offset": 496,
+              "opcode": 49,
+              "reference_address": 5213572,
+              "target_address": 5212596,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 504,
+              "lo_offset": 508,
+              "opcode": 49,
+              "reference_address": 5213576,
+              "target_address": 5212600,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 568,
+              "lo_offset": 612,
+              "opcode": 49,
+              "reference_address": 5213592,
+              "target_address": 5212616,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 628,
+              "lo_offset": 632,
+              "opcode": 49,
+              "reference_address": 5213588,
+              "target_address": 5212612,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 636,
+              "lo_offset": 640,
+              "opcode": 49,
+              "reference_address": 5213584,
+              "target_address": 5212608,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 904,
+              "lo_offset": 968,
+              "opcode": 49,
+              "reference_address": 5213584,
+              "target_address": 5212608,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 980,
+              "lo_offset": 984,
+              "opcode": 49,
+              "reference_address": 5213588,
+              "target_address": 5212612,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1000,
+              "lo_offset": 1016,
+              "opcode": 49,
+              "reference_address": 5213592,
+              "target_address": 5212616,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 460,
+              "opcode": 3,
+              "reference_address": 2164624,
+              "target_address": 2166032
+            },
+            {
+              "offset": 696,
+              "opcode": 3,
+              "reference_address": 2023312,
+              "target_address": 2024672
+            },
+            {
+              "offset": 756,
+              "opcode": 3,
+              "reference_address": 2023312,
+              "target_address": 2024672
+            },
+            {
+              "offset": 812,
+              "opcode": 3,
+              "reference_address": 2023312,
+              "target_address": 2024672
+            },
+            {
+              "offset": 844,
+              "opcode": 3,
+              "reference_address": 2023312,
+              "target_address": 2024672
+            },
+            {
+              "offset": 1128,
+              "opcode": 3,
+              "reference_address": 2164624,
+              "target_address": 2166032
+            }
+          ]
+        },
+        {
+          "version": "SLES-51968",
+          "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+          "source_address": 3258384,
+          "source": "SB/Game/zNPCSupport.cpp",
+          "name": "NPCC_aimVary",
+          "linkage_name": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "reference_sha256": "3d08050b6ce9a9d22f62255de7aa10279df39c50fe56c3122ebae2a7f4d56756",
+          "data_address_operands": [
+            {
+              "hi_offset": 480,
+              "lo_offset": 484,
+              "opcode": 49,
+              "reference_address": 5212336,
+              "target_address": 5212592,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 492,
+              "lo_offset": 496,
+              "opcode": 49,
+              "reference_address": 5212340,
+              "target_address": 5212596,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 504,
+              "lo_offset": 508,
+              "opcode": 49,
+              "reference_address": 5212344,
+              "target_address": 5212600,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 568,
+              "lo_offset": 612,
+              "opcode": 49,
+              "reference_address": 5212360,
+              "target_address": 5212616,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 628,
+              "lo_offset": 632,
+              "opcode": 49,
+              "reference_address": 5212356,
+              "target_address": 5212612,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 636,
+              "lo_offset": 640,
+              "opcode": 49,
+              "reference_address": 5212352,
+              "target_address": 5212608,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 904,
+              "lo_offset": 968,
+              "opcode": 49,
+              "reference_address": 5212352,
+              "target_address": 5212608,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 980,
+              "lo_offset": 984,
+              "opcode": 49,
+              "reference_address": 5212356,
+              "target_address": 5212612,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1000,
+              "lo_offset": 1016,
+              "opcode": 49,
+              "reference_address": 5212360,
+              "target_address": 5212616,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 460,
+              "opcode": 3,
+              "reference_address": 2165920,
+              "target_address": 2166032
+            },
+            {
+              "offset": 696,
+              "opcode": 3,
+              "reference_address": 2024560,
+              "target_address": 2024672
+            },
+            {
+              "offset": 756,
+              "opcode": 3,
+              "reference_address": 2024560,
+              "target_address": 2024672
+            },
+            {
+              "offset": 812,
+              "opcode": 3,
+              "reference_address": 2024560,
+              "target_address": 2024672
+            },
+            {
+              "offset": 844,
+              "opcode": 3,
+              "reference_address": 2024560,
+              "target_address": 2024672
+            },
+            {
+              "offset": 1128,
+              "opcode": 3,
+              "reference_address": 2165920,
+              "target_address": 2166032
+            }
+          ]
+        },
+        {
+          "version": "SLES-51970",
+          "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+          "source_address": 3255072,
+          "source": "SB/Game/zNPCSupport.cpp",
+          "name": "NPCC_aimVary",
+          "linkage_name": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "reference_sha256": "7b45efd52f35681a07149d0c21eb19ab97d0318092aaa2ac5e417da7c75a1b33",
+          "data_address_operands": [
+            {
+              "hi_offset": 480,
+              "lo_offset": 484,
+              "opcode": 49,
+              "reference_address": 5210848,
+              "target_address": 5212592,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 492,
+              "lo_offset": 496,
+              "opcode": 49,
+              "reference_address": 5210852,
+              "target_address": 5212596,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 504,
+              "lo_offset": 508,
+              "opcode": 49,
+              "reference_address": 5210856,
+              "target_address": 5212600,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 568,
+              "lo_offset": 612,
+              "opcode": 49,
+              "reference_address": 5210872,
+              "target_address": 5212616,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 628,
+              "lo_offset": 632,
+              "opcode": 49,
+              "reference_address": 5210868,
+              "target_address": 5212612,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 636,
+              "lo_offset": 640,
+              "opcode": 49,
+              "reference_address": 5210864,
+              "target_address": 5212608,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 904,
+              "lo_offset": 968,
+              "opcode": 49,
+              "reference_address": 5210864,
+              "target_address": 5212608,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 980,
+              "lo_offset": 984,
+              "opcode": 49,
+              "reference_address": 5210868,
+              "target_address": 5212612,
+              "storage": "file_backed"
+            },
+            {
+              "hi_offset": 1000,
+              "lo_offset": 1016,
+              "opcode": 49,
+              "reference_address": 5210872,
+              "target_address": 5212616,
+              "storage": "file_backed"
+            }
+          ],
+          "direct_transfers": [
+            {
+              "offset": 460,
+              "opcode": 3,
+              "reference_address": 2162608,
+              "target_address": 2166032
+            },
+            {
+              "offset": 696,
+              "opcode": 3,
+              "reference_address": 2021200,
+              "target_address": 2024672
+            },
+            {
+              "offset": 756,
+              "opcode": 3,
+              "reference_address": 2021200,
+              "target_address": 2024672
+            },
+            {
+              "offset": 812,
+              "opcode": 3,
+              "reference_address": 2021200,
+              "target_address": 2024672
+            },
+            {
+              "offset": 844,
+              "opcode": 3,
+              "reference_address": 2021200,
+              "target_address": 2024672
+            },
+            {
+              "offset": 1128,
+              "opcode": 3,
+              "reference_address": 2162608,
+              "target_address": 2166032
+            }
+          ]
+        }
+      ],
+      "corroboration": {
+        "proof_scope": "complete_npc_callers_with_typed_vector_constants_local_float_and_anchored_player_model",
+        "local_control_flow": {
+          "passes": true,
+          "reasons": [],
+          "returns": [
+            3259736
+          ],
+          "direct_or_indirect_calls": [
+            3258956,
+            3259192,
+            3259252,
+            3259308,
+            3259340,
+            3259624
+          ],
+          "branches": [
+            [
+              3258568,
+              3258600
+            ],
+            [
+              3258592,
+              3258576
+            ],
+            [
+              3258604,
+              3258636
+            ],
+            [
+              3258628,
+              3258612
+            ],
+            [
+              3258640,
+              3258672
+            ],
+            [
+              3258664,
+              3258648
+            ],
+            [
+              3258676,
+              3258708
+            ],
+            [
+              3258700,
+              3258684
+            ],
+            [
+              3258712,
+              3258744
+            ],
+            [
+              3258736,
+              3258720
+            ],
+            [
+              3258804,
+              3258816
+            ],
+            [
+              3258880,
+              3259056
+            ],
+            [
+              3258900,
+              3258976
+            ],
+            [
+              3258964,
+              3259016
+            ],
+            [
+              3259016,
+              3259048
+            ],
+            [
+              3259048,
+              3259696
+            ],
+            [
+              3259172,
+              3259192
+            ],
+            [
+              3259180,
+              3259376
+            ],
+            [
+              3259232,
+              3259296
+            ],
+            [
+              3259244,
+              3259296
+            ],
+            [
+              3259284,
+              3259368
+            ],
+            [
+              3259300,
+              3259328
+            ],
+            [
+              3259316,
+              3259368
+            ],
+            [
+              3259332,
+              3259360
+            ],
+            [
+              3259348,
+              3259368
+            ],
+            [
+              3259632,
+              3259664
+            ],
+            [
+              3259668,
+              3259688
+            ],
+            [
+              3259676,
+              3259696
+            ]
+          ],
+          "stack_adjustments": [
+            [
+              3258496,
+              -208
+            ],
+            [
+              3259740,
+              208
+            ]
+          ],
+          "ra_saves": [
+            [
+              3258504,
+              -96
+            ]
+          ],
+          "ra_loads": [
+            [
+              3259696,
+              -96
+            ]
+          ],
+          "unreachable_zero_words": [
+            3258972,
+            3259188,
+            3259292,
+            3259324,
+            3259356,
+            3259684
+          ],
+          "following_zero_alignment": 0
         },
         "whole_translation_unit_claimed": false
       }
@@ -316786,6 +319923,2765 @@
           }
         }
       ],
+      "typed_globals": {
+        "declaration": {
+          "reference_address": 5422576,
+          "type": "zGlobals",
+          "size": 8272,
+          "declaration_die": 6594607
+        },
+        "target_address": 5424368,
+        "component_path": [
+          {
+            "owner": "zGlobals",
+            "member": "player",
+            "offset": 1792,
+            "type_attributes": {
+              "7": 6610326
+            }
+          },
+          {
+            "owner": "zPlayerGlobals",
+            "member": "ent",
+            "offset": 0,
+            "type_attributes": {
+              "7": 6595412
+            }
+          },
+          {
+            "owner": "zEnt",
+            "base": "xEnt",
+            "offset": 0,
+            "type_die": 6595780
+          },
+          {
+            "owner": "xEnt",
+            "member": "model",
+            "offset": 36,
+            "type_attributes": {
+              "8": "01ff396500"
+            }
+          }
+        ],
+        "component_offset": 1828,
+        "independent_complete_anchor": {
+          "source": "SB/Game/zNPCGoalStd.cpp",
+          "name": "CalcNewDir",
+          "address": 2912416,
+          "size": 624,
+          "sha256": "9ec0e90e42c2657dc34eb4105c443ea96cd6497ea5802fc8c0a48db7d1cea3c0"
+        },
+        "data_extent_promoted": false
+      }
+    }
+  ],
+  "npc_vectors_data_proofs": [
+    {
+      "version": "SLUS-20680",
+      "complete_direct_transfers": [
+        {
+          "caller": "SetHome__8NPCArenaFP10zNPCCommonP10zMovePoint",
+          "caller_address": 2975008,
+          "offset": 80,
+          "opcode": 3,
+          "reference_address": 2973856,
+          "target_address": 2975264,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeRobot.cpp",
+            "name": "NextBestNav",
+            "size": 296
+          }
+        },
+        {
+          "caller": "CornerOfArena__9zNPCRobotFP5xVec3f",
+          "caller_address": 3019616,
+          "offset": 824,
+          "opcode": 3,
+          "reference_address": 2023408,
+          "target_address": 2024768,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xMath.cpp",
+            "name": "xrand",
+            "size": 32
+          }
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "offset": 460,
+          "opcode": 3,
+          "reference_address": 2164624,
+          "target_address": 2166032,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xVec3.cpp",
+            "name": "xVec3Normalize",
+            "size": 224
+          }
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "offset": 696,
+          "opcode": 3,
+          "reference_address": 2023312,
+          "target_address": 2024672,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xMath.cpp",
+            "name": "xurand",
+            "size": 88
+          }
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "offset": 756,
+          "opcode": 3,
+          "reference_address": 2023312,
+          "target_address": 2024672,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xMath.cpp",
+            "name": "xurand",
+            "size": 88
+          }
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "offset": 812,
+          "opcode": 3,
+          "reference_address": 2023312,
+          "target_address": 2024672,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xMath.cpp",
+            "name": "xurand",
+            "size": 88
+          }
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "offset": 844,
+          "opcode": 3,
+          "reference_address": 2023312,
+          "target_address": 2024672,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xMath.cpp",
+            "name": "xurand",
+            "size": 88
+          }
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "offset": 1128,
+          "opcode": 3,
+          "reference_address": 2164624,
+          "target_address": 2166032,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xVec3.cpp",
+            "name": "xVec3Normalize",
+            "size": 224
+          }
+        },
+        {
+          "caller": "MoveTryToEscape__17zNPCGoalTubeLassoFf",
+          "caller_address": 2814960,
+          "offset": 552,
+          "opcode": 3,
+          "reference_address": 2164624,
+          "target_address": 2166032,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xVec3.cpp",
+            "name": "xVec3Normalize",
+            "size": 224
+          }
+        },
+        {
+          "caller": "MoveTryToEscape__17zNPCGoalTubeLassoFf",
+          "caller_address": 2814960,
+          "offset": 1104,
+          "opcode": 3,
+          "reference_address": 2961184,
+          "target_address": 2962592,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "TurnToFace",
+            "size": 340
+          }
+        },
+        {
+          "caller": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "caller_address": 2818528,
+          "offset": 572,
+          "opcode": 3,
+          "reference_address": 3254880,
+          "target_address": 3256288,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCSupport.cpp",
+            "name": "NPCC_TmrCycle",
+            "size": 104
+          }
+        },
+        {
+          "caller": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "caller_address": 2818528,
+          "offset": 592,
+          "opcode": 3,
+          "reference_address": 3254880,
+          "target_address": 3256288,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCSupport.cpp",
+            "name": "NPCC_TmrCycle",
+            "size": 104
+          }
+        },
+        {
+          "caller": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "caller_address": 2818528,
+          "offset": 632,
+          "opcode": 3,
+          "reference_address": 1132848,
+          "target_address": 1132848,
+          "complete_callee_identity": {
+            "address": 1132848,
+            "context_bytes": 64,
+            "sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+            "scope": "unchanged_opaque_prefix",
+            "no_identity_or_extent_claim": true
+          }
+        },
+        {
+          "caller": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "caller_address": 2818528,
+          "offset": 652,
+          "opcode": 3,
+          "reference_address": 1132848,
+          "target_address": 1132848,
+          "complete_callee_identity": {
+            "address": 1132848,
+            "context_bytes": 64,
+            "sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+            "scope": "unchanged_opaque_prefix",
+            "no_identity_or_extent_claim": true
+          }
+        },
+        {
+          "caller": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "caller_address": 2818528,
+          "offset": 932,
+          "opcode": 3,
+          "reference_address": 1132848,
+          "target_address": 1132848,
+          "complete_callee_identity": {
+            "address": 1132848,
+            "context_bytes": 64,
+            "sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+            "scope": "unchanged_opaque_prefix",
+            "no_identity_or_extent_claim": true
+          }
+        },
+        {
+          "caller": "Enter__20zNPCGoalAttackTarTarFfPv",
+          "caller_address": 2853312,
+          "offset": 36,
+          "opcode": 3,
+          "reference_address": 2962336,
+          "target_address": 2963744,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "VelStop",
+            "size": 192
+          }
+        },
+        {
+          "caller": "Enter__20zNPCGoalAttackTarTarFfPv",
+          "caller_address": 2853312,
+          "offset": 112,
+          "opcode": 3,
+          "reference_address": 2924064,
+          "target_address": 2925472,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCGoalStd.cpp",
+            "name": "Enter",
+            "size": 32
+          }
+        },
+        {
+          "caller": "MoveCorner__18zNPCGoalAlertSlickFf",
+          "caller_address": 2860352,
+          "offset": 232,
+          "opcode": 3,
+          "reference_address": 3018208,
+          "target_address": 3019616,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeRobot.cpp",
+            "name": "CornerOfArena",
+            "size": 896,
+            "linkage_name": "CornerOfArena__9zNPCRobotFP5xVec3f"
+          }
+        },
+        {
+          "caller": "MoveCorner__18zNPCGoalAlertSlickFf",
+          "caller_address": 2860352,
+          "offset": 388,
+          "opcode": 3,
+          "reference_address": 2962064,
+          "target_address": 2963472,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "ThrottleAdjust",
+            "size": 264
+          }
+        },
+        {
+          "caller": "MoveCorner__18zNPCGoalAlertSlickFf",
+          "caller_address": 2860352,
+          "offset": 448,
+          "opcode": 3,
+          "reference_address": 2962064,
+          "target_address": 2963472,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "ThrottleAdjust",
+            "size": 264
+          }
+        },
+        {
+          "caller": "MoveCorner__18zNPCGoalAlertSlickFf",
+          "caller_address": 2860352,
+          "offset": 484,
+          "opcode": 3,
+          "reference_address": 2962064,
+          "target_address": 2963472,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "ThrottleAdjust",
+            "size": 264
+          }
+        },
+        {
+          "caller": "MoveCorner__18zNPCGoalAlertSlickFf",
+          "caller_address": 2860352,
+          "offset": 556,
+          "opcode": 3,
+          "reference_address": 2164624,
+          "target_address": 2166032,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xVec3.cpp",
+            "name": "xVec3Normalize",
+            "size": 224
+          }
+        },
+        {
+          "caller": "MoveCorner__18zNPCGoalAlertSlickFf",
+          "caller_address": 2860352,
+          "offset": 576,
+          "opcode": 3,
+          "reference_address": 2961536,
+          "target_address": 2962944,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "ThrottleApply",
+            "size": 372
+          }
+        },
+        {
+          "caller": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+          "caller_address": 2871648,
+          "offset": 232,
+          "opcode": 3,
+          "reference_address": 3018208,
+          "target_address": 3019616,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeRobot.cpp",
+            "name": "CornerOfArena",
+            "size": 896,
+            "linkage_name": "CornerOfArena__9zNPCRobotFP5xVec3f"
+          }
+        },
+        {
+          "caller": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+          "caller_address": 2871648,
+          "offset": 388,
+          "opcode": 3,
+          "reference_address": 2962064,
+          "target_address": 2963472,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "ThrottleAdjust",
+            "size": 264
+          }
+        },
+        {
+          "caller": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+          "caller_address": 2871648,
+          "offset": 448,
+          "opcode": 3,
+          "reference_address": 2962064,
+          "target_address": 2963472,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "ThrottleAdjust",
+            "size": 264
+          }
+        },
+        {
+          "caller": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+          "caller_address": 2871648,
+          "offset": 484,
+          "opcode": 3,
+          "reference_address": 2962064,
+          "target_address": 2963472,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "ThrottleAdjust",
+            "size": 264
+          }
+        },
+        {
+          "caller": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+          "caller_address": 2871648,
+          "offset": 556,
+          "opcode": 3,
+          "reference_address": 2164624,
+          "target_address": 2166032,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xVec3.cpp",
+            "name": "xVec3Normalize",
+            "size": 224
+          }
+        },
+        {
+          "caller": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+          "caller_address": 2871648,
+          "offset": 576,
+          "opcode": 3,
+          "reference_address": 2961536,
+          "target_address": 2962944,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "ThrottleApply",
+            "size": 372
+          }
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertChomperFfPv",
+          "caller_address": 2890896,
+          "offset": 40,
+          "opcode": 3,
+          "reference_address": 2962336,
+          "target_address": 2963744,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "VelStop",
+            "size": 192
+          }
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertChomperFfPv",
+          "caller_address": 2890896,
+          "offset": 100,
+          "opcode": 3,
+          "reference_address": 2928400,
+          "target_address": 2929808,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCGoalCommon.cpp",
+            "name": "Enter",
+            "size": 216
+          }
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "caller_address": 2896336,
+          "offset": 44,
+          "opcode": 3,
+          "reference_address": 2023408,
+          "target_address": 2024768,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xMath.cpp",
+            "name": "xrand",
+            "size": 32
+          }
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "caller_address": 2896336,
+          "offset": 208,
+          "opcode": 3,
+          "reference_address": 2928400,
+          "target_address": 2929808,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCGoalCommon.cpp",
+            "name": "Enter",
+            "size": 216
+          }
+        }
+      ],
+      "changed_data_operands": 33,
+      "typed_field_operands": [
+        {
+          "caller": "SetHome__8NPCArenaFP10zNPCCommonP10zMovePoint",
+          "caller_address": 2975008,
+          "hi_offset": 176,
+          "lo_offset": 180,
+          "opcode": 49,
+          "reference_address": 5213552,
+          "target_address": 5212576,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "SetHome__8NPCArenaFP10zNPCCommonP10zMovePoint",
+          "caller_address": 2975008,
+          "hi_offset": 192,
+          "lo_offset": 196,
+          "opcode": 49,
+          "reference_address": 5213556,
+          "target_address": 5212580,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "SetHome__8NPCArenaFP10zNPCCommonP10zMovePoint",
+          "caller_address": 2975008,
+          "hi_offset": 204,
+          "lo_offset": 208,
+          "opcode": 49,
+          "reference_address": 5213560,
+          "target_address": 5212584,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "CornerOfArena__9zNPCRobotFP5xVec3f",
+          "caller_address": 3019616,
+          "hi_offset": 144,
+          "lo_offset": 148,
+          "opcode": 49,
+          "reference_address": 5213592,
+          "target_address": 5212616,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "CornerOfArena__9zNPCRobotFP5xVec3f",
+          "caller_address": 3019616,
+          "hi_offset": 184,
+          "lo_offset": 188,
+          "opcode": 49,
+          "reference_address": 5213588,
+          "target_address": 5212612,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "CornerOfArena__9zNPCRobotFP5xVec3f",
+          "caller_address": 3019616,
+          "hi_offset": 196,
+          "lo_offset": 200,
+          "opcode": 49,
+          "reference_address": 5213584,
+          "target_address": 5212608,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "CornerOfArena__9zNPCRobotFP5xVec3f",
+          "caller_address": 3019616,
+          "hi_offset": 336,
+          "lo_offset": 344,
+          "opcode": 9,
+          "reference_address": 5427220,
+          "target_address": 5426196,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 480,
+          "lo_offset": 484,
+          "opcode": 49,
+          "reference_address": 5213568,
+          "target_address": 5212592,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 492,
+          "lo_offset": 496,
+          "opcode": 49,
+          "reference_address": 5213572,
+          "target_address": 5212596,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 504,
+          "lo_offset": 508,
+          "opcode": 49,
+          "reference_address": 5213576,
+          "target_address": 5212600,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 568,
+          "lo_offset": 612,
+          "opcode": 49,
+          "reference_address": 5213592,
+          "target_address": 5212616,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 628,
+          "lo_offset": 632,
+          "opcode": 49,
+          "reference_address": 5213588,
+          "target_address": 5212612,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 636,
+          "lo_offset": 640,
+          "opcode": 49,
+          "reference_address": 5213584,
+          "target_address": 5212608,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 904,
+          "lo_offset": 968,
+          "opcode": 49,
+          "reference_address": 5213584,
+          "target_address": 5212608,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 980,
+          "lo_offset": 984,
+          "opcode": 49,
+          "reference_address": 5213588,
+          "target_address": 5212612,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 1000,
+          "lo_offset": 1016,
+          "opcode": 49,
+          "reference_address": 5213592,
+          "target_address": 5212616,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "MoveTryToEscape__17zNPCGoalTubeLassoFf",
+          "caller_address": 2814960,
+          "hi_offset": 92,
+          "lo_offset": 104,
+          "opcode": 57,
+          "reference_address": 5228760,
+          "target_address": 5227784,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "MoveTryToEscape__17zNPCGoalTubeLassoFf",
+          "caller_address": 2814960,
+          "hi_offset": 640,
+          "lo_offset": 644,
+          "opcode": 49,
+          "reference_address": 5228760,
+          "target_address": 5227784,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "MoveTryToEscape__17zNPCGoalTubeLassoFf",
+          "caller_address": 2814960,
+          "hi_offset": 676,
+          "lo_offset": 748,
+          "opcode": 49,
+          "reference_address": 5228760,
+          "target_address": 5227784,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "caller_address": 2818528,
+          "hi_offset": 660,
+          "lo_offset": 668,
+          "opcode": 9,
+          "reference_address": 5213600,
+          "target_address": 5212624,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "caller_address": 2818528,
+          "hi_offset": 664,
+          "lo_offset": 700,
+          "opcode": 9,
+          "reference_address": 5213568,
+          "target_address": 5212592,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAttackTarTarFfPv",
+          "caller_address": 2853312,
+          "hi_offset": 52,
+          "lo_offset": 84,
+          "opcode": 49,
+          "reference_address": 5213552,
+          "target_address": 5212576,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAttackTarTarFfPv",
+          "caller_address": 2853312,
+          "hi_offset": 92,
+          "lo_offset": 96,
+          "opcode": 49,
+          "reference_address": 5213556,
+          "target_address": 5212580,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAttackTarTarFfPv",
+          "caller_address": 2853312,
+          "hi_offset": 104,
+          "lo_offset": 108,
+          "opcode": 49,
+          "reference_address": 5213560,
+          "target_address": 5212584,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertChomperFfPv",
+          "caller_address": 2890896,
+          "hi_offset": 48,
+          "lo_offset": 56,
+          "opcode": 49,
+          "reference_address": 5213552,
+          "target_address": 5212576,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertChomperFfPv",
+          "caller_address": 2890896,
+          "hi_offset": 76,
+          "lo_offset": 80,
+          "opcode": 49,
+          "reference_address": 5213556,
+          "target_address": 5212580,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertChomperFfPv",
+          "caller_address": 2890896,
+          "hi_offset": 88,
+          "lo_offset": 92,
+          "opcode": 49,
+          "reference_address": 5213560,
+          "target_address": 5212584,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "caller_address": 2896336,
+          "hi_offset": 100,
+          "lo_offset": 144,
+          "opcode": 49,
+          "reference_address": 5213552,
+          "target_address": 5212576,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "caller_address": 2896336,
+          "hi_offset": 152,
+          "lo_offset": 156,
+          "opcode": 49,
+          "reference_address": 5213556,
+          "target_address": 5212580,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "caller_address": 2896336,
+          "hi_offset": 164,
+          "lo_offset": 168,
+          "opcode": 49,
+          "reference_address": 5213560,
+          "target_address": 5212584,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "caller_address": 2896336,
+          "hi_offset": 176,
+          "lo_offset": 180,
+          "opcode": 49,
+          "reference_address": 5213552,
+          "target_address": 5212576,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "caller_address": 2896336,
+          "hi_offset": 188,
+          "lo_offset": 192,
+          "opcode": 49,
+          "reference_address": 5213556,
+          "target_address": 5212580,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "caller_address": 2896336,
+          "hi_offset": 200,
+          "lo_offset": 204,
+          "opcode": 49,
+          "reference_address": 5213560,
+          "target_address": 5212584,
+          "storage": "file_backed"
+        }
+      ],
+      "opaque_runtime_contexts": [
+        {
+          "address": 1132848,
+          "context_bytes": 64,
+          "sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+          "scope": "unchanged_opaque_prefix",
+          "no_identity_or_extent_claim": true,
+          "uniqueness": {
+            "matching_addresses": [
+              1132848
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 64,
+            "masked_instruction_count": 0
+          }
+        },
+        {
+          "address": 1132848,
+          "context_bytes": 64,
+          "sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+          "scope": "unchanged_opaque_prefix",
+          "no_identity_or_extent_claim": true,
+          "uniqueness": {
+            "matching_addresses": [
+              1132848
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 64,
+            "masked_instruction_count": 0
+          }
+        },
+        {
+          "address": 1132848,
+          "context_bytes": 64,
+          "sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+          "scope": "unchanged_opaque_prefix",
+          "no_identity_or_extent_claim": true,
+          "uniqueness": {
+            "matching_addresses": [
+              1132848
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 64,
+            "masked_instruction_count": 0
+          }
+        }
+      ],
+      "typed_constants": {
+        "g_Y3": {
+          "reference_address": 5213584,
+          "target_address": 5212608,
+          "size": 12,
+          "declaration_die": 6338583,
+          "type": "xVec3",
+          "payload": "000000000000803f00000000",
+          "data_extent_promoted": false
+        },
+        "g_O3": {
+          "reference_address": 5213552,
+          "target_address": 5212576,
+          "size": 12,
+          "declaration_die": 6338617,
+          "type": "xVec3",
+          "payload": "000000000000000000000000",
+          "data_extent_promoted": false
+        },
+        "g_X3": {
+          "reference_address": 5213568,
+          "target_address": 5212592,
+          "size": 12,
+          "declaration_die": 6338651,
+          "type": "xVec3",
+          "payload": "0000803f0000000000000000",
+          "data_extent_promoted": false
+        },
+        "g_Z3": {
+          "reference_address": 5213600,
+          "target_address": 5212624,
+          "size": 12,
+          "declaration_die": 6338685,
+          "type": "xVec3",
+          "payload": "00000000000000000000803f",
+          "data_extent_promoted": false
+        },
+        "dst_tetherMax": {
+          "reference_address": 5228760,
+          "target_address": 5227784,
+          "size": 4,
+          "declaration_die": 6477852,
+          "type": "float",
+          "payload": "00000000",
+          "data_extent_promoted": false
+        }
+      },
+      "typed_globals": {
+        "declaration": {
+          "reference_address": 5425392,
+          "type": "zGlobals",
+          "size": 8272,
+          "declaration_die": 6593303
+        },
+        "target_address": 5424368,
+        "component_path": [
+          {
+            "owner": "zGlobals",
+            "member": "player",
+            "offset": 1792,
+            "type_attributes": {
+              "7": 6609022
+            }
+          },
+          {
+            "owner": "zPlayerGlobals",
+            "member": "ent",
+            "offset": 0,
+            "type_attributes": {
+              "7": 6594108
+            }
+          },
+          {
+            "owner": "zEnt",
+            "base": "xEnt",
+            "offset": 0,
+            "type_die": 6594476
+          },
+          {
+            "owner": "xEnt",
+            "member": "model",
+            "offset": 36,
+            "type_attributes": {
+              "8": "01e7346500"
+            }
+          }
+        ],
+        "component_offset": 1828,
+        "independent_complete_anchor": {
+          "source": "SB/Game/zNPCGoalStd.cpp",
+          "name": "CalcNewDir",
+          "address": 2912416,
+          "size": 624,
+          "sha256": "9ec0e90e42c2657dc34eb4105c443ea96cd6497ea5802fc8c0a48db7d1cea3c0"
+        },
+        "data_extent_promoted": false
+      }
+    },
+    {
+      "version": "SLES-51968",
+      "complete_direct_transfers": [
+        {
+          "caller": "SetHome__8NPCArenaFP10zNPCCommonP10zMovePoint",
+          "caller_address": 2975008,
+          "offset": 80,
+          "opcode": 3,
+          "reference_address": 2975152,
+          "target_address": 2975264,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeRobot.cpp",
+            "name": "NextBestNav",
+            "size": 296
+          }
+        },
+        {
+          "caller": "CornerOfArena__9zNPCRobotFP5xVec3f",
+          "caller_address": 3019616,
+          "offset": 824,
+          "opcode": 3,
+          "reference_address": 2024656,
+          "target_address": 2024768,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xMath.cpp",
+            "name": "xrand",
+            "size": 32
+          }
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "offset": 460,
+          "opcode": 3,
+          "reference_address": 2165920,
+          "target_address": 2166032,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xVec3.cpp",
+            "name": "xVec3Normalize",
+            "size": 224
+          }
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "offset": 696,
+          "opcode": 3,
+          "reference_address": 2024560,
+          "target_address": 2024672,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xMath.cpp",
+            "name": "xurand",
+            "size": 88
+          }
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "offset": 756,
+          "opcode": 3,
+          "reference_address": 2024560,
+          "target_address": 2024672,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xMath.cpp",
+            "name": "xurand",
+            "size": 88
+          }
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "offset": 812,
+          "opcode": 3,
+          "reference_address": 2024560,
+          "target_address": 2024672,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xMath.cpp",
+            "name": "xurand",
+            "size": 88
+          }
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "offset": 844,
+          "opcode": 3,
+          "reference_address": 2024560,
+          "target_address": 2024672,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xMath.cpp",
+            "name": "xurand",
+            "size": 88
+          }
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "offset": 1128,
+          "opcode": 3,
+          "reference_address": 2165920,
+          "target_address": 2166032,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xVec3.cpp",
+            "name": "xVec3Normalize",
+            "size": 224
+          }
+        },
+        {
+          "caller": "MoveTryToEscape__17zNPCGoalTubeLassoFf",
+          "caller_address": 2814960,
+          "offset": 552,
+          "opcode": 3,
+          "reference_address": 2165920,
+          "target_address": 2166032,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xVec3.cpp",
+            "name": "xVec3Normalize",
+            "size": 224
+          }
+        },
+        {
+          "caller": "MoveTryToEscape__17zNPCGoalTubeLassoFf",
+          "caller_address": 2814960,
+          "offset": 1104,
+          "opcode": 3,
+          "reference_address": 2962480,
+          "target_address": 2962592,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "TurnToFace",
+            "size": 340
+          }
+        },
+        {
+          "caller": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "caller_address": 2818528,
+          "offset": 572,
+          "opcode": 3,
+          "reference_address": 3256176,
+          "target_address": 3256288,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCSupport.cpp",
+            "name": "NPCC_TmrCycle",
+            "size": 104
+          }
+        },
+        {
+          "caller": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "caller_address": 2818528,
+          "offset": 592,
+          "opcode": 3,
+          "reference_address": 3256176,
+          "target_address": 3256288,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCSupport.cpp",
+            "name": "NPCC_TmrCycle",
+            "size": 104
+          }
+        },
+        {
+          "caller": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "caller_address": 2818528,
+          "offset": 632,
+          "opcode": 3,
+          "reference_address": 1132848,
+          "target_address": 1132848,
+          "complete_callee_identity": {
+            "address": 1132848,
+            "context_bytes": 64,
+            "sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+            "scope": "unchanged_opaque_prefix",
+            "no_identity_or_extent_claim": true
+          }
+        },
+        {
+          "caller": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "caller_address": 2818528,
+          "offset": 652,
+          "opcode": 3,
+          "reference_address": 1132848,
+          "target_address": 1132848,
+          "complete_callee_identity": {
+            "address": 1132848,
+            "context_bytes": 64,
+            "sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+            "scope": "unchanged_opaque_prefix",
+            "no_identity_or_extent_claim": true
+          }
+        },
+        {
+          "caller": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "caller_address": 2818528,
+          "offset": 932,
+          "opcode": 3,
+          "reference_address": 1132848,
+          "target_address": 1132848,
+          "complete_callee_identity": {
+            "address": 1132848,
+            "context_bytes": 64,
+            "sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+            "scope": "unchanged_opaque_prefix",
+            "no_identity_or_extent_claim": true
+          }
+        },
+        {
+          "caller": "Enter__20zNPCGoalAttackTarTarFfPv",
+          "caller_address": 2853312,
+          "offset": 36,
+          "opcode": 3,
+          "reference_address": 2963632,
+          "target_address": 2963744,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "VelStop",
+            "size": 192
+          }
+        },
+        {
+          "caller": "Enter__20zNPCGoalAttackTarTarFfPv",
+          "caller_address": 2853312,
+          "offset": 112,
+          "opcode": 3,
+          "reference_address": 2925360,
+          "target_address": 2925472,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCGoalStd.cpp",
+            "name": "Enter",
+            "size": 32
+          }
+        },
+        {
+          "caller": "MoveCorner__18zNPCGoalAlertSlickFf",
+          "caller_address": 2860352,
+          "offset": 232,
+          "opcode": 3,
+          "reference_address": 3019504,
+          "target_address": 3019616,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeRobot.cpp",
+            "name": "CornerOfArena",
+            "size": 896,
+            "linkage_name": "CornerOfArena__9zNPCRobotFP5xVec3f"
+          }
+        },
+        {
+          "caller": "MoveCorner__18zNPCGoalAlertSlickFf",
+          "caller_address": 2860352,
+          "offset": 388,
+          "opcode": 3,
+          "reference_address": 2963360,
+          "target_address": 2963472,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "ThrottleAdjust",
+            "size": 264
+          }
+        },
+        {
+          "caller": "MoveCorner__18zNPCGoalAlertSlickFf",
+          "caller_address": 2860352,
+          "offset": 448,
+          "opcode": 3,
+          "reference_address": 2963360,
+          "target_address": 2963472,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "ThrottleAdjust",
+            "size": 264
+          }
+        },
+        {
+          "caller": "MoveCorner__18zNPCGoalAlertSlickFf",
+          "caller_address": 2860352,
+          "offset": 484,
+          "opcode": 3,
+          "reference_address": 2963360,
+          "target_address": 2963472,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "ThrottleAdjust",
+            "size": 264
+          }
+        },
+        {
+          "caller": "MoveCorner__18zNPCGoalAlertSlickFf",
+          "caller_address": 2860352,
+          "offset": 556,
+          "opcode": 3,
+          "reference_address": 2165920,
+          "target_address": 2166032,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xVec3.cpp",
+            "name": "xVec3Normalize",
+            "size": 224
+          }
+        },
+        {
+          "caller": "MoveCorner__18zNPCGoalAlertSlickFf",
+          "caller_address": 2860352,
+          "offset": 576,
+          "opcode": 3,
+          "reference_address": 2962832,
+          "target_address": 2962944,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "ThrottleApply",
+            "size": 372
+          }
+        },
+        {
+          "caller": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+          "caller_address": 2871648,
+          "offset": 232,
+          "opcode": 3,
+          "reference_address": 3019504,
+          "target_address": 3019616,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeRobot.cpp",
+            "name": "CornerOfArena",
+            "size": 896,
+            "linkage_name": "CornerOfArena__9zNPCRobotFP5xVec3f"
+          }
+        },
+        {
+          "caller": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+          "caller_address": 2871648,
+          "offset": 388,
+          "opcode": 3,
+          "reference_address": 2963360,
+          "target_address": 2963472,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "ThrottleAdjust",
+            "size": 264
+          }
+        },
+        {
+          "caller": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+          "caller_address": 2871648,
+          "offset": 448,
+          "opcode": 3,
+          "reference_address": 2963360,
+          "target_address": 2963472,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "ThrottleAdjust",
+            "size": 264
+          }
+        },
+        {
+          "caller": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+          "caller_address": 2871648,
+          "offset": 484,
+          "opcode": 3,
+          "reference_address": 2963360,
+          "target_address": 2963472,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "ThrottleAdjust",
+            "size": 264
+          }
+        },
+        {
+          "caller": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+          "caller_address": 2871648,
+          "offset": 556,
+          "opcode": 3,
+          "reference_address": 2165920,
+          "target_address": 2166032,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xVec3.cpp",
+            "name": "xVec3Normalize",
+            "size": 224
+          }
+        },
+        {
+          "caller": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+          "caller_address": 2871648,
+          "offset": 576,
+          "opcode": 3,
+          "reference_address": 2962832,
+          "target_address": 2962944,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "ThrottleApply",
+            "size": 372
+          }
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertChomperFfPv",
+          "caller_address": 2890896,
+          "offset": 40,
+          "opcode": 3,
+          "reference_address": 2963632,
+          "target_address": 2963744,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "VelStop",
+            "size": 192
+          }
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertChomperFfPv",
+          "caller_address": 2890896,
+          "offset": 100,
+          "opcode": 3,
+          "reference_address": 2929696,
+          "target_address": 2929808,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCGoalCommon.cpp",
+            "name": "Enter",
+            "size": 216
+          }
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "caller_address": 2896336,
+          "offset": 44,
+          "opcode": 3,
+          "reference_address": 2024656,
+          "target_address": 2024768,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xMath.cpp",
+            "name": "xrand",
+            "size": 32
+          }
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "caller_address": 2896336,
+          "offset": 208,
+          "opcode": 3,
+          "reference_address": 2929696,
+          "target_address": 2929808,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCGoalCommon.cpp",
+            "name": "Enter",
+            "size": 216
+          }
+        }
+      ],
+      "changed_data_operands": 33,
+      "typed_field_operands": [
+        {
+          "caller": "SetHome__8NPCArenaFP10zNPCCommonP10zMovePoint",
+          "caller_address": 2975008,
+          "hi_offset": 176,
+          "lo_offset": 180,
+          "opcode": 49,
+          "reference_address": 5212320,
+          "target_address": 5212576,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "SetHome__8NPCArenaFP10zNPCCommonP10zMovePoint",
+          "caller_address": 2975008,
+          "hi_offset": 192,
+          "lo_offset": 196,
+          "opcode": 49,
+          "reference_address": 5212324,
+          "target_address": 5212580,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "SetHome__8NPCArenaFP10zNPCCommonP10zMovePoint",
+          "caller_address": 2975008,
+          "hi_offset": 204,
+          "lo_offset": 208,
+          "opcode": 49,
+          "reference_address": 5212328,
+          "target_address": 5212584,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "CornerOfArena__9zNPCRobotFP5xVec3f",
+          "caller_address": 3019616,
+          "hi_offset": 144,
+          "lo_offset": 148,
+          "opcode": 49,
+          "reference_address": 5212360,
+          "target_address": 5212616,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "CornerOfArena__9zNPCRobotFP5xVec3f",
+          "caller_address": 3019616,
+          "hi_offset": 184,
+          "lo_offset": 188,
+          "opcode": 49,
+          "reference_address": 5212356,
+          "target_address": 5212612,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "CornerOfArena__9zNPCRobotFP5xVec3f",
+          "caller_address": 3019616,
+          "hi_offset": 196,
+          "lo_offset": 200,
+          "opcode": 49,
+          "reference_address": 5212352,
+          "target_address": 5212608,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "CornerOfArena__9zNPCRobotFP5xVec3f",
+          "caller_address": 3019616,
+          "hi_offset": 336,
+          "lo_offset": 344,
+          "opcode": 9,
+          "reference_address": 5425940,
+          "target_address": 5426196,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 480,
+          "lo_offset": 484,
+          "opcode": 49,
+          "reference_address": 5212336,
+          "target_address": 5212592,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 492,
+          "lo_offset": 496,
+          "opcode": 49,
+          "reference_address": 5212340,
+          "target_address": 5212596,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 504,
+          "lo_offset": 508,
+          "opcode": 49,
+          "reference_address": 5212344,
+          "target_address": 5212600,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 568,
+          "lo_offset": 612,
+          "opcode": 49,
+          "reference_address": 5212360,
+          "target_address": 5212616,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 628,
+          "lo_offset": 632,
+          "opcode": 49,
+          "reference_address": 5212356,
+          "target_address": 5212612,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 636,
+          "lo_offset": 640,
+          "opcode": 49,
+          "reference_address": 5212352,
+          "target_address": 5212608,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 904,
+          "lo_offset": 968,
+          "opcode": 49,
+          "reference_address": 5212352,
+          "target_address": 5212608,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 980,
+          "lo_offset": 984,
+          "opcode": 49,
+          "reference_address": 5212356,
+          "target_address": 5212612,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 1000,
+          "lo_offset": 1016,
+          "opcode": 49,
+          "reference_address": 5212360,
+          "target_address": 5212616,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "MoveTryToEscape__17zNPCGoalTubeLassoFf",
+          "caller_address": 2814960,
+          "hi_offset": 92,
+          "lo_offset": 104,
+          "opcode": 57,
+          "reference_address": 5227528,
+          "target_address": 5227784,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "MoveTryToEscape__17zNPCGoalTubeLassoFf",
+          "caller_address": 2814960,
+          "hi_offset": 640,
+          "lo_offset": 644,
+          "opcode": 49,
+          "reference_address": 5227528,
+          "target_address": 5227784,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "MoveTryToEscape__17zNPCGoalTubeLassoFf",
+          "caller_address": 2814960,
+          "hi_offset": 676,
+          "lo_offset": 748,
+          "opcode": 49,
+          "reference_address": 5227528,
+          "target_address": 5227784,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "caller_address": 2818528,
+          "hi_offset": 660,
+          "lo_offset": 668,
+          "opcode": 9,
+          "reference_address": 5212368,
+          "target_address": 5212624,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "caller_address": 2818528,
+          "hi_offset": 664,
+          "lo_offset": 700,
+          "opcode": 9,
+          "reference_address": 5212336,
+          "target_address": 5212592,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAttackTarTarFfPv",
+          "caller_address": 2853312,
+          "hi_offset": 52,
+          "lo_offset": 84,
+          "opcode": 49,
+          "reference_address": 5212320,
+          "target_address": 5212576,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAttackTarTarFfPv",
+          "caller_address": 2853312,
+          "hi_offset": 92,
+          "lo_offset": 96,
+          "opcode": 49,
+          "reference_address": 5212324,
+          "target_address": 5212580,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAttackTarTarFfPv",
+          "caller_address": 2853312,
+          "hi_offset": 104,
+          "lo_offset": 108,
+          "opcode": 49,
+          "reference_address": 5212328,
+          "target_address": 5212584,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertChomperFfPv",
+          "caller_address": 2890896,
+          "hi_offset": 48,
+          "lo_offset": 56,
+          "opcode": 49,
+          "reference_address": 5212320,
+          "target_address": 5212576,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertChomperFfPv",
+          "caller_address": 2890896,
+          "hi_offset": 76,
+          "lo_offset": 80,
+          "opcode": 49,
+          "reference_address": 5212324,
+          "target_address": 5212580,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertChomperFfPv",
+          "caller_address": 2890896,
+          "hi_offset": 88,
+          "lo_offset": 92,
+          "opcode": 49,
+          "reference_address": 5212328,
+          "target_address": 5212584,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "caller_address": 2896336,
+          "hi_offset": 100,
+          "lo_offset": 144,
+          "opcode": 49,
+          "reference_address": 5212320,
+          "target_address": 5212576,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "caller_address": 2896336,
+          "hi_offset": 152,
+          "lo_offset": 156,
+          "opcode": 49,
+          "reference_address": 5212324,
+          "target_address": 5212580,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "caller_address": 2896336,
+          "hi_offset": 164,
+          "lo_offset": 168,
+          "opcode": 49,
+          "reference_address": 5212328,
+          "target_address": 5212584,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "caller_address": 2896336,
+          "hi_offset": 176,
+          "lo_offset": 180,
+          "opcode": 49,
+          "reference_address": 5212320,
+          "target_address": 5212576,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "caller_address": 2896336,
+          "hi_offset": 188,
+          "lo_offset": 192,
+          "opcode": 49,
+          "reference_address": 5212324,
+          "target_address": 5212580,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "caller_address": 2896336,
+          "hi_offset": 200,
+          "lo_offset": 204,
+          "opcode": 49,
+          "reference_address": 5212328,
+          "target_address": 5212584,
+          "storage": "file_backed"
+        }
+      ],
+      "opaque_runtime_contexts": [
+        {
+          "address": 1132848,
+          "context_bytes": 64,
+          "sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+          "scope": "unchanged_opaque_prefix",
+          "no_identity_or_extent_claim": true,
+          "uniqueness": {
+            "matching_addresses": [
+              1132848
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 64,
+            "masked_instruction_count": 0
+          }
+        },
+        {
+          "address": 1132848,
+          "context_bytes": 64,
+          "sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+          "scope": "unchanged_opaque_prefix",
+          "no_identity_or_extent_claim": true,
+          "uniqueness": {
+            "matching_addresses": [
+              1132848
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 64,
+            "masked_instruction_count": 0
+          }
+        },
+        {
+          "address": 1132848,
+          "context_bytes": 64,
+          "sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+          "scope": "unchanged_opaque_prefix",
+          "no_identity_or_extent_claim": true,
+          "uniqueness": {
+            "matching_addresses": [
+              1132848
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 64,
+            "masked_instruction_count": 0
+          }
+        }
+      ],
+      "typed_constants": {
+        "g_Y3": {
+          "reference_address": 5212352,
+          "target_address": 5212608,
+          "size": 12,
+          "declaration_die": 6339041,
+          "type": "xVec3",
+          "payload": "000000000000803f00000000",
+          "data_extent_promoted": false
+        },
+        "g_O3": {
+          "reference_address": 5212320,
+          "target_address": 5212576,
+          "size": 12,
+          "declaration_die": 6339075,
+          "type": "xVec3",
+          "payload": "000000000000000000000000",
+          "data_extent_promoted": false
+        },
+        "g_X3": {
+          "reference_address": 5212336,
+          "target_address": 5212592,
+          "size": 12,
+          "declaration_die": 6339109,
+          "type": "xVec3",
+          "payload": "0000803f0000000000000000",
+          "data_extent_promoted": false
+        },
+        "g_Z3": {
+          "reference_address": 5212368,
+          "target_address": 5212624,
+          "size": 12,
+          "declaration_die": 6339143,
+          "type": "xVec3",
+          "payload": "00000000000000000000803f",
+          "data_extent_promoted": false
+        },
+        "dst_tetherMax": {
+          "reference_address": 5227528,
+          "target_address": 5227784,
+          "size": 4,
+          "declaration_die": 6478310,
+          "type": "float",
+          "payload": "00000000",
+          "data_extent_promoted": false
+        }
+      },
+      "typed_globals": {
+        "declaration": {
+          "reference_address": 5424112,
+          "type": "zGlobals",
+          "size": 8272,
+          "declaration_die": 6593761
+        },
+        "target_address": 5424368,
+        "component_path": [
+          {
+            "owner": "zGlobals",
+            "member": "player",
+            "offset": 1792,
+            "type_attributes": {
+              "7": 6609480
+            }
+          },
+          {
+            "owner": "zPlayerGlobals",
+            "member": "ent",
+            "offset": 0,
+            "type_attributes": {
+              "7": 6594566
+            }
+          },
+          {
+            "owner": "zEnt",
+            "base": "xEnt",
+            "offset": 0,
+            "type_die": 6594934
+          },
+          {
+            "owner": "xEnt",
+            "member": "model",
+            "offset": 36,
+            "type_attributes": {
+              "8": "01b1366500"
+            }
+          }
+        ],
+        "component_offset": 1828,
+        "independent_complete_anchor": {
+          "source": "SB/Game/zNPCGoalStd.cpp",
+          "name": "CalcNewDir",
+          "address": 2912416,
+          "size": 624,
+          "sha256": "9ec0e90e42c2657dc34eb4105c443ea96cd6497ea5802fc8c0a48db7d1cea3c0"
+        },
+        "data_extent_promoted": false
+      }
+    },
+    {
+      "version": "SLES-51970",
+      "complete_direct_transfers": [
+        {
+          "caller": "SetHome__8NPCArenaFP10zNPCCommonP10zMovePoint",
+          "caller_address": 2975008,
+          "offset": 80,
+          "opcode": 3,
+          "reference_address": 2971840,
+          "target_address": 2975264,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeRobot.cpp",
+            "name": "NextBestNav",
+            "size": 296
+          }
+        },
+        {
+          "caller": "CornerOfArena__9zNPCRobotFP5xVec3f",
+          "caller_address": 3019616,
+          "offset": 824,
+          "opcode": 3,
+          "reference_address": 2021296,
+          "target_address": 2024768,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xMath.cpp",
+            "name": "xrand",
+            "size": 32
+          }
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "offset": 460,
+          "opcode": 3,
+          "reference_address": 2162608,
+          "target_address": 2166032,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xVec3.cpp",
+            "name": "xVec3Normalize",
+            "size": 224
+          }
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "offset": 696,
+          "opcode": 3,
+          "reference_address": 2021200,
+          "target_address": 2024672,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xMath.cpp",
+            "name": "xurand",
+            "size": 88
+          }
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "offset": 756,
+          "opcode": 3,
+          "reference_address": 2021200,
+          "target_address": 2024672,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xMath.cpp",
+            "name": "xurand",
+            "size": 88
+          }
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "offset": 812,
+          "opcode": 3,
+          "reference_address": 2021200,
+          "target_address": 2024672,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xMath.cpp",
+            "name": "xurand",
+            "size": 88
+          }
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "offset": 844,
+          "opcode": 3,
+          "reference_address": 2021200,
+          "target_address": 2024672,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xMath.cpp",
+            "name": "xurand",
+            "size": 88
+          }
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "offset": 1128,
+          "opcode": 3,
+          "reference_address": 2162608,
+          "target_address": 2166032,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xVec3.cpp",
+            "name": "xVec3Normalize",
+            "size": 224
+          }
+        },
+        {
+          "caller": "MoveTryToEscape__17zNPCGoalTubeLassoFf",
+          "caller_address": 2814960,
+          "offset": 552,
+          "opcode": 3,
+          "reference_address": 2162608,
+          "target_address": 2166032,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xVec3.cpp",
+            "name": "xVec3Normalize",
+            "size": 224
+          }
+        },
+        {
+          "caller": "MoveTryToEscape__17zNPCGoalTubeLassoFf",
+          "caller_address": 2814960,
+          "offset": 1104,
+          "opcode": 3,
+          "reference_address": 2959168,
+          "target_address": 2962592,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "TurnToFace",
+            "size": 340
+          }
+        },
+        {
+          "caller": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "caller_address": 2818528,
+          "offset": 572,
+          "opcode": 3,
+          "reference_address": 3252864,
+          "target_address": 3256288,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCSupport.cpp",
+            "name": "NPCC_TmrCycle",
+            "size": 104
+          }
+        },
+        {
+          "caller": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "caller_address": 2818528,
+          "offset": 592,
+          "opcode": 3,
+          "reference_address": 3252864,
+          "target_address": 3256288,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCSupport.cpp",
+            "name": "NPCC_TmrCycle",
+            "size": 104
+          }
+        },
+        {
+          "caller": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "caller_address": 2818528,
+          "offset": 632,
+          "opcode": 3,
+          "reference_address": 1132848,
+          "target_address": 1132848,
+          "complete_callee_identity": {
+            "address": 1132848,
+            "context_bytes": 64,
+            "sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+            "scope": "unchanged_opaque_prefix",
+            "no_identity_or_extent_claim": true
+          }
+        },
+        {
+          "caller": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "caller_address": 2818528,
+          "offset": 652,
+          "opcode": 3,
+          "reference_address": 1132848,
+          "target_address": 1132848,
+          "complete_callee_identity": {
+            "address": 1132848,
+            "context_bytes": 64,
+            "sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+            "scope": "unchanged_opaque_prefix",
+            "no_identity_or_extent_claim": true
+          }
+        },
+        {
+          "caller": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "caller_address": 2818528,
+          "offset": 932,
+          "opcode": 3,
+          "reference_address": 1132848,
+          "target_address": 1132848,
+          "complete_callee_identity": {
+            "address": 1132848,
+            "context_bytes": 64,
+            "sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+            "scope": "unchanged_opaque_prefix",
+            "no_identity_or_extent_claim": true
+          }
+        },
+        {
+          "caller": "Enter__20zNPCGoalAttackTarTarFfPv",
+          "caller_address": 2853312,
+          "offset": 36,
+          "opcode": 3,
+          "reference_address": 2960320,
+          "target_address": 2963744,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "VelStop",
+            "size": 192
+          }
+        },
+        {
+          "caller": "Enter__20zNPCGoalAttackTarTarFfPv",
+          "caller_address": 2853312,
+          "offset": 112,
+          "opcode": 3,
+          "reference_address": 2922048,
+          "target_address": 2925472,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCGoalStd.cpp",
+            "name": "Enter",
+            "size": 32
+          }
+        },
+        {
+          "caller": "MoveCorner__18zNPCGoalAlertSlickFf",
+          "caller_address": 2860352,
+          "offset": 232,
+          "opcode": 3,
+          "reference_address": 3016192,
+          "target_address": 3019616,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeRobot.cpp",
+            "name": "CornerOfArena",
+            "size": 896,
+            "linkage_name": "CornerOfArena__9zNPCRobotFP5xVec3f"
+          }
+        },
+        {
+          "caller": "MoveCorner__18zNPCGoalAlertSlickFf",
+          "caller_address": 2860352,
+          "offset": 388,
+          "opcode": 3,
+          "reference_address": 2960048,
+          "target_address": 2963472,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "ThrottleAdjust",
+            "size": 264
+          }
+        },
+        {
+          "caller": "MoveCorner__18zNPCGoalAlertSlickFf",
+          "caller_address": 2860352,
+          "offset": 448,
+          "opcode": 3,
+          "reference_address": 2960048,
+          "target_address": 2963472,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "ThrottleAdjust",
+            "size": 264
+          }
+        },
+        {
+          "caller": "MoveCorner__18zNPCGoalAlertSlickFf",
+          "caller_address": 2860352,
+          "offset": 484,
+          "opcode": 3,
+          "reference_address": 2960048,
+          "target_address": 2963472,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "ThrottleAdjust",
+            "size": 264
+          }
+        },
+        {
+          "caller": "MoveCorner__18zNPCGoalAlertSlickFf",
+          "caller_address": 2860352,
+          "offset": 556,
+          "opcode": 3,
+          "reference_address": 2162608,
+          "target_address": 2166032,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xVec3.cpp",
+            "name": "xVec3Normalize",
+            "size": 224
+          }
+        },
+        {
+          "caller": "MoveCorner__18zNPCGoalAlertSlickFf",
+          "caller_address": 2860352,
+          "offset": 576,
+          "opcode": 3,
+          "reference_address": 2959520,
+          "target_address": 2962944,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "ThrottleApply",
+            "size": 372
+          }
+        },
+        {
+          "caller": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+          "caller_address": 2871648,
+          "offset": 232,
+          "opcode": 3,
+          "reference_address": 3016192,
+          "target_address": 3019616,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeRobot.cpp",
+            "name": "CornerOfArena",
+            "size": 896,
+            "linkage_name": "CornerOfArena__9zNPCRobotFP5xVec3f"
+          }
+        },
+        {
+          "caller": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+          "caller_address": 2871648,
+          "offset": 388,
+          "opcode": 3,
+          "reference_address": 2960048,
+          "target_address": 2963472,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "ThrottleAdjust",
+            "size": 264
+          }
+        },
+        {
+          "caller": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+          "caller_address": 2871648,
+          "offset": 448,
+          "opcode": 3,
+          "reference_address": 2960048,
+          "target_address": 2963472,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "ThrottleAdjust",
+            "size": 264
+          }
+        },
+        {
+          "caller": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+          "caller_address": 2871648,
+          "offset": 484,
+          "opcode": 3,
+          "reference_address": 2960048,
+          "target_address": 2963472,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "ThrottleAdjust",
+            "size": 264
+          }
+        },
+        {
+          "caller": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+          "caller_address": 2871648,
+          "offset": 556,
+          "opcode": 3,
+          "reference_address": 2162608,
+          "target_address": 2166032,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xVec3.cpp",
+            "name": "xVec3Normalize",
+            "size": 224
+          }
+        },
+        {
+          "caller": "MoveCorner__20zNPCGoalAlertMonsoonFf",
+          "caller_address": 2871648,
+          "offset": 576,
+          "opcode": 3,
+          "reference_address": 2959520,
+          "target_address": 2962944,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "ThrottleApply",
+            "size": 372
+          }
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertChomperFfPv",
+          "caller_address": 2890896,
+          "offset": 40,
+          "opcode": 3,
+          "reference_address": 2960320,
+          "target_address": 2963744,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCTypeCommon.cpp",
+            "name": "VelStop",
+            "size": 192
+          }
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertChomperFfPv",
+          "caller_address": 2890896,
+          "offset": 100,
+          "opcode": 3,
+          "reference_address": 2926384,
+          "target_address": 2929808,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCGoalCommon.cpp",
+            "name": "Enter",
+            "size": 216
+          }
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "caller_address": 2896336,
+          "offset": 44,
+          "opcode": 3,
+          "reference_address": 2021296,
+          "target_address": 2024768,
+          "complete_callee_identity": {
+            "source": "SB/Core/x/xMath.cpp",
+            "name": "xrand",
+            "size": 32
+          }
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "caller_address": 2896336,
+          "offset": 208,
+          "opcode": 3,
+          "reference_address": 2926384,
+          "target_address": 2929808,
+          "complete_callee_identity": {
+            "source": "SB/Game/zNPCGoalCommon.cpp",
+            "name": "Enter",
+            "size": 216
+          }
+        }
+      ],
+      "changed_data_operands": 33,
+      "typed_field_operands": [
+        {
+          "caller": "SetHome__8NPCArenaFP10zNPCCommonP10zMovePoint",
+          "caller_address": 2975008,
+          "hi_offset": 176,
+          "lo_offset": 180,
+          "opcode": 49,
+          "reference_address": 5210832,
+          "target_address": 5212576,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "SetHome__8NPCArenaFP10zNPCCommonP10zMovePoint",
+          "caller_address": 2975008,
+          "hi_offset": 192,
+          "lo_offset": 196,
+          "opcode": 49,
+          "reference_address": 5210836,
+          "target_address": 5212580,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "SetHome__8NPCArenaFP10zNPCCommonP10zMovePoint",
+          "caller_address": 2975008,
+          "hi_offset": 204,
+          "lo_offset": 208,
+          "opcode": 49,
+          "reference_address": 5210840,
+          "target_address": 5212584,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "CornerOfArena__9zNPCRobotFP5xVec3f",
+          "caller_address": 3019616,
+          "hi_offset": 144,
+          "lo_offset": 148,
+          "opcode": 49,
+          "reference_address": 5210872,
+          "target_address": 5212616,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "CornerOfArena__9zNPCRobotFP5xVec3f",
+          "caller_address": 3019616,
+          "hi_offset": 184,
+          "lo_offset": 188,
+          "opcode": 49,
+          "reference_address": 5210868,
+          "target_address": 5212612,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "CornerOfArena__9zNPCRobotFP5xVec3f",
+          "caller_address": 3019616,
+          "hi_offset": 196,
+          "lo_offset": 200,
+          "opcode": 49,
+          "reference_address": 5210864,
+          "target_address": 5212608,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "CornerOfArena__9zNPCRobotFP5xVec3f",
+          "caller_address": 3019616,
+          "hi_offset": 336,
+          "lo_offset": 344,
+          "opcode": 9,
+          "reference_address": 5424404,
+          "target_address": 5426196,
+          "storage": "zero_fill"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 480,
+          "lo_offset": 484,
+          "opcode": 49,
+          "reference_address": 5210848,
+          "target_address": 5212592,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 492,
+          "lo_offset": 496,
+          "opcode": 49,
+          "reference_address": 5210852,
+          "target_address": 5212596,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 504,
+          "lo_offset": 508,
+          "opcode": 49,
+          "reference_address": 5210856,
+          "target_address": 5212600,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 568,
+          "lo_offset": 612,
+          "opcode": 49,
+          "reference_address": 5210872,
+          "target_address": 5212616,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 628,
+          "lo_offset": 632,
+          "opcode": 49,
+          "reference_address": 5210868,
+          "target_address": 5212612,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 636,
+          "lo_offset": 640,
+          "opcode": 49,
+          "reference_address": 5210864,
+          "target_address": 5212608,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 904,
+          "lo_offset": 968,
+          "opcode": 49,
+          "reference_address": 5210864,
+          "target_address": 5212608,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 980,
+          "lo_offset": 984,
+          "opcode": 49,
+          "reference_address": 5210868,
+          "target_address": 5212612,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "NPCC_aimVary__FP5xVec3P5xVec3P5xVec3fiP5xVec3",
+          "caller_address": 3258496,
+          "hi_offset": 1000,
+          "lo_offset": 1016,
+          "opcode": 49,
+          "reference_address": 5210872,
+          "target_address": 5212616,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "MoveTryToEscape__17zNPCGoalTubeLassoFf",
+          "caller_address": 2814960,
+          "hi_offset": 92,
+          "lo_offset": 104,
+          "opcode": 57,
+          "reference_address": 5225928,
+          "target_address": 5227784,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "MoveTryToEscape__17zNPCGoalTubeLassoFf",
+          "caller_address": 2814960,
+          "hi_offset": 640,
+          "lo_offset": 644,
+          "opcode": 49,
+          "reference_address": 5225928,
+          "target_address": 5227784,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "MoveTryToEscape__17zNPCGoalTubeLassoFf",
+          "caller_address": 2814960,
+          "hi_offset": 676,
+          "lo_offset": 748,
+          "opcode": 49,
+          "reference_address": 5225928,
+          "target_address": 5227784,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "caller_address": 2818528,
+          "hi_offset": 660,
+          "lo_offset": 668,
+          "opcode": 9,
+          "reference_address": 5210880,
+          "target_address": 5212624,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "MoveFrolic__20zNPCGoalTubeDucklingFf",
+          "caller_address": 2818528,
+          "hi_offset": 664,
+          "lo_offset": 700,
+          "opcode": 9,
+          "reference_address": 5210848,
+          "target_address": 5212592,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAttackTarTarFfPv",
+          "caller_address": 2853312,
+          "hi_offset": 52,
+          "lo_offset": 84,
+          "opcode": 49,
+          "reference_address": 5210832,
+          "target_address": 5212576,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAttackTarTarFfPv",
+          "caller_address": 2853312,
+          "hi_offset": 92,
+          "lo_offset": 96,
+          "opcode": 49,
+          "reference_address": 5210836,
+          "target_address": 5212580,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAttackTarTarFfPv",
+          "caller_address": 2853312,
+          "hi_offset": 104,
+          "lo_offset": 108,
+          "opcode": 49,
+          "reference_address": 5210840,
+          "target_address": 5212584,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertChomperFfPv",
+          "caller_address": 2890896,
+          "hi_offset": 48,
+          "lo_offset": 56,
+          "opcode": 49,
+          "reference_address": 5210832,
+          "target_address": 5212576,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertChomperFfPv",
+          "caller_address": 2890896,
+          "hi_offset": 76,
+          "lo_offset": 80,
+          "opcode": 49,
+          "reference_address": 5210836,
+          "target_address": 5212580,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertChomperFfPv",
+          "caller_address": 2890896,
+          "hi_offset": 88,
+          "lo_offset": 92,
+          "opcode": 49,
+          "reference_address": 5210840,
+          "target_address": 5212584,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "caller_address": 2896336,
+          "hi_offset": 100,
+          "lo_offset": 144,
+          "opcode": 49,
+          "reference_address": 5210832,
+          "target_address": 5212576,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "caller_address": 2896336,
+          "hi_offset": 152,
+          "lo_offset": 156,
+          "opcode": 49,
+          "reference_address": 5210836,
+          "target_address": 5212580,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "caller_address": 2896336,
+          "hi_offset": 164,
+          "lo_offset": 168,
+          "opcode": 49,
+          "reference_address": 5210840,
+          "target_address": 5212584,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "caller_address": 2896336,
+          "hi_offset": 176,
+          "lo_offset": 180,
+          "opcode": 49,
+          "reference_address": 5210832,
+          "target_address": 5212576,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "caller_address": 2896336,
+          "hi_offset": 188,
+          "lo_offset": 192,
+          "opcode": 49,
+          "reference_address": 5210836,
+          "target_address": 5212580,
+          "storage": "file_backed"
+        },
+        {
+          "caller": "Enter__20zNPCGoalAlertFodBzztFfPv",
+          "caller_address": 2896336,
+          "hi_offset": 200,
+          "lo_offset": 204,
+          "opcode": 49,
+          "reference_address": 5210840,
+          "target_address": 5212584,
+          "storage": "file_backed"
+        }
+      ],
+      "opaque_runtime_contexts": [
+        {
+          "address": 1132848,
+          "context_bytes": 64,
+          "sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+          "scope": "unchanged_opaque_prefix",
+          "no_identity_or_extent_claim": true,
+          "uniqueness": {
+            "matching_addresses": [
+              1132848
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 64,
+            "masked_instruction_count": 0
+          }
+        },
+        {
+          "address": 1132848,
+          "context_bytes": 64,
+          "sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+          "scope": "unchanged_opaque_prefix",
+          "no_identity_or_extent_claim": true,
+          "uniqueness": {
+            "matching_addresses": [
+              1132848
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 64,
+            "masked_instruction_count": 0
+          }
+        },
+        {
+          "address": 1132848,
+          "context_bytes": 64,
+          "sha256": "be4a3ee8517a1b6dd58fbde971196d1360ee2ce0f7944917bad5c0fb1987350f",
+          "scope": "unchanged_opaque_prefix",
+          "no_identity_or_extent_claim": true,
+          "uniqueness": {
+            "matching_addresses": [
+              1132848
+            ],
+            "unchanged_anchor_offset": 0,
+            "unchanged_anchor_bytes": 64,
+            "masked_instruction_count": 0
+          }
+        }
+      ],
+      "typed_constants": {
+        "g_Y3": {
+          "reference_address": 5210864,
+          "target_address": 5212608,
+          "size": 12,
+          "declaration_die": 6339887,
+          "type": "xVec3",
+          "payload": "000000000000803f00000000",
+          "data_extent_promoted": false
+        },
+        "g_O3": {
+          "reference_address": 5210832,
+          "target_address": 5212576,
+          "size": 12,
+          "declaration_die": 6339921,
+          "type": "xVec3",
+          "payload": "000000000000000000000000",
+          "data_extent_promoted": false
+        },
+        "g_X3": {
+          "reference_address": 5210848,
+          "target_address": 5212592,
+          "size": 12,
+          "declaration_die": 6339955,
+          "type": "xVec3",
+          "payload": "0000803f0000000000000000",
+          "data_extent_promoted": false
+        },
+        "g_Z3": {
+          "reference_address": 5210880,
+          "target_address": 5212624,
+          "size": 12,
+          "declaration_die": 6339989,
+          "type": "xVec3",
+          "payload": "00000000000000000000803f",
+          "data_extent_promoted": false
+        },
+        "dst_tetherMax": {
+          "reference_address": 5225928,
+          "target_address": 5227784,
+          "size": 4,
+          "declaration_die": 6479156,
+          "type": "float",
+          "payload": "00000000",
+          "data_extent_promoted": false
+        }
+      },
       "typed_globals": {
         "declaration": {
           "reference_address": 5422576,

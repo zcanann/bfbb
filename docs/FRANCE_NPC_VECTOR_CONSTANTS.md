@@ -47,3 +47,12 @@ original-only identity proof; they do not supply identity evidence.
 The French Robot profile uses address-qualified selectors to retain both
 SetHome overloads. Existing symbols, call offsets and provenance are preserved.
 The change does not alter debug-region or GameCube source selections.
+
+Production integration passes in `build/oct09-france-render-save`: all aggregate
+evidence regenerates identically and all 76 enabled source units compile.
+The ten identities add 6,492 known bytes, reaching 829 functions / 394,796
+bytes. With the independently validated timer and bonked-check source changes,
+matching gains 2,772 exact bytes / eight functions, reaching 181,408 bytes /
+547 functions. Every earlier score is retained; the full CPU denominator stays
+2,979,968 bytes. All eight original-backed vector tests pass. Source data and a
+complete original executable build remain pending.

@@ -4107,10 +4107,24 @@
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
+      "name": "MoveTryToEscape",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2814960,
+      "size": 1132,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "DuckStackInterp",
       "source": "SB/Game/zNPCGoalRobo.cpp",
       "address": 2818032,
       "size": 484,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "MoveFrolic",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2818528,
+      "size": 1240,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
@@ -4219,6 +4233,13 @@
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2853312,
+      "size": 144,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "FXStreakUpdate",
       "source": "SB/Game/zNPCGoalRobo.cpp",
       "address": 2853456,
@@ -4244,6 +4265,13 @@
       "source": "SB/Game/zNPCGoalRobo.cpp",
       "address": 2859872,
       "size": 476,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "MoveCorner",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2860352,
+      "size": 608,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
@@ -4275,6 +4303,13 @@
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
+      "name": "MoveCorner",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2871648,
+      "size": 608,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "CalcAttackVector",
       "source": "SB/Game/zNPCGoalRobo.cpp",
       "address": 2876240,
@@ -4300,6 +4335,20 @@
       "source": "SB/Game/zNPCGoalRobo.cpp",
       "address": 2887936,
       "size": 836,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2890896,
+      "size": 132,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCGoalRobo.cpp",
+      "address": 2896336,
+      "size": 240,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
@@ -4877,6 +4926,13 @@
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
+      "name": "SetHome",
+      "source": "SB/Game/zNPCTypeRobot.cpp",
+      "address": 2975008,
+      "size": 244,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "NextBestNav",
       "source": "SB/Game/zNPCTypeRobot.cpp",
       "address": 2975264,
@@ -4979,6 +5035,13 @@
       "source": "SB/Game/zNPCTypeRobot.cpp",
       "address": 3019344,
       "size": 272,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "CornerOfArena",
+      "source": "SB/Game/zNPCTypeRobot.cpp",
+      "address": 3019616,
+      "size": 896,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
@@ -5336,6 +5399,13 @@
       "source": "SB/Game/zNPCSupport.cpp",
       "address": 3258256,
       "size": 200,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPCC_aimVary",
+      "source": "SB/Game/zNPCSupport.cpp",
+      "address": 3258496,
+      "size": 1248,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {

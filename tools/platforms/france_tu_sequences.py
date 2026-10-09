@@ -743,6 +743,15 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in npc_player_model['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('NPC player-model adds eight unique complete original consumers. Nine data operands follow the original typed globals.player.ent.model path and an independent complete CalcNewDir anchor; nineteen JALs close through complete identities or two literal unnamed runtime contexts. No runtime identity, whole translation-unit or data extent is claimed.')
+    from platforms.france_npc_vector_constants import generate_unit as generate_npc_vectors
+    npc_vectors = generate_npc_vectors(originals, registry_dir)
+    document['functions'].extend(npc_vectors['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(npc_vectors['sequence_proofs'])
+    document['npc_vectors_data_proofs'] = npc_vectors['data_proofs']
+    for key, value in npc_vectors['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('NPC vectors adds ten unique complete original consumers. Thirty-three data operands follow complete typed vector objects, scalar members, an independently anchored player-model field and one original local float; thirty-three JALs close through complete identities or literal unnamed runtime contexts. Twelve fixed dependencies preserve evidence across later recoveries. No runtime identity, whole translation-unit or data extent is claimed.')
     return document
 
 
