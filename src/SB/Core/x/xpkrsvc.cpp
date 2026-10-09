@@ -1346,6 +1346,31 @@ S32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, S32 plattag, 
     char fullname[128] = {};
     sprintf(fullname, "%s %s %s %s", plat, vid, lang, title);
 
+#if defined(PS2)
+    S32 rc = !(bool)strcmp(plat, "GameCube") || !(bool)strcmp(plat, "Xbox") ||
+             !(bool)strcmp(plat, "PlayStation 2");
+    if (!rc)
+    {
+        return 0;
+    }
+    rc = !(bool)strcmp(vid, "NTSC") || !(bool)strcmp(vid, "PAL");
+    if (!rc)
+    {
+        return 0;
+    }
+    rc = !(bool)strcmp(lang, "US Common") || !(bool)strcmp(lang, "United Kingdom") ||
+         !(bool)strcmp(lang, "French") || !(bool)strcmp(lang, "German");
+    if (!rc)
+    {
+        return 0;
+    }
+    rc = !(bool)strcmp(title, "Sponge Bob") || !(bool)strcmp(title, "Incredibles") ||
+         !(bool)strcmp(title, "Jimmy Newtron");
+    if (!rc)
+    {
+        return 0;
+    }
+#else
     bool rc = false;
     if ((strcmp(plat, "GameCube") == 0 || strcmp(plat, "Xbox") == 0 ||
          strcmp(plat, "PlayStation 2") == 0))
@@ -1389,26 +1414,44 @@ S32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, S32 plattag, 
         return 0;
     }
 
-    rc = !(bool)(strcmp(plat, "GameCube"));
-    if (!rc)
-    {
-        return 0;
-    }
+#endif
 
-#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
-    rc = !(strcmp(vid, "PAL"));
+#if defined(PS2)
+    rc = !(bool)strcmp(plat, "PlayStation 2");
 #else
-    rc = !(strcmp(vid, "NTSC"));
+    rc = !(bool)(strcmp(plat, "GameCube"));
 #endif
     if (!rc)
     {
         return 0;
     }
 
-#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78) || defined(VERSION_SLES_51968) || \
+    defined(VERSION_SLES_51970)
+    rc = !(strcmp(vid, "PAL"));
+#else
+    rc = !(strcmp(vid, "NTSC"));
+#endif
+#if defined(VERSION_SLES_51970)
+    // The German executable performs this comparison but discards its result.
+    strcmp(lang, "German");
+#endif
+    if (!rc)
+    {
+        return 0;
+    }
+
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78) || defined(VERSION_SLES_51968) || \
+    defined(VERSION_SLES_51970)
+#if defined(PS2)
+    S32 langMatches = !(bool)strcmp(lang, "United Kingdom");
+    langMatches += !(bool)strcmp(lang, "French");
+    langMatches += !(bool)strcmp(lang, "German");
+#else
     S32 langMatches = !strcmp(lang, "United Kingdom");
     langMatches += !strcmp(lang, "French");
     langMatches += !strcmp(lang, "German");
+#endif
     if (!langMatches)
 #else
     rc = !(strcmp(lang, "US Common"));
@@ -1419,11 +1462,15 @@ S32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, S32 plattag, 
     }
 
     rc = !(strcmp(title, "Sponge Bob"));
+#if defined(PS2)
+    return rc != 0;
+#else
     if (!rc)
     {
         return 0;
     }
     return 1;
+#endif
 }
 
 #if defined(PS2)

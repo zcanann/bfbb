@@ -101,3 +101,38 @@ constant is masked. This audit does not prove the masked linked SDK/data
 identities. Fresh GC solo remains 76/76 exact; the shared PS2 header requires
 the full integration gates. Private evidence is `resource-layout-proof.json`,
 `resource-proof.json`, and `resource-raw-proof.json` under `build/packer-oct09`.
+
+
+## Platform and regional package validation
+
+`ValidatePlatform` now uses the original PS2 platform and regional checks.
+Its original DWARF `rc` is a signed 32-bit integer. Boolean conversion of
+each comparison, short-circuit validation of recognized strings, and a
+final normalized return reproduce the original control flow. The required
+platform is `PlayStation 2`, rather than the previous GameCube literal.
+USA requires NTSC and US Common. Europe and Germany require PAL and accept
+United Kingdom, French, or German. Germany also performs an additional
+comparison against German before testing the saved PAL result; its return
+value is discarded in the original, and that behavior is preserved.
+
+The original comparison call at 0x11bbf8 implements bytewise comparison;
+its source interface remains `strcmp`, without promoting a runtime alias.
+All comparison literals and their call offsets were extracted independently
+from each original executable, including the German discarded-result call.
+The original `fullname` local is a 128-byte array and `rc` has DWARF
+fundamental type 8 (signed integer).
+
+Normal whole-unit validation improves the USA 692-byte body from
+72.6474% to **98.84393%**, Europe's 756-byte body from 65.994705% to
+**98.941795%**, and Germany's 772-byte body from 61.751297% to
+**98.96373%**. All other 49 functions retain their scores; this change
+adds no exact functions. Fresh GC solo remains 76/76 exact. France has no
+enabled packer source profile, so no French match is claimed.
+
+The remaining difference is two extra NOPs in each compiled body. All
+158/174/178 non-NOP words agree after masking 51/57/60 source relocation
+fields and verifying relative branch destinations by non-NOP ordinal.
+Register operands, non-relocation constants, and branch conditions are
+unchanged. This is not proof of the masked runtime identities or a compiler
+defect. Private evidence is in `build/packer-oct09/platform-original.json`,
+`platform-proof.json`, and `platform-raw-proof.json`.
