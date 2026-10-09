@@ -138,7 +138,11 @@ call closure and executable link remain unproved.
 The actual Xbox production profile also improves its 654-byte cubic solver
 from 93.5533% to 100% in both US and EU. The full 12-function, 2,561-byte units
 improve from 96.43162% to 98.07791%, gaining 654 exact bytes / one function;
-other function records and data measures are unchanged. All three actual
+other function records and data measures are unchanged. These Xbox numbers
+are ordinary objdiff source-comparison scores. The stricter export gate still
+requires independent original callee proof for eight direct-call operands;
+the source pilot does not claim completed export or runtime call closure.
+All three actual
 GameCube source builds retain all 18 functions / 3,252 matched bytes, and
 every allocated section is byte-identical to the baseline.
 

@@ -10,6 +10,25 @@
 #include "xJSP.h"
 #include <string.h>
 
+// The original platform TU inlines these helpers against xModel's shared storage.
+extern RpMorphTarget anim_coll_old_mt;
+
+static inline void iCollideAnimCollApply(const xModelInstance& cm)
+{
+    if ((cm.Flags & 0x1800) == 0x800)
+    {
+        xModelAnimCollRefresh(cm);
+    }
+    RpMorphTarget* mt = cm.Data->geometry->morphTarget;
+    anim_coll_old_mt.verts = mt->verts;
+    mt->verts = (RwV3d*)cm.anim_coll.verts;
+}
+
+static inline void iCollideAnimCollRestore(const xModelInstance& cm)
+{
+    cm.Data->geometry->morphTarget->verts = anim_coll_old_mt.verts;
+}
+
 static S32 sCollidingJSP = 0;
 
 // RpCollisionTriangle::index is declared RwInt32, but the JSP collision tree
@@ -789,7 +808,7 @@ S32 iSphereHitsModel3(const xSphere* b, const xModelInstance* m, xCollis* colls,
     RpIntersection isx;
     if (m->Flags & 0x800)
     {
-        xModelAnimCollApply(*m);
+        iCollideAnimCollApply(*m);
     }
 
     U8 idx;
@@ -858,7 +877,7 @@ S32 iSphereHitsModel3(const xSphere* b, const xModelInstance* m, xCollis* colls,
 
     if (m->Flags & 0x800)
     {
-        xModelAnimCollRestore(*m);
+        iCollideAnimCollRestore(*m);
     }
 
     return cbnumcs;
@@ -938,16 +957,6 @@ U32 iRayHitsEnv(const xRay3* r, const xEnv* env, xCollis* coll)
         }
     }
 
-    RwV3d temp = isx.t.line.start;
-    isx.t.line.start = isx.t.line.end;
-    isx.t.line.end = temp;
-
-    RpCollisionWorldForAllIntersections(env->geom->world, &isx, rayHitsEnvBackwardCB, coll);
-    if (env->geom->collision != NULL)
-    {
-        RpCollisionWorldForAllIntersections(env->geom->collision, &isx, rayHitsEnvBackwardCB, coll);
-    }
-
     if (r->flags & 0x400)
     {
         coll->dist += cbray.min_t;
@@ -960,7 +969,7 @@ U32 iRayHitsModel(const xRay3* r, const xModelInstance* m, xCollis* coll)
 {
     if (m->Flags & 0x800)
     {
-        xModelAnimCollApply(*m);
+        iCollideAnimCollApply(*m);
     }
 
     RpIntersection isx;
@@ -1034,8 +1043,8 @@ U32 iRayHitsModel(const xRay3* r, const xModelInstance* m, xCollis* coll)
     RpAtomicForAllIntersections(m->Data, &isx, rayHitsModelCB, coll);
 
     RwV3d temp = isx.t.line.start;
-    isx.t.line.start = isx.t.line.end;
-    isx.t.line.end = temp;
+    xVec3Copy((xVec3*)&isx.t.line.start, (xVec3*)&isx.t.line.end);
+    xVec3Copy((xVec3*)&isx.t.line.end, (xVec3*)&temp);
 
     RpAtomicForAllIntersections(m->Data, &isx, rayHitsModelBackwardCB, coll);
 
@@ -1057,7 +1066,7 @@ U32 iRayHitsModel(const xRay3* r, const xModelInstance* m, xCollis* coll)
 
     if (m->Flags & 0x800)
     {
-        xModelAnimCollRestore(*m);
+        iCollideAnimCollRestore(*m);
     }
 
     return coll->flags & 1;

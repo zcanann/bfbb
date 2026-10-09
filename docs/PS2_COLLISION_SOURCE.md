@@ -87,3 +87,47 @@ inventories/commands; `layouts.json` and `api-proof.json`; per-unit `profile.jso
 normalization instruction window in `triangle-retail.txt`; and the full regression
 and GameCube section comparisons. The type registry is reproducible with
 `tools/platforms/ps2_type_layouts.py` against authenticated originals.
+
+## Platform ray passes and animated collision storage (2026-10-09)
+
+The original PS2 iRayHitsEnv does not perform the backward world-intersection
+pass present in the GameCube source. Removing that pass only from the PS2
+translation unit restores the complete 720-byte function in all three debug
+releases. The forward JSP/world paths, optional collision world and min_t
+adjustment remain. The original model-ray function does retain its backward
+atomic pass; its vector copies now use the existing typed xVec3Copy helper.
+
+Both original model-ray and model-sphere routines inline animation-collision
+apply/restore logic. Bounded private helpers in this platform file restore
+the flag test, xModelAnimCollRefresh boundary and vertex-pointer exchange.
+They use xModel's existing external anim_coll_old_mt rather than the separate
+static reconstruction in xCollide.cpp. All three original iCollide, xCollide
+and xModel DWARF records refer to one externally named 28-byte RpMorphTarget:
+USA 0x568bd0, PAL 0x5686d0 and Germany 0x5680d0. The verts member is at offset
+20. Original instruction replay proves the saved-pointer store and restore
+load in both affected functions, as well as the independently named refresh
+call. RpAtomic.geometry=24, RpGeometry.morphTarget=92 and the relevant
+xModelInstance fields also agree with the current complete declarations.
+No shared declarations or shared implementation are changed.
+
+All three full 21-function / 10,532-byte iCollide units improve from
+94.01481% to 97.69807% fuzzy. Exact coverage increases from 3,168 bytes /
+14 functions to 3,888 bytes / 15 functions. iRayHitsEnv improves from
+73.54444% to 100%; iRayHitsModel1152 from 84.416664% to 94.36806%; and
+iSphereHitsModel3 1588 from 94.73048% to 99.94459%. Other function records
+and data measures are unchanged. The remaining model-sphere source mismatch
+is an equivalent subtraction operand/load allocation; the model-ray residual
+includes vector temporary lifetime differences.
+
+The environment-ray raw proof reproduces 712 of 720 bytes after replaying
+originally named function, callback and global relocations. Two world-SDK
+call words remain unresolved and are excluded from raw equality. No runtime
+aliases or original metadata are added. France is outside the current
+platform iCollide source profile; no new French identity or coverage is
+inferred. GameCube selects its separate gc/iCollide.cpp, and this PS2-only
+source file is absent from the Xbox production profile.
+
+Private evidence is build/icollide-ray-final-comparison.json,
+build/icollide-ray-final-changes.json, build/icollide-ray-raw-proof.json and
+build/icollide-anim-global-proof.json in the PS2 worktree. The baseline
+snapshot is cdab1fcf7. Compiler settings, profiles and scoring are unchanged.
