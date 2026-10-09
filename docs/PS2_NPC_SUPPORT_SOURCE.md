@@ -51,3 +51,34 @@ Private evidence: `build/support-original-locals.txt`,
 `build/support-source-france-summary.json`,
 `build/support-source-gc-verify/<version>/report.json`, the
 `build/support-source-probes*.txt` results, and saved candidate object files.
+
+## Line of sight and interpolation
+
+A subsequent PS2-only change writes the three ray-origin components directly
+in HaveLOSToPos. This removes two component-address lifetimes spanning the
+normalization call and restores the original five saved registers and stack
+frame. The 404-byte body improves from 90.128716% to 98.0198%; two extra NOPs
+remain. Direct displacement expressions alone or combined with the copy
+produce the same improvement, so only the smaller copy change is retained.
+
+GenSmooth now matches all 508 bytes, up from 92.874016%. Original DWARF records
+`u` and `u3` at function scope, with no named `u2` or temporary row pointer.
+The restored loop accesses the coefficient array directly and groups each
+squared term before multiplying by its coefficient. This reproduces the
+original common subexpression, fused operations, result registers and loop
+increment scheduling. The ungrouped variant reaches 95.7874%; adding a named
+`u2` to the otherwise matching expression reaches 99.56693% and is discarded.
+
+Against the FindNearest follow-up, full 54-function checks in SLUS-20680,
+SLES-51968 and SLES-51970 increase exact coverage from 4,312 bytes / forty
+functions to 4,820 bytes / forty-one functions (+508 bytes / one function).
+Similarity improves from 94.40663% to 94.94901%. The other 52 function records
+remain identical. The sixteen-function French selection remains unchanged,
+as do every function record and all data measures in all three GameCube
+releases. Neither changed function has a selected French identity.
+
+Private evidence: `build/support-smooth-locals.txt`,
+`build/support-los-probes.txt`, `build/support-los-copy-diff.json`,
+`build/support-smooth-probes.txt`,
+`build/support-los-smooth-region-summary.json`, and
+`build/support-los-smooth-gc.txt`.

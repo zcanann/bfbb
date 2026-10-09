@@ -1323,7 +1323,13 @@ S32 NPCC_HaveLOSToPos(xVec3* pos_src, xVec3* pos_tgt, F32 dst_max, xBase* tgt, x
 
     xVec3Sub(&ray.dir, pos_tgt, pos_src);
     xVec3Normalize(&ray.dir, &ray.dir);
+#if defined(PS2)
+    ray.origin.x = pos_src->x;
+    ray.origin.y = pos_src->y;
+    ray.origin.z = pos_src->z;
+#else
     xVec3Copy(&ray.origin, pos_src);
+#endif
 
     ray.flags = (1 << 10) | (1 << 11);
 
@@ -1428,11 +1434,26 @@ void NPCC_GenSmooth(xVec3** pos_base, xVec3** pos_mid)
     static S32 init = 0;
 
     S32 i;
+#if defined(PS2)
+    F32 u, u3;
+#endif
 
     if (!init)
     {
         init = 1;
 
+#if defined(PS2)
+        for (i = 0; i < 4; i++)
+        {
+            u = yews[i];
+            u3 = u * (u * u);
+
+            prepute[i][0] = -0.5f * u3 + u * u + -0.5f * u;
+            prepute[i][1] = 1.5f * u3 + -2.5f * (u * u) + 1.0f;
+            prepute[i][2] = -1.5f * u3 + 2.0f * (u * u) + 0.5f * u;
+            prepute[i][3] = 0.5f * u3 + -0.5f * (u * u);
+        }
+#else
         i = 0;
         while (i < 4)
         {
@@ -1449,6 +1470,7 @@ void NPCC_GenSmooth(xVec3** pos_base, xVec3** pos_mid)
             pre[2] = -1.5f * u3 + 2.0f * u2 + 0.5f * u;
             pre[3] = 0.5f * u3 + -0.5f * u2;
         }
+#endif
     }
 
     for (i = 0; i < 4; i++)
