@@ -192,3 +192,18 @@ SaveGame (1096 bytes) and LoadGame (724 bytes) are now exact in USA, Europe
 and Germany: 1820 additional exact bytes and two functions per region.
 They are the only changed scores, and the full GC report remains identical.
 Evidence: `*-saveload.json` and `saveload-proof.json`.
+
+## Format prompts and successful-save controller status
+
+The format-error prompts now pass their PS2 conditional UI indices directly
+to the event helper. The enclosing 1248-byte format function improves from
+89.23077% to 97.69231%. The save loop restores its original explicit state-5
+no-op case and missing-controller handling after the success notification:
+when `gTrcPad[0].state` is `TRC_PadMissing`, it calls `xTRCPad` for the active
+pad with that state. The callee and `gTrcPad` member load were authenticated
+against debug symbols and DWARF globals in all three executables.
+
+SaveLoop's 1576-byte body improves from 90.730965% to 97.92132% in all three
+regions. These are the only two changed scores; the full GC report remains
+identical. Remaining differences include prompt-loop NOP placement.
+Evidence: `*-prompts.json`, `prompts-proof.json`, and `trc-save-proof.json`.

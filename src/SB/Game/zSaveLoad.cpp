@@ -770,12 +770,16 @@ S32 zSaveLoad_CardYankedErrorPrompt(S32 cardNumber)
 
 S32 zSaveLoad_ErrorFormatPrompt(S32 cardNumber)
 {
+#if defined(PS2)
+    zSaveLoad_UIEvent(cardNumber == 1 ? 0x2c : 0x2e, eEventUIFocusOn_Select);
+#else
     int i = 0x2e;
     if (cardNumber == 1)
     {
         i = 0x2c;
     }
     zSaveLoad_UIEvent(i, eEventUIFocusOn_Select);
+#endif
 
     promptSel = -1;
     while (promptSel == -1)
@@ -783,23 +787,31 @@ S32 zSaveLoad_ErrorFormatPrompt(S32 cardNumber)
         zSaveLoad_Tick();
     }
 
+#if defined(PS2)
+    zSaveLoad_UIEvent(cardNumber == 1 ? 0x2c : 0x2e, eEventUIFocusOff_Unselect);
+#else
     i = 0x2e;
     if (cardNumber == 1)
     {
         i = 0x2c;
     }
     zSaveLoad_UIEvent(i, eEventUIFocusOff_Unselect);
+#endif
     return 6;
 }
 
 S32 zSaveLoad_ErrorFormatCardYankedPrompt(S32 cardNumber)
 {
+#if defined(PS2)
+    zSaveLoad_UIEvent(cardNumber == 1 ? 0x2d : 0x2f, eEventUIFocusOn_Select);
+#else
     int i = 0x2f;
     if (cardNumber == 1)
     {
         i = 0x2d;
     }
     zSaveLoad_UIEvent(i, eEventUIFocusOn_Select);
+#endif
 
     promptSel = -1;
     while (promptSel == -1)
@@ -807,12 +819,16 @@ S32 zSaveLoad_ErrorFormatCardYankedPrompt(S32 cardNumber)
         zSaveLoad_Tick();
     }
 
+#if defined(PS2)
+    zSaveLoad_UIEvent(cardNumber == 1 ? 0x2d : 0x2f, eEventUIFocusOff_Unselect);
+#else
     i = 0x2f;
     if (cardNumber == 1)
     {
         i = 0x2d;
     }
     zSaveLoad_UIEvent(i, eEventUIFocusOff_Unselect);
+#endif
     return 6;
 }
 
@@ -2725,12 +2741,14 @@ U32 zSaveLoad_SaveLoop()
                 break;
             }
             break;
+#if !defined(PS2)
         case 3:
         case 4:
-        case 5:
         case 6:
         case 7:
         case 8:
+#endif
+        case 5:
             break;
         case 11:
             zGameModeSwitch(eGameMode_Game);
@@ -2748,6 +2766,12 @@ U32 zSaveLoad_SaveLoop()
 
                 xBase* sendTo = zSceneFindObject(xStrHash("MNU4 SAVE COMPLETED"));
                 zEntEvent(sendTo, eEventVisible);
+#if defined(PS2)
+                if (gTrcPad[0].state == TRC_PadMissing)
+                {
+                    xTRCPad(globals.currentActivePad, TRC_PadMissing);
+                }
+#endif
             }
             else
             {
