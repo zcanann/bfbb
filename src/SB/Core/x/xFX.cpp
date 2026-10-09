@@ -698,7 +698,7 @@ RpAtomic* xFXBubbleRender(RpAtomic* atomic)
     iDrawSetFBMSK(bp->pass1_fbmsk);
     iModelSetMaterialAlpha(atomic, bp->pass1_alpha);
 
-    if (((char)bp->pass1))
+    if (bp->pass1)
     {
         AtomicDisableMatFX(atomic);
         (*gAtomicRenderCallBack)(atomic);
@@ -707,7 +707,7 @@ RpAtomic* xFXBubbleRender(RpAtomic* atomic)
     iDrawSetFBMSK(0);
     iModelSetMaterialAlpha(atomic, bp->pass2_alpha);
 
-    if (((char)bp->pass2) != 0)
+    if (bp->pass2)
     {
         gFXSurfaceFlags = 0x10;
         xFXAtomicEnvMapSetup(atomic, bp->fresnel_map, bp->fresnel_map_coeff);
@@ -717,7 +717,7 @@ RpAtomic* xFXBubbleRender(RpAtomic* atomic)
 
     iModelSetMaterialAlpha(atomic, bp->pass3_alpha);
 
-    if (((char)bp->pass3) != 0)
+    if (bp->pass3)
     {
         AtomicDisableMatFX(atomic);
         gFXSurfaceFlags = 0x10;
@@ -777,7 +777,7 @@ static RpAtomic* AtomicSetEnvMap(RpAtomic* atomic, void* data)
 
 RpAtomic* xFXAtomicEnvMapSetup(RpAtomic* atomic, U32 envmapID, F32 shininess)
 {
-    void* env = xSTFindAsset(envmapID, NULL);
+    RwTexture* env = (RwTexture*)xSTFindAsset(envmapID, NULL);
     if (env)
     {
         AtomicSetEnvMap(atomic, env);

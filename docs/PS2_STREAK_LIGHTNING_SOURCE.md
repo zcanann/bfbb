@@ -132,3 +132,19 @@ unchanged target sizes/counts and data measures; France and every GameCube
 score remain unchanged. Evidence is `build/fx-counter-dwarf-audit.json`,
 `build/fx-scene-enter-final-comparison.json`, its function-delta JSON, and
 `build/fx-scene-enter-gc-{before,after}.json`.
+
+All three debug originals declare the environment-map lookup local as
+`RwTexture*`, rather than the reconstructed `void*`. Restoring that pointer type
+recovers the original branch scheduling when the helper is inlined into the
+bubble and shiny renderers. The bubble pass flags are one-bit unsigned fields,
+so their extra `char` casts are redundant and introduce unwanted PS2 masks.
+Removing those casts and restoring the pointer type makes the 608-byte bubble
+and 568-byte shiny functions exact in each debug region, adding 1176 bytes.
+The standalone lookup helper stays exact. Complete `xFX` units reach 17208
+exact bytes; every other regional score and target/data control is unchanged,
+as are France and every GameCube score. No platform conditional is needed.
+
+The original pointer-type DIE audit is `build/fx-env-pointer-dwarf.json`.
+Complete comparisons are `build/fx-bubble-final-comparison.json`, its
+function-delta JSON, and `build/fx-bubble-gc-{before,after}.json`. This is an
+ordinary source comparison with the existing unresolved SDK identity limits.
