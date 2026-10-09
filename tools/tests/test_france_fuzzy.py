@@ -97,7 +97,9 @@ class FuzzyTests(unittest.TestCase):
                 self.assertEqual([c["start"] for c in candidates[:2]], [20, 210])
                 self.assertEqual(diagnostics["best_runner_up_gap_percent"], 0)
                 candidates, diagnostics = fuzzy.search(index, q, slack=10, max_cells=1)
-                self.assertFalse(candidates)
+                self.assertEqual(len(candidates), 2)
+                self.assertTrue(all(c["alignment_kind"] == "coarse_seed_window" for c in candidates))
+                self.assertTrue(all(c["edit_similarity_percent"] is None for c in candidates))
                 self.assertEqual(diagnostics["cell_budget_skipped_windows"], 2)
             finally:
                 index.close()
@@ -113,6 +115,7 @@ class OriginalTests(unittest.TestCase):
                 name="xStrHash", source="xString.cpp", address=None, seed_words=5,
                 limit=3, max_words=4096, top=5, slack=32, max_windows=12,
                 max_cells=1000000, max_seeds=24, max_occurrences=64)
+            args.include_verified = True
             cold = fuzzy.run(args)
             expected = {0x20F190, 0x20F1F0, 0x20F260}
             self.assertEqual({f["candidates"][0]["candidate_address"] for f in cold["functions"]}, expected)

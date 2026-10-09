@@ -1,92 +1,127 @@
 # France fuzzy candidate discovery
 
 `tools/platforms/france_fuzzy.py` searches the stripped French PS2 executable
-for counterparts of named functions in the three debug-bearing originals.
-It reads authenticated original executables and their actual DWARF ranges;
-compiled source objects are not inputs.
+using authenticated debug-region originals. It prioritizes large functions and,
+with `--blocks`, physically contiguous translation-unit blocks. Compiled source
+objects are never inputs.
 
 ```sh
+# Find large regions first and save a reusable diagnostic map.
 python tools/platforms/france_fuzzy.py --orig-dir /path/to/orig \
-  --source xGrid.cpp --name xGridUpdate --output build/france-grid-candidates.json
+  --blocks --limit 10 --map-output build/france-large-map.json
+# Use those tentative regions when ranking smaller candidates.
 python tools/platforms/france_fuzzy.py --orig-dir /path/to/orig \
-  --reference SLES-51968 --source zEntTrigger.cpp --top 5
+  --source zNPCGoal --hypotheses build/france-large-map.json
+# Inspect an independently verified anchor, including its occupied range.
+python tools/platforms/france_fuzzy.py --orig-dir /path/to/orig \
+  --source xGrid.cpp --name xGridUpdate --include-verified
 ```
 
-Name and source filters are case-insensitive substrings. `--address 0x...`
-selects an exact **reference** entry address. The default reference is USA;
-the target is always France. `--limit` defaults to 20 functions and the output
-reports any omitted references. No filter is required, but broad runs should
-set an intentional function budget.
+Name/source filters are case-insensitive substrings; `--address` selects an exact
+reference entry. USA is the default reference; `--reference` also accepts the
+European and German debug releases. `--order source` restores source/address
+ordering. The default largest-first order uses reference byte size, before the
+query limit is applied. Too-small/too-large references do not consume that limit.
 
-The tool uses the existing reviewed `cpu_text` region associated with the
-authenticated French executable. It excludes VU packets and initialized data.
-It normalizes ordinary GPR/FPR assignments, branch and call destinations,
-LUI values, GP/stack offsets and large address-like offsets. Zero, GP, SP and
-RA retain distinct roles. Opcode selectors, shift amounts, comparison and
-logical literals, and small non-stack offsets remain useful discriminants.
-Unmodeled encodings remain literal. This deliberately lossy normalization is
-for discovery; it does not establish equivalent behavior or relocation rules.
+A TU block contains consecutive original functions from one source, separated
+by at most `--block-gap` bytes (default 16). It never joins separated functions
+merely because they share a source name. Already verified members break unknown
+blocks. Member names and original boundaries remain in the diagnostic output.
 
-Rare five-instruction seeds rank nearby candidate windows. Only a bounded
-number of windows receive exact semiglobal edit-distance alignment: the whole
-reference must be consumed, while target prefix/suffix words are free. The
-JSON includes inferred target spans, substitutions, insertions, deletions,
-matching runs, coverage, edit similarity, exact longest-common-subsequence
-length and its Dice score. The LCS implementation is bit-parallel and does not
-mean longest common substring. Body hashes and a separate raw-body-equality
-flag distinguish normalized matches from actual byte equality. Executable
-payloads are not written into the candidate JSON.
+## Large bodies and bounded refinement
 
-`best_runner_up_gap_percent` is the score difference between the two best
-refined candidates. Zero preserves ambiguity; null means fewer than two were
-refined. It is not an identity confidence or an exhaustive uniqueness proof.
-The seed occurrence limit, retained seed count, skipped windows and other
-search budgets are recorded explicitly. Sparse seeds or changed instruction
-order can hide the right candidate.
+Rare five-instruction seeds propose windows. Exact bit-parallel LCS scores every
+eligible window without allocating a quadratic traceback matrix. This works for
+large functions and TU blocks beyond the edit-alignment cell budget. LCS means
+longest common subsequence, including gaps, rather than common substring.
 
-The default limits are 12 windows, 24 selected seeds, 64 occurrences per seed,
-32 words of window slack, and 1,000,000 alignment cells per window. Functions
-over 4,096 words are skipped before search. The cell cap is a separate limit:
-it normally skips refinement beyond roughly 970 words even below that size
-limit. `cell_budget_skipped_windows` records this case. Increase `--max-cells`
-for an intentional larger query; quadratic refinement is never silently run
-beyond the requested budget. `--slack`, `--max-windows`, `--max-seeds`,
-`--max-occurrences` and `--seed-words` expose the other tradeoffs.
+Up to four LCS-ranked windows receive exact semiglobal edit alignment when within
+`--max-cells` (default 1,000,000). All reference words are consumed; target flanks
+are free. Refined candidates include matching runs, substitutions, insertions,
+deletions, inferred spans and edit scores. `--max-refinements 0` selects coarse
+search only. Quadratic refinement never exceeds its explicit cell cap.
 
-Hash-keyed caches under `build/france-fuzzy-cache` retain ELF/DWARF metadata,
-normalized target tokens and a SQLite seed index. Original hashes are checked
-on every invocation. Cache keys include normalization version, executable
-identity, CPU region and seed width. A changed algorithm must bump
-`CACHE_VERSION`. Temporary files and database replacement keep incomplete
-indexes out of subsequent queries. Use `--cache-dir` for isolated runs.
+Unrefined candidates remain in the ranking with
+`alignment_kind: coarse_seed_window`, an empty alignment, and null edit scores.
+Their candidate edges are search-window edges, **not inferred function bounds**.
+Each result records its search window, seed start estimate and nominal flank
+slack. Verified exclusions or region edges may clip that window. Normalized LCS
+scores, body hashes and raw-byte equality are separate fields.
 
-Candidate output defaults to `build/france-fuzzy-candidates.json`; originals
-and configuration directories cannot be output/cache destinations. Every
-document and function explicitly says `eligible_for_progress: false` and
-`boundary_confirmation: false`. It never changes a registry, source profile,
-symbol table, denominator or matching report. A candidate still needs the
-existing independent original-only ownership, entry and boundary review.
+Defaults are 20 queries, 16,384 words per query, 12 windows, 24 selected seeds,
+64 occurrences per seed and 32 words of flank slack. `--max-words`, `--slack`,
+`--max-windows`, `--max-seeds`, `--max-occurrences` and `--seed-words` expose these
+budgets. Cell-budget diagnostics count windows left coarse, not discarded
+candidates. Sparse seeds or changed instruction order can still hide a match.
 
-Validation on 2026-10-08 uses three independently known exact string functions
-at `0x20f190`, `0x20f1f0` and `0x20f260`, plus the independently verified,
-raw-byte-different `xGridUpdate` at `0x305730` (204 bytes). Each ranks first.
-A private cold run for the three string functions took 6.97 seconds, including
-DWARF parsing and index construction; the same warm query took 0.10 seconds.
-The warm Grid query took 0.08 seconds. These are observed local timings, not
-runtime guarantees. Artifacts are `build/france-fuzzy-benchmark-*.json` in the
-regional worker checkout.
+Normalization removes ordinary register allocation and address-like differences
+while retaining zero/GP/SP/RA roles, operation selectors, shifts, comparisons,
+logical literals and small non-stack field offsets. Unknown encodings remain
+literal. This intentionally weak comparison is not a relocation or behavior proof.
+
+## Verified occupancy and tentative overlays
+
+`france_layout.py` reads only the established reviewed, CFG-corroborated,
+transfer-corroborated and TU-corroborated function registries. It requires their
+explicit boundary confirmations, expected provenance kind, executable identity
+and complete original body hashes. Conflicting boundaries fail closed. These
+checks authenticate existing independently reviewed proofs; this search does
+not replace or regenerate those proofs. Address-only anchors and candidate files
+never become hard exclusions.
+
+By default, occupied instruction seeds are ignored and candidate windows are
+split at independently verified boundaries. Reference provenance identifies known
+functions by version, executable identity, source/name and original entry address,
+including overloads. Skipped references have an explicit `already_verified_reference`
+status and a `--include-verified` hint; the CLI prints their count.
+
+Earlier larger hypotheses also help rank later small queries. If a candidate
+substantially overlaps a larger incompatible hypothesis, its ranking loses five
+points by default. The unmodified LCS score, penalty and conflicting tentative
+identities remain visible. Only the earlier query's best candidate influences
+this penalty; a block is compatible with members from its own source. No candidate
+is removed on this evidence. Set `--soft-overlap-penalty 0` to disable the penalty.
+`--hypotheses` accepts earlier candidate outputs or maps, including ambiguous
+alternatives; all imported hypotheses remain explicitly unconfirmed.
+
+`ranking_score_percent` is the normalized LCS Dice score minus this optional soft
+penalty. `best_runner_up_gap_percent` compares the two best retained rankings,
+including coarse candidates. A zero gap preserves ambiguity; a null gap means
+fewer than two candidates. Neither is an identity confidence or uniqueness proof.
+
+Every output includes a reusable `layout`; `--map-output` writes it separately.
+It lists authenticated occupied functions, registry hashes, unclaimed regions
+ranked largest first, and distinct soft overlays. Unclaimed regions can include
+padding. Tentative overlays never reduce verified-free space. Outputs and caches
+cannot overwrite originals or configuration directories.
+
+## Caches and validation
+
+Hash-keyed metadata, normalized tokens and SQLite seeds remain under
+`build/france-fuzzy-cache`. Originals are authenticated on every invocation.
+Cache keys cover normalization/index version, executable identity, CPU region
+and seed width; bump `CACHE_VERSION` if those cached representations change.
+Temporary replacements prevent incomplete caches. Use `--cache-dir` to isolate runs.
+
+The initial large-block check found candidate windows for Dutchman (59,688
+reference bytes), Hazard (57,056), BossSB2 (56,124) and KingJelly (49,460), at
+99.68–99.82% normalized LCS. A five-query cold run took 19.27 seconds, including
+5.58 seconds preparing caches. These are unconfirmed coarse windows and observed
+local timings. None was promoted into a registry. Private evidence is
+`build/france-large-oct08.json` and `build/france-large-map-oct08.json`.
 
 ```sh
 python -m unittest discover -s tools/tests -p test_france_fuzzy.py -v
-# Also run the private original checks:
+python -m unittest discover -s tools/tests -p test_france_layout.py -v
+# Also authenticate the private xStrHash/xGridUpdate regression fixtures:
 # PowerShell: $env:BFBB_FRANCE_TEST_ORIG='C:/path/to/orig'
 # POSIX:     export BFBB_FRANCE_TEST_ORIG=/path/to/orig
 python -m unittest discover -s tools/tests -p test_france_fuzzy.py -v
 ```
 
-Six tests pass with originals supplied. Synthetic tests preserve register-role
-distinctions, reconstruct mixed insert/delete/substitution alignments, retain
-ambiguous duplicate candidates, enforce the cell budget and reproduce cached
-rankings. Three hundred randomized short sequences compare the bit-parallel
-LCS result with an independent quadratic implementation. No matching-score
-or source-link increase is claimed by adding this discovery tool.
+Tests cover independent LCS cross-checks, reconstructed gapped alignment, large
+bodies above the cell cap, ambiguous copies, verified exclusions, overload
+provenance, TU adjacency, body/identity failures and tentative-only penalties.
+The existing independently known string and Grid candidates remain top-ranked
+with `--include-verified`. No matching-progress increase or source-link claim is
+made by this discovery tool.

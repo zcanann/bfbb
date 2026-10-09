@@ -25,6 +25,8 @@ sys.path.insert(0, str(ROOT / "tools"))
 from platforms.france_candidates import REFERENCES, TARGET, _loaded
 from platforms.ps2 import inspect_elf
 from platforms.ps2_report import _function_ranges, _source_name
+from platforms.france_layout import (OccupiedRanges, apply_soft_penalties, reference_queries, region_map,
+                                    soft_hypotheses, verified_functions)
 
 CACHE_VERSION = 1
 MASK = (1 << 63) - 1
@@ -208,16 +210,21 @@ class SeedIndex:
         self.db.close()
 
     def windows(self, query: list[int], max_occurrences: int, max_seeds: int,
-                max_windows: int, slack: int):
+                max_windows: int, slack: int, occupied=None):
         choices = []
+        hits_by_hash = {}
         for position, value in seeds(query, self.width):
             if len(set(query[position:position + self.width])) < 3:
                 continue
-            hits = [p for (p,) in self.db.execute(
-                "SELECT position FROM seeds WHERE hash=? LIMIT ?", (value, max_occurrences + 1))]
+            if value not in hits_by_hash:
+                hits_by_hash[value] = [p for (p,) in self.db.execute(
+                    "SELECT position FROM seeds WHERE hash=? LIMIT ?", (value, max_occurrences + 1))]
+            hits = hits_by_hash[value]
             if not hits or len(hits) > max_occurrences:
                 continue
-            hits = [p for p in hits if self.tokens[p:p + self.width] == query[position:position + self.width]]
+            hits = [p for p in hits if
+                    (occupied is None or not occupied.overlaps(p, p + self.width)) and
+                    self.tokens[p:p + self.width] == query[position:position + self.width]]
             if hits:
                 choices.append((len(hits), position, hits))
         # Rare seeds first; non-overlapping reference seeds prevent one common run
@@ -315,27 +322,58 @@ def align(query: list[int], window: list[int], max_cells: int):
 
 def search(index: SeedIndex, query: list[int], *, top: int = 5, slack: int = 32,
            max_windows: int = 12, max_cells: int = 1000000,
-           max_seeds: int = 24, max_occurrences: int = 64):
-    windows, diagnostics = index.windows(query, max_occurrences, max_seeds, max_windows, slack)
-    candidates, skipped = [], 0
+           max_seeds: int = 24, max_occurrences: int = 64,
+           max_refinements: int = 4, occupied=None):
+    occupied = occupied or OccupiedRanges()
+    windows, diagnostics = index.windows(query, max_occurrences, max_seeds, max_windows, slack, occupied)
+    candidates, skipped, refinements = [], 0, 0
+    # Bit-parallel LCS has no quadratic traceback allocation. Score all seed
+    # windows first, including large functions that exceed the refinement cap.
+    # These windows remain explicitly coarse: neither their edges nor a full
+    # edit alignment are inferred from the LCS length alone.
+    coarse = []
     for begin, end, estimate, votes in windows:
-        result = align(query, index.tokens[begin:end], max_cells)
-        if result is None:
+        for low, high in occupied.available(begin, end):
+            if high - low < index.width:
+                continue
+            common = lcs_length(query, index.tokens[low:high])
+            coarse.append({"start": low, "end": high, "alignment_kind": "coarse_seed_window",
+                           "alignment": [], "edit_similarity_percent": None, "edit_distance": None,
+                           "lcs_instructions": common,
+                           "lcs_dice_percent": 200 * common / (len(query) + high - low),
+                           "seed_votes": votes, "seed_start_estimate": estimate})
+    coarse.sort(key=lambda c: (-c["lcs_dice_percent"], -c["seed_votes"], c["start"]))
+    for position, item in enumerate(coarse):
+        begin, end = item["start"], item["end"]
+        result = None
+        if len(query) * (end - begin) > max_cells:
             skipped += 1
-            continue
-        result["start"] += begin
-        result["end"] += begin
-        for run in result["alignment"]:
-            run["target_start"] += begin
-            run["target_end"] += begin
-        result.update(seed_votes=votes, seed_start_estimate=estimate)
+        elif position < max_refinements:
+            result = align(query, index.tokens[begin:end], max_cells)
+        if result is None:
+            result = item
+        else:
+            refinements += 1
+            result["start"] += begin
+            result["end"] += begin
+            for run in result["alignment"]:
+                run["target_start"] += begin
+                run["target_end"] += begin
+            result.update(alignment_kind="semiglobal_edit_alignment", seed_votes=item["seed_votes"],
+                          seed_start_estimate=item["seed_start_estimate"])
+        result["ranking_score_percent"] = result["lcs_dice_percent"]
+        result.update(window_start=begin, window_end=end, nominal_flank_slack_instructions=slack)
         if not any(c["start"] == result["start"] and c["end"] == result["end"] for c in candidates):
             candidates.append(result)
-    candidates.sort(key=lambda c: (-c["edit_similarity_percent"], -c["lcs_dice_percent"], c["start"]))
+    candidates.sort(key=lambda c: (-c["ranking_score_percent"],
+                                  -(c["edit_similarity_percent"] or 0), c["start"]))
     diagnostics["cell_budget_skipped_windows"] = skipped
-    diagnostics["refined_candidates"] = len(candidates)
-    diagnostics["best_runner_up_gap_percent"] = (candidates[0]["edit_similarity_percent"] -
-        candidates[1]["edit_similarity_percent"] if len(candidates) > 1 else None)
+    diagnostics["coarse_scored_windows"] = len(coarse)
+    diagnostics["refined_windows"] = refinements
+    diagnostics["refined_candidates"] = sum(c["alignment_kind"] == "semiglobal_edit_alignment" for c in candidates)
+    diagnostics["coarse_candidates"] = sum(c["alignment_kind"] == "coarse_seed_window" for c in candidates)
+    diagnostics["best_runner_up_gap_percent"] = (candidates[0]["ranking_score_percent"] -
+        candidates[1]["ranking_score_percent"] if len(candidates) > 1 else None)
     return candidates[:top], diagnostics
 
 
@@ -353,55 +391,90 @@ def run(args):
         raise ValueError("Expected one reviewed CPU text region")
     region = regions[0]
     body = read_body(target, dst["metadata"], region["address"], region["size"])
+    verified, provenance = verified_functions(args.config_dir / TARGET, dst["sha1"], region, body)
+    include_verified = getattr(args, "include_verified", False)
+    occupied = OccupiedRanges(((f["address"] - region["address"]) // 4,
+                               (f["address"] + f["size"] - region["address"]) // 4)
+                              for f in verified) if not include_verified else OccupiedRanges()
+    imported = soft_hypotheses(getattr(args, "hypotheses", []), dst["sha1"], region)
     key = hashlib.sha256((str(CACHE_VERSION) + dst["sha1"] + str(args.seed_words) +
                           json.dumps(region, sort_keys=True)).encode()).hexdigest()
     tokens, token_hit = cached_tokens(body, args.cache_dir / (key + ".tokens"))
     index = SeedIndex(tokens, args.seed_words, args.cache_dir / (key + ".sqlite"))
     ready = time.perf_counter()
-    functions = [f for f in ref["functions"] if
+    queries, known_skipped = reference_queries(ref["functions"], verified,
+        blocks=getattr(args, "blocks", False), include_verified=include_verified,
+        max_gap=getattr(args, "block_gap", 16), reference_version=args.reference, reference_sha1=ref["sha1"])
+    selected = lambda f: (
                  (not args.name or args.name.lower() in f["name"].lower()) and
                  (not args.source or args.source.lower() in f["source"].lower()) and
-                 (args.address is None or f["low"] == args.address)]
-    functions.sort(key=lambda f: (f["source"], f["low"], f["name"]))
+                 (args.address is None or f["low"] == args.address))
+    functions = [f for f in queries if selected(f)]
+    known_skipped = [f for f in known_skipped if selected(f)]
+    order = getattr(args, "order", "largest")
+    functions.sort(key=(lambda f: (-(f["high"] - f["low"]), f["source"], f["low"], f["name"]))
+                   if order == "largest" else (lambda f: (f["source"], f["low"], f["name"])))
+    # Oversize/undersize references must not consume the entire largest-first
+    # query budget. Keep their counts explicit while searching eligible bodies.
+    eligible = [f for f in functions if args.seed_words * 4 <= f["high"] - f["low"] <= args.max_words * 4]
     output = []
+    earlier_hypotheses = list(imported)
     try:
-        for f in functions[:args.limit]:
+        for f in eligible[:args.limit]:
             size = f["high"] - f["low"]
             record = {"name": f["name"], "source": f["source"],
                       "reference_address": f["low"], "reference_size": size,
+                      "reference_kind": f["reference_kind"],
                       "boundary_confirmation": False, "eligible_for_progress": False}
-            if size < args.seed_words * 4 or size > args.max_words * 4:
-                record.update(status="skipped_reference_size", candidates=[])
-            else:
-                code = read_body(reference, ref["metadata"], f["low"], size)
-                candidates, diagnostics = search(index, decode(code), top=args.top, slack=args.slack,
-                    max_windows=args.max_windows, max_cells=args.max_cells,
-                    max_seeds=args.max_seeds, max_occurrences=args.max_occurrences)
-                for c in candidates:
-                    start, end = c.pop("start"), c.pop("end")
-                    c["candidate_address"] = region["address"] + start * 4
-                    c["candidate_size"] = (end - start) * 4
-                    c["candidate_body_sha256"] = hashlib.sha256(body[start * 4:end * 4]).hexdigest()
-                    c["raw_identical_body"] = code == body[start * 4:end * 4]
-                    c["boundary_confirmation"] = False
-                    c["seed_start_estimate"] = region["address"] + c["seed_start_estimate"] * 4
-                    for run in c["alignment"]:
-                        for k in ("reference_start", "reference_end"):
-                            run[k] = f["low"] + run[k] * 4
-                        for k in ("target_start", "target_end"):
-                            run[k] = region["address"] + run[k] * 4
-                record.update(status="ranked" if candidates else "no_candidate_within_search_budgets",
-                              candidates=candidates, search=diagnostics,
-                              reference_body_sha256=hashlib.sha256(code).hexdigest())
+            if "members" in f:
+                record["reference_members"] = f["members"]
+            code = read_body(reference, ref["metadata"], f["low"], size)
+            candidates, diagnostics = search(index, decode(code), top=max(args.top, args.max_windows), slack=args.slack,
+                max_windows=args.max_windows, max_cells=args.max_cells,
+                max_seeds=args.max_seeds, max_occurrences=args.max_occurrences,
+                max_refinements=getattr(args, "max_refinements", 4), occupied=occupied)
+            for c in candidates:
+                start, end = c.pop("start"), c.pop("end")
+                c["candidate_address"] = region["address"] + start * 4
+                c["candidate_size"] = (end - start) * 4
+                window_start, window_end = c.pop("window_start"), c.pop("window_end")
+                c["search_window_address"] = region["address"] + window_start * 4
+                c["search_window_size"] = (window_end - window_start) * 4
+                c["candidate_body_sha256"] = hashlib.sha256(body[start * 4:end * 4]).hexdigest()
+                c["raw_identical_body"] = code == body[start * 4:end * 4]
+                c["boundary_confirmation"] = False
+                c["eligible_for_progress"] = False
+                c["seed_start_estimate"] = region["address"] + c["seed_start_estimate"] * 4
+                for run in c["alignment"]:
+                    for k in ("reference_start", "reference_end"):
+                        run[k] = f["low"] + run[k] * 4
+                    for k in ("target_start", "target_end"):
+                        run[k] = region["address"] + run[k] * 4
+            apply_soft_penalties(candidates, record, earlier_hypotheses,
+                                 getattr(args, "soft_overlap_penalty", 5.0))
+            candidates = candidates[:args.top]
+            diagnostics["best_runner_up_gap_percent"] = (candidates[0]["ranking_score_percent"] -
+                candidates[1]["ranking_score_percent"] if len(candidates) > 1 else None)
+            if candidates:
+                earlier_hypotheses.append({"name": record["name"], "source": record["source"],
+                    "reference_size": size, "reference_kind": record["reference_kind"],
+                    "candidate_rank": 1, **candidates[0]})
+            record.update(status="ranked" if candidates else "no_candidate_within_search_budgets",
+                          candidates=candidates, search=diagnostics,
+                          reference_body_sha256=hashlib.sha256(code).hexdigest())
             output.append(record)
     finally:
         index.close()
-    return {"schema_version": 1, "status": "unconfirmed-fuzzy-candidates",
+    return {"schema_version": 2, "status": "unconfirmed-fuzzy-candidates",
             "eligible_for_progress": False, "boundary_confirmation": False,
             "reference_version": args.reference, "reference_sha1": ref["sha1"],
             "target_version": TARGET, "target_sha1": dst["sha1"], "region": region,
             "method": {"normalization_version": CACHE_VERSION, "seed_words": args.seed_words,
-                       "alignment": "semiglobal unit-cost edit distance; exact bit-parallel LCS",
+                       "alignment": "bit-parallel LCS window ranking; budgeted semiglobal edit refinement",
+                       "search_order": order, "include_unit_blocks": getattr(args, "blocks", False),
+                       "verified_ranges_excluded": not include_verified,
+                       "max_refinements": getattr(args, "max_refinements", 4),
+                       "soft_overlap_penalty_percent": getattr(args, "soft_overlap_penalty", 5.0),
                        "special_gpr_roles_preserved": ["zero", "gp", "sp", "ra"],
                        "limits": {k: getattr(args, k) for k in ("limit", "max_words", "max_windows",
                                   "max_cells", "max_seeds", "max_occurrences", "slack", "top")}},
@@ -410,14 +483,22 @@ def run(args):
                 "Scores compare normalized instructions; they are not objdiff matching-progress scores.",
                 "Unknown reference members, duplicate functions and seed/window limits may hide a better match.",
                 "A runner-up gap is local to searched windows, not confidence in a recovered identity.",
+                "Coarse candidate spans are seed windows, not aligned function boundaries; edit scores are null.",
                 "Independent original-only ownership, entry and boundary evidence is required before promotion."],
             "cache": {"reference_metadata_hit": ref_hit, "target_metadata_hit": dst_hit,
                       "target_tokens_hit": token_hit,
                       "target_seed_index_hit": index.cache_hit},
             "timing_seconds": {"prepare": ready - started, "search": time.perf_counter() - ready,
                                "total": time.perf_counter() - started},
-            "selected_reference_functions": len(functions),
-            "omitted_by_limit": max(0, len(functions) - args.limit), "functions": output}
+            "selected_reference_queries": len(functions),
+            "known_reference_identities_skipped": len(known_skipped),
+            "verified_references_skipped": [{"name": f["name"], "source": f["source"],
+                "reference_address": f["low"], "reference_size": f["high"] - f["low"],
+                "status": "already_verified_reference", "search_hint": "Use --include-verified to inspect anchors."}
+                for f in known_skipped],
+            "omitted_by_size": len(functions) - len(eligible),
+            "omitted_by_limit": max(0, len(eligible) - args.limit), "functions": output,
+            "layout": region_map(dst["sha1"], region, verified, provenance, output, imported)}
 
 
 def main():
@@ -427,11 +508,23 @@ def main():
     p.add_argument("--config-dir", type=Path, default=ROOT / "config/platforms")
     p.add_argument("--cache-dir", type=Path, default=ROOT / "build/france-fuzzy-cache")
     p.add_argument("--output", type=Path, default=ROOT / "build/france-fuzzy-candidates.json")
+    p.add_argument("--map-output", type=Path, help="also write the reusable occupancy/hypothesis map")
+    p.add_argument("--hypotheses", type=Path, action="append", default=[],
+                   help="overlay prior candidate results or maps; never hard exclusions")
+    p.add_argument("--include-verified", action="store_true",
+                   help="also search occupied ranges and already verified names, for anchor inspection")
+    p.add_argument("--blocks", action="store_true", help="also rank contiguous original TU blocks")
+    p.add_argument("--block-gap", type=int, default=16, help="maximum original alignment gap within a TU block")
+    p.add_argument("--order", choices=("largest", "source"), default="largest")
+    p.add_argument("--max-refinements", type=int, default=4,
+                   help="refine this many LCS-ranked windows when within the DP cell cap (0 = coarse only)")
+    p.add_argument("--soft-overlap-penalty", type=float, default=5.0,
+                   help="ranking points deducted for overlap with an incompatible larger hypothesis; 0 disables")
     p.add_argument("--reference", choices=REFERENCES, default="SLUS-20680")
     p.add_argument("--name", default="", help="case-insensitive DWARF function-name substring")
     p.add_argument("--source", default="", help="case-insensitive original source-path substring")
     p.add_argument("--address", type=lambda s: int(s, 0), help="exact reference entry address")
-    for name, default in (("limit", 20), ("top", 5), ("seed-words", 5), ("max-words", 4096),
+    for name, default in (("limit", 20), ("top", 5), ("seed-words", 5), ("max-words", 16384),
                           ("max-windows", 12), ("max-cells", 1000000), ("max-seeds", 24),
                           ("max-occurrences", 64), ("slack", 32)):
         p.add_argument("--" + name, type=int, default=default)
@@ -441,15 +534,27 @@ def main():
         p.error("Search budgets must be positive")
     if args.seed_words < 3:
         p.error("--seed-words must be at least 3")
+    if args.max_refinements < 0 or args.block_gap < 0:
+        p.error("Refinement count and block gap must be nonnegative")
+    if not 0 <= args.soft_overlap_penalty <= 100:
+        p.error("Soft overlap penalty must be between 0 and 100")
     # Keep private executable-derived caches and unconfirmed candidates out of
     # committed registries, even when the caller supplies an explicit output.
     protected = [(ROOT / "config").resolve(), args.config_dir.resolve(), args.orig_dir.resolve()]
-    if any(path.resolve().is_relative_to(parent) for path in (args.output, args.cache_dir) for parent in protected):
+    outputs = [args.output, args.cache_dir] + ([args.map_output] if args.map_output else [])
+    if any(path.resolve().is_relative_to(parent) for path in outputs for parent in protected):
         p.error("Outputs and caches must be outside original/configuration directories")
+    if args.map_output and args.map_output.resolve() == args.output.resolve():
+        p.error("Candidate and map outputs must be distinct")
     try:
         result = run(args)
         atomic_json(args.output, result)
-        print(f"Ranked {len(result['functions'])} references in {result['timing_seconds']['total']:.2f}s; "
+        if args.map_output:
+            atomic_json(args.map_output, result["layout"])
+        print(f"Ranked {len(result['functions'])} references; skipped "
+              f"{result['known_reference_identities_skipped']} already verified (use --include-verified), "
+              f"{result['omitted_by_size']} outside size limits; "
+              f"{result['timing_seconds']['total']:.2f}s; "
               f"diagnostic candidates: {args.output}")
     except (OSError, ValueError, KeyError, sqlite3.DatabaseError) as error:
         p.exit(1, f"error: {error}\n")
