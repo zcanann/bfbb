@@ -178,3 +178,17 @@ This uses the existing `sceMcSync` SDK reconstruction and adds no SDK
 identity or registry records. It is the only changed function score, with
 no regressions; the full GC report remains identical. Evidence is in
 `*-dosave.json` and `dosave-proof.json` in `build/save-oct09/`.
+
+## Save and load result handling
+
+The PS2 save routine returns -1 for a failed card-presence check and maps
+the no-room failure to result 10; other final failures return -1. The save
+and load routines both retain separate no-op and in-progress status cases
+before success/failure, and both pass `currentCard` to the cache update after
+calling the physical-slot lookup. These restore the original error paths
+and register lifetimes without changing the GC implementations.
+
+SaveGame (1096 bytes) and LoadGame (724 bytes) are now exact in USA, Europe
+and Germany: 1820 additional exact bytes and two functions per region.
+They are the only changed scores, and the full GC report remains identical.
+Evidence: `*-saveload.json` and `saveload-proof.json`.

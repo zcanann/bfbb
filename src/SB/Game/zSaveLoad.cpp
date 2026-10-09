@@ -2300,10 +2300,18 @@ S32 zSaveLoad_SaveGame()
     S32 use_game = currentGame;
 
     st_XSAVEGAME_DATA* xsgdata = zSaveLoadSGInit(XSG_MODE_SAVE);
+#if defined(PS2)
+    if (!xSGCheckMemoryCard(xsgdata, currentCard))
+#else
     if (xSGCheckMemoryCard(xsgdata, currentCard) == 0)
+#endif
     {
         zSaveLoadSGDone(xsgdata);
+#if defined(PS2)
+        return -1;
+#else
         return 8;
+#endif
     }
 
     xSGTgtSelect(xsgdata, use_tgt);
@@ -2359,15 +2367,23 @@ S32 zSaveLoad_SaveGame()
         {
             switch (asstat)
             {
+#if defined(PS2)
+            case XSG_ASTAT_NOOP:
+                break;
+            case XSG_ASTAT_INPROG:
+                break;
+#endif
             case XSG_ASTAT_SUCCESS:
                 success = true;
                 break;
             case XSG_ASTAT_FAILED:
                 success = false;
                 break;
+#if !defined(PS2)
             case XSG_ASTAT_NOOP:
             case XSG_ASTAT_INPROG:
                 break;
+#endif
             }
         }
     }
@@ -2380,7 +2396,11 @@ S32 zSaveLoad_SaveGame()
     if (!xSGCheckMemoryCard(xsgdata, currentCard))
     {
         zSaveLoadSGDone(xsgdata);
+#if defined(PS2)
+        return -1;
+#else
         return 8;
+#endif
     }
 
     if (!zSaveLoadSGDone(xsgdata))
@@ -2392,7 +2412,11 @@ S32 zSaveLoad_SaveGame()
     if (success && teststat)
     {
         S32 idx = xSGTgtPhysSlotIdx(xsgdata, use_tgt);
+#if defined(PS2)
+        asg->SetCache(use_tgt, use_game, currentCard);
+#else
         asg->SetCache(use_tgt, use_game, idx);
+#endif
         globals.autoSaveFeature = 1;
         return 1;
     }
@@ -2400,12 +2424,17 @@ S32 zSaveLoad_SaveGame()
 
     switch (whyFail)
     {
+#if defined(PS2)
+    case XSG_WHYERR_NOROOM:
+        return 10;
+#else
     case XSG_WHYERR_DAMAGE:
     case XSG_WHYERR_OTHER:
         return 7;
     case XSG_WHYERR_NOCARD:
     case XSG_WHYERR_CARDYANKED:
         return 8;
+#endif
     default:
         return -1;
     }
@@ -2455,15 +2484,23 @@ S32 zSaveLoad_LoadGame()
         {
             switch (asstat)
             {
+#if defined(PS2)
+            case XSG_ASTAT_NOOP:
+                break;
+            case XSG_ASTAT_INPROG:
+                break;
+#endif
             case XSG_ASTAT_SUCCESS:
                 success = true;
                 break;
             case XSG_ASTAT_FAILED:
                 success = false;
                 break;
+#if !defined(PS2)
             case XSG_ASTAT_NOOP:
             case XSG_ASTAT_INPROG:
                 break;
+#endif
             }
         }
     }
@@ -2492,7 +2529,11 @@ S32 zSaveLoad_LoadGame()
     {
         S32 use_game = currentGame;
         S32 idx = xSGTgtPhysSlotIdx(xsgdata, use_tgt);
+#if defined(PS2)
+        asg->SetCache(use_tgt, use_game, currentCard);
+#else
         asg->SetCache(use_tgt, use_game, idx);
+#endif
         globals.autoSaveFeature = 1;
         return 1;
     }
