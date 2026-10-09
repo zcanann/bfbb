@@ -231016,7 +231016,19 @@
         "ConfigPar@003b80f0": "ConfigPar__17NPARParmVisSplashCFP8NPARData11en_nparmodePC5xVec3PC5xVec3",
         "ConfigPar@003b89d0": "ConfigPar__19NPARParmChuckSplashCFP8NPARData11en_nparmodePC5xVec3PC5xVec3",
         "ConfigPar@003baf00": "ConfigPar__20NPARParmTubeConfettiCFP8NPARData11en_nparmodePC5xVec3PC5xVec3",
-        "ConfigPar@003bc8a0": "ConfigPar__14NPARParmOilBubCFP8NPARData11en_nparmodePC5xVec3PC5xVec3"
+        "ConfigPar@003bc8a0": "ConfigPar__14NPARParmOilBubCFP8NPARData11en_nparmodePC5xVec3PC5xVec3",
+        "NPAR_EmitH2OTrail@003b48b0": "NPAR_EmitH2OTrail__FPC5xVec3",
+        "NPAR_EmitH2OSpray@003b4980": "NPAR_EmitH2OSpray__FPC5xVec3PC5xVec3",
+        "NPAR_EmitH2ODrops@003b4a60": "NPAR_EmitH2ODrops__FPC5xVec3PC5xVec3",
+        "NPAR_EmitH2ODrips@003b4b40": "NPAR_EmitH2ODrips__FPC5xVec3PC5xVec3",
+        "NPAR_EmitTubeSparklies@003b4de0": "NPAR_EmitTubeSparklies__FPC5xVec3PC5xVec3",
+        "NPAR_EmitTubeConfetti@003b4ec0": "NPAR_EmitTubeConfetti__FPC5xVec3PC5xVec3",
+        "NPAR_EmitTubeSpiralCin@003b4fa0": "NPAR_EmitTubeSpiralCin__FPC5xVec3PC5xVec3f",
+        "NPAR_EmitTubeSpiral@003b5130": "NPAR_EmitTubeSpiral__FPC5xVec3PC5xVec3f",
+        "NPAR_EmitOilSplash@003b52c0": "NPAR_EmitOilSplash__FPC5xVec3PC5xVec3",
+        "NPAR_EmitOilVapors@003b53a0": "NPAR_EmitOilVapors__FPC5xVec3",
+        "NPAR_EmitOilTrailz@003b5470": "NPAR_EmitOilTrailz__FPC5xVec3",
+        "NPAR_EmitOilShieldPop@003b5540": "NPAR_EmitOilShieldPop__FPC5xVec3"
       },
       "calls": [
         {
@@ -231067,6 +231079,90 @@
           "target_source": "SB/Core/x/xMath.cpp",
           "target_function": "xurand@001ee4e0",
           "symbol": "xurand__Fv"
+        },
+        {
+          "function": "NPAR_EmitH2OTrail@003b48b0",
+          "offset": 176,
+          "target_source": "SB/Game/zNPCSupplement.cpp",
+          "target_function": "ConfigPar@003b89d0",
+          "symbol": "ConfigPar__19NPARParmChuckSplashCFP8NPARData11en_nparmodePC5xVec3PC5xVec3"
+        },
+        {
+          "function": "NPAR_EmitH2OSpray@003b4980",
+          "offset": 180,
+          "target_source": "SB/Game/zNPCSupplement.cpp",
+          "target_function": "ConfigPar@003b89d0",
+          "symbol": "ConfigPar__19NPARParmChuckSplashCFP8NPARData11en_nparmodePC5xVec3PC5xVec3"
+        },
+        {
+          "function": "NPAR_EmitH2ODrops@003b4a60",
+          "offset": 180,
+          "target_source": "SB/Game/zNPCSupplement.cpp",
+          "target_function": "ConfigPar@003b89d0",
+          "symbol": "ConfigPar__19NPARParmChuckSplashCFP8NPARData11en_nparmodePC5xVec3PC5xVec3"
+        },
+        {
+          "function": "NPAR_EmitH2ODrips@003b4b40",
+          "offset": 180,
+          "target_source": "SB/Game/zNPCSupplement.cpp",
+          "target_function": "ConfigPar@003b89d0",
+          "symbol": "ConfigPar__19NPARParmChuckSplashCFP8NPARData11en_nparmodePC5xVec3PC5xVec3"
+        },
+        {
+          "function": "NPAR_EmitTubeSparklies@003b4de0",
+          "offset": 180,
+          "target_source": "SB/Game/zNPCSupplement.cpp",
+          "target_function": "ConfigPar@003baf00",
+          "symbol": "ConfigPar__20NPARParmTubeConfettiCFP8NPARData11en_nparmodePC5xVec3PC5xVec3"
+        },
+        {
+          "function": "NPAR_EmitTubeConfetti@003b4ec0",
+          "offset": 180,
+          "target_source": "SB/Game/zNPCSupplement.cpp",
+          "target_function": "ConfigPar@003baf00",
+          "symbol": "ConfigPar__20NPARParmTubeConfettiCFP8NPARData11en_nparmodePC5xVec3PC5xVec3"
+        },
+        {
+          "function": "NPAR_EmitTubeSpiralCin@003b4fa0",
+          "offset": 200,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "NPAR_EmitTubeSpiral@003b5130",
+          "offset": 200,
+          "target_source": "SB/Core/x/xMath.cpp",
+          "target_function": "xurand@001ee4e0",
+          "symbol": "xurand__Fv"
+        },
+        {
+          "function": "NPAR_EmitOilSplash@003b52c0",
+          "offset": 180,
+          "target_source": "SB/Game/zNPCSupplement.cpp",
+          "target_function": "ConfigPar@003bc8a0",
+          "symbol": "ConfigPar__14NPARParmOilBubCFP8NPARData11en_nparmodePC5xVec3PC5xVec3"
+        },
+        {
+          "function": "NPAR_EmitOilVapors@003b53a0",
+          "offset": 172,
+          "target_source": "SB/Game/zNPCSupplement.cpp",
+          "target_function": "ConfigPar@003bc8a0",
+          "symbol": "ConfigPar__14NPARParmOilBubCFP8NPARData11en_nparmodePC5xVec3PC5xVec3"
+        },
+        {
+          "function": "NPAR_EmitOilTrailz@003b5470",
+          "offset": 172,
+          "target_source": "SB/Game/zNPCSupplement.cpp",
+          "target_function": "ConfigPar@003bc8a0",
+          "symbol": "ConfigPar__14NPARParmOilBubCFP8NPARData11en_nparmodePC5xVec3PC5xVec3"
+        },
+        {
+          "function": "NPAR_EmitOilShieldPop@003b5540",
+          "offset": 172,
+          "target_source": "SB/Game/zNPCSupplement.cpp",
+          "target_function": "ConfigPar@003bc8a0",
+          "symbol": "ConfigPar__14NPARParmOilBubCFP8NPARData11en_nparmodePC5xVec3PC5xVec3"
         }
       ],
       "linkage_provenance": [
@@ -231171,6 +231267,318 @@
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
               "source_address": 3914624,
               "reference_sha256": "a3c1ba48ea0f062e34cb97fde6b62ebe870fa00a74cde56bf5e26286ea51657c"
+            }
+          ]
+        },
+        {
+          "function": "NPAR_EmitH2OTrail@003b48b0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3885232,
+          "size": 204,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3883856,
+              "reference_sha256": "aefdbfc4082237f18a78c427f33dcff903a89e5b6393d731177250d871bd285a"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3885120,
+              "reference_sha256": "cb255ad6b9db54cf48c278b6c38ec0257386ab2daa37dbf1def7c070586f711e"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3881872,
+              "reference_sha256": "0e2472cfc3ea5bb60425150535a93f3ed9238e707a869ec50f2f3c2338d42868"
+            }
+          ]
+        },
+        {
+          "function": "NPAR_EmitH2OSpray@003b4980",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3885440,
+          "size": 216,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3884064,
+              "reference_sha256": "64bc33be5a1cf3f51f2eb3a8c696d878ba8431558eaab242f21f0fd88d052891"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3885328,
+              "reference_sha256": "81adcfe27e5d9d75f42f2ceb102888c07ed4561a994223a3c4ce4cb58efaf7e8"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3882080,
+              "reference_sha256": "2bf1d757a986385e36af671c6203a0bf2902d99c08aa6117099e7076c9c2b803"
+            }
+          ]
+        },
+        {
+          "function": "NPAR_EmitH2ODrops@003b4a60",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3885664,
+          "size": 216,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3884288,
+              "reference_sha256": "8e3b0e4f1855a9bdb7c0bff272aec7938826b52e385a326c6d137a16b77caeba"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3885552,
+              "reference_sha256": "4bc48bc785233ced26039410c062bd034d56dba3bedc6dcc782df81349c04473"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3882304,
+              "reference_sha256": "e9acbc3fd59db8de892a9cc5a0d7175c27362beb11caac113e20df4f8f674adb"
+            }
+          ]
+        },
+        {
+          "function": "NPAR_EmitH2ODrips@003b4b40",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3885888,
+          "size": 216,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3884512,
+              "reference_sha256": "6e068272b3ef17ade5495e8daecaf76d9744255e95bde1bf51042900cbe07a2d"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3885776,
+              "reference_sha256": "11ab2c78b385b371672dffb79d697b58e322a1559bcc5aacdf2fbcc554005736"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3882528,
+              "reference_sha256": "20e499effdb247d21b9377eeee59ef23f0e28bf8e71b7296c8949462e264444d"
+            }
+          ]
+        },
+        {
+          "function": "NPAR_EmitTubeSparklies@003b4de0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3886560,
+          "size": 216,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3885184,
+              "reference_sha256": "5bd3ccf3cf1ad896a55e5d0c67be86a3ba2717af35af137c9a7e16491422692f"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3886448,
+              "reference_sha256": "a8ef4455241e4b565e88a177ebbac487a9aa0715756f3438db37ae4948e8339e"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3883200,
+              "reference_sha256": "9500ae206b5ab6bbe436b978d38ddce20f1270d0f341c34bc5e8dbb0d6070817"
+            }
+          ]
+        },
+        {
+          "function": "NPAR_EmitTubeConfetti@003b4ec0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3886784,
+          "size": 216,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3885408,
+              "reference_sha256": "a4ba3df79b989b53215c6a818c259a30a32fa8f6402b87e1f293694943de6989"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3886672,
+              "reference_sha256": "8a437c3970ac080e9c3679373266db9200c64cbab697552877533930c45f9487"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3883424,
+              "reference_sha256": "ac770627ea44a32c8ca256c0a0faf2f122c78e7090e182ae99ec40da4519d2ba"
+            }
+          ]
+        },
+        {
+          "function": "NPAR_EmitTubeSpiralCin@003b4fa0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3887008,
+          "size": 396,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3885632,
+              "reference_sha256": "a1d2f693e9d1b94927c2fd58465e9fd908262133c3fa01eb80e45f4147922572"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3886896,
+              "reference_sha256": "b1838b65adaea7be304996dadabf72951ccd7a2193b0febd7457a0f87043dfec"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3883648,
+              "reference_sha256": "fb856c3f1e36b7ffb03ef4963aa60ca5842053025a7f8a0b8974f33bc169f1f0"
+            }
+          ]
+        },
+        {
+          "function": "NPAR_EmitTubeSpiral@003b5130",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3887408,
+          "size": 396,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3886032,
+              "reference_sha256": "3d373b76b1fd1124d5b42f95b46f25ec3b0a47d230311c1f03ea145b95ded0e4"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3887296,
+              "reference_sha256": "67af67123cfae29724651652088056d5dac4f98fd292483514eef07711a72d83"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3884048,
+              "reference_sha256": "6d6bb2717aecd726c030e7c985f5b21675381170042ba34b51eef69f6b142645"
+            }
+          ]
+        },
+        {
+          "function": "NPAR_EmitOilSplash@003b52c0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3887808,
+          "size": 216,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3886432,
+              "reference_sha256": "d2491de44c83db2b6ec95b47ed586feacd5484f593c504662658e030419e8a64"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3887696,
+              "reference_sha256": "77255476e0f29a97ff54687f98c27c66af999f02b3a53803a3b9a72d1c79cdfb"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3884448,
+              "reference_sha256": "c4315ce9415a39c228fee824b30e9ad087ec7adc007ee07df957f9ce4e6489ca"
+            }
+          ]
+        },
+        {
+          "function": "NPAR_EmitOilVapors@003b53a0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3888032,
+          "size": 204,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3886656,
+              "reference_sha256": "6fc0938317358317c476b3489eacc1dd00ac00fddc76807df0f7c8039c576baa"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3887920,
+              "reference_sha256": "dd7c9002888cd18d324449f9f2319878f2736fd38bd07aa15c0898534df322f7"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3884672,
+              "reference_sha256": "533e46fcef188798b60c0214314159d8fee8815461bb0a84598327576f5c4e2e"
+            }
+          ]
+        },
+        {
+          "function": "NPAR_EmitOilTrailz@003b5470",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3888240,
+          "size": 204,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3886864,
+              "reference_sha256": "2d9395f7508178f8d3ac62f10c3c3c5245c1123a12946c3efc89607b9419426b"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3888128,
+              "reference_sha256": "33fab31a766432e83bb4387c66a60da343e660f86f3413fd4e01ab42f63a6d73"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3884880,
+              "reference_sha256": "02af70a14a0d882bddf88ca34b1431217b20c03d06f13ec12722de2e7643318c"
+            }
+          ]
+        },
+        {
+          "function": "NPAR_EmitOilShieldPop@003b5540",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3888448,
+          "size": 204,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3887072,
+              "reference_sha256": "b8512e0a6b5a24bdc832b497a6b6901f4add79a750814247fc63a669dbacf675"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3888336,
+              "reference_sha256": "65f04671678d13ce72b09e8b738d3c93ce0b0d7d4f12132b5e85e46e8f922abd"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3885088,
+              "reference_sha256": "7e114c71319360b524f30b374351cf0b6a5a88b183ca4425c26abb8f1bea3283"
             }
           ]
         }
