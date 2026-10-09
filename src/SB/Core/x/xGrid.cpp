@@ -257,6 +257,9 @@ void xGridUpdate(xGrid* grid, xEnt* ent)
     }
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 xGridBound** xGridGetCell(xGrid* grid, const xEnt* ent, S32& grx, S32& grz)
 {
     const xBound* bound = &ent->bound;
@@ -281,6 +284,9 @@ xGridBound** xGridGetCell(xGrid* grid, const xEnt* ent, S32& grx, S32& grz)
     xGridGetCell(grid, center->x, center->y, center->z, grx, grz);
     return &grid->cells[grz * grid->nx] + grx;
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 void xGridGetCell(xGrid* grid, F32 x, F32 y, F32 z, S32& grx, S32& grz)
 {

@@ -46,3 +46,23 @@ and triangle map at offset 12. Those used offsets agree with the existing SDK
 header. The absence of a concrete `RpCollisionData` DWARF name is not evidence
 of a different layout, nor sufficient proof of its unused members. No speculative
 plugin layout was introduced for this batch.
+
+## Entity-cell accessor call boundary
+
+A PS2-only `dont_inline` scope around the entity-based `xGridGetCell` definition
+restores the original call from `xGridUpdate`. The coordinate-based overload
+keeps its existing inlining behavior. The actual complete source object now
+matches all twelve functions / 5,732 function bytes in all four PS2 versions,
+adding the 204-byte updater. The GU4Y78 GameCube object retains every function
+score, including 14 exact functions / 3,576 bytes.
+
+Independent raw comparisons reproduce all 204 updater bytes in each debug
+original after applying its three actual calls and the real `gGridIterActive`
+GP relocation. France's existing comparison profile still leaves the overloaded
+accessor call and iterator-active global unresolved. Its ordinary exact code
+score is therefore not a complete relocation or retail-link claim. No scoring
+settings or original identities were changed to obtain this source result.
+
+Private PS2-worktree evidence includes `build/grid-raw-proof.json`, its replay
+script, retained whole `ps2solo` objects, `build/grid-gc-{before,after}.json`, and
+the fresh limited French target in `build/grid-france-diagnostic`.
