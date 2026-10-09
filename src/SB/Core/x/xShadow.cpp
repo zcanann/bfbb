@@ -2590,6 +2590,27 @@ void xShadowManager_Add(xEnt* ent)
 
 void xShadowManager_Remove(xEnt* ent)
 {
+#if defined(PS2)
+    S32 i;
+    for (i = 6; i < sMgrCount; i++)
+    {
+        sMgrList[i].cache = NULL;
+    }
+
+    i = 0;
+    while (i < sMgrCount)
+    {
+        if (ent == sMgrList[i].ent)
+        {
+            sMgrList[i] = sMgrList[sMgrCount - 1];
+            sMgrCount--;
+        }
+        else
+        {
+            i++;
+        }
+    }
+#else
     int a = 0;
     for (int i = 6; i < sMgrCount; i++)
     {
@@ -2612,6 +2633,7 @@ void xShadowManager_Remove(xEnt* ent)
             a++;
         }
     }
+#endif
 }
 
 static S32 CmpShadowMgr(const void* a, const void* b)

@@ -162,3 +162,16 @@ and Germany. Totals are now 24/34 functions and 9,756/20,044 exact bytes, with
 98.78268% fuzzy matching. Every other score is unchanged. The full GameCube
 USA report remains identical and its retail DOL SHA-1 passes. France/Xbox
 have no enabled unit profile. Evidence uses `*-fill.json` and `fill-proof.json`.
+
+
+## Exact manager removal
+
+The PS2 manager removal body uses the original single `i` loop variable,
+confirmed by DWARF, for cache clearing and entry removal. This drops a
+synthetic dead counter and restores register reuse across both loops.
+GameCube retains its existing form. The complete 184-byte function is now
+exact in USA, Europe and Germany (previously 91.304344%). Unit totals reach
+25/34 functions, 9,940/20,044 exact bytes, and
+98.8625% fuzzy matching. Every other score and the full GameCube USA
+report remain unchanged; the retail DOL SHA-1 passes. Evidence uses
+`*-remove.json` and `remove-proof.json`.
