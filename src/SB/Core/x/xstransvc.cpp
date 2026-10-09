@@ -379,6 +379,11 @@ void* xSTFindAssetByType(U32 type, S32 idx, U32* size)
 S32 xSTGetAssetInfo(U32 aid, st_PKR_ASSET_TOCINFO* tocainfo)
 {
     S32 rc = 0;
+#if defined(PS2)
+    // Retail retains this DWARF-backed scratch record's initialization even
+    // though the package callback writes directly to tocainfo.
+    st_PKR_ASSET_TOCINFO tocinfo = {};
+#endif
     S32 scncnt = XST_cnt_locked();
     for (S32 i = 0; i < scncnt; i++)
     {
