@@ -34,3 +34,11 @@ Whole-unit before/after reports agree across all four PS2 releases: 8 exact func
 Raw verification uses the independently named original buffer and `_ctype_` data addresses, applies the source object's real HI16/LO16 relocations including the table's +1 addend, and reproduces all 784 bytes in each debug original. It also decodes the original seven-entry switch table from its guarded original address load, checks every entry against its original case block, and verifies the source table's seven real R_MIPS_32 relocations. No unresolved external reference is silently ignored.
 
 Private reproducible artifacts are `build/util-full-comparison.py` and `.json`, the corresponding `util-france-comparison` files and scoped `util-france-diagnostic.py`, `build/util-ctype-proof.py` and `build/util-ctype-raw-proof.json`, plus `build/checkutilgc.py` and `build/util-gc-{before,after}.json` in the agent worktree. Existing ownership, progress denominators, compiler flags and completed-unit status remain unchanged.
+
+## Probability helper return path
+
+Naming the `xurand()` result as an `F32` local before the existing comparison makes `xUtil_yesno` exact in all four PS2 releases. The sole original mismatch was the unconditional branch following the weight-one return: the direct comparison expression sent that branch to the padding NOP before the epilogue, while the original skips the NOP. The random value, endpoint fast paths, number of random calls and comparison semantics are unchanged. No platform conditional or compiler patch is needed.
+
+The 120-byte gain brings each complete utility-unit report to 10 exact functions / 2184 bytes out of 11 / 2668. The CRC update remains 94.752%; all other scores are unchanged. Raw source-object relocation against each original's independently identified `xurand` call reproduces all 120 bytes, including France. GU4Y78 remains seven exact functions / 1704 bytes; the full production Xbox US and EU utility profiles remain three exact functions / 532 bytes out of four / 636, with every function score unchanged.
+
+Private artifacts: `build/util-yesno-full-comparison.py` and `.json`, `build/util-yesno-proof.py` and `build/util-yesno-raw-proof.json`, `build/checkutilyesnogc.py`, and `build/checkutilyesnoxbox.py` / `checkutilyesnoxboxeu.py` with their retained before/after reports.

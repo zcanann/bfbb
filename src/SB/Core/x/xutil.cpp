@@ -242,7 +242,8 @@ S32 xUtil_yesno(F32 wt_yes)
         return 1;
     }
 
-    return (xurand() <= wt_yes);
+    F32 random = xurand();
+    return random <= wt_yes;
 }
 
 void xUtil_wtadjust(F32* wts, S32 cnt, F32 arbref)
