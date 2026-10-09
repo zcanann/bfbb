@@ -14764,3 +14764,29 @@ is retained; all three GameCube source reports and retail checksums pass.
 Evidence: `build/oct09-france-animation`, `build/oct09-us-ui-render`, their
 comparison logs, `build/oct09-player-tables-tests.log`, and
 `build/oct09-animation-<GameCube-version>.log`.
+
+The SDK/animation-extension batch reaches 1,005,392 exact USA bytes / 3,775
+functions, adding 14,160 bytes / thirteen functions. Authentic RenderWare vertex
+color assignment, compatible laser color copies, renderer local lifetimes and
+inline boundaries, UI setup/portal/button dispatch and shadow call boundaries
+supply the exact gains. Emitter helpers, packed credits color, ribbon normals,
+and original PS2 VU shadow operations improve fuzzy matching. All VU masks are
+checked against raw words because the disassembly display omits destination masks.
+
+Five original-backed animation builders now compare exactly in France, expanding
+the earlier three without changing their records. Full callback/sound/global
+contexts corroborate the additional German pointer operands; those contexts
+remain unpromoted. Three complete CruiseBubble insertion/cheat/callback bodies
+reuse the prior parameter anchor and add another 1,148 exact bytes. Together
+with exact UI setup, France gains 27,020 exact bytes over the preceding snapshot.
+Its full production run recovers 713 functions / 360,832 known bytes and compiles
+70 source units, preserving the full CPU-code denominator and earlier scores.
+
+The SDK worker compares 69 affected unit/region pairs plus the final laser helper
+closure. Root independently completes the USA source build, all French registry
+regeneration/source/export checks and all three GameCube builds/checksums. Seven
+animation/Cruise original-backed tests pass. All function/code/data regression
+checks are clean. GameCube streak and glare fuzzy scores improve; no exact or data
+measure is lost. Evidence: `build/oct09-{us,france}-sdk`, their comparison logs,
+`build/oct09-animation-extension-tests.log`, `build/oct09-sdk-<GameCube-version>.log`,
+and the raw projection/caller artifacts cited in the unit notes.

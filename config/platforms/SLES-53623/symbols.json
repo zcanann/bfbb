@@ -229,6 +229,20 @@
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
+      "name": "zPatrick_AnimTable",
+      "source": "SB/Game/zEntPlayerAnimationTables.h",
+      "address": 1448064,
+      "size": 11056,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "zSandy_AnimTable",
+      "source": "SB/Game/zEntPlayerAnimationTables.h",
+      "address": 1459120,
+      "size": 14400,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "zEntSimpleObj_MgrCustomUpdate",
       "source": "SB/Game/zEntSimpleObj.cpp",
       "address": 1523392,
@@ -3904,10 +3918,31 @@
       "provenance": "reviewed-whole-tu-sequence"
     },
     {
+      "name": "insert_player_animations",
+      "source": "SB/Game/zEntCruiseBubble.cpp",
+      "address": 2755040,
+      "size": 744,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "register_tweaks",
       "source": "SB/Game/zEntCruiseBubble.cpp",
       "address": 2757952,
       "size": 11980,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "load_cheat_tweak",
+      "source": "SB/Game/zEntCruiseBubble.cpp",
+      "address": 2769936,
+      "size": 396,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "check_anim_aim",
+      "source": "SB/Game/zEntCruiseBubble.cpp",
+      "address": 2770336,
+      "size": 8,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {

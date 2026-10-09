@@ -661,7 +661,16 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     document['player_animation_table_data_proofs'] = player_tables['data_proofs']
     for key, value in player_tables['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
-    document['limitations'].append('Player animation tables adds three unique complete builders using all three original ownership and strict-return witnesses. Complete strings, independently confirmed animation callees and code-pointer identities corroborate every changed operand. Remaining builders are excluded pending callback/helper evidence; no whole translation-unit or data extent is claimed.')
+    document['limitations'].append('Player animation tables adds five unique complete builders using all three original ownership and strict-return witnesses. Complete strings, independently confirmed animation callees and complete callback contexts corroborate every changed operand, including German pointer relocations. The main builder remains excluded pending insertion-helper and callback evidence; no whole translation-unit or data extent is claimed.')
+    from platforms.france_cruise_animation import generate_unit as generate_cruise_animation
+    cruise_animation = generate_cruise_animation(originals, registry_dir)
+    document['functions'].extend(cruise_animation['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(cruise_animation['sequence_proofs'])
+    document['cruise_animation_data_proofs'] = cruise_animation['data_proofs']
+    for key, value in cruise_animation['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Cruise animation adds three complete functions rooted in the independently regenerated parameter-registration anchor. Complete insertion strings, typed fields/tables, callback identity and full original runtime contexts corroborate all operands. The existing parameter body is preserved, and no whole translation-unit or data extent is claimed.')
     return document
 
 
