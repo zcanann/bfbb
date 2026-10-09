@@ -197094,9 +197094,26 @@
       "symbols": {
         "xSndIsReady": "xSndIsReady__FUi",
         "xSndExit": "xSndExit__Fv",
-        "xSndSetEnvironmentalEffect": "xSndSetEnvironmentalEffect__F12sound_effect"
+        "xSndSetEnvironmentalEffect": "xSndSetEnvironmentalEffect__F12sound_effect",
+        "xSndStreamUnlock": "xSndStreamUnlock__FUi",
+        "xSndStreamReady": "xSndStreamReady__FUi",
+        "xSndParentDied": "xSndParentDied__FUi",
+        "xSndIDIsPlaying": "xSndIDIsPlaying__FUi",
+        "xSndSetListenerData": "xSndSetListenerData__F19sound_listener_typePC7xMat4x3",
+        "xSndInternalUpdateVoicePos": "xSndInternalUpdateVoicePos__FP13xSndVoiceInfo",
+        "xSndProcessSoundPos": "xSndProcessSoundPos__FPC5xVec3P5xVec3",
+        "xSndCalculateListenerPosition": "xSndCalculateListenerPosition__Fv",
+        "xSndAddDelayed": "xSndAddDelayed__FUiffUiUiUiP4xEntP5xVec3ff14sound_categoryf"
       },
-      "calls": [],
+      "calls": [
+        {
+          "function": "xSndInternalUpdateVoicePos",
+          "offset": 260,
+          "target_source": "SB/Core/x/xSnd.cpp",
+          "target_function": "xSndProcessSoundPos@0020a650",
+          "symbol": "xSndProcessSoundPos__FPC5xVec3P5xVec3"
+        }
+      ],
       "linkage_provenance": [
         {
           "function": "xSndIsReady",
@@ -197137,6 +197154,240 @@
               "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
               "source_address": 2141648,
               "reference_sha256": "a6dfc8ca939267c57957690d441f351815fd4725f8d7ee4b4cfb1d383902ed03"
+            }
+          ]
+        },
+        {
+          "function": "xSndStreamUnlock",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2135376,
+          "size": 72,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2133968,
+              "reference_sha256": "eb1bccd2d425a145fb551ef45a23b92935258a666c182a39ea3cc33b60203117"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2135264,
+              "reference_sha256": "60bbd20c5abb0eb904ce8a9274834e6deeafeea93b77a77ebe4f8a84324fedf2"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2131920,
+              "reference_sha256": "6344b6fce8ef2952991bd0a8eeb266cb31d8410c5ec97b0738d09cf48228b2f1"
+            }
+          ]
+        },
+        {
+          "function": "xSndStreamReady",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2135456,
+          "size": 88,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2134048,
+              "reference_sha256": "4773d1935b3b48482fc2833505b14ea8e170a26ba69fa3b479b5511eeec12f8b"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2135344,
+              "reference_sha256": "d4abe868136dbd755629255053f60b3c2a5482ff28283ca3f3551bb18cb46a51"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2132000,
+              "reference_sha256": "e6c58bad57df45bb4375186fa3042b03ec509f7b1f6be77eb148aef9a889a46a"
+            }
+          ]
+        },
+        {
+          "function": "xSndParentDied",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2137216,
+          "size": 64,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2135808,
+              "reference_sha256": "c4881f03d67813f18efa59185dd774685a7e7ae95a34ea28098c1264ed5abb57"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2137104,
+              "reference_sha256": "ebdc7b586de6e9b9ac5abb01b3e02f5bea7c5fc4e1e475c80622d79e5398194f"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2133760,
+              "reference_sha256": "ecc0e5b6c19504c1132f3298ae8b03efa47bc9b0e0246d9cd973b4e03c328120"
+            }
+          ]
+        },
+        {
+          "function": "xSndIDIsPlaying",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2137296,
+          "size": 88,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2135888,
+              "reference_sha256": "c0ac4ba9c0728491b9e883f3f74feb01220ecf1bb0aae7410e6b36c2d24638ec"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2137184,
+              "reference_sha256": "0ead2e46c4642af0a17a2aab5196ae329f028eadcc78da7203362b721e732f49"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2133840,
+              "reference_sha256": "3e392e8b179e6170b8d7bcee6f404f302451cda89a1d29008ed3aae9a4d02650"
+            }
+          ]
+        },
+        {
+          "function": "xSndSetListenerData",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2139008,
+          "size": 232,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2137600,
+              "reference_sha256": "06813a8de1911d28e4ed30102a9af1d1193d07cb77548f3e74dbfe9a6f6f630e"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2138896,
+              "reference_sha256": "97383bbbf389f161c64eecaa2e46a2df93dd947477ba9dfc10606762bc0357a4"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2135552,
+              "reference_sha256": "9f1c99482203e10847495b538d3fce3798295107df3645fde1a09d2ee6bbef51"
+            }
+          ]
+        },
+        {
+          "function": "xSndInternalUpdateVoicePos",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2139440,
+          "size": 284,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2138032,
+              "reference_sha256": "3ed11958918340a7d30350651ba27faef1f49b4d3e3a751837706944efefef96"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2139328,
+              "reference_sha256": "0deb30328eda33fc3b4275c819e91940596b4e3e39a8994bf93bcd9b48edace3"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2135984,
+              "reference_sha256": "2d0bd44fb4ad95ec00c946d54184db488e63987c57d95ce84e2ccf68b81d9c20"
+            }
+          ]
+        },
+        {
+          "function": "xSndProcessSoundPos",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2139728,
+          "size": 616,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2138320,
+              "reference_sha256": "834b6ae657a113972d01e1910712d4bd8a421a7092d6f390315c34a8fed85815"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2139616,
+              "reference_sha256": "b473441c7140d305c91b30dbf5e433b301ee1540d2badecdb9a3b1c26d060f10"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2136272,
+              "reference_sha256": "1afa510e61052b692ce00a08874785a348890a5cb3f3b6d33424d3962ae49044"
+            }
+          ]
+        },
+        {
+          "function": "xSndCalculateListenerPosition",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2140352,
+          "size": 416,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2138944,
+              "reference_sha256": "dd353141240f2033d60291a90f4feffacacbd5f3a1d5b2d84b0d0fae6b9728af"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2140240,
+              "reference_sha256": "32134b37fd7a939fbe62ba72e011a80dd4614d5daba1747cca1895bd93f5241d"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2136896,
+              "reference_sha256": "89b523b17bfa709991e4c0b8218044384d9557238e2814d2f97244f1e67b4efb"
+            }
+          ]
+        },
+        {
+          "function": "xSndAddDelayed",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2140768,
+          "size": 128,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2139360,
+              "reference_sha256": "394be7cb2d339fd192f2f77748d9d666d0919316fd3b3b1b95cb87f51f2e9f63"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2140656,
+              "reference_sha256": "3cec5398810af89a0b55850d0d70bdcc9bb6b9b415b5066a4488344bd77e9852"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2137312,
+              "reference_sha256": "b6004b96d28b229aa11587e69559547fa2938890bc1c102e7242d5c1a01543c5"
             }
           ]
         }
