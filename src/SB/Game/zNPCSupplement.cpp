@@ -677,7 +677,11 @@ void NPCC_BurstBubble(en_npcburst burst, xVec3* pos_base)
             pos_emit.y = 0.1f * (2.0f * (xurand() - 0.5f)) + hyt;
             pos_emit.z = rad_cur * fc + 0.1f * (2.0f * (xurand() - 0.5f));
 
+#if defined(PS2)
+            xVec3Add(&pos_emit, &pos_emit, pos_base);
+#else
             xVec3AddTo(&pos_emit, pos_base);
+#endif
 
             if (burst == NPC_BURST_SHIELD)
             {

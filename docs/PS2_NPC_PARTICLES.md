@@ -126,3 +126,23 @@ in `build/npc-uv-cache-regions/`, `build/npc-uv-cache-gc.txt`, and
 `build/npc-particle-kernels-france-pilot/{before-source,report}.json`. A separate
 probe rearranging the synthetic arithmetic locals into the DWARF declaration
 order did not improve the score and was discarded.
+
+## Burst vector-add follow-up
+
+Using the ordinary three-operand `xVec3Add` form for the PS2 burst position
+addition improves NPCC_BurstBubble (868 bytes) from 98.61751% to 98.80184%.
+All three full debug-unit reports change only that record, with unit fuzzy
+99.86032% to 99.86419% and unchanged exact totals. All three GC full-unit
+reports remain identical. Evidence is `build/npc-burst-region-summary.json`,
+`after-burst.json` beside the preserved atlas reports and `build/npc-burst-gc.txt`.
+Reversing the add operands reduced similarity and was discarded.
+
+The culler GPR residual remains unresolved. Returning its output by reference,
+expanding the same assembly directly in callers, and using ordinary `=r`
+instead of the unnecessary early-clobber modifier all emitted the same bytes.
+The input pointer is consumed by the first vector load, before the GPR output
+is written. No register constraint was added to force retail's a0 assignment.
+Original DWARF puts the caller's thisChickIsToast and _loc variables in v0; it
+does not identify a named a0 output. A FindParty common-return rewrite slightly
+improved BurstBubble but regressed 24 exact helper bodies, so it was discarded.
+No compiler-version cause is inferred from these unsuccessful source probes.
