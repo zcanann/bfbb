@@ -65,3 +65,22 @@ proof registries change.
 Other residuals still need investigation. In particular, some target calls
 remain anonymous in the extracted object; their formatting alone is not
 sufficient evidence to rename or authenticate them.
+
+## Cylinder and bubble-spread follow-up
+
+`ColTestCyl` originally computes the upper height as one expression,
+`hyt + 0.5f * hyt`. Restoring that PS2 expression preserves the separate
+multiply temporary and makes the 240-byte function exact in all three debug
+regions. The GC spelling remains unchanged.
+
+`DeathStar` now places its `0.4f` scale directly in the three PS2 spread-vector
+initializers. The original zeroes the aggregate before calculating the
+scaled spread; assigning back to `size` beforehand had moved the arithmetic
+across that initialization. The 420-byte function improves from 84.59048%
+to 98.09524% across the same regions. Explicitly zeroing the vector and then
+assigning a separate scaled local produces the same result; the retained
+initializer is simpler. The remaining difference is two padding NOPs.
+
+Only these two function scores change. Exact coverage gains another 240
+bytes and one function per debug region; the full GC report stays identical.
+Evidence: `build/hazard-oct09/*-small.json` and `small-proof.json`.

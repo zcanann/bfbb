@@ -1806,11 +1806,17 @@ S32 NPCHazard::ColTestCyl(const xBound* bnd_tgt, F32 rad, F32 hyt)
     // fill it as possibly aliasing the 0.5f literal load, and refuses to hoist
     // that load above them the way the retail code does.
     const xVec3 diff = bnd_tgt->cyl.center - this->pos_hazard;
+#if defined(PS2)
+    F32 upper = hyt + 0.5f * hyt;
+#else
     F32 upper = 0.5f * hyt;
+#endif
     F32 rad_eff = rad + bnd_tgt->cyl.r;
     F32 lower;
 
+#if !defined(PS2)
     upper = hyt + upper;
+#endif
     lower = upper - hyt;
 
     if (diff.y > upper)
@@ -2191,8 +2197,12 @@ void NPCHazard::DeathStar()
         // (`fmuls f0, f0, f1`). `F32 size = 0.4f * rad_max;` swaps both, and
         // `size *= 0.4f;` fixes the loads but not the multiply.
         F32 size = ball->rad_max;
+#if defined(PS2)
+        xVec3 pos_spread = { 0.4f * size, 0.4f * size, 0.4f * size };
+#else
         size = 0.4f * size;
         xVec3 pos_spread = { size, size, size };
+#endif
         xVec3 vel_spread = { 2.0f, 2.0f, 2.0f };
 
         zFX_SpawnBubbleTrail(&pos_emit, 20, &pos_spread, &vel_spread);
