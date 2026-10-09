@@ -1,4 +1,6 @@
-# PS2 player slide interpolation
+# PS2 player source differences
+
+## Slide interpolation
 
 `SlideTrackUpdate` is 3144 bytes at `0x14a7f0` in USA, Europe and Germany.
 Its DWARF records the following local order: `colltmp`, `collsph`, `qcd`,
@@ -73,3 +75,20 @@ its carried-object cleanup. USA and Europe omit that path. Restricting
 the short-path guard to the appropriate PS2 regions restores the German
 function from 17.25% to 100%; the prior comment claiming all PS2 builds
 used the short path was incorrect.
+
+## Player update integer absolute values
+
+At offsets `0x1290` and `0x12b0`, the original `zEntPlayer_Update` calls
+the same 20-byte signed-absolute-value runtime entry at `0x114b50` on the
+two signed analog-pad bytes. The entry's five words are `04810002`,
+`0080102d`, `00021023`, `03e00008`, `00000000`, identical in all three
+debug regions. Its original runtime name remains unresolved; this does
+not establish a new `abs` or `labs` symbol identity or relocation alias.
+
+A PS2 `inline_intrinsics off` pragma scoped to this caller preserves the
+existing source's two standard `abs(int)` calls, raising its comparison
+from 94.44583% to 94.56484%. Scoping the pragma around just the expressions
+and resetting it before the rest of the function has no effect. The
+setting is reset immediately after the function, with no other unit
+scores changed and no GameCube report change. The unresolved runtime
+call identity remains a limitation of the source comparison.

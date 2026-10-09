@@ -5058,6 +5058,9 @@ static xEnt* zEntPlayer_FindGrabEnt(xEnt* ent, zScene* zsc, S32* failed)
 static const U8 SBBBashBones[8] = { 22, 30, 38, 42 };
 static const U8 SBBBounceBones[8] = { 22, 30, 38, 42 };
 
+#if defined(PS2)
+#pragma inline_intrinsics off
+#endif
 void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt)
 {
     xAnimState* astate;
@@ -7452,6 +7455,10 @@ catchtunnel_done:
 }
 
 xVec3* NPCC_rightDir(xEnt* ent);
+
+#if defined(PS2)
+#pragma inline_intrinsics reset
+#endif
 
 void zEntPlayer_CheckCritterContact(xEnt* player, F32 dt)
 {
