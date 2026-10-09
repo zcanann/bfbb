@@ -247,6 +247,10 @@ void xSndStartStereo(U32 id1, U32 id2, F32 pitch);
 bool xSndIsPlayingByHandle(U32 sndID);
 U32 xSndIsPlaying(U32 assetID);
 U32 xSndIDIsPlaying(U32 sndID);
+#if defined(PS2)
+U32 xSndIsReady(U32 id);
+void xSndLoadExternalData(U32 snd, const void* data, S32 forceBuffer);
+#endif
 void xSndStop(U32 snd);
 void xSndParentDied(U32 pid);
 void xSndStopChildren(U32 pid);

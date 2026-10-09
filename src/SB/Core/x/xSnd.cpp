@@ -115,7 +115,7 @@ void xSndPauseAll(U32 pause_effects, U32 pause_streams)
 {
     sDelayedPaused = pause_effects;
 
-    for (U32 i = 0; i < 0x40; i++)
+    for (U32 i = 0; i < XSND_VOICE_COUNT; i++)
     {
         if (gSnd.voice[i].flags & 1)
         {
@@ -133,7 +133,7 @@ void xSndPauseAll(U32 pause_effects, U32 pause_streams)
 
 void xSndPauseCategory(U32 mask, U32 pause)
 {
-    for (U32 i = 0; i < 0x40; i++)
+    for (U32 i = 0; i < XSND_VOICE_COUNT; i++)
     {
         if ((gSnd.voice[i].flags & 1) && (mask & 1 << gSnd.voice[i].category))
         {
@@ -149,7 +149,7 @@ void xSndSetCategoryVol(sound_category category, F32 vol)
 
 void xSndStopAll(U32 mask)
 {
-    for (U32 i = 0; i < 0x40; i++)
+    for (U32 i = 0; i < XSND_VOICE_COUNT; i++)
     {
         if ((gSnd.voice[i].flags & 1) && (mask & 1 << gSnd.voice[i].category))
         {
@@ -313,6 +313,10 @@ void xSndInternalUpdateVoicePos(xSndVoiceInfo* pVoice)
     }
 }
 
+#if defined(PS2)
+// Retail Suspend calls this complete update routine instead of inlining it.
+#pragma dont_inline on
+#endif
 void xSndUpdate()
 {
     xSndCalculateListenerPosition();
@@ -320,6 +324,9 @@ void xSndUpdate()
     update_faders(sTimeElapsed);
     iSndUpdate();
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 void xSndSetListenerData(sound_listener_type listenerType, const xMat4x3* pMat)
 {
@@ -582,6 +589,18 @@ U32 xSndIDIsPlaying(U32 sndID)
     }
     return 0;
 }
+
+#if defined(PS2)
+U32 xSndIsReady(U32 id)
+{
+    return iSndIsReady(id);
+}
+
+void xSndLoadExternalData(U32 snd, const void* data, S32 forceBuffer)
+{
+    iSndLoadExternalData(snd, data, forceBuffer);
+}
+#endif
 
 void xSndStop(U32 snd)
 {

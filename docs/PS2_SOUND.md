@@ -86,3 +86,38 @@ This is a standard code match. Raw reconstruction still distinguishes the two
 stop callees and the source xSndGetVol call from the original platform targets;
 no raw396 claim is made. Private evidence: build/near246/proof.json,
 raw/raw-proof.json and gc/proof.json. No profile, header or backend changed.
+
+## Remaining voice bounds and PS2 wrappers (2026-10-08)
+
+PauseAll, PauseCategory and StopAll still used a literal 64-voice loop after
+the earlier capacity correction. They now use `XSND_VOICE_COUNT`, as the
+other voice loops already do. Original PS2 instructions compare against 48.
+This promotes those three functions and Resume, which inlines PauseAll, for
+648 additional exact source bytes. GameCube keeps its existing 64-voice bound.
+
+The original Suspend calls the complete Update routine. The selected compiler's
+bottom-up inlining expanded Update into Suspend, producing a much larger body.
+A PS2-only `dont_inline` pragma around Update's definition preserves the original
+call while keeping its own body unchanged. Suspend's 160 bytes then match.
+The pragma resets immediately after the definition. Disabling bottom-up inlining
+for the entire unit regressed Init; that broader change was rejected.
+
+Two missing shared wrappers are also restored only for PS2. `xSndIsReady`
+returns the platform `iSndIsReady` byte result as U32, reproducing the original
+32-byte call and unsigned-byte conversion. `xSndLoadExternalData` tailcalls its
+platform counterpart, reproducing all eight bytes. Original DWARF gives the
+platform return type and parameter types; existing independently captured
+target relocations identify both callees. The declarations are in the PS2
+platform header, with the shared wrapper declarations guarded for PS2.
+
+Fresh complete-source reports agree in USA, Europe and Germany: 24/37 exact
+functions and 4668/6764 exact bytes become 31/37 and 5516/6764, a gain of seven
+functions and 848 bytes per release. Unit fuzzy matching rises from 95.61502%
+to 98.3974%. Every previously matched function stays matched. France's existing
+three-function profile gains IsReady's 32 bytes and reaches 3/3, 132/132.
+This does not establish complete French TU ownership or whole-unit linking.
+
+The full GameCube USA build preserves its complete progress report and passes
+the retail DOL SHA-1 check. Private original/after/final unit reports and rejected
+inlining probes are under `build/sound-oct08`. No comparison profile, registry,
+original target, or compiler binary was changed.
