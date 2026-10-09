@@ -197623,7 +197623,8 @@
         "xSndPlayInternal@00209d60": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf",
         "xSndPlay3D@0020a2c0": "xSndPlay3D__FUiffUiUiPC5xVec3ff14sound_categoryf",
         "xSndPlay3D@0020a310": "xSndPlay3D__FUiffUiUiP4xEntff14sound_categoryf",
-        "xSndPlay@0020a330": "xSndPlay__FUiffUiUiUi14sound_categoryf"
+        "xSndPlay@0020a330": "xSndPlay__FUiffUiUiUi14sound_categoryf",
+        "xSndStop@00209cc0": "xSndStop__FUi"
       },
       "calls": [
         {
@@ -197703,6 +197704,14 @@
           "target_source": "SB/Core/x/xSnd.cpp",
           "target_function": "xSndPlayInternal@00209d60",
           "symbol": "xSndPlayInternal__FUiffUiUiUiP4xEntPC5xVec3ff14sound_categoryf",
+          "opcode": 2
+        },
+        {
+          "function": "xSndStop@00209cc0",
+          "offset": 0,
+          "target_source": "SB/Core/p2/iSnd.cpp",
+          "target_function": "iSndStop@001b8b70",
+          "symbol": "iSndStop__FUi",
           "opcode": 2
         }
       ],
@@ -198084,6 +198093,32 @@
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
               "source_address": 2135472,
               "reference_sha256": "6e593a12a61ca0367a96b20ba24c209e7829ffe7256c567670c1b310443ce514"
+            }
+          ]
+        },
+        {
+          "function": "xSndStop@00209cc0",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 2137280,
+          "size": 8,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 2135872,
+              "reference_sha256": "a0a64a011e459558c8d8750bdb83f90bfff5e856c4a12bb449defbf56dc16039"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 2137168,
+              "reference_sha256": "8e0a27b09b3e8e658fc7b54f38175c0c15bc189b7386c96b1fa131bed04f51b4"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 2133824,
+              "reference_sha256": "5c369635a43f4d451dea558da89ea7b61511b3c2b51fbd36fe56d5307f5fe137"
             }
           ]
         }
