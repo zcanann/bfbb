@@ -119,3 +119,30 @@ retain their previous results, and fresh GC solo remains 16/16 exact.
 These are compiler-report matches, not independent authentication of every
 masked runtime relocation. The independently checked call map is recorded
 in private `build/maincard-oct09/german-call-proof.json`.
+
+## German localized progress display
+
+The German `zMainShowProgressBar` uses `LADEVORGANG...`, with its color split
+computed as `(percentageDone / 100.0f) * strlen(loadingst)`. Restoring this
+instead of the English text and integer division improves the 424-byte body
+from 76.971695% to **98.113205%**. The other nine German functions retain
+their results, including exact main/loop. USA/Europe unit controls and fresh
+GC solo are unchanged.
+
+The original German DWARF names `loadingText`, `textToShow`, `beforeText`,
+`afterText`, `loadingst`, `loadlen`, and `spotToInsertColor`. It describes
+`loadingText` as **char[11]**, despite the authenticated literal at
+`0x4f3ceb` containing 14 characters plus its terminator. This original bug
+is preserved explicitly: `strcpy` writes 15 bytes to an 11-byte buffer.
+The original and reconstructed frame is 0xf0 bytes; the three 64-byte buffers
+start at +0x20, +0x60, and +0xa0, and loadingText starts at +0xe0. Its four
+overflow bytes occupy +0xeb through +0xee, including part of the later
+clear-color storage at +0xec. That color is subsequently zero-initialized.
+No synthetic padding or replacement buffer is added to hide this behavior.
+
+All **97 non-NOP instructions** agree after masking 25 source relocation
+fields and checking relative branch destinations by non-NOP ordinal. Source
+has 108 words versus 106 original words: two additional NOPs account for the
+remaining instruction-count difference. This does not authenticate the
+masked runtime identities or establish a compiler defect. Private evidence
+is in `build/maincard-oct09/progress-alignment-proof.json`.

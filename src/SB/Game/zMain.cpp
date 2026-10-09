@@ -731,7 +731,12 @@ void zMainMemLvlChkCB()
 void zMainShowProgressBar()
 {
     S32 progBar;
+#if defined(VERSION_SLES_51970)
+    // Original German buffer is smaller than the localized string.
+    char loadingText[11];
+#else
     char loadingText[12];
+#endif
     char auStack_cc[64];
     char acStack_8c[64];
     char formattedStr[64];
@@ -742,8 +747,15 @@ void zMainShowProgressBar()
         {
             percentageDone = 100;
         }
+#if defined(VERSION_SLES_51970)
+        char* loadingst = "LADEVORGANG...";
+        U32 loadlen = strlen(loadingst);
+        progBar = (S32)((percentageDone / 100.0f) * loadlen);
+        strcpy(loadingText, loadingst);
+#else
         progBar = percentageDone / 10;
         strcpy(loadingText, "Loading...");
+#endif
         memset(auStack_cc, 0, 64);
         memset(formattedStr, 0, 64);
         strcpy(acStack_8c, loadingText);
