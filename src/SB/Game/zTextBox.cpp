@@ -482,6 +482,11 @@ iColor_tag convert(const ztextbox::asset_type::color_type& color)
 }
 
 #ifdef PS2
+inline F32 xtextbox::yextent(F32 max, S32& size, bool cache) const
+{
+    return yextent(max, size, temp_layout(cache), 0, -1);
+}
+
 template <> inline basic_rect<F32>& basic_rect<F32>::scale(F32 x, F32 y)
 {
     return scale(x, y, x, y);

@@ -59,3 +59,17 @@ The depth setter is a no-op on GameCube; its existing dimensions and external
 rectangle helper remain intact. The full GameCube USA report is identical and
 its retail DOL SHA-1 passes. Private evidence uses `*-backdrop.json` in
 `build/textbox-oct09`. No shared header, profile, target or registry changes.
+
+## Text-height wrapper
+
+The initializer's original call sequence evaluates `temp_layout` and then the
+five-argument `yextent` overload. Restoring the existing three-argument inline
+wrapper from `zUIFont.cpp` in this PS2 TU reproduces that sequence and makes
+the complete 612-byte initializer exact in all three debug regions.
+
+Textbox units now have 20/21 exact functions: USA 4,876/4,924 bytes and
+99.83753% fuzzy; Europe/Germany 4,868/4,916 and 99.837265%. Every other function
+score is unchanged. The remaining 48-byte `update_all` differs by two NOPs;
+for, while and guarded do-loop forms produced the same remaining difference.
+The full GameCube USA report remains identical and its retail DOL SHA-1 passes.
+Private evidence uses `*-extent.json` in `build/textbox-oct09`.
