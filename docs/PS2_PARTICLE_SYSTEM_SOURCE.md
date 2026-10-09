@@ -48,3 +48,23 @@ Private evidence under `C:/Projects/bfbb-agent-ps2-oct08/build`:
   byte equality for the 220-byte updater and 52-byte render wrapper.
 - `particle-sprite-final-comparison.json`, `particle-sprite-final-changes.json`,
   and `particle-sprite-gc-{before,after}.json`: complete comparison controls.
+
+## Original flag predicates
+
+Use explicit equality-to-zero tests for aging/back-to-life flags and a Boolean
+nonzero expression for visibility. All values remain 0 or 1, while the PS2
+compiler recovers the original mask/XOR/SLTIU instructions. The unsigned-byte
+link count likewise uses its original nonzero test.
+
+In all three debug versions, the event callback improves from 92.62069% to 100%
+(348 bytes), and init improves from 94.96089% to 98.88268%. Complete-unit fuzzy
+matching rises from 94.184074% to 95.57394%, exact code rises from 1,004 to 1,352
+bytes, and exact functions rise from six to seven. Every other score and data
+control is unchanged. The shared source preserves all GC scores and its 22
+exact functions / 3,492 bytes.
+
+Evidence: `particle-flags-final-comparison.json`,
+`particle-flags-final-changes.json`, `particle-flags-gc-{before,after}.json`, and
+`particle-flags-raw-proof.py` / `.json`. The raw proof reproduces all 348 callback
+bytes after independently mapped actual call relocations in all three originals.
+Local sign-bit-negation helper probes lowered sprite matching and were discarded.

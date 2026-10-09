@@ -215,7 +215,7 @@ void xParSysInit(xBase* b, xParSysAsset* tasset)
     t->eventFunc = &xParSysEventCB;
     t->tasset = tasset;
 
-    if (t->linkCount > 0)
+    if (t->linkCount != 0)
     {
         t->link = (xLinkAsset*)((char*)&t->tasset[1] + tasset->cmdSize);
     }
@@ -224,7 +224,7 @@ void xParSysInit(xBase* b, xParSysAsset* tasset)
         t->link = NULL;
     }
 
-    t->visible = tasset->parFlags & 0x1;
+    t->visible = (tasset->parFlags & 0x1) != 0;
     t->cmdCount = tasset->cmdCount;
     if (t->cmdCount)
     {
@@ -249,9 +249,9 @@ void xParSysInit(xBase* b, xParSysAsset* tasset)
     xParGroupInit(t->group);
     xParGroupSetPriority(t->group, tasset->priority);
     xParGroupRegister(t->group);
-    xParGroupSetAging(t->group, (((tasset->parFlags >> 1) & 0x1) ^ 0x1) & 0xFF);
+    xParGroupSetAging(t->group, (tasset->parFlags & 0x2) == 0);
     xParGroupSetVisibility(t->group, t->visible);
-    xParGroupSetBack2Life(t->group,(((tasset->parFlags >> 2) & 0x1) ^ 0x1) & 0xFF);
+    xParGroupSetBack2Life(t->group, (tasset->parFlags & 0x4) == 0);
     t->parent = NULL;
 
     for (i = 0; i < t->cmdCount; i++)
@@ -284,11 +284,11 @@ void xParSysReset(xParSys* t)
     {
         xParGroupKillAllParticles(t->group);
 
-        t->visible = t->tasset->parFlags & 0x1;
+        t->visible = (t->tasset->parFlags & 0x1) != 0;
 
-        xParGroupSetAging(t->group, (((t->tasset->parFlags >> 1) & 0x1) ^ 0x1) & 0xFF);
+        xParGroupSetAging(t->group, (t->tasset->parFlags & 0x2) == 0);
         xParGroupSetVisibility(t->group, t->visible);
-        xParGroupSetBack2Life(t->group,(((t->tasset->parFlags >> 2) & 0x1) ^ 0x1) & 0xFF);
+        xParGroupSetBack2Life(t->group, (t->tasset->parFlags & 0x4) == 0);
     }
 }
 
