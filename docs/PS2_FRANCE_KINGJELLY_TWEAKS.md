@@ -38,7 +38,8 @@ The France source profiles add these two members while preserving all earlier
 zEnt selections and every other version profile. Authenticated source
 compilation produced a 100% exact 376-byte float-list helper and 99.72701%
 fuzzy matching for the 23,444-byte King Jelly body. Thus this addition supplies
-23,820 newly covered bytes and 376 exact bytes; the new coverage also expands
-the report denominator. Existing zEnt function comparisons are unchanged.
+23,820 newly covered bytes and 376 exact bytes. This expands the selected-function
+comparison; the full production CPU-code denominator remains unchanged.
+Existing zEnt function comparisons are unchanged.
 Private validation is `build/kingjelly-france-pilot/report.json` in the regional
 worker checkout. No source or compiler changes were required.

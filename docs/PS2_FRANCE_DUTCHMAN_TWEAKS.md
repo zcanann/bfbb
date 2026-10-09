@@ -47,6 +47,7 @@ Two France-only source profiles select these four proven members and restore
 comparison produced two exact helpers / 336 exact bytes out of 16,252 selected
 bytes, with 99.655426% fuzzy matching. Dutchman register_tweaks is 99.69207% and
 the vector helper is 97.560974%. These newly covered functions were previously
-absent from the France report; adding verified coverage changes its denominator.
+absent from the France comparison. This expands the selected-function comparison;
+the full production CPU-code denominator remains unchanged.
 Existing source and other version profiles are unchanged. Private validation:
 `build/dutchman-france-pilot/report.json` in the regional worker checkout.

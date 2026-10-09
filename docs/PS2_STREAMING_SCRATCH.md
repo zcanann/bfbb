@@ -18,6 +18,7 @@ predeclaring the loop index did not improve it. Initializing the loop index
 before counting scenes also scored lower. The retained form is the smallest
 change supported by both the original local-variable metadata and instructions.
 
-The declaration is PS2-only. A full GameCube USA build produces an identical
-`report.json` and passes the retail DOL SHA-1 check. Private unit reports for all
+The declaration is PS2-only. Full GameCube USA, Europe and Germany builds produce
+unchanged function, code and data scores and pass their retail DOL SHA-1 checks.
+Private unit reports for all
 four PS2 versions and rejected source probes are in `build/stransvc-oct08`.
