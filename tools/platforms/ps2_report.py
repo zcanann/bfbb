@@ -47,6 +47,7 @@ def _target_object(functions: list[dict], elf_flags: int) -> bytes:
                  "data": b"", "align": 0, "link": 0, "info": 0, "entsize": 0}]
     symbols = bytearray(16)
     strings = bytearray(b"\0")
+    defined_symbols = {}
     for function in functions:
         index = len(sections)
         # Match the compiler's code-section name even for a one-function subset.
@@ -58,8 +59,11 @@ def _target_object(functions: list[dict], elf_flags: int) -> bytes:
         name_offset = len(strings)
         # DWARF1 gives human names, not necessarily unique linker names. Include
         # the proven address so overloads/weak copies cannot be falsely deduped.
-        name = function.get("linkage_name", f"{function['name']}@{function['low']:08x}").encode("utf-8")
-        strings.extend(name + b"\0")
+        name = function.get("linkage_name", f"{function['name']}@{function['low']:08x}")
+        if name in defined_symbols:
+            raise ValueError("Duplicate target function linkage")
+        defined_symbols[name] = len(symbols) // 16
+        strings.extend(name.encode("utf-8") + b"\0")
         symbols.extend(struct.pack("<IIIBBH", name_offset, 0,
                                    len(function["bytes"]), 0x12, 0, index))
     external_symbols = {}
@@ -68,6 +72,10 @@ def _target_object(functions: list[dict], elf_flags: int) -> bytes:
         relocations = bytearray()
         for relocation in function.get("relocations", []):
             name = relocation["symbol"]
+            if name in defined_symbols:
+                relocations.extend(struct.pack("<II", relocation["offset"],
+                                               (defined_symbols[name] << 8) | relocation.get("type", 4)))
+                continue
             if name not in external_symbols:
                 external_symbols[name] = len(symbols) // 16
                 name_offset = len(strings)

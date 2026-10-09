@@ -210797,7 +210797,22 @@
         "render_par_sprite__FPvP9xParGroup": "render_par_sprite__FPvP9xParGroup",
         "par_sprite_update__FR7xParSysR9xParGroup": "par_sprite_update__FR7xParSysR9xParGroup"
       },
-      "calls": []
+      "calls": [
+        {
+          "function": "xParGroupUpdateR__FP7xParSysP9xParGroupf",
+          "offset": 52,
+          "target_source": "SB/Core/x/xParSys.cpp",
+          "target_function": "xParGroupUpdateR__FP7xParSysP9xParGroupf",
+          "symbol": "xParGroupUpdateR__FP7xParSysP9xParGroupf"
+        },
+        {
+          "function": "xParGroupUpdateR__FP7xParSysP9xParGroupf",
+          "offset": 132,
+          "target_source": "SB/Core/x/xParCmd.cpp",
+          "target_function": "xParCmdGetUpdateFunc__FUi",
+          "symbol": "xParCmdGetUpdateFunc__FUi"
+        }
+      ]
     },
     {
       "source": "src/SB/Game/zEGenerator.cpp",
