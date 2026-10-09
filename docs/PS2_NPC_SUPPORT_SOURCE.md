@@ -82,3 +82,26 @@ Private evidence: `build/support-smooth-locals.txt`,
 `build/support-smooth-probes.txt`,
 `build/support-los-smooth-region-summary.json`, and
 `build/support-los-smooth-gc.txt`.
+
+## Cone rendering
+
+RenderCone's 808-byte PS2 body now matches exactly in SLUS-20680, SLES-51968
+and SLES-51970, up from 84.207924%. The local color and position copies now
+precede the UV calculations, consistent with the original DWARF local order.
+The unchanged bottom color is const. Reordering alone reaches 95.91584%; the
+const qualification restores the fourth retained color register, original
+stack frame and instruction scheduling. No SDK header or compiler changes
+are involved.
+
+Full 54-function checks increase exact coverage from 4,820 bytes / forty-one
+functions to 5,628 bytes / forty-two functions (+808 bytes / one function),
+and similarity from 94.94901% to 95.96558%. Every other function record is
+identical. The seventeen-function French selection (including the separately
+proved GenSmooth) remains at 1,808 exact bytes / twelve functions and
+98.49284%. All 73 GameCube function records and all data measures remain
+unchanged in GQPE78, GQPP78 and GU4Y78, allowing the small declaration change
+to be shared across platforms.
+
+Private evidence: `build/support-cone-locals.txt`,
+`build/support-cone-probes.txt`, `build/support-cone-const-probes.txt`,
+`build/support-cone-region-summary.json`, and `build/support-cone-gc.txt`.

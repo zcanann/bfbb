@@ -552,14 +552,15 @@ void NPCLaser::Render(xVec3* pos_src, xVec3* pos_tgt)
 
 void NPCCone::RenderCone(xVec3* pos_tiptop, xVec3* pos_botcenter)
 {
+    RwRGBA rgba_top = this->rgba_top;
+    const RwRGBA rgba_bot = this->rgba_bot;
+    xVec3 pos_top = *pos_tiptop;
+    const xVec3 pos_bot = *pos_botcenter;
+
     F32 u_tip = this->uv_tip[0] + 0.5f * this->uv_slice[0];
     F32 v_tip = this->uv_tip[1];
     F32 u_base = this->uv_tip[0] + this->uv_slice[0];
     F32 v_base = v_tip + this->uv_slice[1];
-    RwRGBA rgba_top = this->rgba_top;
-    RwRGBA rgba_bot = this->rgba_bot;
-    xVec3 pos_top = *pos_tiptop;
-    const xVec3 pos_bot = *pos_botcenter;
 
     void* mem = xMemPushTemp(10 * sizeof(RwIm3DVertex));
     if (!mem)
