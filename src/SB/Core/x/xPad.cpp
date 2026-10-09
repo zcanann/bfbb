@@ -72,13 +72,18 @@ void xPadRumbleEnable(S32 idx, S32 enable)
         if (p->flags & 8)
         {
             p->flags ^= 8;
-            xPadDestroyRumbleChain(mPad + idx);
+            xPadDestroyRumbleChain(p);
         }
     }
 }
 
 S32 xPadUpdate(S32 idx, F32 time_passed)
 {
+#if defined(PS2)
+    const S32 analog_threshold = 100;
+#else
+    const S32 analog_threshold = 50;
+#endif
     if (idx != 0)
     {
         return 0;
@@ -143,19 +148,19 @@ S32 xPadUpdate(S32 idx, F32 time_passed)
         if (p->flags & 0x1)
         {
             U32 fake_dpad = 0;
-            if (p->analog1.x >= 50)
+            if (p->analog1.x >= analog_threshold)
             {
                 fake_dpad |= 0x20;
             }
-            else if (p->analog1.x <= -50)
+            else if (p->analog1.x <= -analog_threshold)
             {
                 fake_dpad |= 0x80;
             }
-            if (p->analog1.y >= 50)
+            if (p->analog1.y >= analog_threshold)
             {
                 fake_dpad |= 0x40;
             }
-            else if (p->analog1.y <= -50)
+            else if (p->analog1.y <= -analog_threshold)
             {
                 fake_dpad |= 0x10;
             }
@@ -176,8 +181,8 @@ S32 xPadUpdate(S32 idx, F32 time_passed)
 
         if (p->flags & 0x2)
         {
-            if (p->analog2.x > -50 && p->analog2.x < 50 && p->analog2.y > -50 &&
-                p->analog2.y < 50)
+            if (p->analog2.x > -analog_threshold && p->analog2.x < analog_threshold &&
+                p->analog2.y > -analog_threshold && p->analog2.y < analog_threshold)
             {
                 p->ar2d_timer = 0.0f;
             }
@@ -187,19 +192,19 @@ S32 xPadUpdate(S32 idx, F32 time_passed)
                 if (p->ar2d_timer <= 0.0f)
                 {
                     p->ar2d_timer = 0.35f;
-                    if (p->analog2.x >= 50)
+                    if (p->analog2.x >= analog_threshold)
                     {
                         new_on |= 0x20;
                     }
-                    else if (p->analog2.x <= -50)
+                    else if (p->analog2.x <= -analog_threshold)
                     {
                         new_on |= 0x80;
                     }
-                    if (p->analog2.y >= 50)
+                    if (p->analog2.y >= analog_threshold)
                     {
                         new_on |= 0x40;
                     }
-                    else if (p->analog2.y <= -50)
+                    else if (p->analog2.y <= -analog_threshold)
                     {
                         new_on |= 0x10;
                     }
@@ -215,7 +220,7 @@ S32 xPadUpdate(S32 idx, F32 time_passed)
     }
 #endif
 
-    p->pressed = new_on & ~p->on;
+    p->pressed = ~p->on & new_on;
     p->released = p->on & ~new_on;
     p->on = new_on;
 
