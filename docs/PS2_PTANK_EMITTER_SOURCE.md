@@ -56,3 +56,28 @@ Private evidence: `emitter-event-final-comparison.json`,
 bytes in each debug executable after applying actual call addresses from
 original linkage identities and the existing reviewed `memset` runtime anchor.
 No relocation is inferred from the compiled call's position.
+
+## Interpolation result lifetime
+
+The PS2 original has a distinct result local `val` and uses the `time` parameter
+for interpolation arithmetic. Remove the reconstructed `val = time` initializer
+on PS2. All three originals' unsigned mode guard and eight-entry jump tables
+show that modes 0, 1, 2, 3, 4, 5, and 7 assign the result on every path. Mode 6
+and out-of-range inputs reach the epilogue without assigning the return register.
+This restores that original undefined return behavior instead of inventing a
+fallback. The mode conversion helper produces only the handled modes; unknown
+names convert to mode 0. GC retains its existing initializer.
+
+The 404-byte helper improves from 98.36633% to 100% in the existing source report
+for all three debug versions. Unit exact matching rises from 968 to 1,372 bytes
+(seven to eight functions), with every other score and data control unchanged.
+GC retains all scores and its 16 exact functions / 2,816 bytes.
+
+Private evidence: `emitter-interp-original-proof.py` / `.json` validates original
+dispatch, result assignments, and the local's DWARF type;
+`emitter-interp-final-comparison.json`, `emitter-interp-final-changes.json`, and
+`emitter-interp-gc-{before,after}.json` preserve complete comparisons. The raw
+audit `emitter-interp-raw-proof.py` / `.json` also checks all eight compiled jump
+table entries against the original targets and reproduces the function bytes
+except the two explicitly unresolved math-call addresses. It does not establish
+new `sinf`/`cosf` identities or change call normalization or coverage.

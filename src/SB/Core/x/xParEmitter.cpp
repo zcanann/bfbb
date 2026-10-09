@@ -352,7 +352,10 @@ F32 xParInterpCompute(S32 interp_mode, xParInterp* r, F32 time, S32 time_has_ela
 {
     F32 val;
 
+#if !defined(PS2)
     val = time;
+#endif
+    // PS2 assigns val only for the interpolation modes handled below.
     switch (interp_mode)
     {
     case 0:
@@ -378,19 +381,19 @@ F32 xParInterpCompute(S32 interp_mode, xParInterp* r, F32 time, S32 time_has_ela
         }
         else
         {
-            val = ((r->val[1] - r->val[0]) * (val / r->freq)) + r->val[0];
+            val = ((r->val[1] - r->val[0]) * (time / r->freq)) + r->val[0];
         }
         break;
     case 4:
-        val = ((r->val[1] - r->val[0]) * (0.5f * isin(6.2831855f * (val * r->oofreq)) + 0.5f)) +
+        val = ((r->val[1] - r->val[0]) * (0.5f * isin(6.2831855f * (time * r->oofreq)) + 0.5f)) +
               r->val[0];
         break;
     case 5:
-        val = ((r->val[1] - r->val[0]) * (0.5f * icos(6.2831855f * (val * r->oofreq)) + 0.5f)) +
+        val = ((r->val[1] - r->val[0]) * (0.5f * icos(6.2831855f * (time * r->oofreq)) + 0.5f)) +
               r->val[0];
         break;
     case 7:
-        if ((val * r->freq) >= 0.5f)
+        if ((time * r->freq) >= 0.5f)
         {
             val = r->val[1];
         }
