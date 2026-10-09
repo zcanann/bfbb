@@ -3007,6 +3007,9 @@ void xFXAuraUpdate(F32 dt)
     }
 }
 
+#if defined(PS2)
+#pragma opt_loop_invariants off
+#endif
 static void RenderRotatedBillboard(xVec3* pos, _xFXAuraAngle* rot, U32 count, F32 width, F32 height,
                                    iColor_tag tint, U32 flipUV)
 {
@@ -3180,6 +3183,10 @@ static void RenderRotatedBillboard(xVec3* pos, _xFXAuraAngle* rot, U32 count, F3
     RwIm3DRenderPrimitive(rwPRIMTYPETRILIST);
     RwIm3DEnd();
 }
+
+#if defined(PS2)
+#pragma opt_loop_invariants reset
+#endif
 
 void xFXAuraRender()
 {

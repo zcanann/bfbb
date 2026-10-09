@@ -170,3 +170,20 @@ Evidence is `build/fade-final-comparison.json`, its function-delta JSON, and
 `build/fade-gc-{before,after}.json`. Unnamed assignment and SDK call targets
 remain unresolved in the comparison profile; this source improvement does not
 promote those identities or claim a fully linked match.
+
+The aura billboard renderer uses a scoped PS2 `opt_loop_invariants off` setting.
+The compiler otherwise hoists camera-vector component addresses into additional
+temporaries, increasing the frame from the original 0x3720 bytes to 0x3750.
+The scoped setting restores the frame and raises the 1404-byte function from
+72.97721% to 87.49573% in each debug region. Turning off common-subexpression,
+strength-reduction or peephole optimization separately, combining those with
+the loop setting, and removing the half-size/negative-height temporaries all
+performed worse and were discarded. This is not a compiler-version diagnosis.
+
+Complete regional comparisons reach 97.764946% for `xFX`, retaining 17208 exact
+bytes and every other function score and target/data measure. France and all
+GameCube scores remain unchanged. Evidence is
+`build/billboard-final-comparison.json`, its function-delta JSON,
+`build/billboard-gc-{before,after}.json`, and
+`build/billboard-original-frame.json`. The function remains outside the current
+French profile, and unresolved SDK call identities remain unchanged.
