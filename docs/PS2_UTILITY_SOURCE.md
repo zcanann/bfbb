@@ -42,3 +42,13 @@ Naming the `xurand()` result as an `F32` local before the existing comparison ma
 The 120-byte gain brings each complete utility-unit report to 10 exact functions / 2184 bytes out of 11 / 2668. The CRC update remains 94.752%; all other scores are unchanged. Raw source-object relocation against each original's independently identified `xurand` call reproduces all 120 bytes, including France. GU4Y78 remains seven exact functions / 1704 bytes; the full production Xbox US and EU utility profiles remain three exact functions / 532 bytes out of four / 636, with every function score unchanged.
 
 Private artifacts: `build/util-yesno-full-comparison.py` and `.json`, `build/util-yesno-proof.py` and `build/util-yesno-raw-proof.json`, `build/checkutilyesnogc.py`, and `build/checkutilyesnoxbox.py` / `checkutilyesnoxboxeu.py` with their retained before/after reports.
+
+## CRC update temporary lifetime
+
+The remaining CRC update mismatch is resolved by assigning the accumulator's high byte to the existing index local before combining it with the next input byte and masking the result. Both spellings evaluate the same unsigned shift, consume one unsigned character, and produce an index from 0 through 255. The separate assignment restores the original register reuse through all eight compiler-unrolled iterations, plus the scalar remainder. No explicit unrolling, register constraint or compiler change is introduced.
+
+The shared spelling regressed the previously exact GameCube function to 92.22222%, so this local lifetime is selected only for PS2. The final GU4Y78 unit retains seven exact functions / 1704 bytes, and both complete production Xbox profiles keep every score unchanged. All four PS2 utility units now report eleven exact functions / 2668 bytes, a further 484-byte gain with every other function unchanged.
+
+Independent raw comparison reproduces all 484 bytes in each debug original after applying the real call to `xUtil_crc_init`, the `g_crc_needinit` GP reference, and both `g_crc32_table` HI16/LO16 address pairs using their original DWARF data addresses. France receives the same ordinary exact result but retains its existing unresolved data-reference limitations. Completed-unit/source-link status is not expanded by the code score.
+
+Private artifacts: `build/util-crc-full-comparison.py` and `.json`, `build/util-crc-proof.py` and `build/util-crc-raw-proof.json`, `build/checkutilcrcgc.py`, and `build/checkutilcrcxbox.py` / `checkutilcrcxboxeu.py` with retained reports.

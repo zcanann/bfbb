@@ -223,7 +223,12 @@ U32 xUtil_crc_update(U32 crc_accum, char* data, S32 datasize)
 
     for (i = 0; i < datasize; i++)
     {
+#if defined(PS2)
+        j = crc_accum >> 24;
+        j = (j ^ *data++) & 0xff;
+#else
         j = ((crc_accum >> 24) ^ *data++) & 0xff;
+#endif
         crc_accum = (crc_accum << 8) ^ g_crc32_table[j];
     }
 
