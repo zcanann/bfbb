@@ -1949,9 +1949,8 @@ static U32 GooDeathCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
     globals.player.DamageTimer = 10.0f;
     zGooStopTide();
     sPlayerDiedLastTime = 1;
-#if !defined(PS2)
-    // All PS2 builds return straight after setting sPlayerDiedLastTime; the
-    // control lock-out on goo death only exists in the GameCube build.
+#if !defined(PS2) || defined(VERSION_SLES_51970)
+    // Germany retains the control lock-out and carried-object cleanup.
     zEntPlayerControlOff(CONTROL_OWNER_GLOBAL);
 #endif
     return false;
@@ -12534,7 +12533,11 @@ static void PlayerRotMatchUpdateEnt(xEnt* ent, xScene* sc, F32 dt, void* fdata)
     xCollis* coll = ent->collis->colls;
     S32 hit_it = coll->flags & 0x1;
     xSurface* surf = zSurfaceGetSurface(coll);
+#if defined(PS2)
+    S32 grounded = hit_it && surf && surf->state == 0 && zSurfaceGetMatchOrient(surf);
+#else
     S32 grounded = hit_it && surf && !surf->state && zSurfaceGetMatchOrient(surf);
+#endif
     xVec3* eup;
 
     if (grounded)
@@ -12563,10 +12566,12 @@ static void PlayerRotMatchUpdateEnt(xEnt* ent, xScene* sc, F32 dt, void* fdata)
 
             F32 rang = xVec3Dot(&nfup, &neup);
 
+#if !defined(PS2)
             if (rang > 1.0f)
             {
                 rang = 1.0f;
             }
+#endif
 
             rang = xacos(rang);
 
@@ -12589,9 +12594,13 @@ static void PlayerRotMatchUpdateEnt(xEnt* ent, xScene* sc, F32 dt, void* fdata)
                     xMat4x3 rot;
 
                     xMat4x3Rot(&rot, &raxis, dang, xEntGetPos(ent));
-                    xMat3x3RMulVec(eup, &rot, &neup);
-
+#if defined(PS2)
                     globals.player.HangElapsed = 0.0f;
+#endif
+                    xMat3x3RMulVec(eup, &rot, &neup);
+#if !defined(PS2)
+                    globals.player.HangElapsed = 0.0f;
+#endif
                 }
             }
         }
@@ -12626,9 +12635,13 @@ static void PlayerRotMatchUpdateEnt(xEnt* ent, xScene* sc, F32 dt, void* fdata)
                 xMat4x3 rot;
 
                 xMat4x3Rot(&rot, &raxis, dang, xEntGetPos(ent));
-                xMat3x3RMulVec(eup, &rot, &neup);
-
+#if defined(PS2)
                 globals.player.HangElapsed = 0.0f;
+#endif
+                xMat3x3RMulVec(eup, &rot, &neup);
+#if !defined(PS2)
+                globals.player.HangElapsed = 0.0f;
+#endif
             }
         }
     }

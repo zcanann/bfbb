@@ -56,3 +56,20 @@ retain their scores. A scoped `dont_inline` pragma restores that boundary.
 The only remaining differences are two extra NOPs, in the aggregate
 zero-initialization loop and following the first dampening zero store.
 The complete USA GameCube report remains identical.
+
+## Rotation and German goo-death differences
+
+`PlayerRotMatchUpdateEnt` at `0x143020` passes its dot product directly to
+`acos` in all three PS2 debug builds. The call is at offset `0x1b4`, with
+the final multiply-add in its delay slot. GameCube's `rang > 1.0f` clamp
+is absent. PS2 also resets `HangElapsed` before the matrix-vector writes
+in both branches and tests `surf->state == 0` directly. These differences
+raise the 1252-byte routine from 80.958466% to 85.722046%. The remaining
+register allocation and scheduling differences have not been attributed
+to a compiler version.
+
+Germany's 320-byte `GooDeathCB` retains `zEntPlayerControlOff`, including
+its carried-object cleanup. USA and Europe omit that path. Restricting
+the short-path guard to the appropriate PS2 regions restores the German
+function from 17.25% to 100%; the prior comment claiming all PS2 builds
+used the short path was incorrect.
