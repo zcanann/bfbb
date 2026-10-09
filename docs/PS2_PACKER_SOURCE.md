@@ -152,3 +152,24 @@ scheduling, and saved-register assignment; no exact or compiler-defect claim
 is made. Positive-body nesting and a break-at-top `for` form scored worse,
 and moving initialization past the declarations made no difference.
 Private whole-unit comparisons are in `build/packer-oct09/active-proof.json`.
+
+
+## Allocation counter declaration
+
+`g_memalloc_pair` is an ordinary `S32` on PS2. The original DWARF identifies
+that name and signed integer type at USA 0x50fa94, Europe 0x50f594, and
+Germany 0x50ef94. The original allocation/release helpers interleave this
+counter's load/store with the neighboring running-total accesses. Removing
+only this counter's unnecessary volatile qualifier recovers that schedule;
+reordering the two source updates instead regressed both helpers. The
+running-total declarations and the GC declarations are unchanged.
+
+Normal whole-unit checks make `PKR_getmem` **240 bytes, 100%** (from
+89.916664%) and `PKR_relmem` **180 bytes, 100%** (from 92.77778%) in all
+three debug regions: **+420 exact bytes and two functions** per region.
+All other 48 functions retain their scores, and fresh GC solo is 76/76
+exact. Complete raw function lengths and words match after only the 11/9
+source relocation fields are masked; no branch operands, registers, or
+non-relocation constants are ignored. This does not authenticate masked
+runtime identities. Evidence is in `build/packer-oct09/counter-proof.json`
+and `counter-raw-proof.json`.

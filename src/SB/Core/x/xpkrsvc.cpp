@@ -120,7 +120,11 @@ st_HIPLOADFUNCS* g_hiprf;
 U32 g_loadlock;
 S32 pkr_sector_size;
 volatile S32 g_packinit;
+#if defined(PS2)
+S32 g_memalloc_pair;
+#else
 volatile S32 g_memalloc_pair;
+#endif
 volatile S32 g_memalloc_runtot;
 volatile S32 g_memalloc_runfree;
 
