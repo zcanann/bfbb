@@ -100,3 +100,22 @@ Private original data bounds, hashes, and decode counts are recorded in
 `build/maincard-oct09/first-original-proof.json`; the normal regional
 comparisons are in `first-proof.json`. France still has no enabled source
 profile for this unit, and full integration gates remain separate.
+
+## Regional startup call boundaries
+
+Original DWARF and direct-call operands identify a retained
+`zMainOutputMgrSetup` call in `main` in all three debug versions. Germany
+also retains three calls to `zMainShowProgressBar` in `main` and ten in
+`zMainLoop`, where the other debug versions inline the progress renderer.
+Scoped `dont_inline` directives preserve these original boundaries: PS2 for
+the output-manager setup, Germany only for the progress renderer. They do
+not change the compiler profile or the shared headers.
+
+Normal whole-unit checks recover German **main (736 bytes)** and
+**zMainLoop (1,632 bytes)** from 0% to **100%**, adding 2,368 exact bytes and
+two functions. USA and Europe main improve from 97.669% to 98.6014%; their
+remaining inlined-renderer NOP differences are unchanged. Other functions
+retain their previous results, and fresh GC solo remains 16/16 exact.
+These are compiler-report matches, not independent authentication of every
+masked runtime relocation. The independently checked call map is recorded
+in private `build/maincard-oct09/german-call-proof.json`.

@@ -208,6 +208,9 @@ void main(S32 argc, char** argv)
     iSystemExit();
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 void zMainOutputMgrSetup()
 {
     iTime tim = iTimeGet();
@@ -216,6 +219,10 @@ void zMainOutputMgrSetup()
     iTimeDiffSec(tim);
     iTimeGet();
 }
+
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 void zMainInitGlobals()
 {
@@ -718,6 +725,9 @@ void zMainMemLvlChkCB()
     zSceneMemLvlChkCB();
 }
 
+#if defined(VERSION_SLES_51970)
+#pragma dont_inline on
+#endif
 void zMainShowProgressBar()
 {
     S32 progBar;
@@ -745,6 +755,10 @@ void zMainShowProgressBar()
         percentageDone += 10;
     }
 }
+
+#if defined(VERSION_SLES_51970)
+#pragma dont_inline reset
+#endif
 
 void zMainLoop()
 {
