@@ -229116,7 +229116,8 @@
         "noHeadCB@00331100": "noHeadCB__FP5xGoalPvP11en_trantypefPv",
         "hiddenByCutscene@00332690": "hiddenByCutscene__10zNPCBSandyFv",
         "BoundEventCB@00333af0": "BoundEventCB__FP5xBaseP5xBaseUiPCfP5xBase",
-        "Process@0032c7c0": "Process__28zNPCGoalBossSandyClotheslineFP11en_trantypefPvP6xScene"
+        "Process@0032c7c0": "Process__28zNPCGoalBossSandyClotheslineFP11en_trantypefPvP6xScene",
+        "zNPCBSandy_BossDamageEffect@00335000": "zNPCBSandy_BossDamageEffect__FP14xModelInstanceUi"
       },
       "calls": [
         {
@@ -230047,6 +230048,32 @@
               "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
               "source_address": 3324576,
               "reference_sha256": "dba2c828a63d04f0f872860cc61b8b136e03b560708f5f3db365aa6372430332"
+            }
+          ]
+        },
+        {
+          "function": "zNPCBSandy_BossDamageEffect@00335000",
+          "registry": "tu-corroborated-functions.json",
+          "france_address": 3362816,
+          "size": 432,
+          "references": [
+            {
+              "version": "SLUS-20680",
+              "executable_sha1": "32e3b7dda09fd8d7fcba4eb769fa17c08cea05df",
+              "source_address": 3361424,
+              "reference_sha256": "319c0b6eabc6cbc925b6f9384ea46f9ea750360417d4f80969561bb25b3b402a"
+            },
+            {
+              "version": "SLES-51968",
+              "executable_sha1": "0c3e685edc13a362d0d27a10dccb0b9698eb5597",
+              "source_address": 3362704,
+              "reference_sha256": "92ef563f38daa7ea0612679524f8341e52255ed923dbf372e66203c32a886af3"
+            },
+            {
+              "version": "SLES-51970",
+              "executable_sha1": "83bf81a139ea24fdb015f1419377de85b643828a",
+              "source_address": 3359456,
+              "reference_sha256": "7a9823b0581145c0b9faa0ffb36396df2b6ee6449c1713701815885e7ce6c99e"
             }
           ]
         }
