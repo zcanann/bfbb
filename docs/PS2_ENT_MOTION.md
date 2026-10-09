@@ -26,3 +26,14 @@ Normal full-unit `ps2solo.py` builds checked all 20 profiled functions
 in each of the four regions: only `xEntMPMove` improves. The complete
 GameCube report is identical and the rebuilt DOL passes its SHA-1 check.
 Private results are in `build/motion-oct09/after-proof.json`.
+
+`xEntMotionInit` also reaches 100% from 89.39247%, adding 744 exact
+bytes and one function in all four PS2 regions. Its mechanical-motion
+branch now uses the original DWARF local `mkasst` and accesses `sld_tm`
+through that member type, instead of the same-offset `mp.speed` union
+member. Marking the existing `xEntMotionDebugAdd` helper inline restores
+the debug-registration sequence embedded at the end of retail Init.
+The US original starts at `0x1da4f0`. All other profiled functions and
+the complete GameCube report remain unchanged, and the GameCube DOL
+again passes its SHA-1 check. Private full-unit comparisons are in
+`build/motion-oct09/init-proof.json`.

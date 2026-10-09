@@ -32,6 +32,8 @@ static U32 xEntSldMove(xEntMotion* motion, xScene* sc, F32 dt, xEntFrame* frame)
 static U32 xEntRotMove(xEntMotion* motion, xScene* sc, F32 dt, xEntFrame* frame);
 char* xbtoa(U32 param);
 
+inline void xEntMotionDebugAdd(xEntMotion*);
+
 void xEntMotionInit(xEntMotion* motion, xEnt* owner, xEntMotionAsset* asset)
 {
     motion->asset = asset;
@@ -87,31 +89,32 @@ void xEntMotionInit(xEntMotion* motion, xEnt* owner, xEntMotionAsset* asset)
     }
     else if (motion->type == XENTMOTION_TYPE_MECH)
     {
-        if (asset->mp.speed < 1e-5f)
+        xEntMotionMechData* mkasst = &asset->mech;
+        if (mkasst->sld_tm < 1e-5f)
         {
-            asset->mp.speed = 1.0f;
+            mkasst->sld_tm = 1.0f;
         }
 
-        if (asset->mech.sld_acc_tm + asset->mech.sld_dec_tm > asset->mech.sld_tm)
+        if (mkasst->sld_acc_tm + mkasst->sld_dec_tm > mkasst->sld_tm)
         {
-            asset->mech.sld_dec_tm = asset->mech.sld_acc_tm = asset->mech.sld_tm * 0.5f;
+            mkasst->sld_dec_tm = mkasst->sld_acc_tm = mkasst->sld_tm * 0.5f;
         }
 
-        if (asset->mech.rot_tm < 1e-5f)
+        if (mkasst->rot_tm < 1e-5f)
         {
-            asset->mech.rot_tm = 1.0f;
+            mkasst->rot_tm = 1.0f;
         }
 
-        if (asset->mech.type == 2)
+        if (mkasst->type == 2)
         {
-            if (asset->mech.rot_tm != asset->mech.sld_tm)
+            if (mkasst->rot_tm != mkasst->sld_tm)
             {
-                asset->mech.rot_tm = asset->mech.sld_tm;
+                mkasst->rot_tm = mkasst->sld_tm;
             }
         }
-        if (asset->mech.rot_acc_tm + asset->mech.rot_dec_tm > asset->mech.rot_tm)
+        if (mkasst->rot_acc_tm + mkasst->rot_dec_tm > mkasst->rot_tm)
         {
-            asset->mech.rot_dec_tm = asset->mech.rot_acc_tm = asset->mech.rot_tm * 0.5f;
+            mkasst->rot_dec_tm = mkasst->rot_acc_tm = mkasst->rot_tm * 0.5f;
         }
     }
 
@@ -1004,7 +1007,7 @@ void xEntMotionDebugExit()
     dbg_idx = -1;
 }
 
-void xEntMotionDebugAdd(xEntMotion* motion)
+inline void xEntMotionDebugAdd(xEntMotion* motion)
 {
     if (dbg_num < dbg_num_allocd)
     {
