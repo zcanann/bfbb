@@ -770,6 +770,178 @@ def generate(manifest: Path, orig_dir: Path, registry_dir: Path) -> dict:
     for key, value in npc_common_animation['counts'].items():
         document['counts'][key] = document['counts'].get(key, 0) + value
     document['limitations'].append('Common NPC animation adds two complete original builders in an independently unique 400-byte cluster with 392 code bytes. Original member ordering, bounds and zero alignment gaps are checked separately from the Robot cluster. Complete typed names, literals, callback identity and animation callees corroborate every operand. No whole translation-unit or data extent is claimed.')
+    from platforms.france_npc_boss_animation import generate_unit as generate_npc_boss_animation
+    npc_boss_animation = generate_npc_boss_animation(originals, registry_dir)
+    document['functions'].extend(npc_boss_animation['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(npc_boss_animation['sequence_proofs'])
+    document['npc_boss_animation_data_proofs'] = npc_boss_animation['data_proofs']
+    for key, value in npc_boss_animation['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Boss NPC animation adds five individually unique complete original builders. All original owner/boundary identities, 279 typed table/string/callback/initializer operands and 143 JALs are checked in each reference, using five fixed complete dependencies. Shared initializer owner selection is constrained by each authenticated function source and preserves earlier Robot proof output. No whole translation-unit or data extent is claimed.')
+    from platforms.france_npc_remaining_animation import generate_unit as generate_npc_remaining_animation
+    npc_remaining_animation = generate_npc_remaining_animation(originals, registry_dir)
+    document['functions'].extend(npc_remaining_animation['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(npc_remaining_animation['sequence_proofs'])
+    document['npc_remaining_animation_data_proofs'] = npc_remaining_animation['data_proofs']
+    for key, value in npc_remaining_animation['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Additional NPC animation adds five individually unique complete original builders. All original owners, bounds, 128 typed operands and 69 JALs are checked through five fixed complete dependencies. One scoped Sandy initializer verifies its complete bounded three-iteration copy prefix and final word; generic straight-line checks remain unchanged. No whole translation-unit or data extent is claimed.')
+    from platforms.france_npc_townsfolk_animation import generate_unit as generate_npc_townsfolk_animation
+    npc_townsfolk_animation = generate_npc_townsfolk_animation(originals, registry_dir)
+    document['functions'].extend(npc_townsfolk_animation['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(npc_townsfolk_animation['sequence_proofs'])
+    document['npc_townsfolk_animation_data_proofs'] = npc_townsfolk_animation['data_proofs']
+    for key, value in npc_townsfolk_animation['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Townsfolk animation adds nine complete original functions in two independently unique Ambient/Villager clusters. All original member orders, bounds, zero gaps, 74 typed operands and 62 transfers are checked. Three exact null-argument tail wrappers reach complete local builders; two scoped copy prefixes preserve the generic checker. No whole translation-unit or data extent is claimed.')
+    from platforms.france_imodel_kernels import generate_unit as generate_imodel_kernels
+    imodel_kernels = generate_imodel_kernels(originals, registry_dir)
+    document['functions'].extend(imodel_kernels['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(imodel_kernels['sequence_proofs'])
+    document['imodel_kernels_data_proofs'] = imodel_kernels['data_proofs']
+    for key, value in imodel_kernels['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Model leaves add four independently unique complete original functions. Typed material arrays and an independently anchored camera frustum prove all three address pairs; all 42 Cull vector instruction words match raw. Original ownership, bounds, zero alignment and strict control flow are checked in all three references. No SDK callee, whole translation-unit or data extent is claimed.')
+    from platforms.france_npc_particle_kernels import generate_unit as generate_npc_particle_kernels
+    npc_particle_kernels = generate_npc_particle_kernels(originals, registry_dir)
+    document['functions'].extend(npc_particle_kernels['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(npc_particle_kernels['sequence_proofs'])
+    document['npc_particle_kernels_data_proofs'] = npc_particle_kernels['data_proofs']
+    document['npc_particle_kernels_call_proofs'] = npc_particle_kernels['call_proofs']
+    for key, value in npc_particle_kernels['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Particle and hazard kernels add nine independently unique complete original functions. Complete fixed xurand and streak callees and a typed full zero vector prove every changed operand. Original ownership, bounds, zero alignment and strict control flow are checked in all three references. Duplicate builders remain unpromoted. No whole translation-unit or data extent is claimed.')
+    from platforms.france_boss_goal_kernels import generate_unit as generate_boss_goal_kernels
+    boss_goal_kernels = generate_boss_goal_kernels(originals, registry_dir)
+    document['functions'].extend(boss_goal_kernels['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(boss_goal_kernels['sequence_proofs'])
+    document['boss_goal_kernels_data_proofs'] = boss_goal_kernels['data_proofs']
+    document['boss_goal_kernels_call_proofs'] = boss_goal_kernels['call_proofs']
+    for key, value in boss_goal_kernels['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Boss goal kernels add 24 independently unique complete Sandy and Patrick bodies. Eight fixed dependencies prove 41 calls and seven typed player-model operands. Original owners, bounds, alignment and strict control flow are checked in all three references. Duplicate exits and bone-position consumers remain unpromoted. No whole translation-unit or data extent is claimed.')
+    from platforms.france_sound_wrappers import generate_unit as generate_sound_wrappers
+    sound_wrappers = generate_sound_wrappers(originals, registry_dir)
+    document['functions'].extend(sound_wrappers['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(sound_wrappers['sequence_proofs'])
+    document['sound_wrappers_data_proofs'] = sound_wrappers['data_proofs']
+    for key, value in sound_wrappers['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Sound wrappers add three complete original entries in one independently unique 1520-byte cluster with an already-proved 1376-byte anchor. Tiny tail wrappers have exact complete argument, terminal jump and delay-slot inventories, preserve SP/RA, and mask only the fixed known callee. All three original owners, bounds and alignment gaps are checked. No whole translation-unit or data extent is claimed.')
+    from platforms.france_sound_controls import generate_unit as generate_sound_controls
+    sound_controls = generate_sound_controls(originals, registry_dir)
+    document['functions'].extend(sound_controls['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(sound_controls['sequence_proofs'])
+    document['sound_controls_data_proofs'] = sound_controls['data_proofs']
+    document['sound_controls_call_proofs'] = sound_controls['call_proofs']
+    for key, value in sound_controls['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Sound controls add eight independently unique complete original bodies. Typed sound-global fields and four fixed complete HIS callees corroborate every changed operand. Original declarations, member paths, ownership, bounds, zero padding and strict control flow are checked in all three references. No whole translation-unit, data extent or new runtime context is claimed.')
+    from platforms.france_sound_stop_wrapper import generate_unit as generate_sound_stop_wrapper
+    sound_stop_wrapper = generate_sound_stop_wrapper(originals, registry_dir)
+    document['functions'].extend(sound_stop_wrapper['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(sound_stop_wrapper['sequence_proofs'])
+    document['sound_stop_wrapper_data_proofs'] = sound_stop_wrapper['data_proofs']
+    for key, value in sound_stop_wrapper['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Sound stop wrapper adds one complete eight-byte tail within an independently unique 176-byte cluster of three complete authenticated original members. Original ownership, member order, bounds, zero gaps and complete known anchors/callee are rechecked in all three references. Only the fixed iSndStop terminal jump target is masked; generic short-seed uniqueness rules are unchanged.')
+    from platforms.france_sandy_clothesline import generate_unit as generate_sandy_clothesline
+    sandy_clothesline = generate_sandy_clothesline(originals, registry_dir)
+    document['functions'].extend(sandy_clothesline['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(sandy_clothesline['sequence_proofs'])
+    document['sandy_clothesline_data_proofs'] = sandy_clothesline['data_proofs']
+    document['sandy_clothesline_call_proofs'] = sandy_clothesline['call_proofs']
+    for key, value in sandy_clothesline['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Sandy clothesline adds one independently unique complete original goal. Twenty-five fixed complete calls and 35 typed spring-object, bounded sound-array and complete-string operands are checked in all three references. Original ownership, bounds, alignment and strict control flow remain required. No whole translation-unit or data extent is claimed.')
+    from platforms.france_sandy_damage_effect import generate_unit as generate_sandy_damage_effect
+    sandy_damage_effect = generate_sandy_damage_effect(originals, registry_dir)
+    document['functions'].extend(sandy_damage_effect['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(sandy_damage_effect['sequence_proofs'])
+    document['sandy_damage_effect_data_proofs'] = sandy_damage_effect['data_proofs']
+    for key, value in sandy_damage_effect['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Sandy damage effect adds one independently unique complete call-free original body. The full four-element BDE record array and model RGB/Next member paths are checked through original declarations, array bounds and types in all three references. Original ownership, bounds, alignment and strict control flow are preserved. No data extent or whole translation-unit is claimed.')
+    from platforms.france_sandy_sit import generate_unit as generate_sandy_sit
+    sandy_sit = generate_sandy_sit(originals, registry_dir)
+    document['functions'].extend(sandy_sit['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(sandy_sit['sequence_proofs'])
+    document['sandy_sit_data_proofs'] = sandy_sit['data_proofs']
+    document['sandy_sit_call_proofs'] = sandy_sit['call_proofs']
+    for key, value in sandy_sit['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Sandy sit adds one independently unique complete original goal. Fourteen fixed complete calls and typed player carry/model paths, complete bone/sound arrays and strings corroborate every changed operand in all three references. Original ownership, bounds, alignment and strict control flow remain required. No whole translation-unit or data extent is claimed.')
+    from platforms.france_sandy_control_callbacks import generate_unit as generate_sandy_control_callbacks
+    sandy_control_callbacks = generate_sandy_control_callbacks(originals, registry_dir)
+    document['functions'].extend(sandy_control_callbacks['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(sandy_control_callbacks['sequence_proofs'])
+    document['sandy_control_callbacks_data_proofs'] = sandy_control_callbacks['data_proofs']
+    document['sandy_control_callbacks_call_proofs'] = sandy_control_callbacks['call_proofs']
+    for key, value in sandy_control_callbacks['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Sandy control callbacks add four independently unique complete original bodies. Typed original ControlOff and model-pointer paths and fixed complete CalcNewDir/AnimTimeRemain dependencies corroborate every operand in all three references. Original ownership, bounds, zero alignment and strict control flow are rechecked. No whole translation-unit or data extent is claimed.')
+    from platforms.france_sandy_leap import generate_unit as generate_sandy_leap
+    sandy_leap = generate_sandy_leap(originals, registry_dir)
+    document['functions'].extend(sandy_leap['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(sandy_leap['sequence_proofs'])
+    document['sandy_leap_data_proofs'] = sandy_leap['data_proofs']
+    document['sandy_leap_call_proofs'] = sandy_leap['call_proofs']
+    for key, value in sandy_leap['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Sandy Leap adds one independently unique complete 484-byte original tail body. Two typed model-pointer loads and a fixed complete Common Enter callee corroborate every operand. The scoped verifier preserves SP/RA and checks local COP1 encodings, full body coverage and terminal J; generic boundary/unknown-opcode rules remain unchanged. All three original identities, extents and padding are checked.')
+    from platforms.france_npc_particle_emitters import generate_unit as generate_npc_particle_emitters
+    npc_particle_emitters = generate_npc_particle_emitters(originals, registry_dir)
+    document['functions'].extend(npc_particle_emitters['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(npc_particle_emitters['sequence_proofs'])
+    document['npc_particle_emitters_data_proofs'] = npc_particle_emitters['data_proofs']
+    document['npc_particle_emitters_call_proofs'] = npc_particle_emitters['call_proofs']
+    for key, value in npc_particle_emitters['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Particle emitters add twelve complete original members in two independently unique ordered clusters. Full typed management/parameter arrays, fixed complete ConfigPar callees and twelve literal calls to one unnamed 64-byte runtime context corroborate every operand. All original member orders, bounds, padding and strict CFGs are checked in three references. No short-seed exception, runtime identity, whole translation-unit or data extent is claimed.')
+    from platforms.france_hazard_splashes import generate_unit as generate_hazard_splashes
+    hazard_splashes = generate_hazard_splashes(originals, registry_dir)
+    document['functions'].extend(hazard_splashes['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(hazard_splashes['sequence_proofs'])
+    document['hazard_splashes_data_proofs'] = hazard_splashes['data_proofs']
+    document['hazard_splashes_call_proofs'] = hazard_splashes['call_proofs']
+    for key, value in hazard_splashes['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Hazard splashes add two independently unique complete original bodies and one complete perpendicular helper identified in a unique 264-byte anchored cluster. All calls reach fixed complete identities; no data operands change. The helper tail uses only its independently proved Normalize callee. Original ownership, bounds, zero gaps and strict CFGs are checked in all three references without weak individual seeds.')
+    from platforms.france_hazard_oil_splash import generate_unit as generate_hazard_oil_splash
+    hazard_oil_splash = generate_hazard_oil_splash(originals, registry_dir)
+    document['functions'].extend(hazard_oil_splash['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(hazard_oil_splash['sequence_proofs'])
+    document['hazard_oil_splash_data_proofs'] = hazard_oil_splash['data_proofs']
+    document['hazard_oil_splash_call_proofs'] = hazard_oil_splash['call_proofs']
+    for key, value in hazard_oil_splash['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('Hazard OilSplash adds one complete original body through stronger full-template uniqueness. Only six inventoried JAL target fields are reconstructed from independently checked complete callees; all other original bits remain literal and exhaustive search uses zero masks. No target body bytes are copied. Original ownership, extents, padding and closed CFG remain required in all three references; unbound ambiguity is retained as negative evidence.')
+    from platforms.france_npc_smooth import generate_unit as generate_npc_smooth
+    npc_smooth = generate_npc_smooth(originals, registry_dir)
+    document['functions'].extend(npc_smooth['functions'])
+    document['functions'].sort(key=lambda function: function['address'])
+    document['sequence_proofs'].extend(npc_smooth['sequence_proofs'])
+    document['npc_smooth_data_proofs'] = npc_smooth['data_proofs']
+    for key, value in npc_smooth['counts'].items():
+        document['counts'][key] = document['counts'].get(key, 0) + value
+    document['limitations'].append('NPC smoothing adds one independently unique complete 508-byte original call-free leaf. Full typed sample and coefficient arrays and signed 32-bit init ownership, complete BSS ranges, original reginfo and unclobbered startup GP setup corroborate all operands in three references. The two GP words remain literal; only three inventoried address fields are reconstructed. Closed control flow, full uniqueness and zero padding remain required. No whole translation-unit, data extent or new data anchor is claimed.')
     return document
 
 

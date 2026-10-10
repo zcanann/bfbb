@@ -2237,9 +2237,14 @@ void zNPCBubbleBuddy::RenderExtra()
 
 void zNPCBubbleBuddy_AlphaUpdate(F32 dt)
 {
-    static F32 tmr_pulseAlpha = 0.0f; // non-matching: stfs too late
+    static F32 tmr_pulseAlpha = 0.0f; // GC non-matching: stfs too late
+#ifdef PS2
+    F32 angle = NPCC_TmrCycle(&tmr_pulseAlpha, dt, 1.5f);
+    zNPCBubbleBuddy::alf_currBubBud = LERP(MAX(0.0f, MIN(xabs(isin(PI * angle)), 1.0f)), 0.5f, 0.5f);
+#else
     F32 angle = NPCC_TmrCycle(&tmr_pulseAlpha, dt, 1.5f) * PI;
     zNPCBubbleBuddy::alf_currBubBud = LERP(MAX(0.0f, MIN(xabs(isin(angle)), 1.0f)), 0.5f, 0.5f);
+#endif
 }
 
 static U32 bb_env_texture = 0;

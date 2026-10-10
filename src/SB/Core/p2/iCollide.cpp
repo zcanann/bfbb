@@ -10,6 +10,25 @@
 #include "xJSP.h"
 #include <string.h>
 
+// The original platform TU inlines these helpers against xModel's shared storage.
+extern RpMorphTarget anim_coll_old_mt;
+
+static inline void iCollideAnimCollApply(const xModelInstance& cm)
+{
+    if ((cm.Flags & 0x1800) == 0x800)
+    {
+        xModelAnimCollRefresh(cm);
+    }
+    RpMorphTarget* mt = cm.Data->geometry->morphTarget;
+    anim_coll_old_mt.verts = mt->verts;
+    mt->verts = (RwV3d*)cm.anim_coll.verts;
+}
+
+static inline void iCollideAnimCollRestore(const xModelInstance& cm)
+{
+    cm.Data->geometry->morphTarget->verts = anim_coll_old_mt.verts;
+}
+
 static S32 sCollidingJSP = 0;
 
 // RpCollisionTriangle::index is declared RwInt32, but the JSP collision tree
@@ -66,25 +85,11 @@ S32 PointWithinTriangle(xVec3* _pt, xVec3** _tri, xVec3* _normal)
 
     if (absZ > absY)
     {
-        if (absZ > absX)
-        {
-            dimension = ZDIM;
-        }
-        else
-        {
-            dimension = XDIM;
-        }
+        dimension = (absZ > absX) ? ZDIM : XDIM;
     }
     else
     {
-        if (absY > absX)
-        {
-            dimension = YDIM;
-        }
-        else
-        {
-            dimension = XDIM;
-        }
+        dimension = (absY > absX) ? YDIM : XDIM;
     }
 
     switch (dimension)
@@ -187,20 +192,21 @@ static void properSphereIsectTri(const xVec3* center, F32 radius, xVec3* tohit, 
     xVec3 temp;
 
     dist = *dist_ptr;
-    dist2plane = xVec3Dot((xVec3*)&tri->normal, center);
-    radius2 = xVec3Dot((xVec3*)&tri->normal, (xVec3*)&tri->point);
+    dist2plane = xVec3Dot((xVec3*)&tri->normal, (xVec3*)&tri->point) -
+                 xVec3Dot((xVec3*)&tri->normal, center);
 
-    xVec3SMul(&projPoint, (xVec3*)&tri->normal, radius2 - dist2plane);
+    xVec3SMul(&projPoint, (xVec3*)&tri->normal, dist2plane);
     xVec3Copy(tohit, &projPoint);
     xVec3AddTo(&projPoint, center);
 
     if (PointWithinTriangle(&projPoint, (xVec3**)&tri->vertices, (xVec3*)&tri->normal))
     {
-        dist = iabs(radius2 - dist2plane);
+        dist = iabs(dist2plane);
     }
     else
     {
         dist2 = SQR(dist);
+        radius2 = SQR(radius);
         for (i = 0; i < 3; i++)
         {
             FindNearestPointOnLine(&vertClosestPoint, &projPoint, (xVec3*)tri->vertices[i],
@@ -208,13 +214,13 @@ static void properSphereIsectTri(const xVec3* center, F32 radius, xVec3* tohit, 
             xVec3Sub(&temp, &vertClosestPoint, center);
             vertDist2 = xVec3Length2(&temp);
 
-            if (vertDist2 < dist2 && vertDist2 < SQR(radius))
+            if (vertDist2 < dist2 && vertDist2 < radius2)
             {
                 dist2 = vertDist2;
                 xVec3Copy(tohit, &temp);
             }
         }
-        dist = xsqrt(dist2);
+        asm volatile("sqrt.s %0, %1" : "=f"(dist) : "f"(dist2));
     }
     *dist_ptr = dist;
 }
@@ -311,15 +317,14 @@ static RpCollisionTriangle* sphereHitsEnv3CB(RpIntersection* isx, RpWorldSector*
 
     if (SQR(tohit.y) > SQR(tohit.x) + SQR(tohit.z))
     {
-        idx = FLOOR;
         if (FLOOR == 0xff)
         {
             idx = FLOOR = cbnumcs++;
         }
         else if (tohit.y < 0.0f)
         {
-            if (colls[idx].hdng.y > 0.0f || dist < colls[idx].dist ||
-                (iabs(dist - colls[idx].dist) < 0.001f && tri->normal.y > colls[idx].norm.y))
+            if (colls[FLOOR].hdng.y > 0.0f || dist < colls[FLOOR].dist ||
+                (iabs(dist - colls[FLOOR].dist) < 0.001f && tri->normal.y > colls[FLOOR].norm.y))
             {
                 idx = FLOOR;
             }
@@ -330,9 +335,9 @@ static RpCollisionTriangle* sphereHitsEnv3CB(RpIntersection* isx, RpWorldSector*
         }
         else
         {
-            if (colls[idx].hdng.y > 0.0f &&
-                (dist < colls[idx].dist ||
-                 (iabs(dist - colls[idx].dist) < 0.001f && tri->normal.y > colls[idx].norm.y)))
+            if (colls[FLOOR].hdng.y > 0.0f &&
+                (dist < colls[FLOOR].dist ||
+                 (iabs(dist - colls[FLOOR].dist) < 0.001f && tri->normal.y > colls[FLOOR].norm.y)))
             {
                 idx = FLOOR;
             }
@@ -762,8 +767,7 @@ S32 iSphereHitsEnv4(const xSphere* b, const xEnv* env, const xMat3x3* mat, xColl
         }
 
         numcs++;
-        F32 s = 1.0f;
-        s /= c->dist;
+        F32 s = 1.0f / c->dist;
         c->hdng.x = c->tohit.x * s;
         c->hdng.y = c->tohit.y * s;
         c->hdng.z = c->tohit.z * s;
@@ -789,7 +793,7 @@ S32 iSphereHitsModel3(const xSphere* b, const xModelInstance* m, xCollis* colls,
     RpIntersection isx;
     if (m->Flags & 0x800)
     {
-        xModelAnimCollApply(*m);
+        iCollideAnimCollApply(*m);
     }
 
     U8 idx;
@@ -858,7 +862,7 @@ S32 iSphereHitsModel3(const xSphere* b, const xModelInstance* m, xCollis* colls,
 
     if (m->Flags & 0x800)
     {
-        xModelAnimCollRestore(*m);
+        iCollideAnimCollRestore(*m);
     }
 
     return cbnumcs;
@@ -938,16 +942,6 @@ U32 iRayHitsEnv(const xRay3* r, const xEnv* env, xCollis* coll)
         }
     }
 
-    RwV3d temp = isx.t.line.start;
-    isx.t.line.start = isx.t.line.end;
-    isx.t.line.end = temp;
-
-    RpCollisionWorldForAllIntersections(env->geom->world, &isx, rayHitsEnvBackwardCB, coll);
-    if (env->geom->collision != NULL)
-    {
-        RpCollisionWorldForAllIntersections(env->geom->collision, &isx, rayHitsEnvBackwardCB, coll);
-    }
-
     if (r->flags & 0x400)
     {
         coll->dist += cbray.min_t;
@@ -960,7 +954,7 @@ U32 iRayHitsModel(const xRay3* r, const xModelInstance* m, xCollis* coll)
 {
     if (m->Flags & 0x800)
     {
-        xModelAnimCollApply(*m);
+        iCollideAnimCollApply(*m);
     }
 
     RpIntersection isx;
@@ -1034,8 +1028,8 @@ U32 iRayHitsModel(const xRay3* r, const xModelInstance* m, xCollis* coll)
     RpAtomicForAllIntersections(m->Data, &isx, rayHitsModelCB, coll);
 
     RwV3d temp = isx.t.line.start;
-    isx.t.line.start = isx.t.line.end;
-    isx.t.line.end = temp;
+    xVec3Copy((xVec3*)&isx.t.line.start, (xVec3*)&isx.t.line.end);
+    xVec3Copy((xVec3*)&isx.t.line.end, (xVec3*)&temp);
 
     RpAtomicForAllIntersections(m->Data, &isx, rayHitsModelBackwardCB, coll);
 
@@ -1057,7 +1051,7 @@ U32 iRayHitsModel(const xRay3* r, const xModelInstance* m, xCollis* coll)
 
     if (m->Flags & 0x800)
     {
-        xModelAnimCollRestore(*m);
+        iCollideAnimCollRestore(*m);
     }
 
     return coll->flags & 1;

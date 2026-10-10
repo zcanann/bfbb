@@ -1152,7 +1152,48 @@
           "addend": 0
         }
       ],
-      "direct_calls": []
+      "direct_calls": [
+        {
+          "offset": 42,
+          "symbol": "xMathSolveQuadratic(F32,F32,F32,F32*,F32*)",
+          "opcode": 232
+        },
+        {
+          "offset": 316,
+          "symbol": "__CIpow",
+          "opcode": 232
+        },
+        {
+          "offset": 334,
+          "symbol": "__CIpow",
+          "opcode": 232
+        },
+        {
+          "offset": 378,
+          "symbol": "__CIpow",
+          "opcode": 232
+        },
+        {
+          "offset": 415,
+          "symbol": "__CIpow",
+          "opcode": 232
+        },
+        {
+          "offset": 493,
+          "symbol": "xatan2(F32,F32)",
+          "opcode": 232
+        },
+        {
+          "offset": 602,
+          "symbol": "__CIpow",
+          "opcode": 232
+        },
+        {
+          "offset": 623,
+          "symbol": "__CIpow",
+          "opcode": 232
+        }
+      ]
     },
     {
       "name": "xAngleClamp",
@@ -15337,6 +15378,212 @@
               "24": "xParCmdSmokeAlpha_Update",
               "25": "xParCmdScale_Update"
             }
+          }
+        }
+      }
+    },
+    {
+      "name": "__CIpow",
+      "canonical_identifier": "__CIpow",
+      "display_name": "__CIpow (x87 arguments)",
+      "source": "Runtime/MSVC/pow.obj",
+      "linkage_name": null,
+      "address": 1824492,
+      "size": 27,
+      "sha256": "7c0542f60c6bdeba321276ec55b0d0a1acaf7ab985eb13050ef1a08b056f3dc2",
+      "boundary_confirmation": true,
+      "identity_confirmation": true,
+      "source_comparison_available": false,
+      "retail_link_verified": false,
+      "instruction_bytes": 27,
+      "instruction_count": 9,
+      "identity_evidence": "The complete 527-byte x87 default in the pinned vendor pow.obj matches after the original two-byte entry jump, except exactly22 genuine COFF relocation fields. The public named __CIpow disabled-SSE2 branch reaches that default. The original context names pow. Only the independently closed27-byte wrapper is registered; shared implementation and context callees remain uncredited.",
+      "semantics": {
+        "identity": "Microsoft x87 two-argument power intrinsic wrapper."
+      },
+      "address_expressions": [],
+      "direct_calls": [],
+      "corroboration": {
+        "return_address": 1824518,
+        "branches": [
+          {
+            "address": 1824492,
+            "size": 2,
+            "opcode": 235,
+            "target": 1824494
+          }
+        ],
+        "saved_registers": [],
+        "reviewed_call_witnesses": [
+          {
+            "kind": "x86_call_rel32",
+            "address": 1329019,
+            "target": 1824492
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1329037,
+            "target": 1824492
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1329081,
+            "target": 1824492
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1329118,
+            "target": 1824492
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1329305,
+            "target": 1824492
+          },
+          {
+            "kind": "x86_call_rel32",
+            "address": 1329326,
+            "target": 1824492
+          }
+        ],
+        "closed_cfg": {
+          "direct_call_targets": [
+            1824528
+          ],
+          "instruction_bytes": 27,
+          "internal_gap_ranges": []
+        },
+        "runtime_pow": {
+          "vendor": {
+            "archive_sha256": "780aa4cbe614efeeb72e3bb9538230f5cd37caeb0adc5d70c346b0dda19ba3a5",
+            "member": "..\\build\\intel\\mt_obj\\pow.obj",
+            "member_sha256": "c887f7e9951109ccda5f2ea7e9492fda5f34faa1ff308cd85111f52228b65ce6",
+            "symbol": "__CIpow",
+            "symbol_offset": 64,
+            "symbol_size": 59,
+            "default_symbol": "__CIpow_default",
+            "default_offset": 123,
+            "default_size": 527,
+            "wrapper_size": 27,
+            "original_entry_jump": "eb00",
+            "normalized_sha256": "6ec0368b71b43cb56dbaff6ea702d9d438691f5f350eff4ebcbfd74547070e22",
+            "relocations": [
+              [
+                30,
+                "__fload_withFB",
+                20
+              ],
+              [
+                50,
+                "__load_CW",
+                20
+              ],
+              [
+                77,
+                "__fload_withFB",
+                20
+              ],
+              [
+                114,
+                "__twoToTOS",
+                20
+              ],
+              [
+                127,
+                "___fastflag",
+                6
+              ],
+              [
+                134,
+                "__fast_exit",
+                20
+              ],
+              [
+                140,
+                "POW_name",
+                6
+              ],
+              [
+                150,
+                "__check_range_exit",
+                20
+              ],
+              [
+                156,
+                "___fastflag",
+                6
+              ],
+              [
+                163,
+                "__fast_exit",
+                20
+              ],
+              [
+                169,
+                "POW_name",
+                6
+              ],
+              [
+                179,
+                "__startTwoArgErrorHandling",
+                20
+              ],
+              [
+                190,
+                "__fload_withFB",
+                20
+              ],
+              [
+                251,
+                "__fload_withFB",
+                20
+              ],
+              [
+                310,
+                "__powhlp",
+                20
+              ],
+              [
+                330,
+                "__fast_exit",
+                20
+              ],
+              [
+                404,
+                "__infinity",
+                6
+              ],
+              [
+                430,
+                "__fast_exit",
+                20
+              ],
+              [
+                437,
+                "__fast_exit",
+                20
+              ],
+              [
+                446,
+                "__fast_exit",
+                20
+              ],
+              [
+                473,
+                "__indefinite",
+                6
+              ],
+              [
+                503,
+                "__half",
+                6
+              ]
+            ]
+          },
+          "vendor_container": {
+            "address": 1824492,
+            "size": 529,
+            "sha256": "f1772ec0fb9f666e912b9e561963df69157fa23994aa9928d4106b459a5ff37a"
           }
         }
       }

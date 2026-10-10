@@ -120,6 +120,9 @@ def verify_functions(original: Original, document: dict, anchors: dict | None = 
         if "runtime_asin" in evidence:
             from platforms.xbox_asin import verify_asin_original
             verify_asin_original(original, function)
+        if "runtime_pow" in evidence:
+            from platforms.xbox_pow import verify_pow_original
+            verify_pow_original(original, function)
         if "runtime_malloc" in evidence:
             from platforms.xbox_malloc import verify_malloc_original
             verify_malloc_original(original, function)

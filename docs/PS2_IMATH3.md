@@ -21,3 +21,71 @@ python tools/platforms/france_tu_sequences.py --orig-dir orig --check
 ```
 
 Private validation artifacts under `build/imath3252`: `original-proof.json`, `profiles.json`, all three `iMath3/<version>/report.json` files, `iMath3/raw-proof.json`, `iMath3/type-proof.json`, `france-raw-proof.json`, `gc/proof.json`, `full-report-proof.json`, and `production/SLES-53623/report.json`. The full French gate reuses authenticated objects for the sixty unchanged prior TUs and adds the actual complete new iMath3 object; all source inputs, command, hashes, and report deltas are recorded.
+
+## Ray and sphere source restoration (2026-10-09)
+
+The complete fifteen-function source unit now reaches 5,628 / 5,944 exact bytes
+and fourteen exact functions in each PS2 version, up from 4,092 bytes and twelve
+functions at source baseline `d43d27086`. Fuzzy code matching rises from
+91.34388% to 99.862045%; all other function scores and data results are unchanged.
+
+* The original 652-byte `iBoxIsectRay` expands `ClipBox` while retaining its six
+  calls to the 216-byte `ClipPlane`. A PS2-only inline declaration restores this
+  boundary and the original vector and interval lifetimes.
+* The original 884-byte `iBoxIsectSphere` computes each axis's low/high sphere
+  endpoints once and selects its region code with nested conditions. Keeping
+  those endpoint lifetimes across the conditional expression restores the
+  original Boolean materialization, branch joins, registers, and instruction
+  scheduling. The comparison operators retain the original ordering, including
+  the negated high-end comparison for the lower-side overlap case.
+
+Every word of both functions reproduces the three debug-bearing originals after
+applying only independently named original relocations: 652 / 652 and 884 / 884
+raw bytes. There are no unresolved call operands in these two bodies. The
+existing independently proven French sequence supplies the same function
+boundaries; its actual French-macro full-unit compilation also reaches both
+exact matches. No original identities, comparison metadata, compiler settings,
+or shared headers change.
+
+The remaining 316-byte `iSphereBoundVec` stays at 97.40506%. Its residual includes
+a branch through a shared return join and NOP placement; the two opaque runtime
+calls remain unnamed. This change does not claim the complete unit is exact.
+
+GameCube's full allocated sections remain byte-identical in USA, PAL, and German
+compilations (5,192 exact bytes / eighteen functions retained). Both Xbox
+production-profile recompilations retain identical comparison section bytes,
+function bytes, and named relocations, plus identical code/data sections in the
+complete private linked source executable. Those Xbox comparisons establish
+unchanged output, not new runtime identity or retail link coverage.
+
+Private reproducible evidence: `build/imath3-final-comparison.py` and `.json`,
+`imath3-final-changes.json`, `imath3-iBoxIsectRay-raw-proof.py` and `.json`,
+`imath3-iBoxIsectSphere-raw-proof.py` and `.json`,
+`checkimath3-gc-all.py`, `imath3-gc-allocations.json`,
+`checkimath3-xbox.py`, `checkimath3-xboxeu.py`, and
+`imath3-xbox-controls.py` / `imath3-xbox-binary-controls.json`.
+
+### Complete geometry comparison
+
+A follow-up replaces the outer `else` in `iSphereBoundVec` with an immediate
+return after its already-contained case. This natural early return restores the
+original shared return join and NOP placement without changing the computations
+or alias-handling behavior. All four complete PS2 unit reports now reach
+5,944 / 5,944 bytes and fifteen / fifteen functions at 100%; the additional
+316-byte function rises from 97.40506%. All other functions and data are unchanged.
+
+Independent raw checking reproduces 308 / 316 bytes in each named original. The
+two remaining JAL operands at offsets 108 and 296 refer to the same still-unnamed
+runtime entry; the compiled spelling is `memcpy`, but this source change does not
+establish that original identity or normalize its operands. Thus 100% here is the
+existing comparison result, not a claim of complete relocation closure.
+
+The shared early-return form preserves every allocated GameCube section in all
+three regions and both Xbox production-profile comparison containers and full
+private linked source code/data sections. Follow-up evidence is recorded under
+`build/imath3-bound-final-{comparison,changes}.json`,
+`imath3-iSphereBoundVec-raw-proof.{py,json}`,
+`imath3-bound-gc-allocations.json`, and
+`imath3-bound-xbox-binary-controls.json`; corresponding `imath3-bound` and
+`checkimath3-bound` scripts reproduce these checks against source parent
+`71fc97851`.

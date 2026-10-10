@@ -3615,7 +3615,12 @@ S32 zNPCGoalBossSandyLeap::Enter(F32 dt, void* updCtxt)
 
     if (sandy->round == 2)
     {
+#if defined(PS2)
+        F32 centerX = sandy->ringEdgeCenter[4].x;
+        toRing.x = endX - centerX;
+#else
         toRing.x = endX - sandy->ringEdgeCenter[4].x;
+#endif
         toRing.y = 0.0f;
         toRing.z = endZ - sandy->ringEdgeCenter[4].z;
 
@@ -3623,7 +3628,11 @@ S32 zNPCGoalBossSandyLeap::Enter(F32 dt, void* updCtxt)
         if (rad2 < 100.0f)
         {
             xVec3SMulBy(&toRing, 10.0f / xsqrt(rad2));
+#if defined(PS2)
+            endX = toRing.x + centerX;
+#else
             endX = toRing.x + sandy->ringEdgeCenter[4].x;
+#endif
             endZ = toRing.z + sandy->ringEdgeCenter[4].z;
         }
     }

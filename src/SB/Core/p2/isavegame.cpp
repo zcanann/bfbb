@@ -22,6 +22,8 @@
 #define ISG_PRODUCT_CODE "BESLES-51968"
 #elif defined(VERSION_SLES_51970)
 #define ISG_PRODUCT_CODE "BESLES-51970"
+#elif defined(VERSION_SLES_53623)
+#define ISG_PRODUCT_CODE "BESLES-53623"
 #else
 #define ISG_PRODUCT_CODE "BASLUS-20680"
 #endif
@@ -1069,6 +1071,7 @@ void iSGAutoSave_Disconnect(st_ISGSESSION* isg)
     iSGSessionEnd(isg);
 }
 
+#pragma dont_inline on
 S32 iSGAutoSave_Monitor(st_ISGSESSION* isg, S32 idx_target)
 {
     U32 stat;
@@ -1092,6 +1095,7 @@ S32 iSGAutoSave_Monitor(st_ISGSESSION* isg, S32 idx_target)
     return 1;
 }
 
+#pragma dont_inline reset
 S32 iSG_start_your_engines()
 {
     S32 result = 1;
@@ -1319,6 +1323,7 @@ S32 iSG_mc_exists(st_ISG_MEMCARD_DATA* mcdata, S32 mcidx)
     return result;
 }
 
+#pragma dont_inline on
 S32 iSG_mc_isformatted(st_ISG_MEMCARD_DATA* mcdata, S32 mcidx)
 {
     S32 result = 1;
@@ -1346,6 +1351,7 @@ S32 iSG_mc_isformatted(st_ISG_MEMCARD_DATA* mcdata, S32 mcidx)
     return is_fmtd;
 }
 
+#pragma dont_inline reset
 S32 iSG_mc_isPSIIcard(st_ISG_MEMCARD_DATA* mcdata, S32 mcidx)
 {
     S32 result = 1;
@@ -1375,6 +1381,7 @@ S32 iSG_mc_isPSIIcard(st_ISG_MEMCARD_DATA* mcdata, S32 mcidx)
     return result;
 }
 
+#pragma dont_inline on
 S32 iSG_mc_availclust(st_ISG_MEMCARD_DATA* mcdata, S32 mcidx)
 {
     S32 result = 1;
@@ -1418,6 +1425,8 @@ S32 iSG_mc_availDirEnt(st_ISG_MEMCARD_DATA* mcdata, S32 mcidx, const char* dpath
     return result ? 0 : -1;
 }
 
+#pragma dont_inline reset
+
 S32 iSG_isSpaceForFile(st_ISG_MEMCARD_DATA* mcdata, S32 mcidx, S32 fsize, const char* dpath,
                               const char* fname, S32* bytesNeeded, S32* availOnDisk)
 {
@@ -1431,8 +1440,8 @@ S32 iSG_isSpaceForFile(st_ISG_MEMCARD_DATA* mcdata, S32 mcidx, S32 fsize, const 
 
     if (dpath != NULL && mcdata->gamepath[0] == '\0')
     {
-        strcpy(mcdata->gamepath, dpath);
         reset_mcpath = 1;
+        strcpy(mcdata->gamepath, dpath);
     }
 
     iSG_mcidx_portslot(mcidx, &mcdata->mcport, &mcdata->mcslot, NULL);
@@ -1450,13 +1459,13 @@ S32 iSG_isSpaceForFile(st_ISG_MEMCARD_DATA* mcdata, S32 mcidx, S32 fsize, const 
         xtra_fent = iSG_get_fsize(mcdata, fname);
         if (xtra_fent > 0)
         {
-            if (xtra_fent < fsize)
+            if (xtra_fent >= fsize)
             {
-                fc_need -= (xtra_fent + 1023) / 1024;
+                fc_need = 0;
             }
             else
             {
-                fc_need = 0;
+                fc_need -= (xtra_fent + 1023) / 1024;
             }
         }
 

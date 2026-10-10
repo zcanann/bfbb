@@ -566,6 +566,9 @@ static void LeanUpdate(F32 angle, F32 dt)
     globals.player.LeanLerp += t * dt;
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 static void TurnToFace(xEnt* ent, const xVec3* target, F32 speedLimit, F32 dt)
 {
     xVec3 currentFacing = ent->frame->mat.at;
@@ -593,6 +596,10 @@ static void TurnToFace(xEnt* ent, const xVec3* target, F32 speedLimit, F32 dt)
         ent->frame->mode |= 0x20;
     }
 }
+
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 static void PlayerArrive(xEnt* ent, xBase* base)
 {
@@ -1942,9 +1949,8 @@ static U32 GooDeathCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
     globals.player.DamageTimer = 10.0f;
     zGooStopTide();
     sPlayerDiedLastTime = 1;
-#if !defined(PS2)
-    // All PS2 builds return straight after setting sPlayerDiedLastTime; the
-    // control lock-out on goo death only exists in the GameCube build.
+#if !defined(PS2) || defined(VERSION_SLES_51970)
+    // Germany retains the control lock-out and carried-object cleanup.
     zEntPlayerControlOff(CONTROL_OWNER_GLOBAL);
 #endif
     return false;
@@ -5052,6 +5058,9 @@ static xEnt* zEntPlayer_FindGrabEnt(xEnt* ent, zScene* zsc, S32* failed)
 static const U8 SBBBashBones[8] = { 22, 30, 38, 42 };
 static const U8 SBBBounceBones[8] = { 22, 30, 38, 42 };
 
+#if defined(PS2)
+#pragma inline_intrinsics off
+#endif
 void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt)
 {
     xAnimState* astate;
@@ -7447,6 +7456,10 @@ catchtunnel_done:
 
 xVec3* NPCC_rightDir(xEnt* ent);
 
+#if defined(PS2)
+#pragma inline_intrinsics reset
+#endif
+
 void zEntPlayer_CheckCritterContact(xEnt* player, F32 dt)
 {
     S32 i;
@@ -9416,19 +9429,33 @@ static RpCollisionTriangle* nearestTrackCB(RpIntersection*, RpCollisionTriangle*
 
 static F32 det3x3top1(F32 a, F32 b, F32 c, F32 d, F32 e, F32 f)
 {
+#if defined(PS2)
+    return a * e + (d * c + (b * f - e * c - a * f)) - d * b;
+#else
     F32 ret = -((a * f) - ((b * f) - (e * c)));
     return -((d * b) - ((a * e) + ((d * c) + ret)));
+#endif
 }
 
 void xQuickCullForSphere(xQCData* q, const xSphere* s);
 
 static void SlideTrackUpdate(xEnt* p)
 {
+#if defined(PS2)
+    xCollis coll;
+    xSphere sph;
+    xQCData qcd;
+    RpIntersection isx;
+    xVec3* center = (xVec3*)&isx.t.sphere.center;
+    TrackPolyData tpd;
+#else
     xQCData qcd;
     RpIntersection isx;
     xSphere sph;
     xCollis coll;
+    RwV3d* center = &isx.t.sphere.center;
     TrackPolyData tpd;
+#endif
     U32 i;
 
     sph.center = *(xVec3*)&p->model->Mat->pos;
@@ -9462,7 +9489,12 @@ static void SlideTrackUpdate(xEnt* p)
             continue;
         }
 
+#if defined(PS2)
+        RwFrame* frame = RpAtomicGetFrame(tent->model->Data);
+        frame->ltm = *tent->model->Mat;
+#else
         RpAtomicGetFrame(tent->model->Data)->ltm = *tent->model->Mat;
+#endif
 
         tpd.mat = (xMat4x3*)tent->model->Mat;
         tpd.testEnt = tent;
@@ -9496,56 +9528,41 @@ static void SlideTrackUpdate(xEnt* p)
     RwTexCoords* uvs = geom->texCoords[0];
     RwV3d* verts = geom->morphTarget->verts;
 
-    F32 det = det3x3top1(verts[tri->vertIndex[0]].x, verts[tri->vertIndex[1]].x,
-                         verts[tri->vertIndex[2]].x, verts[tri->vertIndex[0]].z,
-                         verts[tri->vertIndex[1]].z, verts[tri->vertIndex[2]].z);
+    U16* triidx = tri->vertIndex;
+
+    F32 det = det3x3top1(verts[triidx[0]].x, verts[triidx[1]].x, verts[triidx[2]].x,
+                         verts[triidx[0]].z, verts[triidx[1]].z, verts[triidx[2]].z);
 
     if (xabs(det) < 1e-5f)
     {
         return;
     }
 
-    F32 val = (-uvs[tri->vertIndex[0]].v *
-                   det3x3top1(isx.t.sphere.center.x, verts[tri->vertIndex[1]].x,
-                              verts[tri->vertIndex[2]].x, isx.t.sphere.center.z,
-                              verts[tri->vertIndex[1]].z, verts[tri->vertIndex[2]].z) +
-               -uvs[tri->vertIndex[1]].v *
-                   det3x3top1(verts[tri->vertIndex[0]].x, isx.t.sphere.center.x,
-                              verts[tri->vertIndex[2]].x, verts[tri->vertIndex[0]].z,
-                              isx.t.sphere.center.z, verts[tri->vertIndex[2]].z) +
-               -uvs[tri->vertIndex[2]].v *
-                   det3x3top1(verts[tri->vertIndex[0]].x, verts[tri->vertIndex[1]].x,
-                              isx.t.sphere.center.x, verts[tri->vertIndex[0]].z,
-                              verts[tri->vertIndex[1]].z, isx.t.sphere.center.z)) /
+    F32 val = (-uvs[triidx[0]].v * det3x3top1(center->x, verts[triidx[1]].x, verts[triidx[2]].x,
+                                              center->z, verts[triidx[1]].z, verts[triidx[2]].z) +
+               -uvs[triidx[1]].v * det3x3top1(verts[triidx[0]].x, center->x, verts[triidx[2]].x,
+                                              verts[triidx[0]].z, center->z, verts[triidx[2]].z) +
+               -uvs[triidx[2]].v * det3x3top1(verts[triidx[0]].x, verts[triidx[1]].x, center->x,
+                                              verts[triidx[0]].z, verts[triidx[1]].z, center->z)) /
               det;
 
-    F32 valx = (-uvs[tri->vertIndex[0]].v *
-                    det3x3top1(1.0f + isx.t.sphere.center.x, verts[tri->vertIndex[1]].x,
-                               verts[tri->vertIndex[2]].x, isx.t.sphere.center.z,
-                               verts[tri->vertIndex[1]].z, verts[tri->vertIndex[2]].z) +
-                -uvs[tri->vertIndex[1]].v *
-                    det3x3top1(verts[tri->vertIndex[0]].x, 1.0f + isx.t.sphere.center.x,
-                               verts[tri->vertIndex[2]].x, verts[tri->vertIndex[0]].z,
-                               isx.t.sphere.center.z, verts[tri->vertIndex[2]].z) +
-                -uvs[tri->vertIndex[2]].v *
-                    det3x3top1(verts[tri->vertIndex[0]].x, verts[tri->vertIndex[1]].x,
-                               1.0f + isx.t.sphere.center.x, verts[tri->vertIndex[0]].z,
-                               verts[tri->vertIndex[1]].z, isx.t.sphere.center.z)) /
-               det;
+    F32 valx =
+        (-uvs[triidx[0]].v * det3x3top1(1.0f + center->x, verts[triidx[1]].x, verts[triidx[2]].x,
+                                        center->z, verts[triidx[1]].z, verts[triidx[2]].z) +
+         -uvs[triidx[1]].v * det3x3top1(verts[triidx[0]].x, 1.0f + center->x, verts[triidx[2]].x,
+                                        verts[triidx[0]].z, center->z, verts[triidx[2]].z) +
+         -uvs[triidx[2]].v * det3x3top1(verts[triidx[0]].x, verts[triidx[1]].x, 1.0f + center->x,
+                                        verts[triidx[0]].z, verts[triidx[1]].z, center->z)) /
+        det;
 
-    F32 valz = (-uvs[tri->vertIndex[0]].v *
-                    det3x3top1(isx.t.sphere.center.x, verts[tri->vertIndex[1]].x,
-                               verts[tri->vertIndex[2]].x, 1.0f + isx.t.sphere.center.z,
-                               verts[tri->vertIndex[1]].z, verts[tri->vertIndex[2]].z) +
-                -uvs[tri->vertIndex[1]].v *
-                    det3x3top1(verts[tri->vertIndex[0]].x, isx.t.sphere.center.x,
-                               verts[tri->vertIndex[2]].x, verts[tri->vertIndex[0]].z,
-                               1.0f + isx.t.sphere.center.z, verts[tri->vertIndex[2]].z) +
-                -uvs[tri->vertIndex[2]].v *
-                    det3x3top1(verts[tri->vertIndex[0]].x, verts[tri->vertIndex[1]].x,
-                               isx.t.sphere.center.x, verts[tri->vertIndex[0]].z,
-                               verts[tri->vertIndex[1]].z, 1.0f + isx.t.sphere.center.z)) /
-               det;
+    F32 valz =
+        (-uvs[triidx[0]].v * det3x3top1(center->x, verts[triidx[1]].x, verts[triidx[2]].x,
+                                        1.0f + center->z, verts[triidx[1]].z, verts[triidx[2]].z) +
+         -uvs[triidx[1]].v * det3x3top1(verts[triidx[0]].x, center->x, verts[triidx[2]].x,
+                                        verts[triidx[0]].z, 1.0f + center->z, verts[triidx[2]].z) +
+         -uvs[triidx[2]].v * det3x3top1(verts[triidx[0]].x, verts[triidx[1]].x, center->x,
+                                        verts[triidx[0]].z, verts[triidx[1]].z, 1.0f + center->z)) /
+        det;
 
     valx -= val;
     valz -= val;
@@ -12523,7 +12540,11 @@ static void PlayerRotMatchUpdateEnt(xEnt* ent, xScene* sc, F32 dt, void* fdata)
     xCollis* coll = ent->collis->colls;
     S32 hit_it = coll->flags & 0x1;
     xSurface* surf = zSurfaceGetSurface(coll);
+#if defined(PS2)
+    S32 grounded = hit_it && surf && surf->state == 0 && zSurfaceGetMatchOrient(surf);
+#else
     S32 grounded = hit_it && surf && !surf->state && zSurfaceGetMatchOrient(surf);
+#endif
     xVec3* eup;
 
     if (grounded)
@@ -12552,10 +12573,12 @@ static void PlayerRotMatchUpdateEnt(xEnt* ent, xScene* sc, F32 dt, void* fdata)
 
             F32 rang = xVec3Dot(&nfup, &neup);
 
+#if !defined(PS2)
             if (rang > 1.0f)
             {
                 rang = 1.0f;
             }
+#endif
 
             rang = xacos(rang);
 
@@ -12578,9 +12601,13 @@ static void PlayerRotMatchUpdateEnt(xEnt* ent, xScene* sc, F32 dt, void* fdata)
                     xMat4x3 rot;
 
                     xMat4x3Rot(&rot, &raxis, dang, xEntGetPos(ent));
-                    xMat3x3RMulVec(eup, &rot, &neup);
-
+#if defined(PS2)
                     globals.player.HangElapsed = 0.0f;
+#endif
+                    xMat3x3RMulVec(eup, &rot, &neup);
+#if !defined(PS2)
+                    globals.player.HangElapsed = 0.0f;
+#endif
                 }
             }
         }
@@ -12615,9 +12642,13 @@ static void PlayerRotMatchUpdateEnt(xEnt* ent, xScene* sc, F32 dt, void* fdata)
                 xMat4x3 rot;
 
                 xMat4x3Rot(&rot, &raxis, dang, xEntGetPos(ent));
-                xMat3x3RMulVec(eup, &rot, &neup);
-
+#if defined(PS2)
                 globals.player.HangElapsed = 0.0f;
+#endif
+                xMat3x3RMulVec(eup, &rot, &neup);
+#if !defined(PS2)
+                globals.player.HangElapsed = 0.0f;
+#endif
             }
         }
     }

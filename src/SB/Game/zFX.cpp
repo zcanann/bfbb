@@ -477,6 +477,7 @@ void zFXGooUpdateInstance(zFXGooInstance* goo, F32 dt)
     F32 tmp = xpow(1.0f - goo->alpha, 1.5f);
     goo->warb_time += tmp * dt;
 
+#if !defined(PS2)
     if (goo->alpha < 1.0f && goo->atomic != NULL)
     {
         RpGeometry* geom = RpAtomicGetGeometry(goo->atomic);
@@ -501,6 +502,8 @@ void zFXGooUpdateInstance(zFXGooInstance* goo, F32 dt)
             RpGeometryUnlock(geom);
         }
     }
+
+#endif
 
     if (goo_timer_textbox != NULL)
     {
@@ -1195,7 +1198,8 @@ void zFX_SpawnBubbleWall()
     xVec3 pos[100];
     xVec3 vel[100];
 
-    // Retail hoisted these six loads out of the loop. Our compiler does not, so
+#if !defined(PS2)
+    // GameCube retail hoisted these six loads out of the loop. Our compiler does not, so
     // they are hoisted by hand; the declaration order fixes the register
     // assignment and the assignment order fixes the emitted load order.
     F32 sy, sx, vsz, vsy, vsx, sz;
@@ -1206,21 +1210,35 @@ void zFX_SpawnBubbleWall()
     vsy = bubblewall_velscale.y;
     vsz = bubblewall_velscale.z;
 
+#endif
+
     xVec3* pp = pos;
     xVec3* vp = vel;
     for (U32 i = 0; i < 50; i++, pp++, vp++)
     {
+#if defined(PS2)
+        pp->x = mat->pos.x + (xurand() - 0.5f) + bubblewall_scale.x * (xurand() - 0.5f);
+        pp->y = mat->pos.y + (xurand() - 0.5f) + bubblewall_scale.y * (xurand() - 0.5f);
+        pp->z = mat->pos.z + (xurand() - 0.5f) + bubblewall_scale.z * (xurand() - 0.5f);
+#else
         pp->x = mat->pos.x + (xurand() - 0.5f) + sx * (xurand() - 0.5f);
         pp->y = mat->pos.y + (xurand() - 0.5f) + sy * (xurand() - 0.5f);
         pp->z = mat->pos.z + (xurand() - 0.5f) + sz * (xurand() - 0.5f);
+#endif
 
         xVec3 offset;
         xVec3ScaleC(&offset, (xVec3*)&mat->at, 1.2f, 1.2f, 1.2f);
         xVec3Add(pp, pp, &offset);
 
+#if defined(PS2)
+        vp->x = bubblewall_velscale.x * (xurand() - 0.5f);
+        vp->y = bubblewall_velscale.y * (xurand() - 0.5f);
+        vp->z = bubblewall_velscale.z * (xurand() - 0.5f);
+#else
         vp->x = vsx * (xurand() - 0.5f);
         vp->y = vsy * (xurand() - 0.5f);
         vp->z = vsz * (xurand() - 0.5f);
+#endif
     }
 
     zParPTankSpawnBubbles(pos, vel, 50, 1.0f);
@@ -1368,7 +1386,7 @@ namespace
     F32 get_triangle_area(const xVec3& a, const xVec3& b, const xVec3& c);
     void eval_tri(xVec3* vert, xVec3* norm, const xMat4x3* mat, const RpGeometry* geom,
                   const RpTriangle* tri);
-    void SkinXformVertAndNormal(xVec3* dst_verts, xVec3* dst_normals, const xVec3* verts,
+    inline void SkinXformVertAndNormal(xVec3* dst_verts, xVec3* dst_normals, const xVec3* verts,
                                 const xVec3* normals, const xMat4x3* mat, const xMat4x3* bone_mats,
                                 const F32* weights, const U32* bone_idx, const U16* idx, U32 count);
     void random_point_on_triangle(xVec3& loc, xVec3& norm, const xVec3* v, const xVec3* n);
@@ -1495,10 +1513,13 @@ namespace
         norm[2].up_normalize();
     }
 
-    void SkinXformVertAndNormal(xVec3* dst_verts, xVec3* dst_normals, const xVec3* verts,
+    inline void SkinXformVertAndNormal(xVec3* dst_verts, xVec3* dst_normals, const xVec3* verts,
                                 const xVec3* normals, const xMat4x3* mat, const xMat4x3* bone_mats,
                                 const F32* weights, const U32* bone_idx, const U16* idx, U32 count)
     {
+#if defined(PS2)
+        const xMat4x3* root_mat = mat++;
+#endif
         U32 done[2] = { 0, 0 };
         xMat4x3* scratch = (xMat4x3*)giAnimScratch;
 
@@ -1514,48 +1535,78 @@ namespace
 
             for (U32 j = 0; j < 4; j++)
             {
-                U32 b = bones >> (j * 8);
-                U32 word = (b >> 5) & 7;
-                U32 bi = b & 0xff;
+                U32 b = (bones >> (j * 8)) & 0xff;
+                U32 word = b >> 5;
+                U32 bi = b;
                 if (!((1 << (b & 0x1f)) & done[word]))
                 {
                     const xMat4x3* model_bone = &mat[bi];
+#if !defined(PS2)
                     model_bone++;
+#endif
                     xMat4x3Mul(&scratch[bi], &bone_mats[bi], model_bone);
                     done[word] |= 1 << (b & 0x1f);
                 }
             }
 
+#if defined(PS2)
+            w = wt;
+            nbones = bones;
+            U32 k = 4;
+            xVec3 acc = { 0.0f, 0.0f, 0.0f };
+            for (; *w && k != 0; k--)
+#else
             xVec3 acc = { 0.0f, 0.0f, 0.0f };
 
             w = wt;
             nbones = bones;
             for (U32 k = 4; *w && k != 0; k--)
+#endif
             {
                 xVec3 tmp;
+#if defined(PS2)
+                const xMat4x3* bone = &scratch[nbones & 0xff];
+                nbones >>= 8;
+#else
                 const xMat4x3* bone = &scratch[bones & 0xff];
                 bones >>= 8;
+#endif
                 xMat4x3Toworld(&tmp, bone, vert);
                 tmp *= *w;
                 acc += tmp;
                 w++;
             }
+#if defined(PS2)
+            xMat4x3Toworld(dst_verts, root_mat, &acc);
+
+            k = 4;
+#else
             xMat4x3Toworld(dst_verts, mat, &acc);
 
             U32 k = 4;
+#endif
             acc = 0.0f;
             w = wt;
             for (; *w && k != 0; k--)
             {
                 xVec3 tmp;
+#if defined(PS2)
+                const xMat4x3* bone = &scratch[bones & 0xff];
+                bones >>= 8;
+#else
                 const xMat4x3* bone = &scratch[nbones & 0xff];
                 nbones >>= 8;
+#endif
                 xMat3x3RMulVec(&tmp, bone, norm);
                 tmp *= *w;
                 acc += tmp;
                 w++;
             }
+#if defined(PS2)
+            xMat3x3RMulVec(dst_normals, root_mat, &acc);
+#else
             xMat3x3RMulVec(dst_normals, mat, &acc);
+#endif
 
             dst_verts++;
             dst_normals++;

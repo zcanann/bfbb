@@ -124,6 +124,18 @@ U32 xMathSolveQuadratic(F32 a, F32 b, F32 c, F32* x1, F32* x2)
     return 2;
 }
 
+#if defined(PS2)
+// Keep the cubic solver's scalar square-root boundary and separate result.
+static inline F32 xMathCubicSqrt(F32 value)
+{
+    F32 result;
+    asm volatile("sqrt.s %0, %1" : "=f"(result) : "f"(value));
+    return result;
+}
+#else
+#define xMathCubicSqrt xsqrt
+#endif
+
 U32 xMathSolveCubic(F32 a, F32 b, F32 c, F32 d, F32* x1, F32* x2, F32* x3)
 {
     F32 arecip; //
@@ -137,13 +149,6 @@ U32 xMathSolveCubic(F32 a, F32 b, F32 c, F32 d, F32* x1, F32* x2, F32* x3)
     F32 fAngle;
     F32 fCos; //
     F32 fSin; //
-
-    F32 temp_f1;
-    F32 temp_f1_2;
-    F32 temp_f1_3;
-    F32 temp_f28_2;
-    F32 temp_f29;
-    F32 var_f1;
 
     if (a == 0.0f)
     {
@@ -167,51 +172,53 @@ U32 xMathSolveCubic(F32 a, F32 b, F32 c, F32 d, F32* x1, F32* x2, F32* x3)
     }
     if (fDiscr > 0.0f)
     {
-        temp_f1 = xsqrt(fDiscr);
-        temp_f1_2 = -fHalfB + temp_f1;
-        if (temp_f1_2 >= 0.0f)
+        fDiscr = xMathCubicSqrt(fDiscr);
+        fTemp = -fHalfB + fDiscr;
+        if (fTemp >= 0.0f)
         {
-            *x1 = xpow(temp_f1_2, 0.33333334f);
+            *x1 = xpow(fTemp, 0.33333334f);
         }
         else
         {
-            *x1 = -xpow(-temp_f1_2, 0.33333334f);
+            *x1 = -xpow(-fTemp, 0.33333334f);
         }
-        temp_f1_3 = -fHalfB - temp_f1;
-        if (temp_f1_3 >= 0.0f)
+        fTemp = -fHalfB - fDiscr;
+        if (fTemp >= 0.0f)
         {
-            *x1 += xpow(temp_f1_3, 0.33333334f);
+            *x1 += xpow(fTemp, 0.33333334f);
         }
         else
         {
-            *x1 -= xpow(-temp_f1_3, 0.33333334f);
+            *x1 -= xpow(-fTemp, 0.33333334f);
         }
         *x1 -= fOffset;
         return 1;
     }
     if (fDiscr < 0.0f)
     {
-        temp_f29 = xsqrt(-0.33333334f * fA);
-        temp_f28_2 = 0.33333334f * xatan2(xsqrt(-fDiscr), -fHalfB);
-        fCos = icos(temp_f28_2);
-        fSin = isin(temp_f28_2);
-        *x1 = (2.0f * temp_f29 * fCos) - fOffset;
-        *x2 = (-temp_f29 * (fCos + 1.7320508f * fSin)) - fOffset;
-        *x3 = (-temp_f29 * (fCos - 1.7320508f * fSin)) - fOffset;
+        fDist = xMathCubicSqrt(-0.33333334f * fA);
+        fAngle = 0.33333334f * xatan2(xMathCubicSqrt(-fDiscr), -fHalfB);
+        fCos = icos(fAngle);
+        fSin = isin(fAngle);
+        *x1 = (2.0f * fDist * fCos) - fOffset;
+        *x2 = (-fDist * (fCos + 1.7320508f * fSin)) - fOffset;
+        *x3 = (-fDist * (fCos - 1.7320508f * fSin)) - fOffset;
         return 3;
     }
     if (fHalfB >= 0.0f)
     {
-        var_f1 = -xpow(fHalfB, 0.33333334f);
+        fTemp = -xpow(fHalfB, 0.33333334f);
     }
     else
     {
-        var_f1 = xpow(-fHalfB, 0.33333334f);
+        fTemp = xpow(-fHalfB, 0.33333334f);
     }
-    *x1 = (2.0f * var_f1) - fOffset;
-    *x2 = -var_f1 - fOffset;
+    *x1 = (2.0f * fTemp) - fOffset;
+    *x2 = -fTemp - fOffset;
     return 2;
 }
+
+#undef xMathCubicSqrt
 
 void __deadstripped_xMath_angles(F32* values)
 {
@@ -235,15 +242,13 @@ F32 xAngleClamp(F32 a)
 #if !defined(XBOX)
 F32 xAngleClampFast(F32 a)
 {
-    F32 rad360 = (2 * PI);
-
     if (a < 0.0f)
     {
-        a += rad360;
+        a += (2 * PI);
     }
-    else if (a >= rad360)
+    else if (a >= (2 * PI))
     {
-        a -= rad360;
+        a -= (2 * PI);
     }
 
     return a;
@@ -275,6 +280,15 @@ F32 xDangleClamp(F32 a)
 #if defined(PS2)
 #define XMATH_SIGN(f) (*(U32*)&(f) & 0x80000000)
 
+static inline S32 xMathAccelNearZero(F32 value)
+{
+    return (F32)xMathAbs(value) < 0.001f;
+}
+static inline S32 xMathAccelSignsDiffer(F32& lhs, F32& rhs)
+{
+    return !(XMATH_SIGN(lhs) == XMATH_SIGN(rhs));
+}
+
 void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
 {
     F32 offset;
@@ -289,7 +303,7 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
 
     offset = endx - x;
 
-    if ((F32)xMathAbs(v) < 0.001f || XMATH_SIGN(offset) != XMATH_SIGN(v))
+    if (xMathAccelNearZero(v) || xMathAccelSignsDiffer(offset, v))
     {
         t1 = 1e38f;
     }

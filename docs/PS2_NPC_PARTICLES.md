@@ -99,3 +99,50 @@ Removing the synthetic UV index local and moving `justTheRand` after the
 reciprocals did not improve these routines; those probes were discarded.
 Remaining differences include UV-count reuse and scheduling. No compiler
 cause is asserted.
+
+## Exact atlas count reuse
+
+The four ConfigPar atlas builders now keep `num_uvcell[0]` in an unsigned
+local across the particle UV stores and use separate reciprocal expressions.
+The original instructions retain this count for the second UV expression;
+reloading through the parameter object changed register lifetimes and
+scheduling. Explicit count reuse restores all four complete bodies without
+assembly, volatile accesses, compiler changes or a generic optimization fence.
+The non-PS2 preprocessed expressions remain the same.
+
+Fahrwerkz, TarTarGunk and SleepyZeez (740 bytes each) improve from 92.189186%
+to 100%; TubeConfetti (1,144 bytes) improves from 94.72028% to 100%. Each of
+USA, PAL and German gains 3,364 exact bytes and four exact functions. The full
+65-function Supplement unit rises from 14,516 to 17,880 exact bytes, 49 to 53
+exact functions and 99.29531% to 99.86032% fuzzy; every other function record
+is unchanged. All three GC full-unit reports retain identical records and
+measures. The newly proved French Confetti body is also exact, adding another
+1,144 exact bytes and one function to the particle-kernel profile; its full
+11-function, two-unit pilot is now 100% across 4,332 bytes. The other three
+French duplicate builders still require independent surrounding identity proof.
+
+Private evidence: `build/npc-uv-cache-region-summary.json`, before/after reports
+in `build/npc-uv-cache-regions/`, `build/npc-uv-cache-gc.txt`, and
+`build/npc-particle-kernels-france-pilot/{before-source,report}.json`. A separate
+probe rearranging the synthetic arithmetic locals into the DWARF declaration
+order did not improve the score and was discarded.
+
+## Burst vector-add follow-up
+
+Using the ordinary three-operand `xVec3Add` form for the PS2 burst position
+addition improves NPCC_BurstBubble (868 bytes) from 98.61751% to 98.80184%.
+All three full debug-unit reports change only that record, with unit fuzzy
+99.86032% to 99.86419% and unchanged exact totals. All three GC full-unit
+reports remain identical. Evidence is `build/npc-burst-region-summary.json`,
+`after-burst.json` beside the preserved atlas reports and `build/npc-burst-gc.txt`.
+Reversing the add operands reduced similarity and was discarded.
+
+The culler GPR residual remains unresolved. Returning its output by reference,
+expanding the same assembly directly in callers, and using ordinary `=r`
+instead of the unnecessary early-clobber modifier all emitted the same bytes.
+The input pointer is consumed by the first vector load, before the GPR output
+is written. No register constraint was added to force retail's a0 assignment.
+Original DWARF puts the caller's thisChickIsToast and _loc variables in v0; it
+does not identify a named a0 output. A FindParty common-return rewrite slightly
+improved BurstBubble but regressed 24 exact helper bodies, so it was discarded.
+No compiler-version cause is inferred from these unsuccessful source probes.

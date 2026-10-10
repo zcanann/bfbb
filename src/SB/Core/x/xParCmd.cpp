@@ -155,9 +155,16 @@ void xParCmdAge_Update(xParCmd* c, xParGroup* ps, F32 dt)
 
 void xParCmdFollow_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
+#if defined(XBOX)
+    xPar* p;
+#else
     xPar* p = ps->m_root;
+#endif
     xParCmdFollow* cmd = (xParCmdFollow*)c->tasset;
     F32 mdt = cmd->gravity * dt;
+#if defined(XBOX)
+    p = ps->m_root;
+#endif
 
     while (p && p->m_next)
     {
@@ -757,10 +764,15 @@ void xParCmd_DampenSpeed_Update(xParCmd* c, xParGroup* ps, F32 dt)
 
     if (cmd->enabled)
     {
+#if !defined(XBOX)
         p = ps->m_root;
+#endif
 
         F32 damp = dt * cmd->dampSpeed;
 
+#if defined(XBOX)
+        p = ps->m_root;
+#endif
         while (p)
         {
             xVec3AddScaled(&p->m_vel, &p->m_vel, damp);

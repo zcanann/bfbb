@@ -58,7 +58,7 @@ class OriginalArrays:
     def initializer(self,function,pair,count):
         original,target=self.original,self.target;a=function["low"];size=function["high"]-a
         roots=[(off,attrs) for off,tag,owner,attrs in self.rows if tag in (6,14) and
-               owner.replace("\\","/").endswith(SOURCE) and attrs.get(17)==a and attrs.get(18)==a+size]
+               owner.replace("\\","/").endswith(function["source"]) and attrs.get(17)==a and attrs.get(18)==a+size]
         require(len(roots)==1,"NPC original builder DWARF identity ambiguous")
         off,root=roots[0]
         declarations=[(i,attrs) for i,tag,owner,attrs in self.rows if off<i<root[1] and

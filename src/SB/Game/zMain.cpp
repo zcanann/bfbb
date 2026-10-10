@@ -36,6 +36,8 @@ extern "C" int sprintf(char*, const char*, ...);
 #if !defined(PS2)
 #include <dolphin/card.h>
 #include <dolphin/os.h>
+#else
+#include <libpad.h>
 #endif
 // from zAssetTypes.h - see the note above
 void zAssetStartup();
@@ -61,11 +63,13 @@ void zAssetShutdown();
 #include "xstransvc.h"
 
 #if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
-enum { MAIN_SCREEN_HEIGHT = 528, MAIN_VBLANKS_PER_SECOND = 50 };
+enum { MAIN_SCREEN_WIDTH = 640, MAIN_SCREEN_HEIGHT = 528, MAIN_VBLANKS_PER_SECOND = 50 };
+#elif defined(VERSION_SLES_51968) || defined(VERSION_SLES_51970)
+enum { MAIN_SCREEN_WIDTH = 512, MAIN_SCREEN_HEIGHT = 512, MAIN_VBLANKS_PER_SECOND = 50 };
 #elif defined(PS2)
-enum { MAIN_SCREEN_HEIGHT = 448, MAIN_VBLANKS_PER_SECOND = 60 };
+enum { MAIN_SCREEN_WIDTH = 640, MAIN_SCREEN_HEIGHT = 448, MAIN_VBLANKS_PER_SECOND = 60 };
 #else
-enum { MAIN_SCREEN_HEIGHT = 480, MAIN_VBLANKS_PER_SECOND = 60 };
+enum { MAIN_SCREEN_WIDTH = 640, MAIN_SCREEN_HEIGHT = 480, MAIN_VBLANKS_PER_SECOND = 60 };
 #endif
 
 static const basic_rect<F32> screen_bounds = { 0.0f, 0.0f, 1.0f, 1.0f };
@@ -132,19 +136,19 @@ void main(S32 argc, char** argv)
     options |= 2;
     for (i = 1; i < argc; i++)
     {
-        if (!strcmp(argv[i], "-hostio"))
+        if (!stricmp(argv[i], "-hostio"))
         {
             options |= 1;
         }
-        else if (!strcmp(argv[i], "-cdrom"))
+        else if (!stricmp(argv[i], "-cdrom"))
         {
             options &= ~1;
         }
-        else if (!strcmp(argv[i], "-rebootiop"))
+        else if (!stricmp(argv[i], "-rebootiop"))
         {
             options |= 2;
         }
-        else if (!strcmp(argv[i], "-norebootiop"))
+        else if (!stricmp(argv[i], "-norebootiop"))
         {
             options &= ~2;
         }
@@ -204,6 +208,9 @@ void main(S32 argc, char** argv)
     iSystemExit();
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 void zMainOutputMgrSetup()
 {
     iTime tim = iTimeGet();
@@ -212,6 +219,10 @@ void zMainOutputMgrSetup()
     iTimeDiffSec(tim);
     iTimeGet();
 }
+
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 void zMainInitGlobals()
 {
@@ -714,10 +725,18 @@ void zMainMemLvlChkCB()
     zSceneMemLvlChkCB();
 }
 
+#if defined(VERSION_SLES_51970)
+#pragma dont_inline on
+#endif
 void zMainShowProgressBar()
 {
     S32 progBar;
+#if defined(VERSION_SLES_51970)
+    // Original German buffer is smaller than the localized string.
+    char loadingText[11];
+#else
     char loadingText[12];
+#endif
     char auStack_cc[64];
     char acStack_8c[64];
     char formattedStr[64];
@@ -728,8 +747,15 @@ void zMainShowProgressBar()
         {
             percentageDone = 100;
         }
+#if defined(VERSION_SLES_51970)
+        char* loadingst = "LADEVORGANG...";
+        U32 loadlen = strlen(loadingst);
+        progBar = (S32)((percentageDone / 100.0f) * loadlen);
+        strcpy(loadingText, loadingst);
+#else
         progBar = percentageDone / 10;
         strcpy(loadingText, "Loading...");
+#endif
         memset(auStack_cc, 0, 64);
         memset(formattedStr, 0, 64);
         strcpy(acStack_8c, loadingText);
@@ -741,6 +767,10 @@ void zMainShowProgressBar()
         percentageDone += 10;
     }
 }
+
+#if defined(VERSION_SLES_51970)
+#pragma dont_inline reset
+#endif
 
 void zMainLoop()
 {
@@ -1005,9 +1035,28 @@ void zMainReadINI()
     RwFree(buf);
 }
 
+#if defined(PS2)
+#if defined(VERSION_SLES_51968)
+extern U32 RlePalette[104];
+extern U8 RleData[49821];
+#elif defined(VERSION_SLES_51970)
+extern U32 RlePalette[104];
+extern U8 RleData[51445];
+#else
+extern U32 RlePalette[101];
+extern U8 RleData[52247];
+#endif
+extern "C" {
+RwRaster* RwRasterSetFromImage(RwRaster* raster, RwImage* image);
+RwRaster* RwRasterPushContext(RwRaster* raster);
+RwRaster* RwRasterPopContext();
+RwRaster* RwRasterRender(RwRaster* raster, RwInt32 x, RwInt32 y);
+}
+#endif
+
 void zMainFirstScreen(S32 mode)
 {
-    RwCamera* cam = iCameraCreate(640, MAIN_SCREEN_HEIGHT, 0);
+    RwCamera* cam = iCameraCreate(MAIN_SCREEN_WIDTH, MAIN_SCREEN_HEIGHT, 0);
     RwRGBA bg = {};
     S32 i;
     S32 vbl;
@@ -1019,6 +1068,52 @@ void zMainFirstScreen(S32 mode)
 
         if (mode)
         {
+#if defined(PS2)
+            RwImage* image = RwImageCreate(MAIN_SCREEN_WIDTH, MAIN_SCREEN_HEIGHT, 32);
+            RwImageAllocatePixels(image);
+            U8* pixels = image->cpPixels;
+            S32 stride = (image->stride - MAIN_SCREEN_WIDTH * 4) & ~3;
+            S32 remaining = MAIN_SCREEN_WIDTH * 4;
+            for (U32 index = 0; index < sizeof(RleData); index++)
+            {
+                U32 entry = RleData[index];
+                if (entry & 0x80)
+                {
+                    S32 count = RleData[index + 1] + 2;
+                    entry = RlePalette[entry & 0x7f];
+                    for (S32 repeat = 0; repeat < count; repeat++)
+                    {
+                        *(U32*)pixels = entry;
+                        pixels += sizeof(U32);
+                        remaining -= 4;
+                        if (remaining <= 0)
+                        {
+                            remaining = MAIN_SCREEN_WIDTH * 4;
+                            pixels += stride;
+                        }
+                    }
+                    index++;
+                }
+                else
+                {
+                    *(U32*)pixels = RlePalette[entry];
+                    pixels += sizeof(U32);
+                    remaining -= 4;
+                    if (remaining <= 0)
+                    {
+                        remaining = MAIN_SCREEN_WIDTH * 4;
+                        pixels += stride;
+                    }
+                }
+            }
+            RwRaster* raster = RwRasterSetFromImage(
+                RwRasterCreate(image->width, image->height, 0, 0), image);
+            RwImageDestroy(image);
+            RwRasterPushContext(RwCameraGetRaster(cam));
+            RwRasterRender(raster, 0, 0);
+            RwRasterPopContext();
+            RwRasterDestroy(raster);
+#else
             char text[617] =
                 "Game and Software \xa9 2003 THQ Inc. \xa9 2003 Viacom International Inc. All "
                 "rights reserved.\n"
@@ -1046,13 +1141,18 @@ void zMainFirstScreen(S32 mode)
             tb.bounds.h = tb.yextent(1);
             tb.bounds.y = 0.5f - 0.5f * tb.bounds.h;
             tb.render(1);
+#endif
         }
 
         RwCameraEndUpdate(cam);
         RwCameraShowRaster(cam, NULL, 1);
     }
 
+#if defined(PS2)
+    vbl = 5 * MAIN_VBLANKS_PER_SECOND;
+#else
     vbl = 3 * MAIN_VBLANKS_PER_SECOND;
+#endif
     while (--vbl)
     {
 #if !defined(PS2)
@@ -1064,8 +1164,115 @@ void zMainFirstScreen(S32 mode)
     iCameraDestroy(cam);
 }
 
-#if !defined(PS2)
-// GameCube memory-card (CARD/OS) startup check; the PS2 version is not recovered.
+#if defined(PS2)
+void zMainMemCardSpaceQuery()
+{
+    S32 bytesNeeded = 0;
+    S32 availOnDisk = 0;
+    S32 neededFiles = 0;
+    S32 do_chk = 1;
+    S32 fullCard = 1;
+    U8 formatInProgress = 0;
+    U8 formatFailed = 0;
+    eStartupErrors startupError = eNoError;
+    S32 status;
+
+    while (1)
+    {
+        if (do_chk)
+        {
+            fullCard = zMenuCardCheckStartup(&bytesNeeded, &availOnDisk, &neededFiles);
+        }
+
+        status = scePadGetState(globals.currentActivePad, 0);
+        while (status == scePadStateExecCmd)
+        {
+            status = scePadGetState(globals.currentActivePad, 0);
+        }
+        if (status != scePadStateStable)
+        {
+            startupError = eNoController;
+            mPad[globals.currentActivePad].state = ePad_Disabled;
+            globals.pad0 = NULL;
+        }
+        else if (startupError == eNoError)
+        {
+            if (bytesNeeded == -3 && availOnDisk == -3 && neededFiles == -3)
+            {
+                startupError = eNoCards;
+                bad_card_needed = 248;
+            }
+        }
+        else if (status == scePadStateStable && startupError == eNoController && !globals.pad0)
+        {
+            gTrcPad[globals.currentActivePad].state = TRC_PadInserted;
+            globals.pad0 = xPadEnable(globals.currentActivePad);
+        }
+
+        if (fullCard == 0 && startupError == eNoError)
+        {
+            break;
+        }
+        do_chk = 0;
+        if (!formatInProgress && !formatFailed && startupError == eNoError)
+        {
+            zSceneCardCheckStartup_set(bytesNeeded, availOnDisk, neededFiles);
+            zMainMemCardQueryPost(bytesNeeded, availOnDisk, neededFiles, 1);
+        }
+        else if (!formatInProgress)
+        {
+            switch (startupError)
+            {
+            case eNoFormat:
+                if (!formatFailed)
+                    zMainMemCardRenderText("{i:text_mem_card_no_format}", 1);
+                break;
+            case eDamagedCard:
+                zMainMemCardRenderText("{i:text_mem_card_damaged_card}", 1);
+                break;
+            case eWrongDevice:
+                zMainMemCardRenderText("{i:text_mem_card_wrong_device}", 1);
+                break;
+            case eNoCards:
+                zMainMemCardRenderText("{i:text_mem_card_no_card}", 1);
+                break;
+            case eCorruptFile:
+                zMainMemCardRenderText("{i:text_mem_card_corrupt_file}", 1);
+                break;
+            case eNoController:
+#if defined(VERSION_SLES_51968) || defined(VERSION_SLES_51970)
+                zMainMemCardRenderText("{i:text_no_controller_pal}", 1);
+#else
+                zMainMemCardRenderText("{i:text_no_controller}", 1);
+#endif
+                break;
+            }
+        }
+        if (globals.pad0)
+        {
+            xPadUpdate(globals.currentActivePad, 1.0f / MAIN_VBLANKS_PER_SECOND);
+        }
+        // Original PS2 iPadUpdate routes Triangle to bit 18.
+        if (globals.pad0 && (globals.pad0->pressed & 0x40000))
+        {
+            do_chk = 1;
+            startupError = eNoError;
+            formatInProgress = 0;
+            formatFailed = 0;
+            zMainMemCardRenderText("{i:text_retry}", 1);
+        }
+        else if (globals.pad0 && (globals.pad0->pressed & XPAD_BUTTON_X))
+        {
+            if (startupError != eNoController)
+                break;
+            do_chk = 1;
+            startupError = eNoError;
+        }
+    }
+    zMainMemCardQueryPost(0, 0, 0, 0);
+}
+#else
+// GameCube memory-card (CARD/OS) startup check.
 void zMainMemCardSpaceQuery()
 {
     S32 bytesNeeded = 0;
@@ -1325,7 +1532,7 @@ static void zMainMemCardQueryPost(S32 needed, S32 available, S32 neededFiles, S3
     RwRGBA colour = {};
     RwInt32 clearMode = 3;
 
-    cam = iCameraCreate(640, MAIN_SCREEN_HEIGHT, 0);
+    cam = iCameraCreate(MAIN_SCREEN_WIDTH, MAIN_SCREEN_HEIGHT, 0);
     RwCameraClear(cam, &colour, clearMode);
     RwCameraBeginUpdate(cam);
     render_mem_card_no_space(needed, available, neededFiles, unk0 != 0);
@@ -1340,7 +1547,7 @@ void zMainMemCardRenderText(const char* a, bool enabled)
     RwRGBA colour = {};
     RwInt32 clearMode = 3;
 
-    cam = iCameraCreate(640, MAIN_SCREEN_HEIGHT, 0);
+    cam = iCameraCreate(MAIN_SCREEN_WIDTH, MAIN_SCREEN_HEIGHT, 0);
     RwCameraClear(cam, &colour, clearMode);
     RwCameraBeginUpdate(cam);
     RenderText(a, enabled);

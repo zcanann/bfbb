@@ -87,3 +87,432 @@ inventories/commands; `layouts.json` and `api-proof.json`; per-unit `profile.jso
 normalization instruction window in `triangle-retail.txt`; and the full regression
 and GameCube section comparisons. The type registry is reproducible with
 `tools/platforms/ps2_type_layouts.py` against authenticated originals.
+
+## Platform ray passes and animated collision storage (2026-10-09)
+
+The original PS2 iRayHitsEnv does not perform the backward world-intersection
+pass present in the GameCube source. Removing that pass only from the PS2
+translation unit restores the complete 720-byte function in all three debug
+releases. The forward JSP/world paths, optional collision world and min_t
+adjustment remain. The original model-ray function does retain its backward
+atomic pass; its vector copies now use the existing typed xVec3Copy helper.
+
+Both original model-ray and model-sphere routines inline animation-collision
+apply/restore logic. Bounded private helpers in this platform file restore
+the flag test, xModelAnimCollRefresh boundary and vertex-pointer exchange.
+They use xModel's existing external anim_coll_old_mt rather than the separate
+static reconstruction in xCollide.cpp. All three original iCollide, xCollide
+and xModel DWARF records refer to one externally named 28-byte RpMorphTarget:
+USA 0x568bd0, PAL 0x5686d0 and Germany 0x5680d0. The verts member is at offset
+20. Original instruction replay proves the saved-pointer store and restore
+load in both affected functions, as well as the independently named refresh
+call. RpAtomic.geometry=24, RpGeometry.morphTarget=92 and the relevant
+xModelInstance fields also agree with the current complete declarations.
+No shared declarations or shared implementation are changed.
+
+All three full 21-function / 10,532-byte iCollide units improve from
+94.01481% to 97.69807% fuzzy. Exact coverage increases from 3,168 bytes /
+14 functions to 3,888 bytes / 15 functions. iRayHitsEnv improves from
+73.54444% to 100%; iRayHitsModel1152 from 84.416664% to 94.36806%; and
+iSphereHitsModel3 1588 from 94.73048% to 99.94459%. Other function records
+and data measures are unchanged. The remaining model-sphere source mismatch
+is an equivalent subtraction operand/load allocation; the model-ray residual
+includes vector temporary lifetime differences.
+
+The environment-ray raw proof reproduces 712 of 720 bytes after replaying
+originally named function, callback and global relocations. Two world-SDK
+call words remain unresolved and are excluded from raw equality. No runtime
+aliases or original metadata are added. France is outside the current
+platform iCollide source profile; no new French identity or coverage is
+inferred. GameCube selects its separate gc/iCollide.cpp, and this PS2-only
+source file is absent from the Xbox production profile.
+
+Private evidence is build/icollide-ray-final-comparison.json,
+build/icollide-ray-final-changes.json, build/icollide-ray-raw-proof.json and
+build/icollide-anim-global-proof.json in the PS2 worktree. The baseline
+snapshot is cdab1fcf7. Compiler settings, profiles and scoring are unchanged.
+
+## Sphere-triangle distance lifetimes (2026-10-09)
+
+properSphereIsectTri now computes the complete plane-distance difference in
+its original dist2plane local, keeps radius2 as the squared radius before
+the edge loop, and uses the original scalar sqrt.s boundary for the final
+distance. The previous reconstruction kept both plane dot products alive
+across the triangle test and recomputed the squared radius inside the loop.
+Original DWARF confirms the float locals and their shared register lifetimes:
+dist2plane/dist2 use f21, while dist/radius2 use f20 in all three releases.
+
+All three complete iCollide source units gain this entire 552-byte function,
+which improves from 88.108696% to 100%. Whole-unit fuzzy matching increases
+from 97.69807% to 98.321304%, with exact coverage rising from 3,888 bytes /
+15 functions to 4,440 bytes / 16 functions. All other function records and
+data measures are unchanged. Independent original relocation replay proves
+all 552 bytes exactly, including the square-root word and both named calls
+(PointWithinTriangle and FindNearestPointOnLine), without unresolved runtime
+operands in this function. The platform scope remains debug PS2 only.
+
+Private evidence is build/icollide-sphere-final-comparison.json,
+build/icollide-sphere-final-changes.json, build/icollide-sphere-raw-proof.json
+and build/icollide-sphere-locals-proof.json. The baseline is c73f98aa6.
+
+## Floor-contact index lifetime (2026-10-09)
+
+The original sphereHitsEnv3CB reads the active FLOOR index directly when
+comparing the existing floor contact, then assigns idx after accepting the
+replacement. Removing the premature idx copy and using FLOOR for those
+comparisons restores the original byte loads and integer conversion
+boundaries. Every successful path still assigns idx before using it.
+The contact tests, replacement choice and output calculations are unchanged.
+
+All three full source units gain the complete 1,804-byte callback, which
+improves from 96.57206% to 100%. Full-unit fuzzy matching rises from
+98.321304% to 98.90847%, and exact coverage from 4,440 bytes / 16 functions
+to 6,244 bytes / 17 functions. Other function records and data measures are
+unchanged. Original-DWARF function/global relocation replay reproduces all
+1,804 bytes in each release, with no unresolved operands. The existing
+PS2-only platform source scope is unchanged.
+
+Evidence is build/icollide-floor-final-comparison.json,
+build/icollide-floor-final-changes.json and build/icollide-floor-raw-proof.json.
+The baseline is 678797b54.
+
+## Environment contact reciprocal and triangle projection choice (2026-10-09)
+
+Initializing the contact scale directly as 1.0f / c->dist restores the
+original reciprocal lifetime in iSphereHitsEnv4. Conditional assignments for
+the dominant triangle-projection dimension restore the original nested branch
+joins in PointWithinTriangle. Both changes preserve the previous comparisons,
+constants and arithmetic.
+
+All three full source units gain iSphereHitsEnv4's 636 bytes, improving it
+from 96.06918% to 100%. PointWithinTriangle912 improves from 97.34649% to
+99.12281%. Whole-unit fuzzy matching rises from 98.90847% to 99.29966%, and
+exact coverage from 6,244 bytes / 17 functions to 6,880 bytes / 18 functions.
+Other function records and data measures are unchanged.
+
+Independent relocation replay reproduces 624 of iSphereHitsEnv4's 636 bytes;
+three unresolved runtime/SDK calls remain excluded from raw equality.
+PointWithinTriangle reproduces 904 of 912 bytes directly. Only the order of
+two independent instructions at offsets 4 and 8 differs: clearing v0 and
+loading the normal's y component. No artificial scheduling operation or
+compiler change is added for this residual.
+
+Evidence is build/icollide-env4-final-comparison.json,
+build/icollide-env4-final-changes.json, build/icollide-env4-raw-proof.json and
+build/icollide-dimension-raw-proof.json. The baseline is c54b12b9e.
+
+
+## Swept-sphere triangle vector transform (2026-10-09)
+
+`xSweptSphereToTriangle` previously transformed its three vertices through
+scalar matrix helpers. The USA, Europe and Germany originals instead share
+an identical 216-byte inline VU kernel at function offsets 0x20 through 0xf8.
+It loads the four inverse-basis rows, packs each unaligned 12-byte vertex,
+transforms all three with full `xyzw` vector masks, and scatters nine result
+floats into `xform[0..2]`. A PS2-local helper restores that kernel without
+fixed GPR bindings or changes to shared matrix headers. Its descriptive name
+is a reconstruction, not a recovered original symbol.
+
+Original DWARF places `xform[4]` at stack offset zero in a 0xa0-byte frame,
+followed by the edge/contact vectors. It also distinguishes the vertex
+`distzsqr` input from the reused `testdist` output. Restoring those lifetimes,
+reusing the named `invZ`, and preserving the edge/vertex `sqrt.s` inline
+boundaries recovers most of the remaining scalar body. Normal length keeps
+the built-in square root and uses the original conditional reciprocal join.
+Using explicit square-root assembly for that normal instead was measured
+and rejected because it changed the register and load schedule substantially.
+The closing vertex uses the existing `xVec3Copy` helper. GameCube keeps its
+previous transform, square-root, and temporary expressions.
+
+Normal complete-unit builds for SLUS-20680, SLES-51968 and SLES-51970 improve
+the 2,536-byte triangle body from 66.03155% to 98.33438%. All other 35 function
+scores are unchanged. Exact coverage remains 10,528 bytes / 20 functions;
+this is a fuzzy matching gain, not an exact-function gain. Fresh GameCube
+solo validation retains 72 of 75 exact functions, including the triangle;
+the existing box and two assignment residuals are unchanged. Full regional
+production gates remain the integration check.
+
+The three original kernel SHA-256 values are identical:
+`dbd4692fb9eb18e43413257b3201db901860e7d3d1c58447bc845b01ff12d544`.
+Independent raw-word checks verify all twelve vector operations, including
+lane masks and operands, in each rebuilt region. Symbolic replay of integer
+packing, vector multiply/add order and stores reproduces the same nine
+output addresses and expressions. The complete bodies have 2,352 of 2,536
+bytes directly equal, with no relocations. Remaining differences are GPR
+allocation/instruction scheduling in the kernel and a few independent scalar
+loads/stores or branch-adjacent operations. These are retained as residuals;
+no compiler patch or compiler-version attribution is proposed.
+
+Baseline: `3ac9a9a80`. Private evidence: `build/collide-oct09/triangle-proof.json`,
+`triangle-locals.json`, `triangle-kernel-proof.json`, and
+`triangle-raw-differences.json`. No registry or runtime aliases change.
+
+
+## Parabola callback component lifetimes (2026-10-09)
+
+`xParabolaEnvCB` originally uses a 0xb0-byte frame with seven saved general
+registers and the named normal at stack offset 0xa0. The reconstructed helper
+forms retained pointers to individual vertex and initial-position components
+across `xVec3Normalize`, expanding the frame to 0xf0. PS2-local explicit
+component copies, subtraction and plane-distance arithmetic remove those
+unnecessary pointer lifetimes. The existing member dot operation expresses
+the two parabola coefficients. No shared vector helper changes, register
+bindings or padding are introduced; non-PS2 expressions are preserved.
+
+The normal complete-unit checks for USA, Europe and Germany improve the
+1,672-byte callback from 76.75598% to 88.61005%. The other 35 function scores,
+including the preceding triangle gain, remain unchanged. Exact coverage
+remains 10,528 bytes / 20 functions. The rebuilt callback has 1,652 bytes and
+retains arithmetic load/register ordering and instruction scheduling residuals;
+this is not an exact-byte claim. All three versions directly reproduce the
+first 96 prologue bytes and the 0xb0 frame. The existing normalization call
+and filter-global relocation remain at their original offsets 0x1e4 and 0x64.
+Fresh GameCube solo validation retains the previous 72/75 exact result.
+
+Direct versus free/member dot helpers, coefficient/plane-distance evaluation
+order and component operand order were separately tested. Several equivalent
+forms regressed; none establishes a compiler-version defect. The private
+fast-probe snapshot was followed by normal builds of each complete regional
+unit. Baseline: `3b6725643`. Evidence is
+`build/collide-oct09/parabola-proof.json`, `parabola-locals.json`, and
+`parabola-entry-proof.json`. Full regional production checks are deferred to
+the integration gate, and no runtime identity or registry evidence changes.
+
+
+## Model-sphere normal square-root boundary (2026-10-09)
+
+`xSphereHitsModel` independently exhibits the same explicit PS2 `sqrt.s`
+boundary as the swept-triangle edges. Reusing the file-local helper restores
+the normal's register lifetime and the original reload of the reciprocal
+constant. The helper moves before this caller and is renamed `xCollideSqrt`;
+its triangle consumers are unchanged. Explicitly expressing the three center
+subtractions before `xMat3x3Tolocal` also restores the original first-component
+load order. The non-PS2 path retains its existing helpers.
+
+All three normal regional unit builds improve this 1,128-byte body from
+97.12057% to 99.858154%, with the other 35 scores unchanged. Fresh GameCube
+solo retains 72/75 exact functions. Exact PS2 coverage is unchanged. The raw
+comparison has 1,068 equal bytes, 44 bytes excluded as relocated words, and
+16 differing non-relocated bytes in the animation-collision restore sequence.
+That sequence retains the original behavior but exchanges the two scratch
+GPRs; a pointer-temporary source probe did not change its allocation and was
+reverted. Existing SDK/global identities are not promoted by this comparison.
+
+Baseline: `f20a1f899`. Private evidence:
+`build/collide-oct09/model-proof.json` and `model-raw-proof.json`. Complete
+production checks remain the integration gate. The adjacent near-exact
+`xCollideCalcTri` was also inspected: its residual is alignment NOP placement
+and consequent branch displacement changes, so no artificial padding was
+introduced there.
+
+
+## Nonuniform box-sphere normalization (2026-10-09)
+
+`xSphereHitsOBB_nu` was using the local normalization macro tuned for
+GameCube, which stores length first and introduces square/component
+temporaries. PS2 originals store normalized components before length in the
+unit-length and zero-length cases, use the ordinary sum-of-squares expression,
+and retain a `sqrt.s` boundary before storing and reloading the measured
+length. A PS2-local macro restores those operations and reuses `xCollideSqrt`.
+The GameCube macro and shared headers are unchanged. The generic normalization
+macro alone improved the pilot from 86.97878% to 91.32361%; restoring the square
+root boundary completed the match.
+
+All three normal complete-unit builds now match the entire 1,508-byte
+function, improving from 86.97878% to 100%. Exact unit coverage rises from
+10,528 bytes / 20 functions to 12,036 bytes / 21 functions, with all other
+35 scores unchanged. Fresh GameCube solo retains the previous 72/75 exact
+result. Independent replay resolves the two JAL operands through the original
+DWARF names `xMat3x3Tolocal` and `xSphereHitsBox`, then reproduces all 1,508
+original bytes in each region. No words remain excluded from that replay.
+
+Baseline: `79e9c4ead`. Private evidence:
+`build/collide-oct09/obb-proof.json` and `obb-raw-proof.json`. This change needs
+no header, compiler or registry edit; full production checks remain the
+integration gate.
+
+
+## Swept-sphere preparation distance lifetime (2026-10-09)
+
+`xSweptSpherePrepare` uses the same explicit square-root boundary while
+normalizing the selected up vector. Restoring that local operation raises
+the pilot from 92.30901% to 98.88412%. The remaining first-distance register
+chain is recovered by using the named `invmag` local for the measured distance
+before replacing it with the reciprocal. Original DWARF assigns that local to
+FPR2. Merely moving its declaration had no effect; retaining this value's
+lifetime completes the match. Substituting the explicit assembly square root
+for the initial distance regressed and was rejected. Both changes are scoped
+to PS2; GameCube retains its former expressions.
+
+Normal complete-unit builds in all three debug regions now match all 932
+bytes, improving from 92.30901% to 100%. Exact unit coverage rises from
+12,036 bytes / 21 functions to 12,968 bytes / 22 functions. All other 35
+function scores are unchanged, and fresh GameCube solo retains 72/75 exact.
+Independent raw replay resolves the three calls and `xqc_def_ctrl` through
+original DWARF, reproducing every original byte in each region with no
+excluded words. No SDK alias or compiler patch is involved.
+
+Baseline: `5bc92b436`. Private evidence:
+`build/collide-oct09/prepare-proof.json`, `prepare-locals.json`, and
+`prepare-raw-proof.json`. Full production checks remain the integration gate.
+
+
+## Swept-box axis and edge calculations (2026-10-09)
+
+The PS2 swept-box body scales each box axis through consecutive scalar
+multiply/store operations. Its previous source inherited the reordered scalar
+temporaries used for GameCube. Restoring direct component operations raises
+the PS2 match, while preserving the GameCube form. The edge loop also uses
+the same explicit square-root boundaries independently observed in the
+triangle routine. Original debug locals distinguish `distzsqr` from the
+reused `testdist`; the corner and vertex calculations now preserve those
+lifetimes. Member assignment helpers express the four transformed corners.
+
+The retained candidate improves the 3,084-byte `xSweptSphereToBox` from
+86.446175% to 95.11284% in normal complete-unit builds for USA, Europe,
+Germany and France. The other 35 function scores are unchanged, and exact
+coverage remains 12,968 bytes / 22 functions. France includes an independently
+compiled before/after control of this source change. Fresh GameCube solo
+retains 72/75 exact functions, with the box's existing 99.175% residual
+unchanged. This remains a fuzzy gain: scalar register allocation, load/store
+scheduling and corner-array evaluation order still differ from the original.
+
+Reusing `invZ` for the edge reciprocal, changing the plane-distance dot
+helpers, and alternative corner copy/assignment forms were measured
+separately; regressing candidates were discarded. No register bindings,
+artificial padding, header changes or compiler-version attribution are added.
+Baseline: `4a4debed7`. Private evidence is
+`build/collide-oct09/box-proof.json`, `box-locals.json`, and the retained
+regional reports. Full production checks remain the integration gate.
+
+## Box-box separating-axis normalization (2026-10-09)
+
+The six axis normalizations in `Mgc_BoxBoxTest` use the same explicit PS2
+square-root boundary already recovered in the other collision routines.
+Original debug locals independently identify six `_mag` temporaries and the
+axis, extent, center and coefficient arrays. Reusing the local square-root
+helper raises the pilot from 88.954796% to 98.85443%. Ordering the independent
+center-difference and first coefficient assignments improves it to 99.70615%.
+Those assignment changes are PS2-only; the helper remains an `xsqrt` alias
+on other platforms.
+
+Normal complete-unit builds for USA, Europe, Germany and France all retain
+99.70615% for this 4,424-byte body. The other 35 function scores are unchanged;
+exact coverage remains 12,968 bytes / 22 functions. Fresh GameCube solo
+retains 72/75 exact functions and the same three residuals. Raw comparison
+in each PS2 region finds 4,300 bytes in identical instruction words, including
+all six square roots at identical offsets; the function has no relocations.
+The remaining 31 words concern coefficient loads, register allocation and
+scheduling. This is a fuzzy gain, not an exact-function claim.
+
+Alternative absolute-value ordering, moving the first distance-dot calculation,
+and vector helper forms were measured separately and rejected. No forced
+register binding, artificial padding, compiler patch or header change is
+used. Baseline: `26ccab6cb` (the swept-box change on staging `5cb49a1a2`).
+Private evidence: `build/collide-oct09/mgc-proof.json`, `mgc-locals.json`,
+`mgc-raw-proof.json`, and the four regional reports. Full production checks
+remain the integration gate.
+
+## Sphere-capsule shared reciprocal (2026-10-09)
+
+The two roots in `xSphereHitsCapsule` now explicitly share one local holding
+`1.0f / (2.0f * f31)`. This preserves the original reciprocal lifetime across
+both root calculations, recovering the register choices and square-root
+scheduling without changing the square-root implementation. Alternative
+declaration order, direct division and explicit assembly square-root forms
+were measured and rejected. The new local name `scale` describes the source
+expression; it does not assert an original debug-local identity.
+
+Normal complete-unit builds in USA, Europe, Germany and France improve this
+496-byte function from 93.30645% to 100%. Direct raw comparison reproduces
+every byte in each region, with no relocations or excluded words. Exact unit
+coverage rises from 12,968 bytes / 22 functions to 13,464 bytes / 23 functions;
+the other 35 function scores are unchanged. Fresh GameCube solo remains
+72/75 exact, including this shared-source body. The Xbox profile does not
+compile this unit or use it as a dependency; no Xbox gain is claimed.
+
+Baseline: `314f23fc8`. Private evidence:
+`build/collide-oct09/capsule-proof.json`, `capsule-locals.json`, and
+`capsule-raw-proof.json`. Full production controls remain the integration gate.
+
+## Swept-model matrix snapshot (2026-10-09)
+
+`xSweptSphereToModel` originally snapshots its entire 64-byte `oldinvbasis`
+matrix using eight iterations of two 32-bit loads and stores. Original debug
+information identifies that local as `xMat4x3` at stack offset `0xd0`.
+Current aligned copy initialization instead produces quadword transfers.
+A file-local PS2 helper now expresses the observed word-pair copy. Its name
+is descriptive and does not claim an independently named original helper.
+The source matrix belongs to the caller's swept-sphere object, while the
+destination is a distinct local snapshot; these ranges cannot overlap.
+The helper uses ordinary nonvolatile accesses and copies all padding words.
+
+Symbolic execution of the complete original and compiled copy loops in all
+four PS2 regions verifies exactly eight iterations, the same 16 destination
+word offsets, and preservation of all 64 source bytes. The later 144-byte
+componentwise restore is unchanged and raw-identical. No type alignment,
+shared header, compiler option or register binding changes are involved.
+Explicit `xMat4x3Copy` generated an incorrect runtime-call boundary, and
+separate aggregate assignment forms regressed; those probes were rejected.
+
+Normal complete-unit builds in all four regions improve the 980-byte body
+from 92.09796% to 99.13878%. The other 35 scores and exact coverage of
+13,464 bytes / 23 functions remain unchanged. Five nonrelocation words still
+differ in the pair-load scheduling and temporary registers; twelve source
+relocation words are excluded from the diagnostic raw comparison. No new
+runtime identity or exact-function claim is made. Fresh GameCube solo remains
+72/75 exact, with its original copy expression preserved.
+
+Baseline: `5b5e0d367`. Private evidence:
+`build/collide-oct09/sweptmodel-proof.json`, `sweptmodel-locals.json`, and
+`sweptmodel-copy-proof.json`. Full production controls remain the integration
+gate.
+
+## BSP triangle iteration boundary (2026-10-09)
+
+The swept-sphere and parabola callbacks now advance `triangles` before
+testing the preceding triangle's continuation flag. This expresses the
+original pointer-update boundary instead of combining it with a postfix
+increment in the condition. It preserves the same triangle visitation and
+termination behavior; the original five-instruction increment/test sequence
+is reproduced in the swept-sphere callback.
+
+All four normal PS2 complete-unit comparisons improve the 164-byte
+`SweptSphereLeafNodeCB` from 96.07317% to 100% and the 1,672-byte
+`xParabolaEnvCB` from 88.61005% to 89.07895%. The remaining 34 scores are
+unchanged. Exact coverage rises from 13,464 bytes / 23 functions to
+13,628 bytes / 24 functions. All 152 nonrelocation bytes of the leaf callback
+are raw-identical; its one call and two global references retain their
+existing production relocation treatment. No new identity is assigned.
+Fresh GameCube solo remains 72/75 exact, including both shared-source bodies.
+Xbox does not compile this unit or use it as a dependency.
+
+Baseline: `d1fde1e99`. Private evidence is
+`build/collide-oct09/leaf-proof.json` and `leaf-raw-proof.json`.
+Full production controls remain the integration gate.
+
+## Oriented-box projected-radius lifetimes (2026-10-09)
+
+`xOBBHitsOBB` now keeps `ar` and `br` as the separate projected radii, adding
+them in the separating-axis comparisons. The previous source reused these
+locals for the combined radius, extending their register lifetimes into
+unrelated tests. Original debug information assigns `ar`, `br` and `r` to
+FPR7, FPR1 and FPR6 respectively. The revised ordinary expressions recover
+those allocations and the original arithmetic sequence. The shared rewrite
+also retains the exact GameCube body.
+
+Normal complete-unit builds in all four PS2 regions improve the 2,768-byte
+body from 96.786125% to 99.71098%, with all other 35 function scores unchanged.
+Exact coverage remains 12,968 bytes / 22 functions. The compiled body has
+two additional alignment NOPs (2,776 bytes). All 663 non-NOP instructions
+match after accounting for branch displacements, with all 42 branch
+destinations and their delay-slot words checked independently. There are no
+relocations. The alignment residual is retained without source padding or a
+compiler-version attribution; it does not count as an exact function.
+
+Fresh GameCube solo remains 72/75 exact. The Xbox profile does not compile
+`xCollide.cpp` as either a unit or dependency, so no Xbox body comparison or
+gain is claimed. Full regional production controls remain the integration
+gate. Baseline: `b1a9832ac`. Private evidence:
+`build/collide-oct09/obb2-proof.json`, `obb2-locals.json`, and
+`obb2-alignment-proof.json`.

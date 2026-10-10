@@ -544,6 +544,34 @@
       "provenance": "reviewed-whole-tu-sequence"
     },
     {
+      "name": "iModelMaterialMulCB",
+      "source": "SB/Core/p2/iModel.cpp",
+      "address": 1757760,
+      "size": 712,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "iModelSetMaterialAlpha",
+      "source": "SB/Core/p2/iModel.cpp",
+      "address": 1759216,
+      "size": 224,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "iModelCull",
+      "source": "SB/Core/p2/iModel.cpp",
+      "address": 1764912,
+      "size": 288,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NextAtomicCallback",
+      "source": "SB/Core/p2/iModel.cpp",
+      "address": 1766352,
+      "size": 48,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "FastS16weight4",
       "source": "SB/Core/p2/iMorph.cpp",
       "address": 1767728,
@@ -740,6 +768,34 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "iSndGetVol",
+      "source": "SB/Core/p2/iSnd.cpp",
+      "address": 1804528,
+      "size": 144,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "iSndSetVol",
+      "source": "SB/Core/p2/iSnd.cpp",
+      "address": 1804672,
+      "size": 492,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "iSndStop",
+      "source": "SB/Core/p2/iSnd.cpp",
+      "address": 1805168,
+      "size": 184,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "iSndPause",
+      "source": "SB/Core/p2/iSnd.cpp",
+      "address": 1805360,
+      "size": 140,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "iSndFindFreeVoice",
       "source": "SB/Core/p2/iSnd.cpp",
       "address": 1805504,
@@ -747,10 +803,38 @@
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
+      "name": "iSndIsReady",
+      "source": "SB/Core/p2/iSnd.cpp",
+      "address": 1806880,
+      "size": 120,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "iSndPlay",
       "source": "SB/Core/p2/iSnd.cpp",
       "address": 1807008,
       "size": 1120,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "iSndIsPlayingByHandle",
+      "source": "SB/Core/p2/iSnd.cpp",
+      "address": 1808128,
+      "size": 112,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "iSndIsPlaying",
+      "source": "SB/Core/p2/iSnd.cpp",
+      "address": 1808240,
+      "size": 112,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "iSndIsPlaying",
+      "source": "SB/Core/p2/iSnd.cpp",
+      "address": 1808352,
+      "size": 88,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
@@ -3183,6 +3267,13 @@
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
+      "name": "xSndStop",
+      "source": "SB/Core/x/xSnd.cpp",
+      "address": 2137280,
+      "size": 8,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "xSndIDIsPlaying",
       "source": "SB/Core/x/xSnd.cpp",
       "address": 2137296,
@@ -3201,6 +3292,27 @@
       "source": "SB/Core/x/xSnd.cpp",
       "address": 2137440,
       "size": 1376,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "xSndPlay3D",
+      "source": "SB/Core/x/xSnd.cpp",
+      "address": 2138816,
+      "size": 72,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "xSndPlay3D",
+      "source": "SB/Core/x/xSnd.cpp",
+      "address": 2138896,
+      "size": 24,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "xSndPlay",
+      "source": "SB/Core/x/xSnd.cpp",
+      "address": 2138928,
+      "size": 28,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
@@ -4793,6 +4905,27 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "ZNPC_AnimTable_Neptune",
+      "source": "SB/Game/zNPCTypeAmbient.cpp",
+      "address": 2945584,
+      "size": 760,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_Jelly",
+      "source": "SB/Game/zNPCTypeAmbient.cpp",
+      "address": 2946352,
+      "size": 480,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_Ambient",
+      "source": "SB/Game/zNPCTypeAmbient.cpp",
+      "address": 2946832,
+      "size": 128,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "NPCC_BuildStandardAnimTran",
       "source": "SB/Game/zNPCTypeCommon.cpp",
       "address": 2947920,
@@ -5206,11 +5339,60 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "ZNPC_AnimTable_Tiki",
+      "source": "SB/Game/zNPCTypeTiki.cpp",
+      "address": 3057152,
+      "size": 124,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "ZNPC_Tiki_Startup",
       "source": "SB/Game/zNPCTypeTiki.cpp",
       "address": 3060640,
       "size": 88,
       "provenance": "machine-corroborated-explicit-transfers"
+    },
+    {
+      "name": "ZNPC_AnimTable_SuperFriend",
+      "source": "SB/Game/zNPCTypeVillager.cpp",
+      "address": 3077328,
+      "size": 972,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_SuperFriend",
+      "source": "SB/Game/zNPCTypeVillager.cpp",
+      "address": 3078304,
+      "size": 8,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_BalloonBoy",
+      "source": "SB/Game/zNPCTypeVillager.cpp",
+      "address": 3078320,
+      "size": 704,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_BalloonBoy",
+      "source": "SB/Game/zNPCTypeVillager.cpp",
+      "address": 3079024,
+      "size": 8,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_Villager",
+      "source": "SB/Game/zNPCTypeVillager.cpp",
+      "address": 3079040,
+      "size": 908,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_Villager",
+      "source": "SB/Game/zNPCTypeVillager.cpp",
+      "address": 3079952,
+      "size": 8,
+      "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
       "name": "zNPCVillager_SceneTimestep",
@@ -5472,10 +5654,24 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "NPCC_GenSmooth",
+      "source": "SB/Game/zNPCSupport.cpp",
+      "address": 3255344,
+      "size": 508,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "NPCC_MakeArbPlane",
       "source": "SB/Game/zNPCSupport.cpp",
       "address": 3256016,
       "size": 196,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPCC_MakePerp",
+      "source": "SB/Game/zNPCSupport.cpp",
+      "address": 3256224,
+      "size": 56,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
@@ -5605,6 +5801,13 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "ZNPC_AnimTable_Test",
+      "source": "SB/Game/zNPCTypeTest.cpp",
+      "address": 3295504,
+      "size": 368,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "xUpdateCull_Reset",
       "source": "SB/Core/x/xUpdateCull.cpp",
       "address": 3314512,
@@ -5654,6 +5857,160 @@
       "provenance": "machine-corroborated-static-cfg"
     },
     {
+      "name": "Process",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3327936,
+      "size": 2832,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3331248,
+      "size": 544,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3331792,
+      "size": 704,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Exit",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3332800,
+      "size": 88,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3332896,
+      "size": 2336,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3336768,
+      "size": 484,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3337296,
+      "size": 812,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3341728,
+      "size": 632,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Exit",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3342368,
+      "size": 104,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3342848,
+      "size": 536,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3343456,
+      "size": 476,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3344208,
+      "size": 592,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "getUpCB",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3345360,
+      "size": 428,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "leapCB",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3346112,
+      "size": 184,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "elbowDropCB",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3346304,
+      "size": 384,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "noHeadCB",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3346688,
+      "size": 148,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "tauntCB",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3348352,
+      "size": 332,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "idleCB",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3348688,
+      "size": 232,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "hiddenByCutscene",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3352208,
+      "size": 520,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "BoundEventCB",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3357424,
+      "size": 128,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "zNPCBSandy_BossDamageEffect",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3362816,
+      "size": 432,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_BossSandy",
+      "source": "SB/Game/zNPCTypeBossSandy.cpp",
+      "address": 3370864,
+      "size": 1852,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "xmax3fast",
       "source": "SB/Core/x/xMathInlines.h",
       "address": 3381488,
@@ -5665,6 +6022,13 @@
       "source": "SB/Game/zNPCTypeKingJelly.cpp",
       "address": 3420080,
       "size": 23444,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_KingJelly",
+      "source": "SB/Game/zNPCTypeKingJelly.cpp",
+      "address": 3446800,
+      "size": 2296,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
@@ -5759,6 +6123,20 @@
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
+      "name": "ZNPC_AnimTable_BossSB2",
+      "source": "SB/Game/zNPCTypeBossSB2.cpp",
+      "address": 3509024,
+      "size": 3096,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_BossSB1",
+      "source": "SB/Game/zNPCTypeBossSB1.cpp",
+      "address": 3523648,
+      "size": 1028,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "iCameraUpdateFog",
       "source": "SB/Core/x/iCamera.cpp",
       "address": 3524912,
@@ -5794,10 +6172,108 @@
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
+      "name": "ZNPC_AnimTable_Prawn",
+      "source": "SB/Game/zNPCTypePrawn.cpp",
+      "address": 3550528,
+      "size": 992,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "register_tweaks",
       "source": "SB/Game/zNPCTypeBossPlankton.cpp",
       "address": 3580144,
       "size": 12572,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_BossPlankton",
+      "source": "SB/Game/zNPCTypeBossPlankton.cpp",
+      "address": 3595392,
+      "size": 2440,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "address": 3602288,
+      "size": 120,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "address": 3609248,
+      "size": 100,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "address": 3612080,
+      "size": 108,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Process",
+      "source": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "address": 3612240,
+      "size": 120,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "address": 3614240,
+      "size": 116,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Exit",
+      "source": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "address": 3614368,
+      "size": 128,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "Enter",
+      "source": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "address": 3616048,
+      "size": 108,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ParabolaHitsConveyors",
+      "source": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "address": 3620112,
+      "size": 584,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "gotoRound",
+      "source": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "address": 3621264,
+      "size": 448,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "canSpawnChucks",
+      "source": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "address": 3621712,
+      "size": 64,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "DuploNotice",
+      "source": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "address": 3626560,
+      "size": 64,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_BossPatrick",
+      "source": "SB/Game/zNPCTypeBossPatrick.cpp",
+      "address": 3638976,
+      "size": 1744,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
@@ -5812,6 +6288,13 @@
       "source": "SB/Game/zNPCTypeDutchman.cpp",
       "address": 3824832,
       "size": 15588,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ZNPC_AnimTable_Dutchman",
+      "source": "SB/Game/zNPCTypeDutchman.cpp",
+      "address": 3845232,
+      "size": 1648,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {
@@ -5920,6 +6403,118 @@
       "provenance": "reviewed-whole-tu-sequence"
     },
     {
+      "name": "NPAR_EmitH2OTrail",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3885232,
+      "size": 204,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPAR_EmitH2OSpray",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3885440,
+      "size": 216,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPAR_EmitH2ODrops",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3885664,
+      "size": 216,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPAR_EmitH2ODrips",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3885888,
+      "size": 216,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPAR_EmitTubeSparklies",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3886560,
+      "size": 216,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPAR_EmitTubeConfetti",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3886784,
+      "size": 216,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPAR_EmitTubeSpiralCin",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3887008,
+      "size": 396,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPAR_EmitTubeSpiral",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3887408,
+      "size": 396,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPAR_EmitOilSplash",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3887808,
+      "size": 216,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPAR_EmitOilVapors",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3888032,
+      "size": 204,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPAR_EmitOilTrailz",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3888240,
+      "size": 204,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "NPAR_EmitOilShieldPop",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3888448,
+      "size": 204,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ConfigPar",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3899632,
+      "size": 284,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ConfigPar",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3901904,
+      "size": 540,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ConfigPar",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3911424,
+      "size": 1144,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ConfigPar",
+      "source": "SB/Game/zNPCSupplement.cpp",
+      "address": 3917984,
+      "size": 304,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "Init",
       "source": "SB/Game/zNPCHazard.cpp",
       "address": 3931376,
@@ -5927,10 +6522,66 @@
       "provenance": "machine-corroborated-explicit-transfers"
     },
     {
+      "name": "StreakUpdate",
+      "source": "SB/Game/zNPCHazard.cpp",
+      "address": 3933648,
+      "size": 544,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "OilSplash",
+      "source": "SB/Game/zNPCHazard.cpp",
+      "address": 3942672,
+      "size": 1084,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "WavesOfEvil",
+      "source": "SB/Game/zNPCHazard.cpp",
+      "address": 3949920,
+      "size": 908,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "WaterSplash",
+      "source": "SB/Game/zNPCHazard.cpp",
+      "address": 3950832,
+      "size": 2172,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ColResp_Default",
+      "source": "SB/Game/zNPCHazard.cpp",
+      "address": 3968768,
+      "size": 280,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "ColTestCyl",
+      "source": "SB/Game/zNPCHazard.cpp",
+      "address": 3971136,
+      "size": 240,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "PosSet",
+      "source": "SB/Game/zNPCHazard.cpp",
+      "address": 3979328,
+      "size": 80,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
       "name": "Start",
       "source": "SB/Game/zNPCHazard.cpp",
       "address": 3979408,
       "size": 128,
+      "provenance": "reviewed-complete-caller-callee-cluster"
+    },
+    {
+      "name": "HAZ_ord_sorttest",
+      "source": "SB/Game/zNPCHazard.cpp",
+      "address": 3987088,
+      "size": 88,
       "provenance": "reviewed-complete-caller-callee-cluster"
     },
     {

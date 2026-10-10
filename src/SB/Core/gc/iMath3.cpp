@@ -137,35 +137,34 @@ void iSphereBoundVec(xSphere* o, const xSphere* s, const xVec3* v)
         {
             memcpy(o, s, sizeof(xSphere));
         }
+        return;
+    }
+
+    if (usetemp)
+    {
+        tp = &temp;
     }
     else
     {
-        if (usetemp)
-        {
-            tp = &temp;
-        }
-        else
-        {
-            tp = o;
-        }
+        tp = o;
+    }
 
-        xVec3Copy(&tp->center, &isx.norm);
+    xVec3Copy(&tp->center, &isx.norm);
 
-        scale = (isx.dist - s->r) / (2.0f * isx.dist);
+    scale = (isx.dist - s->r) / (2.0f * isx.dist);
 
 #if defined(XBOX)
-        xVec3SMul(&tp->center, &isx.norm, scale);
+    xVec3SMul(&tp->center, &isx.norm, scale);
 #else
-        xVec3SMul(&tp->center, &tp->center, scale);
+    xVec3SMul(&tp->center, &tp->center, scale);
 #endif
-        xVec3Add(&tp->center, &tp->center, &s->center);
+    xVec3Add(&tp->center, &tp->center, &s->center);
 
-        tp->r = 0.5f * (isx.dist + s->r);
+    tp->r = 0.5f * (isx.dist + s->r);
 
-        if (usetemp)
-        {
-            memcpy(o, tp, sizeof(xSphere));
-        }
+    if (usetemp)
+    {
+        memcpy(o, tp, sizeof(xSphere));
     }
 }
 
@@ -484,6 +483,9 @@ static U32 ClipPlane(F32 denom, F32 numer, F32* t_in, F32* t_out)
     return (numer <= 0.0f);
 }
 
+#if defined(PS2)
+inline
+#endif
 static U32 ClipBox(const xVec3* r3, const xVec3* r4, const xVec3* r5, F32* t_in, F32* t_out)
 {
     return (ClipPlane(r5->x, -r4->x - r3->x, t_in, t_out) &&
@@ -571,6 +573,44 @@ void iBoxIsectRay(const xBox* b, const xRay3* r, xIsect* isx)
 void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
 {
     U32 xcode, ycode, zcode;
+#if defined(PS2)
+    {
+        const F32 lo = p->center.x - p->r;
+        const F32 hi = p->center.x + p->r;
+        xcode = (lo < box->lower.x)
+                    ? ((hi < box->lower.x) ? 2 : !(hi > box->upper.x))
+                    : ((lo > box->upper.x) ? 5 : ((hi > box->upper.x) ? 4 : 3));
+    }
+    if (xcode % 3 == 2)
+    {
+        isx->penned = 1.0f;
+        return;
+    }
+    {
+        const F32 lo = p->center.y - p->r;
+        const F32 hi = p->center.y + p->r;
+        ycode = (lo < box->lower.y)
+                    ? ((hi < box->lower.y) ? 2 : !(hi > box->upper.y))
+                    : ((lo > box->upper.y) ? 5 : ((hi > box->upper.y) ? 4 : 3));
+    }
+    if (ycode % 3 == 2)
+    {
+        isx->penned = 1.0f;
+        return;
+    }
+    {
+        const F32 lo = p->center.z - p->r;
+        const F32 hi = p->center.z + p->r;
+        zcode = (lo < box->lower.z)
+                    ? ((hi < box->lower.z) ? 2 : !(hi > box->upper.z))
+                    : ((lo > box->upper.z) ? 5 : ((hi > box->upper.z) ? 4 : 3));
+    }
+    if (zcode % 3 == 2)
+    {
+        isx->penned = 1.0f;
+        return;
+    }
+#else
 #if defined(XBOX)
     const F32& radius = p->r;
 #else
@@ -768,6 +808,8 @@ void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
         isx->penned = 1.0f;
         return;
     }
+
+#endif
 
     iBoxIsectVec(box, &p->center, isx);
 

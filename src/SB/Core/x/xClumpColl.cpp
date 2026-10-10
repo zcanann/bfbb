@@ -91,15 +91,6 @@ struct RpMeshHeader
     RwUInt32 firstMeshOffset;
 };
 
-struct RwResEntry
-{
-    RwLLLink link;
-    RwInt32 size;
-    void* owner;
-    RwResEntry** ownerRef;
-    void (*destroyNotify)(RwResEntry* resEntry);
-};
-
 struct rwPS2AllResEntryHeader
 {
     RwInt32 refCnt;
@@ -766,6 +757,112 @@ static S32 LeafNodeLinePolyIntersect(xClumpCollBSPTriangle* triangles, void* dat
                 v1 = &triangles->v.p[1];
                 v2 = &triangles->v.p[2];
             }
+#if defined(PS2)
+            {
+                // Pack the unaligned 12-byte vertices, then form both triangle edges
+                // and the ray cross product in the VU.
+                U32 x, y, z, packed;
+                F32 det, u, v, t, epsilon, tolerance;
+                const RwV3d* start = &isData->start;
+                const RwV3d* delta = &isData->delta;
+                asm volatile("lw %0, 0(%9)\n"
+                             "vaddw.xyz vf11, vf0, vf0w\n"
+                             "lw %1, 4(%9)\n"
+                             "lw %2, 8(%9)\n"
+                             "pextlw %3, %1, %0\n"
+                             "lw %0, 0(%11)\n"
+                             "pcpyld %3, %2, %3\n"
+                             "lw %1, 4(%11)\n"
+                             "qmtc2 %3, vf1\n"
+                             "lw %2, 8(%11)\n"
+                             "pextlw %3, %1, %0\n"
+                             "lqc2 vf7, 0(%8)\n"
+                             "pcpyld %3, %2, %3\n"
+                             "lw %0, 0(%10)\n"
+                             "qmtc2 %3, vf3\n"
+                             "lw %1, 4(%10)\n"
+                             "vsub.xyz vf5, vf3, vf1\n"
+                             "lw %2, 8(%10)\n"
+                             "pextlw %3, %1, %0\n"
+                             "lqc2 vf6, 0(%7)\n"
+                             "pcpyld %3, %2, %3\n"
+                             "qmtc2 %3, vf2\n"
+                             "vopmula.xyz ACC, vf7, vf5\n"
+                             "lui %1, 0xb22b\n"
+                             "vopmsub.xyz vf8, vf5, vf7\n"
+                             "ori %1, %1, 0xcc77\n"
+                             "vsub.xyz vf4, vf2, vf1\n"
+                             "lui %2, 0xb727\n"
+                             "vsub.xyz vf6, vf6, vf1\n"
+                             "ori %2, %2, 0xc5ac\n"
+                             "vadd.xyz vf12, vf0, vf5\n"
+                             "vmul.xyz vf9, vf8, vf4\n"
+                             "vadday.x ACC, vf9, vf9y\n"
+                             "vmaddz.x vf9, vf11, vf9z\n"
+                             "qmfc2 %0, vf9\n"
+                             "mtc1 %1, %5\n"
+                             "mtc1 %0, %4\n"
+                             "mtc1 %2, %6\n"
+                             : "=&r"(x), "=&r"(y), "=&r"(z), "=&r"(packed), "=f"(det),
+                               "=f"(epsilon), "=f"(tolerance)
+                             : "r"(start), "r"(delta), "r"(v0), "r"(v1), "r"(v2)
+                             : "memory");
+                // Flip the edges for the reverse-facing triangle.
+                if (det < epsilon)
+                {
+                    asm volatile("vopmula.xyz ACC, vf7, vf4\n"
+                                 "vopmsub.xyz vf8, vf4, vf7\n"
+                                 "vadd.xyz vf5, vf0, vf4\n"
+                                 "vadd.xyz vf4, vf0, vf12\n"
+                                 "vmul.xyz vf9, vf8, vf12\n"
+                                 "vadday.x ACC, vf9, vf9y\n"
+                                 "vmaddz.x vf9, vf11, vf9z\n"
+                                 "qmfc2 %1, vf9\n"
+                                 "mtc1 %1, %0\n"
+                                 : "=f"(det), "=&r"(x) : : "memory");
+                }
+                if (det <= -epsilon)
+                    continue;
+                asm volatile("vmul.xyz vf9, vf8, vf6\n"
+                             "vadday.x ACC, vf9, vf9y\n"
+                             "vmaddz.x vf9, vf11, vf9z\n"
+                             "qmfc2 %1, vf9\n"
+                             "mtc1 %1, %0\n"
+                             : "=f"(u), "=&r"(x) : : "memory");
+                F32 lo = det * tolerance;
+                F32 hi = det - lo;
+                if (u < lo)
+                    continue;
+                if (hi < u)
+                    continue;
+                asm volatile("vopmula.xyz ACC, vf6, vf4\n"
+                             "vopmsub.xyz vf8, vf4, vf6\n"
+                             "vmul.xyz vf9, vf8, vf7\n"
+                             "vadday.x ACC, vf9, vf9y\n"
+                             "vmaddz.x vf9, vf11, vf9z\n"
+                             "qmfc2 %1, vf9\n"
+                             "mtc1 %1, %0\n"
+                             : "=f"(v), "=&r"(x) : : "memory");
+                if (v < lo)
+                    continue;
+                u += v;
+                if (hi < u)
+                    continue;
+                asm volatile("vmul.xyz vf9, vf8, vf5\n"
+                             "vadday.x ACC, vf9, vf9y\n"
+                             "vmaddz.x vf9, vf11, vf9z\n"
+                             "qmfc2 %1, vf9\n"
+                             "mtc1 %1, %0\n"
+                             : "=f"(t), "=&r"(x) : : "memory");
+                if (t < lo)
+                    continue;
+                if (hi < t)
+                    continue;
+                F32 hit_distance = t / det;
+                asm volatile("swc1 %0, 0(%1)" : : "f"(hit_distance), "r"(&distance) : "memory");
+                result = 1;
+            }
+#else
             RwV3dSubMacro(&edge1, v1, v0);
             RwV3dSubMacro(&edge2, v2, v0);
             RwV3dCrossProductMacro(&pVec, &isData->delta, &edge2);
@@ -803,6 +900,7 @@ static S32 LeafNodeLinePolyIntersect(xClumpCollBSPTriangle* triangles, void* dat
                     }
                 }
             }
+#endif
             if (result)
             {
                 RpCollisionTriangle collisionTri;
@@ -834,7 +932,11 @@ static S32 LeafNodeLinePolyIntersect(xClumpCollBSPTriangle* triangles, void* dat
                 }
             }
         }
+#if defined(PS2)
+    } while ((++triangles)[-1].flags & 0x1);
+#else
     } while ((triangles++)->flags & 0x1);
+#endif
     return 1;
 }
 
@@ -842,12 +944,31 @@ static S32 LeafNodeLinePolyIntersect(xClumpCollBSPTriangle* triangles, void* dat
 static RwBool FastIntersectSphereTriangle(RwSphere* sphere, RwV3d* v0, RwV3d* v1, RwV3d* v2,
                                           RwV3d* normal, RwReal* distance, RwV3d* vc);
 
-#define SphereMin(_a, _b) (((_a) < (_b)) ? (_a) : (_b))
-#define SphereMax(_a, _b) (((_a) > (_b)) ? (_a) : (_b))
+// The PS2 broad phase uses hardware min/max, not comparison-and-select branches.
+static inline void SphereMinMax(F32 a, F32 b, F32 c, F32& lo, F32& hi)
+{
+    asm volatile("min.s %0, %2, %3\n"
+                 "max.s %1, %2, %3\n"
+                 "min.s %0, %0, %4\n"
+                 "max.s %1, %1, %4\n"
+                 : "=&f"(lo), "=&f"(hi) : "f"(a), "f"(b), "f"(c));
+}
 
 // Reject the triangle when it lies wholly beyond the sphere along one axis, otherwise
 // record its vertices relative to the sphere centre.
-#define SphereAxisReject(_axis)                                                                        if (testSphere->sphere->center._axis + testSphere->sphere->radius <=                                       SphereMin(SphereMin(v0->_axis, v1->_axis), v2->_axis) ||                                       SphereMax(SphereMax(v0->_axis, v1->_axis), v2->_axis) <=                                               testSphere->sphere->center._axis - testSphere->sphere->radius)                             {                                                                                                      continue;                                                                                      }                                                                                                  vc[0]._axis = v0->_axis - testSphere->sphere->center._axis;                                        vc[1]._axis = v1->_axis - testSphere->sphere->center._axis;                                        vc[2]._axis = v2->_axis - testSphere->sphere->center._axis
+#define SphereAxisReject(_axis)                                                    \
+    {                                                                              \
+        F32 a = v0->_axis, b = v1->_axis, c = v2->_axis;                           \
+        F32 centre = sphere->center._axis;                                         \
+        F32 lo, hi;                                                                \
+        SphereMinMax(a, b, c, lo, hi);                                             \
+        if (centre + radius <= lo) continue;                                       \
+        if (hi <= centre - radius) continue;                                       \
+        vc[0]._axis = a - centre;                                                  \
+        vc[1]._axis = b - centre;                                                  \
+        vc[2]._axis = c - centre;                                                  \
+    }
+
 #endif
 
 static S32 LeafNodeSpherePolyIntersect(xClumpCollBSPTriangle* triangles, void* data)
@@ -875,6 +996,8 @@ static S32 LeafNodeSpherePolyIntersect(xClumpCollBSPTriangle* triangles, void* d
             }
 #if defined(PS2)
             RwV3d vc[3];
+            const RwSphere* sphere = testSphere->sphere;
+            F32 radius = sphere->radius;
 
             SphereAxisReject(x);
             SphereAxisReject(y);
@@ -900,7 +1023,11 @@ static S32 LeafNodeSpherePolyIntersect(xClumpCollBSPTriangle* triangles, void* d
                 }
             }
         }
+#if defined(PS2)
+    } while ((++triangles)[-1].flags & 0x1);
+#else
     } while ((triangles++)->flags & 0x1);
+#endif
     return 1;
 }
 
@@ -956,7 +1083,11 @@ static S32 LeafNodeBoxPolyIntersect(xClumpCollBSPTriangle* triangles, void* data
                 }
             }
         }
+#if defined(PS2)
+    } while ((++triangles)[-1].flags & 0x1);
+#else
     } while ((triangles++)->flags & 0x1);
+#endif
     return 1;
 }
 

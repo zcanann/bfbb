@@ -19078,6 +19078,14 @@
       "identity_kind": "reviewed"
     },
     {
+      "name": "__CIpow",
+      "canonical_identifier": "__CIpow",
+      "source": "Runtime/MSVC/pow.obj",
+      "address": 1824492,
+      "size": 27,
+      "identity_kind": "reviewed"
+    },
+    {
       "name": null,
       "canonical_identifier": "anon_001bd8fd",
       "source": null,

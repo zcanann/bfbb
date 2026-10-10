@@ -10,6 +10,7 @@
 
 #include "iAnim.h"
 #include "xLightKit.h"
+#include "zGlobals.h"
 #include "xMath3.h"
 #include "xModel.h"
 #include "xMathInlines.h"
@@ -76,6 +77,8 @@ void iModelInit()
 
 static RpAtomic* FindAtomicCallback(RpAtomic* atomic, void*)
 {
+    // Retain the parent field itself so each SDK call observes its current value.
+    void*& frame = atomic->object.object.parent;
     RpHAnimHierarchy* pHier = GetHierarchy(atomic);
     RpSkin* pSkin = RpSkinGeometryGetSkin(atomic->geometry);
 
@@ -83,7 +86,7 @@ static RpAtomic* FindAtomicCallback(RpAtomic* atomic, void*)
     {
         pHier = RpHAnimHierarchyCreate(RpSkinGetNumBones(pSkin), NULL, NULL,
                                        rpHANIMHIERARCHYLOCALSPACEMATRICES, 0x24);
-        RpHAnimFrameSetHierarchy(RpAtomicGetFrame(atomic), pHier);
+        RpHAnimFrameSetHierarchy((RwFrame*)frame, pHier);
     }
     if (pHier != NULL && pSkin != NULL)
     {
@@ -98,7 +101,7 @@ static RpAtomic* FindAtomicCallback(RpAtomic* atomic, void*)
         gLastAtomicList[gLastAtomicCount++] = atomic;
     }
 
-    RwFrameGetRoot(RpAtomicGetFrame(atomic));
+    RwFrameGetRoot((RwFrame*)frame);
     return atomic;
 }
 
@@ -244,7 +247,153 @@ RpAtomic* iModelFile_RWMultiAtomic(RpAtomic* model)
 U32 iModelNumBones(RpAtomic* model)
 {
     RpHAnimHierarchy* hierarchy = GetHierarchy(model);
-    return hierarchy == NULL ? 0 : hierarchy->numNodes;
+    if (hierarchy != NULL)
+    {
+        return hierarchy->numNodes;
+    }
+    return 0;
+}
+
+// The animation matrix stack stays in vf20-vf23 between bones. Each new
+// quaternion is converted and composed with that current parent in VU0.
+static inline void model_matrix_identity(RwMatrix* stack)
+{
+    asm volatile("vmulx.xyzw vf20, vf0, vf0x\n"
+                 "vmulx.xyzw vf21, vf0, vf0x\n"
+                 "vmulx.xyzw vf22, vf0, vf0x\n"
+                 "vmulx.xyzw vf23, vf0, vf0x\n"
+                 "vaddw.x vf20, vf20, vf0w\n"
+                 "vaddw.y vf21, vf21, vf0w\n"
+                 "vaddw.z vf22, vf22, vf0w\n"
+                 "sqc2 vf20, 0x0(%0)\n"
+                 "sqc2 vf21, 0x10(%0)\n"
+                 "sqc2 vf22, 0x20(%0)\n"
+                 "sqc2 vf23, 0x30(%0)\n"
+                 : : "r"(stack) : "memory");
+}
+
+static inline void model_matrix_push(RwMatrix* stack)
+{
+    asm volatile("sqc2 vf20, 0x0(%0)\n"
+                 "sqc2 vf21, 0x10(%0)\n"
+                 "sqc2 vf22, 0x20(%0)\n"
+                 "sqc2 vf23, 0x30(%0)\n"
+                 : : "r"(stack) : "memory");
+}
+
+static inline void model_matrix_bone(const xQuat* quat, const xVec3* tran, RwMatrix* mat)
+{
+    // The packed quaternion kernel reserves a4-a6 for MMI shuffles.
+    asm volatile("lq a4, 0x0(%0)\n"
+                 "mtsah zero, 0x2\n"
+                 "vaddw.xyz vf5, vf0, vf0w\n"
+                 "qmtc2 a4, vf1\n"
+                 "pcpyud a5, a4, zero\n"
+                 "vadd.xyz vf1, vf1, vf1\n"
+                 "pcpyld a5, a4, a5\n"
+                 "pexew a6, a4\n"
+                 "qmtc2 a5, vf3\n"
+                 "qfsrv a6, a6, a6\n"
+                 "vsubx.x vf3, vf0, vf3x\n"
+                 "qfsrv a5, a6, a6\n"
+                 "qmtc2 a6, vf2\n"
+                 "qfsrv a5, a5, a5\n"
+                 "vsuby.y vf2, vf0, vf2y\n"
+                 "qmtc2 a5, vf4\n"
+                 "lw a4, 0x0(%1)\n"
+                 "lw a5, 0x4(%1)\n"
+                 "lw a6, 0x8(%1)\n"
+                 "vmulaz.xyz ACC, vf3, vf1z\n"
+                 "vmaddaw.x ACC, vf5, vf0w\n"
+                 "vsubz.z vf4, vf0, vf4z\n"
+                 "vmsuby.xyz vf16, vf2, vf1y\n"
+                 "vmulax.xyz ACC, vf2, vf1x\n"
+                 "vmaddaw.y ACC, vf5, vf0w\n"
+                 "vmsubz.xyz vf17, vf4, vf1z\n"
+                 "vmulay.xyz ACC, vf4, vf1y\n"
+                 "pextlw a4, a5, a4\n"
+                 "vmaddaw.z ACC, vf5, vf0w\n"
+                 "pcpyld a4, a6, a4\n"
+                 "vmsubx.xyz vf18, vf3, vf1x\n"
+                 "qmtc2 a4, vf19\n"
+                 "vmulax.xyz ACC, vf20, vf16x\n"
+                 "vmadday.xyz ACC, vf21, vf16y\n"
+                 "vmaddz.xyz vf9, vf22, vf16z\n"
+                 "vmulax.xyz ACC, vf20, vf17x\n"
+                 "vmadday.xyz ACC, vf21, vf17y\n"
+                 "vmaddz.xyz vf10, vf22, vf17z\n"
+                 "vmulax.xyz ACC, vf20, vf18x\n"
+                 "vmadday.xyz ACC, vf21, vf18y\n"
+                 "vmaddz.xyz vf11, vf22, vf18z\n"
+                 "vmulx.w vf9, vf0, vf0x\n"
+                 "vmulax.xyz ACC, vf20, vf19x\n"
+                 "vmadday.xyz ACC, vf21, vf19y\n"
+                 "vmaddaz.xyz ACC, vf22, vf19z\n"
+                 "vmaddw.xyz vf12, vf23, vf0w\n"
+                 "sqc2 vf9, 0x0(%2)\n"
+                 "sqc2 vf10, 0x10(%2)\n"
+                 "sqc2 vf11, 0x20(%2)\n"
+                 "sqc2 vf12, 0x30(%2)\n"
+                 : : "r"(quat), "r"(tran), "r"(mat) : "a4", "a5", "a6", "memory");
+}
+
+static inline void model_matrix_pop(const RwMatrix* stack)
+{
+    asm volatile("lqc2 vf20, 0x0(%0)\n"
+                 "lqc2 vf21, 0x10(%0)\n"
+                 "lqc2 vf22, 0x20(%0)\n"
+                 "lqc2 vf23, 0x30(%0)\n"
+                 : : "r"(stack) : "memory");
+}
+
+static inline void model_matrix_advance()
+{
+    asm volatile("vmulw.xyzw vf20, vf9, vf0w\n"
+                 "vmulw.xyzw vf21, vf10, vf0w\n"
+                 "vmulw.xyzw vf22, vf11, vf0w\n"
+                 "vmulw.xyzw vf23, vf12, vf0w\n"
+                 : : : "memory");
+}
+
+void iModelAnimMatrices(RpAtomic* model, xQuat* quat, xVec3* tran, RwMatrix* mat)
+{
+    RpHAnimHierarchy* pHierarchy = GetHierarchy(model);
+    RwMatrix matrixStack[32];
+    RwMatrix* pMatrixStackTop;
+    RpHAnimNodeInfo* pCurrentFrame;
+    S32 pCurrentFrameFlags;
+    S32 i, numFrames;
+
+    if (pHierarchy != NULL)
+    {
+        pMatrixStackTop = matrixStack;
+        model_matrix_identity(pMatrixStackTop);
+        numFrames = pHierarchy->numNodes;
+        ++pMatrixStackTop;
+        pCurrentFrame = pHierarchy->pNodeInfo;
+        for (i = 0; i < numFrames; ++i)
+        {
+            pCurrentFrameFlags = pCurrentFrame->flags;
+            if (pCurrentFrameFlags & 2)
+            {
+                model_matrix_push(pMatrixStackTop);
+                ++pMatrixStackTop;
+            }
+            model_matrix_bone(quat, tran, mat);
+            if (pCurrentFrameFlags & 1)
+            {
+                model_matrix_pop(--pMatrixStackTop);
+            }
+            else
+            {
+                model_matrix_advance();
+            }
+            ++mat;
+            ++quat;
+            ++tran;
+            ++pCurrentFrame;
+        }
+    }
 }
 
 void iModelRender(RpAtomic* model, RwMatrix* mat)
@@ -280,6 +429,89 @@ void iModelRender(RpAtomic* model, RwMatrix* mat)
     {
         hierarchy->pMatrixArray = pAnimOldMatrix;
     }
+}
+
+// Transform the local sphere, retain the largest axis scale, and test the
+// camera's four packed side planes followed by its two depth planes.
+S32 iModelCull(RpAtomic* model, RwMatrix* mat)
+{
+    U32 outside, y, z, radius;
+    const RwSphere* sphere = &model->boundingSphere;
+    RwSphere* worldSphere = &model->worldBoundingSphere;
+    asm volatile("lqc2 vf10, 0x0(%5)\n"
+                 "lqc2 vf11, 0x10(%5)\n"
+                 "vmul.xyz vf15, vf10, vf10\n"
+                 "lqc2 vf12, 0x20(%5)\n"
+                 "vmul.xyz vf16, vf11, vf11\n"
+                 "lqc2 vf13, 0x30(%5)\n"
+                 "vmul.xyz vf17, vf12, vf12\n"
+                 "vaddy.x vf15, vf15, vf15y\n"
+                 "lw %0, 0x0(%4)\n"
+                 "vaddy.x vf16, vf16, vf16y\n"
+                 "lw %1, 0x4(%4)\n"
+                 "vaddy.x vf17, vf17, vf17y\n"
+                 "lw %2, 0x8(%4)\n"
+                 "vaddz.x vf15, vf15, vf15z\n"
+                 "vaddz.x vf16, vf16, vf16z\n"
+                 "vaddz.x vf17, vf17, vf17z\n"
+                 "vmax.x vf15, vf15, vf16\n"
+                 "vmax.x vf15, vf15, vf17\n"
+                 "lw %3, 0xc(%4)\n"
+                 "pextlw %0, %1, %0\n"
+                 "pextlw %2, %3, %2\n"
+                 "vsqrt Q, vf15x\n"
+                 "pcpyld %0, %2, %0\n"
+                 "qmtc2 %0, vf2\n"
+                 "vmulax.xyz ACC, vf10, vf2x\n"
+                 "vmadday.xyz ACC, vf11, vf2y\n"
+                 "vmaddaz.xyz ACC, vf12, vf2z\n"
+                 "vmaddw.xyz vf1, vf13, vf0w\n"
+                 "lqc2 vf6, 0x30(%6)\n"
+                 "vwaitq\n"
+                 "vmulq.w vf1, vf2, Q\n"
+                 "lqc2 vf3, 0x0(%6)\n"
+                 "lqc2 vf4, 0x10(%6)\n"
+                 "lqc2 vf5, 0x20(%6)\n"
+                 "vaddaw.xyzw ACC, vf6, vf1w\n"
+                 "vmsubax.xyzw ACC, vf3, vf1x\n"
+                 "vmsubay.xyzw ACC, vf4, vf1y\n"
+                 "vmsubz.xyzw vf2, vf5, vf1z\n"
+                 "lqc2 vf3, 0x40(%6)\n"
+                 "lqc2 vf4, 0x50(%6)\n"
+                 "lqc2 vf5, 0x60(%6)\n"
+                 "qmfc2 %0, vf2\n"
+                 "lqc2 vf6, 0x70(%6)\n"
+                 "pcgtw %0, zero, %0\n"
+                 "ppach %0, zero, %0\n"
+                 "qmfc2 %2, vf1\n"
+                 "sw %2, 0x0(%7)\n"
+                 "pextuw %3, zero, %2\n"
+                 "prot3w %2, %2\n"
+                 "sw %2, 0x4(%7)\n"
+                 "sw %3, 0x8(%7)\n"
+                 "pextuw %3, zero, %3\n"
+                 "sw %3, 0xc(%7)\n"
+                 : "=&r"(outside), "=&r"(y), "=&r"(z), "=&r"(radius) : "r"(sphere), "r"(mat), "r"(globals.camera.frustplane), "r"(worldSphere) : "memory");
+    asm volatile("vaddaw.xy ACC, vf6, vf1w\n"
+                 : : : "memory");
+    if (outside)
+    {
+        goto outside_frustum;
+    }
+    asm volatile("vmsubax.xy ACC, vf3, vf1x\n"
+                 "vmsubay.xy ACC, vf4, vf1y\n"
+                 "vmsubz.xy vf2, vf5, vf1z\n"
+                 "qmfc2 %0, vf2\n"
+                 "pcgtw %0, zero, %0\n"
+                 : "=r"(outside) : : "memory");
+    if (outside)
+    {
+        goto outside_frustum;
+    }
+    return 0;
+
+outside_frustum:
+    return 1;
 }
 
 S32 iModelSphereCull(xSphere* sphere)
@@ -365,6 +597,182 @@ shadow_test:
 U32 iModelVertCount(RpAtomic* model)
 {
     return model->geometry->numVertices;
+}
+
+// Cache all four indexed bone matrices, then accumulate weighted positions in
+// VU0. Later weights stop on zero bits; the first weight always contributes.
+static inline void SkinXform(xVec3* dest, const xVec3* vert, RwMatrix* mat,
+                             const RwMatrix* skinmat, const F32* wt, const U32* idx, U32 count)
+{
+    U32 catMatFlags[2] = {};
+    RwMatrix* catmat = (RwMatrix*)giAnimScratch;
+    asm volatile("lqc2 vf1, 0x0(%0)\n"
+                 "lqc2 vf2, 0x10(%0)\n"
+                 "lqc2 vf3, 0x20(%0)\n"
+                 "lqc2 vf4, 0x30(%0)\n"
+                 : : "r"(mat) : "memory");
+    ++mat;
+    while (count != 0)
+    {
+        for (U32 i = 0; i < 4; ++i)
+        {
+            U32 midx = (*idx >> (i * 8)) & 0xff;
+            if (!(catMatFlags[midx >> 5] & (1 << (midx & 31))))
+            {
+                xMat4x3Mul((xMat4x3*)(catmat + midx), (const xMat4x3*)(skinmat + midx),
+                           (const xMat4x3*)(mat + midx));
+                catMatFlags[midx >> 5] |= 1 << (midx & 31);
+            }
+        }
+        {
+            U32 packedIndex = *idx;
+            U32 nextWeight;
+            asm volatile("lw %0, 0x0(%2)\n"
+                         "lw a5, 0x4(%2)\n"
+                         "lw a6, 0x8(%2)\n"
+                         "pextlw %0, a5, %0\n"
+                         "pcpyld %0, a6, %0\n"
+                         "qmtc2 %0, vf9\n"
+                         "lw %0, 0x0(%3)\n"
+                         "andi a5, %1, 0xff\n"
+                         "sll a5, a5, 6\n"
+                         "addu a5, a5, %4\n"
+                         "srl %1, %1, 8\n"
+                         "qmtc2 %0, vf10\n"
+                         "lw %0, 0x4(%3)\n"
+                         "vmulx.xyzw vf11, vf9, vf10x\n"
+                         "lqc2 vf5, 0x0(a5)\n"
+                         "lqc2 vf6, 0x10(a5)\n"
+                         "lqc2 vf7, 0x20(a5)\n"
+                         "lqc2 vf8, 0x30(a5)\n"
+                         "vmulax.xyz ACC, vf5, vf11x\n"
+                         "vmadday.xyz ACC, vf6, vf11y\n"
+                         "vmaddaz.xyz ACC, vf7, vf11z\n"
+                         "vmaddax.xyz ACC, vf8, vf10x\n"
+                         : "=&r"(nextWeight), "+r"(packedIndex) : "r"(vert), "r"(wt), "r"(catmat) : "a5", "a6", "memory");
+            if (!nextWeight)
+            {
+                goto finish;
+            }
+            asm volatile("andi a5, %1, 0xff\n"
+                         "sll a5, a5, 6\n"
+                         "addu a5, a5, %3\n"
+                         "srl %1, %1, 8\n"
+                         "qmtc2 %0, vf10\n"
+                         "lw %0, 0x8(%2)\n"
+                         "vmulx.xyzw vf11, vf9, vf10x\n"
+                         "lqc2 vf5, 0x0(a5)\n"
+                         "lqc2 vf6, 0x10(a5)\n"
+                         "lqc2 vf7, 0x20(a5)\n"
+                         "lqc2 vf8, 0x30(a5)\n"
+                         "vmaddax.xyz ACC, vf5, vf11x\n"
+                         "vmadday.xyz ACC, vf6, vf11y\n"
+                         "vmaddaz.xyz ACC, vf7, vf11z\n"
+                         "vmaddax.xyz ACC, vf8, vf10x\n"
+                         : "+r"(nextWeight), "+r"(packedIndex) : "r"(wt), "r"(catmat) : "a5", "memory");
+            if (!nextWeight)
+            {
+                goto finish;
+            }
+            asm volatile("andi a5, %1, 0xff\n"
+                         "sll a5, a5, 6\n"
+                         "addu a5, a5, %3\n"
+                         "srl %1, %1, 8\n"
+                         "qmtc2 %0, vf10\n"
+                         "lw %0, 0xc(%2)\n"
+                         "vmulx.xyzw vf11, vf9, vf10x\n"
+                         "lqc2 vf5, 0x0(a5)\n"
+                         "lqc2 vf6, 0x10(a5)\n"
+                         "lqc2 vf7, 0x20(a5)\n"
+                         "lqc2 vf8, 0x30(a5)\n"
+                         "vmaddax.xyz ACC, vf5, vf11x\n"
+                         "vmadday.xyz ACC, vf6, vf11y\n"
+                         "vmaddaz.xyz ACC, vf7, vf11z\n"
+                         "vmaddax.xyz ACC, vf8, vf10x\n"
+                         : "+r"(nextWeight), "+r"(packedIndex) : "r"(wt), "r"(catmat) : "a5", "memory");
+            if (!nextWeight)
+            {
+                goto finish;
+            }
+            asm volatile("andi a5, %1, 0xff\n"
+                         "sll a5, a5, 6\n"
+                         "addu a5, a5, %2\n"
+                         "qmtc2 %0, vf10\n"
+                         "vmulx.xyzw vf11, vf9, vf10x\n"
+                         "lqc2 vf5, 0x0(a5)\n"
+                         "lqc2 vf6, 0x10(a5)\n"
+                         "lqc2 vf7, 0x20(a5)\n"
+                         "lqc2 vf8, 0x30(a5)\n"
+                         "vmaddax.xyz ACC, vf5, vf11x\n"
+                         "vmadday.xyz ACC, vf6, vf11y\n"
+                         "vmaddaz.xyz ACC, vf7, vf11z\n"
+                         "vmaddax.xyz ACC, vf8, vf10x\n"
+                         : : "r"(nextWeight), "r"(packedIndex), "r"(catmat) : "a5", "memory");
+        finish:
+            asm volatile("vmaddx.xyz vf10, vf0, vf0x\n"
+                         "vmulax.xyz ACC, vf1, vf10x\n"
+                         "vmadday.xyz ACC, vf2, vf10y\n"
+                         "vmaddaz.xyz ACC, vf3, vf10z\n"
+                         "vmaddw.xyz vf10, vf4, vf0w\n"
+                         "qmfc2 %0, vf10\n"
+                         "sw %0, 0x0(%1)\n"
+                         "prot3w %0, %0\n"
+                         "sw %0, 0x4(%1)\n"
+                         "prot3w %0, %0\n"
+                         "sw %0, 0x8(%1)\n"
+                         : "=&r"(nextWeight) : "r"(dest) : "memory");
+        }
+        ++vert;
+        ++dest;
+        ++idx;
+        wt += 4;
+        --count;
+    }
+}
+
+U32 iModelVertEval(RpAtomic* model, U32 index, U32 count, RwMatrix* mat, xVec3* vert, xVec3* dest)
+{
+    RpGeometry* geom = RpAtomicGetGeometry(model);
+
+    if (vert == NULL)
+    {
+        U32 numVerts = geom->numVertices;
+        if ((index >= numVerts) || (count == 0))
+        {
+            return 0;
+        }
+        count = (count < numVerts - index) ? count : (numVerts - index);
+        vert = (xVec3*)geom->morphTarget->verts;
+        vert += index;
+    }
+
+    RpSkin* skin = RpSkinGeometryGetSkin(model->geometry);
+    if (skin)
+    {
+        SkinXform(dest, vert, mat, RpSkinGetSkinToBoneMatrices(skin),
+                  (F32*)(RpSkinGetVertexBoneWeights(skin) + index),
+                  RpSkinGetVertexBoneIndices(skin) + index, count);
+    }
+    else
+    {
+        RwV3dTransformPoints((RwV3d*)dest, (const RwV3d*)vert, count, mat);
+    }
+    return count;
+}
+
+void iModelTagEval(RpAtomic* model, const xModelTag* tag, RwMatrix* mat, xVec3* dest)
+{
+    if (tag->wt[0])
+    {
+        RpGeometry* geom = RpAtomicGetGeometry(model);
+        RpSkin* skin = RpSkinGeometryGetSkin(geom);
+        const RwMatrix* skinmat = RpSkinGetSkinToBoneMatrices(skin);
+        SkinXform(dest, &tag->v, mat, skinmat, tag->wt, &tag->matidx, 1);
+    }
+    else
+    {
+        RwV3dTransformPoints((RwV3d*)dest, (RwV3d*)&tag->v, 1, mat);
+    }
 }
 
 static inline void SkinNormals(xVec3* dest, const xVec3* normal, const RwMatrix* mat,

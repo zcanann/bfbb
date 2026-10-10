@@ -15012,3 +15012,462 @@ three comparison logs, `build/oct09-france-curve-animation`, its comparison log,
 `build/oct09-curve-animation-<GameCube-version>.log`,
 `build/oct09-curve-animation-xbox` and both regional comparison logs,
 plus `build/oct09-france-animation-map{,-query}.json`.
+
+The player/TRC/SKB/boss batch adds 624 exact bytes / three functions in USA and
+PAL, reaching 1,033,788 / 3,829 and 1,026,228 / 3,816 respectively. Germany
+gains 984 bytes / four functions, reaching 1,027,296 / 3,818, including its
+previously omitted goo-death control/carried-object cleanup. Regional controller
+messages, byte-color handling, validity and initialization reproduce the
+original layouts and strings without naming stripped camera SDK calls.
+
+Player movement's original TurnToFace boundary improves 75.10625% to 99.375%;
+documented slide locals/determinant order improve 35.108143% to 36.631042%.
+Original rotation state/reset ordering and the absent PS2 dot clamp improve
+80.958466% to 85.722046%. Update's two original integer-abs calls improve
+94.44583% to 94.56484%; their runtime name remains unresolved. SKB translation
+improves 28.290323% to 99.17742% through the genuine volatile abs.s primitive and
+original count/zero-array lifetimes. Eval remains missing in this snapshot and
+retains its full denominator. All three combined debug-region report comparisons
+preserve every earlier function/code/data measure.
+
+Five individually unique French boss animation builders add 10,472 exact bytes
+/ five functions, reaching 202,876 bytes / 573 functions. All original owner and
+boundary witnesses, 279 typed table/string/callback/initializer operands and
+143 calls are inventoried in every reference. The shared initializer uses the
+authenticated function owner; the previous Robot proof output stays identical.
+All 556 prior function proofs remain unchanged. Nine boss mutation tests and
+eight Robot replay tests pass; strict aggregate regeneration and all 76 French
+source units succeed. Coverage reaches 853 functions / 415,468 known bytes.
+
+All three GameCube full source reports/checksums and both Xbox source reports
+remain unchanged. CPU denominators and source-data/full-link limitations remain
+explicit. Evidence: `build/oct09-player-boss/<debug-version>` and comparison logs,
+`build/oct09-france-player-boss`, its comparison log,
+`build/oct09-npc-boss-animation-tests.log`,
+`build/oct09-npc-robot-animation-replay.log`,
+`build/oct09-player-boss-<GameCube-version>.log`,
+`build/oct09-player-boss-xbox` and both regional comparison logs.
+
+The SKB/model/townsfolk follow-up adds 280 exact bytes / one function in each
+debug PS2 version through Villager's original sine-expression order. USA reaches
+1,034,068 bytes / 3,830 functions, PAL 1,026,508 / 3,817, and Germany
+1,027,576 / 3,819. Full report comparisons preserve every earlier function,
+code and data measure. Four changed units are rebuilt against the verified
+214-unit snapshots, with unchanged debug profiles and frozen source hashes.
+Overall fuzzy scores reach 65.719248%, 65.680177%, and 65.564430% respectively.
+
+Previously omitted SKB evaluation reaches 78.87838%; model animation matrices
+reach 93.62963%, and sphere culling reaches 90.19444%. Their raw VU/MMI words,
+lane masks, original locals and typed polynomial/frustum operands are checked
+independently. Lasso rendering improves 85.162766% to 88.31542%. Scheduling and
+register residuals remain scored; no compiler patch is introduced.
+
+France adds fourteen complete animation identities / 9,092 known bytes through
+five independent builders and two complete Ambient/Villager clusters. All 561
+previous function records, auxiliary proofs, sequence/call prefixes and metadata
+remain unchanged. Twenty-two original-backed tests pass. Strict full aggregate
+regeneration succeeds and all 82 enabled source units compile. Exact matching
+gains 6,524 bytes / fourteen functions, reaching 209,400 bytes / 587 functions;
+known coverage reaches 867 functions / 424,560 bytes. The four-function SKB
+profile uses unchanged authenticated boundaries and adds its 32-byte Duration
+match; incomplete Sandy/SB1 builders retain their full residuals.
+
+All three GameCube source reports/checksums and both Xbox source reports pass
+without a regression. Full CPU denominators and the source-data/full-link
+limitations remain unchanged. Evidence: `build/oct09-eval-townsfolk`, its three
+comparison logs, `build/oct09-france-eval-townsfolk` and comparison log,
+`build/oct09-npc-{remaining,townsfolk}-animation-tests.log`,
+`build/oct09-eval-townsfolk-<GameCube-version>.log`,
+`build/oct09-eval-townsfolk-xbox` and
+`build/oct09-france-townsfolk-{query,map}.json`.
+
+The triangle/model/motion batch adds 1,560 exact bytes / three functions in
+each debug PS2 region: BubbleWall 520 bytes, motion initialization 744, and
+FindAtomicCallback 296. USA reaches 1,035,628 bytes / 3,833 functions, PAL
+1,028,068 / 3,820, and Germany 1,029,136 / 3,822. Every earlier function/code/data
+measure survives the complete comparisons. Four changed units are rebuilt
+against the verified 214-unit snapshots; debug profiles and global compiler
+settings are unchanged, and all final source hashes are rechecked.
+
+Restored weighted vertex/tag kernels reach 93.14732% / 93.516304%; triangle
+skinning reaches 99.22085%, move-point banking 99.67374%, and goo update
+99.99288%. Raw VU words and lane masks are independently audited. Deferred
+compilation can extend pragma effects beyond lexical placement; the full-unit
+motion checks establish that only the intended functions change. Goo's original
+unused vector slot explains a remaining frame-size lead; unsuccessful local
+initialization probes are discarded without synthetic padding or a compiler
+defect claim. Unproved SDK identities remain unpromoted, including eight calls
+in the report-exact atomic callback.
+
+Four complete French model leaves add 1,272 known bytes, reaching 871 functions
+/ 425,832 bytes. All 575 earlier TU function records and all prior auxiliary
+proofs survive unchanged. Seven original-backed tests pass; typed material
+arrays and an independently anchored camera frustum prove all three address
+pairs, and all 42 Cull vector words match raw. Strict aggregate regeneration and
+all 83 source compilations succeed. The model leaves plus motion initialization
+add 1,728 exact bytes / four functions, reaching 211,128 / 591; no earlier score
+declines.
+
+Both Xbox releases add 228 exact bytes / two functions through particle damping
+and following, reaching 15,797 bytes / 84 functions. Both bodies match all
+81 / 147 bytes directly against authenticated originals, without relocations;
+every other compared particle body is unchanged. Both full 13-unit source
+reports pass. All three GameCube full source reports/checksums pass, and all
+allocated source section entries for the Xbox-specific edits remain identical
+in all four PS2 versions. Full CPU denominators and source-data/full-link
+limitations remain unchanged.
+
+Evidence: `build/oct09-fx-model-motion`, its three comparison logs,
+`build/oct09-france-fx-model-motion` and comparison log,
+`build/oct09-imodel-kernels-{proof.json,tests.log}`,
+`build/oct09-fx-model-motion-<GameCube-version>.log`,
+`build/oct09-fx-model-motion-xbox`, and the Xbox worktree's
+`build/xbox-{dampen,follow}-raw-proof.json` and cross-platform control artifacts.
+
+The math/particle/laser batch adds 4,504 exact bytes / seven functions in each
+debug PS2 version: 932 cubic bytes, 3,364 particle-atlas bytes and 208 laser
+helper bytes. USA reaches 1,040,132 bytes / 3,840 functions, PAL 1,032,572 /
+3,827, and Germany 1,033,640 / 3,829. Acceleration additionally improves
+95.349464% to 99.97312%. All prior function/code/data scores survive the full
+comparisons. Three changed source units are rebuilt against the verified
+214-unit snapshots with unchanged debug profiles and stable final source hashes.
+Raw cubic proof establishes 896/932 bytes; nine runtime JAL identities remain
+unresolved. The acceleration branch residual remains counted.
+
+Nine independently unique French particle/hazard kernels add 3,504 known bytes;
+coverage reaches 880 functions / 429,336 bytes. Complete fixed math/streak
+callees and a typed full zero vector prove every changed operand. Duplicate
+builders remain unpromoted, all 579 prior TU records/auxiliary proofs survive,
+and seven original-backed tests pass. Full aggregate regeneration and all 84
+source compilations succeed. With the exact atlas/cubic source, France adds
+4,436 exact bytes / ten functions, reaching 215,564 bytes / 601 functions.
+All earlier scores are preserved.
+
+The ordinary Xbox cubic score initially exposed missing target-call provenance
+at the strict export gate. Independent pinned-vendor/original proof closes all
+eight calls without changing that guard. Only a 27-byte x87 pow wrapper enters
+known coverage; its complete matching vendor implementation is context, with
+no runtime source credit. All old symbol/anonymous records survive and eight
+original-backed mutation/archive tests pass. Both complete 13-unit source
+reports add 654 exact bytes / one function, reaching 16,451 / 85; known coverage
+is 2,557 functions / 635,442 bytes. See `XBOX_CUBIC_CALLS.md` for the identity
+and inverse-relocation checks.
+
+Fresh GameCube source reports/checksums pass in all three versions. CPU
+denominators and source-data/full-link limitations remain unchanged. Evidence:
+`build/oct09-math-particle-laser`, its three comparison logs,
+`build/oct09-france-math-particle-laser` and comparison log,
+`build/oct09-npc-particle-kernels-tests.log`,
+`build/oct09-math-particle-laser-<GameCube-version>.log`, and
+`build/oct09-math-particle-laser-pow-final-xbox` with both comparison logs.
+
+The collision/disco/voice batch adds 5,172 exact bytes / six functions in each
+debug PS2 region. Four collision routines contribute 3,712 bytes, voice selection
+900, and the clump box callback 560. USA reaches 1,045,304 / 3,846, PAL
+1,037,744 / 3,833, and Germany 1,038,812 / 3,835. The Disco-only PS2 header
+visibility change is gated by fresh compilation of all 214 source units in
+each region; every earlier function/code/data measure survives the comparisons.
+All debug profiles/global compiler settings remain unchanged, and root source
+is held at `7b209eae1` throughout these builds.
+
+The restored 920-byte VU line callback improves 3.1086957% to 79.40435%; the
+512-byte sphere callback improves 0% to 66.27344%. All 28 arithmetic words/lane
+masks and hardware min/max dependencies are audited independently. Remaining
+GPR/FPR scheduling differences stay scored without forced register bindings.
+Disco refresh_bound improves 65.172485% to 91.72279% and now has the original
+call-free shape. Collision ray/sphere lifetimes, hardware boundaries and floor
+index ordering provide further gains. Unproved SDK calls remain explicit in
+the raw audits; no compiler patch or target alias is introduced.
+
+Twenty-four complete French boss goal kernels and three anchored sound wrappers
+add 7,552 known bytes, reaching 907 identities / 436,888 bytes. All 588 prior TU
+function records, auxiliary proofs and sequence/limitation prefixes survive
+unchanged. Thirteen original-backed tests pass. Small sound tails are identified
+through one full independently unique cluster, preserving exact argument,
+terminal-jump and delay-slot inventories; generic uniqueness rules stay intact.
+Full aggregate regeneration and all 84 source compilations succeed. Boss goals,
+sound wrappers, voice selection and clump box source add 8,428 exact bytes /
+28 functions, reaching 223,992 / 629, with no earlier score lost.
+
+All three fresh GameCube source reports/checksums and both full 13-unit Xbox
+source reports pass unchanged. Full CPU denominators and source-data/full-link
+limitations remain unchanged. Evidence: `build/oct09-full-clump-collision-disco`
+and its three comparison logs, `build/oct09-france-clump-collision-disco` and
+comparison log, `build/oct09-boss-sound-tests.log`,
+`build/oct09-clump-collision-disco-<GameCube-version>.log` and
+`build/oct09-clump-collision-disco-xbox`.
+
+The camera/main/math/sound batch adds 3,080 exact bytes / seven functions in
+USA and PAL, reaching 1,048,384 / 3,853 and 1,040,824 / 3,840. Germany also
+recovers its 736-byte main and 1,632-byte loop, gaining 5,448 / nine and
+reaching 1,044,260 / 3,844. Camera is now 14/14 and 3,984/3,984 in all debug
+regions; quaternion interpolation and Euler conversion add 676 exact bytes.
+All earlier function/code/data measures survive. Four changed source units are
+rebuilt against the verified 214-unit snapshots, with unchanged debug profiles,
+global compiler settings and final source hashes. Source is frozen at
+`ac8cce373` throughout validation.
+
+Previously omitted startup query and splash behavior now scores 96.43606% and
+95.173615%. Original PAL camera dimensions, 50 Hz polling and controller text
+are independently checked; splash extern declarations preserve original asset
+types and extents without shipping asset definitions. All non-NOP words and
+relative branch destinations agree in the bounded original audits, while
+unproved runtime/data relocations and extra compiler NOPs remain counted.
+Stream playback improves to 87.63571%, and cone bounds to 99.0991%. Neither
+prior/future compiler probes nor source loop experiments establish a patch
+justification, so no compiler patch or artificial padding is introduced.
+
+Twelve complete French sound/Sandy identities add 7,000 known bytes, reaching
+919 functions / 443,888 bytes. Full typed objects/arrays, fixed complete
+dependencies, complete strings and strict unique bodies/anchored tail clusters
+corroborate the new identities. All 615 previous TU function records, auxiliary
+proofs and sequence/limitation prefixes remain unchanged. Four already-verified
+camera identities receive source comparison without altering their bounds or
+relocations. Full production regeneration and all 85 source compilations pass;
+with camera and math source, matching gains 9,964 bytes / eighteen functions,
+reaching 233,956 / 647. No earlier score declines.
+
+The decoder cache retains only completed immutable buffers, returns independent
+attribute dictionaries, and preserves lazy failure/partial-iteration behavior.
+All 945,882 reference rows/attributes match the previous decoder exactly. Warm
+benchmark iterations are two to three times faster; cold decoding and retained
+memory cost more, as documented in `PS2_DWARF_REUSE.md`. Full canonical proof
+regeneration validates the unchanged evidence, and all 41 original-backed
+mutation and cache-isolation tests pass.
+
+Fresh GameCube source reports/checksums and both complete Xbox source reports
+pass unchanged. Full CPU denominators and source-data/full-link limitations
+remain unchanged. Evidence: `build/oct09-camera-main-sandy` and its three
+comparison logs, `build/oct09-france-camera-main-sandy` and comparison log,
+`build/oct09-controls-sandy-tests.log`, `build/oct09-dwarf-cache-benchmark.json`,
+`build/oct09-camera-main-sandy-<GameCube-version>.log` and
+`build/oct09-camera-main-sandy-xbox`.
+
+The packer/geometry batch adds 2,600 exact bytes / seven functions in each debug
+PS2 release. USA reaches 1,050,984 / 3,860, PAL 1,043,424 / 3,847 and Germany
+1,046,860 / 3,851. The complete iMath3 unit is now 15/15 and 5,944/5,944,
+contributing 1,852 bytes; four packer functions contribute 748. All 214 source
+units are freshly compiled in each region because xpkrsvc.h restores the
+original PS2 asset-name field: char[32] at offset 0x40 and structure size 96.
+All prior function/code/data measures survive, debug profiles/global compiler
+settings are unchanged, and root source is frozen at `1866f1e7d`.
+
+Packer helper lifetimes and original call boundaries also improve asynchronous
+load/read paths. Hardware box intersection control and per-axis temporaries
+restore the geometry bodies. The sphere-bound routine's two runtime calls stay
+unnamed in its 308/316-byte independent raw proof. German progress rendering
+restores the exact localized text, float proportion and original char[11]
+declaration; its original 15-byte copy overrun is documented rather than silently
+changing the source layout. Remaining NOP and runtime-identity gaps stay scored.
+No compiler patch or artificial register binding is introduced.
+
+Four independently unique complete French Sandy callbacks add 1,376 known
+bytes, reaching 923 identities / 445,264 bytes. Original typed ControlOff and
+model paths plus fixed complete CalcNewDir/AnimTimeRemain identities prove
+every changed operand. All 627 prior TU proof records and auxiliary fields
+remain unchanged; seven original-backed tests pass. Full aggregate regeneration
+and all 85 source compilations succeed. Callback and geometry source add 3,228
+exact bytes / seven functions, reaching 237,184 / 654, without an earlier score
+decline. The updated largest-first map skips 874 verified reference identities;
+its remaining candidates stay diagnostic-only.
+
+Fresh full GameCube source reports/checksums and both complete Xbox source
+reports pass unchanged. Full CPU denominators and source-data/full-link limits
+remain unchanged. Evidence: `build/oct09-full-packer-geometry` and its three
+comparison logs, `build/oct09-france-packer-geometry` and comparison log,
+`build/oct09-sandy-control-callbacks-tests.log`,
+`build/oct09-packer-geometry-<GameCube-version>.log`,
+`build/oct09-packer-geometry-xbox` and
+`build/oct09-france-packer-geometry-{query,map}.json`.
+
+The morph/resource checkpoint restores typed PS2 morph source and all three
+original handwritten unpack kernels. Their 848 bytes are independently exact
+in USA, PAL, Germany and France. Three real self-J relocations per unit retain
+their aligned interior offsets through the defined source symbol; the bounded
+target metadata change requires opcode J, complete original bounds and the
+canonical own symbol, and checks the reconstructed original operand. Existing
+entry calls and other relocation behavior remain unchanged. Twelve original
+kernel fixtures and eight internal-J/ELF tests pass, including negative cases.
+
+Packer work restores the original 24-byte resource entry, allocation counters,
+2048-byte sector size, cleanup and layer-header behavior. Full rebuilds found
+duplicate declarations in xClumpColl and iFMV; those now use the canonical
+header, with a direct rwplcore.h include in iFMV. The resource functions'
+original return values are ignored by these callers. Source and profiles are
+frozen at `1c61239d4` for the final full debug rebuilds. Command-line option
+comparisons use the independently verified casefold routine; its runtime
+identity is not promoted through a target alias. No compiler patch is added.
+
+Seventeen independently corroborated French identities add 7,608 known bytes,
+reaching 940 functions / 452,872 bytes. Complete Sandy Leap, particle-emitter
+clusters, splash/helper bodies and OilSplash retain full original ownership,
+bounds, padding and dependency checks. OilSplash uses exhaustive zero-mask
+uniqueness after reconstructing only six inventoried calls from complete
+verified callees. All 631 prior TU function records and auxiliary prefixes
+remain unchanged. The strict production regeneration and all 87 source units
+pass. Together with morph and the already-proved memory-card source, France
+gains 14,512 exact bytes / 40 functions, reaching 251,696 / 694, without losing
+any previous matches. Its memory-card product prefix is corroborated from the
+original name-builder context. Twenty-five original-backed identity/mutation
+tests pass. Unproved SDK/runtime identities remain unregistered.
+
+Fresh GameCube source reports/checksums and both full Xbox source reports pass
+without regressions. CPU denominators, source-data credit and full-link limits
+remain unchanged. Evidence: `build/oct09-france-morph-resource-fixed`,
+`build/oct09-morph-resource-compare-france.log`,
+`build/oct09-morph-resource-proof-tests.log`,
+`build/oct09-morph-internal-j-tests.log`,
+`build/oct09-morph-resource-<GameCube-version>.log`,
+`build/oct09-morph-resource-xbox` and both Xbox comparison logs.
+The refreshed largest-first French map skips 891 verified reference identities;
+its remaining Player, Dutchman and SB2 block candidates remain diagnostic-only.
+Evidence: `build/oct09-france-morph-resource-{query,map}.json`.
+
+The final debug rebuilds freshly compile all 215 source units per release and
+pass every prior function/unit comparison. Each gains 6,008 exact bytes /
+eighteen functions: USA reaches 1,056,992 / 3,878, PAL 1,049,432 / 3,865 and
+Germany 1,052,868 / 3,869. Packer contributes 4,560 bytes, morph 1,040 and the
+memory-card space query 408. The canonical resource callers retain their prior
+measures; no data or full-link credit is added. Evidence:
+`build/oct09-full-morph-resource-final`, its three full build logs,
+`build/oct09-morph-resource-compare-<debug-version>.log` and
+`build/oct09-morph-checkpoint-audit.log`.
+
+The screen/collision checkpoint adds seven typed screen helpers (1,356 bytes),
+three memory-card call-boundary fixes (452 bytes) and the NPC bound-ray routine
+(240 bytes). Each debug PS2 release gains 2,048 exact bytes / eleven functions:
+USA reaches 1,059,040 / 3,889, PAL 1,051,480 / 3,876 and Germany 1,054,916 /
+3,880. The full original screen denominator remains thirteen functions / 5,788
+bytes; its six unimplemented bodies remain zero. Seventeen SDK instruction
+words in the implemented screen helpers remain unnamed in the independent raw
+proof; no runtime identity is invented from their comparison scores.
+
+The original swept-triangle VU transform and vector lifetimes improve the
+2,536-byte body from 66.03155% to 98.33438%. The parabola callback improves from
+76.75598% to 88.61005%, restoring its original 0xb0 frame, and model-sphere
+collision improves from 97.12057% to 99.858154%. NPC aim and arbitrary-plane
+lifetimes improve without exact credit. Full VU lane/pack/scatter and original
+call boundaries are independently checked; the remaining scheduling and
+register differences stay scored. No artificial padding or compiler patch is
+introduced.
+
+Targets are freshly regenerated from originals. Only source objects whose
+source, enabled profile, target object bytes and frozen object hash agree with
+the preceding full gate are reused. All four changed debug units are compiled;
+212 unchanged objects are checked and reused, preserving the complete 216-unit
+source comparison. Global compiler settings stay identical. Source/profile is
+frozen at `51ce479dc`, and every previous debug function/unit measure survives.
+Fresh full GameCube and Xbox source reports pass without regressions. Evidence:
+`build/oct09-screen-collision`, its `reuse-validation.json` documents and three
+debug comparison logs, `build/oct09-screen-collision-gc.log`,
+`build/oct09-screen-collision-xbox` and both Xbox comparison logs.
+
+France gains 564 exact bytes / three functions from the same bound-ray and
+format-helper source, reaching 252,260 / 697. Known coverage remains 940
+identities / 452,872 bytes. Strict original regeneration and registry comparison
+pass; three changed units compile and 84 unchanged objects are checked/reused.
+The private validation wrapper initially counted enabled profiles lacking a
+recovered French target unit. Its assertion now counts represented units and
+requires every prior compiled source to survive. The successful original target
+stage is retained unchanged, and source/report stages are completed with the
+normal compiler and section exporter. Every previous French function/unit
+measure survives. Evidence: `build/oct09-screen-collision-France-resume.log`,
+`build/oct09-screen-collision-compare-SLES-53623.log` and
+`build/oct09-screen-checkpoint-audit.log`.
+
+The OBB/smoothing checkpoint adds another 3,116 exact bytes / five functions
+per debug release: nonuniform sphere/OBB (1,508), swept-sphere preparation
+(932), NPC smoothing (508), and two screen camera lifecycle helpers (168).
+USA reaches 1,062,156 / 3,894, PAL 1,054,596 / 3,881 and Germany 1,058,032 /
+3,885. Full original replay of the OBB and preparation calls/data operands
+reproduces all 2,440 bytes in all three references without excluded words.
+Original normalization boundaries and named local lifetimes restore the source
+behavior; no compiler patch or artificial padding is introduced.
+
+NPC search improves from 62.519802% to 98.935646% after restoring the literal
+original ABS.S, found guard and initialization placement. Line of sight improves
+from 90.128716% to 98.0198% through component-copy lifetimes. Screen overlay
+reaches 99.65035%, retaining the independently authenticated otherwise-unused
+RwRect initializer; remaining NOP/branch differences and unnamed SDK operands
+stay unproved. All original screen bodies retain the 5,788-byte denominator.
+
+France's already-proven OBB/preparation source adds 2,440 exact bytes / two
+functions, reaching 254,700 / 699 with unchanged 940 identities / 452,872 known
+bytes. No new French identity is inferred from a source match. All four reports
+retain every earlier function/unit measure. Only three changed debug units and
+two changed French units are recompiled against their preceding verified full
+target sets; headers, profiles, target registries and global compiler settings
+are unchanged, and source hashes remain frozen at `be9e88d35`. Fresh full
+GameCube checks pass unchanged. Both previously verified full Xbox source sets
+and their dependencies are unchanged by this batch. Evidence:
+`build/oct09-obb-smooth`, its four comparison logs,
+`build/oct09-obb-smooth-audit.log` and `build/oct09-obb-smooth-gc.log`.
+
+Motion-blur allocation and vertex setup raise the complete 13-function /
+5,788-byte PS2 screen comparison from 46.02626% to 58.002766%; Open (272 bytes)
+reaches 97.05882% and setup (452) reaches 94.95575%. Instruction-level symbolic
+replay checks both original width branches, real ABI call clobbers and all 44
+ordered vertex writes/arithmetic trees. The one-cell grid syntax is documented
+as a reconstruction. Unnamed SDK calls and remaining NOP/register differences
+remain unproved, and the original distortion body is still unimplemented in
+this checkpoint. Swept-box (3,084 bytes) improves from 86.446175% to 95.11284%
+in all four PS2 source comparisons. Every prior function/unit measure survives;
+debug exact totals remain unchanged. No header or compiler setting changes.
+
+One complete original French smoothing identity adds 508 known and exact bytes,
+reaching 941 identities / 453,380 known bytes and 255,208 exact bytes / 700
+functions. Three independently unique complete templates, typed sample and
+coefficient arrays, signed init ownership, complete BSS bounds and original
+reginfo/startup GP witnesses prove its address operands. The two GP words stay
+literal; no new data anchor or generic ingestion rule is needed. All 648 prior
+TU records, counts and auxiliary prefixes survive unchanged apart from the
+explicit appended proof counts. Six original-backed mutation tests pass. Fresh
+strict production regeneration and registry checks pass; one changed profile
+unit is recompiled and 86 byte-identical target/source objects are checked and
+reused, preserving all 87 source comparisons. All debug profiles remain equal
+to the preceding checkpoint. Full CPU/data/link limitations remain unchanged.
+
+Fresh full GameCube checks pass unchanged; all thirteen previously verified
+Xbox source units and their dependencies are unchanged. Evidence:
+`build/oct09-motion-box`, its four comparison logs,
+`build/oct09-motion-box-gc.log`, `build/oct09-smooth-proof-tests.log`,
+`build/oct09-france-motion-box-smooth`, its comparison log, and
+`build/oct09-motion-smooth-audit.log`.
+
+File/distortion/collision source adds 2,060 exact bytes / five functions per
+debug release: file debug mode (328), file load (264), cone rendering (808),
+sphere/capsule intersection (496), and the swept-sphere leaf callback (164).
+USA reaches 1,064,216 / 3,899, PAL 1,056,656 / 3,886 and Germany 1,060,092 /
+3,890. The file debug guard now excludes the original invalid status explicitly;
+all 328 raw bytes are independently reproduced. Two unnamed file-loader calls
+remain excluded from its 256/264-byte raw proof. The shared capsule reciprocal
+reproduces all 496 original bytes in all four regions. Callback raw proof keeps
+three unresolved call/GP words separate rather than promoting identities.
+
+The complete 13-function / 5,788-byte screen unit now has all bodies implemented
+and reaches 99.36835% fuzzy while retaining 1,524 exact bytes / nine functions.
+Distortion's 2,396-byte body scores 99.926544%; 2,264 independently replayed raw
+bytes agree, with 23 unnamed SDK calls and ten stack/register residual words
+explicitly excluded. Six original aggregates and two zero-filled static slots
+are verified. Original unfinished render-counter/UV behavior and debug prints
+are preserved, with no invented runtime aliases or compiler patch.
+
+Box/box (4,424 bytes) improves to 99.70615% and oriented-box intersection to
+99.71098%; remaining NOP/scheduling differences stay scored. A scoped PS2
+matrix snapshot helper restores the original eight word-pair iterations and
+all 64 bytes including padding, improving swept-model to 99.13878%. Symbolic
+copy replay verifies distinct source/caller and local-stack buffers; the later
+144-byte restore remains raw identical. Ordinary memory accesses are retained,
+with no alignment/header change or artificial padding.
+
+France gains the same capsule and callback source (660 bytes / two functions),
+reaching 255,868 / 702, with unchanged 941 identities / 453,380 known bytes.
+All four full section reports preserve every earlier function/unit measure;
+four debug source units and two French units are recompiled against the
+preceding verified target sets with source frozen at `dd313f1e8`. Fresh full
+GameCube checks pass unchanged. Both previously verified Xbox source/dependency
+sets remain unchanged; their profile does not yet select collision. CPU/data
+denominators and full-link limitations remain unchanged. Evidence:
+`build/oct09-file-distortion-collision`, its four comparison logs,
+`build/oct09-file-distortion-collision-gc.log` and
+`build/oct09-file-collision-audit.log`.

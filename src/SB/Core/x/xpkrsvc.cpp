@@ -9,6 +9,66 @@
 #include "xMath.h"
 #include "xMemMgr.h"
 
+#if defined(PS2)
+#include <rwplcore.h>
+
+struct RwModuleInfo
+{
+    RwInt32 globalsOffset;
+    RwInt32 numInstances;
+};
+
+// RenderWare's private resource-arena layout, also used by baresour.c.
+struct rwResources
+{
+    RwInt32 maxSize;
+    RwInt32 currentSize;
+    RwInt32 reusageSize;
+    void* memHeap;
+    RwLinkList entriesA;
+    RwLinkList entriesB;
+    RwLinkList* freeEntries;
+    RwLinkList* usedEntries;
+};
+
+extern RwModuleInfo resourcesModule;
+#define RWRESOURCESGLOBAL(var) \
+    (((rwResources*)((char*)RwEngineInstance + resourcesModule.globalsOffset))->var)
+
+static RwResEntry* g_RWarena_resEntry;
+static RwResEntry* g_RWarena_resOwner;
+
+void PKR_special_loadbuf_killed(RwResEntry*)
+{
+}
+
+#pragma dont_inline on
+char* PKR_specialGet_loadbuf(st_PACKER_READ_DATA* pr, S32 amount, S32 align)
+{
+    RwResourcesEmptyArena();
+    RwResourcesGetArenaSize();
+    g_RWarena_resEntry = RwResourcesAllocateResEntry(pr, &g_RWarena_resOwner, amount + align,
+                                                   PKR_special_loadbuf_killed);
+    if (!g_RWarena_resEntry)
+    {
+        return NULL;
+    }
+    char* da_mem = (char*)(((U32)(g_RWarena_resEntry + 1) + align - 1) & -align);
+    memset(da_mem, 0, amount);
+    return da_mem;
+}
+#pragma dont_inline reset
+
+static inline void PKR_specialReturn_loadbuf(st_PACKER_LTOC_NODE* layer)
+{
+    RwResEntry* entry = g_RWarena_resEntry;
+    g_RWarena_resOwner = NULL;
+    g_RWarena_resEntry = NULL;
+    RwResourcesFreeResEntry(entry);
+    layer->laymem = NULL;
+}
+#endif
+
 // The target's @stringBase0 opens with twelve strings ours lacks entirely --
 // the en_LAYER_TYPE names, plus a "<unknown>" fallback. Nothing left in the
 // unit references them, so they are the residue of a layer-type-to-name
@@ -60,7 +120,11 @@ st_HIPLOADFUNCS* g_hiprf;
 U32 g_loadlock;
 S32 pkr_sector_size;
 volatile S32 g_packinit;
+#if defined(PS2)
+S32 g_memalloc_pair;
+#else
 volatile S32 g_memalloc_pair;
+#endif
 volatile S32 g_memalloc_runtot;
 volatile S32 g_memalloc_runfree;
 
@@ -81,7 +145,11 @@ S32 PKRStartup()
     {
         g_pkr_read_funcmap = g_pkr_read_funcmap_original;
         g_hiprf = get_HIPLFuncs();
+#if defined(PS2)
+        pkr_sector_size = 2048;
+#else
         pkr_sector_size = 32;
+#endif
     }
     return g_packinit;
 }
@@ -167,8 +235,13 @@ st_PACKER_READ_DATA* PKR_ReadInit(void* userdata, char* pkgfile, U32 opts, S32* 
 
 void PKR_ReadDone(st_PACKER_READ_DATA* pr)
 {
+#if defined(PS2)
+    S32 j;
+    S32 i;
+#else
     S32 i;
     S32 j;
+#endif
     S32 lockid;
     st_PACKER_ATOC_NODE* assnode;
     st_PACKER_LTOC_NODE* laynode;
@@ -255,12 +328,20 @@ S32 PKR_SetActive(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer)
             continue;
         }
 
+#if defined(PS2)
+        j = 0;
+        while (j < laynode->assref.cnt)
+#else
         for (j = 0; j < laynode->assref.cnt; j++)
+#endif
         {
             assnode = (st_PACKER_ATOC_NODE*)laynode->assref.list[j];
             result = assnode->loadflag & 0x80000;
             if (assnode->loadflag & 0x10000 || result == 0)
             {
+#if defined(PS2)
+                j++;
+#endif
                 continue;
             }
 
@@ -281,6 +362,9 @@ S32 PKR_SetActive(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer)
                     assnode->loadflag |= 0x10000;
                 }
             }
+#if defined(PS2)
+            j++;
+#endif
         }
     }
 
@@ -400,6 +484,21 @@ S32 PKR_LoadStep_Async()
         if (!moretodo)
         {
             rc = 1;
+#if defined(PS2)
+            if (PKR_layerLoadDest(asynlay->laytyp) == PKR_LDDEST_RWHANDOFF)
+            {
+                RwResEntry* entry = g_RWarena_resEntry;
+                if (entry->link.next)
+                {
+                    entry->link.prev->next = entry->link.next;
+                    entry->link.next->prev = entry->link.prev;
+                    entry->link.next = RWRESOURCESGLOBAL(usedEntries)->link.next;
+                    entry->link.prev = &RWRESOURCESGLOBAL(usedEntries)->link;
+                    RWRESOURCESGLOBAL(usedEntries)->link.next->prev = &entry->link;
+                    RWRESOURCESGLOBAL(usedEntries)->link.next = &entry->link;
+                }
+            }
+#endif
         }
         else if (moretodo == 1)
         {
@@ -437,6 +536,9 @@ S32 PKR_LoadStep_Async()
     return rc;
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 char* PKR_LayerMemReserve(st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* layer)
 {
     char* mem = NULL;
@@ -457,23 +559,46 @@ char* PKR_LayerMemReserve(st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* layer)
                                 &layer->laytru);
         break;
     case PKR_LDDEST_RWHANDOFF:
+#if defined(PS2)
+        mem = PKR_specialGet_loadbuf(pr, layer->laysize, 0x40);
+#else
         PKR_push_memmark();
         mem = (char*)PKR_getmem('LYR\0', layer->laysize, layer->laytyp + 0x8000, 0x40);
+#endif
         break;
     }
 
     return mem;
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 void PKR_LayerMemRelease(st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* layer)
 {
+#if defined(PS2)
+    en_PKR_LAYER_LOAD_DEST loaddest = PKR_layerLoadDest(layer->laytyp);
+    if (loaddest == PKR_LDDEST_SKIP)
+        return;
+    switch (loaddest)
+#else
     switch (PKR_layerLoadDest(layer->laytyp))
+#endif
     {
+#if !defined(PS2)
     case PKR_LDDEST_SKIP:
         break;
+#endif
     case PKR_LDDEST_RWHANDOFF:
+#if defined(PS2)
+        PKR_specialReturn_loadbuf(layer);
+#else
         PKR_relmem('LYR\0', layer->laysize, layer->laymem, layer->laytyp + 0x8000, 0);
         PKR_pop_memmark();
+#endif
         layer->laymem = NULL;
         break;
     case PKR_LDDEST_KEEPSTATIC:
@@ -486,6 +611,9 @@ void PKR_LayerMemRelease(st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* layer)
         break;
     }
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 void PKR_drv_guardLayer(st_PACKER_LTOC_NODE*)
 {
@@ -551,9 +679,15 @@ S32 PKR_findNextLayerToLoad(st_PACKER_READ_DATA** work_on_pkg, st_PACKER_LTOC_NO
     S32 j;
 
     *next_layer = NULL;
+#if defined(PS2)
+    tmppr = *work_on_pkg;
+    if (tmppr != NULL)
+    {
+#else
     if (*work_on_pkg != NULL)
     {
         tmppr = *work_on_pkg;
+#endif
         for (j = 0; j < tmppr->laytoc.cnt; j++)
         {
             tmplay = (st_PACKER_LTOC_NODE*)tmppr->laytoc.list[j];
@@ -568,9 +702,15 @@ S32 PKR_findNextLayerToLoad(st_PACKER_READ_DATA** work_on_pkg, st_PACKER_LTOC_NO
 
     if (*next_layer == NULL)
     {
+#if defined(PS2)
+        for (i = 0; i < 16; i++)
+        {
+            tmppr = &g_readdatainst[i];
+#else
         tmppr = g_readdatainst;
         for (i = 0; i < 16; i++, tmppr++)
         {
+#endif
             if ((g_loadlock & 1 << i) == 0 || tmppr == *work_on_pkg)
             {
                 continue;
@@ -669,12 +809,16 @@ void PKR_xform_asset(st_PACKER_ATOC_NODE* assnode, S32 dumpable_layer)
 {
     if (!(assnode->infoflag & 4))
     {
+#if defined(PS2)
+        if (assnode->typeref != NULL && assnode->typeref->readXForm != NULL)
+#else
         if (assnode->typeref == NULL)
         {
             return;
         }
 
         if (assnode->typeref->readXForm != NULL)
+#endif
         {
             assnode->Name();
             xUtil_idtag2string(assnode->asstype, 0);
@@ -722,6 +866,9 @@ void PKR_xform_asset(st_PACKER_ATOC_NODE* assnode, S32 dumpable_layer)
     }
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 void* PKR_FindAsset(st_PACKER_READ_DATA* pr, U32 aid)
 {
     st_PACKER_ATOC_NODE* assnode = NULL;
@@ -743,6 +890,9 @@ void* PKR_FindAsset(st_PACKER_READ_DATA* pr, U32 aid)
     }
     return NULL;
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 S32 PKR_LoadLayer(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer)
 {
@@ -965,6 +1115,9 @@ S32 PKR_FRIEND_assetIsGameDup(U32 aid, const st_PACKER_READ_DATA* skippr, S32 ou
                               U32 chksum, char*)
 {
     S32 is_dup = 0;
+#if defined(PS2)
+    st_PACKER_ATOC_NODE* tmp_ass;
+#endif
     if (aid == 0x7ab6743a)
     {
         return 0;
@@ -987,7 +1140,11 @@ S32 PKR_FRIEND_assetIsGameDup(U32 aid, const st_PACKER_READ_DATA* skippr, S32 ou
             continue;
         }
 
+#if defined(PS2)
+        tmp_ass = (st_PACKER_ATOC_NODE*)g_readdatainst[i].asstoc.list[idx];
+#else
         st_PACKER_ATOC_NODE* tmp_ass = (st_PACKER_ATOC_NODE*)g_readdatainst[i].asstoc.list[idx];
+#endif
         if ((tmp_ass->loadflag & 0x80000) == 0 && tmp_ass->asstype != 0x534e4420 &&
             tmp_ass->asstype != 0x534e4453)
         {
@@ -1068,7 +1225,11 @@ st_PACKER_LTOC_NODE* PKR_newlaynode(en_LAYER_TYPE layer, S32 refcnt)
     memset(newnode, 0, sizeof(st_PACKER_LTOC_NODE));
 
     newnode->laytyp = layer;
+#if defined(PS2)
+    XOrdInit(&newnode->assref, refcnt > 1 ? refcnt : 2, 0);
+#else
     XOrdInit(&newnode->assref, refcnt <= 1 ? 2 : refcnt, 0);
+#endif
     return newnode;
 }
 
@@ -1152,6 +1313,9 @@ S32 LOD_r_PACK(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     return 1;
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 S32 LOD_r_PVER(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     S32 ver = 0;
@@ -1180,6 +1344,9 @@ S32 LOD_r_PVER(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     }
     return 1;
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 S32 LOD_r_PFLG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
@@ -1230,6 +1397,31 @@ S32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, S32 plattag, 
     char fullname[128] = {};
     sprintf(fullname, "%s %s %s %s", plat, vid, lang, title);
 
+#if defined(PS2)
+    S32 rc = !(bool)strcmp(plat, "GameCube") || !(bool)strcmp(plat, "Xbox") ||
+             !(bool)strcmp(plat, "PlayStation 2");
+    if (!rc)
+    {
+        return 0;
+    }
+    rc = !(bool)strcmp(vid, "NTSC") || !(bool)strcmp(vid, "PAL");
+    if (!rc)
+    {
+        return 0;
+    }
+    rc = !(bool)strcmp(lang, "US Common") || !(bool)strcmp(lang, "United Kingdom") ||
+         !(bool)strcmp(lang, "French") || !(bool)strcmp(lang, "German");
+    if (!rc)
+    {
+        return 0;
+    }
+    rc = !(bool)strcmp(title, "Sponge Bob") || !(bool)strcmp(title, "Incredibles") ||
+         !(bool)strcmp(title, "Jimmy Newtron");
+    if (!rc)
+    {
+        return 0;
+    }
+#else
     bool rc = false;
     if ((strcmp(plat, "GameCube") == 0 || strcmp(plat, "Xbox") == 0 ||
          strcmp(plat, "PlayStation 2") == 0))
@@ -1273,26 +1465,44 @@ S32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, S32 plattag, 
         return 0;
     }
 
-    rc = !(bool)(strcmp(plat, "GameCube"));
-    if (!rc)
-    {
-        return 0;
-    }
+#endif
 
-#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
-    rc = !(strcmp(vid, "PAL"));
+#if defined(PS2)
+    rc = !(bool)strcmp(plat, "PlayStation 2");
 #else
-    rc = !(strcmp(vid, "NTSC"));
+    rc = !(bool)(strcmp(plat, "GameCube"));
 #endif
     if (!rc)
     {
         return 0;
     }
 
-#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78)
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78) || defined(VERSION_SLES_51968) || \
+    defined(VERSION_SLES_51970)
+    rc = !(strcmp(vid, "PAL"));
+#else
+    rc = !(strcmp(vid, "NTSC"));
+#endif
+#if defined(VERSION_SLES_51970)
+    // The German executable performs this comparison but discards its result.
+    strcmp(lang, "German");
+#endif
+    if (!rc)
+    {
+        return 0;
+    }
+
+#if defined(VERSION_GQPP78) || defined(VERSION_GU4Y78) || defined(VERSION_SLES_51968) || \
+    defined(VERSION_SLES_51970)
+#if defined(PS2)
+    S32 langMatches = !(bool)strcmp(lang, "United Kingdom");
+    langMatches += !(bool)strcmp(lang, "French");
+    langMatches += !(bool)strcmp(lang, "German");
+#else
     S32 langMatches = !strcmp(lang, "United Kingdom");
     langMatches += !strcmp(lang, "French");
     langMatches += !strcmp(lang, "German");
+#endif
     if (!langMatches)
 #else
     rc = !(strcmp(lang, "US Common"));
@@ -1303,13 +1513,20 @@ S32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, S32 plattag, 
     }
 
     rc = !(strcmp(title, "Sponge Bob"));
+#if defined(PS2)
+    return rc != 0;
+#else
     if (!rc)
     {
         return 0;
     }
     return 1;
+#endif
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 S32 LOD_r_PLAT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     S32 result = 1;
@@ -1333,7 +1550,13 @@ S32 LOD_r_PLAT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     }
     return result;
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 S32 LOD_r_DICT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     U32 cid = g_hiprf->enter(pkg);
@@ -1355,7 +1578,13 @@ S32 LOD_r_DICT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     }
     return 1;
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 S32 LOD_r_ATOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     U32 cid = g_hiprf->enter(pkg);
@@ -1375,6 +1604,9 @@ S32 LOD_r_ATOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     }
     return 1;
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 S32 LOD_r_AINF(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
@@ -1436,6 +1668,9 @@ S32 LOD_r_AHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     return 1;
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 S32 LOD_r_ADBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_ATOC_NODE* assnode)
 {
     S32 ival = 0;
@@ -1445,6 +1680,10 @@ S32 LOD_r_ADBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_ATOC_NODE
     assnode->assalign = ival;
 
     g_hiprf->readString(pkg, tmpbuf);
+#if defined(PS2)
+    strncpy(assnode->basename, tmpbuf, sizeof(assnode->basename) - 1);
+    assnode->basename[sizeof(assnode->basename) - 1] = '\0';
+#endif
     tmpbuf[0] = 0;
 
     g_hiprf->readString(pkg, tmpbuf);
@@ -1457,7 +1696,13 @@ S32 LOD_r_ADBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_ATOC_NODE
 
     return 1;
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 S32 LOD_r_LTOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     U32 cid = g_hiprf->enter(pkg);
@@ -1477,6 +1722,9 @@ S32 LOD_r_LTOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     }
     return 1;
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 S32 LOD_r_LINF(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
@@ -1545,6 +1793,9 @@ S32 LOD_r_LDBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE
     return 1;
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 S32 LOD_r_STRM(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     U32 cid = g_hiprf->enter(pkg);
@@ -1564,6 +1815,9 @@ S32 LOD_r_STRM(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     }
     return 1;
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 S32 LOD_r_DHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
@@ -1581,6 +1835,9 @@ void PKR_spew_verhist()
 {
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 st_PACKER_ASSETTYPE* PKR_type2typeref(U32 type, st_PACKER_ASSETTYPE* typelist)
 {
     st_PACKER_ASSETTYPE* da_type = NULL;
@@ -1601,6 +1858,9 @@ st_PACKER_ASSETTYPE* PKR_type2typeref(U32 type, st_PACKER_ASSETTYPE* typelist)
     }
     return da_type;
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
 {
@@ -1608,6 +1868,9 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
     st_PACKER_ATOC_NODE* assnode;
     S32 j;
     S32 i;
+#if defined(PS2)
+    S32 idx;
+#endif
     S32 typcnt[129] = {};
     st_XORDEREDARRAY* tmplist;
     U32 lasttype = 0;
@@ -1621,7 +1884,9 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
             assnode = (st_PACKER_ATOC_NODE*)laynode->assref.list[j];
             if (!(assnode->loadflag & 0x100000) && !(assnode->loadflag & 0x200000))
             {
+#if !defined(PS2)
                 S32 idx;
+#endif
                 if (lasttype != 0 && assnode->asstype == lasttype)
                 {
                     idx = lastidx;
@@ -1652,7 +1917,13 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
     {
         if (typcnt[k] >= 1)
         {
+#if defined(PS2)
+            tmplist = &pr->typelist[k];
+            S32 count = typcnt[k] > 1 ? typcnt[k] : 2;
+            XOrdInit(tmplist, count, false);
+#else
             XOrdInit(&pr->typelist[k], typcnt[k] > 1 ? typcnt[k] : 2, false);
+#endif
         }
     }
 
@@ -1664,7 +1935,9 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
             assnode = (st_PACKER_ATOC_NODE*)laynode->assref.list[j];
             if (!(assnode->loadflag & 0x100000) && !(assnode->loadflag & 0x200000))
             {
+#if !defined(PS2)
                 S32 idx;
+#endif
                 if (lasttype != 0 && assnode->asstype == lasttype)
                 {
                     idx = lastidx;
@@ -1772,6 +2045,9 @@ void* PKR_getmem(U32 id, S32 amount, U32, S32 align, S32 isTemp, char** memtrue)
     return memptr;
 }
 
+#if defined(PS2)
+#pragma dont_inline on
+#endif
 void PKR_relmem(U32 id, S32 blksize, void* memptr, U32, S32 isTemp)
 {
     g_memalloc_pair--;
@@ -1794,6 +2070,9 @@ void PKR_relmem(U32 id, S32 blksize, void* memptr, U32, S32 isTemp)
         }
     }
 }
+#if defined(PS2)
+#pragma dont_inline reset
+#endif
 
 void PKR_push_memmark()
 {

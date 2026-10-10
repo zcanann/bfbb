@@ -11,6 +11,9 @@
 #include <string.h>
 #if defined(PS2)
 #include <rwim3d.h>
+
+void iDrawSetFBA1(S32 value);
+extern S32 skyCameraExt;
 #endif
 
 RwCamera* globalCamera;
@@ -113,6 +116,9 @@ void iCameraBegin(RwCamera* cam, S32 clear)
 
     RwCameraSetNearClipPlane(cam, sCameraNearClip);
     RwCameraBeginUpdate(cam);
+#if defined(PS2)
+    iDrawSetFBA1(1);
+#endif
 }
 
 void iCameraEnd(RwCamera* cam)
@@ -181,25 +187,32 @@ void iCameraFrustumPlanes(RwCamera* cam, xVec4* frustplane)
     frustplane[6].w = rwPlane->plane.normal.z;
     frustplane[7].w = rwPlane->plane.distance;
 
-    rwPlane = &cam->frustumPlanes[2];
+#if defined(PS2)
+    // The PS2 extension stores the wide frustum planes at byte offset 0x60.
+    RwFrustumPlane* widePlanes = (RwFrustumPlane*)((U8*)cam + skyCameraExt + 0x60);
+#else
+    RwFrustumPlane* widePlanes = cam->frustumPlanes;
+#endif
+
+    rwPlane = &widePlanes[2];
     frustplane[8].x = rwPlane->plane.normal.x;
     frustplane[9].x = rwPlane->plane.normal.y;
     frustplane[10].x = rwPlane->plane.normal.z;
     frustplane[11].x = rwPlane->plane.distance;
 
-    rwPlane = &cam->frustumPlanes[4];
+    rwPlane = &widePlanes[4];
     frustplane[8].y = rwPlane->plane.normal.x;
     frustplane[9].y = rwPlane->plane.normal.y;
     frustplane[10].y = rwPlane->plane.normal.z;
     frustplane[11].y = rwPlane->plane.distance;
 
-    rwPlane = &cam->frustumPlanes[5];
+    rwPlane = &widePlanes[5];
     frustplane[8].z = rwPlane->plane.normal.x;
     frustplane[9].z = rwPlane->plane.normal.y;
     frustplane[10].z = rwPlane->plane.normal.z;
     frustplane[11].z = rwPlane->plane.distance;
 
-    rwPlane = &cam->frustumPlanes[3];
+    rwPlane = &widePlanes[3];
     frustplane[8].w = rwPlane->plane.normal.x;
     frustplane[9].w = rwPlane->plane.normal.y;
     frustplane[10].w = rwPlane->plane.normal.z;
@@ -247,9 +260,9 @@ void iCamGetViewMatrix(RwCamera* camera, xMat4x3* view_matrix)
 {
     RwMatrix* rw_view;
 
-    memset(view_matrix, 0, sizeof(xMat4x3));
-
     rw_view = RwCameraGetViewMatrix(camera);
+
+    memset(view_matrix, 0, sizeof(xMat4x3));
 
     view_matrix->right.x = rw_view->right.x;
     view_matrix->right.y = rw_view->right.y;
@@ -267,19 +280,8 @@ void iCamGetViewMatrix(RwCamera* camera, xMat4x3* view_matrix)
 
 void iCameraSetNearFarClip(F32 nearPlane, F32 farPlane)
 {
-    if (nearPlane <= 0.0f)
-    {
-        nearPlane = 0.05f;
-    }
-
-    sCameraNearClip = nearPlane;
-
-    if (farPlane <= 0.0f)
-    {
-        farPlane = 400.0f;
-    }
-
-    sCameraFarClip = farPlane;
+    sCameraNearClip = nearPlane <= 0.0f ? 0.05f : nearPlane;
+    sCameraFarClip = farPlane <= 0.0f ? 400.0f : farPlane;
 }
 
 void iCameraSetFogParams(iFogParams* fp, F32 time)
@@ -312,8 +314,15 @@ void iCameraUpdateFog(RwCamera* cam, iTime t)
     RwRGBA c;
     F32 dt;
     xGlobals* g = xglobals;
+    iFogParams* fogA;
+    iFogParams* fogB;
+    iFogParams* fog;
 
-    if (g->fog.type == rwFOGTYPENAFOGTYPE)
+    fog = &g->fog;
+    fogA = &g->fogA;
+    fogB = &g->fogB;
+
+    if (fog->type == rwFOGTYPENAFOGTYPE)
     {
         return;
     }
@@ -328,28 +337,28 @@ void iCameraUpdateFog(RwCamera* cam, iTime t)
     dt = iTimeDiffSec(xglobals->fog_t0, now) / iTimeDiffSec(xglobals->fog_t0, xglobals->fog_t1);
     dt = CLAMP(dt, 0.0f, 1.0f);
 
-    g->fog.type = xglobals->fogB.type;
-    g->fog.table = xglobals->fogB.table;
+    fog->type = xglobals->fogB.type;
+    fog->table = xglobals->fogB.table;
 
-    g->fog.start = g->fogA.start + dt * (g->fogB.start - g->fogA.start);
-    g->fog.stop = g->fogA.stop + dt * (g->fogB.stop - g->fogA.stop);
-    g->fog.density = g->fogA.density + dt * (g->fogB.density - g->fogA.density);
+    fog->start = fogA->start + dt * (fogB->start - fogA->start);
+    fog->stop = fogA->stop + dt * (fogB->stop - fogA->stop);
+    fog->density = fogA->density + dt * (fogB->density - fogA->density);
 
-    a = g->fogA.fogcolor;
-    b = g->fogB.fogcolor;
+    a = fogA->fogcolor;
+    b = fogB->fogcolor;
     c.red = a.red + dt * (b.red - a.red);
     c.green = a.green + dt * (b.green - a.green);
     c.blue = a.blue + dt * (b.blue - a.blue);
     c.alpha = a.alpha + dt * (b.alpha - a.alpha);
-    g->fog.fogcolor = c;
+    fog->fogcolor = c;
 
-    a = g->fogA.bgcolor;
-    b = g->fogB.bgcolor;
+    a = fogA->bgcolor;
+    b = fogB->bgcolor;
     c.red = a.red + dt * (b.red - a.red);
     c.green = a.green + dt * (b.green - a.green);
     c.blue = a.blue + dt * (b.blue - a.blue);
     c.alpha = a.alpha + dt * (b.alpha - a.alpha);
-    g->fog.bgcolor = c;
+    fog->bgcolor = c;
 
     if (1.0f == dt)
     {

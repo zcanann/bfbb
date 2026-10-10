@@ -182,3 +182,62 @@ The discarded probes in `build/sound-position-source-probe` include cached
 vectors and pointers, direct memberwise operations, and changed compound
 assignments. No comparison settings, original targets, headers or compiler
 binaries changed.
+
+## PS2 voice selection source recovery (2026-10-09)
+
+The platform-specific iSndFindFreeVoice now reports 100% for its 900-byte
+body in USA, Europe, Germany and France, previously 85.28%. The locked-voice
+range end derives from its begin pointer, selection sentinels initialize after
+the diagnostic state write, and function-scoped `inline_intrinsics off` retains
+the original two out-of-line signed absolute-value operations. The pragma resets
+before the next function; no shared headers or other platform sources change.
+
+Full debug-region iSnd reports rise from 4888/6908 exact bytes (23/25 functions)
+to 5788/6908 (24/25), with fuzzy matching 94.23335% to 96.15113%. The existing
+four-function French subset rises from 872/2892 exact bytes to 1772/2892,
+86.22545% to 90.806366%. All other function and data records stay unchanged.
+The French target is copied unchanged from the independently verified terminal
+`oct09-france-math-particle-laser` cache; no new identities are registered.
+
+Independent raw replay in each debug original agrees on 892/900 bytes after
+applying original-DWARF-backed function/global relocations. The two remaining
+JAL words at offsets 504 and 516 call the same unnamed runtime entry (USA
+0x114b50). The source calls `abs`; that does not establish the original symbol's
+identity, so both destinations remain unresolved in target metadata. This is
+complete comparison matching, not a claim of a fully linked byte-identical body.
+
+Private evidence: `build/isnd-free-final-comparison.json`,
+`build/isnd-free-final-changes.json`, `build/isnd-free-raw-proof.json`, and
+`build/isnd-locals.py`. GameCube and Xbox use separate platform sound sources.
+
+## PS2 playback stream lifetimes (2026-10-09)
+
+The remaining iSndPlay body improves from 76.26071% to 87.63571% in all
+four versions. Original DWARF records contain two branch-specific file locals;
+the source now scopes those pointers and the stream-only scalar locals to their
+uses. Interleaved playback retains the block size across the diagnostic write,
+then uses it for the track LSN, block size and skip count. Non-interleaved
+playback selects its loop flag before that write, matching the retail order.
+The selected flags and the arguments passed to each playback operation retain
+their existing values.
+
+Full debug-region unit fuzzy matching rises from 96.15113% to 97.99537%;
+the four-function French subset rises from 90.806366% to 95.21162%. Exact
+counts remain 5788/6908 and 1772/2892 respectively. Every other function and
+data record stays unchanged, including the newly exact voice selector. No
+comparison settings, original metadata, headers or compiler binaries change.
+
+The original and compiled body still differ substantially in volume-copy
+lifetimes: the compiler preserves a pointer to nvol.volR across playback calls,
+adding a saved register and stack space. Separate assignments, field copies,
+reference/value copy helpers, temporary objects, and alternate pitch/stream
+lifetimes did not resolve this. The later 3.0.1b74 compiler also preserves this
+pointer and regresses the full function; it does not provide evidence for a
+compiler patch. A 2.4 comparison used its supported auto,deferred inlining mode
+because bottomup is unavailable there. None of these diagnostic compilers or
+copy-helper probes were retained.
+
+Private evidence: `build/isnd-play-final-comparison.json`,
+`build/isnd-play-final-changes.json`, `build/isnd-locals.py`, and
+`build/isnd-compiler-{deferred-,}mwcps2-*`. This remains a source improvement,
+not an exact or fully linked-body claim. Other platforms select different files.
