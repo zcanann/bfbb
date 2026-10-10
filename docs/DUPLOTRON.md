@@ -15433,3 +15433,41 @@ Xbox source units and their dependencies are unchanged. Evidence:
 `build/oct09-motion-box-gc.log`, `build/oct09-smooth-proof-tests.log`,
 `build/oct09-france-motion-box-smooth`, its comparison log, and
 `build/oct09-motion-smooth-audit.log`.
+
+File/distortion/collision source adds 2,060 exact bytes / five functions per
+debug release: file debug mode (328), file load (264), cone rendering (808),
+sphere/capsule intersection (496), and the swept-sphere leaf callback (164).
+USA reaches 1,064,216 / 3,899, PAL 1,056,656 / 3,886 and Germany 1,060,092 /
+3,890. The file debug guard now excludes the original invalid status explicitly;
+all 328 raw bytes are independently reproduced. Two unnamed file-loader calls
+remain excluded from its 256/264-byte raw proof. The shared capsule reciprocal
+reproduces all 496 original bytes in all four regions. Callback raw proof keeps
+three unresolved call/GP words separate rather than promoting identities.
+
+The complete 13-function / 5,788-byte screen unit now has all bodies implemented
+and reaches 99.36835% fuzzy while retaining 1,524 exact bytes / nine functions.
+Distortion's 2,396-byte body scores 99.926544%; 2,264 independently replayed raw
+bytes agree, with 23 unnamed SDK calls and ten stack/register residual words
+explicitly excluded. Six original aggregates and two zero-filled static slots
+are verified. Original unfinished render-counter/UV behavior and debug prints
+are preserved, with no invented runtime aliases or compiler patch.
+
+Box/box (4,424 bytes) improves to 99.70615% and oriented-box intersection to
+99.71098%; remaining NOP/scheduling differences stay scored. A scoped PS2
+matrix snapshot helper restores the original eight word-pair iterations and
+all 64 bytes including padding, improving swept-model to 99.13878%. Symbolic
+copy replay verifies distinct source/caller and local-stack buffers; the later
+144-byte restore remains raw identical. Ordinary memory accesses are retained,
+with no alignment/header change or artificial padding.
+
+France gains the same capsule and callback source (660 bytes / two functions),
+reaching 255,868 / 702, with unchanged 941 identities / 453,380 known bytes.
+All four full section reports preserve every earlier function/unit measure;
+four debug source units and two French units are recompiled against the
+preceding verified target sets with source frozen at `dd313f1e8`. Fresh full
+GameCube checks pass unchanged. Both previously verified Xbox source/dependency
+sets remain unchanged; their profile does not yet select collision. CPU/data
+denominators and full-link limitations remain unchanged. Evidence:
+`build/oct09-file-distortion-collision`, its four comparison logs,
+`build/oct09-file-distortion-collision-gc.log` and
+`build/oct09-file-collision-audit.log`.
