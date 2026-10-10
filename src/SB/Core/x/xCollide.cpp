@@ -637,7 +637,8 @@ static S32 xParabolaEnvCB(xClumpCollBSPTriangle* triangles, void* data)
                 }
             }
         }
-    } while ((triangles++)->flags & 0x1);
+        ++triangles;
+    } while (triangles[-1].flags & 0x1);
 
     return 1;
 }
@@ -2251,7 +2252,8 @@ static S32 SweptSphereLeafNodeCB(xClumpCollBSPTriangle* triangles, void* data)
                 sSweptSphereHitFound = 1;
             }
         }
-    } while ((triangles++)->flags & 0x1);
+        ++triangles;
+    } while (triangles[-1].flags & 0x1);
     return 1;
 }
 

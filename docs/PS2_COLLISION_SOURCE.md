@@ -468,6 +468,29 @@ Baseline: `5b5e0d367`. Private evidence:
 `sweptmodel-copy-proof.json`. Full production controls remain the integration
 gate.
 
+## BSP triangle iteration boundary (2026-10-09)
+
+The swept-sphere and parabola callbacks now advance `triangles` before
+testing the preceding triangle's continuation flag. This expresses the
+original pointer-update boundary instead of combining it with a postfix
+increment in the condition. It preserves the same triangle visitation and
+termination behavior; the original five-instruction increment/test sequence
+is reproduced in the swept-sphere callback.
+
+All four normal PS2 complete-unit comparisons improve the 164-byte
+`SweptSphereLeafNodeCB` from 96.07317% to 100% and the 1,672-byte
+`xParabolaEnvCB` from 88.61005% to 89.07895%. The remaining 34 scores are
+unchanged. Exact coverage rises from 13,464 bytes / 23 functions to
+13,628 bytes / 24 functions. All 152 nonrelocation bytes of the leaf callback
+are raw-identical; its one call and two global references retain their
+existing production relocation treatment. No new identity is assigned.
+Fresh GameCube solo remains 72/75 exact, including both shared-source bodies.
+Xbox does not compile this unit or use it as a dependency.
+
+Baseline: `d1fde1e99`. Private evidence is
+`build/collide-oct09/leaf-proof.json` and `leaf-raw-proof.json`.
+Full production controls remain the integration gate.
+
 ## Oriented-box projected-radius lifetimes (2026-10-09)
 
 `xOBBHitsOBB` now keeps `ar` and `br` as the separate projected radii, adding
