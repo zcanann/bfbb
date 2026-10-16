@@ -1589,7 +1589,7 @@
       }).join('');
       const code = encodeSetup();
       if (scenario.platform !== 'gc') {
-        return `<section class="route-status"><div class="route-status-head"><div><h3>Scrubbed state</h3><small>after event ${step} of ${scenario.events.length}</small></div><label>Target shift<select data-route-shift>${targetOptions}</select></label></div><p class="route-status-empty">Task-shift crash inference is currently grounded only for the GameCube layout. This platform does not use the same alignments.</p><div class="setup-code"><span>Setup</span><code title="${esc(code)}">${esc(code)}</code><button class="button small" type="button" data-copy-setup>Copy</button></div></section>`;
+        return `<section class="route-status"><div class="route-status-head"><div><h3>Scrubbed state</h3><small>after event ${step} of ${scenario.events.length}</small></div><label>Target shift<select data-route-shift>${targetOptions}</select></label></div><p class="route-status-empty">Task-shift crash inference is currently grounded only for the GameCube layout. This platform does not use the same alignments.</p><div class="setup-code"><span>Setup</span><code title="${esc(code)}">${esc(code)}</code><button class="button small" type="button" data-copy-setup>Copy link</button></div></section>`;
       }
 
       const writtenMax = state.memory.length;
@@ -1618,7 +1618,7 @@
       const shiftTone = targetReady ? 'clear' : crashing.length ? 'bad' : 'open';
       const saveTone = crashing.length ? 'bad' : 'clear';
       const saveText = crashing.length ? `CRASH · ${crashing.map(row => WORLDS[row.index].code).join(', ')}` : 'SAFE';
-      return `<section class="route-status"><div class="route-status-head"><div><h3>Scrubbed state</h3><small>after event ${step} of ${scenario.events.length}</small></div><label>Target shift<select data-route-shift>${targetOptions}</select></label></div><div class="route-metrics"><div class="route-metric ${shiftTone}"><span>Inferred / target shift</span><b>${zeroShift} / ${target.shift}</b></div><div class="route-metric ${saveTone}"><span>Save or transition</span><b title="${esc(saveText)}">${esc(saveText)}</b></div></div><div class="route-status-table">${table}</div><div class="setup-code"><span>Setup</span><code title="${esc(code)}">${esc(code)}</code><button class="button small" type="button" data-copy-setup>Copy</button></div></section>`;
+      return `<section class="route-status"><div class="route-status-head"><div><h3>Scrubbed state</h3><small>after event ${step} of ${scenario.events.length}</small></div><label>Target shift<select data-route-shift>${targetOptions}</select></label></div><div class="route-metrics"><div class="route-metric ${shiftTone}"><span>Inferred / target shift</span><b>${zeroShift} / ${target.shift}</b></div><div class="route-metric ${saveTone}"><span>Save or transition</span><b title="${esc(saveText)}">${esc(saveText)}</b></div></div><div class="route-status-table">${table}</div><div class="setup-code"><span>Setup</span><code title="${esc(code)}">${esc(code)}</code><button class="button small" type="button" data-copy-setup>Copy link</button></div></section>`;
     }
 
     function renderInspector(state) {
@@ -1937,6 +1937,21 @@
       return `${platform}${target.shift}/${tokens.join(',')}`;
     }
 
+    function setupShareUrl() {
+      const url = new URL(location.href);
+      url.search = '';
+      url.searchParams.set('setup', encodeSetup());
+      url.hash = '';
+      return url;
+    }
+
+    async function copySetupLink() {
+      const url = setupShareUrl();
+      try { await navigator.clipboard.writeText(url.href); toast('Setup link copied'); }
+      catch (_) { prompt('Copy this link', url.href); }
+      history.replaceState(null, '', `${url.pathname}${url.search}`);
+    }
+
     function decodeSetup(value) {
       const [header, body = ''] = String(value).split('/', 2);
       const match = header.match(/^([gxp])(0|[1-9]\d{0,2})$/);
@@ -2180,11 +2195,7 @@
     });
     $('#block-inspector').addEventListener('click', event => {
       if (event.target.closest('[data-inspector-delete]') && selectedEventIndex != null) deleteProgramBlock(selectedEventIndex);
-      if (event.target.closest('[data-copy-setup]')) {
-        const code = encodeSetup();
-        if (navigator.clipboard?.writeText) navigator.clipboard.writeText(code).then(() => toast('Setup code copied')).catch(() => prompt('Copy this setup code', code));
-        else prompt('Copy this setup code', code);
-      }
+      if (event.target.closest('[data-copy-setup]')) copySetupLink();
     });
 
     $$('[data-flag]').forEach(input => input.addEventListener('change', event => { scenario.flags[event.target.dataset.flag] = event.target.checked; render(); }));
@@ -2203,13 +2214,7 @@
       render();
     });
     $('#preset-demo').addEventListener('click', loadDemo);
-    $('#share').addEventListener('click', async () => {
-      const code = encodeSetup();
-      const url = `${location.origin}${location.pathname}?setup=${code}`;
-      try { await navigator.clipboard.writeText(url); toast('Setup link copied'); }
-      catch (_) { prompt('Copy this link', url); }
-      history.replaceState(null, '', `${location.pathname}?setup=${code}`);
-    });
+    $('#share').addEventListener('click', copySetupLink);
     $('#export').addEventListener('click', () => {
       const blob = new Blob([JSON.stringify(scenarioData(), null, 2) + '\n'], { type: 'application/json' });
       const link = document.createElement('a');
