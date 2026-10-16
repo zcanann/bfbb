@@ -126,15 +126,12 @@
     .layout-summary span { color: var(--muted); font-size: .82rem; }
     .memory-scroll { padding: 8px 0 6px; }
     .memory-diagram { width: 100%; }
-    .thrown-array-card { display: grid; grid-template-columns: minmax(220px, 1fr) auto; gap: 12px; width: 100%; padding: 12px 14px; border: 1px solid var(--ink); background: #ecebe5; color: var(--ink); text-align: left; }
-    .thrown-array-card.selected { box-shadow: inset 0 -5px var(--blue); }
-    .thrown-array-card b, .thrown-array-card span { display: block; }
-    .thrown-array-card span { margin-top: 4px; color: var(--muted); font-size: .72rem; }
-    .array-address { align-self: center; font: .68rem/1.35 ui-monospace, SFMono-Regular, Consolas, monospace; text-align: right; }
-    .array-ticks { display: grid; grid-template-columns: repeat(32, 1fr); height: 9px; margin-top: 7px; border: 1px solid #9ba3a5; border-right: 0; }
-    .array-ticks i { border-right: 1px solid #9ba3a5; }
-    .overflow-heading { display: flex; justify-content: space-between; gap: 12px; margin: 14px 0 7px; color: var(--muted); font-size: .72rem; }
-    .overflow-map { position: relative; width: 100%; height: 132px; border: 1px solid var(--ink); overflow: hidden; background: #fff; }
+    .overflow-map { --overflow-left: 20%; position: relative; width: 100%; height: 148px; border: 1px solid var(--ink); overflow: hidden; background: #fff; }
+    .thrown-list-region { position: absolute; inset-block: 0; left: 0; z-index: 3; width: var(--overflow-left); padding: 42px 10px 9px; border: 0; border-right: 4px double var(--ink); background: #ecebe5; color: var(--ink); text-align: left; }
+    .thrown-list-region.selected { box-shadow: inset 0 -6px var(--blue); }
+    .thrown-list-region b { display: block; font-size: clamp(.68rem, .9vw, .88rem); overflow-wrap: anywhere; }
+    .thrown-list-region small { display: block; margin-top: 7px; font: .57rem/1.35 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .legal-slot-band { position: absolute; inset: 0 0 auto; height: 27px; padding-top: 6px; border-bottom: 1px solid rgba(29, 36, 40, .28); background: rgba(255, 255, 255, .76); font: 700 .66rem/1 ui-monospace, SFMono-Regular, Consolas, monospace; text-align: center; }
     .layout-region { position: absolute; inset-block: 0; min-width: 1px; padding: 38px 7px 8px; border: 0; border-right: 1px solid rgba(29, 36, 40, .42); background: var(--slot); color: var(--ink); text-align: left; }
     .layout-region:nth-child(2n) { background: #dedfd9; }
     .layout-region.hot { background: var(--orange-pale); }
@@ -142,7 +139,7 @@
     .layout-region.selected { box-shadow: inset 0 -6px var(--blue); }
     .layout-region b { display: block; font-size: clamp(.58rem, .72vw, .76rem); line-height: 1.2; overflow-wrap: anywhere; }
     .layout-region small { display: block; margin-top: 5px; font: .55rem/1.25 ui-monospace, SFMono-Regular, Consolas, monospace; }
-    .overflow-slot-lines { position: absolute; inset: 0; z-index: 2; display: grid; pointer-events: none; }
+    .overflow-slot-lines { position: absolute; inset: 0 0 0 var(--overflow-left); z-index: 2; display: grid; pointer-events: none; }
     .overflow-slot-line { position: relative; min-width: 0; border-left: 1px solid rgba(18, 107, 131, .58); }
     .overflow-slot-line:first-child { border-left: 0; }
     .overflow-slot-line.current { background: rgba(184, 79, 35, .12); box-shadow: inset 0 0 0 2px var(--orange); }
@@ -151,6 +148,7 @@
     .layout-key button { min-height: 30px; padding: 5px 8px; border: 1px solid var(--line); border-left: 5px solid #7b8589; background: #fff; color: var(--ink); font-size: .68rem; }
     .layout-key button.hot { border-left-color: var(--orange); }
     .layout-key button.safe { border-left-color: var(--green); }
+    .layout-key button.legal { border-left-color: var(--blue); }
     .layout-key button.selected { outline: 2px solid var(--blue); }
     .layout-note { margin: 10px 0 0; color: var(--muted); font-size: .84rem; line-height: 1.5; }
     .layout-source { display: grid; grid-template-columns: minmax(220px, .55fr) minmax(400px, 1.45fr); gap: 14px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
@@ -560,7 +558,7 @@
       <div class="section-head">
         <div>
           <h2 id="layout-title">Where the overflow goes</h2>
-          <p>The 32-entry array is shown first. Every overflow record after it is an equal-width slot, numbered continuously from #33.</p>
+          <p>The legal 32-entry list and the neighboring memory it overruns share one map. The list is compressed so overflow records #33 onward stay readable.</p>
         </div>
         <div class="platform-tabs" role="tablist" aria-label="Platform memory layout">
           <button class="tab" type="button" role="tab" data-platform="gc" aria-selected="true">GameCube</button>
@@ -1424,11 +1422,13 @@
       $('#layout-range').textContent = `${hex(listStart)} – ${hex(cfg.end)}`;
       $('#layout-note').textContent = cfg.note;
       const total = cfg.end - cfg.start;
+      const overflowLeft = 20;
+      const overflowWidth = 100 - overflowLeft;
       const maxSlot = Math.max(...cfg.slots);
       const slotCount = maxSlot - 32;
       const regions = cfg.segments.map(([name, start, end, tone], index) => {
-        const left = ((start - cfg.start) / total) * 100;
-        const width = ((end - start) / total) * 100;
+        const left = overflowLeft + ((start - cfg.start) / total) * overflowWidth;
+        const width = ((end - start) / total) * overflowWidth;
         const label = width >= 4 ? `<b>${esc(name)}</b>` : '';
         const address = width >= 11 ? `<small>${hex(start)}–${hex(end - 1)}</small>` : '';
         return `<button type="button" class="layout-region ${tone}${index === selectedLayoutSegment ? ' selected' : ''}" data-layout-segment="${index}" style="left:${left}%;width:${width}%" title="${esc(name)} · ${hex(start)}–${hex(end - 1)}">${label}${address}</button>`;
@@ -1437,9 +1437,8 @@
         const start = cfg.start + (number - 33) * cfg.stride;
         return `<div class="overflow-slot-line${number === state.count ? ' current' : ''}" title="#${number} · ${hex(start)}"><span>#${number}</span></div>`;
       }).join('');
-      const key = cfg.segments.map(([name, start, end, tone], index) => `<button type="button" class="${tone}${index === selectedLayoutSegment ? ' selected' : ''}" data-layout-segment="${index}">${esc(name)} · ${hex(start)}–${hex(end - 1)}</button>`).join('');
-      const ticks = Array.from({ length: 32 }, () => '<i></i>').join('');
-      $('#memory-diagram').innerHTML = `<button type="button" class="thrown-array-card${selectedLayoutSegment === -1 ? ' selected' : ''}" data-layout-base><span><b>zThrownList[32]</b><span>legal tracked-object storage · slots #1–#32</span><span class="array-ticks">${ticks}</span></span><code class="array-address">${hex(listStart)}<br>through ${hex(cfg.start - 1)}</code></button><div class="overflow-heading"><b>Overflow records over neighboring memory</b><span>${slotCount} records · ${hex(cfg.stride)} bytes each</span></div><div class="overflow-map">${regions}<div class="overflow-slot-lines" style="grid-template-columns:repeat(${slotCount},1fr)">${slots}</div></div><div class="layout-key">${key}</div>`;
+      const key = `<button type="button" class="legal${selectedLayoutSegment === -1 ? ' selected' : ''}" data-layout-base>zThrownList[32] · ${hex(listStart)}–${hex(cfg.start - 1)}</button>` + cfg.segments.map(([name, start, end, tone], index) => `<button type="button" class="${tone}${index === selectedLayoutSegment ? ' selected' : ''}" data-layout-segment="${index}">${esc(name)} · ${hex(start)}–${hex(end - 1)}</button>`).join('');
+      $('#memory-diagram').innerHTML = `<div class="overflow-map"><button type="button" class="thrown-list-region${selectedLayoutSegment === -1 ? ' selected' : ''}" data-layout-base><span class="legal-slot-band">#1–#32</span><b>zThrownList[32]</b><small>${hex(listStart)}–${hex(cfg.start - 1)}<br>legal tracked-object storage</small></button>${regions}<div class="overflow-slot-lines" style="grid-template-columns:repeat(${slotCount},1fr)">${slots}</div></div><div class="layout-key">${key}</div>`;
       const chosen = selectedLayoutSegment === -1 ? ['zThrownList[32]', listStart, cfg.start] : cfg.segments[selectedLayoutSegment];
       const [segmentName, segmentStart, segmentEnd] = chosen;
       const backing = LAYOUT_BACKING[segmentName] || (segmentName.includes('world') ? LAYOUT_BACKING.sWorld : {
