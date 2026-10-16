@@ -42,7 +42,7 @@
     code, .mono { font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace; }
 
     .page {
-      width: min(1440px, calc(100% - 32px));
+      width: min(1680px, calc(100% - 32px));
       margin: 0 auto;
       padding: 26px 0 60px;
     }
@@ -124,43 +124,27 @@
     .layout-summary { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin: 14px 0 10px; }
     .layout-summary strong { font-size: 1.05rem; }
     .layout-summary span { color: var(--muted); font-size: .82rem; }
-    .overflow-origin { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; padding: 9px 11px; border-left: 4px solid var(--ink); background: #ecebe5; font-size: .75rem; }
-    .overflow-origin span { color: var(--muted); }
-    .memory-scroll { overflow-x: auto; padding: 8px 0 6px; }
-    .memory-diagram { min-width: 940px; }
-    .memory-band { position: relative; display: flex; height: 92px; border: 1px solid var(--ink); overflow: hidden; }
-    .memory-segment {
-      min-width: 54px;
-      padding: 9px 8px;
-      border-right: 1px solid rgba(29, 36, 40, .45);
-      background: var(--slot);
-      overflow: hidden;
-      color: var(--ink);
-      text-align: left;
-      cursor: pointer;
-    }
-    .memory-segment:nth-child(2n) { background: #dedfd9; }
-    .memory-segment.hot { background: var(--orange-pale); }
-    .memory-segment.safe { background: var(--green-pale); }
-    .memory-segment.selected { box-shadow: inset 0 -5px var(--blue); }
-    .memory-segment:focus-visible { outline: 3px solid var(--blue); outline-offset: -3px; }
-    .memory-segment b, .slot-span b { display: block; font-size: .75rem; white-space: nowrap; }
-    .memory-segment small { display: block; margin-top: 6px; color: #4f595e; font: .66rem/1.3 ui-monospace, SFMono-Regular, Consolas, monospace; white-space: nowrap; }
-    .slot-band { position: relative; height: 74px; margin-top: 7px; border-bottom: 1px solid var(--line); }
-    .slot-span {
-      position: absolute;
-      top: 0;
-      height: 47px;
-      min-width: 28px;
-      padding: 6px 7px;
-      border: 1px solid var(--blue);
-      background: rgba(220, 238, 242, .92);
-      color: #124e60;
-      overflow: hidden;
-    }
-    .slot-span:nth-child(even) { top: 25px; background: rgba(255, 254, 250, .94); }
-    .slot-span.current { z-index: 2; border-width: 2px; border-color: var(--orange); background: var(--orange-pale); color: #713017; }
-    .slot-span small { font: .62rem/1 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .memory-scroll { padding: 8px 0 6px; }
+    .memory-diagram { width: 100%; }
+    .thrown-array-card { display: grid; grid-template-columns: minmax(220px, 1fr) auto; gap: 12px; width: 100%; padding: 12px 14px; border: 1px solid var(--ink); background: #ecebe5; color: var(--ink); text-align: left; }
+    .thrown-array-card.selected { box-shadow: inset 0 -5px var(--blue); }
+    .thrown-array-card b, .thrown-array-card span { display: block; }
+    .thrown-array-card span { margin-top: 4px; color: var(--muted); font-size: .72rem; }
+    .array-address { align-self: center; font: .68rem/1.35 ui-monospace, SFMono-Regular, Consolas, monospace; text-align: right; }
+    .array-ticks { display: grid; grid-template-columns: repeat(32, 1fr); height: 9px; margin-top: 7px; border: 1px solid #9ba3a5; border-right: 0; }
+    .array-ticks i { border-right: 1px solid #9ba3a5; }
+    .overflow-heading { display: flex; justify-content: space-between; gap: 12px; margin: 14px 0 7px; color: var(--muted); font-size: .72rem; }
+    .overflow-slot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(86px, 1fr)); gap: 6px; width: 100%; }
+    .layout-slot { min-width: 0; min-height: 96px; padding: 0; border: 1px solid var(--line-dark); background: #fff; color: var(--ink); text-align: left; }
+    .layout-slot.current { border: 2px solid var(--orange); }
+    .layout-slot-head { display: flex; justify-content: space-between; gap: 4px; padding: 6px 7px; border-bottom: 1px solid var(--line); background: #f5f4ef; }
+    .layout-slot-head b { font-size: .72rem; }
+    .layout-slot-head code { color: var(--muted); font-size: .53rem; }
+    .layout-slot-parts { display: grid; gap: 3px; padding: 5px; }
+    .layout-part { padding: 4px 5px; border-left: 4px solid #7b8589; background: var(--slot); font-size: .61rem; font-weight: 700; line-height: 1.2; overflow-wrap: anywhere; }
+    .layout-part.hot { border-color: var(--orange); background: var(--orange-pale); }
+    .layout-part.safe { border-color: var(--green); background: var(--green-pale); }
+    .layout-part.selected { outline: 2px solid var(--blue); outline-offset: -1px; }
     .layout-note { margin: 10px 0 0; color: var(--muted); font-size: .84rem; line-height: 1.5; }
     .layout-source { display: grid; grid-template-columns: minmax(220px, .55fr) minmax(400px, 1.45fr); gap: 14px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
     .layout-source p { margin: 6px 0 0; color: var(--muted); font-size: .76rem; line-height: 1.5; }
@@ -456,6 +440,44 @@
     .toast { position: fixed; right: 18px; bottom: 18px; z-index: 20; padding: 10px 13px; background: var(--ink); color: #fff; border-radius: 3px; font-size: .8rem; opacity: 0; transform: translateY(8px); pointer-events: none; transition: .18s ease; }
     .toast.show { opacity: 1; transform: none; }
 
+    .route-inspection { margin-bottom: 14px; overflow: hidden; }
+    .route-inspection .timeline-top { grid-template-columns: auto minmax(180px, 1fr) auto minmax(180px, auto) auto; }
+    .playback-readout { min-width: 0; }
+    .playback-readout b, .playback-readout span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .playback-readout b { font-size: .77rem; }
+    .playback-readout span { margin-top: 3px; color: var(--muted); font-size: .66rem; }
+    .tracked-readout { display: grid; justify-items: end; min-width: 62px; }
+    .tracked-readout strong { font: 800 1.35rem/1 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .tracked-readout span { margin-top: 3px; color: var(--muted); font-size: .62rem; }
+    .route-inspection .slot-scroll { margin: 0; padding: 12px 16px 8px; border-bottom: 1px solid var(--line); }
+    .route-inspection .slot-legend { margin: 0; padding: 7px 16px 9px; }
+
+    .lifeline-scroll { overflow-x: auto; border: 1px solid var(--line); background: #fff; }
+    .lifeline-grid { display: grid; min-width: max-content; }
+    .lifeline-corner, .lifeline-head, .lifeline-label, .lifeline-cell { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .lifeline-corner, .lifeline-label { position: sticky; left: 0; z-index: 3; width: 220px; background: #f5f4ef; }
+    .lifeline-corner { z-index: 5; display: flex; align-items: center; padding: 8px 10px; color: var(--muted); font-size: .69rem; font-weight: 750; }
+    .lifeline-head { min-width: 116px; height: 68px; padding: 7px 8px; background: #f8f7f2; color: var(--ink); text-align: left; }
+    .lifeline-head.current { background: var(--blue-pale); box-shadow: inset 0 -4px var(--blue); }
+    .lifeline-head .time-top { display: flex; justify-content: space-between; color: var(--muted); font: .61rem/1 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .lifeline-head b { display: block; overflow: hidden; margin-top: 6px; font-size: .68rem; text-overflow: ellipsis; white-space: nowrap; }
+    .lifeline-label { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 7px; align-items: center; min-height: 56px; padding: 7px 9px; border-left: 5px solid var(--scope-color); }
+    .lifeline-label.selected { background: var(--blue-pale); }
+    .lifeline-label .lane-icon { font-size: 1.2rem; text-align: center; }
+    .lifeline-label b { display: block; overflow: hidden; font-size: .72rem; text-overflow: ellipsis; white-space: nowrap; }
+    .lifeline-end { margin-top: 4px; padding: 3px 5px; font-size: .61rem; }
+    .lifeline-cell { position: relative; min-width: 116px; min-height: 56px; padding: 0; border-top: 0; border-left: 0; background: #fff; }
+    .lifeline-cell.current { background: #f3f8f9; }
+    .lifeline-cell.clickable { cursor: pointer; }
+    .lifeline-cell.clickable:hover { background: var(--blue-pale); }
+    .life-line { position: absolute; top: 50%; right: 0; left: 0; height: 3px; transform: translateY(-50%); background: var(--scope-color); }
+    .life-line.start { left: 50%; }
+    .life-line.end { right: 50%; }
+    .life-dot { position: absolute; top: 50%; left: 50%; display: grid; place-items: center; width: 24px; height: 24px; border: 3px solid var(--scope-color); border-radius: 50%; background: #fff; color: var(--ink); font-size: .7rem; font-weight: 850; transform: translate(-50%, -50%); }
+    .life-dot.end { border-radius: 3px; background: var(--scope-color); color: #fff; }
+    .life-note { position: absolute; right: 3px; bottom: 2px; left: 3px; overflow: hidden; color: var(--muted); font: .55rem/1 ui-monospace, SFMono-Regular, Consolas, monospace; text-align: center; text-overflow: ellipsis; white-space: nowrap; }
+    .lifeline-empty { padding: 34px 18px; color: var(--muted); text-align: center; }
+
     @media (max-width: 1040px) {
       .workspace { grid-template-columns: 1fr; }
       .block-workspace { grid-template-columns: 1fr; }
@@ -468,6 +490,7 @@
       .finder-top, .deep-grid { grid-template-columns: 1fr; }
       .layout-source { grid-template-columns: 1fr; }
       .gate-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .program-shell { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 680px) {
@@ -489,6 +512,9 @@
       .tool-tab { padding-inline: 11px; }
       .program-shell { grid-template-columns: 1fr; }
       .palette-stack { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .route-inspection .timeline-top { grid-template-columns: auto minmax(120px, 1fr) auto; }
+      .playback-readout { grid-column: 1 / -1; }
+      .tracked-readout { position: absolute; right: 16px; }
     }
   </style>
 </head>
@@ -521,7 +547,7 @@
       <div class="section-head">
         <div>
           <h2 id="layout-title">Where the overflow goes</h2>
-          <p>The slot rectangles use the retail stride and are aligned against the neighboring globals.</p>
+          <p>The 32-entry array is shown first. Every overflow record after it is an equal-width slot, numbered continuously from #33.</p>
         </div>
         <div class="platform-tabs" role="tablist" aria-label="Platform memory layout">
           <button class="tab" type="button" role="tab" data-platform="gc" aria-selected="true">GameCube</button>
@@ -531,7 +557,6 @@
       </div>
       <div class="panel memory-panel">
         <div class="layout-summary"><strong id="layout-name"></strong><span id="layout-range" class="mono"></span></div>
-        <div class="overflow-origin"><code>static zThrownStruct zThrownList[32];</code><span>object #33 starts at the first byte after this array</span></div>
         <div class="memory-scroll"><div class="memory-diagram" id="memory-diagram"></div></div>
         <p class="layout-note" id="layout-note"></p>
         <div class="layout-source">
@@ -575,7 +600,7 @@
       <div class="section-head">
         <div>
           <h2 id="timeline-title">Route builder</h2>
-          <p>Nest blocks inside a throw to show what happens while that object remains tracked. The timeline and overflow slots are generated from the block tree.</p>
+          <p>Place each throw, then mark where that object ends. Objects with no end are treated as OOB and remain tracked.</p>
         </div>
         <div class="toolbar">
           <button class="button small" type="button" id="preset-blank">Clear route</button>
@@ -585,6 +610,18 @@
           <button class="button small" type="button" id="import">Import JSON</button>
         </div>
       </div>
+
+      <section class="panel route-inspection" aria-label="Route playback">
+        <div class="timeline-top">
+          <button class="icon-button" type="button" id="previous" aria-label="Previous event">←</button>
+          <input id="scrubber" type="range" min="0" max="0" value="0" aria-label="Inspect route">
+          <button class="icon-button" type="button" id="next" aria-label="Next event">→</button>
+          <div class="playback-readout"><b id="playback-event">Start</b><span id="state-caption">Before the first event</span></div>
+          <div class="tracked-readout"><strong id="tracked-count">32</strong><span>tracked</span></div>
+        </div>
+        <div class="slot-scroll"><div class="slots" id="slots"></div></div>
+        <div class="slot-legend"><span>solid = active</span><span>dashed = stale bytes</span><span>orange = overflow</span></div>
+      </section>
 
       <div class="block-workspace">
         <aside class="panel block-palette" aria-label="Block palette">
@@ -597,19 +634,7 @@
               <button class="palette-block" draggable="true" type="button" data-palette-kind="throw" data-object-type="enemy"><span>🤖</span><span>Enemy</span></button>
               <button class="palette-block" draggable="true" type="button" data-palette-kind="throw" data-object-type="wood"><span>🪵</span><span>Wood tiki</span></button>
             </div>
-            <p>Overflow begins at object #33. The first 32 occupied slots are assumed.</p>
-          </div>
-          <div class="palette-group">
-            <h3>Outcomes</h3>
-            <div class="palette-stack">
-              <button class="palette-block action" draggable="true" type="button" data-palette-kind="action" data-action="oob"><span>↘</span><span>Reaches OOB</span></button>
-              <button class="palette-block action" draggable="true" type="button" data-palette-kind="action" data-action="settle"><span>0</span><span>Settles</span></button>
-              <button class="palette-block action" draggable="true" type="button" data-palette-kind="action" data-action="expire"><span>◌</span><span>Timer expires</span></button>
-              <button class="palette-block action" draggable="true" type="button" data-palette-kind="action" data-action="impact"><span>💥</span><span>Goo / wall</span></button>
-              <button class="palette-block action" draggable="true" type="button" data-palette-kind="action" data-action="remove"><span>×</span><span>Removal finishes</span></button>
-              <button class="palette-block action" draggable="true" type="button" data-palette-kind="action" data-action="boxbreak"><span>↔</span><span>Breaks in box</span></button>
-            </div>
-            <p>Drop an outcome onto its throw. Matching color and indentation show its scope.</p>
+            <p>Click to insert at the scrubber. Overflow begins at #33; #1–#32 are assumed.</p>
           </div>
           <div class="palette-group">
             <h3>Route</h3>
@@ -624,15 +649,18 @@
         </aside>
         <div class="program-shell">
           <section class="panel program-panel" aria-labelledby="program-title">
-            <div class="program-head"><h3 id="program-title">Route program</h3><small>drag to reorder · click to inspect</small></div>
+            <div class="program-head"><h3 id="program-title">Object lifelines</h3><small>click an event to scrub · click a lane cell to move its end</small></div>
             <div class="program-list" id="program-list"></div>
           </section>
           <aside class="panel block-inspector" id="block-inspector" aria-live="polite"></aside>
         </div>
       </div>
 
-      <div class="viewer-workspace">
-        <aside class="panel composer" aria-label="Legacy event form" hidden>
+      <div hidden>
+        <div id="timeline-list"></div>
+        <div id="obligations"></div>
+        <div id="watch-grid"></div>
+        <aside class="composer" aria-label="Legacy event form">
           <div class="composer-block">
             <h3>Starting list</h3>
             <div class="form-grid">
@@ -727,28 +755,6 @@
             <p class="insert-hint" id="insert-hint"></p>
           </div>
         </aside>
-
-        <div>
-          <section class="panel timeline-panel" aria-label="Ordered events">
-            <div class="timeline-top">
-              <button class="icon-button" type="button" id="previous" aria-label="Previous event">←</button>
-              <input id="scrubber" type="range" min="0" max="0" value="0" aria-label="Inspect timeline">
-              <button class="icon-button" type="button" id="next" aria-label="Next event">→</button>
-            </div>
-            <div class="timeline-strip" id="timeline-list"></div>
-          </section>
-
-          <section class="panel state-panel section" aria-labelledby="state-title">
-            <div class="state-heading">
-              <div><h3 id="state-title">State after the selected event</h3><small id="state-caption"></small></div>
-              <div><strong id="tracked-count">32</strong><small>tracked</small></div>
-            </div>
-            <div class="slot-scroll"><div class="slots" id="slots"></div></div>
-            <div class="slot-legend"><span>solid = active</span><span>dashed = stale bytes beyond the logical count</span><span>orange border = overflow</span></div>
-            <div class="obligations" id="obligations"></div>
-            <div class="watch-grid" id="watch-grid"></div>
-          </section>
-        </div>
       </div>
     </section>
 
@@ -931,6 +937,10 @@
     };
 
     const LAYOUT_BACKING = {
+      'zThrownList[32]': {
+        note: 'The legal array contains 32 records. Object #33 writes one full record immediately after this allocation; every later object advances by the platform stride.',
+        code: 'static zThrownStruct zThrownList[32];\nstatic U32 zThrownCount;\n\nstruct zThrownStruct\n{\n    xEnt* ent;\n    xEnt* stackEnt;\n    xEnt* stackTgt;\n    xEnt* patLauncher;\n    void (*oldupdate)(xEnt*, xScene*, F32);\n    xVec3 vel;\n    xVec3 oldcollpos;\n    F32 collResetTimer;\n    F32 killTimer;\n    ThrowableStats* stats;\n    U32 oldRecShadow;\n    xEntDrive drv;\n    S32 driveDebounce;\n    xEnt* driveLastFloor;\n    xEntFrame frame;\n};'
+      },
       'Vertex[4]': {
         note: 'The legacy UI keeps four immediate-mode vertices directly beside the other UI globals. A UI redraw can therefore rewrite bytes already occupied by overflow object #33.',
         code: 'static RwIm2DVertex Vertex[4];\nstatic RwImVertexIndex Index[6] = { 0, 1, 2, 0, 2, 3 };'
@@ -973,6 +983,7 @@
       oob: ['↘', 'reaches OOB', 'Stays tracked; its trajectory obligation is discharged.'],
       settle: ['⌄', 'settles on ground', 'Writes exact zero to velocity X and remains tracked.'],
       expire: ['◌', 'timer expires', 'Becomes hidden/returning; the record still occupies its slot.'],
+      expire_remove: ['×', 'expires and leaves the list', 'The fruit expires, the last record copies down if needed, and the count drops.'],
       remove: ['×', 'finishes removal', 'The current last record copies into its slot, then the count drops.'],
       impact: ['💥', 'hits goo or a wall', 'Velocity reaches zero, then the record is removed.'],
       boxbreak: ['↔', 'breaks on box entry', 'Held objects break on box entry; the record is removed.']
@@ -991,10 +1002,8 @@
     };
     let step = 0;
     let nextId = 1;
-    let dragIndex = null;
-    let dragPayload = null;
     let selectedEventIndex = null;
-    let selectedLayoutSegment = 0;
+    let selectedLayoutSegment = -1;
     let activeTool = 'route';
 
     const $ = (selector) => document.querySelector(selector);
@@ -1173,6 +1182,11 @@
           if (!TYPE[record.type]?.fruit) state.invalid.push(`${record.label} is not a timed fruit, so “expire” is only a hypothetical marker.`);
           record.status = 'expired';
           state.memory[index] = clone(record);
+        } else if (event.action === 'expire_remove') {
+          if (!TYPE[record.type]?.fruit) state.invalid.push(`${record.label} is not a timed fruit, so expiry is only hypothetical.`);
+          record.status = 'expired';
+          state.memory[index] = clone(record);
+          removeObject(state, event.objectId, event, false);
         } else if (event.action === 'remove' || event.action === 'boxbreak') {
           removeObject(state, event.objectId, event, false);
         } else if (event.action === 'impact') {
@@ -1403,25 +1417,29 @@
 
     function renderLayout(state) {
       const cfg = LAYOUTS[scenario.platform];
-      selectedLayoutSegment = Math.max(0, Math.min(selectedLayoutSegment, cfg.segments.length - 1));
+      selectedLayoutSegment = Math.max(-1, Math.min(selectedLayoutSegment, cfg.segments.length - 1));
       $('#layout-name').textContent = cfg.name;
-      $('#layout-range').textContent = `${hex(cfg.start)} – ${hex(cfg.end)}`;
+      const listStart = cfg.start - 32 * cfg.stride;
+      $('#layout-range').textContent = `${hex(listStart)} – ${hex(cfg.end)}`;
       $('#layout-note').textContent = cfg.note;
-      const total = cfg.end - cfg.start;
-      const segments = cfg.segments.map(([name, start, end, tone], index) => {
-        const width = ((end - start) / total) * 100;
-        return `<button type="button" class="memory-segment ${tone}${index === selectedLayoutSegment ? ' selected' : ''}" data-layout-segment="${index}" style="width:${width}%"><b>${esc(name)}</b><small>${hex(start)}<br>${hex(end - 1)}</small></button>`;
-      }).join('');
-      const spans = cfg.slots.map(number => {
+      const maxSlot = Math.max(...cfg.slots);
+      const slots = Array.from({ length: maxSlot - 32 }, (_, index) => index + 33).map(number => {
         const start = cfg.start + (number - 33) * cfg.stride;
         const end = start + cfg.stride;
-        const left = Math.max(0, ((start - cfg.start) / total) * 100);
-        const width = Math.max(2.4, (cfg.stride / total) * 100);
-        const current = number === state.count ? ' current' : '';
-        return `<div class="slot-span${current}" style="left:${left}%;width:${width}%" title="Object ${number}: ${hex(start)}–${hex(end - 1)}"><b>#${number}</b><small>${hex(start)}</small></div>`;
+        const overlaps = cfg.segments.map((segment, index) => ({ segment, index }))
+          .filter(({ segment }) => segment[1] < end && segment[2] > start);
+        const parts = overlaps.map(({ segment: [name, segmentStart, segmentEnd, tone], index }) => {
+          const overlapStart = Math.max(start, segmentStart);
+          const overlapEnd = Math.min(end, segmentEnd);
+          const bytes = Math.max(0, overlapEnd - overlapStart);
+          return `<span class="layout-part ${tone}${index === selectedLayoutSegment ? ' selected' : ''}" data-layout-segment="${index}" title="${esc(name)} · ${bytes} bytes · ${hex(overlapStart)}–${hex(overlapEnd - 1)}">${esc(name)}</span>`;
+        }).join('') || '<span class="layout-part">unmapped</span>';
+        return `<div class="layout-slot${number === state.count ? ' current' : ''}"><div class="layout-slot-head"><b>#${number}</b><code>${hex(start)}</code></div><div class="layout-slot-parts">${parts}</div></div>`;
       }).join('');
-      $('#memory-diagram').innerHTML = `<div class="memory-band">${segments}</div><div class="slot-band">${spans}</div>`;
-      const [segmentName, segmentStart, segmentEnd] = cfg.segments[selectedLayoutSegment];
+      const ticks = Array.from({ length: 32 }, () => '<i></i>').join('');
+      $('#memory-diagram').innerHTML = `<button type="button" class="thrown-array-card${selectedLayoutSegment === -1 ? ' selected' : ''}" data-layout-base><span><b>zThrownList[32]</b><span>legal tracked-object storage · slots #1–#32</span><span class="array-ticks">${ticks}</span></span><code class="array-address">${hex(listStart)}<br>through ${hex(cfg.start - 1)}</code></button><div class="overflow-heading"><b>Overflow records</b><span>each column is one complete ${hex(cfg.stride)}-byte record</span></div><div class="overflow-slot-grid">${slots}</div>`;
+      const chosen = selectedLayoutSegment === -1 ? ['zThrownList[32]', listStart, cfg.start] : cfg.segments[selectedLayoutSegment];
+      const [segmentName, segmentStart, segmentEnd] = chosen;
       const backing = LAYOUT_BACKING[segmentName] || (segmentName.includes('world') ? LAYOUT_BACKING.sWorld : {
         note: 'This block is present in the recovered retail layout; no clearer source declaration is currently attached.',
         code: `// ${segmentName}\n// ${hex(segmentStart)} .. ${hex(segmentEnd - 1)}`
@@ -1433,88 +1451,111 @@
 
     const SCOPE_COLORS = ['#126b83', '#7a4e9d', '#b84f23', '#2f7051', '#8a6715', '#a33a36', '#476a9e', '#8b5268'];
 
-    function throwForId(objectId) {
-      return scenario.events.find(event => event.kind === 'throw' && event.objectId === objectId) || null;
-    }
-
-    function validScopeId(event) {
-      return event.scopeId && throwForId(event.scopeId) && !(event.kind === 'throw' && event.scopeId === event.objectId) ? event.scopeId : null;
-    }
-
-    function normalizeEventTree() {
-      const ordered = [];
-      const visited = new Set();
-      function visit(scopeId, ancestors = new Set()) {
-        scenario.events.forEach(event => {
-          if (visited.has(event)) return;
-          const parent = validScopeId(event);
-          if (parent !== scopeId || (event.kind === 'throw' && ancestors.has(event.objectId))) return;
-          visited.add(event);
-          event.scopeId = parent;
-          ordered.push(event);
-          if (event.kind === 'throw') visit(event.objectId, new Set([...ancestors, event.objectId]));
-        });
-      }
-      visit(null);
-      scenario.events.forEach(event => {
-        if (visited.has(event)) return;
-        event.scopeId = null;
-        visited.add(event);
-        ordered.push(event);
-        if (event.kind === 'throw') visit(event.objectId, new Set([event.objectId]));
-      });
-      scenario.events = ordered;
-    }
-
     function scopeColor(objectId) {
       if (!objectId) return '#737977';
       const number = Number(String(objectId).replace(/\D/g, '')) || 0;
       return SCOPE_COLORS[number % SCOPE_COLORS.length];
     }
 
-    function directChildren(scopeId) {
-      return scenario.events.filter(event => validScopeId(event) === scopeId);
+    const TERMINAL_ACTIONS = new Set(['expire_remove', 'impact', 'boxbreak', 'remove']);
+
+    function endpointFor(objectId) {
+      const index = scenario.events.findIndex(event => event.kind === 'action' && event.objectId === objectId && TERMINAL_ACTIONS.has(event.action));
+      return index < 0 ? null : { index, event: scenario.events[index] };
     }
 
-    function programBlock(event, index) {
-      const selected = selectedEventIndex === index ? ' selected' : '';
-      const kind = event.kind;
-      const owner = kind === 'throw' ? event.objectId : (event.objectId || validScopeId(event));
-      const color = scopeColor(owner);
-      const before = simulate(index);
-      const scopeCopy = kind === 'action' ? `<span class="scope-name">acts on ${esc(findObjectLabel(event.objectId))}</span> · ` : '';
-      return `<div class="program-block ${kind}${selected}" draggable="true" data-program-index="${index}"${kind === 'throw' ? ` data-scope-target="${esc(event.objectId)}"` : ''} style="--scope-color:${color}">
-        <span class="block-grip" aria-hidden="true">⠿</span><span class="block-icon">${eventIcon(event)}</span>
-        <span class="block-copy"><b>${esc(eventLabel(event))}</b><small>${scopeCopy}${esc(eventDetail(event, before))}</small></span>
-        <button class="block-delete" type="button" data-delete-block="${index}" aria-label="Delete ${esc(eventLabel(event))}">×</button>
-      </div>`;
+    function endpointChoice(event) {
+      return event?.action || 'open';
     }
 
-    function renderProgramScope(scopeId, depth = 0) {
-      const children = directChildren(scopeId);
-      const parts = [];
-      children.forEach(event => {
-        const index = scenario.events.indexOf(event);
-        parts.push(`<div class="program-drop" data-drop-scope="${scopeId || ''}" data-before-index="${index}"></div>`);
-        if (event.kind === 'throw') {
-          const nested = renderProgramScope(event.objectId, depth + 1);
-          parts.push(`<div class="scope-wrap" data-scope-wrap="${esc(event.objectId)}">${programBlock(event, index)}<div class="scope-body" data-scope-body="${esc(event.objectId)}" style="--scope-color:${scopeColor(event.objectId)}"><div class="scope-label">while ${esc(findObjectLabel(event.objectId))} remains tracked</div>${nested || `<div class="scope-empty">drop events here</div>`}<div class="program-drop" data-drop-scope="${esc(event.objectId)}" data-before-index=""></div></div></div>`);
-        } else {
-          parts.push(programBlock(event, index));
-        }
-      });
-      if (scopeId === null) parts.push('<div class="program-drop root-drop" data-drop-scope="" data-before-index=""></div>');
-      return parts.join('');
+    function endpointOptions(selected, fruit) {
+      const options = [
+        ['open', 'OOB / no end'],
+        ...(fruit ? [['expire_remove', 'expires']] : []),
+        ['impact', 'goo / wall'],
+        ['boxbreak', 'breaks on box entry'],
+        ['remove', 'removed']
+      ];
+      return options.map(([value, label]) => `<option value="${value}"${selected === value ? ' selected' : ''}>${label}</option>`).join('');
+    }
+
+    function setEndpoint(objectId, action, insertion = step) {
+      const throwIndex = scenario.events.findIndex(event => event.kind === 'throw' && event.objectId === objectId);
+      if (throwIndex < 0) return;
+      const existing = endpointFor(objectId);
+      if (action === 'open') {
+        if (existing) scenario.events.splice(existing.index, 1);
+        step = Math.min(step, scenario.events.length);
+        render();
+        return;
+      }
+      if (existing) {
+        existing.event.action = action;
+        selectedEventIndex = existing.index;
+        step = existing.index + 1;
+        render();
+        return;
+      }
+      const index = Math.max(throwIndex + 1, Math.min(Number(insertion), scenario.events.length));
+      const event = { kind: 'action', objectId, action };
+      scenario.events.splice(index, 0, event);
+      selectedEventIndex = index;
+      step = index + 1;
+      render();
+    }
+
+    function moveEndpoint(objectId, targetIndex) {
+      const endpoint = endpointFor(objectId);
+      const throwIndex = scenario.events.findIndex(event => event.kind === 'throw' && event.objectId === objectId);
+      if (!endpoint || targetIndex <= throwIndex || targetIndex === endpoint.index) return;
+      const [event] = scenario.events.splice(endpoint.index, 1);
+      let index = targetIndex;
+      if (endpoint.index < targetIndex) index--;
+      index = Math.max(throwIndex + 1, Math.min(index, scenario.events.length));
+      scenario.events.splice(index, 0, event);
+      selectedEventIndex = index;
+      step = index + 1;
+      render();
     }
 
     function renderProgram() {
       const root = $('#program-list');
-      normalizeEventTree();
       if (!scenario.events.length) {
-        root.innerHTML = '<div class="program-empty">Drag a throw here.<br>Overflow object #33 will be the first block.</div><div class="program-drop root-drop" data-drop-scope="" data-before-index=""></div>';
-      } else {
-        root.innerHTML = renderProgramScope(null);
+        root.innerHTML = '<div class="lifeline-empty">Click a throw on the left. It will become overflow object #33.</div>';
+        return;
       }
+      const throws = scenario.events.filter(event => event.kind === 'throw');
+      if (!throws.length) {
+        root.innerHTML = '<div class="lifeline-empty">Add a throw to create the first object lane.</div>';
+        return;
+      }
+      let preview = createInitialState();
+      const heads = scenario.events.map((event, index) => {
+        applyEvent(preview, event);
+        return `<button type="button" class="lifeline-head${step === index + 1 ? ' current' : ''}" data-program-index="${index}"><span class="time-top"><span>${index + 1}</span><span>#${preview.count}</span></span><b>${eventIcon(event)} ${esc(eventLabel(event))}</b></button>`;
+      }).join('');
+      const rows = throws.map(throwEvent => {
+        const start = scenario.events.indexOf(throwEvent);
+        const endpoint = endpointFor(throwEvent.objectId);
+        const end = endpoint?.index ?? scenario.events.length - 1;
+        const type = TYPE[throwEvent.objectType] || TYPE.custom;
+        const label = throwEvent.label || `${type.name} ${throwEvent.objectId.replace('obj-', '')}`;
+        const lane = scenario.events.map((event, index) => {
+          const isStart = index === start;
+          const isEnd = endpoint && index === endpoint.index;
+          const active = index >= start && index <= end;
+          const clickable = endpoint && index > start ? ' clickable' : '';
+          let contents = '';
+          if (active) contents += `<span class="life-line${isStart ? ' start' : ''}${isEnd ? ' end' : ''}"></span>`;
+          if (isStart) contents += `<span class="life-dot" title="starts here">${type.icon}</span><span class="life-note">start</span>`;
+          else if (isEnd) contents += `<span class="life-dot end" title="${esc(ACTION_COPY[endpoint.event.action]?.[1] || 'ends')}">${eventIcon(endpoint.event)}</span><span class="life-note">${esc(ACTION_COPY[endpoint.event.action]?.[1] || 'end')}</span>`;
+          return `<button type="button" class="lifeline-cell${step === index + 1 ? ' current' : ''}${clickable}" data-lane-object="${esc(throwEvent.objectId)}" data-lane-index="${index}"${clickable ? ' title="Move this object’s end here"' : ''}>${contents}</button>`;
+        }).join('');
+        const selected = selectedEventIndex === start || selectedEventIndex === endpoint?.index ? ' selected' : '';
+        return `<div class="lifeline-label${selected}" data-select-throw="${start}" style="--scope-color:${scopeColor(throwEvent.objectId)}"><span class="lane-icon">${type.icon}</span><span><b>${esc(label)}</b><select class="lifeline-end" data-end-object="${esc(throwEvent.objectId)}" aria-label="End for ${esc(label)}">${endpointOptions(endpointChoice(endpoint?.event), type.fruit)}</select></span></div>${lane}`;
+      }).join('');
+      const columns = `220px repeat(${scenario.events.length}, 116px)`;
+      root.innerHTML = `<div class="lifeline-scroll"><div class="lifeline-grid" style="grid-template-columns:${columns}"><div class="lifeline-corner">objects ↓ · events →</div>${heads}${rows}</div></div>`;
     }
 
     function fieldOptions(selected) {
@@ -1525,7 +1566,7 @@
       const root = $('#block-inspector');
       const event = selectedEventIndex == null ? null : scenario.events[selectedEventIndex];
       if (!event) {
-        root.innerHTML = '<div class="inspector-empty">Select a block to edit it.<br>Drop blocks inside a throw to show that they happen while that object remains tracked.</div>';
+        root.innerHTML = '<div class="inspector-empty">Select an event to edit it.<br>Set an object’s end from its lane; the scrubber chooses where a new end is placed.</div>';
         return;
       }
       let form = '';
@@ -1540,10 +1581,10 @@
             <label>+0x110 temporary frame<select data-block-field="frame">${fieldOptions(event.fields?.frame || 'auto')}</select></label>
             <label>+0xBC last floor pointer<select data-block-field="floor">${fieldOptions(event.fields?.floor || 'auto')}</select></label>
             <label>+0x164 frame rotation Z<select data-block-field="axisZ">${fieldOptions(event.fields?.axisZ || 'auto')}</select></label>
-          </div></details></div><p class="inspector-note">This block owns a scope. Anything dropped inside it is emitted after this throw and before the scope ends.</p>`;
+          </div></details></div><p class="inspector-note">This is the object’s start. Use its lane control to leave it OOB or give it an end.</p>`;
       } else if (event.kind === 'action') {
         const throws = scenario.events.filter(item => item.kind === 'throw');
-        form = `<h3>${eventIcon(event)} Outcome block</h3><div class="inspector-form"><label>Outcome<select data-block-edit="action">${Object.entries(ACTION_COPY).map(([key, value]) => `<option value="${key}"${event.action === key ? ' selected' : ''}>${esc(value[1])}</option>`).join('')}</select></label><label>Acts on<select data-block-edit="objectId">${throws.map(item => `<option value="${esc(item.objectId)}"${event.objectId === item.objectId ? ' selected' : ''}>${esc(findObjectLabel(item.objectId))}</option>`).join('')}</select></label></div><p class="inspector-note">The target is normally the throw whose scope contains this block.</p>`;
+        form = `<h3>${eventIcon(event)} Object end</h3><div class="inspector-form"><label>End type<select data-block-edit="action">${Object.entries(ACTION_COPY).filter(([key]) => TERMINAL_ACTIONS.has(key)).map(([key, value]) => `<option value="${key}"${event.action === key ? ' selected' : ''}>${esc(value[1])}</option>`).join('')}</select></label><label>Object<select data-block-edit="objectId">${throws.map(item => `<option value="${esc(item.objectId)}"${event.objectId === item.objectId ? ' selected' : ''}>${esc(findObjectLabel(item.objectId))}</option>`).join('')}</select></label></div><p class="inspector-note">Move this endpoint by clicking another cell on the same object lane.</p>`;
       } else {
         const markers = { box: 'Box transition', ui: 'Textured UI draw', pausebypass: 'Pause → Options bypass', save: 'Save attempt', reset: 'Reset during save', note: 'Note' };
         form = `<h3>${eventIcon(event)} Route block</h3><div class="inspector-form"><label>Type<select data-block-edit="marker">${Object.entries(markers).map(([key, value]) => `<option value="${key}"${event.marker === key ? ' selected' : ''}>${esc(value)}</option>`).join('')}</select></label><label>Optional label<input type="text" maxlength="60" data-block-edit="label" value="${esc(event.label || '')}"></label></div>`;
@@ -1552,22 +1593,12 @@
     }
 
     function renderTimeline() {
-      const root = $('#timeline-list');
-      const cells = [`<button type="button" class="timeline-cell${step === 0 ? ' current' : ''}" data-timeline-step="0"><span class="time-top"><span>start</span><span>#32</span></span><b>Overflow begins</b><small>slots #1–#32 assumed occupied</small></button>`];
-      let before = createInitialState();
-      scenario.events.forEach((event, index) => {
-        const preview = clone(before);
-        applyEvent(preview, event);
-        const invalid = preview.invalid.length > before.invalid.length ? ' invalid' : '';
-        const owner = event.kind === 'throw' ? event.objectId : (event.objectId || validScopeId(event));
-        cells.push(`<button type="button" class="timeline-cell${step === index + 1 ? ' current' : ''}${invalid}" data-timeline-step="${index + 1}" style="--scope-color:${scopeColor(owner)}"><span class="time-top"><span>${index + 1}</span><span>#${preview.count}</span></span><b>${eventIcon(event)} ${esc(eventLabel(event))}</b><small>${esc(eventDetail(event, before))}</small></button>`);
-        before = preview;
-      });
-      root.innerHTML = cells.join('');
       $('#scrubber').max = scenario.events.length;
       $('#scrubber').value = step;
       $('#previous').disabled = step === 0;
       $('#next').disabled = step === scenario.events.length;
+      const current = step ? scenario.events[step - 1] : null;
+      $('#playback-event').textContent = current ? `${step}. ${eventIcon(current)} ${eventLabel(current)}` : 'Start · overflow begins at #33';
     }
 
     function renderState(state) {
@@ -1694,7 +1725,6 @@
 
     function render() {
       const selectedEvent = selectedEventIndex == null ? null : scenario.events[selectedEventIndex];
-      normalizeEventTree();
       selectedEventIndex = selectedEvent ? scenario.events.indexOf(selectedEvent) : null;
       step = Math.max(0, Math.min(step, scenario.events.length));
       if (selectedEventIndex != null && !scenario.events[selectedEventIndex]) selectedEventIndex = null;
@@ -1723,85 +1753,29 @@
       row?.scrollIntoView({ block: 'nearest' });
     }
 
-    function eventIsInsideScope(event, scopeId) {
-      let parent = validScopeId(event);
-      const seen = new Set();
-      while (parent && !seen.has(parent)) {
-        if (parent === scopeId) return true;
-        seen.add(parent);
-        parent = validScopeId(throwForId(parent));
-      }
-      return false;
-    }
-
-    function scopeInsertionIndex(scopeId, beforeIndex = null) {
-      if (beforeIndex !== null && beforeIndex !== '' && scenario.events[Number(beforeIndex)]) return Number(beforeIndex);
-      if (!scopeId) return scenario.events.length;
-      const throwIndex = scenario.events.findIndex(event => event.kind === 'throw' && event.objectId === scopeId);
-      let end = throwIndex + 1;
-      scenario.events.forEach((event, index) => { if (eventIsInsideScope(event, scopeId)) end = Math.max(end, index + 1); });
-      return Math.max(0, end);
-    }
-
-    function selectedScope() {
-      const event = selectedEventIndex == null ? null : scenario.events[selectedEventIndex];
-      if (!event) return null;
-      if (event.kind === 'throw') return event.objectId;
-      return validScopeId(event);
-    }
-
-    function paletteEvent(payload, scopeId) {
-      if (payload.kind === 'throw') return { kind: 'throw', objectId: newObjectId(), objectType: payload.objectType, label: '', initialState: 'airborne', fields: {}, scopeId };
-      if (payload.kind === 'marker') return { kind: 'marker', marker: payload.marker, label: '', scopeId };
-      if (payload.kind === 'action') {
-        if (!scopeId) return null;
-        return { kind: 'action', objectId: scopeId, action: payload.action, scopeId };
-      }
+    function paletteEvent(payload) {
+      if (payload.kind === 'throw') return { kind: 'throw', objectId: newObjectId(), objectType: payload.objectType, label: '', initialState: 'airborne', fields: {} };
+      if (payload.kind === 'marker') return { kind: 'marker', marker: payload.marker, label: '' };
       return null;
     }
 
-    function insertPaletteBlock(payload, scopeId = null, beforeIndex = null) {
-      const event = paletteEvent(payload, scopeId);
-      if (!event) { toast('Drop outcomes inside a throw scope'); return; }
-      const index = scopeInsertionIndex(scopeId, beforeIndex);
+    function insertPaletteBlock(payload, beforeIndex = step) {
+      const event = paletteEvent(payload);
+      if (!event) return;
+      const index = Math.max(0, Math.min(Number(beforeIndex), scenario.events.length));
       scenario.events.splice(index, 0, event);
-      normalizeEventTree();
       selectedEventIndex = scenario.events.indexOf(event);
       step = selectedEventIndex + 1;
       render();
     }
 
-    function subtreeEvents(index) {
-      const root = scenario.events[index];
-      if (!root) return [];
-      if (root.kind !== 'throw') return [root];
-      return scenario.events.filter(event => event === root || eventIsInsideScope(event, root.objectId));
-    }
-
     function deleteProgramBlock(index) {
-      const removed = new Set(subtreeEvents(index));
-      scenario.events = scenario.events.filter(event => !removed.has(event));
+      const event = scenario.events[index];
+      if (!event) return;
+      if (event.kind === 'throw') scenario.events = scenario.events.filter(item => item !== event && item.objectId !== event.objectId);
+      else scenario.events.splice(index, 1);
       selectedEventIndex = null;
       step = Math.min(step, scenario.events.length);
-      render();
-    }
-
-    function moveProgramBlock(index, targetScope, beforeIndex = null) {
-      const root = scenario.events[index];
-      if (!root) return;
-      const moving = subtreeEvents(index);
-      const movingSet = new Set(moving);
-      const movingIds = new Set(moving.filter(event => event.kind === 'throw').map(event => event.objectId));
-      if (targetScope && movingIds.has(targetScope)) { toast('A throw cannot be nested inside itself'); return; }
-      const beforeEvent = beforeIndex !== null && beforeIndex !== '' ? scenario.events[Number(beforeIndex)] : null;
-      scenario.events = scenario.events.filter(event => !movingSet.has(event));
-      root.scopeId = targetScope || null;
-      if (root.kind === 'action' && targetScope) root.objectId = targetScope;
-      const target = beforeEvent && !movingSet.has(beforeEvent) ? scenario.events.indexOf(beforeEvent) : scopeInsertionIndex(targetScope);
-      scenario.events.splice(Math.max(0, target), 0, ...moving);
-      normalizeEventTree();
-      selectedEventIndex = scenario.events.indexOf(root);
-      step = selectedEventIndex + 1;
       render();
     }
 
@@ -1887,14 +1861,13 @@
       scenario.exploreShift = 24;
       scenario.flags = { chuck: true, tubelet: true, plankton: false, sock: false };
       scenario.events = [
-        { kind: 'throw', objectId: 'obj-1', objectType: 'melon', label: 'watermelon A', initialState: 'airborne', fields: {}, scopeId: null },
-        { kind: 'throw', objectId: 'obj-2', objectType: 'melon', label: 'watermelon B', initialState: 'airborne', fields: {}, scopeId: 'obj-1' },
-        { kind: 'throw', objectId: 'obj-3', objectType: 'stone', label: 'tower tiki', initialState: 'airborne', fields: {}, scopeId: 'obj-2' },
-        { kind: 'action', objectId: 'obj-1', action: 'expire', scopeId: 'obj-2' },
-        { kind: 'action', objectId: 'obj-3', action: 'impact', scopeId: 'obj-2' },
-        { kind: 'action', objectId: 'obj-1', action: 'remove', scopeId: 'obj-2' },
-        { kind: 'action', objectId: 'obj-2', action: 'settle', scopeId: 'obj-2' },
-        { kind: 'marker', marker: 'save', label: 'Inspect the resulting save fields', scopeId: 'obj-2' }
+        { kind: 'throw', objectId: 'obj-1', objectType: 'melon', label: 'watermelon A', initialState: 'airborne', fields: {} },
+        { kind: 'throw', objectId: 'obj-2', objectType: 'melon', label: 'watermelon B', initialState: 'airborne', fields: {} },
+        { kind: 'action', objectId: 'obj-1', action: 'expire_remove' },
+        { kind: 'throw', objectId: 'obj-3', objectType: 'melon', label: 'watermelon C', initialState: 'airborne', fields: {} },
+        { kind: 'action', objectId: 'obj-2', action: 'expire_remove' },
+        { kind: 'action', objectId: 'obj-3', action: 'expire_remove' },
+        { kind: 'marker', marker: 'save', label: 'Inspect the resulting save fields' }
       ];
       nextId = 4;
       step = scenario.events.length;
@@ -1917,8 +1890,13 @@
         selectTool(tabs[target].dataset.tool, true);
       });
     });
-    $$('.tab').forEach(tab => tab.addEventListener('click', () => { scenario.platform = tab.dataset.platform; selectedLayoutSegment = 0; render(); }));
+    $$('.tab').forEach(tab => tab.addEventListener('click', () => { scenario.platform = tab.dataset.platform; selectedLayoutSegment = -1; render(); }));
     $('#memory-diagram').addEventListener('click', event => {
+      if (event.target.closest('[data-layout-base]')) {
+        selectedLayoutSegment = -1;
+        renderLayout(simulate(step));
+        return;
+      }
       const segment = event.target.closest('[data-layout-segment]');
       if (!segment) return;
       selectedLayoutSegment = Number(segment.dataset.layoutSegment);
@@ -1975,59 +1953,34 @@
         action: block.dataset.action,
         marker: block.dataset.marker
       };
-      block.addEventListener('click', () => insertPaletteBlock(payload, selectedScope()));
-      block.addEventListener('dragstart', event => {
-        dragPayload = { source: 'palette', ...payload };
-        event.dataTransfer.effectAllowed = 'copy';
-        event.dataTransfer.setData('text/plain', JSON.stringify(dragPayload));
-      });
+      block.draggable = false;
+      block.addEventListener('click', () => insertPaletteBlock(payload));
     });
 
     $('#program-list').addEventListener('click', event => {
-      const deletion = event.target.closest('[data-delete-block]');
-      if (deletion) { deleteProgramBlock(Number(deletion.dataset.deleteBlock)); return; }
+      if (event.target.closest('[data-end-object]')) return;
+      const laneCell = event.target.closest('[data-lane-object]');
+      if (laneCell) {
+        moveEndpoint(laneCell.dataset.laneObject, Number(laneCell.dataset.laneIndex));
+        return;
+      }
+      const laneLabel = event.target.closest('[data-select-throw]');
+      if (laneLabel) {
+        selectedEventIndex = Number(laneLabel.dataset.selectThrow);
+        step = selectedEventIndex + 1;
+        render();
+        return;
+      }
       const block = event.target.closest('[data-program-index]');
       if (!block) return;
       selectedEventIndex = Number(block.dataset.programIndex);
       step = selectedEventIndex + 1;
       render();
     });
-    $('#program-list').addEventListener('dragstart', event => {
-      const block = event.target.closest('[data-program-index]');
-      if (!block) return;
-      dragPayload = { source: 'program', index: Number(block.dataset.programIndex) };
-      event.dataTransfer.effectAllowed = 'move';
-      event.dataTransfer.setData('text/plain', JSON.stringify(dragPayload));
-    });
-    $('#program-list').addEventListener('dragover', event => {
-      const drop = event.target.closest('[data-drop-scope]');
-      const scope = event.target.closest('[data-scope-target]');
-      if (!drop && !scope) return;
-      event.preventDefault();
-      $$('.program-drop.drag-over, .program-block.scope-target').forEach(item => item.classList.remove('drag-over', 'scope-target'));
-      (drop || scope).classList.add(drop ? 'drag-over' : 'scope-target');
-    });
-    $('#program-list').addEventListener('dragleave', event => {
-      const target = event.target.closest('.program-drop, .program-block');
-      if (target && !target.contains(event.relatedTarget)) target.classList.remove('drag-over', 'scope-target');
-    });
-    $('#program-list').addEventListener('drop', event => {
-      const drop = event.target.closest('[data-drop-scope]');
-      const scopeBlock = event.target.closest('[data-scope-target]');
-      if (!drop && !scopeBlock) return;
-      event.preventDefault();
-      let payload = dragPayload;
-      if (!payload) { try { payload = JSON.parse(event.dataTransfer.getData('text/plain')); } catch (_) {} }
-      if (!payload) return;
-      const targetScope = scopeBlock ? scopeBlock.dataset.scopeTarget : (drop.dataset.dropScope || null);
-      const beforeIndex = scopeBlock ? null : (drop.dataset.beforeIndex || null);
-      if (payload.source === 'palette') insertPaletteBlock(payload, targetScope, beforeIndex);
-      else moveProgramBlock(payload.index, targetScope, beforeIndex);
-      dragPayload = null;
-    });
-    document.addEventListener('dragend', () => {
-      dragPayload = null;
-      $$('.program-drop.drag-over, .program-block.scope-target').forEach(item => item.classList.remove('drag-over', 'scope-target'));
+    $('#program-list').addEventListener('change', event => {
+      const select = event.target.closest('[data-end-object]');
+      if (!select) return;
+      setEndpoint(select.dataset.endObject, select.value);
     });
 
     $('#block-inspector').addEventListener('change', event => {
@@ -2039,9 +1992,7 @@
       } else if (event.target.dataset.blockEdit) {
         const key = event.target.dataset.blockEdit;
         block[key] = event.target.value;
-        if (key === 'objectId') block.scopeId = event.target.value;
       }
-      normalizeEventTree();
       selectedEventIndex = scenario.events.indexOf(block);
       step = selectedEventIndex + 1;
       render();
