@@ -1908,7 +1908,7 @@
         <div class="table-wrap"><table><thead><tr><th>Loaded slot</th><th>Destination task</th><th>Reads from</th><th>Warp result</th></tr></thead><tbody>${tableRows}</tbody></table></div>`;
       $('#explorer-value').textContent = `${shift} shift`;
       $('#shift-custom').value = shift;
-      const quick = [0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 100];
+      const quick = TARGETS.map(target => target.shift);
       $('#explorer-picks').innerHTML = quick.map(value => `<button class="shift-pick${scenario.exploreShift === value ? ' active' : ''}" type="button" data-explore="${value}">${value}</button>`).join('');
     }
 
