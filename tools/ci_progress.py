@@ -85,6 +85,7 @@ def render(
   <div class="eyebrow">{html.escape(repository.split("/")[0])} / {version} / GameCube</div>
   <h1>Battle for Bikini Bottom</h1>
   <nav aria-label="Game version">{version_links}</nav>
+  <nav aria-label="Research tools"><a href="{prefix}throwverflow/">Throwverflow Lab</a></nav>
   <p class="subtle">Decompilation progress from a clean CI build of <a href="{repo_url}">{html.escape(repository)}</a>.</p>
   <div class="cards">
     <div class="card">Matching code<strong>{overall['code']:.2f}%</strong></div>

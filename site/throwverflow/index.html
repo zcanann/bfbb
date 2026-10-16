@@ -1,0 +1,1636 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Build and inspect BFBB Throwverflow timelines, memory overlaps, removals, and save-table shifts.">
+  <title>Throwverflow Lab</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f5f3ed;
+      --panel: #fffefa;
+      --ink: #1d2428;
+      --muted: #69747a;
+      --line: #cdd2d1;
+      --line-dark: #8f999b;
+      --blue: #126b83;
+      --blue-pale: #dceef2;
+      --orange: #b84f23;
+      --orange-pale: #f6e2d7;
+      --green: #2f7051;
+      --green-pale: #dcecdf;
+      --red: #a33a36;
+      --red-pale: #f4ddda;
+      --yellow: #8a6715;
+      --yellow-pale: #f4ebc8;
+      --slot: #e8e6df;
+      --shadow: 0 1px 0 rgba(17, 31, 38, .08);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; min-width: 320px; }
+    button, input, select, textarea { font: inherit; }
+    button, select, input { min-height: 38px; }
+    button { cursor: pointer; }
+    button:disabled { cursor: not-allowed; opacity: .45; }
+    a { color: var(--blue); }
+    code, .mono { font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace; }
+
+    .page {
+      width: min(1440px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 26px 0 60px;
+    }
+
+    header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .eyebrow {
+      color: var(--blue);
+      font: 700 .75rem/1.2 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    h1 { margin: 5px 0 0; font-size: clamp(2rem, 4vw, 3.35rem); line-height: 1; letter-spacing: -.045em; }
+    header p { max-width: 700px; margin: 0; color: var(--muted); line-height: 1.5; }
+    .header-links { display: flex; flex-wrap: wrap; gap: 12px; font-size: .9rem; }
+
+    .section { margin-top: 28px; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 12px; }
+    h2 { margin: 0; font-size: 1.3rem; letter-spacing: -.02em; }
+    h3 { margin: 0; font-size: 1rem; }
+    .section-head p, .subtle { margin: 0; color: var(--muted); font-size: .9rem; line-height: 1.45; }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line-dark);
+      box-shadow: var(--shadow);
+    }
+
+    .platform-tabs, .toolbar, .button-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tab, .button, .icon-button {
+      border: 1px solid var(--line-dark);
+      background: var(--panel);
+      color: var(--ink);
+      padding: 8px 12px;
+      border-radius: 3px;
+      font-weight: 650;
+    }
+    .tab[aria-selected="true"], .button.primary {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: #fff;
+    }
+    .button.danger { color: var(--red); border-color: #d19a95; }
+    .button.small, .icon-button { min-height: 30px; padding: 5px 8px; font-size: .78rem; }
+    .icon-button { width: 30px; padding-inline: 0; }
+
+    .memory-panel { padding: 18px; overflow: hidden; }
+    .layout-summary { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin: 14px 0 10px; }
+    .layout-summary strong { font-size: 1.05rem; }
+    .layout-summary span { color: var(--muted); font-size: .82rem; }
+    .memory-scroll { overflow-x: auto; padding: 8px 0 6px; }
+    .memory-diagram { min-width: 940px; }
+    .memory-band { position: relative; display: flex; height: 92px; border: 1px solid var(--ink); overflow: hidden; }
+    .memory-segment {
+      min-width: 54px;
+      padding: 9px 8px;
+      border-right: 1px solid rgba(29, 36, 40, .45);
+      background: var(--slot);
+      overflow: hidden;
+    }
+    .memory-segment:nth-child(2n) { background: #dedfd9; }
+    .memory-segment.hot { background: var(--orange-pale); }
+    .memory-segment.safe { background: var(--green-pale); }
+    .memory-segment b, .slot-span b { display: block; font-size: .75rem; white-space: nowrap; }
+    .memory-segment small { display: block; margin-top: 6px; color: #4f595e; font: .66rem/1.3 ui-monospace, SFMono-Regular, Consolas, monospace; white-space: nowrap; }
+    .slot-band { position: relative; height: 74px; margin-top: 7px; border-bottom: 1px solid var(--line); }
+    .slot-span {
+      position: absolute;
+      top: 0;
+      height: 47px;
+      min-width: 28px;
+      padding: 6px 7px;
+      border: 1px solid var(--blue);
+      background: rgba(220, 238, 242, .92);
+      color: #124e60;
+      overflow: hidden;
+    }
+    .slot-span:nth-child(even) { top: 25px; background: rgba(255, 254, 250, .94); }
+    .slot-span.current { z-index: 2; border-width: 2px; border-color: var(--orange); background: var(--orange-pale); color: #713017; }
+    .slot-span small { font: .62rem/1 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .layout-note { margin: 10px 0 0; color: var(--muted); font-size: .84rem; line-height: 1.5; }
+
+    .workspace { display: grid; grid-template-columns: minmax(360px, .86fr) minmax(500px, 1.4fr); gap: 18px; align-items: start; }
+    .composer { padding: 16px; }
+    .composer-block + .composer-block { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); }
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 10px; }
+    .form-grid .wide { grid-column: 1 / -1; }
+    label { display: grid; gap: 5px; color: var(--muted); font-size: .75rem; font-weight: 650; }
+    select, input[type="text"], input[type="number"] {
+      width: 100%;
+      border: 1px solid var(--line-dark);
+      border-radius: 2px;
+      background: #fff;
+      color: var(--ink);
+      padding: 7px 8px;
+    }
+    details { border-top: 1px solid var(--line); }
+    details summary { cursor: pointer; padding: 10px 0; color: var(--blue); font-weight: 650; font-size: .82rem; }
+    .advanced { padding-bottom: 4px; }
+    .insert-hint { margin: 9px 0 0; color: var(--muted); font-size: .76rem; }
+
+    .timeline-panel { overflow: hidden; }
+    .timeline-top { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+    input[type="range"] { width: 100%; accent-color: var(--blue); }
+    .timeline-list { max-height: 492px; overflow: auto; }
+    .event-row {
+      display: grid;
+      grid-template-columns: 34px 34px minmax(0, 1fr) auto;
+      gap: 9px;
+      align-items: center;
+      padding: 9px 10px;
+      border-bottom: 1px solid var(--line);
+      background: var(--panel);
+    }
+    .event-row.selected { background: var(--blue-pale); box-shadow: inset 4px 0 var(--blue); }
+    .event-row.invalid { background: var(--red-pale); }
+    .event-row[draggable="true"] { cursor: grab; }
+    .event-number { color: var(--muted); font: .72rem/1 ui-monospace, SFMono-Regular, Consolas, monospace; text-align: right; }
+    .event-icon { font-size: 1.3rem; text-align: center; }
+    .event-copy b { display: block; font-size: .86rem; }
+    .event-copy small { display: block; margin-top: 2px; color: var(--muted); font-size: .72rem; }
+    .event-actions { display: flex; gap: 4px; }
+    .empty { padding: 30px 16px; color: var(--muted); text-align: center; }
+
+    .state-panel { padding: 16px; }
+    .state-heading { display: flex; align-items: start; justify-content: space-between; gap: 14px; }
+    .state-heading strong { font: 700 1.8rem/1 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .state-heading small { display: block; margin-top: 5px; color: var(--muted); }
+    .slot-scroll { overflow-x: auto; margin-top: 14px; padding-bottom: 8px; }
+    .slots { display: grid; grid-auto-flow: column; grid-auto-columns: 50px; gap: 4px; min-width: max-content; }
+    .slot {
+      position: relative;
+      width: 50px;
+      height: 78px;
+      border: 1px solid var(--line-dark);
+      background: var(--slot);
+      overflow: hidden;
+    }
+    .slot.overflow { border-color: var(--orange); }
+    .slot.stale { opacity: .48; border-style: dashed; }
+    .slot .num { display: block; padding: 4px; color: var(--muted); font: .62rem/1 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .slot .emoji { display: grid; place-items: center; height: 40px; font-size: 1.25rem; }
+    .slot .tag { display: block; overflow: hidden; padding: 0 3px; font: .58rem/1.2 ui-monospace, SFMono-Regular, Consolas, monospace; text-align: center; text-overflow: ellipsis; white-space: nowrap; }
+    .slot .copied { position: absolute; inset: auto 2px 2px; color: var(--blue); font: .52rem/1 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .slot-boundary { border-left: 3px solid var(--orange); }
+    .slot-legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 4px; color: var(--muted); font-size: .72rem; }
+
+    .obligations { display: grid; gap: 7px; margin-top: 14px; }
+    .obligation {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 9px;
+      padding: 8px 10px;
+      border-left: 3px solid var(--yellow);
+      background: var(--yellow-pale);
+      font-size: .8rem;
+    }
+    .obligation.error { border-color: var(--red); background: var(--red-pale); }
+    .obligation.done { border-color: var(--green); background: var(--green-pale); }
+
+    .watch-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 14px; }
+    .watch {
+      min-width: 0;
+      padding: 10px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
+    }
+    .watch.zero { border-color: #7daa8f; background: var(--green-pale); }
+    .watch.bad { border-color: #d1918b; background: var(--red-pale); }
+    .watch.original { background: #edf0ec; }
+    .watch .address { color: var(--muted); font: .68rem/1 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .watch b { display: block; margin: 7px 0 3px; font-size: .86rem; }
+    .watch .value { display: block; overflow: hidden; font: 700 .8rem/1.3 ui-monospace, SFMono-Regular, Consolas, monospace; text-overflow: ellipsis; white-space: nowrap; }
+    .watch small { display: block; margin-top: 6px; color: var(--muted); font-size: .67rem; line-height: 1.35; }
+
+    .shift-panel { padding: 16px; }
+    .shift-controls { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(280px, .7fr); gap: 18px; }
+    .world-grid { display: grid; grid-template-columns: repeat(5, minmax(112px, 1fr)); gap: 7px; margin-top: 10px; }
+    .world-control { padding: 8px; border: 1px solid var(--line); background: #fff; }
+    .world-control b { display: flex; justify-content: space-between; gap: 4px; font-size: .75rem; }
+    .world-control b small { color: var(--muted); font-weight: 500; }
+    .world-control select { min-height: 32px; margin-top: 6px; padding: 4px; font-size: .72rem; }
+    .flag-list { display: grid; gap: 8px; margin-top: 10px; }
+    .check { display: flex; grid-template: none; align-items: center; gap: 8px; color: var(--ink); font-size: .8rem; font-weight: 500; }
+    .check input { width: 16px; height: 16px; margin: 0; }
+
+    .shift-result { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 16px; }
+    .shift-status { padding: 9px 11px; background: var(--green-pale); border-left: 3px solid var(--green); font-size: .82rem; }
+    .shift-status.bad { background: var(--red-pale); border-color: var(--red); }
+    .payoff-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 10px; }
+    .payoff { padding: 12px; border: 1px solid var(--line-dark); background: #fff; }
+    .payoff.unlocked { border-color: var(--green); background: var(--green-pale); }
+    .payoff.locked { border-color: #c7a165; background: var(--yellow-pale); }
+    .payoff span { color: var(--muted); font: .67rem/1.2 ui-monospace, SFMono-Regular, Consolas, monospace; text-transform: uppercase; }
+    .payoff b { display: block; margin: 6px 0; }
+    .payoff p { margin: 0; color: var(--muted); font-size: .78rem; line-height: 1.4; }
+    .table-wrap { max-height: 480px; overflow: auto; margin-top: 10px; border: 1px solid var(--line); }
+    table { width: 100%; border-collapse: collapse; background: #fff; font-size: .76rem; }
+    th, td { padding: 8px 9px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    thead th { position: sticky; top: 0; z-index: 1; background: var(--ink); color: #fff; }
+    tr.key-row td { background: var(--blue-pale); }
+
+    .finder-panel { padding: 16px; }
+    .finder-top { display: grid; grid-template-columns: minmax(260px, .65fr) minmax(420px, 1.35fr); gap: 18px; }
+    .shift-picks { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .shift-pick {
+      min-width: 52px;
+      min-height: 34px;
+      padding: 5px 8px;
+      border: 1px solid var(--line-dark);
+      border-radius: 2px;
+      background: #fff;
+      color: var(--ink);
+      font: 700 .76rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+    .shift-pick.active { border-color: var(--blue); background: var(--blue); color: #fff; }
+    .target-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
+    .target-metric { padding: 10px; border: 1px solid var(--line); background: #fff; }
+    .target-metric span { display: block; color: var(--muted); font-size: .67rem; text-transform: uppercase; letter-spacing: .05em; }
+    .target-metric b { display: block; margin-top: 4px; font-size: 1rem; }
+    .requirement-list { display: grid; gap: 6px; margin-top: 10px; }
+    .requirement {
+      display: grid;
+      grid-template-columns: 42px minmax(110px, .7fr) minmax(180px, 1.3fr) auto;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 9px;
+      border: 1px solid var(--line);
+      background: #fff;
+      font-size: .76rem;
+    }
+    .requirement .world { font-weight: 800; }
+    .requirement code { color: var(--muted); font-size: .69rem; }
+    .status-pill { justify-self: end; padding: 3px 6px; border-radius: 99px; font-size: .65rem; font-weight: 800; white-space: nowrap; }
+    .status-pill.clear { background: var(--green-pale); color: var(--green); }
+    .status-pill.open { background: var(--yellow-pale); color: var(--yellow); }
+    .status-pill.bad { background: var(--red-pale); color: var(--red); }
+    .gate-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
+    .gate { min-height: 102px; padding: 10px; border: 1px solid var(--line); background: #fff; }
+    .gate.clear { border-top: 3px solid var(--green); }
+    .gate.open { border-top: 3px solid var(--yellow); }
+    .gate.bad { border-top: 3px solid var(--red); }
+    .gate b { display: block; font-size: .79rem; }
+    .gate span { display: block; margin-top: 5px; color: var(--muted); font-size: .71rem; line-height: 1.4; }
+
+    .deep-grid { display: grid; grid-template-columns: minmax(300px, .55fr) minmax(600px, 1.45fr); gap: 18px; margin-top: 16px; }
+    .alignment-panel, .hex-panel { padding: 14px; }
+    .alignment-table { margin-top: 10px; max-height: 540px; overflow: auto; border: 1px solid var(--line); }
+    .alignment-table table { font-size: .7rem; }
+    .hex-toolbar { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 10px; align-items: end; margin-top: 10px; }
+    .hex-meta { color: var(--muted); font-size: .75rem; line-height: 1.4; }
+    .hex-view { margin-top: 10px; overflow: auto; max-height: 500px; border: 1px solid var(--line); background: #141a1d; color: #dbe6e9; }
+    .hex-row { display: grid; grid-template-columns: 92px repeat(16, 25px) minmax(120px, 1fr); min-width: 650px; border-bottom: 1px solid #2e393e; }
+    .hex-address, .hex-byte, .hex-ascii { padding: 5px 3px; font: .67rem/1.15 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .hex-address { color: #7fb7c4; border-right: 1px solid #39464b; }
+    .hex-byte { text-align: center; color: #6f7d82; }
+    .hex-byte.zero { background: #244c3a; color: #c7f3d9; }
+    .hex-byte.original { background: #394247; color: #fff; }
+    .hex-byte.nonzero { background: #6a3b26; color: #ffe1cf; }
+    .hex-byte.unknown { background: #493b21; color: #ffe9a8; }
+    .hex-ascii { padding-left: 9px; color: #a8b4b8; border-left: 1px solid #39464b; white-space: nowrap; }
+    .hex-provenance { display: grid; gap: 6px; margin-top: 10px; }
+    .hex-provenance div { padding: 7px 8px; border-left: 3px solid var(--blue); background: var(--blue-pale); font-size: .72rem; }
+
+    .explorer { padding: 12px; margin-bottom: 14px; border: 1px solid var(--line); background: #fff; }
+    .explorer-row { display: grid; grid-template-columns: auto minmax(180px, 1fr) auto; gap: 10px; align-items: center; }
+    .explorer-value { min-width: 74px; font: 800 1.2rem/1 ui-monospace, SFMono-Regular, Consolas, monospace; text-align: right; }
+    .explorer-picks { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+
+    .footer-note { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: .78rem; line-height: 1.5; }
+    .toast { position: fixed; right: 18px; bottom: 18px; z-index: 20; padding: 10px 13px; background: var(--ink); color: #fff; border-radius: 3px; font-size: .8rem; opacity: 0; transform: translateY(8px); pointer-events: none; transition: .18s ease; }
+    .toast.show { opacity: 1; transform: none; }
+
+    @media (max-width: 1040px) {
+      .workspace { grid-template-columns: 1fr; }
+      .timeline-list { max-height: 390px; }
+      .watch-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .shift-controls { grid-template-columns: 1fr; }
+      .world-grid { grid-template-columns: repeat(3, minmax(110px, 1fr)); }
+      .finder-top, .deep-grid { grid-template-columns: 1fr; }
+      .gate-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 680px) {
+      .page { width: min(100% - 18px, 1440px); padding-top: 14px; }
+      header { display: block; }
+      header p { margin-top: 12px; }
+      .header-links { margin-top: 12px; }
+      .section-head { display: block; }
+      .section-head p { margin-top: 5px; }
+      .form-grid, .watch-grid, .payoff-grid { grid-template-columns: 1fr; }
+      .world-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .target-summary, .gate-grid { grid-template-columns: 1fr; }
+      .requirement { grid-template-columns: 38px minmax(0, 1fr) auto; }
+      .requirement code { grid-column: 2 / -1; }
+      .hex-toolbar { grid-template-columns: 1fr; }
+      .event-row { grid-template-columns: 26px 28px minmax(0, 1fr); }
+      .event-actions { grid-column: 3; }
+      .timeline-top { grid-template-columns: auto 1fr auto; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div>
+        <div class="eyebrow">BFBB memory research</div>
+        <h1>Throwverflow Lab</h1>
+      </div>
+      <div>
+        <p>Order throws and delayed outcomes, inspect the physical list after every event, and see exactly which saved task receives each later counter.</p>
+        <nav class="header-links" aria-label="Related pages">
+          <a href="../">Decompilation progress</a>
+          <a href="https://github.com/zcanann/bfbb/blob/main/src/SB/Game/zThrown.cpp">Throw-system source</a>
+          <a href="https://github.com/zcanann/bfbb">Source repository</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="section" aria-labelledby="layout-title">
+      <div class="section-head">
+        <div>
+          <h2 id="layout-title">Where the overflow goes</h2>
+          <p>The slot rectangles use the retail stride and are aligned against the neighboring globals.</p>
+        </div>
+        <div class="platform-tabs" role="tablist" aria-label="Platform memory layout">
+          <button class="tab" type="button" role="tab" data-platform="gc" aria-selected="true">GameCube</button>
+          <button class="tab" type="button" role="tab" data-platform="xbox" aria-selected="false">Xbox</button>
+          <button class="tab" type="button" role="tab" data-platform="ps2" aria-selected="false">PlayStation 2</button>
+        </div>
+      </div>
+      <div class="panel memory-panel">
+        <div class="layout-summary"><strong id="layout-name"></strong><span id="layout-range" class="mono"></span></div>
+        <div class="memory-scroll"><div class="memory-diagram" id="memory-diagram"></div></div>
+        <p class="layout-note" id="layout-note"></p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="finder-title">
+      <div class="section-head">
+        <div>
+          <h2 id="finder-title">GameCube setup finder</h2>
+          <p>Pick the amount of progression you want removed. The lab turns it into exact-zero obligations and checks the current timeline against them. Xbox and PS2 do not place this table after the throw list.</p>
+        </div>
+      </div>
+      <div class="panel finder-panel">
+        <div class="finder-top">
+          <div>
+            <h3>Target shift</h3>
+            <div class="shift-picks" id="target-picks"></div>
+            <div class="target-summary" id="target-summary"></div>
+            <div class="button-row" style="margin-top:10px">
+              <button class="button small" id="explore-target" type="button">Show this mapping below</button>
+              <button class="button small" id="auto-target" type="button">Return worlds to Auto</button>
+            </div>
+          </div>
+          <div>
+            <h3>Required exact-zero writes</h3>
+            <div class="requirement-list" id="requirements"></div>
+          </div>
+        </div>
+        <div style="margin-top:16px">
+          <h3>Crash and recovery gates</h3>
+          <div class="gate-grid" id="gates"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="timeline-title">
+      <div class="section-head">
+        <div>
+          <h2 id="timeline-title">Event lab</h2>
+          <p>A fruit expiring and its record being removed are separate events. Reorder either around later throws or impacts.</p>
+        </div>
+        <div class="toolbar">
+          <button class="button small" type="button" id="preset-blank">Reset to 32 OOB</button>
+          <button class="button small" type="button" id="preset-demo">Load copy demo</button>
+          <button class="button small" type="button" id="share">Copy share link</button>
+          <button class="button small" type="button" id="export">Export JSON</button>
+          <button class="button small" type="button" id="import">Import JSON</button>
+        </div>
+      </div>
+
+      <div class="workspace">
+        <aside class="panel composer" aria-label="Add events">
+          <div class="composer-block">
+            <h3>Starting list</h3>
+            <div class="form-grid">
+              <label>Already tracked
+                <input id="base-count" type="number" min="0" max="160" step="1" value="32">
+              </label>
+              <label>Starting object
+                <select id="base-type">
+                  <option value="stone">🗿 OOB stone tikis</option>
+                  <option value="wood">🪵 OOB wood tikis</option>
+                  <option value="enemy">🤖 OOB enemies</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div class="composer-block">
+            <h3>Add a throw</h3>
+            <div class="form-grid">
+              <label>Object
+                <select id="throw-type">
+                  <option value="stone">🗿 Stone tiki</option>
+                  <option value="wood">🪵 Wood tiki</option>
+                  <option value="melon">🍉 Watermelon</option>
+                  <option value="ice">🧊 Ice cube</option>
+                  <option value="enemy">🤖 Throwable enemy</option>
+                  <option value="custom">◆ Custom / frameless</option>
+                </select>
+              </label>
+              <label>Immediate state
+                <select id="throw-state">
+                  <option value="airborne">Airborne — resolve later</option>
+                  <option value="oob">Out of bounds — stays tracked</option>
+                  <option value="settled">Settled on ground</option>
+                </select>
+              </label>
+              <label class="wide">Optional label
+                <input id="throw-label" type="text" maxlength="40" placeholder="melon A, tower tiki, stored ice…">
+              </label>
+            </div>
+            <details>
+              <summary>Payload overrides</summary>
+              <div class="form-grid advanced">
+                <label><span><code>+0x14</code> velocity X</span><select id="field-velx"></select></label>
+                <label><span><code>+0x68</code> platform-relative Y</span><select id="field-opy"></select></label>
+                <label><span><code>+0x110</code> temporary frame word</span><select id="field-frame"></select></label>
+                <label><span><code>+0xBC</code> last floor pointer</span><select id="field-floor"></select></label>
+                <label class="wide"><span><code>+0x164</code> temporary-frame rotation Z</span><select id="field-axis"></select></label>
+              </div>
+            </details>
+            <button class="button primary" type="button" id="add-throw">Add throw</button>
+          </div>
+
+          <div class="composer-block">
+            <h3>Resolve an existing object</h3>
+            <div class="form-grid">
+              <label class="wide">Object at the insertion point
+                <select id="action-object"></select>
+              </label>
+              <label class="wide">What happens now
+                <select id="action-type">
+                  <option value="oob">Reaches OOB and keeps falling</option>
+                  <option value="settle">Lands / settles; velocity becomes zero</option>
+                  <option value="expire">Fruit timer expires; record remains briefly</option>
+                  <option value="remove">Removal completes; last record copies down</option>
+                  <option value="impact">Hits goo/wall; velocity zero, then removal</option>
+                  <option value="boxbreak">Breaks on box entry; removal</option>
+                </select>
+              </label>
+            </div>
+            <button class="button primary" type="button" id="add-action">Add outcome</button>
+          </div>
+
+          <div class="composer-block">
+            <h3>Add a route marker</h3>
+            <div class="form-grid">
+              <label>Marker
+                <select id="marker-type">
+                  <option value="box">↔ Box transition</option>
+                  <option value="ui">▣ Textured UI draw</option>
+                  <option value="pausebypass">✕ Pause → Options bypass</option>
+                  <option value="save">💾 Save attempt</option>
+                  <option value="reset">↻ Reset during save</option>
+                  <option value="note">— Note</option>
+                </select>
+              </label>
+              <label>Text
+                <input id="marker-label" type="text" maxlength="60" placeholder="optional note">
+              </label>
+            </div>
+            <button class="button" type="button" id="add-marker">Add marker</button>
+            <p class="insert-hint" id="insert-hint"></p>
+          </div>
+        </aside>
+
+        <div>
+          <section class="panel timeline-panel" aria-label="Ordered events">
+            <div class="timeline-top">
+              <button class="icon-button" type="button" id="previous" aria-label="Previous event">←</button>
+              <input id="scrubber" type="range" min="0" max="0" value="0" aria-label="Inspect timeline">
+              <button class="icon-button" type="button" id="next" aria-label="Next event">→</button>
+            </div>
+            <div class="timeline-list" id="timeline-list"></div>
+          </section>
+
+          <section class="panel state-panel section" aria-labelledby="state-title">
+            <div class="state-heading">
+              <div><h3 id="state-title">State after the selected event</h3><small id="state-caption"></small></div>
+              <div><strong id="tracked-count">32</strong><small>tracked</small></div>
+            </div>
+            <div class="slot-scroll"><div class="slots" id="slots"></div></div>
+            <div class="slot-legend"><span>solid = active</span><span>dashed = stale bytes beyond the logical count</span><span>orange border = overflow</span></div>
+            <div class="obligations" id="obligations"></div>
+            <div class="watch-grid" id="watch-grid"></div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="deep-title">
+      <div class="section-head">
+        <div>
+          <h2 id="deep-title">Memory inspector</h2>
+          <p>The full GameCube zero ladder and a symbolic byte view of any overflow record.</p>
+        </div>
+      </div>
+      <div class="deep-grid">
+        <div class="panel alignment-panel">
+          <h3>Task-count alignment ladder</h3>
+          <p class="layout-note">This extends through all 100 task slots. Rows beyond the demonstrated route are layout facts, not claims of recoverability.</p>
+          <div class="alignment-table" id="alignment-table"></div>
+        </div>
+        <div class="panel hex-panel">
+          <h3>Pseudo hex viewer</h3>
+          <div class="hex-toolbar">
+            <label>Physical record
+              <select id="hex-slot"></select>
+            </label>
+            <div class="hex-meta" id="hex-meta"></div>
+          </div>
+          <div class="hex-view" id="hex-view" aria-label="Symbolic hexadecimal memory viewer"></div>
+          <div class="hex-provenance" id="hex-provenance"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="shift-title">
+      <div class="section-head">
+        <div>
+          <h2 id="shift-title">Save-stream shift calculator</h2>
+          <p>Zero task counts shorten the saved task list. A clean load still reads 100 task values, so robot flags and the sock reminder slide into task slots.</p>
+        </div>
+      </div>
+      <div class="panel shift-panel">
+        <div class="explorer">
+          <div class="explorer-row">
+            <button class="button small" type="button" id="timeline-mapping">Use timeline</button>
+            <input id="shift-explorer" type="range" min="0" max="100" step="1" value="24" aria-label="Explore an exact task shift">
+            <span class="explorer-value" id="explorer-value">timeline</span>
+          </div>
+          <div class="explorer-picks" id="explorer-picks"></div>
+        </div>
+        <div class="shift-controls">
+          <div>
+            <h3>World task counts</h3>
+            <div class="world-grid" id="world-grid"></div>
+          </div>
+          <div>
+            <h3>Later saved values</h3>
+            <div class="flag-list">
+              <label class="check"><input type="checkbox" data-flag="chuck"> Chuck police counter = 1</label>
+              <label class="check"><input type="checkbox" data-flag="tubelet"> Tubelet police counter = 1</label>
+              <label class="check"><input type="checkbox" data-flag="plankton"> Plankton police counter = 1</label>
+              <label class="check"><input type="checkbox" data-flag="sock"> Sock reminder counter = 1</label>
+            </div>
+            <p class="layout-note"><code>REMINDER_SOCK_CNTR</code> has object ID <code>CD6D023F</code>; its signed count is at the scene object pointer <code>+0x14</code>.</p>
+            <p class="layout-note">These are per-task availability/completion values. The player’s numeric spatula inventory is saved separately and is not duplicated by this shift.</p>
+          </div>
+        </div>
+        <div class="shift-result" id="shift-result"></div>
+      </div>
+    </section>
+
+    <p class="footer-note">This is an event-order and memory-layout calculator, not a frame-perfect game simulation. “Unknown” means the selected object profile does not establish an exact value. A safe save requires every corrupted <code>numTasks</code> field to be either untouched at its original value or exactly zero.</p>
+  </main>
+
+  <input id="import-file" type="file" accept="application/json,.json" hidden>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+  (() => {
+    'use strict';
+
+    const TYPE = {
+      stone:  { name: 'Stone tiki', icon: '🗿', fruit: false, writes: { velX: 'nonzero', opY: 'keep', frame: 'keep', floor: 'zero', axisZ: 'keep' } },
+      wood:   { name: 'Wood tiki', icon: '🪵', fruit: false, writes: { velX: 'nonzero', opY: 'keep', frame: 'keep', floor: 'zero', axisZ: 'keep' } },
+      melon:  { name: 'Watermelon', icon: '🍉', fruit: true,  writes: { velX: 'nonzero', opY: 'keep', frame: 'zero', floor: 'zero', axisZ: 'zero' } },
+      ice:    { name: 'Ice cube', icon: '🧊', fruit: true,  writes: { velX: 'nonzero', opY: 'keep', frame: 'zero', floor: 'zero', axisZ: 'zero' } },
+      enemy:  { name: 'Throwable enemy', icon: '🤖', fruit: false, writes: { velX: 'nonzero', opY: 'keep', frame: 'keep', floor: 'zero', axisZ: 'keep' } },
+      custom: { name: 'Custom object', icon: '◆', fruit: false, writes: { velX: 'unknown', opY: 'unknown', frame: 'unknown', floor: 'zero', axisZ: 'unknown' } }
+    };
+
+    const FIELD_OPTIONS = [
+      ['auto', 'Use object profile'],
+      ['zero', 'Write exact zero'],
+      ['nonzero', 'Write nonzero'],
+      ['unknown', 'Write unknown bits'],
+      ['keep', 'Leave prior bytes untouched']
+    ];
+
+    const WATCHES = [
+      { key: 'opY', slot: 33, address: '802F63D0', world: 0, offset: '+0x68', label: 'HB task count' },
+      { key: 'frame', slot: 34, address: '802F661C', world: 1, offset: '+0x110', label: 'JF task count' },
+      { key: 'velX', slot: 36, address: '802F6868', world: 2, offset: '+0x14', label: 'BB task count' },
+      { key: 'floor', slot: 37, address: '802F6AB4', world: 3, offset: '+0xBC', label: 'GL task count' }
+    ];
+
+    const ZERO_ALIGNMENTS = [
+      [0, 33, 'opY',   0x68,  'driven platform-relative Y = +0.0'],
+      [1, 34, 'frame',  0x110, 'frameless temporary-frame word = +0.0'],
+      [2, 36, 'velX',   0x14,  'velocity X = +0.0 after settling/impact'],
+      [3, 37, 'floor',  0xBC,  'new record writes a null last-floor pointer'],
+      [4, 38, 'axisZ',  0x164, 'frameless rotation-axis Z = +0.0'],
+      [5, 40, 'opY',   0x68,  'driven platform-relative Y = +0.0'],
+      [6, 41, 'frame',  0x110, 'frameless temporary-frame word = +0.0'],
+      [7, 43, 'velX',   0x14,  'velocity X = +0.0 after settling/impact'],
+      [8, 44, 'floor',  0xBC,  'new record writes a null last-floor pointer'],
+      [9, 45, 'axisZ',  0x164, 'frameless rotation-axis Z = +0.0'],
+      [10, 47, 'opY',  0x68,  'driven platform-relative Y = +0.0'],
+      [11, 48, 'frame', 0x110, 'frameless temporary-frame word = +0.0'],
+      [12, 50, 'velX',  0x14,  'velocity X = +0.0 after settling/impact'],
+      [13, 51, 'floor', 0xBC,  'new record writes a null last-floor pointer'],
+      [14, 52, 'axisZ', 0x164, 'frameless rotation-axis Z = +0.0']
+    ].map(([world, object, key, offset, requirement]) => ({
+      world, object, key, offset, requirement,
+      address: 0x802F6368 + (object - 33) * 0x1A4 + offset
+    }));
+
+    const WORLDS = [
+      ['HB', 'Bikini Bottom', 8], ['JF', 'Jellyfish Fields', 8], ['BB', 'Downtown', 8], ['GL', 'Goo Lagoon', 8],
+      ['B1', 'Poseidome', 1], ['RB', 'Rock Bottom', 8], ['BC', 'Mermalair', 8], ['SM', 'Sand Mountain', 8],
+      ['B2', 'Industrial Park', 1], ['KF', 'Kelp Forest', 8], ['GY', 'Graveyard', 8], ['DB', 'Dream', 8],
+      ['B3', 'Chum Bucket Lab', 2], ['PAT', 'Patrick', 8], ['KRABS', 'Mr. Krabs', 8]
+    ].map(([code, name, count], index) => ({ code, name, count, index }));
+
+    const TARGETS = [{ worlds: 0, shift: 0, maxObject: 32 }];
+    WORLDS.reduce((shift, world, index) => {
+      const next = shift + world.count;
+      TARGETS.push({ worlds: index + 1, shift: next, maxObject: ZERO_ALIGNMENTS[index].object });
+      return next;
+    }, 0);
+
+    const TASK_NAMES = {
+      HB: ['On Top of the Pineapple', 'On Top of Shady Shoals', 'On Top of the Chum Bucket', 'SpongeBob’s Closet', 'Annoy Squidward', 'Ambush at the Tree Dome', 'Infestation at the Krusty Krab', 'A Wall Jump in the Bucket'],
+      JF: ['Top of the Hill', 'Cowa-Bungee!', 'Spelunking', 'Patrick’s Dilemma', 'Navigate the Canyons and Mesas', 'Drain the Lake', 'Slide Leap', 'Defeat King Jellyfish'],
+      BB: ['End of the Road', 'Learn Sandy’s Moves', 'Tikis Go Boom', 'Across the Rooftops', 'Swingin’ Sandy', 'Ambush in the Lighthouse', 'Extreme Bungee', 'Come Back with the Cruise Bubble'],
+      GL: ['King of the Castle', 'Connect the Towers', 'Save the Children', 'Over the Moat', 'Through the Sea Caves', 'Clean Out the Bumper Boats', 'Slip and Slide Under the Pier', 'Tower Bungee'],
+      B1: ['Rumble at the Poseidome'],
+      RB: ['Get to the Museum', 'Slip Sliding Away', 'Return the Museum’s Art', 'Swingalong Spatula', 'Plundering Robots in the Museum', 'Across the Trench of Darkness', 'Lasers are Fun and Good for You', 'How in Tarnation Do You Get There?'],
+      BC: ['Top of Entrance Area', 'Top of Computer Area', 'Shut Down Security System', 'Funnel Machines', 'Spinning Towers of Power', 'Top of Security Tunnel', 'Complete Rolling Ball Room', 'Defeat Prawn'],
+      SM: ['Frosty Bungee', 'Top of Lodge', 'Defeat Robots on Guppy Mound', 'Beat Mrs. Puff’s Time', 'Defeat Robots on Flounder Hill', 'Beat Bubble Buddy’s Time', 'Defeat Robots on Sand Mountain', 'Beat Larry’s Time'],
+      B2: ['Robo-Patrick Ahoy!'],
+      KF: ['Through the Woods', 'Find all Lost Campers', 'Tiki Roundup', 'Down in the Swamp', 'Through the Kelp Caves', 'Power Crystal Crisis', 'Kelp Vine Slide', 'Beat Mermaid Man’s Time'],
+      GY: ['Top of Entrance Area', 'A Path through the Goo', 'Goo Tanker Ahoy!', 'Top of Stack of Ships', 'Shipwreck Bungee', 'Destroy Robot Ship', 'Get Aloft There, Matey!', 'Defeat Flying Dutchman'],
+      DB: ['Across the Dreamscape', 'Follow the Bouncing Ball', 'Slidin’ Texas Style', 'Swingers Ahoy', 'Music is in the Ear of the Beholder', 'Krabby Patty Platforms', 'Super Bounce', 'Here You Go'],
+      B3: ['Kah-Rah-Tae!', 'The Small Shall Rule… or Not'],
+      PAT: Array.from({ length: 8 }, (_, i) => `Return socks #${i + 1}`),
+      KRABS: ['Pay 3000', 'Pay 3500', 'Pay 4000', 'Pay 4500', 'Pay 5000', 'Pay 5500', 'Pay 6500', 'Pay 7500']
+    };
+
+    const ROBOTS = ['Fodder', 'Hammer', 'Tar-Tar', 'G-Love', 'Monsoon', 'Sleepy-Time', 'Chuck', 'Tubelet', 'Slick', 'Fodder Bomb', 'Bzzt-Bot', 'Chomper', 'Arf', 'Arf Dog', 'Plankton'];
+
+    const LAYOUTS = {
+      gc: {
+        name: 'GameCube · GQPE78', start: 0x802F6368, end: 0x802F6D50, stride: 0x1A4,
+        note: 'Object 33 begins in the UI quad and reaches HB. Objects 33, 34, 36, and 37 align with the first four world task counts. Textured legacy UI can rewrite slot 33.',
+        segments: [
+          ['Vertex[4]', 0x802F6368, 0x802F63C8, 'hot'], ['HB world', 0x802F63C8, 0x802F6614, 'hot'],
+          ['JF world', 0x802F6614, 0x802F6860, 'hot'], ['BB world', 0x802F6860, 0x802F6AAC, 'hot'],
+          ['GL world', 0x802F6AAC, 0x802F6CF8, 'hot'], ['B1 world', 0x802F6CF8, 0x802F6D50, '']
+        ], slots: [33, 34, 35, 36, 37, 38]
+      },
+      xbox: {
+        name: 'Xbox · retail US/EU', start: 0x002E5080, end: 0x002E6000, stride: 0x1A4,
+        note: 'Objects 33–39 occupy the UI sort list. Object 40 spans the end of that list, all of gUIMgr, temporary vertices, and the beginning of sWorld; an ordinary tiki only writes selected parts of the span.',
+        segments: [
+          ['sSorted[768]', 0x002E5080, 0x002E5C80, 'hot'], ['gUIMgr', 0x002E5C80, 0x002E5CA0, 'hot'],
+          ['Vertex[4]', 0x002E5CA0, 0x002E5D10, 'hot'], ['gap', 0x002E5D10, 0x002E5D18, ''],
+          ['sWorld', 0x002E5D18, 0x002E6000, 'hot']
+        ], slots: [33, 34, 35, 36, 37, 38, 39, 40, 41]
+      },
+      ps2: {
+        name: 'PlayStation 2 · SLUS-20680', start: 0x005C47B0, end: 0x005CA7E0, stride: 0x1B0,
+        note: 'PS2 runs forward into diagnostics, the HUD allocator boundary, Sandy’s lasso guide table, then Cruise Bubble state. Its pause/warp table is earlier in memory and cannot be reached by this forward overflow.',
+        segments: [
+          ['event log / diagnostics', 0x005C47B0, 0x005C6E20, 'safe'], ['HUD allocator', 0x005C6E20, 0x005C6E80, 'hot'],
+          ['Sandy lasso guides', 0x005C6E80, 0x005CA630, 'hot'], ['Cruise Bubble', 0x005CA630, 0x005CA7E0, 'hot']
+        ], slots: [33, 40, 48, 55, 56, 64, 72, 80, 88, 89]
+      }
+    };
+
+    const ACTION_COPY = {
+      oob: ['↘', 'reaches OOB', 'Stays tracked; its trajectory obligation is discharged.'],
+      settle: ['⌄', 'settles on ground', 'Writes exact zero to velocity X and remains tracked.'],
+      expire: ['◌', 'timer expires', 'Becomes hidden/returning; the record still occupies its slot.'],
+      remove: ['×', 'finishes removal', 'The current last record copies into its slot, then the count drops.'],
+      impact: ['💥', 'hits goo or a wall', 'Velocity reaches zero, then the record is removed.'],
+      boxbreak: ['↔', 'breaks on box entry', 'Held objects break on box entry; the record is removed.']
+    };
+
+    let scenario = {
+      version: 1,
+      platform: 'gc',
+      baseCount: 32,
+      baseType: 'stone',
+      events: [],
+      overrides: {},
+      targetWorlds: 4,
+      exploreShift: null,
+      flags: { chuck: false, tubelet: false, plankton: false, sock: false }
+    };
+    let step = 0;
+    let nextId = 1;
+    let dragIndex = null;
+
+    const $ = (selector) => document.querySelector(selector);
+    const $$ = (selector) => [...document.querySelectorAll(selector)];
+    const esc = (value) => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const hex = (value) => `0x${value.toString(16).toUpperCase().padStart(8, '0')}`;
+    const clone = (value) => JSON.parse(JSON.stringify(value));
+
+    function toast(message) {
+      const el = $('#toast');
+      el.textContent = message;
+      el.classList.add('show');
+      clearTimeout(toast.timer);
+      toast.timer = setTimeout(() => el.classList.remove('show'), 1800);
+    }
+
+    function field(kind, source, label = null) {
+      const labels = { zero: 'exact 0', nonzero: 'nonzero', unknown: 'unknown', original: 'original count', keep: 'untouched' };
+      return { kind, source, label: label || labels[kind] || kind };
+    }
+
+    function initialPayload(slot) {
+      const payload = {
+        velX: field('unknown', 'prior memory'),
+        opY: field('unknown', 'prior memory'),
+        frame: field('unknown', 'prior memory'),
+        floor: field('unknown', 'prior memory'),
+        axisZ: field('unknown', 'prior memory')
+      };
+      for (const alignment of ZERO_ALIGNMENTS) {
+        if (alignment.object === slot) {
+          const world = WORLDS[alignment.world];
+          payload[alignment.key] = field('original', `${world.code} task count before overflow`, String(world.count));
+        }
+      }
+      return payload;
+    }
+
+    function makeBaseRecord(index) {
+      const t = TYPE[scenario.baseType] || TYPE.stone;
+      const record = {
+        id: `base-${index}`,
+        type: scenario.baseType,
+        icon: t.icon,
+        label: `${t.name} ${index}`,
+        status: 'oob',
+        payload: initialPayload(index),
+        base: true,
+        copiedFrom: null
+      };
+      if (index >= 33) {
+        for (const key of ['velX', 'opY', 'frame', 'floor', 'axisZ']) {
+          profileWrite(record, key, t.writes[key], `starting ${record.label}`);
+        }
+      }
+      return record;
+    }
+
+    function profileWrite(record, key, choice, eventName) {
+      if (choice === 'keep') return;
+      record.payload[key] = field(choice, eventName);
+    }
+
+    function makeThrownRecord(event, slot, previous) {
+      const type = TYPE[event.objectType] || TYPE.custom;
+      const record = {
+        id: event.objectId,
+        type: event.objectType,
+        icon: type.icon,
+        label: event.label || `${type.name} ${event.objectId.replace('obj-', '')}`,
+        status: event.initialState,
+        payload: previous ? clone(previous.payload) : initialPayload(slot),
+        base: false,
+        copiedFrom: null
+      };
+      for (const key of ['velX', 'opY', 'frame', 'floor', 'axisZ']) {
+        const choice = event.fields?.[key] && event.fields[key] !== 'auto' ? event.fields[key] : type.writes[key];
+        profileWrite(record, key, choice, `throw ${record.label}`);
+      }
+      if (event.initialState === 'settled') record.payload.velX = field('zero', `${record.label} settled`);
+      return record;
+    }
+
+    function createInitialState() {
+      const memory = [];
+      const active = [];
+      const objects = {};
+      for (let i = 1; i <= scenario.baseCount; i++) {
+        const record = makeBaseRecord(i);
+        memory[i - 1] = record;
+        active[i - 1] = record.id;
+        objects[record.id] = record;
+      }
+      return {
+        count: scenario.baseCount, memory, active, objects, invalid: [], messages: [],
+        uiDrawn: false, pauseBypass: false, saveAttempts: 0, resetAfterSave: false
+      };
+    }
+
+    function activeSlot(state, objectId) {
+      return state.active.indexOf(objectId);
+    }
+
+    function removeObject(state, objectId, event, zeroVelocity) {
+      const index = activeSlot(state, objectId);
+      if (index < 0) {
+        state.invalid.push(`${eventLabel(event)} refers to an object that is no longer tracked.`);
+        return;
+      }
+      const record = state.objects[objectId];
+      if (zeroVelocity) {
+        record.payload.velX = field('zero', `${record.label} impact`);
+        state.memory[index] = clone(record);
+      }
+      const lastIndex = state.count - 1;
+      const lastId = state.active[lastIndex];
+      if (index !== lastIndex) {
+        const donor = clone(state.memory[lastIndex]);
+        donor.copiedFrom = lastIndex + 1;
+        state.memory[index] = donor;
+        state.active[index] = lastId;
+        state.objects[lastId] = donor;
+        state.messages.push(`${record.label} left slot #${index + 1}; ${donor.label} copied down from #${lastIndex + 1}.`);
+      } else {
+        state.messages.push(`${record.label} left the last active slot #${index + 1}; its bytes remain stale there.`);
+      }
+      state.active.pop();
+      state.count--;
+      record.status = 'removed';
+      state.objects[objectId] = record;
+    }
+
+    function applyEvent(state, event) {
+      if (event.kind === 'throw') {
+        const slot = state.count + 1;
+        if (state.active.includes(event.objectId)) {
+          state.invalid.push(`${eventLabel(event)} duplicates an active object ID.`);
+          return;
+        }
+        const previous = state.memory[slot - 1] || null;
+        const record = makeThrownRecord(event, slot, previous);
+        state.memory[slot - 1] = record;
+        state.active.push(record.id);
+        state.objects[record.id] = record;
+        state.count++;
+        return;
+      }
+      if (event.kind === 'action') {
+        const index = activeSlot(state, event.objectId);
+        if (index < 0) {
+          state.invalid.push(`${eventLabel(event)} occurs before the throw or after removal.`);
+          return;
+        }
+        const record = state.objects[event.objectId];
+        if (event.action === 'oob') {
+          record.status = 'oob';
+          state.memory[index] = clone(record);
+        } else if (event.action === 'settle') {
+          record.status = 'settled';
+          record.payload.velX = field('zero', `${record.label} settled`);
+          state.memory[index] = clone(record);
+        } else if (event.action === 'expire') {
+          if (!TYPE[record.type]?.fruit) state.invalid.push(`${record.label} is not a timed fruit, so “expire” is only a hypothetical marker.`);
+          record.status = 'expired';
+          state.memory[index] = clone(record);
+        } else if (event.action === 'remove' || event.action === 'boxbreak') {
+          removeObject(state, event.objectId, event, false);
+        } else if (event.action === 'impact') {
+          removeObject(state, event.objectId, event, true);
+        }
+        state.objects[event.objectId] = record;
+        return;
+      }
+      if (event.kind === 'marker') {
+        if (event.marker === 'ui') state.uiDrawn = true;
+        if (event.marker === 'pausebypass') state.pauseBypass = true;
+        if (event.marker === 'save') { state.saveAttempts++; state.resetAfterSave = false; }
+        if (event.marker === 'reset' && state.saveAttempts) state.resetAfterSave = true;
+      }
+    }
+
+    function simulate(limit = scenario.events.length) {
+      const state = createInitialState();
+      for (let i = 0; i < Math.min(limit, scenario.events.length); i++) applyEvent(state, scenario.events[i]);
+      return state;
+    }
+
+    function eventLabel(event) {
+      if (event.kind === 'throw') return `Throw ${event.label || TYPE[event.objectType]?.name || 'object'}`;
+      if (event.kind === 'action') {
+        const ref = findObjectLabel(event.objectId);
+        return `${ref} ${ACTION_COPY[event.action]?.[1] || event.action}`;
+      }
+      const names = { box: 'Box transition', ui: 'Textured UI draw', pausebypass: 'Pause → Options bypass', save: 'Save attempt', reset: 'Reset during save', note: 'Note' };
+      return event.label || names[event.marker] || 'Marker';
+    }
+
+    function eventDetail(event, stateBefore) {
+      if (event.kind === 'throw') return `writes slot #${stateBefore.count + 1} · ${event.initialState}`;
+      if (event.kind === 'action') {
+        const idx = activeSlot(stateBefore, event.objectId);
+        return idx < 0 ? 'invalid at this point' : `acts on current slot #${idx + 1}`;
+      }
+      if (event.marker === 'box') return 'held objects break; thrown records are not automatically removed';
+      if (event.marker === 'ui') return 'can rewrite GameCube slot #33 through Vertex';
+      if (event.marker === 'pausebypass') return 'bypasses View Spatulas; it does not repair the damaged pointers';
+      if (event.marker === 'save') return 'serializes the current task-count layout';
+      if (event.marker === 'reset') return 'avoids continuing into the known console post-save crash';
+      return 'no slot change';
+    }
+
+    function eventIcon(event) {
+      if (event.kind === 'throw') return TYPE[event.objectType]?.icon || '◆';
+      if (event.kind === 'action') return ACTION_COPY[event.action]?.[0] || '·';
+      return { box: '↔', ui: '▣', pausebypass: '✕', save: '💾', reset: '↻', note: '—' }[event.marker] || '—';
+    }
+
+    function findObjectLabel(id) {
+      const throwEvent = scenario.events.find(e => e.kind === 'throw' && e.objectId === id);
+      if (throwEvent) return throwEvent.label || `${TYPE[throwEvent.objectType]?.name || 'Object'} ${id.replace('obj-', '')}`;
+      if (id?.startsWith('base-')) return `${TYPE[scenario.baseType]?.name || 'Base object'} ${id.slice(5)}`;
+      return id || 'Object';
+    }
+
+    function readWatch(state, watch) {
+      const record = state.memory[watch.slot - 1];
+      if (!record) return field('original', `${watch.label} before overflow`, String(WORLDS[watch.world].count));
+      return record.payload[watch.key] || field('unknown', record.label);
+    }
+
+    function readAlignment(state, alignment) {
+      const record = state.memory[alignment.object - 1];
+      if (!record) {
+        const world = WORLDS[alignment.world];
+        return field('original', `${world.code} task count before overflow`, String(world.count));
+      }
+      return record.payload[alignment.key] || field('unknown', record.label);
+    }
+
+    function alignmentTone(value) {
+      if (value.kind === 'zero') return ['clear', 'cleared'];
+      if (value.kind === 'original') return ['open', 'not written'];
+      return ['bad', value.kind === 'nonzero' ? 'nonzero' : 'unknown'];
+    }
+
+    function sourceStreamForShift(shift) {
+      const tasks = taskList();
+      const stream = tasks.slice(shift);
+      ROBOTS.forEach((robot, index) => stream.push({ type: 'police', robot, index }));
+      stream.push({ type: 'sock' });
+      stream.push({ type: 'cheat', part: 'high 16 bits' }, { type: 'cheat', part: 'low 16 bits' });
+      for (let i = 0; i < 120; i++) stream.push({ type: 'stale', label: `Stale CNTR halfword ${i + 1}`, value: null });
+      return stream;
+    }
+
+    function renderFinder(state) {
+      const target = TARGETS.find(item => item.worlds === scenario.targetWorlds) || TARGETS[4];
+      $('#target-picks').innerHTML = TARGETS.map(item => {
+        const key = item.worlds <= 4 || item.worlds === 15 || item.worlds % 2 === 0;
+        const short = item.shift <= 32 ? String(item.shift) : item.shift === 100 ? '100' : `+${item.shift}`;
+        return `<button type="button" class="shift-pick${item.worlds === target.worlds ? ' active' : ''}${key ? '' : ' secondary'}" data-target-worlds="${item.worlds}" title="Zero the first ${item.worlds} world task counts">${short}</button>`;
+      }).join('');
+      const preview = sourceStreamForShift(target.shift);
+      const robo = preview[82];
+      const brain = preview[83];
+      $('#target-summary').innerHTML = `
+        <div class="target-metric"><span>task shift</span><b>${target.shift} / 100</b></div>
+        <div class="target-metric"><span>highest required object</span><b>#${target.maxObject}</b></div>
+        <div class="target-metric"><span>boss sources</span><b>${esc(shortSource(robo))} / ${esc(shortSource(brain))}</b></div>`;
+      const requirements = ZERO_ALIGNMENTS.slice(0, target.worlds).map(alignment => {
+        const world = WORLDS[alignment.world];
+        const value = readAlignment(state, alignment);
+        const [tone, status] = alignmentTone(value);
+        return `<div class="requirement"><span class="world">${world.code}</span><span>object #${alignment.object} <code>+0x${alignment.offset.toString(16).toUpperCase()} → ${hex(alignment.address)}</code></span><code>${esc(alignment.requirement)}</code><span class="status-pill ${tone}" title="${esc(value.source)}">${status}</span></div>`;
+      });
+      const platformWarning = scenario.platform === 'gc' ? '' : `<div class="obligation error"><b>!</b><span>This zero ladder is GameCube-only. ${scenario.platform === 'xbox' ? 'Xbox must first cross its UI sort list and manager.' : 'PS2’s sWorld table is earlier in memory and cannot be reached by this forward overflow.'}</span></div>`;
+      $('#requirements').innerHTML = platformWarning + (requirements.length ? requirements.join('') : '<div class="subtle">No corrupted world counts are required for shift 0.</div>');
+
+      const required = ZERO_ALIGNMENTS.slice(0, target.worlds).map(a => readAlignment(state, a));
+      const zerosClear = required.every(value => value.kind === 'zero');
+      const unresolved = required.filter(value => value.kind !== 'zero').length;
+      const overflowReached = state.memory.length >= 33 || state.count >= 33;
+      const slot33Active = state.count >= 33;
+      const gates = [
+        {
+          tone: overflowReached ? 'clear' : 'open', title: 'Reach the overflow',
+          text: overflowReached ? `Physical slot #33 has been written; current count is ${state.count}.` : 'The timeline has not written physical slot #33 yet.'
+        },
+        {
+          tone: zerosClear ? 'clear' : unresolved ? 'bad' : 'open', title: 'Save-loop task counts',
+          text: zerosClear ? `All ${target.worlds} required counts are exact zero.` : `${unresolved} required field${unresolved === 1 ? '' : 's'} are not exact zero at this step.`
+        },
+        {
+          tone: !slot33Active ? 'clear' : state.uiDrawn ? 'bad' : 'open', title: 'Slot #33 / UI-quad alias',
+          text: !slot33Active ? 'No active record currently occupies slot #33.' : state.uiDrawn ? 'A textured UI draw has been ordered while #33 is active; its entity lookup is now a crash risk.' : 'Slot #33 is active. A later textured UI draw can replace its entity pointer.'
+        },
+        {
+          tone: !overflowReached ? 'clear' : state.pauseBypass ? 'clear' : 'open', title: 'View Spatulas crash',
+          text: !overflowReached ? 'Pause pointers have not been overflowed.' : state.pauseBypass ? 'The timeline records the first-frame Start → X Options bypass.' : 'Opening the level selector remains a crash. Add the pause-bypass marker if the route uses manual save.'
+        },
+        {
+          tone: !state.saveAttempts ? 'open' : zerosClear ? 'clear' : 'bad', title: 'Save attempt',
+          text: !state.saveAttempts ? 'No save attempt marker has been reached.' : zerosClear ? 'The target task-count prerequisites are cleared at this inspected step.' : 'A save marker exists, but the currently inspected state does not satisfy the target counts.'
+        },
+        {
+          tone: !state.saveAttempts ? 'open' : state.resetAfterSave ? 'clear' : 'bad', title: 'Console post-save crash',
+          text: !state.saveAttempts ? 'Not reached.' : state.resetAfterSave ? 'A reset-during-save marker follows the latest save.' : 'Continuing after the save remains a console crash risk; add the reset marker.'
+        }
+      ];
+      $('#gates').innerHTML = gates.map(gate => `<div class="gate ${gate.tone}"><b>${esc(gate.title)}</b><span>${esc(gate.text)}</span></div>`).join('');
+    }
+
+    function shortSource(source) {
+      if (!source) return 'none';
+      if (source.type === 'task') return source.code;
+      if (source.type === 'police') return source.robot;
+      if (source.type === 'sock') return 'sock reminder';
+      if (source.type === 'cheat') return 'cheat bits';
+      return 'stale';
+    }
+
+    function renderAlignmentTable(state) {
+      const rows = ZERO_ALIGNMENTS.map(alignment => {
+        const world = WORLDS[alignment.world];
+        const value = readAlignment(state, alignment);
+        const [tone, status] = alignmentTone(value);
+        return `<tr><td><b>${world.code}</b><br>${esc(world.name)}</td><td>#${alignment.object}<br><code>+0x${alignment.offset.toString(16).toUpperCase()}</code></td><td><code>${hex(alignment.address)}</code></td><td>${esc(alignment.requirement)}</td><td><span class="status-pill ${tone}">${status}</span><br><small>${esc(value.source)}</small></td></tr>`;
+      }).join('');
+      $('#alignment-table').innerHTML = `<table><thead><tr><th>World</th><th>Record field</th><th>GC address</th><th>Required payload</th><th>Current bytes</th></tr></thead><tbody>${rows}</tbody></table>`;
+    }
+
+    function renderHex(state) {
+      const maxSlot = Math.max(52, state.memory.length);
+      const select = $('#hex-slot');
+      const prior = Number(select.value) || 33;
+      select.innerHTML = Array.from({ length: maxSlot - 32 }, (_, i) => `<option value="${i + 33}">#${i + 33}</option>`).join('');
+      const chosen = Math.min(maxSlot, Math.max(33, prior));
+      select.value = chosen;
+      const record = state.memory[chosen - 1];
+      const payload = record ? record.payload : initialPayload(chosen);
+      const active = chosen <= state.count;
+      const base = 0x802F6368 + (chosen - 33) * 0x1A4;
+      $('#hex-meta').innerHTML = `<b>${record ? esc(record.icon + ' ' + record.label) : 'Neighboring global bytes'}</b><br><code>${hex(base)}–${hex(base + 0x1A3)}</code> · ${record ? (active ? 'active record' : 'stale record bytes') : 'not yet overwritten'}`;
+      const fields = [
+        ['velX', 0x14, 'velocity X'], ['opY', 0x68, 'platform-relative Y'], ['floor', 0xBC, 'last floor pointer'],
+        ['frame', 0x110, 'temporary frame word'], ['axisZ', 0x164, 'rotation-axis Z']
+      ];
+      const bytes = Array.from({ length: 0x1A4 }, () => ({ text: '··', tone: '' }));
+      for (const [key, offset] of fields) {
+        const value = payload[key] || field('unknown', 'not modeled');
+        let words = ['??', '??', '??', '??'];
+        if (value.kind === 'zero') words = ['00', '00', '00', '00'];
+        else if (value.kind === 'original') words = ['00', '00', '00', Number(value.label || 0).toString(16).padStart(2, '0').toUpperCase()];
+        else if (value.kind === 'nonzero') words = ['NZ', 'NZ', 'NZ', 'NZ'];
+        for (let i = 0; i < 4; i++) bytes[offset + i] = { text: words[i], tone: value.kind };
+      }
+      const rows = [];
+      for (let offset = 0; offset < 0x1A4; offset += 16) {
+        const cells = bytes.slice(offset, Math.min(offset + 16, bytes.length));
+        while (cells.length < 16) cells.push({ text: '  ', tone: '' });
+        const rowFields = fields.filter(([, fieldOffset]) => fieldOffset >= offset && fieldOffset < offset + 16).map(([, , label]) => label).join(', ');
+        rows.push(`<div class="hex-row"><span class="hex-address">${hex(base + offset)}</span>${cells.map(byte => `<span class="hex-byte ${byte.tone}">${byte.text}</span>`).join('')}<span class="hex-ascii">${esc(rowFields)}</span></div>`);
+      }
+      $('#hex-view').innerHTML = rows.join('');
+      $('#hex-provenance').innerHTML = fields.map(([key, offset, label]) => {
+        const value = payload[key] || field('unknown', 'not modeled');
+        const alignment = ZERO_ALIGNMENTS.find(item => item.object === chosen && item.key === key);
+        const alias = alignment ? ` → ${WORLDS[alignment.world].code} numTasks at ${hex(alignment.address)}` : '';
+        return `<div><code>+0x${offset.toString(16).toUpperCase()}</code> ${esc(label)}${esc(alias)}: <b>${esc(value.label)}</b> · ${esc(value.source)}</div>`;
+      }).join('');
+    }
+
+    function obligationsFor(state) {
+      const items = [];
+      for (const objectId of state.active) {
+        if (objectId.startsWith('base-')) continue;
+        const record = state.objects[objectId];
+        const fruit = TYPE[record.type]?.fruit;
+        if (record.status === 'airborne') {
+          items.push({ icon: record.icon, text: `${record.label}: choose OOB, landing, or impact.` });
+        } else if (record.status === 'settled' && fruit) {
+          items.push({ icon: record.icon, text: `${record.label}: timer still needs to expire, then removal must complete.` });
+        } else if (record.status === 'settled' && !fruit) {
+          items.push({ icon: record.icon, text: `${record.label}: settled non-fruit is still tracked in this model; add its actual removal when known.` });
+        } else if (record.status === 'oob' && fruit) {
+          items.push({ icon: record.icon, text: `${record.label}: OOB trajectory resolved, but its fruit timer and removal remain.` });
+        } else if (record.status === 'expired') {
+          items.push({ icon: record.icon, text: `${record.label}: visually expired, but still occupies a slot until removal completes.` });
+        }
+      }
+      return items;
+    }
+
+    function renderLayout(state) {
+      const cfg = LAYOUTS[scenario.platform];
+      $('#layout-name').textContent = cfg.name;
+      $('#layout-range').textContent = `${hex(cfg.start)} – ${hex(cfg.end)}`;
+      $('#layout-note').textContent = cfg.note;
+      const total = cfg.end - cfg.start;
+      const segments = cfg.segments.map(([name, start, end, tone]) => {
+        const width = ((end - start) / total) * 100;
+        return `<div class="memory-segment ${tone}" style="width:${width}%"><b>${esc(name)}</b><small>${hex(start)}<br>${hex(end - 1)}</small></div>`;
+      }).join('');
+      const spans = cfg.slots.map(number => {
+        const start = cfg.start + (number - 33) * cfg.stride;
+        const end = start + cfg.stride;
+        const left = Math.max(0, ((start - cfg.start) / total) * 100);
+        const width = Math.max(2.4, (cfg.stride / total) * 100);
+        const current = number === state.count ? ' current' : '';
+        return `<div class="slot-span${current}" style="left:${left}%;width:${width}%" title="Object ${number}: ${hex(start)}–${hex(end - 1)}"><b>#${number}</b><small>${hex(start)}</small></div>`;
+      }).join('');
+      $('#memory-diagram').innerHTML = `<div class="memory-band">${segments}</div><div class="slot-band">${spans}</div>`;
+    }
+
+    function renderTimeline() {
+      const root = $('#timeline-list');
+      if (!scenario.events.length) {
+        root.innerHTML = '<div class="empty">No ordered events yet. Add a throw or marker at the left.</div>';
+      } else {
+        const rows = [];
+        let before = createInitialState();
+        scenario.events.forEach((event, index) => {
+          const preview = clone(before);
+          applyEvent(preview, event);
+          const invalid = preview.invalid.length > before.invalid.length ? ' invalid' : '';
+          rows.push(`<div class="event-row${step === index + 1 ? ' selected' : ''}${invalid}" draggable="true" data-index="${index}">
+            <span class="event-number">${index + 1}</span><span class="event-icon">${eventIcon(event)}</span>
+            <span class="event-copy"><b>${esc(eventLabel(event))}</b><small>${esc(eventDetail(event, before))}</small></span>
+            <span class="event-actions"><button class="icon-button" type="button" data-move="up" title="Move earlier">↑</button><button class="icon-button" type="button" data-move="down" title="Move later">↓</button><button class="icon-button" type="button" data-delete title="Delete">×</button></span>
+          </div>`);
+          before = preview;
+        });
+        root.innerHTML = rows.join('');
+      }
+      $('#scrubber').max = scenario.events.length;
+      $('#scrubber').value = step;
+      $('#previous').disabled = step === 0;
+      $('#next').disabled = step === scenario.events.length;
+      $('#insert-hint').textContent = step === 0 ? 'New events are inserted before event 1.' : `New events are inserted after event ${step}.`;
+    }
+
+    function renderState(state) {
+      $('#tracked-count').textContent = state.count;
+      $('#state-caption').textContent = step === 0 ? 'Before the first event' : `After event ${step} of ${scenario.events.length}`;
+      const shown = Math.max(37, state.memory.length, state.count);
+      const slots = [];
+      for (let i = 0; i < shown; i++) {
+        const record = state.memory[i];
+        const active = i < state.count;
+        const classes = ['slot', i >= 32 ? 'overflow' : '', !active && record ? 'stale' : '', i === 32 ? 'slot-boundary' : ''].filter(Boolean).join(' ');
+        const title = record ? `${record.label} · ${active ? record.status : 'stale bytes'}` : 'untouched';
+        slots.push(`<div class="${classes}" title="${esc(title)}"><span class="num">${i + 1}</span>${record ? `<span class="emoji">${record.icon}</span><span class="tag">${esc(record.label)}</span>${record.copiedFrom ? `<span class="copied">←${record.copiedFrom}</span>` : ''}` : ''}</div>`);
+      }
+      $('#slots').innerHTML = slots.join('');
+
+      const obligations = obligationsFor(state);
+      const notes = [];
+      if (state.invalid.length) notes.push(...state.invalid.map(text => ({ icon: '!', text, error: true })));
+      notes.push(...obligations);
+      if (!notes.length) notes.push({ icon: '✓', text: 'Every added object has a stated outcome at this point.', done: true });
+      $('#obligations').innerHTML = notes.map(item => `<div class="obligation${item.error ? ' error' : ''}${item.done ? ' done' : ''}"><b>${item.icon}</b><span>${esc(item.text)}</span></div>`).join('');
+
+      $('#watch-grid').innerHTML = WATCHES.map(watch => {
+        const value = readWatch(state, watch);
+        const tone = value.kind === 'zero' ? 'zero' : value.kind === 'original' ? 'original' : 'bad';
+        return `<button type="button" class="watch ${tone}" data-hex-slot="${watch.slot}" title="Open record #${watch.slot} in the memory inspector"><span class="address">${watch.address} · #${watch.slot}${watch.offset}</span><b>${watch.label}</b><span class="value">${esc(value.label)}</span><small>${esc(value.source)}</small></button>`;
+      }).join('');
+    }
+
+    function renderActionObjects(state) {
+      const select = $('#action-object');
+      const current = select.value;
+      const options = state.active.filter(id => !id.startsWith('base-')).map((id, index) => {
+        const record = state.objects[id];
+        const slot = state.active.indexOf(id) + 1;
+        return `<option value="${esc(id)}">#${slot} ${record.icon} ${esc(record.label)} · ${record.status}</option>`;
+      });
+      select.innerHTML = options.length ? options.join('') : '<option value="">No added object is active here</option>';
+      if ([...select.options].some(option => option.value === current)) select.value = current;
+      $('#add-action').disabled = !options.length;
+    }
+
+    function worldAutoState(index, state) {
+      const alignment = ZERO_ALIGNMENTS.find(item => item.world === index);
+      if (!alignment) return { mode: 'normal', reason: 'not reached by the modeled GC fields' };
+      const value = readAlignment(state, alignment);
+      const address = hex(alignment.address);
+      if (value.kind === 'zero') return { mode: 'zero', reason: `${address} is exact zero` };
+      if (value.kind === 'original') return { mode: 'normal', reason: `${address} is untouched` };
+      return { mode: 'bad', reason: `${address} is ${value.label}` };
+    }
+
+    function effectiveWorldState(index, state) {
+      const override = scenario.overrides[index] || 'auto';
+      return override === 'auto' ? worldAutoState(index, state) : { mode: override, reason: 'manual calculator override' };
+    }
+
+    function taskList() {
+      const list = [];
+      for (const world of WORLDS) {
+        for (let i = 0; i < world.count; i++) {
+          const name = TASK_NAMES[world.code]?.[i] || `task ${i + 1}`;
+          list.push({ type: 'task', code: `${world.code}${i + 1}`, label: `${world.name} · ${name}`, value: null });
+        }
+      }
+      return list;
+    }
+
+    function sourceValue(source) {
+      if (source.type === 'police') {
+        const key = source.robot.toLowerCase().replace(/[^a-z]/g, '');
+        if (key === 'chuck') return scenario.flags.chuck ? 1 : 0;
+        if (key === 'tubelet') return scenario.flags.tubelet ? 1 : 0;
+        if (key === 'plankton') return scenario.flags.plankton ? 1 : 0;
+        return 0;
+      }
+      if (source.type === 'sock') return scenario.flags.sock ? 1 : 0;
+      if (source.type === 'cheat') return 0;
+      return source.value;
+    }
+
+    function sourceLabel(source) {
+      if (!source) return 'No serialized value';
+      if (source.type === 'task') return source.code + ' · ' + source.label;
+      if (source.type === 'police') return `Police flag ${source.index + 1} · ${source.robot}`;
+      if (source.type === 'sock') return 'REMINDER_SOCK_CNTR';
+      if (source.type === 'cheat') return `Saved cheat flags · ${source.part}`;
+      return source.label || 'Stale CNTR buffer';
+    }
+
+    function buildSaveStream(state) {
+      const allTasks = taskList();
+      if (scenario.exploreShift !== null) {
+        const shift = Math.max(0, Math.min(100, Number(scenario.exploreShift) || 0));
+        return { stream: sourceStreamForShift(shift), bad: [], omitted: allTasks.slice(0, shift), exploring: true };
+      }
+      const stream = [];
+      let cursor = 0;
+      const bad = [];
+      const omitted = [];
+      for (const world of WORLDS) {
+        const status = effectiveWorldState(world.index, state);
+        const slice = allTasks.slice(cursor, cursor + world.count);
+        if (status.mode === 'normal') stream.push(...slice);
+        else if (status.mode === 'zero') omitted.push(...slice);
+        else bad.push(`${world.code}: ${status.reason}`);
+        cursor += world.count;
+      }
+      ROBOTS.forEach((robot, index) => stream.push({ type: 'police', robot, index }));
+      stream.push({ type: 'sock' });
+      stream.push({ type: 'cheat', part: 'high 16 bits' }, { type: 'cheat', part: 'low 16 bits' });
+      for (let i = 0; i < 40; i++) stream.push({ type: 'stale', label: `Stale CNTR halfword ${i + 1}`, value: null });
+      return { stream, bad, omitted, exploring: false };
+    }
+
+    function renderWorldGrid(state) {
+      $('#world-grid').innerHTML = WORLDS.map(world => {
+        const auto = worldAutoState(world.index, state);
+        const selected = scenario.overrides[world.index] || 'auto';
+        return `<div class="world-control"><b>${world.code}<small>${world.count} task${world.count === 1 ? '' : 's'}</small></b><select data-world="${world.index}" title="${esc(auto.reason)}">
+          <option value="auto"${selected === 'auto' ? ' selected' : ''}>Auto · ${auto.mode}</option>
+          <option value="normal"${selected === 'normal' ? ' selected' : ''}>Original</option>
+          <option value="zero"${selected === 'zero' ? ' selected' : ''}>Exact zero</option>
+          <option value="bad"${selected === 'bad' ? ' selected' : ''}>Corrupt / unsafe</option>
+        </select></div>`;
+      }).join('');
+    }
+
+    function renderShift(state) {
+      renderWorldGrid(state);
+      const { stream, bad, omitted, exploring } = buildSaveStream(state);
+      const tasks = taskList();
+      const shift = omitted.length;
+      const status = bad.length
+        ? `<div class="shift-status bad"><b>Save mapping is not deterministic.</b> ${esc(bad.join(' · '))}. Set those worlds to exact zero or original once the route proves their value.</div>`
+        : `<div class="shift-status"><b>${shift} task values omitted${exploring ? ' in the explorer' : ''}.</b> Every later value loads ${shift} task positions earlier.</div>`;
+      const payoff = [82, 83].map(index => {
+        const destination = tasks[index];
+        const source = stream[index];
+        const value = bad.length ? null : sourceValue(source);
+        const unlocked = value === 1;
+        return `<div class="payoff ${unlocked ? 'unlocked' : 'locked'}"><span>${destination.code} · ${index === 82 ? 'Robo-SpongeBob' : 'final Brain fight'}</span><b>${bad.length ? 'mapping blocked' : unlocked ? 'unlocked' : 'locked'}</b><p>${bad.length ? 'Resolve unsafe task counts first.' : `${esc(sourceLabel(source))} supplies ${value == null ? 'an unknown value' : value}.`}</p></div>`;
+      }).join('');
+      const tableRows = tasks.map((destination, index) => {
+        const source = bad.length ? null : stream[index];
+        const value = source ? sourceValue(source) : null;
+        const key = index === 82 || index === 83 ? ' class="key-row"' : '';
+        return `<tr${key}><td><b>${destination.code}</b><br>${esc(destination.label)}</td><td>${esc(sourceLabel(source))}</td><td>${value == null ? '—' : value}</td></tr>`;
+      }).join('');
+      $('#shift-result').innerHTML = `${status}<div class="payoff-grid">${payoff}</div><details><summary>Show all 100 loaded task values</summary><div class="table-wrap"><table><thead><tr><th>Destination task</th><th>Value read from</th><th>Known value</th></tr></thead><tbody>${tableRows}</tbody></table></div></details>`;
+      $('#explorer-value').textContent = scenario.exploreShift === null ? 'timeline' : `${shift} shift`;
+      $('#shift-explorer').value = scenario.exploreShift === null ? shift : scenario.exploreShift;
+      const quick = [0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 100];
+      $('#explorer-picks').innerHTML = quick.map(value => `<button class="shift-pick${scenario.exploreShift === value ? ' active' : ''}" type="button" data-explore="${value}">${value}</button>`).join('');
+    }
+
+    function render() {
+      step = Math.max(0, Math.min(step, scenario.events.length));
+      const state = simulate(step);
+      $$('.tab').forEach(tab => tab.setAttribute('aria-selected', String(tab.dataset.platform === scenario.platform)));
+      $('#base-count').value = scenario.baseCount;
+      $('#base-type').value = scenario.baseType;
+      $$('[data-flag]').forEach(input => { input.checked = Boolean(scenario.flags[input.dataset.flag]); });
+      renderLayout(state);
+      renderFinder(state);
+      renderTimeline();
+      renderState(state);
+      renderActionObjects(state);
+      renderAlignmentTable(state);
+      renderHex(state);
+      renderShift(state);
+      saveLocal();
+    }
+
+    function addEvent(event) {
+      scenario.events.splice(step, 0, event);
+      step++;
+      render();
+      const row = $(`.event-row[data-index="${step - 1}"]`);
+      row?.scrollIntoView({ block: 'nearest' });
+    }
+
+    function newObjectId() {
+      const used = new Set(scenario.events.filter(e => e.objectId).map(e => e.objectId));
+      while (used.has(`obj-${nextId}`)) nextId++;
+      return `obj-${nextId++}`;
+    }
+
+    function moveEvent(index, delta) {
+      const target = index + delta;
+      if (target < 0 || target >= scenario.events.length) return;
+      const [event] = scenario.events.splice(index, 1);
+      scenario.events.splice(target, 0, event);
+      step = target + 1;
+      render();
+    }
+
+    function scenarioData() {
+      return {
+        version: 1,
+        platform: scenario.platform,
+        baseCount: scenario.baseCount,
+        baseType: scenario.baseType,
+        events: scenario.events,
+        overrides: scenario.overrides,
+        targetWorlds: scenario.targetWorlds,
+        exploreShift: scenario.exploreShift,
+        flags: scenario.flags
+      };
+    }
+
+    function hydrate(data) {
+      if (!data || !Array.isArray(data.events)) throw new Error('Not a Throwverflow scenario');
+      scenario = {
+        version: 1,
+        platform: LAYOUTS[data.platform] ? data.platform : 'gc',
+        baseCount: Math.max(0, Math.min(160, Number(data.baseCount) || 0)),
+        baseType: TYPE[data.baseType] ? data.baseType : 'stone',
+        events: data.events.slice(0, 300),
+        overrides: data.overrides || {},
+        targetWorlds: Math.max(0, Math.min(15, Number(data.targetWorlds ?? 4))),
+        exploreShift: data.exploreShift === null || data.exploreShift === undefined ? null : Math.max(0, Math.min(100, Number(data.exploreShift) || 0)),
+        flags: { chuck: false, tubelet: false, plankton: false, sock: false, ...(data.flags || {}) }
+      };
+      const ids = scenario.events.map(e => Number(String(e.objectId || '').replace('obj-', ''))).filter(Number.isFinite);
+      nextId = Math.max(0, ...ids) + 1;
+      step = scenario.events.length;
+      render();
+    }
+
+    function encodeShare() {
+      const bytes = new TextEncoder().encode(JSON.stringify(scenarioData()));
+      let binary = '';
+      bytes.forEach(byte => { binary += String.fromCharCode(byte); });
+      return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    }
+
+    function decodeShare(value) {
+      const base64 = value.replace(/-/g, '+').replace(/_/g, '/');
+      const binary = atob(base64 + '='.repeat((4 - base64.length % 4) % 4));
+      const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
+      return JSON.parse(new TextDecoder().decode(bytes));
+    }
+
+    function saveLocal() {
+      try { localStorage.setItem('throwverflow-lab-v1', JSON.stringify(scenarioData())); } catch (_) {}
+    }
+
+    function populateFieldSelects() {
+      ['field-velx', 'field-opy', 'field-frame', 'field-floor', 'field-axis'].forEach(id => {
+        $(`#${id}`).innerHTML = FIELD_OPTIONS.map(([value, label]) => `<option value="${value}">${label}</option>`).join('');
+      });
+    }
+
+    function loadDemo() {
+      scenario.baseCount = 32;
+      scenario.baseType = 'stone';
+      scenario.platform = 'gc';
+      scenario.overrides = {};
+      scenario.targetWorlds = 4;
+      scenario.exploreShift = null;
+      scenario.flags = { chuck: true, tubelet: true, plankton: false, sock: false };
+      scenario.events = [
+        { kind: 'throw', objectId: 'obj-1', objectType: 'melon', label: 'watermelon A', initialState: 'airborne', fields: {} },
+        { kind: 'throw', objectId: 'obj-2', objectType: 'melon', label: 'watermelon B', initialState: 'airborne', fields: {} },
+        { kind: 'throw', objectId: 'obj-3', objectType: 'stone', label: 'tower tiki', initialState: 'airborne', fields: {} },
+        { kind: 'action', objectId: 'obj-1', action: 'expire' },
+        { kind: 'action', objectId: 'obj-3', action: 'impact' },
+        { kind: 'action', objectId: 'obj-1', action: 'remove' },
+        { kind: 'action', objectId: 'obj-2', action: 'settle' },
+        { kind: 'marker', marker: 'save', label: 'Inspect the resulting save fields' }
+      ];
+      nextId = 4;
+      step = scenario.events.length;
+      render();
+    }
+
+    populateFieldSelects();
+
+    $$('.tab').forEach(tab => tab.addEventListener('click', () => { scenario.platform = tab.dataset.platform; render(); }));
+    $('#target-picks').addEventListener('click', event => {
+      const button = event.target.closest('[data-target-worlds]');
+      if (!button) return;
+      scenario.targetWorlds = Number(button.dataset.targetWorlds);
+      render();
+    });
+    $('#explore-target').addEventListener('click', () => {
+      const target = TARGETS.find(item => item.worlds === scenario.targetWorlds) || TARGETS[4];
+      scenario.exploreShift = target.shift;
+      document.querySelector('#shift-title').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      render();
+    });
+    $('#auto-target').addEventListener('click', () => { scenario.overrides = {}; scenario.exploreShift = null; render(); });
+    $('#hex-slot').addEventListener('change', () => renderHex(simulate(step)));
+    $('#shift-explorer').addEventListener('input', event => { scenario.exploreShift = Number(event.target.value); renderShift(simulate(step)); saveLocal(); });
+    $('#timeline-mapping').addEventListener('click', () => { scenario.exploreShift = null; render(); });
+    $('#explorer-picks').addEventListener('click', event => {
+      const button = event.target.closest('[data-explore]');
+      if (!button) return;
+      scenario.exploreShift = Number(button.dataset.explore);
+      render();
+    });
+    $('#base-count').addEventListener('change', event => { scenario.baseCount = Math.max(0, Math.min(160, Number(event.target.value) || 0)); step = Math.min(step, scenario.events.length); render(); });
+    $('#base-type').addEventListener('change', event => { scenario.baseType = event.target.value; render(); });
+    $('#add-throw').addEventListener('click', () => {
+      const objectType = $('#throw-type').value;
+      const label = $('#throw-label').value.trim();
+      addEvent({
+        kind: 'throw', objectId: newObjectId(), objectType, label,
+        initialState: $('#throw-state').value,
+        fields: { velX: $('#field-velx').value, opY: $('#field-opy').value, frame: $('#field-frame').value, floor: $('#field-floor').value, axisZ: $('#field-axis').value }
+      });
+      $('#throw-label').value = '';
+    });
+    $('#add-action').addEventListener('click', () => {
+      const objectId = $('#action-object').value;
+      if (objectId) addEvent({ kind: 'action', objectId, action: $('#action-type').value });
+    });
+    $('#add-marker').addEventListener('click', () => {
+      addEvent({ kind: 'marker', marker: $('#marker-type').value, label: $('#marker-label').value.trim() });
+      $('#marker-label').value = '';
+    });
+    $('#scrubber').addEventListener('input', event => { step = Number(event.target.value); render(); });
+    $('#previous').addEventListener('click', () => { step = Math.max(0, step - 1); render(); });
+    $('#next').addEventListener('click', () => { step = Math.min(scenario.events.length, step + 1); render(); });
+
+    $('#timeline-list').addEventListener('click', event => {
+      const row = event.target.closest('.event-row');
+      if (!row) return;
+      const index = Number(row.dataset.index);
+      if (event.target.closest('[data-delete]')) {
+        scenario.events.splice(index, 1);
+        step = Math.min(step, scenario.events.length);
+        render();
+      } else if (event.target.closest('[data-move="up"]')) moveEvent(index, -1);
+      else if (event.target.closest('[data-move="down"]')) moveEvent(index, 1);
+      else { step = index + 1; render(); }
+    });
+    $('#watch-grid').addEventListener('click', event => {
+      const card = event.target.closest('[data-hex-slot]');
+      if (!card) return;
+      $('#hex-slot').value = card.dataset.hexSlot;
+      renderHex(simulate(step));
+      $('#deep-title').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    $('#timeline-list').addEventListener('dragstart', event => {
+      const row = event.target.closest('.event-row');
+      if (!row) return;
+      dragIndex = Number(row.dataset.index);
+      event.dataTransfer.effectAllowed = 'move';
+    });
+    $('#timeline-list').addEventListener('dragover', event => { if (event.target.closest('.event-row')) event.preventDefault(); });
+    $('#timeline-list').addEventListener('drop', event => {
+      event.preventDefault();
+      const row = event.target.closest('.event-row');
+      if (!row || dragIndex == null) return;
+      let target = Number(row.dataset.index);
+      const [item] = scenario.events.splice(dragIndex, 1);
+      if (dragIndex < target) target--;
+      scenario.events.splice(target, 0, item);
+      step = target + 1;
+      dragIndex = null;
+      render();
+    });
+
+    $('#world-grid').addEventListener('change', event => {
+      if (!event.target.matches('[data-world]')) return;
+      const index = event.target.dataset.world;
+      if (event.target.value === 'auto') delete scenario.overrides[index];
+      else scenario.overrides[index] = event.target.value;
+      render();
+    });
+    $$('[data-flag]').forEach(input => input.addEventListener('change', event => { scenario.flags[event.target.dataset.flag] = event.target.checked; render(); }));
+
+    $('#preset-blank').addEventListener('click', () => {
+      scenario.baseCount = 32;
+      scenario.baseType = 'stone';
+      scenario.events = [];
+      scenario.overrides = {};
+      scenario.targetWorlds = 4;
+      scenario.exploreShift = null;
+      scenario.flags = { chuck: false, tubelet: false, plankton: false, sock: false };
+      step = 0;
+      nextId = 1;
+      render();
+    });
+    $('#preset-demo').addEventListener('click', loadDemo);
+    $('#share').addEventListener('click', async () => {
+      const url = `${location.origin}${location.pathname}#s=${encodeShare()}`;
+      try { await navigator.clipboard.writeText(url); toast('Share link copied'); }
+      catch (_) { prompt('Copy this link', url); }
+      history.replaceState(null, '', `#s=${encodeShare()}`);
+    });
+    $('#export').addEventListener('click', () => {
+      const blob = new Blob([JSON.stringify(scenarioData(), null, 2) + '\n'], { type: 'application/json' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'throwverflow-scenario.json';
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+    });
+    $('#import').addEventListener('click', () => $('#import-file').click());
+    $('#import-file').addEventListener('change', async event => {
+      const file = event.target.files[0];
+      if (!file) return;
+      try { hydrate(JSON.parse(await file.text())); toast('Scenario imported'); }
+      catch (error) { toast(error.message || 'Import failed'); }
+      event.target.value = '';
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.target.matches('input, select, textarea, button')) return;
+      if (event.key === 'ArrowLeft') { event.preventDefault(); step = Math.max(0, step - 1); render(); }
+      if (event.key === 'ArrowRight') { event.preventDefault(); step = Math.min(scenario.events.length, step + 1); render(); }
+    });
+
+    try {
+      const hash = location.hash.match(/^#s=(.+)$/);
+      if (hash) hydrate(decodeShare(hash[1]));
+      else {
+        const saved = localStorage.getItem('throwverflow-lab-v1');
+        if (saved) hydrate(JSON.parse(saved));
+        else render();
+      }
+    } catch (_) {
+      render();
+      toast('Saved scenario could not be loaded');
+    }
+  })();
+  </script>
+</body>
+</html>
