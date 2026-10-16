@@ -154,6 +154,16 @@
     .layout-key button.system { border-left-color: #7a4e9d; }
     .layout-key button.legal { border-left-color: var(--blue); }
     .layout-key button.selected { outline: 2px solid var(--blue); }
+    .save-stream { margin-top: 13px; padding-top: 12px; border-top: 1px solid var(--line); }
+    .save-stream-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 7px; }
+    .save-stream-head b { font-size: .82rem; }
+    .save-stream-head span { color: var(--muted); font-size: .7rem; }
+    .save-stream-map { display: flex; width: 100%; height: 58px; border: 1px solid var(--ink); overflow: hidden; background: #fff; }
+    .save-stream-region { min-width: 1px; padding: 20px 1px 5px; border: 0; border-right: 1px solid rgba(29, 36, 40, .42); overflow: hidden; background: var(--orange-pale); color: var(--ink); font: 700 clamp(.43rem, .58vw, .66rem)/1 ui-monospace, SFMono-Regular, Consolas, monospace; text-align: center; white-space: nowrap; }
+    .save-stream-region.police { background: var(--yellow-pale); }
+    .save-stream-region.sock { background: #dcecf1; }
+    .save-stream-region.cheat { background: #ebe5f0; }
+    .save-stream-note { margin: 7px 0 0; color: var(--muted); font-size: .73rem; line-height: 1.45; }
     .layout-note { margin: 10px 0 0; color: var(--muted); font-size: .84rem; line-height: 1.5; }
     .layout-source { display: grid; grid-template-columns: minmax(220px, .55fr) minmax(400px, 1.45fr); gap: 14px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
     .layout-source p { margin: 6px 0 0; color: var(--muted); font-size: .76rem; line-height: 1.5; }
@@ -927,6 +937,13 @@
 
     const ROBOTS = ['Fodder', 'Hammer', 'Tar-Tar', 'G-Love', 'Monsoon', 'Sleepy-Time', 'Chuck', 'Tubelet', 'Slick', 'Fodder Bomb', 'Bzzt-Bot', 'Chomper', 'Arf', 'Arf Dog', 'Plankton'];
 
+    const CNTR_STREAM = [
+      ...WORLDS.map(world => ({ label: `${world.code} task counters`, short: world.code, count: world.count, tone: 'task', backing: 'CNTR task counters' })),
+      { label: '15 robot police counters', short: 'POLICE', count: 15, tone: 'police', backing: 'CNTR police counters' },
+      { label: 'REMINDER_SOCK_CNTR', short: 'S', count: 1, tone: 'sock', backing: 'CNTR sock counter' },
+      { label: 'saved cheat flags', short: 'CH', count: 2, tone: 'cheat', backing: 'CNTR cheat flags' }
+    ];
+
     const LAYOUTS = {
       gc: {
         name: 'GameCube · GQPE78', start: 0x802F6368, end: 0x802FE100, stride: 0x1A4,
@@ -986,8 +1003,24 @@
         code: 'struct menuWorld\n{\n    _zUI* uiSelected;\n    char worldPrefix[2];\n    U32 numTasks;\n    menuTask task[8];\n};\n\nstatic menuWorld sWorld[WORLD_COUNT];'
       },
       'alignment': {
-        note: 'Four linker-alignment bytes separate the end of the 15-world table from zVar storage.',
-        code: '// 0x802F863C .. 0x802F863F\n// Linker alignment between zUI.cpp and zVar.cpp BSS.'
+        note: 'Four linker-alignment bytes separate the physical sWorld allocation from zVar storage. Police and sock counters are not here: they follow the task counts in the serialized CNTR stream shown below.',
+        code: '// Physical BSS only: 0x802F863C .. 0x802F863F\n// Linker alignment between zUI.cpp and zVar.cpp.\n// This is separate from CNTR save-stream ordering.'
+      },
+      'CNTR task counters': {
+        note: 'The save first writes each active world task counter. Throwverflow zeros selected numTasks fields, so those worlds contribute no values and shorten this part of the stream.',
+        code: 'void zUI_ScenePortalSave(xSerial* s)\n{\n    for (U32 i = 0; i < WORLD_COUNT; i++)\n        for (U32 j = 0; j < sWorld[i].numTasks; j++)\n            s->Write(sWorld[i].task[j].counter->count);\n}'
+      },
+      'CNTR police counters': {
+        note: 'Fifteen HB09 robot-bounty counters are serialized immediately after the task counters. If task values were omitted, these become the next values loaded into spatula destinations.',
+        code: 'strcpy(tempString, "HB09 ROBOT COUNTER 01");\nfor (i = 0; i < LEVEL_COUNT; i++)\n{\n    id = xStrHash(tempString);\n    s->Write(((_xCounter*)zSceneFindObject(id))->count);\n    // advance 01 through 15\n}'
+      },
+      'CNTR sock counter': {
+        note: 'REMINDER_SOCK_CNTR is the single value immediately after the fifteen police counters. It can slide into a later spatula destination when enough task values are omitted.',
+        code: 'id = xStrHash("REMINDER_SOCK_CNTR");\ns->Write(((_xCounter*)zSceneFindObject(id))->count);'
+      },
+      'CNTR cheat flags': {
+        note: 'The saved cheat bitfield follows the sock reminder. The shift viewer represents its 32 bits as the next two 16-bit CNTR values.',
+        code: '// Immediately after REMINDER_SOCK_CNTR:\nzGameExtras_Save(s);\n// Saved cheat flags occupy the next 32 bits.'
       },
       'zVar text buffers': {
         note: 'Static character buffers used to format live counter, collectible, timer, and other UI-variable strings. Object #54 reaches the first one after leaving the warp table.',
@@ -1480,6 +1513,15 @@
       return items;
     }
 
+    function saveStreamHtml() {
+      const total = CNTR_STREAM.reduce((sum, item) => sum + item.count, 0);
+      const regions = CNTR_STREAM.map(item => {
+        const width = item.count / total * 100;
+        return `<button type="button" class="save-stream-region ${item.tone}" data-layout-backing="${esc(item.backing)}" style="width:${width}%" title="${esc(item.label)} · ${item.count} ${item.count === 1 ? 'value' : 'values'}">${esc(item.short)}</button>`;
+      }).join('');
+      return `<section class="save-stream"><div class="save-stream-head"><b>CNTR save stream</b><span>118 × 16-bit values before later save clients</span></div><div class="save-stream-map">${regions}</div><p class="save-stream-note">Save writes 100 task counts, 15 police counters, <code>REMINDER_SOCK_CNTR</code>, then the 32-bit cheat flags. Zeroed world counts omit task values; loading rebuilds the normal 100 task destinations first, so police, sock, and cheat data slide left into spatula slots.</p></section>`;
+    }
+
     function renderLayout(state) {
       const cfg = LAYOUTS[scenario.platform];
       selectedLayoutSegment = Math.max(-1, Math.min(selectedLayoutSegment, cfg.segments.length - 1));
@@ -1505,7 +1547,8 @@
         return `<div class="overflow-slot-line${number === state.count ? ' current' : ''}" title="#${number} · ${hex(start)}"><span>#${number}</span></div>`;
       }).join('');
       const key = `<button type="button" class="legal${selectedLayoutSegment === -1 ? ' selected' : ''}" data-layout-base>zThrownList[32] · ${hex(listStart)}–${hex(cfg.start - 1)}</button>` + cfg.segments.map(([name, start, end, tone], index) => `<button type="button" class="${tone}${index === selectedLayoutSegment ? ' selected' : ''}" data-layout-segment="${index}">${esc(name)} · ${hex(start)}–${hex(end - 1)}</button>`).join('');
-      $('#memory-diagram').innerHTML = `<div class="overflow-map"><button type="button" class="thrown-list-region${selectedLayoutSegment === -1 ? ' selected' : ''}" data-layout-base><span class="legal-slot-band">#1–#32</span><b>zThrownList[32]</b><small>${hex(listStart)}–${hex(cfg.start - 1)}<br>legal tracked-object storage</small></button>${regions}<div class="overflow-slot-lines" style="grid-template-columns:repeat(${slotCount},1fr)">${slots}</div></div><div class="layout-key">${key}</div>`;
+      const saveStream = scenario.platform === 'gc' ? saveStreamHtml() : '';
+      $('#memory-diagram').innerHTML = `<div class="overflow-map"><button type="button" class="thrown-list-region${selectedLayoutSegment === -1 ? ' selected' : ''}" data-layout-base><span class="legal-slot-band">#1–#32</span><b>zThrownList[32]</b><small>${hex(listStart)}–${hex(cfg.start - 1)}<br>legal tracked-object storage</small></button>${regions}<div class="overflow-slot-lines" style="grid-template-columns:repeat(${slotCount},1fr)">${slots}</div></div>${saveStream}<div class="layout-key">${key}</div>`;
       const chosen = selectedLayoutSegment === -1 ? ['zThrownList[32]', listStart, cfg.start] : cfg.segments[selectedLayoutSegment];
       const [segmentName, segmentStart, segmentEnd] = chosen;
       const backing = LAYOUT_BACKING[segmentName] || (segmentName.includes('world') ? LAYOUT_BACKING.sWorld : {
@@ -2094,6 +2137,17 @@
     });
     $$('.tab').forEach(tab => tab.addEventListener('click', () => { scenario.platform = tab.dataset.platform; selectedLayoutSegment = -1; render(); }));
     $('#memory-diagram').addEventListener('click', event => {
+      const backingButton = event.target.closest('[data-layout-backing]');
+      if (backingButton) {
+        const name = backingButton.dataset.layoutBacking;
+        const backing = LAYOUT_BACKING[name];
+        if (backing) {
+          $('#layout-source-title').textContent = name;
+          $('#layout-source-note').textContent = backing.note;
+          $('#layout-source-code').textContent = backing.code;
+        }
+        return;
+      }
       if (event.target.closest('[data-layout-base]')) {
         selectedLayoutSegment = -1;
         renderLayout(simulate(step));
