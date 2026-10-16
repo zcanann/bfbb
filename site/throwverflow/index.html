@@ -1153,6 +1153,12 @@
           payload[alignment.key] = field('original', `${world.code} task count before overflow`, String(world.count));
         }
       }
+      // Record #35 +0x68 is 0x802F6718: the zero-initialized base-header word in
+      // JF task 4's embedded _zPortal. Ordinary throws do not touch xEntDrive.op,
+      // so the known zero survives fruit reuse and can cascade down through removals.
+      if (slot === 35) {
+        payload.opY = field('zero', 'zero-initialized JF task 4 portal header at 0x802F6718');
+      }
       return payload;
     }
 
