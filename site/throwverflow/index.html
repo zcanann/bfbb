@@ -1685,17 +1685,7 @@
       return FIELD_OPTIONS.map(([value, label]) => `<option value="${value}"${selected === value ? ' selected' : ''}>${esc(label)}</option>`).join('');
     }
 
-    function routeStatusHtml(state) {
-      const target = TARGETS.find(item => item.worlds === scenario.targetWorlds) || TARGETS[0];
-      const targetOptions = TARGETS.map(item => {
-        const through = item.worlds ? ` · through ${WORLDS[item.worlds - 1].code}` : ' · no shift';
-        return `<option value="${item.worlds}"${item.worlds === target.worlds ? ' selected' : ''}>${item.shift}${through}</option>`;
-      }).join('');
-      const code = encodeSetup();
-      if (scenario.platform !== 'gc') {
-        return `<section class="route-status"><div class="route-status-head"><div><h3>Scrubbed state</h3><small>after event ${step} of ${scenario.events.length}</small></div><label>Target shift<select data-route-shift>${targetOptions}</select></label></div><p class="route-status-empty">Task-shift crash inference is currently grounded only for the GameCube layout. This platform does not use the same alignments.</p><div class="setup-code"><span>Setup</span><code title="${esc(code)}">${esc(code)}</code><button class="button small" type="button" data-copy-setup>Copy link</button></div></section>`;
-      }
-
+    function analyzeRouteState(state, target) {
       const writtenMax = state.memory.length;
       const rows = ZERO_ALIGNMENTS.map((alignment, index) => {
         const value = readAlignment(state, alignment);
@@ -1712,6 +1702,39 @@
       const crashing = rows.filter(row => row.crash);
       const missing = rows.filter(row => row.required && !row.zero);
       const targetReady = !crashing.length && !missing.length && zeroShift === target.shift;
+      return { rows, zeroShift, crashing, missing, targetReady };
+    }
+
+    function finalRouteVerdict(state, analysis, target) {
+      if (state.invalid.length) return { tone: 'bad', text: 'INVALID EVENTS', detail: state.invalid.join(' ') };
+      if (analysis.crashing.length) {
+        const worlds = analysis.crashing.map(row => WORLDS[row.index].code).join(', ');
+        return { tone: 'bad', text: `CRASH · ${worlds}`, detail: `The final timeline leaves crash values in ${worlds}.` };
+      }
+      if (state.saveAttempts && state.count >= 33 && !state.pauseBypass) {
+        return { tone: 'bad', text: 'PAUSE CRASH', detail: 'The final route attempts a manual save without the first-frame Options bypass.' };
+      }
+      if (state.saveAttempts && !state.resetAfterSave) {
+        return { tone: 'bad', text: 'POST-SAVE CRASH', detail: 'The save is reached, but the timeline does not reset the console afterward.' };
+      }
+      if (!analysis.targetReady) {
+        return { tone: 'open', text: `INCOMPLETE · ${analysis.zeroShift}/${target.shift}`, detail: 'The final timeline is not known to crash, but it does not produce the selected target shift.' };
+      }
+      return { tone: 'clear', text: `READY · ${analysis.zeroShift}`, detail: 'The final timeline clears every required task count for the selected shift.' };
+    }
+
+    function routeStatusHtml(state) {
+      const target = TARGETS.find(item => item.worlds === scenario.targetWorlds) || TARGETS[0];
+      const targetOptions = TARGETS.map(item => {
+        const through = item.worlds ? ` · through ${WORLDS[item.worlds - 1].code}` : ' · no shift';
+        return `<option value="${item.worlds}"${item.worlds === target.worlds ? ' selected' : ''}>${item.shift}${through}</option>`;
+      }).join('');
+      const code = encodeSetup();
+      if (scenario.platform !== 'gc') {
+        return `<section class="route-status"><div class="route-status-head"><div><h3>Scrubbed state</h3><small>after event ${step} of ${scenario.events.length}</small></div><label>Target shift<select data-route-shift>${targetOptions}</select></label></div><p class="route-status-empty">Task-shift crash inference is currently grounded only for the GameCube layout. This platform does not use the same alignments.</p><div class="setup-code"><span>Setup</span><code title="${esc(code)}">${esc(code)}</code><button class="button small" type="button" data-copy-setup>Copy link</button></div></section>`;
+      }
+
+      const { rows, zeroShift, crashing } = analyzeRouteState(state, target);
       const relevant = rows.filter(row => row.required || row.zero || row.crash || row.value.kind !== 'original');
       const table = relevant.length ? relevant.map(row => {
         const world = WORLDS[row.index];
@@ -1719,10 +1742,12 @@
         const status = row.crash ? 'CRASH' : row.zero ? 'ZERO' : row.needed ? 'NEEDS 0' : 'SAFE';
         return `<div class="route-status-row ${tone}" title="${esc(row.value.source)}"><b>${world.code}</b><code>#${row.alignment.object} +0x${row.alignment.offset.toString(16).toUpperCase()}</code><span class="field-value">${esc(row.value.label)}</span><span class="field-state">${status}</span></div>`;
       }).join('') : '<p class="route-status-empty">No task-count fields have been changed at this scrub position.</p>';
-      const shiftTone = targetReady ? 'clear' : crashing.length ? 'bad' : 'open';
-      const saveTone = crashing.length ? 'bad' : 'clear';
-      const saveText = crashing.length ? `CRASH · ${crashing.map(row => WORLDS[row.index].code).join(', ')}` : 'SAFE';
-      return `<section class="route-status"><div class="route-status-head"><div><h3>Scrubbed state</h3><small>after event ${step} of ${scenario.events.length}</small></div><label>Target shift<select data-route-shift>${targetOptions}</select></label></div><div class="route-metrics"><div class="route-metric ${shiftTone}"><span>Inferred / target shift</span><b>${zeroShift} / ${target.shift}</b></div><div class="route-metric ${saveTone}"><span>Save or transition</span><b title="${esc(saveText)}">${esc(saveText)}</b></div></div><div class="route-status-table">${table}</div><div class="setup-code"><span>Setup</span><code title="${esc(code)}">${esc(code)}</code><button class="button small" type="button" data-copy-setup>Copy link</button></div></section>`;
+      const nowText = crashing.length ? `CRASH · ${crashing.map(row => WORLDS[row.index].code).join(', ')}` : `SAFE · ${zeroShift}/${target.shift}`;
+      const nowTone = crashing.length ? 'bad' : 'clear';
+      const finalState = simulate(scenario.events.length);
+      const finalAnalysis = analyzeRouteState(finalState, target);
+      const finalVerdict = finalRouteVerdict(finalState, finalAnalysis, target);
+      return `<section class="route-status"><div class="route-status-head"><div><h3>Scrubbed state</h3><small>after event ${step} of ${scenario.events.length}</small></div><label>Target shift<select data-route-shift>${targetOptions}</select></label></div><div class="route-metrics"><div class="route-metric ${nowTone}"><span>Now · event ${step}</span><b title="Current inferred shift ${zeroShift} of ${target.shift}">${esc(nowText)}</b></div><div class="route-metric ${finalVerdict.tone}"><span>Final setup · event ${scenario.events.length}</span><b title="${esc(finalVerdict.detail)}">${esc(finalVerdict.text)}</b></div></div><div class="route-status-table">${table}</div><div class="setup-code"><span>Setup</span><code title="${esc(code)}">${esc(code)}</code><button class="button small" type="button" data-copy-setup>Copy link</button></div></section>`;
     }
 
     function renderInspector(state) {
