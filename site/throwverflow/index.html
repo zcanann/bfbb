@@ -134,17 +134,24 @@
     .array-ticks { display: grid; grid-template-columns: repeat(32, 1fr); height: 9px; margin-top: 7px; border: 1px solid #9ba3a5; border-right: 0; }
     .array-ticks i { border-right: 1px solid #9ba3a5; }
     .overflow-heading { display: flex; justify-content: space-between; gap: 12px; margin: 14px 0 7px; color: var(--muted); font-size: .72rem; }
-    .overflow-slot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(86px, 1fr)); gap: 6px; width: 100%; }
-    .layout-slot { min-width: 0; min-height: 96px; padding: 0; border: 1px solid var(--line-dark); background: #fff; color: var(--ink); text-align: left; }
-    .layout-slot.current { border: 2px solid var(--orange); }
-    .layout-slot-head { display: flex; justify-content: space-between; gap: 4px; padding: 6px 7px; border-bottom: 1px solid var(--line); background: #f5f4ef; }
-    .layout-slot-head b { font-size: .72rem; }
-    .layout-slot-head code { color: var(--muted); font-size: .53rem; }
-    .layout-slot-parts { display: grid; gap: 3px; padding: 5px; }
-    .layout-part { padding: 4px 5px; border-left: 4px solid #7b8589; background: var(--slot); font-size: .61rem; font-weight: 700; line-height: 1.2; overflow-wrap: anywhere; }
-    .layout-part.hot { border-color: var(--orange); background: var(--orange-pale); }
-    .layout-part.safe { border-color: var(--green); background: var(--green-pale); }
-    .layout-part.selected { outline: 2px solid var(--blue); outline-offset: -1px; }
+    .overflow-map { position: relative; width: 100%; height: 132px; border: 1px solid var(--ink); overflow: hidden; background: #fff; }
+    .layout-region { position: absolute; inset-block: 0; min-width: 1px; padding: 38px 7px 8px; border: 0; border-right: 1px solid rgba(29, 36, 40, .42); background: var(--slot); color: var(--ink); text-align: left; }
+    .layout-region:nth-child(2n) { background: #dedfd9; }
+    .layout-region.hot { background: var(--orange-pale); }
+    .layout-region.safe { background: var(--green-pale); }
+    .layout-region.selected { box-shadow: inset 0 -6px var(--blue); }
+    .layout-region b { display: block; font-size: clamp(.58rem, .72vw, .76rem); line-height: 1.2; overflow-wrap: anywhere; }
+    .layout-region small { display: block; margin-top: 5px; font: .55rem/1.25 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .overflow-slot-lines { position: absolute; inset: 0; z-index: 2; display: grid; pointer-events: none; }
+    .overflow-slot-line { position: relative; min-width: 0; border-left: 1px solid rgba(18, 107, 131, .58); }
+    .overflow-slot-line:first-child { border-left: 0; }
+    .overflow-slot-line.current { background: rgba(184, 79, 35, .12); box-shadow: inset 0 0 0 2px var(--orange); }
+    .overflow-slot-line span { display: block; height: 27px; padding: 6px 1px 0; border-bottom: 1px solid rgba(29, 36, 40, .28); background: rgba(255, 255, 255, .76); font: 700 clamp(.43rem, .58vw, .66rem)/1 ui-monospace, SFMono-Regular, Consolas, monospace; text-align: center; }
+    .layout-key { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
+    .layout-key button { min-height: 30px; padding: 5px 8px; border: 1px solid var(--line); border-left: 5px solid #7b8589; background: #fff; color: var(--ink); font-size: .68rem; }
+    .layout-key button.hot { border-left-color: var(--orange); }
+    .layout-key button.safe { border-left-color: var(--green); }
+    .layout-key button.selected { outline: 2px solid var(--blue); }
     .layout-note { margin: 10px 0 0; color: var(--muted); font-size: .84rem; line-height: 1.5; }
     .layout-source { display: grid; grid-template-columns: minmax(220px, .55fr) minmax(400px, 1.45fr); gap: 14px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
     .layout-source p { margin: 6px 0 0; color: var(--muted); font-size: .76rem; line-height: 1.5; }
@@ -458,7 +465,13 @@
     .lifeline-corner, .lifeline-label { position: sticky; left: 0; z-index: 3; width: 220px; background: #f5f4ef; }
     .lifeline-corner { z-index: 5; display: flex; align-items: center; padding: 8px 10px; color: var(--muted); font-size: .69rem; font-weight: 750; }
     .lifeline-head { min-width: 116px; height: 68px; padding: 7px 8px; background: #f8f7f2; color: var(--ink); text-align: left; }
+    .lifeline-head[draggable="true"] { cursor: grab; }
+    .lifeline-head[draggable="true"]:active { cursor: grabbing; }
+    .lifeline-head.drop-before { box-shadow: inset 5px 0 var(--orange); }
+    .lifeline-head.drop-after { box-shadow: inset -5px 0 var(--orange); }
     .lifeline-head.current { background: var(--blue-pale); box-shadow: inset 0 -4px var(--blue); }
+    .lifeline-head.current.drop-before { box-shadow: inset 5px 0 var(--orange), inset 0 -4px var(--blue); }
+    .lifeline-head.current.drop-after { box-shadow: inset -5px 0 var(--orange), inset 0 -4px var(--blue); }
     .lifeline-head .time-top { display: flex; justify-content: space-between; color: var(--muted); font: .61rem/1 ui-monospace, SFMono-Regular, Consolas, monospace; }
     .lifeline-head b { display: block; overflow: hidden; margin-top: 6px; font-size: .68rem; text-overflow: ellipsis; white-space: nowrap; }
     .lifeline-label { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 7px; align-items: center; min-height: 56px; padding: 7px 9px; border-left: 5px solid var(--scope-color); }
@@ -649,7 +662,7 @@
         </aside>
         <div class="program-shell">
           <section class="panel program-panel" aria-labelledby="program-title">
-            <div class="program-head"><h3 id="program-title">Object lifelines</h3><small>click an event to scrub · click a lane cell to move its end</small></div>
+            <div class="program-head"><h3 id="program-title">Object lifelines</h3><small>drag event columns to reorder · click a lane cell to move its end</small></div>
             <div class="program-list" id="program-list"></div>
           </section>
           <aside class="panel block-inspector" id="block-inspector" aria-live="polite"></aside>
@@ -788,8 +801,8 @@
     <section class="section tool-panel" id="tool-shifts" role="tabpanel" aria-labelledby="tool-tab-shifts" hidden>
       <div class="section-head">
         <div>
-          <h2 id="shift-title">Save-stream shift calculator</h2>
-          <p>Zero task counts shorten the saved task list. A clean load still reads 100 task values, so robot flags and the sock reminder slide into task slots.</p>
+          <h2 id="shift-title">Task table shifts</h2>
+          <p>Choose a shift and read the resulting destination-to-source mapping directly.</p>
         </div>
       </div>
       <div class="panel shift-panel">
@@ -799,19 +812,6 @@
             <label>Custom shift<input id="shift-custom" type="number" min="0" max="100" step="1" value="24"></label>
             <button class="button small" type="button" id="apply-custom-shift">Show</button>
             <strong class="explorer-value" id="explorer-value">24</strong>
-          </div>
-        </div>
-        <div class="shift-controls simple">
-          <div>
-            <h3>Later saved values</h3>
-            <div class="flag-list">
-              <label class="check"><input type="checkbox" data-flag="chuck"> Chuck police counter = 1</label>
-              <label class="check"><input type="checkbox" data-flag="tubelet"> Tubelet police counter = 1</label>
-              <label class="check"><input type="checkbox" data-flag="plankton"> Plankton police counter = 1</label>
-              <label class="check"><input type="checkbox" data-flag="sock"> Sock reminder counter = 1</label>
-            </div>
-            <p class="layout-note"><code>REMINDER_SOCK_CNTR</code> has object ID <code>CD6D023F</code>; its signed count is at the scene object pointer <code>+0x14</code>.</p>
-            <p class="layout-note">These are per-task availability/completion values. The player’s numeric spatula inventory is saved separately and is not duplicated by this shift.</p>
           </div>
         </div>
         <div class="shift-result" id="shift-result"></div>
@@ -1002,6 +1002,7 @@
     };
     let step = 0;
     let nextId = 1;
+    let draggedEvent = null;
     let selectedEventIndex = null;
     let selectedLayoutSegment = -1;
     let activeTool = 'route';
@@ -1422,22 +1423,23 @@
       const listStart = cfg.start - 32 * cfg.stride;
       $('#layout-range').textContent = `${hex(listStart)} – ${hex(cfg.end)}`;
       $('#layout-note').textContent = cfg.note;
+      const total = cfg.end - cfg.start;
       const maxSlot = Math.max(...cfg.slots);
-      const slots = Array.from({ length: maxSlot - 32 }, (_, index) => index + 33).map(number => {
-        const start = cfg.start + (number - 33) * cfg.stride;
-        const end = start + cfg.stride;
-        const overlaps = cfg.segments.map((segment, index) => ({ segment, index }))
-          .filter(({ segment }) => segment[1] < end && segment[2] > start);
-        const parts = overlaps.map(({ segment: [name, segmentStart, segmentEnd, tone], index }) => {
-          const overlapStart = Math.max(start, segmentStart);
-          const overlapEnd = Math.min(end, segmentEnd);
-          const bytes = Math.max(0, overlapEnd - overlapStart);
-          return `<span class="layout-part ${tone}${index === selectedLayoutSegment ? ' selected' : ''}" data-layout-segment="${index}" title="${esc(name)} · ${bytes} bytes · ${hex(overlapStart)}–${hex(overlapEnd - 1)}">${esc(name)}</span>`;
-        }).join('') || '<span class="layout-part">unmapped</span>';
-        return `<div class="layout-slot${number === state.count ? ' current' : ''}"><div class="layout-slot-head"><b>#${number}</b><code>${hex(start)}</code></div><div class="layout-slot-parts">${parts}</div></div>`;
+      const slotCount = maxSlot - 32;
+      const regions = cfg.segments.map(([name, start, end, tone], index) => {
+        const left = ((start - cfg.start) / total) * 100;
+        const width = ((end - start) / total) * 100;
+        const label = width >= 4 ? `<b>${esc(name)}</b>` : '';
+        const address = width >= 11 ? `<small>${hex(start)}–${hex(end - 1)}</small>` : '';
+        return `<button type="button" class="layout-region ${tone}${index === selectedLayoutSegment ? ' selected' : ''}" data-layout-segment="${index}" style="left:${left}%;width:${width}%" title="${esc(name)} · ${hex(start)}–${hex(end - 1)}">${label}${address}</button>`;
       }).join('');
+      const slots = Array.from({ length: slotCount }, (_, index) => index + 33).map(number => {
+        const start = cfg.start + (number - 33) * cfg.stride;
+        return `<div class="overflow-slot-line${number === state.count ? ' current' : ''}" title="#${number} · ${hex(start)}"><span>#${number}</span></div>`;
+      }).join('');
+      const key = cfg.segments.map(([name, start, end, tone], index) => `<button type="button" class="${tone}${index === selectedLayoutSegment ? ' selected' : ''}" data-layout-segment="${index}">${esc(name)} · ${hex(start)}–${hex(end - 1)}</button>`).join('');
       const ticks = Array.from({ length: 32 }, () => '<i></i>').join('');
-      $('#memory-diagram').innerHTML = `<button type="button" class="thrown-array-card${selectedLayoutSegment === -1 ? ' selected' : ''}" data-layout-base><span><b>zThrownList[32]</b><span>legal tracked-object storage · slots #1–#32</span><span class="array-ticks">${ticks}</span></span><code class="array-address">${hex(listStart)}<br>through ${hex(cfg.start - 1)}</code></button><div class="overflow-heading"><b>Overflow records</b><span>each column is one complete ${hex(cfg.stride)}-byte record</span></div><div class="overflow-slot-grid">${slots}</div>`;
+      $('#memory-diagram').innerHTML = `<button type="button" class="thrown-array-card${selectedLayoutSegment === -1 ? ' selected' : ''}" data-layout-base><span><b>zThrownList[32]</b><span>legal tracked-object storage · slots #1–#32</span><span class="array-ticks">${ticks}</span></span><code class="array-address">${hex(listStart)}<br>through ${hex(cfg.start - 1)}</code></button><div class="overflow-heading"><b>Overflow records over neighboring memory</b><span>${slotCount} records · ${hex(cfg.stride)} bytes each</span></div><div class="overflow-map">${regions}<div class="overflow-slot-lines" style="grid-template-columns:repeat(${slotCount},1fr)">${slots}</div></div><div class="layout-key">${key}</div>`;
       const chosen = selectedLayoutSegment === -1 ? ['zThrownList[32]', listStart, cfg.start] : cfg.segments[selectedLayoutSegment];
       const [segmentName, segmentStart, segmentEnd] = chosen;
       const backing = LAYOUT_BACKING[segmentName] || (segmentName.includes('world') ? LAYOUT_BACKING.sWorld : {
@@ -1532,7 +1534,7 @@
       let preview = createInitialState();
       const heads = scenario.events.map((event, index) => {
         applyEvent(preview, event);
-        return `<button type="button" class="lifeline-head${step === index + 1 ? ' current' : ''}" data-program-index="${index}"><span class="time-top"><span>${index + 1}</span><span>#${preview.count}</span></span><b>${eventIcon(event)} ${esc(eventLabel(event))}</b></button>`;
+        return `<button type="button" class="lifeline-head${step === index + 1 ? ' current' : ''}" draggable="true" data-program-index="${index}"><span class="time-top"><span>${index + 1}</span><span>#${preview.count}</span></span><b>${eventIcon(event)} ${esc(eventLabel(event))}</b></button>`;
       }).join('');
       const rows = throws.map(throwEvent => {
         const start = scenario.events.indexOf(throwEvent);
@@ -1604,7 +1606,8 @@
     function renderState(state) {
       $('#tracked-count').textContent = state.count;
       $('#state-caption').textContent = step === 0 ? 'Before the first event' : `After event ${step} of ${scenario.events.length}`;
-      const shown = Math.max(37, state.memory.length, state.count);
+      const routeExtent = simulate(scenario.events.length).memory.length;
+      const shown = Math.max(40, routeExtent, state.memory.length, state.count);
       const slots = [];
       for (let i = 32; i < shown; i++) {
         const record = state.memory[i];
@@ -1697,26 +1700,15 @@
     }
 
     function renderShift(state) {
-      const { stream, bad, omitted, exploring } = buildSaveStream(state);
+      const { stream, omitted } = buildSaveStream(state);
       const tasks = taskList();
       const shift = omitted.length;
-      const status = bad.length
-        ? `<div class="shift-status bad"><b>Save mapping is not deterministic.</b> ${esc(bad.join(' · '))}. Set those worlds to exact zero or original once the route proves their value.</div>`
-        : `<div class="shift-status"><b>${shift} task values omitted.</b> The selected leading task counts are assumed to be exact zero; every later value loads ${shift} positions earlier.</div>`;
-      const payoff = [82, 83].map(index => {
-        const destination = tasks[index];
-        const source = stream[index];
-        const value = bad.length ? null : sourceValue(source);
-        const unlocked = value === 1;
-        return `<div class="payoff ${unlocked ? 'unlocked' : 'locked'}"><span>${destination.code} · ${index === 82 ? 'Robo-SpongeBob' : 'final Brain fight'}</span><b>${bad.length ? 'mapping blocked' : unlocked ? 'unlocked' : 'locked'}</b><p>${bad.length ? 'Resolve unsafe task counts first.' : `${esc(sourceLabel(source))} supplies ${value == null ? 'an unknown value' : value}.`}</p></div>`;
-      }).join('');
       const tableRows = tasks.map((destination, index) => {
-        const source = bad.length ? null : stream[index];
-        const value = source ? sourceValue(source) : null;
+        const source = stream[index];
         const key = index === 82 || index === 83 ? ' class="key-row"' : '';
-        return `<tr${key}><td><b>${destination.code}</b><br>${esc(destination.label)}</td><td>${esc(sourceLabel(source))}</td><td>${value == null ? '—' : value}</td></tr>`;
+        return `<tr${key}><td>${index + 1}</td><td><b>${destination.code}</b><br>${esc(destination.label)}</td><td>${esc(sourceLabel(source))}</td></tr>`;
       }).join('');
-      $('#shift-result').innerHTML = `${status}<div class="payoff-grid">${payoff}</div><details><summary>Show all 100 loaded task values</summary><div class="table-wrap"><table><thead><tr><th>Destination task</th><th>Value read from</th><th>Known value</th></tr></thead><tbody>${tableRows}</tbody></table></div></details>`;
+      $('#shift-result').innerHTML = `<div class="shift-status"><b>${shift}-entry shift.</b> The first ${shift} serialized task values are omitted; every destination below reads from the source shown beside it.</div><div class="table-wrap"><table><thead><tr><th>Loaded slot</th><th>Destination task</th><th>Reads from</th></tr></thead><tbody>${tableRows}</tbody></table></div>`;
       $('#explorer-value').textContent = `${shift} shift`;
       $('#shift-custom').value = shift;
       const quick = [0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 100];
@@ -1772,10 +1764,40 @@
     function deleteProgramBlock(index) {
       const event = scenario.events[index];
       if (!event) return;
-      if (event.kind === 'throw') scenario.events = scenario.events.filter(item => item !== event && item.objectId !== event.objectId);
-      else scenario.events.splice(index, 1);
-      selectedEventIndex = null;
-      step = Math.min(step, scenario.events.length);
+      const removed = event.kind === 'throw'
+        ? new Set(scenario.events.filter(item => item === event || item.objectId === event.objectId))
+        : new Set([event]);
+      const prior = scenario.events.slice(0, index).reverse().find(item => !removed.has(item)) || null;
+      scenario.events = scenario.events.filter(item => !removed.has(item));
+      selectedEventIndex = prior ? scenario.events.indexOf(prior) : null;
+      step = selectedEventIndex == null ? 0 : selectedEventIndex + 1;
+      render();
+    }
+
+    function validateEventOrder(events) {
+      const started = new Set();
+      for (const event of events) {
+        if (event.kind === 'throw') started.add(event.objectId);
+        if (event.kind === 'action' && !started.has(event.objectId)) {
+          return `${findObjectLabel(event.objectId)} cannot end before it is thrown.`;
+        }
+      }
+      return '';
+    }
+
+    function reorderEvent(sourceIndex, targetIndex, after) {
+      if (sourceIndex < 0 || targetIndex < 0 || sourceIndex >= scenario.events.length || targetIndex >= scenario.events.length) return;
+      const candidate = scenario.events.slice();
+      const [moving] = candidate.splice(sourceIndex, 1);
+      let insertion = targetIndex + (after ? 1 : 0);
+      if (sourceIndex < insertion) insertion--;
+      insertion = Math.max(0, Math.min(insertion, candidate.length));
+      candidate.splice(insertion, 0, moving);
+      const error = validateEventOrder(candidate);
+      if (error) { toast(error); return; }
+      scenario.events = candidate;
+      selectedEventIndex = insertion;
+      step = insertion + 1;
       render();
     }
 
@@ -1981,6 +2003,42 @@
       const select = event.target.closest('[data-end-object]');
       if (!select) return;
       setEndpoint(select.dataset.endObject, select.value);
+    });
+    $('#program-list').addEventListener('dragstart', event => {
+      const head = event.target.closest('.lifeline-head[data-program-index]');
+      if (!head) return;
+      draggedEvent = scenario.events[Number(head.dataset.programIndex)] || null;
+      if (!draggedEvent) return;
+      event.dataTransfer.effectAllowed = 'move';
+      event.dataTransfer.setData('text/plain', head.dataset.programIndex);
+    });
+    $('#program-list').addEventListener('dragover', event => {
+      const head = event.target.closest('.lifeline-head[data-program-index]');
+      if (!head || !draggedEvent) return;
+      event.preventDefault();
+      $$('.lifeline-head.drop-before, .lifeline-head.drop-after').forEach(item => item.classList.remove('drop-before', 'drop-after'));
+      const after = event.clientX >= head.getBoundingClientRect().left + head.getBoundingClientRect().width / 2;
+      head.classList.add(after ? 'drop-after' : 'drop-before');
+      event.dataTransfer.dropEffect = 'move';
+    });
+    $('#program-list').addEventListener('dragleave', event => {
+      const head = event.target.closest('.lifeline-head');
+      if (head && !head.contains(event.relatedTarget)) head.classList.remove('drop-before', 'drop-after');
+    });
+    $('#program-list').addEventListener('drop', event => {
+      const head = event.target.closest('.lifeline-head[data-program-index]');
+      if (!head || !draggedEvent) return;
+      event.preventDefault();
+      const sourceIndex = scenario.events.indexOf(draggedEvent);
+      const targetIndex = Number(head.dataset.programIndex);
+      const after = event.clientX >= head.getBoundingClientRect().left + head.getBoundingClientRect().width / 2;
+      $$('.lifeline-head.drop-before, .lifeline-head.drop-after').forEach(item => item.classList.remove('drop-before', 'drop-after'));
+      reorderEvent(sourceIndex, targetIndex, after);
+      draggedEvent = null;
+    });
+    $('#program-list').addEventListener('dragend', () => {
+      draggedEvent = null;
+      $$('.lifeline-head.drop-before, .lifeline-head.drop-after').forEach(item => item.classList.remove('drop-before', 'drop-after'));
     });
 
     $('#block-inspector').addEventListener('change', event => {
