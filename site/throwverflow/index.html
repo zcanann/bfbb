@@ -67,6 +67,29 @@
     header p { max-width: 700px; margin: 0; color: var(--muted); line-height: 1.5; }
     .header-links { display: flex; flex-wrap: wrap; gap: 12px; font-size: .9rem; }
 
+    .tool-tabs {
+      display: flex;
+      gap: 4px;
+      margin-top: 18px;
+      overflow-x: auto;
+      border-bottom: 1px solid var(--line-dark);
+      scrollbar-width: thin;
+    }
+    .tool-tab {
+      flex: 0 0 auto;
+      min-height: 42px;
+      padding: 9px 15px 8px;
+      border: 0;
+      border-bottom: 3px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .tool-tab:hover { color: var(--ink); background: rgba(255, 255, 255, .5); }
+    .tool-tab[aria-selected="true"] { border-bottom-color: var(--blue); color: var(--ink); }
+    .tool-tab:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }
+    .tool-panel[hidden] { display: none; }
+
     .section { margin-top: 28px; }
     .section-head { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 12px; }
     h2 { margin: 0; font-size: 1.3rem; letter-spacing: -.02em; }
@@ -353,6 +376,7 @@
       .event-row { grid-template-columns: 26px 28px minmax(0, 1fr); }
       .event-actions { grid-column: 3; }
       .timeline-top { grid-template-columns: auto 1fr auto; }
+      .tool-tab { padding-inline: 11px; }
     }
   </style>
 </head>
@@ -373,7 +397,15 @@
       </div>
     </header>
 
-    <section class="section" aria-labelledby="layout-title">
+    <nav class="tool-tabs" role="tablist" aria-label="Throwverflow tools">
+      <button class="tool-tab" id="tool-tab-route" type="button" role="tab" data-tool="route" aria-controls="tool-route" aria-selected="true">Route builder</button>
+      <button class="tool-tab" id="tool-tab-setup" type="button" role="tab" data-tool="setup" aria-controls="tool-setup" aria-selected="false" tabindex="-1">Setup finder</button>
+      <button class="tool-tab" id="tool-tab-layouts" type="button" role="tab" data-tool="layouts" aria-controls="tool-layouts" aria-selected="false" tabindex="-1">Platform layouts</button>
+      <button class="tool-tab" id="tool-tab-memory" type="button" role="tab" data-tool="memory" aria-controls="tool-memory" aria-selected="false" tabindex="-1">Memory inspector</button>
+      <button class="tool-tab" id="tool-tab-shifts" type="button" role="tab" data-tool="shifts" aria-controls="tool-shifts" aria-selected="false" tabindex="-1">Task shifts</button>
+    </nav>
+
+    <section class="section tool-panel" id="tool-layouts" role="tabpanel" aria-labelledby="tool-tab-layouts" hidden>
       <div class="section-head">
         <div>
           <h2 id="layout-title">Where the overflow goes</h2>
@@ -392,7 +424,7 @@
       </div>
     </section>
 
-    <section class="section" aria-labelledby="finder-title">
+    <section class="section tool-panel" id="tool-setup" role="tabpanel" aria-labelledby="tool-tab-setup" hidden>
       <div class="section-head">
         <div>
           <h2 id="finder-title">GameCube setup finder</h2>
@@ -422,7 +454,7 @@
       </div>
     </section>
 
-    <section class="section" aria-labelledby="timeline-title">
+    <section class="section tool-panel" id="tool-route" role="tabpanel" aria-labelledby="tool-tab-route">
       <div class="section-head">
         <div>
           <h2 id="timeline-title">Event lab</h2>
@@ -558,7 +590,7 @@
       </div>
     </section>
 
-    <section class="section" aria-labelledby="deep-title">
+    <section class="section tool-panel" id="tool-memory" role="tabpanel" aria-labelledby="tool-tab-memory" hidden>
       <div class="section-head">
         <div>
           <h2 id="deep-title">Memory inspector</h2>
@@ -585,7 +617,7 @@
       </div>
     </section>
 
-    <section class="section" aria-labelledby="shift-title">
+    <section class="section tool-panel" id="tool-shifts" role="tabpanel" aria-labelledby="tool-tab-shifts" hidden>
       <div class="section-head">
         <div>
           <h2 id="shift-title">Save-stream shift calculator</h2>
@@ -763,6 +795,7 @@
     let step = 0;
     let nextId = 1;
     let dragIndex = null;
+    let activeTool = 'route';
 
     const $ = (selector) => document.querySelector(selector);
     const $$ = (selector) => [...document.querySelectorAll(selector)];
@@ -776,6 +809,19 @@
       el.classList.add('show');
       clearTimeout(toast.timer);
       toast.timer = setTimeout(() => el.classList.remove('show'), 1800);
+    }
+
+    function selectTool(tool, focus = false) {
+      const tab = $(`.tool-tab[data-tool="${tool}"]`);
+      if (!tab) return;
+      activeTool = tool;
+      $$('.tool-tab').forEach(button => {
+        const selected = button === tab;
+        button.setAttribute('aria-selected', String(selected));
+        button.tabIndex = selected ? 0 : -1;
+      });
+      $$('.tool-panel').forEach(panel => { panel.hidden = panel.id !== `tool-${tool}`; });
+      if (focus) tab.focus();
     }
 
     function field(kind, source, label = null) {
@@ -1481,6 +1527,19 @@
 
     populateFieldSelects();
 
+    $$('.tool-tab').forEach((tab, index, tabs) => {
+      tab.addEventListener('click', () => selectTool(tab.dataset.tool));
+      tab.addEventListener('keydown', event => {
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        let target = index;
+        if (event.key === 'ArrowLeft') target = (index - 1 + tabs.length) % tabs.length;
+        if (event.key === 'ArrowRight') target = (index + 1) % tabs.length;
+        if (event.key === 'Home') target = 0;
+        if (event.key === 'End') target = tabs.length - 1;
+        selectTool(tabs[target].dataset.tool, true);
+      });
+    });
     $$('.tab').forEach(tab => tab.addEventListener('click', () => { scenario.platform = tab.dataset.platform; render(); }));
     $('#target-picks').addEventListener('click', event => {
       const button = event.target.closest('[data-target-worlds]');
@@ -1491,8 +1550,9 @@
     $('#explore-target').addEventListener('click', () => {
       const target = TARGETS.find(item => item.worlds === scenario.targetWorlds) || TARGETS[4];
       scenario.exploreShift = target.shift;
-      document.querySelector('#shift-title').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      selectTool('shifts');
       render();
+      window.scrollTo({ top: $('.tool-tabs').offsetTop, behavior: 'smooth' });
     });
     $('#auto-target').addEventListener('click', () => { scenario.overrides = {}; scenario.exploreShift = null; render(); });
     $('#hex-slot').addEventListener('change', () => renderHex(simulate(step)));
@@ -1545,7 +1605,8 @@
       if (!card) return;
       $('#hex-slot').value = card.dataset.hexSlot;
       renderHex(simulate(step));
-      $('#deep-title').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      selectTool('memory');
+      window.scrollTo({ top: $('.tool-tabs').offsetTop, behavior: 'smooth' });
     });
     $('#timeline-list').addEventListener('dragstart', event => {
       const row = event.target.closest('.event-row');
@@ -1618,6 +1679,7 @@
       if (event.key === 'ArrowRight') { event.preventDefault(); step = Math.min(scenario.events.length, step + 1); render(); }
     });
 
+    selectTool(activeTool);
     try {
       const hash = location.hash.match(/^#s=(.+)$/);
       if (hash) hydrate(decodeShare(hash[1]));
