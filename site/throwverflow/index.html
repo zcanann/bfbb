@@ -136,8 +136,11 @@
     .layout-region:nth-child(2n) { background: #dedfd9; }
     .layout-region.hot { background: var(--orange-pale); }
     .layout-region.safe { background: var(--green-pale); }
+    .layout-region.system { background: #ebe5f0; }
     .layout-region.selected { box-shadow: inset 0 -6px var(--blue); }
     .layout-region b { display: block; font-size: clamp(.58rem, .72vw, .76rem); line-height: 1.2; overflow-wrap: anywhere; }
+    .layout-region.compact { padding-inline: 1px; text-align: center; }
+    .layout-region.compact b { overflow: hidden; font-size: clamp(.46rem, .6vw, .66rem); white-space: nowrap; }
     .layout-region small { display: block; margin-top: 5px; font: .55rem/1.25 ui-monospace, SFMono-Regular, Consolas, monospace; }
     .overflow-slot-lines { position: absolute; inset: 0 0 0 var(--overflow-left); z-index: 2; display: grid; pointer-events: none; }
     .overflow-slot-line { position: relative; min-width: 0; border-left: 1px solid rgba(18, 107, 131, .58); }
@@ -148,6 +151,7 @@
     .layout-key button { min-height: 30px; padding: 5px 8px; border: 1px solid var(--line); border-left: 5px solid #7b8589; background: #fff; color: var(--ink); font-size: .68rem; }
     .layout-key button.hot { border-left-color: var(--orange); }
     .layout-key button.safe { border-left-color: var(--green); }
+    .layout-key button.system { border-left-color: #7a4e9d; }
     .layout-key button.legal { border-left-color: var(--blue); }
     .layout-key button.selected { outline: 2px solid var(--blue); }
     .layout-note { margin: 10px 0 0; color: var(--muted); font-size: .84rem; line-height: 1.5; }
@@ -925,13 +929,21 @@
 
     const LAYOUTS = {
       gc: {
-        name: 'GameCube · GQPE78', start: 0x802F6368, end: 0x802F6D50, stride: 0x1A4,
-        note: 'Object 33 begins in the UI quad and reaches HB. Objects 33, 34, 36, and 37 align with the first four world task counts. Textured legacy UI can rewrite slot 33.',
+        name: 'GameCube · GQPE78', start: 0x802F6368, end: 0x802FE100, stride: 0x1A4,
+        note: 'This follows the complete 15-world pause/warp table and every adjacent GC block through particle scratch. Object #54 crosses the end of sWorld; #56 reaches animation scratch; #78 reaches collision and file I/O scratch; #88 reaches FMV/audio state; #103 reaches model caches; #106 reaches particle scratch; #109 reaches the 0x14000-byte memory-card workspace immediately beyond this view.',
         segments: [
-          ['Vertex[4]', 0x802F6368, 0x802F63C8, 'hot'], ['HB world', 0x802F63C8, 0x802F6614, 'hot'],
-          ['JF world', 0x802F6614, 0x802F6860, 'hot'], ['BB world', 0x802F6860, 0x802F6AAC, 'hot'],
-          ['GL world', 0x802F6AAC, 0x802F6CF8, 'hot'], ['B1 world', 0x802F6CF8, 0x802F6D50, '']
-        ], slots: [33, 34, 35, 36, 37, 38]
+          ['Vertex[4]', 0x802F6368, 0x802F63C8, 'hot', 'UI'],
+          ...WORLDS.map((world, index) => [`${world.code} world · ${world.name}`, 0x802F63C8 + index * 0x24C, 0x802F63C8 + (index + 1) * 0x24C, 'hot', world.code]),
+          ['alignment', 0x802F863C, 0x802F8640, '', ''],
+          ['zVar text buffers', 0x802F8640, 0x802F8A80, 'system', 'text'],
+          ['iAnim scratch', 0x802F8A80, 0x802FAE20, 'system', 'anim'],
+          ['iCollide scratch', 0x802FAE20, 0x802FAE60, 'system', 'col'],
+          ['iFile buffer', 0x802FAE60, 0x802FBE80, 'system', 'file'],
+          ['FMV state', 0x802FBE80, 0x802FBE98, 'system', ''],
+          ['audio mixer', 0x802FBE98, 0x802FD698, 'system', 'audio'],
+          ['model caches', 0x802FD698, 0x802FDB38, 'system', 'model'],
+          ['particle scratch', 0x802FDB38, 0x802FE100, 'system', 'particle']
+        ], slots: [33, 40, 47, 54, 56, 57, 64, 72, 78, 79, 88, 89, 103, 106, 109]
       },
       xbox: {
         name: 'Xbox · retail US/EU', start: 0x002E5080, end: 0x002E6000, stride: 0x1A4,
@@ -972,6 +984,42 @@
       'sWorld': {
         note: 'This is the pause/warp task table. GameCube places it immediately after Vertex; Xbox reaches its beginning during object #40.',
         code: 'struct menuWorld\n{\n    _zUI* uiSelected;\n    char worldPrefix[2];\n    U32 numTasks;\n    menuTask task[8];\n};\n\nstatic menuWorld sWorld[WORLD_COUNT];'
+      },
+      'alignment': {
+        note: 'Four linker-alignment bytes separate the end of the 15-world table from zVar storage.',
+        code: '// 0x802F863C .. 0x802F863F\n// Linker alignment between zUI.cpp and zVar.cpp BSS.'
+      },
+      'zVar text buffers': {
+        note: 'Static character buffers used to format live counter, collectible, timer, and other UI-variable strings. Object #54 reaches the first one after leaving the warp table.',
+        code: '// zVar.cpp BSS: 0x802F8640 .. 0x802F8A7F\n// Many function-local buffers used by zVar callbacks.\n\nstatic char buffer[0x0C];\nstatic char buffer[0x20];\nstatic char buffer[0x40];\nstatic char buffer[0x80];'
+      },
+      'iAnim scratch': {
+        note: 'The GameCube animation decoder uses this entire block as shared scratch memory. Object #56 reaches its beginning; object #57 begins inside it.',
+        code: '// iAnim.cpp BSS: 0x802F8A80 .. 0x802FAE1F\nstatic U8 scratchBuffer[9120];\nU8* giAnimScratch = scratchBuffer;'
+      },
+      'iCollide scratch': {
+        note: 'Temporary ray and intersection records used by GameCube collision callbacks. Object #78 spans this block.',
+        code: '// iCollide.cpp BSS: 0x802FAE20 .. 0x802FAE5F\nstatic xRay3 cbray;\nstatic RpIntersection cbisx_local;'
+      },
+      'iFile buffer': {
+        note: 'Aligned temporary storage used by GameCube file reads. Object #78 reaches its beginning and object #79 begins inside it.',
+        code: '// iFile.cpp BSS: 0x802FAE60 .. 0x802FBE7F\nstatic U32 tbuffer[1024 + 8];\nstatic U32* buffer32;'
+      },
+      'FMV state': {
+        note: 'The tiny GameCube Bink pixel-format lookup sits between the file buffer and the audio mixer.',
+        code: '// iFMV.cpp BSS: 0x802FBE80 .. 0x802FBE97\nstatic u32 Bink_surface_type[RAD3DSURFACECOUNT];'
+      },
+      'audio mixer': {
+        note: 'State for all 64 GameCube mixer channels. Object #88 reaches this region and object #89 begins inside it.',
+        code: '// iMix.c BSS: 0x802FBE98 .. 0x802FD697\nstatic MIXChannel __MIXChannel[64];'
+      },
+      'model caches': {
+        note: 'Model instancing caches: the last-atomic list, empty lights, and temporary material arrays. Object #103 reaches this region.',
+        code: '// iModel.cpp BSS: 0x802FD698 .. 0x802FDB37\nstatic RpAtomic* gLastAtomicList[256];\nstatic RpLight* sEmptyDirectionalLight[4];\nstatic RwRGBA sMaterialColor[16];\nstatic RwTexture* sMaterialTexture[16];\nstatic U8 sMaterialAlpha[16];'
+      },
+      'particle scratch': {
+        note: 'Particle color and render scratch immediately before the memory-card workspace. Object #106 reaches this block; object #109 continues into cardwork.',
+        code: '// iParMgr.cpp BSS: 0x802FDB38 .. 0x802FE0FF\nstatic F32 gColorTable[256];\n// Additional particle render-vector scratch follows.\n\n// Next: isavegame.cpp\n// static char cardwork[2][0xA000];\n// 0x802FE100 .. 0x803120FF'
       },
       'HUD allocator': {
         note: 'The PS2 overflow reaches allocator bookkeeping before the lasso data. Treat this as a recovery boundary, not spare storage.',
@@ -1444,12 +1492,13 @@
       const overflowWidth = 100 - overflowLeft;
       const maxSlot = Math.max(...cfg.slots);
       const slotCount = maxSlot - 32;
-      const regions = cfg.segments.map(([name, start, end, tone], index) => {
+      const regions = cfg.segments.map(([name, start, end, tone, shortName], index) => {
         const left = overflowLeft + ((start - cfg.start) / total) * overflowWidth;
         const width = ((end - start) / total) * overflowWidth;
-        const label = width >= 4 ? `<b>${esc(name)}</b>` : '';
+        const visibleName = shortName || name;
+        const label = width >= 1.25 && visibleName ? `<b>${esc(visibleName)}</b>` : '';
         const address = width >= 11 ? `<small>${hex(start)}–${hex(end - 1)}</small>` : '';
-        return `<button type="button" class="layout-region ${tone}${index === selectedLayoutSegment ? ' selected' : ''}" data-layout-segment="${index}" style="left:${left}%;width:${width}%" title="${esc(name)} · ${hex(start)}–${hex(end - 1)}">${label}${address}</button>`;
+        return `<button type="button" class="layout-region ${tone}${width < 4 ? ' compact' : ''}${index === selectedLayoutSegment ? ' selected' : ''}" data-layout-segment="${index}" style="left:${left}%;width:${width}%" title="${esc(name)} · ${hex(start)}–${hex(end - 1)}">${label}${address}</button>`;
       }).join('');
       const slots = Array.from({ length: slotCount }, (_, index) => index + 33).map(number => {
         const start = cfg.start + (number - 33) * cfg.stride;
