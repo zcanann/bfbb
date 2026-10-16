@@ -124,6 +124,8 @@
     .layout-summary { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin: 14px 0 10px; }
     .layout-summary strong { font-size: 1.05rem; }
     .layout-summary span { color: var(--muted); font-size: .82rem; }
+    .overflow-origin { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; padding: 9px 11px; border-left: 4px solid var(--ink); background: #ecebe5; font-size: .75rem; }
+    .overflow-origin span { color: var(--muted); }
     .memory-scroll { overflow-x: auto; padding: 8px 0 6px; }
     .memory-diagram { min-width: 940px; }
     .memory-band { position: relative; display: flex; height: 92px; border: 1px solid var(--ink); overflow: hidden; }
@@ -133,10 +135,15 @@
       border-right: 1px solid rgba(29, 36, 40, .45);
       background: var(--slot);
       overflow: hidden;
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
     }
     .memory-segment:nth-child(2n) { background: #dedfd9; }
     .memory-segment.hot { background: var(--orange-pale); }
     .memory-segment.safe { background: var(--green-pale); }
+    .memory-segment.selected { box-shadow: inset 0 -5px var(--blue); }
+    .memory-segment:focus-visible { outline: 3px solid var(--blue); outline-offset: -3px; }
     .memory-segment b, .slot-span b { display: block; font-size: .75rem; white-space: nowrap; }
     .memory-segment small { display: block; margin-top: 6px; color: #4f595e; font: .66rem/1.3 ui-monospace, SFMono-Regular, Consolas, monospace; white-space: nowrap; }
     .slot-band { position: relative; height: 74px; margin-top: 7px; border-bottom: 1px solid var(--line); }
@@ -155,8 +162,105 @@
     .slot-span.current { z-index: 2; border-width: 2px; border-color: var(--orange); background: var(--orange-pale); color: #713017; }
     .slot-span small { font: .62rem/1 ui-monospace, SFMono-Regular, Consolas, monospace; }
     .layout-note { margin: 10px 0 0; color: var(--muted); font-size: .84rem; line-height: 1.5; }
+    .layout-source { display: grid; grid-template-columns: minmax(220px, .55fr) minmax(400px, 1.45fr); gap: 14px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+    .layout-source p { margin: 6px 0 0; color: var(--muted); font-size: .76rem; line-height: 1.5; }
+    .layout-source pre { overflow-x: auto; margin: 0; padding: 11px 12px; border: 1px solid #354147; background: #171d20; color: #e2ecef; font: .72rem/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; }
 
     .workspace { display: grid; grid-template-columns: minmax(360px, .86fr) minmax(500px, 1.4fr); gap: 18px; align-items: start; }
+    .block-workspace { display: grid; grid-template-columns: 238px minmax(0, 1fr); gap: 14px; align-items: start; }
+    .block-palette { padding: 14px; position: sticky; top: 10px; }
+    .palette-group + .palette-group { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
+    .palette-group h3 { margin-bottom: 8px; }
+    .palette-group p { margin: 7px 0 0; color: var(--muted); font-size: .7rem; line-height: 1.4; }
+    .palette-stack { display: grid; gap: 6px; }
+    .palette-block {
+      display: grid;
+      grid-template-columns: 25px minmax(0, 1fr);
+      gap: 7px;
+      align-items: center;
+      width: 100%;
+      min-height: 36px;
+      padding: 6px 9px;
+      border: 1px solid #7b8e94;
+      border-left: 5px solid var(--blue);
+      border-radius: 4px;
+      background: #edf6f8;
+      color: var(--ink);
+      font-size: .76rem;
+      font-weight: 700;
+      text-align: left;
+      cursor: grab;
+    }
+    .palette-block.action { border-color: #8aa894; border-left-color: var(--green); background: #edf5ef; }
+    .palette-block.marker { border-color: #a6a39a; border-left-color: #737977; background: #f4f3ee; }
+    .palette-block:active { cursor: grabbing; }
+    .program-shell { display: grid; grid-template-columns: minmax(370px, 1.35fr) minmax(270px, .65fr); gap: 14px; }
+    .program-panel, .block-inspector { min-width: 0; padding: 14px; }
+    .program-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; margin-bottom: 10px; }
+    .program-head small { color: var(--muted); font-size: .69rem; }
+    .program-list { min-height: 210px; padding: 8px; border: 1px dashed var(--line-dark); background: #f8f7f2; }
+    .program-empty { display: grid; place-items: center; min-height: 190px; color: var(--muted); font-size: .8rem; text-align: center; }
+    .program-drop { height: 7px; margin: 1px 10px; border-radius: 4px; transition: .12s ease; }
+    .program-drop.drag-over { height: 24px; background: var(--blue-pale); outline: 1px dashed var(--blue); }
+    .program-block {
+      --scope-color: var(--blue);
+      display: grid;
+      grid-template-columns: 21px 30px minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+      min-height: 54px;
+      padding: 8px 8px 8px 7px;
+      border: 1px solid var(--line-dark);
+      border-left: 6px solid var(--scope-color);
+      border-radius: 5px;
+      background: #fff;
+      box-shadow: 0 1px 0 rgba(17, 31, 38, .06);
+      cursor: grab;
+    }
+    .program-block.action { width: calc(100% - 30px); margin-left: 30px; background: #f4f8f5; }
+    .program-block.marker { --scope-color: #737977; background: #f5f4f0; }
+    .program-block.selected { outline: 2px solid var(--ink); outline-offset: 1px; }
+    .program-block.scope-target { background: var(--green-pale); outline: 2px dashed var(--green); outline-offset: 2px; }
+    .scope-wrap { min-width: 0; }
+    .scope-body {
+      margin: 3px 0 4px 16px;
+      padding: 5px 6px 7px 14px;
+      border-left: 3px solid var(--scope-color);
+      border-bottom: 1px solid color-mix(in srgb, var(--scope-color) 35%, transparent);
+      background: color-mix(in srgb, var(--scope-color) 5%, transparent);
+    }
+    .scope-label { margin: 1px 0 4px; color: var(--muted); font: 650 .63rem/1.2 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .scope-empty { padding: 8px 9px; border: 1px dashed var(--line); color: var(--muted); font-size: .68rem; text-align: center; }
+    .block-grip { color: var(--line-dark); font: 700 .9rem/1 monospace; letter-spacing: -3px; }
+    .block-icon { font-size: 1.2rem; text-align: center; }
+    .block-copy { min-width: 0; }
+    .block-copy b, .block-copy small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .block-copy b { font-size: .8rem; }
+    .block-copy small { margin-top: 3px; color: var(--muted); font-size: .67rem; }
+    .scope-name { color: var(--green); font-weight: 750; }
+    .block-delete { min-width: 28px; min-height: 28px; padding: 0; border: 0; background: transparent; color: var(--muted); font-size: 1rem; }
+    .block-delete:hover { color: var(--red); }
+    .inspector-empty { display: grid; place-items: center; min-height: 180px; padding: 18px; color: var(--muted); font-size: .8rem; line-height: 1.5; text-align: center; }
+    .inspector-form { display: grid; gap: 10px; margin-top: 12px; }
+    .inspector-note { margin: 10px 0 0; padding: 8px 9px; border-left: 3px solid var(--blue); background: var(--blue-pale); font-size: .72rem; line-height: 1.4; }
+    .inspector-actions { display: flex; justify-content: flex-end; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
+    .playback-panel { margin-top: 14px; overflow: hidden; }
+    .timeline-strip { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(112px, 145px); gap: 6px; overflow-x: auto; padding: 10px 12px 13px; background: #f8f7f2; }
+    .timeline-cell {
+      min-height: 68px;
+      padding: 7px 8px;
+      border: 1px solid var(--line);
+      border-top: 4px solid var(--scope-color, #737977);
+      border-radius: 3px;
+      background: #fff;
+      color: var(--ink);
+      text-align: left;
+    }
+    .timeline-cell.current { border-color: var(--ink); background: var(--blue-pale); box-shadow: inset 0 0 0 1px var(--ink); }
+    .timeline-cell.invalid { background: var(--red-pale); }
+    .timeline-cell .time-top { display: flex; justify-content: space-between; gap: 6px; color: var(--muted); font: .64rem/1 monospace; }
+    .timeline-cell b { display: block; overflow: hidden; margin-top: 6px; font-size: .72rem; text-overflow: ellipsis; white-space: nowrap; }
+    .timeline-cell small { display: block; margin-top: 4px; color: var(--muted); font-size: .62rem; }
     .composer { padding: 16px; }
     .composer-block + .composer-block { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); }
     .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 10px; }
@@ -345,6 +449,8 @@
     .explorer-row { display: grid; grid-template-columns: auto minmax(180px, 1fr) auto; gap: 10px; align-items: center; }
     .explorer-value { min-width: 74px; font: 800 1.2rem/1 ui-monospace, SFMono-Regular, Consolas, monospace; text-align: right; }
     .explorer-picks { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+    .custom-shift { display: grid; grid-template-columns: 130px auto 1fr; gap: 8px; align-items: end; margin-top: 10px; }
+    .shift-controls.simple { grid-template-columns: minmax(260px, 430px); }
 
     .footer-note { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: .78rem; line-height: 1.5; }
     .toast { position: fixed; right: 18px; bottom: 18px; z-index: 20; padding: 10px 13px; background: var(--ink); color: #fff; border-radius: 3px; font-size: .8rem; opacity: 0; transform: translateY(8px); pointer-events: none; transition: .18s ease; }
@@ -352,11 +458,15 @@
 
     @media (max-width: 1040px) {
       .workspace { grid-template-columns: 1fr; }
+      .block-workspace { grid-template-columns: 1fr; }
+      .block-palette { position: static; }
+      .palette-stack { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .timeline-list { max-height: 390px; }
       .watch-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .shift-controls { grid-template-columns: 1fr; }
       .world-grid { grid-template-columns: repeat(3, minmax(110px, 1fr)); }
       .finder-top, .deep-grid { grid-template-columns: 1fr; }
+      .layout-source { grid-template-columns: 1fr; }
       .gate-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
@@ -377,6 +487,8 @@
       .event-actions { grid-column: 3; }
       .timeline-top { grid-template-columns: auto 1fr auto; }
       .tool-tab { padding-inline: 11px; }
+      .program-shell { grid-template-columns: 1fr; }
+      .palette-stack { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
   </style>
 </head>
@@ -419,8 +531,13 @@
       </div>
       <div class="panel memory-panel">
         <div class="layout-summary"><strong id="layout-name"></strong><span id="layout-range" class="mono"></span></div>
+        <div class="overflow-origin"><code>static zThrownStruct zThrownList[32];</code><span>object #33 starts at the first byte after this array</span></div>
         <div class="memory-scroll"><div class="memory-diagram" id="memory-diagram"></div></div>
         <p class="layout-note" id="layout-note"></p>
+        <div class="layout-source">
+          <div><h3 id="layout-source-title">C++ backing</h3><p id="layout-source-note"></p></div>
+          <pre><code id="layout-source-code"></code></pre>
+        </div>
       </div>
     </section>
 
@@ -457,11 +574,11 @@
     <section class="section tool-panel" id="tool-route" role="tabpanel" aria-labelledby="tool-tab-route">
       <div class="section-head">
         <div>
-          <h2 id="timeline-title">Event lab</h2>
-          <p>A fruit expiring and its record being removed are separate events. Reorder either around later throws or impacts.</p>
+          <h2 id="timeline-title">Route builder</h2>
+          <p>Nest blocks inside a throw to show what happens while that object remains tracked. The timeline and overflow slots are generated from the block tree.</p>
         </div>
         <div class="toolbar">
-          <button class="button small" type="button" id="preset-blank">Reset to 32 OOB</button>
+          <button class="button small" type="button" id="preset-blank">Clear route</button>
           <button class="button small" type="button" id="preset-demo">Load copy demo</button>
           <button class="button small" type="button" id="share">Copy share link</button>
           <button class="button small" type="button" id="export">Export JSON</button>
@@ -469,8 +586,53 @@
         </div>
       </div>
 
-      <div class="workspace">
-        <aside class="panel composer" aria-label="Add events">
+      <div class="block-workspace">
+        <aside class="panel block-palette" aria-label="Block palette">
+          <div class="palette-group">
+            <h3>Throws</h3>
+            <div class="palette-stack">
+              <button class="palette-block" draggable="true" type="button" data-palette-kind="throw" data-object-type="stone"><span>🗿</span><span>Stone tiki</span></button>
+              <button class="palette-block" draggable="true" type="button" data-palette-kind="throw" data-object-type="melon"><span>🍉</span><span>Watermelon</span></button>
+              <button class="palette-block" draggable="true" type="button" data-palette-kind="throw" data-object-type="ice"><span>🧊</span><span>Ice cube</span></button>
+              <button class="palette-block" draggable="true" type="button" data-palette-kind="throw" data-object-type="enemy"><span>🤖</span><span>Enemy</span></button>
+              <button class="palette-block" draggable="true" type="button" data-palette-kind="throw" data-object-type="wood"><span>🪵</span><span>Wood tiki</span></button>
+            </div>
+            <p>Overflow begins at object #33. The first 32 occupied slots are assumed.</p>
+          </div>
+          <div class="palette-group">
+            <h3>Outcomes</h3>
+            <div class="palette-stack">
+              <button class="palette-block action" draggable="true" type="button" data-palette-kind="action" data-action="oob"><span>↘</span><span>Reaches OOB</span></button>
+              <button class="palette-block action" draggable="true" type="button" data-palette-kind="action" data-action="settle"><span>0</span><span>Settles</span></button>
+              <button class="palette-block action" draggable="true" type="button" data-palette-kind="action" data-action="expire"><span>◌</span><span>Timer expires</span></button>
+              <button class="palette-block action" draggable="true" type="button" data-palette-kind="action" data-action="impact"><span>💥</span><span>Goo / wall</span></button>
+              <button class="palette-block action" draggable="true" type="button" data-palette-kind="action" data-action="remove"><span>×</span><span>Removal finishes</span></button>
+              <button class="palette-block action" draggable="true" type="button" data-palette-kind="action" data-action="boxbreak"><span>↔</span><span>Breaks in box</span></button>
+            </div>
+            <p>Drop an outcome onto its throw. Matching color and indentation show its scope.</p>
+          </div>
+          <div class="palette-group">
+            <h3>Route</h3>
+            <div class="palette-stack">
+              <button class="palette-block marker" draggable="true" type="button" data-palette-kind="marker" data-marker="box"><span>box</span><span>Box transition</span></button>
+              <button class="palette-block marker" draggable="true" type="button" data-palette-kind="marker" data-marker="ui"><span>UI</span><span>UI draw</span></button>
+              <button class="palette-block marker" draggable="true" type="button" data-palette-kind="marker" data-marker="pausebypass"><span>menu</span><span>Pause bypass</span></button>
+              <button class="palette-block marker" draggable="true" type="button" data-palette-kind="marker" data-marker="save"><span>save</span><span>Save</span></button>
+              <button class="palette-block marker" draggable="true" type="button" data-palette-kind="marker" data-marker="reset"><span>reset</span><span>Console reset</span></button>
+            </div>
+          </div>
+        </aside>
+        <div class="program-shell">
+          <section class="panel program-panel" aria-labelledby="program-title">
+            <div class="program-head"><h3 id="program-title">Route program</h3><small>drag to reorder · click to inspect</small></div>
+            <div class="program-list" id="program-list"></div>
+          </section>
+          <aside class="panel block-inspector" id="block-inspector" aria-live="polite"></aside>
+        </div>
+      </div>
+
+      <div class="viewer-workspace">
+        <aside class="panel composer" aria-label="Legacy event form" hidden>
           <div class="composer-block">
             <h3>Starting list</h3>
             <div class="form-grid">
@@ -573,7 +735,7 @@
               <input id="scrubber" type="range" min="0" max="0" value="0" aria-label="Inspect timeline">
               <button class="icon-button" type="button" id="next" aria-label="Next event">→</button>
             </div>
-            <div class="timeline-list" id="timeline-list"></div>
+            <div class="timeline-strip" id="timeline-list"></div>
           </section>
 
           <section class="panel state-panel section" aria-labelledby="state-title">
@@ -626,18 +788,14 @@
       </div>
       <div class="panel shift-panel">
         <div class="explorer">
-          <div class="explorer-row">
-            <button class="button small" type="button" id="timeline-mapping">Use timeline</button>
-            <input id="shift-explorer" type="range" min="0" max="100" step="1" value="24" aria-label="Explore an exact task shift">
-            <span class="explorer-value" id="explorer-value">timeline</span>
-          </div>
           <div class="explorer-picks" id="explorer-picks"></div>
-        </div>
-        <div class="shift-controls">
-          <div>
-            <h3>World task counts</h3>
-            <div class="world-grid" id="world-grid"></div>
+          <div class="custom-shift">
+            <label>Custom shift<input id="shift-custom" type="number" min="0" max="100" step="1" value="24"></label>
+            <button class="button small" type="button" id="apply-custom-shift">Show</button>
+            <strong class="explorer-value" id="explorer-value">24</strong>
           </div>
+        </div>
+        <div class="shift-controls simple">
           <div>
             <h3>Later saved values</h3>
             <div class="flag-list">
@@ -772,6 +930,45 @@
       }
     };
 
+    const LAYOUT_BACKING = {
+      'Vertex[4]': {
+        note: 'The legacy UI keeps four immediate-mode vertices directly beside the other UI globals. A UI redraw can therefore rewrite bytes already occupied by overflow object #33.',
+        code: 'static RwIm2DVertex Vertex[4];\nstatic RwImVertexIndex Index[6] = { 0, 1, 2, 0, 2, 3 };'
+      },
+      'sSorted[768]': {
+        note: 'Xbox object #33 begins where the UI renderer expects an array of 768 object pointers.',
+        code: '_zUI* sSorted[768];\nstatic U32 sSortedCount = 0;\n\n// zUIRenderAll later reads sSorted[i] as _zUI*.'
+      },
+      'gUIMgr': {
+        note: 'Object #40 spans this entire manager. Only the zThrownStruct fields actually updated by the chosen object produce writes.',
+        code: 'struct zUIMgr : xMgr\n{\n    S32 m_preUpdateStart, m_preUpdateEnd;\n    U32 m_preUpdateMax;\n    _zUI** m_preUpdate;\n    S32 m_updateStart, m_updateEnd;\n    U32 m_updateMax;\n    _zUI** m_update;\n};\n\nzUIMgr gUIMgr;'
+      },
+      'sWorld': {
+        note: 'This is the pause/warp task table. GameCube places it immediately after Vertex; Xbox reaches its beginning during object #40.',
+        code: 'struct menuWorld\n{\n    _zUI* uiSelected;\n    char worldPrefix[2];\n    U32 numTasks;\n    menuTask task[8];\n};\n\nstatic menuWorld sWorld[WORLD_COUNT];'
+      },
+      'HUD allocator': {
+        note: 'The PS2 overflow reaches allocator bookkeeping before the lasso data. Treat this as a recovery boundary, not spare storage.',
+        code: '// Linker-adjacent HUD allocator state\n// Exact ownership is established from the retail symbol/layout map.\n// A zThrownStruct write here is allocator data, not a menu-task shift.'
+      },
+      'Sandy lasso guides': {
+        note: 'Objects #56–#88 overlap Sandy’s lasso model/animation guide storage on PS2.',
+        code: '// Sandy lasso guide table\n// Retail PS2 layout places this after the HUD allocator boundary.\n// zThrownList overflow advances through it at a 0x1B0-byte stride.'
+      },
+      'Cruise Bubble': {
+        note: 'Object #89 reaches Cruise Bubble state. The layout is interesting, but recovery must be demonstrated before deeper setups matter.',
+        code: '// Cruise Bubble state\n// Reached by PS2 overflow object #89 after crossing lasso storage.'
+      },
+      'event log / diagnostics': {
+        note: 'PS2 objects #33–#54 land in diagnostic/debug storage rather than the warp table.',
+        code: '// Event-log and diagnostic storage\n// Forward overflow begins here on PS2.\n// sWorld is earlier in memory, so this path cannot shift its task table.'
+      },
+      'gap': {
+        note: 'Eight linker-layout bytes between the UI vertices and sWorld. They are shown so object boundaries remain address-accurate.',
+        code: '// 8 bytes between Vertex[4] and sWorld in the retail Xbox layout'
+      }
+    };
+
     const ACTION_COPY = {
       oob: ['↘', 'reaches OOB', 'Stays tracked; its trajectory obligation is discharged.'],
       settle: ['⌄', 'settles on ground', 'Writes exact zero to velocity X and remains tracked.'],
@@ -789,12 +986,15 @@
       events: [],
       overrides: {},
       targetWorlds: 4,
-      exploreShift: null,
+      exploreShift: 24,
       flags: { chuck: false, tubelet: false, plankton: false, sock: false }
     };
     let step = 0;
     let nextId = 1;
     let dragIndex = null;
+    let dragPayload = null;
+    let selectedEventIndex = null;
+    let selectedLayoutSegment = 0;
     let activeTool = 'route';
 
     const $ = (selector) => document.querySelector(selector);
@@ -1203,13 +1403,14 @@
 
     function renderLayout(state) {
       const cfg = LAYOUTS[scenario.platform];
+      selectedLayoutSegment = Math.max(0, Math.min(selectedLayoutSegment, cfg.segments.length - 1));
       $('#layout-name').textContent = cfg.name;
       $('#layout-range').textContent = `${hex(cfg.start)} – ${hex(cfg.end)}`;
       $('#layout-note').textContent = cfg.note;
       const total = cfg.end - cfg.start;
-      const segments = cfg.segments.map(([name, start, end, tone]) => {
+      const segments = cfg.segments.map(([name, start, end, tone], index) => {
         const width = ((end - start) / total) * 100;
-        return `<div class="memory-segment ${tone}" style="width:${width}%"><b>${esc(name)}</b><small>${hex(start)}<br>${hex(end - 1)}</small></div>`;
+        return `<button type="button" class="memory-segment ${tone}${index === selectedLayoutSegment ? ' selected' : ''}" data-layout-segment="${index}" style="width:${width}%"><b>${esc(name)}</b><small>${hex(start)}<br>${hex(end - 1)}</small></button>`;
       }).join('');
       const spans = cfg.slots.map(number => {
         const start = cfg.start + (number - 33) * cfg.stride;
@@ -1220,33 +1421,153 @@
         return `<div class="slot-span${current}" style="left:${left}%;width:${width}%" title="Object ${number}: ${hex(start)}–${hex(end - 1)}"><b>#${number}</b><small>${hex(start)}</small></div>`;
       }).join('');
       $('#memory-diagram').innerHTML = `<div class="memory-band">${segments}</div><div class="slot-band">${spans}</div>`;
+      const [segmentName, segmentStart, segmentEnd] = cfg.segments[selectedLayoutSegment];
+      const backing = LAYOUT_BACKING[segmentName] || (segmentName.includes('world') ? LAYOUT_BACKING.sWorld : {
+        note: 'This block is present in the recovered retail layout; no clearer source declaration is currently attached.',
+        code: `// ${segmentName}\n// ${hex(segmentStart)} .. ${hex(segmentEnd - 1)}`
+      });
+      $('#layout-source-title').textContent = segmentName;
+      $('#layout-source-note').textContent = backing.note;
+      $('#layout-source-code').textContent = backing.code;
+    }
+
+    const SCOPE_COLORS = ['#126b83', '#7a4e9d', '#b84f23', '#2f7051', '#8a6715', '#a33a36', '#476a9e', '#8b5268'];
+
+    function throwForId(objectId) {
+      return scenario.events.find(event => event.kind === 'throw' && event.objectId === objectId) || null;
+    }
+
+    function validScopeId(event) {
+      return event.scopeId && throwForId(event.scopeId) && !(event.kind === 'throw' && event.scopeId === event.objectId) ? event.scopeId : null;
+    }
+
+    function normalizeEventTree() {
+      const ordered = [];
+      const visited = new Set();
+      function visit(scopeId, ancestors = new Set()) {
+        scenario.events.forEach(event => {
+          if (visited.has(event)) return;
+          const parent = validScopeId(event);
+          if (parent !== scopeId || (event.kind === 'throw' && ancestors.has(event.objectId))) return;
+          visited.add(event);
+          event.scopeId = parent;
+          ordered.push(event);
+          if (event.kind === 'throw') visit(event.objectId, new Set([...ancestors, event.objectId]));
+        });
+      }
+      visit(null);
+      scenario.events.forEach(event => {
+        if (visited.has(event)) return;
+        event.scopeId = null;
+        visited.add(event);
+        ordered.push(event);
+        if (event.kind === 'throw') visit(event.objectId, new Set([event.objectId]));
+      });
+      scenario.events = ordered;
+    }
+
+    function scopeColor(objectId) {
+      if (!objectId) return '#737977';
+      const number = Number(String(objectId).replace(/\D/g, '')) || 0;
+      return SCOPE_COLORS[number % SCOPE_COLORS.length];
+    }
+
+    function directChildren(scopeId) {
+      return scenario.events.filter(event => validScopeId(event) === scopeId);
+    }
+
+    function programBlock(event, index) {
+      const selected = selectedEventIndex === index ? ' selected' : '';
+      const kind = event.kind;
+      const owner = kind === 'throw' ? event.objectId : (event.objectId || validScopeId(event));
+      const color = scopeColor(owner);
+      const before = simulate(index);
+      const scopeCopy = kind === 'action' ? `<span class="scope-name">acts on ${esc(findObjectLabel(event.objectId))}</span> · ` : '';
+      return `<div class="program-block ${kind}${selected}" draggable="true" data-program-index="${index}"${kind === 'throw' ? ` data-scope-target="${esc(event.objectId)}"` : ''} style="--scope-color:${color}">
+        <span class="block-grip" aria-hidden="true">⠿</span><span class="block-icon">${eventIcon(event)}</span>
+        <span class="block-copy"><b>${esc(eventLabel(event))}</b><small>${scopeCopy}${esc(eventDetail(event, before))}</small></span>
+        <button class="block-delete" type="button" data-delete-block="${index}" aria-label="Delete ${esc(eventLabel(event))}">×</button>
+      </div>`;
+    }
+
+    function renderProgramScope(scopeId, depth = 0) {
+      const children = directChildren(scopeId);
+      const parts = [];
+      children.forEach(event => {
+        const index = scenario.events.indexOf(event);
+        parts.push(`<div class="program-drop" data-drop-scope="${scopeId || ''}" data-before-index="${index}"></div>`);
+        if (event.kind === 'throw') {
+          const nested = renderProgramScope(event.objectId, depth + 1);
+          parts.push(`<div class="scope-wrap" data-scope-wrap="${esc(event.objectId)}">${programBlock(event, index)}<div class="scope-body" data-scope-body="${esc(event.objectId)}" style="--scope-color:${scopeColor(event.objectId)}"><div class="scope-label">while ${esc(findObjectLabel(event.objectId))} remains tracked</div>${nested || `<div class="scope-empty">drop events here</div>`}<div class="program-drop" data-drop-scope="${esc(event.objectId)}" data-before-index=""></div></div></div>`);
+        } else {
+          parts.push(programBlock(event, index));
+        }
+      });
+      if (scopeId === null) parts.push('<div class="program-drop root-drop" data-drop-scope="" data-before-index=""></div>');
+      return parts.join('');
+    }
+
+    function renderProgram() {
+      const root = $('#program-list');
+      normalizeEventTree();
+      if (!scenario.events.length) {
+        root.innerHTML = '<div class="program-empty">Drag a throw here.<br>Overflow object #33 will be the first block.</div><div class="program-drop root-drop" data-drop-scope="" data-before-index=""></div>';
+      } else {
+        root.innerHTML = renderProgramScope(null);
+      }
+    }
+
+    function fieldOptions(selected) {
+      return FIELD_OPTIONS.map(([value, label]) => `<option value="${value}"${selected === value ? ' selected' : ''}>${esc(label)}</option>`).join('');
+    }
+
+    function renderInspector() {
+      const root = $('#block-inspector');
+      const event = selectedEventIndex == null ? null : scenario.events[selectedEventIndex];
+      if (!event) {
+        root.innerHTML = '<div class="inspector-empty">Select a block to edit it.<br>Drop blocks inside a throw to show that they happen while that object remains tracked.</div>';
+        return;
+      }
+      let form = '';
+      if (event.kind === 'throw') {
+        form = `<h3>${eventIcon(event)} Throw block</h3><div class="inspector-form">
+          <label>Label<input type="text" maxlength="40" data-block-edit="label" value="${esc(event.label || '')}" placeholder="optional name"></label>
+          <label>Object<select data-block-edit="objectType">${Object.entries(TYPE).filter(([key]) => key !== 'custom').map(([key, value]) => `<option value="${key}"${event.objectType === key ? ' selected' : ''}>${esc(value.name)}</option>`).join('')}</select></label>
+          <label>Starts<select data-block-edit="initialState"><option value="airborne"${event.initialState === 'airborne' ? ' selected' : ''}>airborne</option><option value="oob"${event.initialState === 'oob' ? ' selected' : ''}>already OOB</option><option value="settled"${event.initialState === 'settled' ? ' selected' : ''}>settled</option></select></label>
+          <details><summary>Memory payload overrides</summary><div class="inspector-form">
+            <label>+0x14 velocity X<select data-block-field="velX">${fieldOptions(event.fields?.velX || 'auto')}</select></label>
+            <label>+0x68 platform-relative Y<select data-block-field="opY">${fieldOptions(event.fields?.opY || 'auto')}</select></label>
+            <label>+0x110 temporary frame<select data-block-field="frame">${fieldOptions(event.fields?.frame || 'auto')}</select></label>
+            <label>+0xBC last floor pointer<select data-block-field="floor">${fieldOptions(event.fields?.floor || 'auto')}</select></label>
+            <label>+0x164 frame rotation Z<select data-block-field="axisZ">${fieldOptions(event.fields?.axisZ || 'auto')}</select></label>
+          </div></details></div><p class="inspector-note">This block owns a scope. Anything dropped inside it is emitted after this throw and before the scope ends.</p>`;
+      } else if (event.kind === 'action') {
+        const throws = scenario.events.filter(item => item.kind === 'throw');
+        form = `<h3>${eventIcon(event)} Outcome block</h3><div class="inspector-form"><label>Outcome<select data-block-edit="action">${Object.entries(ACTION_COPY).map(([key, value]) => `<option value="${key}"${event.action === key ? ' selected' : ''}>${esc(value[1])}</option>`).join('')}</select></label><label>Acts on<select data-block-edit="objectId">${throws.map(item => `<option value="${esc(item.objectId)}"${event.objectId === item.objectId ? ' selected' : ''}>${esc(findObjectLabel(item.objectId))}</option>`).join('')}</select></label></div><p class="inspector-note">The target is normally the throw whose scope contains this block.</p>`;
+      } else {
+        const markers = { box: 'Box transition', ui: 'Textured UI draw', pausebypass: 'Pause → Options bypass', save: 'Save attempt', reset: 'Reset during save', note: 'Note' };
+        form = `<h3>${eventIcon(event)} Route block</h3><div class="inspector-form"><label>Type<select data-block-edit="marker">${Object.entries(markers).map(([key, value]) => `<option value="${key}"${event.marker === key ? ' selected' : ''}>${esc(value)}</option>`).join('')}</select></label><label>Optional label<input type="text" maxlength="60" data-block-edit="label" value="${esc(event.label || '')}"></label></div>`;
+      }
+      root.innerHTML = `${form}<div class="inspector-actions"><button class="button danger small" type="button" data-inspector-delete>Delete block</button></div>`;
     }
 
     function renderTimeline() {
       const root = $('#timeline-list');
-      if (!scenario.events.length) {
-        root.innerHTML = '<div class="empty">No ordered events yet. Add a throw or marker at the left.</div>';
-      } else {
-        const rows = [];
-        let before = createInitialState();
-        scenario.events.forEach((event, index) => {
-          const preview = clone(before);
-          applyEvent(preview, event);
-          const invalid = preview.invalid.length > before.invalid.length ? ' invalid' : '';
-          rows.push(`<div class="event-row${step === index + 1 ? ' selected' : ''}${invalid}" draggable="true" data-index="${index}">
-            <span class="event-number">${index + 1}</span><span class="event-icon">${eventIcon(event)}</span>
-            <span class="event-copy"><b>${esc(eventLabel(event))}</b><small>${esc(eventDetail(event, before))}</small></span>
-            <span class="event-actions"><button class="icon-button" type="button" data-move="up" title="Move earlier">↑</button><button class="icon-button" type="button" data-move="down" title="Move later">↓</button><button class="icon-button" type="button" data-delete title="Delete">×</button></span>
-          </div>`);
-          before = preview;
-        });
-        root.innerHTML = rows.join('');
-      }
+      const cells = [`<button type="button" class="timeline-cell${step === 0 ? ' current' : ''}" data-timeline-step="0"><span class="time-top"><span>start</span><span>#32</span></span><b>Overflow begins</b><small>slots #1–#32 assumed occupied</small></button>`];
+      let before = createInitialState();
+      scenario.events.forEach((event, index) => {
+        const preview = clone(before);
+        applyEvent(preview, event);
+        const invalid = preview.invalid.length > before.invalid.length ? ' invalid' : '';
+        const owner = event.kind === 'throw' ? event.objectId : (event.objectId || validScopeId(event));
+        cells.push(`<button type="button" class="timeline-cell${step === index + 1 ? ' current' : ''}${invalid}" data-timeline-step="${index + 1}" style="--scope-color:${scopeColor(owner)}"><span class="time-top"><span>${index + 1}</span><span>#${preview.count}</span></span><b>${eventIcon(event)} ${esc(eventLabel(event))}</b><small>${esc(eventDetail(event, before))}</small></button>`);
+        before = preview;
+      });
+      root.innerHTML = cells.join('');
       $('#scrubber').max = scenario.events.length;
       $('#scrubber').value = step;
       $('#previous').disabled = step === 0;
       $('#next').disabled = step === scenario.events.length;
-      $('#insert-hint').textContent = step === 0 ? 'New events are inserted before event 1.' : `New events are inserted after event ${step}.`;
     }
 
     function renderState(state) {
@@ -1254,14 +1575,14 @@
       $('#state-caption').textContent = step === 0 ? 'Before the first event' : `After event ${step} of ${scenario.events.length}`;
       const shown = Math.max(37, state.memory.length, state.count);
       const slots = [];
-      for (let i = 0; i < shown; i++) {
+      for (let i = 32; i < shown; i++) {
         const record = state.memory[i];
         const active = i < state.count;
         const classes = ['slot', i >= 32 ? 'overflow' : '', !active && record ? 'stale' : '', i === 32 ? 'slot-boundary' : ''].filter(Boolean).join(' ');
         const title = record ? `${record.label} · ${active ? record.status : 'stale bytes'}` : 'untouched';
         slots.push(`<div class="${classes}" title="${esc(title)}"><span class="num">${i + 1}</span>${record ? `<span class="emoji">${record.icon}</span><span class="tag">${esc(record.label)}</span>${record.copiedFrom ? `<span class="copied">←${record.copiedFrom}</span>` : ''}` : ''}</div>`);
       }
-      $('#slots').innerHTML = slots.join('');
+      $('#slots').innerHTML = slots.join('') || '<div class="empty">No overflow slots written yet.</div>';
 
       const obligations = obligationsFor(state);
       const notes = [];
@@ -1340,50 +1661,17 @@
 
     function buildSaveStream(state) {
       const allTasks = taskList();
-      if (scenario.exploreShift !== null) {
-        const shift = Math.max(0, Math.min(100, Number(scenario.exploreShift) || 0));
-        return { stream: sourceStreamForShift(shift), bad: [], omitted: allTasks.slice(0, shift), exploring: true };
-      }
-      const stream = [];
-      let cursor = 0;
-      const bad = [];
-      const omitted = [];
-      for (const world of WORLDS) {
-        const status = effectiveWorldState(world.index, state);
-        const slice = allTasks.slice(cursor, cursor + world.count);
-        if (status.mode === 'normal') stream.push(...slice);
-        else if (status.mode === 'zero') omitted.push(...slice);
-        else bad.push(`${world.code}: ${status.reason}`);
-        cursor += world.count;
-      }
-      ROBOTS.forEach((robot, index) => stream.push({ type: 'police', robot, index }));
-      stream.push({ type: 'sock' });
-      stream.push({ type: 'cheat', part: 'high 16 bits' }, { type: 'cheat', part: 'low 16 bits' });
-      for (let i = 0; i < 40; i++) stream.push({ type: 'stale', label: `Stale CNTR halfword ${i + 1}`, value: null });
-      return { stream, bad, omitted, exploring: false };
-    }
-
-    function renderWorldGrid(state) {
-      $('#world-grid').innerHTML = WORLDS.map(world => {
-        const auto = worldAutoState(world.index, state);
-        const selected = scenario.overrides[world.index] || 'auto';
-        return `<div class="world-control"><b>${world.code}<small>${world.count} task${world.count === 1 ? '' : 's'}</small></b><select data-world="${world.index}" title="${esc(auto.reason)}">
-          <option value="auto"${selected === 'auto' ? ' selected' : ''}>Auto · ${auto.mode}</option>
-          <option value="normal"${selected === 'normal' ? ' selected' : ''}>Original</option>
-          <option value="zero"${selected === 'zero' ? ' selected' : ''}>Exact zero</option>
-          <option value="bad"${selected === 'bad' ? ' selected' : ''}>Corrupt / unsafe</option>
-        </select></div>`;
-      }).join('');
+      const shift = Math.max(0, Math.min(100, Number(scenario.exploreShift) || 0));
+      return { stream: sourceStreamForShift(shift), bad: [], omitted: allTasks.slice(0, shift), exploring: true };
     }
 
     function renderShift(state) {
-      renderWorldGrid(state);
       const { stream, bad, omitted, exploring } = buildSaveStream(state);
       const tasks = taskList();
       const shift = omitted.length;
       const status = bad.length
         ? `<div class="shift-status bad"><b>Save mapping is not deterministic.</b> ${esc(bad.join(' · '))}. Set those worlds to exact zero or original once the route proves their value.</div>`
-        : `<div class="shift-status"><b>${shift} task values omitted${exploring ? ' in the explorer' : ''}.</b> Every later value loads ${shift} task positions earlier.</div>`;
+        : `<div class="shift-status"><b>${shift} task values omitted.</b> The selected leading task counts are assumed to be exact zero; every later value loads ${shift} positions earlier.</div>`;
       const payoff = [82, 83].map(index => {
         const destination = tasks[index];
         const source = stream[index];
@@ -1398,14 +1686,18 @@
         return `<tr${key}><td><b>${destination.code}</b><br>${esc(destination.label)}</td><td>${esc(sourceLabel(source))}</td><td>${value == null ? '—' : value}</td></tr>`;
       }).join('');
       $('#shift-result').innerHTML = `${status}<div class="payoff-grid">${payoff}</div><details><summary>Show all 100 loaded task values</summary><div class="table-wrap"><table><thead><tr><th>Destination task</th><th>Value read from</th><th>Known value</th></tr></thead><tbody>${tableRows}</tbody></table></div></details>`;
-      $('#explorer-value').textContent = scenario.exploreShift === null ? 'timeline' : `${shift} shift`;
-      $('#shift-explorer').value = scenario.exploreShift === null ? shift : scenario.exploreShift;
+      $('#explorer-value').textContent = `${shift} shift`;
+      $('#shift-custom').value = shift;
       const quick = [0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 100];
       $('#explorer-picks').innerHTML = quick.map(value => `<button class="shift-pick${scenario.exploreShift === value ? ' active' : ''}" type="button" data-explore="${value}">${value}</button>`).join('');
     }
 
     function render() {
+      const selectedEvent = selectedEventIndex == null ? null : scenario.events[selectedEventIndex];
+      normalizeEventTree();
+      selectedEventIndex = selectedEvent ? scenario.events.indexOf(selectedEvent) : null;
       step = Math.max(0, Math.min(step, scenario.events.length));
+      if (selectedEventIndex != null && !scenario.events[selectedEventIndex]) selectedEventIndex = null;
       const state = simulate(step);
       $$('.tab').forEach(tab => tab.setAttribute('aria-selected', String(tab.dataset.platform === scenario.platform)));
       $('#base-count').value = scenario.baseCount;
@@ -1413,9 +1705,10 @@
       $$('[data-flag]').forEach(input => { input.checked = Boolean(scenario.flags[input.dataset.flag]); });
       renderLayout(state);
       renderFinder(state);
+      renderProgram();
+      renderInspector();
       renderTimeline();
       renderState(state);
-      renderActionObjects(state);
       renderAlignmentTable(state);
       renderHex(state);
       renderShift(state);
@@ -1428,6 +1721,88 @@
       render();
       const row = $(`.event-row[data-index="${step - 1}"]`);
       row?.scrollIntoView({ block: 'nearest' });
+    }
+
+    function eventIsInsideScope(event, scopeId) {
+      let parent = validScopeId(event);
+      const seen = new Set();
+      while (parent && !seen.has(parent)) {
+        if (parent === scopeId) return true;
+        seen.add(parent);
+        parent = validScopeId(throwForId(parent));
+      }
+      return false;
+    }
+
+    function scopeInsertionIndex(scopeId, beforeIndex = null) {
+      if (beforeIndex !== null && beforeIndex !== '' && scenario.events[Number(beforeIndex)]) return Number(beforeIndex);
+      if (!scopeId) return scenario.events.length;
+      const throwIndex = scenario.events.findIndex(event => event.kind === 'throw' && event.objectId === scopeId);
+      let end = throwIndex + 1;
+      scenario.events.forEach((event, index) => { if (eventIsInsideScope(event, scopeId)) end = Math.max(end, index + 1); });
+      return Math.max(0, end);
+    }
+
+    function selectedScope() {
+      const event = selectedEventIndex == null ? null : scenario.events[selectedEventIndex];
+      if (!event) return null;
+      if (event.kind === 'throw') return event.objectId;
+      return validScopeId(event);
+    }
+
+    function paletteEvent(payload, scopeId) {
+      if (payload.kind === 'throw') return { kind: 'throw', objectId: newObjectId(), objectType: payload.objectType, label: '', initialState: 'airborne', fields: {}, scopeId };
+      if (payload.kind === 'marker') return { kind: 'marker', marker: payload.marker, label: '', scopeId };
+      if (payload.kind === 'action') {
+        if (!scopeId) return null;
+        return { kind: 'action', objectId: scopeId, action: payload.action, scopeId };
+      }
+      return null;
+    }
+
+    function insertPaletteBlock(payload, scopeId = null, beforeIndex = null) {
+      const event = paletteEvent(payload, scopeId);
+      if (!event) { toast('Drop outcomes inside a throw scope'); return; }
+      const index = scopeInsertionIndex(scopeId, beforeIndex);
+      scenario.events.splice(index, 0, event);
+      normalizeEventTree();
+      selectedEventIndex = scenario.events.indexOf(event);
+      step = selectedEventIndex + 1;
+      render();
+    }
+
+    function subtreeEvents(index) {
+      const root = scenario.events[index];
+      if (!root) return [];
+      if (root.kind !== 'throw') return [root];
+      return scenario.events.filter(event => event === root || eventIsInsideScope(event, root.objectId));
+    }
+
+    function deleteProgramBlock(index) {
+      const removed = new Set(subtreeEvents(index));
+      scenario.events = scenario.events.filter(event => !removed.has(event));
+      selectedEventIndex = null;
+      step = Math.min(step, scenario.events.length);
+      render();
+    }
+
+    function moveProgramBlock(index, targetScope, beforeIndex = null) {
+      const root = scenario.events[index];
+      if (!root) return;
+      const moving = subtreeEvents(index);
+      const movingSet = new Set(moving);
+      const movingIds = new Set(moving.filter(event => event.kind === 'throw').map(event => event.objectId));
+      if (targetScope && movingIds.has(targetScope)) { toast('A throw cannot be nested inside itself'); return; }
+      const beforeEvent = beforeIndex !== null && beforeIndex !== '' ? scenario.events[Number(beforeIndex)] : null;
+      scenario.events = scenario.events.filter(event => !movingSet.has(event));
+      root.scopeId = targetScope || null;
+      if (root.kind === 'action' && targetScope) root.objectId = targetScope;
+      const target = beforeEvent && !movingSet.has(beforeEvent) ? scenario.events.indexOf(beforeEvent) : scopeInsertionIndex(targetScope);
+      scenario.events.splice(Math.max(0, target), 0, ...moving);
+      normalizeEventTree();
+      selectedEventIndex = scenario.events.indexOf(root);
+      step = selectedEventIndex + 1;
+      render();
     }
 
     function newObjectId() {
@@ -1464,17 +1839,18 @@
       scenario = {
         version: 1,
         platform: LAYOUTS[data.platform] ? data.platform : 'gc',
-        baseCount: Math.max(0, Math.min(160, Number(data.baseCount) || 0)),
-        baseType: TYPE[data.baseType] ? data.baseType : 'stone',
+        baseCount: 32,
+        baseType: 'stone',
         events: data.events.slice(0, 300),
         overrides: data.overrides || {},
         targetWorlds: Math.max(0, Math.min(15, Number(data.targetWorlds ?? 4))),
-        exploreShift: data.exploreShift === null || data.exploreShift === undefined ? null : Math.max(0, Math.min(100, Number(data.exploreShift) || 0)),
+        exploreShift: data.exploreShift === null || data.exploreShift === undefined ? 24 : Math.max(0, Math.min(100, Number(data.exploreShift) || 0)),
         flags: { chuck: false, tubelet: false, plankton: false, sock: false, ...(data.flags || {}) }
       };
       const ids = scenario.events.map(e => Number(String(e.objectId || '').replace('obj-', ''))).filter(Number.isFinite);
       nextId = Math.max(0, ...ids) + 1;
       step = scenario.events.length;
+      selectedEventIndex = null;
       render();
     }
 
@@ -1508,20 +1884,21 @@
       scenario.platform = 'gc';
       scenario.overrides = {};
       scenario.targetWorlds = 4;
-      scenario.exploreShift = null;
+      scenario.exploreShift = 24;
       scenario.flags = { chuck: true, tubelet: true, plankton: false, sock: false };
       scenario.events = [
-        { kind: 'throw', objectId: 'obj-1', objectType: 'melon', label: 'watermelon A', initialState: 'airborne', fields: {} },
-        { kind: 'throw', objectId: 'obj-2', objectType: 'melon', label: 'watermelon B', initialState: 'airborne', fields: {} },
-        { kind: 'throw', objectId: 'obj-3', objectType: 'stone', label: 'tower tiki', initialState: 'airborne', fields: {} },
-        { kind: 'action', objectId: 'obj-1', action: 'expire' },
-        { kind: 'action', objectId: 'obj-3', action: 'impact' },
-        { kind: 'action', objectId: 'obj-1', action: 'remove' },
-        { kind: 'action', objectId: 'obj-2', action: 'settle' },
-        { kind: 'marker', marker: 'save', label: 'Inspect the resulting save fields' }
+        { kind: 'throw', objectId: 'obj-1', objectType: 'melon', label: 'watermelon A', initialState: 'airborne', fields: {}, scopeId: null },
+        { kind: 'throw', objectId: 'obj-2', objectType: 'melon', label: 'watermelon B', initialState: 'airborne', fields: {}, scopeId: 'obj-1' },
+        { kind: 'throw', objectId: 'obj-3', objectType: 'stone', label: 'tower tiki', initialState: 'airborne', fields: {}, scopeId: 'obj-2' },
+        { kind: 'action', objectId: 'obj-1', action: 'expire', scopeId: 'obj-2' },
+        { kind: 'action', objectId: 'obj-3', action: 'impact', scopeId: 'obj-2' },
+        { kind: 'action', objectId: 'obj-1', action: 'remove', scopeId: 'obj-2' },
+        { kind: 'action', objectId: 'obj-2', action: 'settle', scopeId: 'obj-2' },
+        { kind: 'marker', marker: 'save', label: 'Inspect the resulting save fields', scopeId: 'obj-2' }
       ];
       nextId = 4;
       step = scenario.events.length;
+      selectedEventIndex = 1;
       render();
     }
 
@@ -1540,7 +1917,13 @@
         selectTool(tabs[target].dataset.tool, true);
       });
     });
-    $$('.tab').forEach(tab => tab.addEventListener('click', () => { scenario.platform = tab.dataset.platform; render(); }));
+    $$('.tab').forEach(tab => tab.addEventListener('click', () => { scenario.platform = tab.dataset.platform; selectedLayoutSegment = 0; render(); }));
+    $('#memory-diagram').addEventListener('click', event => {
+      const segment = event.target.closest('[data-layout-segment]');
+      if (!segment) return;
+      selectedLayoutSegment = Number(segment.dataset.layoutSegment);
+      renderLayout(simulate(step));
+    });
     $('#target-picks').addEventListener('click', event => {
       const button = event.target.closest('[data-target-worlds]');
       if (!button) return;
@@ -1554,51 +1937,28 @@
       render();
       window.scrollTo({ top: $('.tool-tabs').offsetTop, behavior: 'smooth' });
     });
-    $('#auto-target').addEventListener('click', () => { scenario.overrides = {}; scenario.exploreShift = null; render(); });
+    $('#auto-target').addEventListener('click', () => { scenario.overrides = {}; render(); });
     $('#hex-slot').addEventListener('change', () => renderHex(simulate(step)));
-    $('#shift-explorer').addEventListener('input', event => { scenario.exploreShift = Number(event.target.value); renderShift(simulate(step)); saveLocal(); });
-    $('#timeline-mapping').addEventListener('click', () => { scenario.exploreShift = null; render(); });
     $('#explorer-picks').addEventListener('click', event => {
       const button = event.target.closest('[data-explore]');
       if (!button) return;
       scenario.exploreShift = Number(button.dataset.explore);
       render();
     });
-    $('#base-count').addEventListener('change', event => { scenario.baseCount = Math.max(0, Math.min(160, Number(event.target.value) || 0)); step = Math.min(step, scenario.events.length); render(); });
-    $('#base-type').addEventListener('change', event => { scenario.baseType = event.target.value; render(); });
-    $('#add-throw').addEventListener('click', () => {
-      const objectType = $('#throw-type').value;
-      const label = $('#throw-label').value.trim();
-      addEvent({
-        kind: 'throw', objectId: newObjectId(), objectType, label,
-        initialState: $('#throw-state').value,
-        fields: { velX: $('#field-velx').value, opY: $('#field-opy').value, frame: $('#field-frame').value, floor: $('#field-floor').value, axisZ: $('#field-axis').value }
-      });
-      $('#throw-label').value = '';
+    $('#apply-custom-shift').addEventListener('click', () => {
+      scenario.exploreShift = Math.max(0, Math.min(100, Number($('#shift-custom').value) || 0));
+      render();
     });
-    $('#add-action').addEventListener('click', () => {
-      const objectId = $('#action-object').value;
-      if (objectId) addEvent({ kind: 'action', objectId, action: $('#action-type').value });
-    });
-    $('#add-marker').addEventListener('click', () => {
-      addEvent({ kind: 'marker', marker: $('#marker-type').value, label: $('#marker-label').value.trim() });
-      $('#marker-label').value = '';
-    });
+    $('#shift-custom').addEventListener('keydown', event => { if (event.key === 'Enter') $('#apply-custom-shift').click(); });
     $('#scrubber').addEventListener('input', event => { step = Number(event.target.value); render(); });
     $('#previous').addEventListener('click', () => { step = Math.max(0, step - 1); render(); });
     $('#next').addEventListener('click', () => { step = Math.min(scenario.events.length, step + 1); render(); });
 
     $('#timeline-list').addEventListener('click', event => {
-      const row = event.target.closest('.event-row');
-      if (!row) return;
-      const index = Number(row.dataset.index);
-      if (event.target.closest('[data-delete]')) {
-        scenario.events.splice(index, 1);
-        step = Math.min(step, scenario.events.length);
-        render();
-      } else if (event.target.closest('[data-move="up"]')) moveEvent(index, -1);
-      else if (event.target.closest('[data-move="down"]')) moveEvent(index, 1);
-      else { step = index + 1; render(); }
+      const cell = event.target.closest('[data-timeline-step]');
+      if (!cell) return;
+      step = Number(cell.dataset.timelineStep);
+      render();
     });
     $('#watch-grid').addEventListener('click', event => {
       const card = event.target.closest('[data-hex-slot]');
@@ -1608,33 +1968,97 @@
       selectTool('memory');
       window.scrollTo({ top: $('.tool-tabs').offsetTop, behavior: 'smooth' });
     });
-    $('#timeline-list').addEventListener('dragstart', event => {
-      const row = event.target.closest('.event-row');
-      if (!row) return;
-      dragIndex = Number(row.dataset.index);
-      event.dataTransfer.effectAllowed = 'move';
-    });
-    $('#timeline-list').addEventListener('dragover', event => { if (event.target.closest('.event-row')) event.preventDefault(); });
-    $('#timeline-list').addEventListener('drop', event => {
-      event.preventDefault();
-      const row = event.target.closest('.event-row');
-      if (!row || dragIndex == null) return;
-      let target = Number(row.dataset.index);
-      const [item] = scenario.events.splice(dragIndex, 1);
-      if (dragIndex < target) target--;
-      scenario.events.splice(target, 0, item);
-      step = target + 1;
-      dragIndex = null;
-      render();
+    $$('.palette-block').forEach(block => {
+      const payload = {
+        kind: block.dataset.paletteKind,
+        objectType: block.dataset.objectType,
+        action: block.dataset.action,
+        marker: block.dataset.marker
+      };
+      block.addEventListener('click', () => insertPaletteBlock(payload, selectedScope()));
+      block.addEventListener('dragstart', event => {
+        dragPayload = { source: 'palette', ...payload };
+        event.dataTransfer.effectAllowed = 'copy';
+        event.dataTransfer.setData('text/plain', JSON.stringify(dragPayload));
+      });
     });
 
-    $('#world-grid').addEventListener('change', event => {
-      if (!event.target.matches('[data-world]')) return;
-      const index = event.target.dataset.world;
-      if (event.target.value === 'auto') delete scenario.overrides[index];
-      else scenario.overrides[index] = event.target.value;
+    $('#program-list').addEventListener('click', event => {
+      const deletion = event.target.closest('[data-delete-block]');
+      if (deletion) { deleteProgramBlock(Number(deletion.dataset.deleteBlock)); return; }
+      const block = event.target.closest('[data-program-index]');
+      if (!block) return;
+      selectedEventIndex = Number(block.dataset.programIndex);
+      step = selectedEventIndex + 1;
       render();
     });
+    $('#program-list').addEventListener('dragstart', event => {
+      const block = event.target.closest('[data-program-index]');
+      if (!block) return;
+      dragPayload = { source: 'program', index: Number(block.dataset.programIndex) };
+      event.dataTransfer.effectAllowed = 'move';
+      event.dataTransfer.setData('text/plain', JSON.stringify(dragPayload));
+    });
+    $('#program-list').addEventListener('dragover', event => {
+      const drop = event.target.closest('[data-drop-scope]');
+      const scope = event.target.closest('[data-scope-target]');
+      if (!drop && !scope) return;
+      event.preventDefault();
+      $$('.program-drop.drag-over, .program-block.scope-target').forEach(item => item.classList.remove('drag-over', 'scope-target'));
+      (drop || scope).classList.add(drop ? 'drag-over' : 'scope-target');
+    });
+    $('#program-list').addEventListener('dragleave', event => {
+      const target = event.target.closest('.program-drop, .program-block');
+      if (target && !target.contains(event.relatedTarget)) target.classList.remove('drag-over', 'scope-target');
+    });
+    $('#program-list').addEventListener('drop', event => {
+      const drop = event.target.closest('[data-drop-scope]');
+      const scopeBlock = event.target.closest('[data-scope-target]');
+      if (!drop && !scopeBlock) return;
+      event.preventDefault();
+      let payload = dragPayload;
+      if (!payload) { try { payload = JSON.parse(event.dataTransfer.getData('text/plain')); } catch (_) {} }
+      if (!payload) return;
+      const targetScope = scopeBlock ? scopeBlock.dataset.scopeTarget : (drop.dataset.dropScope || null);
+      const beforeIndex = scopeBlock ? null : (drop.dataset.beforeIndex || null);
+      if (payload.source === 'palette') insertPaletteBlock(payload, targetScope, beforeIndex);
+      else moveProgramBlock(payload.index, targetScope, beforeIndex);
+      dragPayload = null;
+    });
+    document.addEventListener('dragend', () => {
+      dragPayload = null;
+      $$('.program-drop.drag-over, .program-block.scope-target').forEach(item => item.classList.remove('drag-over', 'scope-target'));
+    });
+
+    $('#block-inspector').addEventListener('change', event => {
+      const block = scenario.events[selectedEventIndex];
+      if (!block) return;
+      if (event.target.dataset.blockField) {
+        block.fields ||= {};
+        block.fields[event.target.dataset.blockField] = event.target.value;
+      } else if (event.target.dataset.blockEdit) {
+        const key = event.target.dataset.blockEdit;
+        block[key] = event.target.value;
+        if (key === 'objectId') block.scopeId = event.target.value;
+      }
+      normalizeEventTree();
+      selectedEventIndex = scenario.events.indexOf(block);
+      step = selectedEventIndex + 1;
+      render();
+    });
+    $('#block-inspector').addEventListener('input', event => {
+      if (event.target.dataset.blockEdit !== 'label') return;
+      const block = scenario.events[selectedEventIndex];
+      if (!block) return;
+      block.label = event.target.value;
+      renderProgram();
+      renderTimeline();
+      saveLocal();
+    });
+    $('#block-inspector').addEventListener('click', event => {
+      if (event.target.closest('[data-inspector-delete]') && selectedEventIndex != null) deleteProgramBlock(selectedEventIndex);
+    });
+
     $$('[data-flag]').forEach(input => input.addEventListener('change', event => { scenario.flags[event.target.dataset.flag] = event.target.checked; render(); }));
 
     $('#preset-blank').addEventListener('click', () => {
@@ -1643,10 +2067,11 @@
       scenario.events = [];
       scenario.overrides = {};
       scenario.targetWorlds = 4;
-      scenario.exploreShift = null;
+      scenario.exploreShift = 24;
       scenario.flags = { chuck: false, tubelet: false, plankton: false, sock: false };
       step = 0;
       nextId = 1;
+      selectedEventIndex = null;
       render();
     });
     $('#preset-demo').addEventListener('click', loadDemo);
