@@ -229,10 +229,34 @@
     .scope-name { color: var(--green); font-weight: 750; }
     .block-delete { min-width: 28px; min-height: 28px; padding: 0; border: 0; background: transparent; color: var(--muted); font-size: 1rem; }
     .block-delete:hover { color: var(--red); }
-    .inspector-empty { display: grid; place-items: center; min-height: 180px; padding: 18px; color: var(--muted); font-size: .8rem; line-height: 1.5; text-align: center; }
+    .inspector-empty { padding: 3px 0 11px; color: var(--muted); font-size: .75rem; line-height: 1.45; }
     .inspector-form { display: grid; gap: 10px; margin-top: 12px; }
     .inspector-note { margin: 10px 0 0; padding: 8px 9px; border-left: 3px solid var(--blue); background: var(--blue-pale); font-size: .72rem; line-height: 1.4; }
     .inspector-actions { display: flex; justify-content: flex-end; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
+    .route-status { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+    .route-status-head { display: grid; grid-template-columns: minmax(0, 1fr) 116px; gap: 10px; align-items: end; }
+    .route-status-head small { display: block; margin-top: 3px; color: var(--muted); font-size: .66rem; }
+    .route-status-head select { padding: 5px 6px; font-size: .7rem; }
+    .route-metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin-top: 9px; }
+    .route-metric { min-width: 0; padding: 7px 8px; border: 1px solid var(--line); background: #fff; }
+    .route-metric span { display: block; color: var(--muted); font-size: .61rem; text-transform: uppercase; letter-spacing: .04em; }
+    .route-metric b { display: block; overflow: hidden; margin-top: 3px; font: 800 .78rem/1.2 ui-monospace, SFMono-Regular, Consolas, monospace; text-overflow: ellipsis; white-space: nowrap; }
+    .route-metric.clear { border-color: #7daa8f; background: var(--green-pale); }
+    .route-metric.bad { border-color: #d1918b; background: var(--red-pale); }
+    .route-metric.open { border-color: #c7a165; background: var(--yellow-pale); }
+    .route-status-table { max-height: 210px; overflow: auto; margin-top: 8px; border: 1px solid var(--line); }
+    .route-status-row { display: grid; grid-template-columns: 34px 72px minmax(0, 1fr) 58px; gap: 6px; align-items: center; min-height: 29px; padding: 4px 6px; border-bottom: 1px solid var(--line); font-size: .65rem; }
+    .route-status-row:last-child { border-bottom: 0; }
+    .route-status-row code { color: var(--muted); font-size: .61rem; }
+    .route-status-row .field-value { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .route-status-row .field-state { justify-self: end; font-weight: 850; }
+    .route-status-row.zero { background: var(--green-pale); }
+    .route-status-row.crash { background: var(--red-pale); }
+    .route-status-row.needed { background: var(--yellow-pale); }
+    .route-status-empty { margin: 8px 0 0; color: var(--muted); font-size: .69rem; line-height: 1.4; }
+    .setup-code { display: flex; gap: 6px; align-items: center; margin-top: 8px; }
+    .setup-code > span { color: var(--muted); font-size: .59rem; font-weight: 750; text-transform: uppercase; letter-spacing: .04em; }
+    .setup-code code { min-width: 0; flex: 1; overflow: hidden; padding: 6px 7px; border: 1px solid var(--line); background: #f8f7f2; font-size: .62rem; text-overflow: ellipsis; white-space: nowrap; }
     .playback-panel { margin-top: 14px; overflow: hidden; }
     .timeline-strip { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(112px, 145px); gap: 6px; overflow-x: auto; padding: 10px 12px 13px; background: #f8f7f2; }
     .timeline-cell {
@@ -616,7 +640,7 @@
         <div class="toolbar">
           <button class="button small" type="button" id="preset-blank">Clear route</button>
           <button class="button small" type="button" id="preset-demo">Load copy demo</button>
-          <button class="button small" type="button" id="share">Copy share link</button>
+          <button class="button small" type="button" id="share">Copy setup link</button>
           <button class="button small" type="button" id="export">Export JSON</button>
           <button class="button small" type="button" id="import">Import JSON</button>
         </div>
@@ -647,20 +671,10 @@
             </div>
             <p>Click to insert at the scrubber. Overflow begins at #33; #1–#32 are assumed.</p>
           </div>
-          <div class="palette-group">
-            <h3>Route</h3>
-            <div class="palette-stack">
-              <button class="palette-block marker" draggable="true" type="button" data-palette-kind="marker" data-marker="box"><span>box</span><span>Box transition</span></button>
-              <button class="palette-block marker" draggable="true" type="button" data-palette-kind="marker" data-marker="ui"><span>UI</span><span>UI draw</span></button>
-              <button class="palette-block marker" draggable="true" type="button" data-palette-kind="marker" data-marker="pausebypass"><span>menu</span><span>Pause bypass</span></button>
-              <button class="palette-block marker" draggable="true" type="button" data-palette-kind="marker" data-marker="save"><span>save</span><span>Save</span></button>
-              <button class="palette-block marker" draggable="true" type="button" data-palette-kind="marker" data-marker="reset"><span>reset</span><span>Console reset</span></button>
-            </div>
-          </div>
         </aside>
         <div class="program-shell">
           <section class="panel program-panel" aria-labelledby="program-title">
-            <div class="program-head"><h3 id="program-title">Object lifelines</h3><small>drag event columns to reorder · click a lane cell to move its end</small></div>
+            <div class="program-head"><h3 id="program-title">Object timeline</h3><small>drag event columns to reorder · click a lane cell to move its end</small></div>
             <div class="program-list" id="program-list"></div>
           </section>
           <aside class="panel block-inspector" id="block-inspector" aria-live="polite"></aside>
@@ -870,6 +884,10 @@
       world, object, key, offset, requirement,
       address: 0x802F6368 + (object - 33) * 0x1A4 + offset
     }));
+
+    // First record count where an unskipped world's live task data is no longer safe to serialize.
+    // The one-task boss worlds keep their only counter intact across this modeled range.
+    const SAVE_DANGER_AT = [34, 35, 36, 37, Infinity, 41, 42, 43, Infinity, 46, 48, 49, 50, 51, 53];
 
     const WORLDS = [
       ['HB', 'Bikini Bottom', 8], ['JF', 'Jellyfish Fields', 8], ['BB', 'Downtown', 8], ['GL', 'Goo Lagoon', 8],
@@ -1085,7 +1103,7 @@
         id: event.objectId,
         type: event.objectType,
         icon: type.icon,
-        label: event.label || `${type.name} ${event.objectId.replace('obj-', '')}`,
+        label: `${type.name} ${event.objectId.replace('obj-', '')}`,
         status: event.initialState,
         payload: previous ? clone(previous.payload) : initialPayload(slot),
         base: false,
@@ -1209,7 +1227,7 @@
     }
 
     function eventLabel(event) {
-      if (event.kind === 'throw') return `Throw ${event.label || TYPE[event.objectType]?.name || 'object'}`;
+      if (event.kind === 'throw') return `Throw ${findObjectLabel(event.objectId)}`;
       if (event.kind === 'action') {
         const ref = findObjectLabel(event.objectId);
         return `${ref} ${ACTION_COPY[event.action]?.[1] || event.action}`;
@@ -1240,7 +1258,7 @@
 
     function findObjectLabel(id) {
       const throwEvent = scenario.events.find(e => e.kind === 'throw' && e.objectId === id);
-      if (throwEvent) return throwEvent.label || `${TYPE[throwEvent.objectType]?.name || 'Object'} ${id.replace('obj-', '')}`;
+      if (throwEvent) return `${TYPE[throwEvent.objectType]?.name || 'Object'} ${id.replace('obj-', '')}`;
       if (id?.startsWith('base-')) return `${TYPE[scenario.baseType]?.name || 'Base object'} ${id.slice(5)}`;
       return id || 'Object';
     }
@@ -1540,7 +1558,7 @@
         const endpoint = endpointFor(throwEvent.objectId);
         const end = endpoint?.index ?? scenario.events.length - 1;
         const type = TYPE[throwEvent.objectType] || TYPE.custom;
-        const label = throwEvent.label || `${type.name} ${throwEvent.objectId.replace('obj-', '')}`;
+        const label = findObjectLabel(throwEvent.objectId);
         const lane = scenario.events.map((event, index) => {
           const isStart = index === start;
           const isEnd = endpoint && index === endpoint.index;
@@ -1563,17 +1581,52 @@
       return FIELD_OPTIONS.map(([value, label]) => `<option value="${value}"${selected === value ? ' selected' : ''}>${esc(label)}</option>`).join('');
     }
 
-    function renderInspector() {
+    function routeStatusHtml(state) {
+      const target = TARGETS.find(item => item.worlds === scenario.targetWorlds) || TARGETS[0];
+      const targetOptions = TARGETS.map(item => {
+        const through = item.worlds ? ` · through ${WORLDS[item.worlds - 1].code}` : ' · no shift';
+        return `<option value="${item.worlds}"${item.worlds === target.worlds ? ' selected' : ''}>${item.shift}${through}</option>`;
+      }).join('');
+      const code = encodeSetup();
+      if (scenario.platform !== 'gc') {
+        return `<section class="route-status"><div class="route-status-head"><div><h3>Scrubbed state</h3><small>after event ${step} of ${scenario.events.length}</small></div><label>Target shift<select data-route-shift>${targetOptions}</select></label></div><p class="route-status-empty">Task-shift crash inference is currently grounded only for the GameCube layout. This platform does not use the same alignments.</p><div class="setup-code"><span>Setup</span><code title="${esc(code)}">${esc(code)}</code><button class="button small" type="button" data-copy-setup>Copy</button></div></section>`;
+      }
+
+      const writtenMax = state.memory.length;
+      const rows = ZERO_ALIGNMENTS.map((alignment, index) => {
+        const value = readAlignment(state, alignment);
+        const required = index < target.worlds;
+        const fieldWasWritten = writtenMax >= alignment.object;
+        const badValue = fieldWasWritten && value.kind !== 'zero' && value.kind !== 'original';
+        const damagedWhileActive = writtenMax >= SAVE_DANGER_AT[index] && value.kind === 'original';
+        const crash = badValue || damagedWhileActive;
+        const zero = value.kind === 'zero';
+        const needed = required && !zero && !crash;
+        return { alignment, index, value, required, crash, zero, needed };
+      });
+      const zeroShift = rows.filter(row => row.zero).reduce((sum, row) => sum + WORLDS[row.index].count, 0);
+      const crashing = rows.filter(row => row.crash);
+      const missing = rows.filter(row => row.required && !row.zero);
+      const targetReady = !crashing.length && !missing.length && zeroShift === target.shift;
+      const relevant = rows.filter(row => row.required || row.zero || row.crash || row.value.kind !== 'original');
+      const table = relevant.length ? relevant.map(row => {
+        const world = WORLDS[row.index];
+        const tone = row.crash ? 'crash' : row.zero ? 'zero' : row.needed ? 'needed' : '';
+        const status = row.crash ? 'CRASH' : row.zero ? 'ZERO' : row.needed ? 'NEEDS 0' : 'SAFE';
+        return `<div class="route-status-row ${tone}" title="${esc(row.value.source)}"><b>${world.code}</b><code>#${row.alignment.object} +0x${row.alignment.offset.toString(16).toUpperCase()}</code><span class="field-value">${esc(row.value.label)}</span><span class="field-state">${status}</span></div>`;
+      }).join('') : '<p class="route-status-empty">No task-count fields have been changed at this scrub position.</p>';
+      const shiftTone = targetReady ? 'clear' : crashing.length ? 'bad' : 'open';
+      const saveTone = crashing.length ? 'bad' : 'clear';
+      const saveText = crashing.length ? `CRASH · ${crashing.map(row => WORLDS[row.index].code).join(', ')}` : 'SAFE';
+      return `<section class="route-status"><div class="route-status-head"><div><h3>Scrubbed state</h3><small>after event ${step} of ${scenario.events.length}</small></div><label>Target shift<select data-route-shift>${targetOptions}</select></label></div><div class="route-metrics"><div class="route-metric ${shiftTone}"><span>Inferred / target shift</span><b>${zeroShift} / ${target.shift}</b></div><div class="route-metric ${saveTone}"><span>Save or transition</span><b title="${esc(saveText)}">${esc(saveText)}</b></div></div><div class="route-status-table">${table}</div><div class="setup-code"><span>Setup</span><code title="${esc(code)}">${esc(code)}</code><button class="button small" type="button" data-copy-setup>Copy</button></div></section>`;
+    }
+
+    function renderInspector(state) {
       const root = $('#block-inspector');
       const event = selectedEventIndex == null ? null : scenario.events[selectedEventIndex];
-      if (!event) {
-        root.innerHTML = '<div class="inspector-empty">Select an event to edit it.<br>Set an object’s end from its lane; the scrubber chooses where a new end is placed.</div>';
-        return;
-      }
-      let form = '';
-      if (event.kind === 'throw') {
-        form = `<h3>${eventIcon(event)} Throw block</h3><div class="inspector-form">
-          <label>Label<input type="text" maxlength="40" data-block-edit="label" value="${esc(event.label || '')}" placeholder="optional name"></label>
+      let form = '<div class="inspector-empty">Select a throw or ending to edit it.</div>';
+      if (event?.kind === 'throw') {
+        form = `<h3>${eventIcon(event)} Throw</h3><div class="inspector-form">
           <label>Object<select data-block-edit="objectType">${Object.entries(TYPE).filter(([key]) => key !== 'custom').map(([key, value]) => `<option value="${key}"${event.objectType === key ? ' selected' : ''}>${esc(value.name)}</option>`).join('')}</select></label>
           <label>Starts<select data-block-edit="initialState"><option value="airborne"${event.initialState === 'airborne' ? ' selected' : ''}>airborne</option><option value="oob"${event.initialState === 'oob' ? ' selected' : ''}>already OOB</option><option value="settled"${event.initialState === 'settled' ? ' selected' : ''}>settled</option></select></label>
           <details><summary>Memory payload overrides</summary><div class="inspector-form">
@@ -1582,15 +1635,13 @@
             <label>+0x110 temporary frame<select data-block-field="frame">${fieldOptions(event.fields?.frame || 'auto')}</select></label>
             <label>+0xBC last floor pointer<select data-block-field="floor">${fieldOptions(event.fields?.floor || 'auto')}</select></label>
             <label>+0x164 frame rotation Z<select data-block-field="axisZ">${fieldOptions(event.fields?.axisZ || 'auto')}</select></label>
-          </div></details></div><p class="inspector-note">This is the object’s start. Use its lane control to leave it OOB or give it an end.</p>`;
-      } else if (event.kind === 'action') {
+          </div></details></div><p class="inspector-note">Use the lane control to leave it OOB or choose where it ends.</p>`;
+      } else if (event?.kind === 'action') {
         const throws = scenario.events.filter(item => item.kind === 'throw');
         form = `<h3>${eventIcon(event)} Object end</h3><div class="inspector-form"><label>End type<select data-block-edit="action">${Object.entries(ACTION_COPY).filter(([key]) => TERMINAL_ACTIONS.has(key)).map(([key, value]) => `<option value="${key}"${event.action === key ? ' selected' : ''}>${esc(value[1])}</option>`).join('')}</select></label><label>Object<select data-block-edit="objectId">${throws.map(item => `<option value="${esc(item.objectId)}"${event.objectId === item.objectId ? ' selected' : ''}>${esc(findObjectLabel(item.objectId))}</option>`).join('')}</select></label></div><p class="inspector-note">Move this endpoint by clicking another cell on the same object lane.</p>`;
-      } else {
-        const markers = { box: 'Box transition', ui: 'Textured UI draw', pausebypass: 'Pause → Options bypass', save: 'Save attempt', reset: 'Reset during save', note: 'Note' };
-        form = `<h3>${eventIcon(event)} Route block</h3><div class="inspector-form"><label>Type<select data-block-edit="marker">${Object.entries(markers).map(([key, value]) => `<option value="${key}"${event.marker === key ? ' selected' : ''}>${esc(value)}</option>`).join('')}</select></label><label>Optional label<input type="text" maxlength="60" data-block-edit="label" value="${esc(event.label || '')}"></label></div>`;
       }
-      root.innerHTML = `${form}<div class="inspector-actions"><button class="button danger small" type="button" data-inspector-delete>Delete block</button></div>`;
+      const actions = event ? '<div class="inspector-actions"><button class="button danger small" type="button" data-inspector-delete>Delete event</button></div>' : '';
+      root.innerHTML = `${form}${actions}${routeStatusHtml(state)}`;
     }
 
     function renderTimeline() {
@@ -1727,7 +1778,7 @@
       renderLayout(state);
       renderFinder(state);
       renderProgram();
-      renderInspector();
+      renderInspector(state);
       renderTimeline();
       renderState(state);
       renderAlignmentTable(state);
@@ -1745,8 +1796,7 @@
     }
 
     function paletteEvent(payload) {
-      if (payload.kind === 'throw') return { kind: 'throw', objectId: newObjectId(), objectType: payload.objectType, label: '', initialState: 'airborne', fields: {} };
-      if (payload.kind === 'marker') return { kind: 'marker', marker: payload.marker, label: '' };
+      if (payload.kind === 'throw') return { kind: 'throw', objectId: newObjectId(), objectType: payload.objectType, initialState: 'airborne', fields: {} };
       return null;
     }
 
@@ -1816,12 +1866,16 @@
     }
 
     function scenarioData() {
+      const events = scenario.events.filter(event => event.kind === 'throw' || event.kind === 'action').map(event => {
+        if (event.kind === 'action') return { kind: 'action', objectId: event.objectId, action: event.action };
+        return { kind: 'throw', objectId: event.objectId, objectType: event.objectType, initialState: event.initialState, fields: event.fields || {} };
+      });
       return {
-        version: 1,
+        version: 2,
         platform: scenario.platform,
         baseCount: scenario.baseCount,
         baseType: scenario.baseType,
-        events: scenario.events,
+        events,
         overrides: scenario.overrides,
         targetWorlds: scenario.targetWorlds,
         exploreShift: scenario.exploreShift,
@@ -1836,7 +1890,7 @@
         platform: LAYOUTS[data.platform] ? data.platform : 'gc',
         baseCount: 32,
         baseType: 'stone',
-        events: data.events.slice(0, 300),
+        events: data.events.filter(event => event?.kind === 'throw' || event?.kind === 'action').slice(0, 300),
         overrides: data.overrides || {},
         targetWorlds: Math.max(0, Math.min(15, Number(data.targetWorlds ?? 4))),
         exploreShift: data.exploreShift === null || data.exploreShift === undefined ? 24 : Math.max(0, Math.min(100, Number(data.exploreShift) || 0)),
@@ -1849,14 +1903,78 @@
       render();
     }
 
-    function encodeShare() {
-      const bytes = new TextEncoder().encode(JSON.stringify(scenarioData()));
-      let binary = '';
-      bytes.forEach(byte => { binary += String.fromCharCode(byte); });
-      return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    const TYPE_TO_CODE = { stone: 'S', wood: 'W', melon: 'M', ice: 'I', enemy: 'E', custom: 'C' };
+    const CODE_TO_TYPE = Object.fromEntries(Object.entries(TYPE_TO_CODE).map(([key, value]) => [value, key]));
+    const ACTION_TO_CODE = { oob: 'o', settle: 's', expire: 'e', expire_remove: 'x', remove: 'r', impact: 'g', boxbreak: 'b' };
+    const CODE_TO_ACTION = Object.fromEntries(Object.entries(ACTION_TO_CODE).map(([key, value]) => [value, key]));
+    const FIELD_TO_CODE = { velX: 'v', opY: 'y', frame: 'f', floor: 'p', axisZ: 'z' };
+    const CODE_TO_FIELD = Object.fromEntries(Object.entries(FIELD_TO_CODE).map(([key, value]) => [value, key]));
+    const VALUE_TO_CODE = { zero: '0', nonzero: '1', unknown: 'u', keep: 'k' };
+    const CODE_TO_VALUE = Object.fromEntries(Object.entries(VALUE_TO_CODE).map(([key, value]) => [value, key]));
+
+    function encodeSetup() {
+      const platform = { gc: 'g', xbox: 'x', ps2: 'p' }[scenario.platform] || 'g';
+      const target = TARGETS.find(item => item.worlds === scenario.targetWorlds) || TARGETS[0];
+      const objectNumbers = new Map();
+      let nextObject = 1;
+      const tokens = [];
+      for (const event of scenario.events) {
+        if (event.kind === 'throw') {
+          objectNumbers.set(event.objectId, nextObject++);
+          let token = TYPE_TO_CODE[event.objectType] || 'C';
+          if (event.initialState === 'oob') token += '@o';
+          if (event.initialState === 'settled') token += '@s';
+          const fields = Object.entries(FIELD_TO_CODE).map(([key, code]) => {
+            const value = event.fields?.[key];
+            return value && value !== 'auto' && VALUE_TO_CODE[value] ? code + VALUE_TO_CODE[value] : '';
+          }).join('');
+          if (fields) token += `~${fields}`;
+          tokens.push(token);
+        } else if (event.kind === 'action' && objectNumbers.has(event.objectId) && ACTION_TO_CODE[event.action]) {
+          tokens.push(`${ACTION_TO_CODE[event.action]}${objectNumbers.get(event.objectId)}`);
+        }
+      }
+      return `${platform}${target.shift}/${tokens.join(',')}`;
     }
 
-    function decodeShare(value) {
+    function decodeSetup(value) {
+      const [header, body = ''] = String(value).split('/', 2);
+      const match = header.match(/^([gxp])(0|[1-9]\d{0,2})$/);
+      if (!match) throw new Error('Invalid Throwverflow setup code');
+      const platform = { g: 'gc', x: 'xbox', p: 'ps2' }[match[1]];
+      const targetShift = Number(match[2]);
+      const target = TARGETS.find(item => item.shift === targetShift);
+      if (!target) throw new Error(`Unsupported target shift ${targetShift}`);
+      const events = [];
+      const objects = [];
+      for (const token of body.split(',').filter(Boolean)) {
+        const type = CODE_TO_TYPE[token[0]];
+        if (type) {
+          const objectId = `obj-${objects.length + 1}`;
+          const [head, fieldText = ''] = token.split('~', 2);
+          const stateCode = head.includes('@') ? head.split('@', 2)[1] : '';
+          const initialState = stateCode === 'o' ? 'oob' : stateCode === 's' ? 'settled' : 'airborne';
+          const fields = {};
+          for (let i = 0; i + 1 < fieldText.length; i += 2) {
+            const key = CODE_TO_FIELD[fieldText[i]];
+            const fieldValue = CODE_TO_VALUE[fieldText[i + 1]];
+            if (!key || !fieldValue) throw new Error(`Invalid payload override in ${token}`);
+            fields[key] = fieldValue;
+          }
+          objects.push(objectId);
+          events.push({ kind: 'throw', objectId, objectType: type, initialState, fields });
+          continue;
+        }
+        const actionMatch = token.match(/^([oserxgb])(\d+)$/);
+        const objectId = actionMatch ? objects[Number(actionMatch[2]) - 1] : null;
+        const action = actionMatch ? CODE_TO_ACTION[actionMatch[1]] : null;
+        if (!objectId || !action) throw new Error(`Invalid timeline event ${token}`);
+        events.push({ kind: 'action', objectId, action });
+      }
+      return { version: 2, platform, baseCount: 32, baseType: 'stone', events, targetWorlds: target.worlds, exploreShift: target.shift, overrides: {}, flags: {} };
+    }
+
+    function decodeLegacyShare(value) {
       const base64 = value.replace(/-/g, '+').replace(/_/g, '/');
       const binary = atob(base64 + '='.repeat((4 - base64.length % 4) % 4));
       const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
@@ -1882,13 +2000,12 @@
       scenario.exploreShift = 24;
       scenario.flags = { chuck: true, tubelet: true, plankton: false, sock: false };
       scenario.events = [
-        { kind: 'throw', objectId: 'obj-1', objectType: 'melon', label: 'watermelon A', initialState: 'airborne', fields: {} },
-        { kind: 'throw', objectId: 'obj-2', objectType: 'melon', label: 'watermelon B', initialState: 'airborne', fields: {} },
+        { kind: 'throw', objectId: 'obj-1', objectType: 'melon', initialState: 'airborne', fields: {} },
+        { kind: 'throw', objectId: 'obj-2', objectType: 'melon', initialState: 'airborne', fields: {} },
         { kind: 'action', objectId: 'obj-1', action: 'expire_remove' },
-        { kind: 'throw', objectId: 'obj-3', objectType: 'melon', label: 'watermelon C', initialState: 'airborne', fields: {} },
+        { kind: 'throw', objectId: 'obj-3', objectType: 'melon', initialState: 'airborne', fields: {} },
         { kind: 'action', objectId: 'obj-2', action: 'expire_remove' },
-        { kind: 'action', objectId: 'obj-3', action: 'expire_remove' },
-        { kind: 'marker', marker: 'save', label: 'Inspect the resulting save fields' }
+        { kind: 'action', objectId: 'obj-3', action: 'expire_remove' }
       ];
       nextId = 4;
       step = scenario.events.length;
@@ -2041,6 +2158,13 @@
     });
 
     $('#block-inspector').addEventListener('change', event => {
+      if (event.target.matches('[data-route-shift]')) {
+        scenario.targetWorlds = Math.max(0, Math.min(15, Number(event.target.value) || 0));
+        const target = TARGETS.find(item => item.worlds === scenario.targetWorlds) || TARGETS[0];
+        scenario.exploreShift = target.shift;
+        render();
+        return;
+      }
       const block = scenario.events[selectedEventIndex];
       if (!block) return;
       if (event.target.dataset.blockField) {
@@ -2054,17 +2178,13 @@
       step = selectedEventIndex + 1;
       render();
     });
-    $('#block-inspector').addEventListener('input', event => {
-      if (event.target.dataset.blockEdit !== 'label') return;
-      const block = scenario.events[selectedEventIndex];
-      if (!block) return;
-      block.label = event.target.value;
-      renderProgram();
-      renderTimeline();
-      saveLocal();
-    });
     $('#block-inspector').addEventListener('click', event => {
       if (event.target.closest('[data-inspector-delete]') && selectedEventIndex != null) deleteProgramBlock(selectedEventIndex);
+      if (event.target.closest('[data-copy-setup]')) {
+        const code = encodeSetup();
+        if (navigator.clipboard?.writeText) navigator.clipboard.writeText(code).then(() => toast('Setup code copied')).catch(() => prompt('Copy this setup code', code));
+        else prompt('Copy this setup code', code);
+      }
     });
 
     $$('[data-flag]').forEach(input => input.addEventListener('change', event => { scenario.flags[event.target.dataset.flag] = event.target.checked; render(); }));
@@ -2084,10 +2204,11 @@
     });
     $('#preset-demo').addEventListener('click', loadDemo);
     $('#share').addEventListener('click', async () => {
-      const url = `${location.origin}${location.pathname}#s=${encodeShare()}`;
-      try { await navigator.clipboard.writeText(url); toast('Share link copied'); }
+      const code = encodeSetup();
+      const url = `${location.origin}${location.pathname}?setup=${code}`;
+      try { await navigator.clipboard.writeText(url); toast('Setup link copied'); }
       catch (_) { prompt('Copy this link', url); }
-      history.replaceState(null, '', `#s=${encodeShare()}`);
+      history.replaceState(null, '', `${location.pathname}?setup=${code}`);
     });
     $('#export').addEventListener('click', () => {
       const blob = new Blob([JSON.stringify(scenarioData(), null, 2) + '\n'], { type: 'application/json' });
@@ -2114,8 +2235,10 @@
 
     selectTool(activeTool);
     try {
+      const setup = new URLSearchParams(location.search).get('setup');
       const hash = location.hash.match(/^#s=(.+)$/);
-      if (hash) hydrate(decodeShare(hash[1]));
+      if (setup) hydrate(decodeSetup(setup));
+      else if (hash) hydrate(decodeLegacyShare(hash[1]));
       else {
         const saved = localStorage.getItem('throwverflow-lab-v1');
         if (saved) hydrate(JSON.parse(saved));
