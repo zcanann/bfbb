@@ -397,6 +397,10 @@
     .shift-result { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 16px; }
     .shift-status { padding: 9px 11px; background: var(--green-pale); border-left: 3px solid var(--green); font-size: .82rem; }
     .shift-status.bad { background: var(--red-pale); border-color: var(--red); }
+    .shift-key { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; margin-top: 10px; }
+    .shift-key-item { padding: 8px 9px; border: 1px solid var(--line); background: #fff; font-size: .72rem; line-height: 1.35; }
+    .shift-key-item b { display: block; margin-bottom: 3px; font-size: .75rem; }
+    .shift-key-item code { font-size: .68rem; }
     .payoff-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 10px; }
     .payoff { padding: 12px; border: 1px solid var(--line-dark); background: #fff; }
     .payoff.unlocked { border-color: var(--green); background: var(--green-pale); }
@@ -540,6 +544,7 @@
       .layout-source { grid-template-columns: 1fr; }
       .gate-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .program-shell { grid-template-columns: 1fr; }
+      .shift-key { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 680px) {
@@ -564,6 +569,7 @@
       .route-inspection .timeline-top { grid-template-columns: auto minmax(120px, 1fr) auto; }
       .playback-readout { grid-column: 1 / -1; }
       .tracked-readout { position: absolute; right: 16px; }
+      .shift-key { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -946,8 +952,8 @@
 
     const LAYOUTS = {
       gc: {
-        name: 'GameCube · GQPE78', start: 0x802F6368, end: 0x802FE100, stride: 0x1A4,
-        note: 'This follows the complete 15-world pause/warp table and every adjacent GC block through particle scratch. Object #54 crosses the end of sWorld; #56 reaches animation scratch; #78 reaches collision and file I/O scratch; #88 reaches FMV/audio state; #103 reaches model caches; #106 reaches particle scratch; #109 reaches the 0x14000-byte memory-card workspace immediately beyond this view.',
+        name: 'GameCube · GQPE78', start: 0x802F6368, end: 0x802FBE98, stride: 0x1A4,
+        note: 'This follows the complete 15-world pause/warp table and the adjacent GC blocks through FMV state. Object #54 crosses the end of sWorld; #56 reaches animation scratch; #78 reaches collision and file I/O scratch; #88 reaches the end of this practical view. Audio and later allocations are omitted.',
         segments: [
           ['Vertex[4]', 0x802F6368, 0x802F63C8, 'hot', 'UI'],
           ...WORLDS.map((world, index) => [`${world.code} world · ${world.name}`, 0x802F63C8 + index * 0x24C, 0x802F63C8 + (index + 1) * 0x24C, 'hot', world.code]),
@@ -956,11 +962,8 @@
           ['iAnim scratch', 0x802F8A80, 0x802FAE20, 'system', 'anim'],
           ['iCollide scratch', 0x802FAE20, 0x802FAE60, 'system', 'col'],
           ['iFile buffer', 0x802FAE60, 0x802FBE80, 'system', 'file'],
-          ['FMV state', 0x802FBE80, 0x802FBE98, 'system', ''],
-          ['audio mixer', 0x802FBE98, 0x802FD698, 'system', 'audio'],
-          ['model caches', 0x802FD698, 0x802FDB38, 'system', 'model'],
-          ['particle scratch', 0x802FDB38, 0x802FE100, 'system', 'particle']
-        ], slots: [33, 40, 47, 54, 56, 57, 64, 72, 78, 79, 88, 89, 103, 106, 109]
+          ['FMV state', 0x802FBE80, 0x802FBE98, 'system', '']
+        ], slots: [33, 40, 47, 54, 56, 57, 64, 72, 78, 79, 88]
       },
       xbox: {
         name: 'Xbox · retail US/EU', start: 0x002E5080, end: 0x002E6000, stride: 0x1A4,
@@ -1019,8 +1022,8 @@
         code: 'id = xStrHash("REMINDER_SOCK_CNTR");\ns->Write(((_xCounter*)zSceneFindObject(id))->count);'
       },
       'CNTR cheat flags': {
-        note: 'The saved cheat bitfield follows the sock reminder. The shift viewer represents its 32 bits as the next two 16-bit CNTR values.',
-        code: '// Immediately after REMINDER_SOCK_CNTR:\nzGameExtras_Save(s);\n// Saved cheat flags occupy the next 32 bits.'
+        note: 'The game writes (g_flg_chEnabled & 0xFFFF) as one 32-bit value after the sock reminder. On big-endian GameCube this appears to the shifted 16-bit task loader as an always-zero upper halfword followed by the low cheat-bit mask.',
+        code: 'void zGameExtras_Save(xSerial* xser)\n{\n    xser->Write(g_flg_chEnabled & 0xFFFF);\n}\n\n// Examples in the low halfword:\n// Bubble Bowl 0x0200, Cruise Bubble 0x0400,\n// Expert Mode 0x0800, camera swaps 0x1000 / 0x2000.'
       },
       'zVar text buffers': {
         note: 'Static character buffers used to format live counter, collectible, timer, and other UI-variable strings. Object #54 reaches the first one after leaving the warp table.',
@@ -1370,7 +1373,10 @@
       const stream = tasks.slice(shift);
       ROBOTS.forEach((robot, index) => stream.push({ type: 'police', robot, index }));
       stream.push({ type: 'sock' });
-      stream.push({ type: 'cheat', part: 'high 16 bits' }, { type: 'cheat', part: 'low 16 bits' });
+      stream.push(
+        { type: 'cheat', part: 'upper 16 bits', half: 'upper' },
+        { type: 'cheat', part: 'low 16-bit mask', half: 'lower' }
+      );
       for (let i = 0; i < 120; i++) stream.push({ type: 'stale', label: `Stale CNTR halfword ${i + 1}`, value: null });
       return stream;
     }
@@ -1519,7 +1525,7 @@
         const width = item.count / total * 100;
         return `<button type="button" class="save-stream-region ${item.tone}" data-layout-backing="${esc(item.backing)}" style="width:${width}%" title="${esc(item.label)} · ${item.count} ${item.count === 1 ? 'value' : 'values'}">${esc(item.short)}</button>`;
       }).join('');
-      return `<section class="save-stream"><div class="save-stream-head"><b>CNTR save stream</b><span>118 × 16-bit values before later save clients</span></div><div class="save-stream-map">${regions}</div><p class="save-stream-note">Save writes 100 task counts, 15 police counters, <code>REMINDER_SOCK_CNTR</code>, then the 32-bit cheat flags. Zeroed world counts omit task values; loading rebuilds the normal 100 task destinations first, so police, sock, and cheat data slide left into spatula slots.</p></section>`;
+      return `<section class="save-stream"><div class="save-stream-head"><b>CNTR save stream</b><span>118 × 16-bit values before later save clients</span></div><div class="save-stream-map">${regions}</div><p class="save-stream-note">Save writes 100 task counts, 15 police counters, <code>REMINDER_SOCK_CNTR</code>, then a 32-bit write containing only the low 16 cheat-flag bits. Zeroed world counts omit task values; loading rebuilds the normal 100 task destinations first, so police, sock, and the two cheat halfwords slide left into spatula slots.</p></section>`;
     }
 
     function renderLayout(state) {
@@ -1822,7 +1828,7 @@
         return 0;
       }
       if (source.type === 'sock') return scenario.flags.sock ? 1 : 0;
-      if (source.type === 'cheat') return 0;
+      if (source.type === 'cheat') return source.half === 'upper' ? 0 : null;
       return source.value;
     }
 
@@ -1833,6 +1839,16 @@
       if (source.type === 'sock') return 'REMINDER_SOCK_CNTR';
       if (source.type === 'cheat') return `Saved cheat flags · ${source.part}`;
       return source.label || 'Stale CNTR buffer';
+    }
+
+    function sourceWarpEffect(source) {
+      if (!source) return 'No known value.';
+      if (source.type === 'task') return 'Copies that task state. Any positive count enables this warp.';
+      if (source.type === 'police') return '0 or 1. A discovered robot writes 1 and enables this warp.';
+      if (source.type === 'sock') return 'Sock reminder count. Any positive count enables this warp.';
+      if (source.type === 'cheat' && source.half === 'upper') return 'Always 0 on GameCube, so this destination stays locked.';
+      if (source.type === 'cheat') return 'Low cheat-bit mask. Positive enables this warp; it does not activate that cheat here.';
+      return 'Unknown leftover signed 16-bit data: positive enables the warp; 0 or negative cannot complete it.';
     }
 
     function buildSaveStream(state) {
@@ -1848,9 +1864,17 @@
       const tableRows = tasks.map((destination, index) => {
         const source = stream[index];
         const key = index === 82 || index === 83 ? ' class="key-row"' : '';
-        return `<tr${key}><td>${index + 1}</td><td><b>${destination.code}</b><br>${esc(destination.label)}</td><td>${esc(sourceLabel(source))}</td></tr>`;
+        return `<tr${key}><td>${index + 1}</td><td><b>${destination.code}</b><br>${esc(destination.label)}</td><td>${esc(sourceLabel(source))}</td><td>${esc(sourceWarpEffect(source))}</td></tr>`;
       }).join('');
-      $('#shift-result').innerHTML = `<div class="shift-status"><b>${shift}-entry shift.</b> The first ${shift} serialized task values are omitted; every destination below reads from the source shown beside it.</div><div class="table-wrap"><table><thead><tr><th>Loaded slot</th><th>Destination task</th><th>Reads from</th></tr></thead><tbody>${tableRows}</tbody></table></div>`;
+      $('#shift-result').innerHTML = `
+        <div class="shift-status"><b>${shift}-entry shift.</b> The first ${shift} serialized task values are omitted; every destination below reads from the source shown beside it.</div>
+        <div class="shift-key">
+          <div class="shift-key-item"><b>Warp rule</b>The taxi check requires the loaded task count to be <code>&gt; 0</code>.</div>
+          <div class="shift-key-item"><b>Stale CNTR halfword</b>Unknown leftover 16-bit buffer data—not automatically dead. Positive can unlock; zero or negative cannot complete the warp.</div>
+          <div class="shift-key-item"><b>Saved cheat flags</b><code>g_flg_chEnabled &amp; 0xFFFF</code> is written as 32 bits: an upper zero halfword, then the low cheat-bit mask.</div>
+          <div class="shift-key-item"><b>Not a destination write</b>These values only change whether the normal task portal is available. They do not replace its scene or marker ID.</div>
+        </div>
+        <div class="table-wrap"><table><thead><tr><th>Loaded slot</th><th>Destination task</th><th>Reads from</th><th>Warp result</th></tr></thead><tbody>${tableRows}</tbody></table></div>`;
       $('#explorer-value').textContent = `${shift} shift`;
       $('#shift-custom').value = shift;
       const quick = [0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 100];
