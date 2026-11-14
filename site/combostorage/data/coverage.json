@@ -11487,9 +11487,9 @@
     "platform": "ps2",
     "source_scene": "GY03",
     "destination_scene": "HB01",
-    "experiments": 2,
+    "experiments": 6,
     "failures": 0,
-    "reaches_play": 0,
+    "reaches_play": 2,
     "holders": 2
   },
   {

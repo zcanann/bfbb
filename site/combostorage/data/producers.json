@@ -8853,6 +8853,19 @@
     "holder_hex": "0x00D3BE48"
   },
   {
+    "id": "prod_a67c39819883d938b1157827",
+    "platform": "ps2",
+    "source_scene": "GY03",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "combo expires in menu",
+    "feasibility": "runtime_holder_mismatch",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "e22d0760d6917d79df03895f000fdd7c327c21a74f07afad0ab685b791833339",
+    "payload_hash": null,
+    "holder_hex": "0x00D3BE48"
+  },
+  {
     "id": "prod_09d8326ee5d2f24af30cd88c",
     "platform": "ps2",
     "source_scene": "GY03",
@@ -8862,6 +8875,19 @@
     "feasibility": "natural_sequence_available",
     "naturality": "synthetic_combo_state",
     "state_hash": "87e651c0a46792f8c96c1d0061faaa4bd94e0e1db7cbc3866387462c4a96220e",
+    "payload_hash": null,
+    "holder_hex": "0x00D3BE74"
+  },
+  {
+    "id": "prod_ec828e788fc49c15e7a8e80b",
+    "platform": "ps2",
+    "source_scene": "GY03",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "after show",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "5d5270384e5cf805191883c4fce9fede9c36526985a1d6f4fc7c1e5d1b9b7bb2",
     "payload_hash": null,
     "holder_hex": "0x00D3BE74"
   },
@@ -8992,6 +9018,19 @@
     "feasibility": "natural_sequence_available",
     "naturality": "synthetic_combo_state",
     "state_hash": "c86785e6554d404b1a0e8d4e65df5490cecbc5cabb1071d73cf96c3d11e1236c",
+    "payload_hash": null,
+    "holder_hex": "0x00C7822C"
+  },
+  {
+    "id": "prod_7c15cf2af85eabae3695b970",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "Make a four-wood-tiki combo, pause and quit before its reward appears, let the delayed reward appear on the title screen, then load Goo Lagoon.",
+    "feasibility": "natural_source_available",
+    "naturality": "controller_actions",
+    "state_hash": null,
     "payload_hash": null,
     "holder_hex": "0x00C7822C"
   },

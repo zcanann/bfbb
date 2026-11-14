@@ -28,7 +28,7 @@ function classify(item) {
   const text = [item.classification, item.result, item.feasibility, ...categories].join(" ").toLowerCase();
   if (/progression_award|pickup_reward_increased|runtime_verified_payoff/.test(text)) {
     const lab = /diagnostic|synthetic|artificial/.test(`${item.naturality} ${item.feasibility}`.toLowerCase());
-    return {key:"payoff", label:lab ? "Verified lab payoff" : "Verified payoff", tone:"good"};
+    return {key:"payoff", label:lab ? "Lab oracle" : "Verified payoff", tone:"good"};
   }
   if (/consumer_verified|wrong_warp_consumer_verified/.test(text)) return {key:"consumer", label:"Consumer verified", tone:"warn"};
   if (/load_blocker|stalled|crash|emulator_artifact/.test(text)) return {key:"blocked", label:/crash/.test(text) ? "Crash" : "Load blocker", tone:"bad"};
@@ -68,6 +68,25 @@ function recipeFor(item) {
   return outer.recipe && typeof outer.recipe === "object" ? outer.recipe : outer;
 }
 
+function isPlayerResult(item) {
+  const producers = item.producers || [];
+  return producers.some(producer => {
+    const text = `${producer.feasibility || ""} ${producer.naturality || ""}`.toLowerCase();
+    const positive = /controller_actions|controller_reproduced|natural_source_available|natural_route_verified|runner_feasible/.test(text);
+    const disqualifier = /diagnostic|synthetic|artificial|missing|not_routeable|layout_only/.test(text);
+    return positive && !disqualifier && Boolean(producer.action_summary);
+  });
+}
+
+function playerInput(item) {
+  const producer = (item.producers || []).find(producer => {
+    const text = `${producer.feasibility || ""} ${producer.naturality || ""}`.toLowerCase();
+    return /controller_actions|controller_reproduced|natural_source_available|natural_route_verified|runner_feasible/.test(text)
+      && !/diagnostic|synthetic|artificial|missing|not_routeable|layout_only/.test(text);
+  });
+  return producer?.action_summary || "No controller-ready input recorded.";
+}
+
 function plainSetup(item) {
   const status = routeability(item);
   const recipe = recipeFor(item);
@@ -91,6 +110,24 @@ function plainSetup(item) {
       "The game loads B302, the Robo-SpongeBob phase."
     ]
   };
+
+  if (isPlayerResult(item)) {
+    const consumer = item.consumers?.[0];
+    return {
+      status: {label: "Player input known", tone: "good", explanation: "The catalog records a concrete controller sequence for this result."},
+      playable: "Yes — the required input is made from ordinary controller actions.",
+      scope: "The input and resulting corruption are both recorded. This does not imply that the effect saves time.",
+      missing: /no access|no .*skip|no payoff/i.test(plainOutcome(item))
+        ? "A useful consequence; the observed effect currently has no demonstrated speedrun payoff."
+        : "Route timing and category legality still need separate evaluation.",
+      summary: `${playerInput(item)} Result: ${plainOutcome(item)}`,
+      steps: [
+        playerInput(item),
+        consumer?.action || `Enter ${destination} and perform the recorded interaction.`,
+        consumer?.result || plainOutcome(item),
+      ],
+    };
+  }
 
   if (item.transition === "title_round_trip" && item.primitive === "stale_motive_allocator") {
     const steps = [`Load ${source}.`];
@@ -118,7 +155,7 @@ function plainSetup(item) {
         ? "A natural way to make the title-screen allocator retain this exact address. Frame-perfect timing on an ordinary combo is not currently enough."
         : "A practical route and timing demonstration on controller input.",
       summary: isDiagnostic
-        ? "The payoff is real, but the address was selected by the harness. This is not an RTA input sequence."
+        ? "Forced-address oracle: the harness selected this address and observed the effect. This is not a player input sequence."
         : `Carry a pending combo reward through the title screen, load ${destination}, then interact with ${target}.`,
       steps
     };
@@ -218,12 +255,29 @@ function renderFindingCard(item) {
 }
 
 function renderFindings() {
-  const items = filtered(dedupeFindings(state.findings));
+  const items = filtered(dedupeFindings(state.findings)).filter(isPlayerResult);
   const counts = new Map();
   items.forEach(item => { const s = classify(item); counts.set(s.label, (counts.get(s.label) || 0) + 1); });
   $("#finding-summary").innerHTML = [...counts].map(([label, count]) => `<span class="summary-chip"><strong>${count}</strong> ${esc(label.toLowerCase())}</span>`).join("");
-  $("#findings-list").innerHTML = items.length ? items.map(renderFindingCard).join("") : `<div class="empty">No known results match these filters.</div>`;
+  $("#findings-list").innerHTML = items.length ? items.map(item => {
+    const status = classify(item);
+    return `<button class="player-result-row" data-id="${esc(item.id)}">
+      <span class="route">${esc(platformName(item.platform))}<strong>${esc(sceneName(item.destination_scene))}</strong></span>
+      <p>${esc(playerInput(item))}</p>
+      <p>${esc(plainOutcome(item))}</p>
+      <span class="badge ${status.tone}">${esc(status.label)}</span>
+    </button>`;
+  }).join("") : `<div class="empty">No controller-complete results match these filters. Lab-only address tests are listed under Research leads.</div>`;
   $$("#findings-list [data-id]").forEach(el => el.addEventListener("click", () => openDetail(findById(el.dataset.id))));
+}
+
+function renderLeads() {
+  const items = filtered(dedupeFindings(state.findings)).filter(item => !isPlayerResult(item));
+  const counts = new Map();
+  items.forEach(item => { const s = classify(item); counts.set(s.label, (counts.get(s.label) || 0) + 1); });
+  $("#lead-summary").innerHTML = [...counts].map(([label, count]) => `<span class="summary-chip"><strong>${count}</strong> ${esc(label.toLowerCase())}</span>`).join("");
+  $("#leads-list").innerHTML = items.length ? items.map(renderFindingCard).join("") : `<div class="empty">No promoted research leads match these filters.</div>`;
+  $$("#leads-list [data-id]").forEach(el => el.addEventListener("click", () => openDetail(findById(el.dataset.id))));
 }
 
 function findById(id) {
@@ -350,6 +404,7 @@ async function switchView(name, push = true) {
   $$(".tab").forEach(x => x.classList.toggle("is-active", x.dataset.view === name));
   $$(".view").forEach(x => x.classList.toggle("is-active", x.id === `view-${name}`));
   if (name === "browse") { await ensureResults(); renderBrowse(); }
+  if (name === "leads") renderLeads();
   if (name === "queue") { await ensureQueue(); renderQueue(); }
   if (name === "coverage") renderCoverage();
   if (push) setParams(true);
@@ -357,6 +412,7 @@ async function switchView(name, push = true) {
 
 function renderCurrent() {
   renderFindings();
+  renderLeads();
   if (state.view === "browse") renderBrowse();
   if (state.view === "coverage") renderCoverage();
   if (state.view === "queue") renderQueue();
@@ -364,7 +420,7 @@ function renderCurrent() {
 
 async function boot() {
   const params = new URLSearchParams(location.search);
-  state.view = ["findings","browse","coverage","queue","about"].includes(params.get("view")) ? params.get("view") : "findings";
+  state.view = ["findings","leads","browse","coverage","queue","about"].includes(params.get("view")) ? params.get("view") : "findings";
   state.platform = ["gamecube","ps2","xbox"].includes(params.get("platform")) ? params.get("platform") : "all";
   state.query = params.get("q") || "";
   state.selected = params.get("result");
@@ -377,6 +433,7 @@ async function boot() {
   $("#search-input").value = state.query;
   $$("#platform-filter button").forEach(x => x.classList.toggle("is-active", x.dataset.platform === state.platform));
   renderFindings();
+  renderLeads();
   await switchView(state.view, false);
   if (state.selected) {
     if (!findById(state.selected)) await ensureResults();

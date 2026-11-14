@@ -989,7 +989,7 @@
     "result": "stable",
     "reaches_play": 1,
     "summary": "The write visibly relocates and shrinks FLOAT_A_PLAT_04 after reset, but the player cannot exploit the reset while riding it.",
-    "holder_hex": null,
+    "holder_hex": "0x00C7822C",
     "writes": [
       {
         "allocation_index": 1,
@@ -1002,7 +1002,7 @@
         "semantic_category": "geometry_motion",
         "before_hex": null,
         "after_hex": null,
-        "holder_hex": null,
+        "holder_hex": "0x00C7822C",
         "write_start_hex": null,
         "write_end_hex": null,
         "continuation_before_hex": null,
@@ -1026,8 +1026,34 @@
         "crash_pc_hex": null
       }
     ],
-    "consumers": [],
-    "producers": [],
+    "consumers": [
+      {
+        "kind": "scene_reset",
+        "action": "Lose a life after Goo Lagoon finishes loading.",
+        "result": "FLOAT_A_PLAT_04 is rebuilt near the origin at roughly one-tenth scale and rises slowly.",
+        "persistence": "until_scene_reload"
+      }
+    ],
+    "producers": [
+      {
+        "id": "prod_7c15cf2af85eabae3695b970",
+        "source_scene": "HB04",
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "Make a four-wood-tiki combo, pause and quit before its reward appears, let the delayed reward appear on the title screen, then load Goo Lagoon.",
+        "feasibility": "natural_source_available",
+        "naturality": "controller_actions",
+        "holder_hex": "0x00C7822C",
+        "recipe": {
+          "action_summary": "Make a four-wood-tiki combo, pause and quit before its reward appears, let the delayed reward appear on the title screen, then load Goo Lagoon.",
+          "feasibility": "natural_source_available",
+          "holder": "0x00C7822C",
+          "naturality": "controller_actions",
+          "source_scene": "HB04",
+          "transition": "title_round_trip"
+        }
+      }
+    ],
     "evidence_refs": [
       "docs/combo-transition-study.md#geometry-controls",
       "tmp/bfbb-ps2-natural-target-catalog.json"

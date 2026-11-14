@@ -19,7 +19,8 @@
 
   <main>
     <nav class="tabs" aria-label="Catalog views">
-      <button class="tab is-active" data-view="findings">Findings</button>
+      <button class="tab is-active" data-view="findings">Player results</button>
+      <button class="tab" data-view="leads">Research leads</button>
       <button class="tab" data-view="browse">Map browser</button>
       <button class="tab" data-view="coverage">Coverage</button>
       <button class="tab" data-view="queue">Test queue</button>
@@ -44,16 +45,30 @@
       <div class="section-heading">
         <div>
           <p class="eyebrow">Start here</p>
-          <h2 id="findings-heading">Known results</h2>
+          <h2 id="findings-heading">Doable input → observed output</h2>
         </div>
-        <p>Open a result to see whether it has a real controller setup, the exact lab test, and what is still missing.</p>
+        <p>Only rows with a concrete player input and a runtime-observed result belong here.</p>
       </div>
       <div class="player-path">
         <strong>Known player trigger</strong>
         <span>Earn a combo large enough to show a reward, pause and quit during its one-second delay, let the delayed reward appear on the title screen, then load a file. This reaches the normal fixed address; cards marked <em>Lab-only setup</em> use addresses this sequence cannot currently reach.</span>
       </div>
       <div id="finding-summary" class="status-summary"></div>
-      <div id="findings-list" class="card-list"></div>
+      <div class="result-matrix-labels" aria-hidden="true"><span>Version / destination</span><span>Do this</span><span>What happens</span><span>Status</span></div>
+      <div id="findings-list" class="result-matrix"></div>
+    </section>
+
+    <section id="view-leads" class="view" aria-labelledby="leads-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Not a route yet</p>
+          <h2 id="leads-heading">Research leads</h2>
+        </div>
+        <p>Useful end states, forced-address tests, crashes, and dead ends. These are hunting information—not player instructions.</p>
+      </div>
+      <div class="lead-note"><strong>Why keep these?</strong><span>A lead is useful when it identifies a desirable output or a real control lever. Static address coincidences stay in the full Map browser instead of being promoted here.</span></div>
+      <div id="lead-summary" class="status-summary"></div>
+      <div id="leads-list" class="card-list"></div>
     </section>
 
     <section id="view-browse" class="view" aria-labelledby="browse-heading">
@@ -96,7 +111,8 @@
       <p class="eyebrow">Reading the catalog</p>
       <h2 id="about-heading">What the labels mean</h2>
       <dl class="definitions">
-        <div><dt>Verified lab payoff</dt><dd>The effect is real after the correct address is forced. It is not a playable exploit unless the result also says a controller setup is known.</dd></div>
+        <div><dt>Player result</dt><dd>A concrete controller input has an observed runtime output. These populate the front-page matrix.</dd></div>
+        <div><dt>Lab oracle</dt><dd>The harness forces an address to answer “what would happen?” No player route to that address is implied. These stay under Research leads.</dd></div>
         <div><dt>Consumer verified</dt><dd>The desired game state does something useful, but no natural setup is known to create it.</dd></div>
         <div><dt>Verified effect</dt><dd>The write visibly changes the game, without a demonstrated progression or time payoff.</dd></div>
         <div><dt>Verified no payoff</dt><dd>The state changed, but a matched control showed no reward or progression advantage.</dd></div>
