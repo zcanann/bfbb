@@ -6735,9 +6735,9 @@
     "platform": "ps2",
     "source_scene": "BC05",
     "destination_scene": "GL01",
-    "experiments": 6,
+    "experiments": 8,
     "failures": 0,
-    "reaches_play": 2,
+    "reaches_play": 4,
     "holders": 2
   },
   {
@@ -16167,9 +16167,9 @@
     "platform": "ps2",
     "source_scene": "HB09",
     "destination_scene": "HB01",
-    "experiments": 2,
+    "experiments": 8,
     "failures": 0,
-    "reaches_play": 0,
+    "reaches_play": 4,
     "holders": 2
   },
   {
