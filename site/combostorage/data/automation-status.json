@@ -1,1 +1,97 @@
-{"status":"not_run"}
+{
+  "schema": "bfbb.combo.autopilot/v1",
+  "run_id": "initial-live-cycle",
+  "status": "succeeded",
+  "started_at": "2026-11-14T22:28:06.029298+00:00",
+  "finished_at": "2026-11-14T22:39:13.567042+00:00",
+  "before": {
+    "generated_at": "2026-11-14T22:30:53.363674+00:00",
+    "summary": {
+      "total": 5269,
+      "actionable": 201,
+      "verified": 4,
+      "closed": 183,
+      "backlog": 4881,
+      "by_status": {
+        "closed": 148,
+        "confirm_runtime": 5008,
+        "find_producer": 1,
+        "inspect_effect": 51,
+        "probe_consumer": 16,
+        "runtime_blocked": 35,
+        "triage": 6,
+        "verified_payoff": 4
+      }
+    },
+    "runner_summary": {
+      "runnable_gamecube": 120,
+      "regression_gamecube": 2,
+      "deferred": 156
+    },
+    "runnable_gamecube": 120,
+    "regression_gamecube": 2,
+    "runner_digest": "2d95d2689c6c7f047f8b647279f41911bf4d505bfd101b081a466178d42a3c59",
+    "regression_digest": "60b9b79ad6399083bcbab025396cfe9af7dd73177e059326fadefe22068e91af"
+  },
+  "after": {
+    "generated_at": "2026-11-14T22:39:10.982865+00:00",
+    "summary": {
+      "total": 5271,
+      "actionable": 201,
+      "verified": 4,
+      "closed": 185,
+      "backlog": 4881,
+      "by_status": {
+        "closed": 148,
+        "confirm_runtime": 5008,
+        "find_producer": 1,
+        "inspect_effect": 51,
+        "probe_consumer": 16,
+        "runtime_blocked": 37,
+        "triage": 6,
+        "verified_payoff": 4
+      }
+    },
+    "runner_summary": {
+      "runnable_gamecube": 116,
+      "regression_gamecube": 2,
+      "deferred": 159
+    },
+    "runnable_gamecube": 116,
+    "regression_gamecube": 2,
+    "runner_digest": "9cc866e23407c4a107f5b7759b3b3e08cda845a1ded61fa6da55db11683c7063",
+    "regression_digest": "19f9cca8d70740a5381838845c3f01a47b8bd1b8f0527103b566ba0d9f91529d"
+  },
+  "commands": [
+    {
+      "name": "initial catalog refresh",
+      "returncode": 0,
+      "skipped": false
+    },
+    {
+      "name": "verified payoff regressions",
+      "returncode": 0,
+      "skipped": false
+    },
+    {
+      "name": "ingest regression evidence",
+      "returncode": 0,
+      "skipped": false
+    },
+    {
+      "name": "discovery batch 1",
+      "returncode": 0,
+      "skipped": false
+    },
+    {
+      "name": "ingest discovery batch 1",
+      "returncode": 0,
+      "skipped": false
+    },
+    {
+      "name": "build static catalog",
+      "returncode": 0,
+      "skipped": false
+    }
+  ]
+}

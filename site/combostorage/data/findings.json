@@ -50,6 +50,7 @@
       }
     ],
     "consumers": [],
+    "producers": [],
     "evidence_refs": [
       "docs/combo-transition-study.md#direct-stale-widget-update",
       "tmp/bfbb-hb00-counter-saved-slot-verify/",
@@ -114,10 +115,114 @@
         "persistence": "session"
       }
     ],
+    "producers": [
+      {
+        "id": "prod_e3a29f2445993c9e2ee8ad04",
+        "source_scene": "HB04",
+        "transition": "pause_quit_to_title",
+        "primitive": "stale_combo_widget_text",
+        "action_summary": "Create an artificial 0x64B0-0x64E0 pre-menu heap displacement, then expire combo tier 15 from HB04.",
+        "feasibility": "diagnostic_only",
+        "naturality": "no_natural_layout_lever_found",
+        "holder_hex": null,
+        "recipe": {
+          "action_summary": "Create an artificial 0x64B0-0x64E0 pre-menu heap displacement, then expire combo tier 15 from HB04.",
+          "feasibility": "diagnostic_only",
+          "naturality": "no_natural_layout_lever_found"
+        }
+      }
+    ],
     "evidence_refs": [
       "docs/combo-transition-study.md#direct-stale-widget-update",
       "tmp/bfbb-db01-warp-counter-oracle-v2/",
       "tmp/bfbb-hb04-b3t1-shift-64b0-stable/"
+    ]
+  },
+  {
+    "id": "exp_3da765e4b864aed46e2721bc",
+    "platform": "gamecube",
+    "source_scene": "HB05",
+    "destination_scene": "GL01",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "runtime_reproduced",
+    "naturality": "diagnostic_delivery",
+    "classification": "controlled_confirmation",
+    "result": "stable",
+    "reaches_play": 1,
+    "summary": "HB05 -> GL01 SHINY_RED_013: stable; control advantage {'shinies': 49, 'spatulas': 0, 'socks_current_level': 0, 'socks_total': 0}",
+    "holder_hex": "0x805B6898",
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "SHINY_RED_013",
+        "owner_type": "Pickup",
+        "asset_type": null,
+        "member": null,
+        "member_size": null,
+        "semantic_category": "pickup_runtime",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x805B6898",
+        "write_start_hex": null,
+        "write_end_hex": null,
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "progression_award",
+        "description": "Controlled probe exceeded the matched control: shinies +49",
+        "severity": "payoff",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": 49,
+        "spatula_delta": 0,
+        "sock_delta": 0,
+        "persistence": "post_transition",
+        "confidence": "matched_control_runtime",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [
+      {
+        "kind": "near_entity",
+        "action": "Probe SHINY_RED_013 and compare with an uncorrupted control.",
+        "result": "pickup_reward_increased",
+        "persistence": "post_transition"
+      }
+    ],
+    "producers": [
+      {
+        "id": "prod_d6895706b5acc7eab2a18e12",
+        "source_scene": "HB05",
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "1 warmups, shinies HUD",
+        "feasibility": "runtime_reproduced",
+        "naturality": "diagnostic_delivery",
+        "holder_hex": "0x805B6898",
+        "recipe": {
+          "command": null,
+          "hud_precondition": "shinies",
+          "hud_precondition_delay": 5,
+          "menu_prefix_allocations": 0,
+          "source": "HB05",
+          "source_dwell_frames": 60,
+          "warmups": 1
+        }
+      }
+    ],
+    "evidence_refs": [
+      "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\initial-live-cycle\\regressions\\confirm-setups\\runs\\01-HB05-w1-s0-GL01-805B6898\\attempt-01\\summary.json",
+      "C:\\Projects\\bfbb\\tmp\\bfbb-combo-regressions\\confirm-setups\\confirmations.json",
+      "C:\\Projects\\bfbb\\tmp\\bfbb-hub-hud-pickup-confirm\\confirm-setups\\confirmations.json",
+      "tmp\\bfbb-combo-regressions\\confirm-setups\\runs\\01-HB05-w1-s0-GL01-805B6898\\attempt-01\\summary.json",
+      "tmp\\bfbb-hub-hud-pickup-confirm\\confirm-setups\\runs\\02-HB05-w1-s0-GL01-805B6898\\attempt-01\\summary.json"
     ]
   },
   {
@@ -176,6 +281,27 @@
         "action": "Probe SHINY_RED_013 and compare with an uncorrupted control.",
         "result": "pickup_reward_increased",
         "persistence": "post_transition"
+      }
+    ],
+    "producers": [
+      {
+        "id": "prod_d6895706b5acc7eab2a18e12",
+        "source_scene": "HB05",
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "1 warmups, shinies HUD",
+        "feasibility": "runtime_reproduced",
+        "naturality": "diagnostic_delivery",
+        "holder_hex": "0x805B6898",
+        "recipe": {
+          "command": null,
+          "hud_precondition": "shinies",
+          "hud_precondition_delay": 5,
+          "menu_prefix_allocations": 0,
+          "source": "HB05",
+          "source_dwell_frames": 60,
+          "warmups": 1
+        }
       }
     ],
     "evidence_refs": [
@@ -242,6 +368,27 @@
         "persistence": "post_transition"
       }
     ],
+    "producers": [
+      {
+        "id": "prod_d6895706b5acc7eab2a18e12",
+        "source_scene": "HB05",
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "1 warmups, shinies HUD",
+        "feasibility": "runtime_reproduced",
+        "naturality": "diagnostic_delivery",
+        "holder_hex": "0x805B6898",
+        "recipe": {
+          "command": null,
+          "hud_precondition": "shinies",
+          "hud_precondition_delay": 5,
+          "menu_prefix_allocations": 0,
+          "source": "HB05",
+          "source_dwell_frames": 60,
+          "warmups": 1
+        }
+      }
+    ],
     "evidence_refs": [
       "tmp\\bfbb-hub-hud-pickup-confirm\\confirm-setups\\runs\\02-HB05-w1-s0-GL01-805B6898\\attempt-01\\summary.json"
     ]
@@ -304,7 +451,115 @@
         "persistence": "post_transition"
       }
     ],
+    "producers": [
+      {
+        "id": "prod_aea8fdf5d0f9cdb4602629a9",
+        "source_scene": "HB07",
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "0 warmups, shinies HUD",
+        "feasibility": "runtime_reproduced",
+        "naturality": "diagnostic_delivery",
+        "holder_hex": "0x805BB2F8",
+        "recipe": {
+          "command": "python tools/bfbb_combo_storage_probe.py run --source HB07 --destination JF02 --variant source_show_expire_menu_show --transition title_round_trip --menu-frames 2 --combo-warmups 0 --source-frames 60 --menu-prefix-allocations 0 --hud-precondition shinies --hud-precondition-delay 120",
+          "hud_precondition": "shinies",
+          "hud_precondition_delay": 120,
+          "menu_prefix_allocations": 0,
+          "source": "HB07",
+          "source_dwell_frames": 60,
+          "warmups": 0
+        }
+      }
+    ],
     "evidence_refs": [
+      "tmp\\bfbb-hb07-d120-confirm\\confirm-setups\\runs\\01-HB07-w0-s0-JF02-805BB2F8\\summary.json"
+    ]
+  },
+  {
+    "id": "exp_8bb8567b0199ae8f83ae7cc5",
+    "platform": "gamecube",
+    "source_scene": "HB07",
+    "destination_scene": "JF02",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "runtime_reproduced",
+    "naturality": "diagnostic_delivery",
+    "classification": "controlled_confirmation",
+    "result": "stable",
+    "reaches_play": 1,
+    "summary": "HB07 -> JF02 SHINY_YELL0W_026: stable; control advantage {'shinies': 48, 'spatulas': 0, 'socks_current_level': 0, 'socks_total': 0}",
+    "holder_hex": "0x805BB2F8",
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "SHINY_YELL0W_026",
+        "owner_type": "Pickup",
+        "asset_type": null,
+        "member": "zEntPickup.simpShadow_embedded",
+        "member_size": null,
+        "semantic_category": "pickup_runtime",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x805BB2F8",
+        "write_start_hex": null,
+        "write_end_hex": null,
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "progression_award",
+        "description": "Controlled probe exceeded the matched control: shinies +48",
+        "severity": "payoff",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": 48,
+        "spatula_delta": 0,
+        "sock_delta": 0,
+        "persistence": "post_transition",
+        "confidence": "matched_control_runtime",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [
+      {
+        "kind": "near_entity",
+        "action": "Probe SHINY_YELL0W_026 and compare with an uncorrupted control.",
+        "result": "pickup_reward_increased",
+        "persistence": "post_transition"
+      }
+    ],
+    "producers": [
+      {
+        "id": "prod_5e8054c249f554e51316ad1b",
+        "source_scene": "HB07",
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "0 warmups, shinies HUD",
+        "feasibility": "runtime_reproduced",
+        "naturality": "diagnostic_delivery",
+        "holder_hex": "0x805BB2F8",
+        "recipe": {
+          "command": null,
+          "hud_precondition": "shinies",
+          "hud_precondition_delay": 120,
+          "menu_prefix_allocations": 0,
+          "source": "HB07",
+          "source_dwell_frames": 60,
+          "warmups": 0
+        }
+      }
+    ],
+    "evidence_refs": [
+      "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\initial-live-cycle\\regressions\\confirm-setups\\runs\\02-HB07-w0-s0-JF02-805BB2F8\\attempt-01\\summary.json",
+      "C:\\Projects\\bfbb\\tmp\\bfbb-combo-regressions\\confirm-setups\\confirmations.json",
+      "C:\\Projects\\bfbb\\tmp\\bfbb-hb07-d120-confirm\\confirm-setups\\confirmations.json",
+      "tmp\\bfbb-combo-regressions\\confirm-setups\\runs\\02-HB07-w0-s0-JF02-805BB2F8\\attempt-01\\summary.json",
       "tmp\\bfbb-hb07-d120-confirm\\confirm-setups\\runs\\01-HB07-w0-s0-JF02-805BB2F8\\summary.json"
     ]
   },
@@ -364,6 +619,27 @@
         "action": "Probe SHINY_YELL0W_026 and compare with an uncorrupted control.",
         "result": "pickup_reward_increased",
         "persistence": "post_transition"
+      }
+    ],
+    "producers": [
+      {
+        "id": "prod_5e8054c249f554e51316ad1b",
+        "source_scene": "HB07",
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "0 warmups, shinies HUD",
+        "feasibility": "runtime_reproduced",
+        "naturality": "diagnostic_delivery",
+        "holder_hex": "0x805BB2F8",
+        "recipe": {
+          "command": null,
+          "hud_precondition": "shinies",
+          "hud_precondition_delay": 120,
+          "menu_prefix_allocations": 0,
+          "source": "HB07",
+          "source_dwell_frames": 60,
+          "warmups": 0
+        }
       }
     ],
     "evidence_refs": [
@@ -430,6 +706,7 @@
         "persistence": "saved"
       }
     ],
+    "producers": [],
     "evidence_refs": [
       "docs/combo-transition-study.md#exact-candidate-outcomes",
       "tmp/bfbb-menu-motive461-bc02/",
@@ -468,6 +745,7 @@
       }
     ],
     "consumers": [],
+    "producers": [],
     "evidence_refs": [
       "docs/combo-transition-study.md#exact-candidate-outcomes",
       "tmp/bfbb-ps2-natural-target-catalog.json"
@@ -542,6 +820,7 @@
       }
     ],
     "consumers": [],
+    "producers": [],
     "evidence_refs": [
       "docs/combo-transition-study.md#exact-candidate-outcomes",
       "tmp/bfbb-ps2-natural-target-catalog.json"
@@ -616,6 +895,7 @@
       }
     ],
     "consumers": [],
+    "producers": [],
     "evidence_refs": [
       "docs/combo-transition-study.md#exact-candidate-outcomes",
       "tmp/bfbb-ps2-natural-target-catalog.json"
@@ -690,6 +970,7 @@
       }
     ],
     "consumers": [],
+    "producers": [],
     "evidence_refs": [
       "docs/combo-transition-study.md#exact-candidate-outcomes",
       "tmp/bfbb-ps2-natural-target-catalog.json"
@@ -746,6 +1027,7 @@
       }
     ],
     "consumers": [],
+    "producers": [],
     "evidence_refs": [
       "docs/combo-transition-study.md#geometry-controls",
       "tmp/bfbb-ps2-natural-target-catalog.json"
@@ -820,6 +1102,7 @@
       }
     ],
     "consumers": [],
+    "producers": [],
     "evidence_refs": [
       "docs/combo-transition-study.md#exact-candidate-outcomes",
       "tmp/bfbb-ps2-natural-target-catalog.json"
@@ -876,6 +1159,7 @@
       }
     ],
     "consumers": [],
+    "producers": [],
     "evidence_refs": [
       "docs/combo-transition-study.md#runtime-candidate-outcomes",
       "tmp/bfbb-xbox-lab/GY01-task-counter-shift-alignments.json",
@@ -940,6 +1224,7 @@
         "persistence": "scene_runtime"
       }
     ],
+    "producers": [],
     "evidence_refs": [
       "docs/combo-transition-study.md#runtime-candidate-outcomes",
       "tmp/bfbb-xbox-lab/oracle-A7B8-RB01-boot-reward42-v2.json",

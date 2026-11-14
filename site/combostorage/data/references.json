@@ -1960,11 +1960,32 @@
     "ref": "tmp\\bfbb-bc01-castlebreak\\confirm-setups\\runs\\01-BC01-w0-s0-GL01-80604F24\\attempt-01\\summary.json"
   },
   {
+    "experiment_id": "exp_c459f998a2fdae8a2f0b5fe0",
+    "platform": "gamecube",
+    "source_scene": "BC04",
+    "destination_scene": "GL01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\initial-live-cycle\\discovery-01\\confirm-setups\\runs\\01-BC04-w0-s0-GL01-805B5648\\attempt-03\\summary.json"
+  },
+  {
+    "experiment_id": "exp_c459f998a2fdae8a2f0b5fe0",
+    "platform": "gamecube",
+    "source_scene": "BC04",
+    "destination_scene": "GL01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-mitm-chain-payoffs-all-nodes-final\\chain-payoff-plan\\chain-payoff-plan.json"
+  },
+  {
     "experiment_id": "exp_848f93c828a8e98dcd2866c7",
     "platform": "gamecube",
     "source_scene": "BC04",
     "destination_scene": "GL01",
     "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-mitm-chain-payoffs-all-nodes-final\\chain-payoff-plan\\chain-payoff-plan.json"
+  },
+  {
+    "experiment_id": "exp_c459f998a2fdae8a2f0b5fe0",
+    "platform": "gamecube",
+    "source_scene": "BC04",
+    "destination_scene": "GL01",
+    "ref": "tmp\\bfbb-all-cycle-catalog\\source-cycle-catalog\\source-cycle-catalog.json"
   },
   {
     "experiment_id": "exp_848f93c828a8e98dcd2866c7",
@@ -2205,11 +2226,32 @@
     "ref": "tmp\\bfbb-bc05-jf02-reward-repeat\\confirm-setups\\runs\\01-BC05-w0-s0-JF02-805A6E34\\summary.json"
   },
   {
+    "experiment_id": "exp_554d448524f64c922a9c6a52",
+    "platform": "gamecube",
+    "source_scene": "BC05",
+    "destination_scene": "RB01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\initial-live-cycle\\discovery-01\\confirm-setups\\runs\\02-BC05-w0-s0-RB01-805A6E08\\attempt-03\\summary.json"
+  },
+  {
+    "experiment_id": "exp_554d448524f64c922a9c6a52",
+    "platform": "gamecube",
+    "source_scene": "BC05",
+    "destination_scene": "RB01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-mitm-chain-payoffs-all-nodes-final\\chain-payoff-plan\\chain-payoff-plan.json"
+  },
+  {
     "experiment_id": "exp_e28c8ab86776d620680d3667",
     "platform": "gamecube",
     "source_scene": "BC05",
     "destination_scene": "RB01",
     "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-mitm-chain-payoffs-all-nodes-final\\chain-payoff-plan\\chain-payoff-plan.json"
+  },
+  {
+    "experiment_id": "exp_554d448524f64c922a9c6a52",
+    "platform": "gamecube",
+    "source_scene": "BC05",
+    "destination_scene": "RB01",
+    "ref": "tmp\\bfbb-all-cycle-catalog\\source-cycle-catalog\\source-cycle-catalog.json"
   },
   {
     "experiment_id": "exp_e28c8ab86776d620680d3667",
@@ -2373,7 +2415,28 @@
     "ref": "tmp/bfbb-hb04-b3t1-shift-64b0-stable/"
   },
   {
-    "experiment_id": "exp_d88025d56b031cbf835db1d9",
+    "experiment_id": "exp_4286deaf7cf5d05d45b72297",
+    "platform": "gamecube",
+    "source_scene": "HB05",
+    "destination_scene": "GL01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\initial-live-cycle\\discovery-01\\confirm-setups\\runs\\03-HB05-w4-s0-GL01-805B6738\\attempt-03\\summary.json"
+  },
+  {
+    "experiment_id": "exp_3da765e4b864aed46e2721bc",
+    "platform": "gamecube",
+    "source_scene": "HB05",
+    "destination_scene": "GL01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\initial-live-cycle\\regressions\\confirm-setups\\runs\\01-HB05-w1-s0-GL01-805B6898\\attempt-01\\summary.json"
+  },
+  {
+    "experiment_id": "exp_3da765e4b864aed46e2721bc",
+    "platform": "gamecube",
+    "source_scene": "HB05",
+    "destination_scene": "GL01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-regressions\\confirm-setups\\confirmations.json"
+  },
+  {
+    "experiment_id": "exp_3da765e4b864aed46e2721bc",
     "platform": "gamecube",
     "source_scene": "HB05",
     "destination_scene": "GL01",
@@ -2384,7 +2447,42 @@
     "platform": "gamecube",
     "source_scene": "HB05",
     "destination_scene": "GL01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-hub-hud-pickup-confirm\\confirm-setups\\confirmations.json"
+  },
+  {
+    "experiment_id": "exp_4286deaf7cf5d05d45b72297",
+    "platform": "gamecube",
+    "source_scene": "HB05",
+    "destination_scene": "GL01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-mitm-chain-payoffs-all-nodes-final\\chain-payoff-plan\\chain-payoff-plan.json"
+  },
+  {
+    "experiment_id": "exp_4286deaf7cf5d05d45b72297",
+    "platform": "gamecube",
+    "source_scene": "HB05",
+    "destination_scene": "GL01",
+    "ref": "tmp\\bfbb-all-cycle-catalog\\source-cycle-catalog\\source-cycle-catalog.json"
+  },
+  {
+    "experiment_id": "exp_3da765e4b864aed46e2721bc",
+    "platform": "gamecube",
+    "source_scene": "HB05",
+    "destination_scene": "GL01",
     "ref": "tmp\\bfbb-combo-regressions\\confirm-setups\\runs\\01-HB05-w1-s0-GL01-805B6898\\attempt-01\\summary.json"
+  },
+  {
+    "experiment_id": "exp_d88025d56b031cbf835db1d9",
+    "platform": "gamecube",
+    "source_scene": "HB05",
+    "destination_scene": "GL01",
+    "ref": "tmp\\bfbb-combo-regressions\\confirm-setups\\runs\\01-HB05-w1-s0-GL01-805B6898\\attempt-01\\summary.json"
+  },
+  {
+    "experiment_id": "exp_3da765e4b864aed46e2721bc",
+    "platform": "gamecube",
+    "source_scene": "HB05",
+    "destination_scene": "GL01",
+    "ref": "tmp\\bfbb-hub-hud-pickup-confirm\\confirm-setups\\runs\\02-HB05-w1-s0-GL01-805B6898\\attempt-01\\summary.json"
   },
   {
     "experiment_id": "exp_d88025d56b031cbf835db1d9",
@@ -2457,6 +2555,27 @@
     "ref": "tmp\\bfbb-clean-confirmations\\confirm-setups\\runs\\06-HB07-w0-s0-GL01-805BB324\\summary.json"
   },
   {
+    "experiment_id": "exp_8bb8567b0199ae8f83ae7cc5",
+    "platform": "gamecube",
+    "source_scene": "HB07",
+    "destination_scene": "JF02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\initial-live-cycle\\regressions\\confirm-setups\\runs\\02-HB07-w0-s0-JF02-805BB2F8\\attempt-01\\summary.json"
+  },
+  {
+    "experiment_id": "exp_8bb8567b0199ae8f83ae7cc5",
+    "platform": "gamecube",
+    "source_scene": "HB07",
+    "destination_scene": "JF02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-regressions\\confirm-setups\\confirmations.json"
+  },
+  {
+    "experiment_id": "exp_8bb8567b0199ae8f83ae7cc5",
+    "platform": "gamecube",
+    "source_scene": "HB07",
+    "destination_scene": "JF02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-hb07-d120-confirm\\confirm-setups\\confirmations.json"
+  },
+  {
     "experiment_id": "exp_628f8960320d3f86f802e7c7",
     "platform": "gamecube",
     "source_scene": "HB07",
@@ -2478,11 +2597,25 @@
     "ref": "tmp\\bfbb-combo-queue-runs\\confirm-setups\\runs\\03-HB07-w0-s0-JF02-805BB2F8\\attempt-03\\summary.json"
   },
   {
+    "experiment_id": "exp_8bb8567b0199ae8f83ae7cc5",
+    "platform": "gamecube",
+    "source_scene": "HB07",
+    "destination_scene": "JF02",
+    "ref": "tmp\\bfbb-combo-regressions\\confirm-setups\\runs\\02-HB07-w0-s0-JF02-805BB2F8\\attempt-01\\summary.json"
+  },
+  {
     "experiment_id": "exp_628f8960320d3f86f802e7c7",
     "platform": "gamecube",
     "source_scene": "HB07",
     "destination_scene": "JF02",
     "ref": "tmp\\bfbb-combo-regressions\\confirm-setups\\runs\\02-HB07-w0-s0-JF02-805BB2F8\\attempt-01\\summary.json"
+  },
+  {
+    "experiment_id": "exp_8bb8567b0199ae8f83ae7cc5",
+    "platform": "gamecube",
+    "source_scene": "HB07",
+    "destination_scene": "JF02",
+    "ref": "tmp\\bfbb-hb07-d120-confirm\\confirm-setups\\runs\\01-HB07-w0-s0-JF02-805BB2F8\\summary.json"
   },
   {
     "experiment_id": "exp_628f8960320d3f86f802e7c7",
@@ -2588,6 +2721,27 @@
     "source_scene": "JF01",
     "destination_scene": "BC02",
     "ref": "tmp/menu-chunks-0-511-payoffs.json"
+  },
+  {
+    "experiment_id": "exp_b402f5b726deaa7deefad1ab",
+    "platform": "gamecube",
+    "source_scene": "JF01",
+    "destination_scene": "GL03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\initial-live-cycle\\discovery-01\\confirm-setups\\runs\\04-JF01-w0-s0-GL03-80582AC4\\attempt-03\\summary.json"
+  },
+  {
+    "experiment_id": "exp_b402f5b726deaa7deefad1ab",
+    "platform": "gamecube",
+    "source_scene": "JF01",
+    "destination_scene": "GL03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-persist-gl03-sock\\runs\\JF01-title_round_trip-menu_show_then_expire-d8-o-4-s180-GL03\\summary.json"
+  },
+  {
+    "experiment_id": "exp_b402f5b726deaa7deefad1ab",
+    "platform": "gamecube",
+    "source_scene": "JF01",
+    "destination_scene": "GL03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-probe-gl03-sock\\runs\\JF01-title_round_trip-menu_show_then_expire-d8-o-4-s180-GL03\\summary.json"
   },
   {
     "experiment_id": "exp_bf852a89a6f5bc297822cd85",

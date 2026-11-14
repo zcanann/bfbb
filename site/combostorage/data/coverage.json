@@ -309,7 +309,7 @@
     "platform": "gamecube",
     "source_scene": "BC04",
     "destination_scene": "GL01",
-    "experiments": 19,
+    "experiments": 23,
     "failures": 1,
     "reaches_play": 14,
     "holders": 5
@@ -372,7 +372,7 @@
     "platform": "gamecube",
     "source_scene": "BC05",
     "destination_scene": "RB01",
-    "experiments": 6,
+    "experiments": 10,
     "failures": 0,
     "reaches_play": 0,
     "holders": 3
@@ -426,10 +426,19 @@
     "platform": "gamecube",
     "source_scene": "GL01",
     "destination_scene": "GL01",
-    "experiments": 29,
+    "experiments": 32,
     "failures": 1,
-    "reaches_play": 29,
+    "reaches_play": 32,
     "holders": 4
+  },
+  {
+    "platform": "gamecube",
+    "source_scene": "GL03",
+    "destination_scene": "GL03",
+    "experiments": 1,
+    "failures": 0,
+    "reaches_play": 1,
+    "holders": 0
   },
   {
     "platform": "gamecube",
@@ -570,10 +579,10 @@
     "platform": "gamecube",
     "source_scene": "HB05",
     "destination_scene": "GL01",
-    "experiments": 7,
+    "experiments": 13,
     "failures": 0,
-    "reaches_play": 4,
-    "holders": 3
+    "reaches_play": 6,
+    "holders": 5
   },
   {
     "platform": "gamecube",
@@ -624,9 +633,9 @@
     "platform": "gamecube",
     "source_scene": "HB07",
     "destination_scene": "JF02",
-    "experiments": 12,
+    "experiments": 14,
     "failures": 0,
-    "reaches_play": 6,
+    "reaches_play": 8,
     "holders": 2
   },
   {
@@ -732,10 +741,10 @@
     "platform": "gamecube",
     "source_scene": "JF01",
     "destination_scene": "GL03",
-    "experiments": 3,
+    "experiments": 7,
     "failures": 2,
     "reaches_play": 3,
-    "holders": 2
+    "holders": 3
   },
   {
     "platform": "gamecube",
@@ -804,9 +813,9 @@
     "platform": "gamecube",
     "source_scene": "JF02",
     "destination_scene": "JF02",
-    "experiments": 22,
+    "experiments": 23,
     "failures": 0,
-    "reaches_play": 22,
+    "reaches_play": 23,
     "holders": 1
   },
   {
@@ -912,9 +921,9 @@
     "platform": "gamecube",
     "source_scene": "RB01",
     "destination_scene": "RB01",
-    "experiments": 7,
+    "experiments": 8,
     "failures": 0,
-    "reaches_play": 7,
+    "reaches_play": 8,
     "holders": 0
   },
   {

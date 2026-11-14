@@ -1,9 +1,10 @@
 const DATA = "data/";
 const sceneNames = {
   HB: "Bikini Bottom", JF: "Jellyfish Fields", BB: "Downtown Bikini Bottom",
-  GL: "Goo Lagoon", BC: "Mermalair", RB: "Rock Bottom", SM: "Sand Mountain",
-  KF: "Kelp Forest", GY: "Flying Dutchman's Graveyard", DB: "SpongeBob's Dream",
-  B1: "Robo-Sandy", B2: "Robo-Patrick", B3: "Robo-SpongeBob", MNU: "Main menu"
+  GL: "Goo Lagoon", B1: "Poseidome", RB: "Rock Bottom", BC: "Mermalair",
+  SM: "Sand Mountain", B2: "Industrial Park", KF: "Kelp Forest",
+  GY: "Flying Dutchman's Graveyard", DB: "SpongeBob's Dream",
+  B3: "Chum Bucket Lab", PG: "Playground", MN: "Main Menu"
 };
 
 const state = {
@@ -25,13 +26,128 @@ const sceneName = (code) => {
 function classify(item) {
   const categories = (item.outcomes || []).map(x => x.category);
   const text = [item.classification, item.result, item.feasibility, ...categories].join(" ").toLowerCase();
-  if (/progression_award|pickup_reward_increased|runtime_verified_payoff/.test(text)) return {key:"payoff", label:"Verified payoff", tone:"good"};
+  if (/progression_award|pickup_reward_increased|runtime_verified_payoff/.test(text)) {
+    const lab = /diagnostic|synthetic|artificial/.test(`${item.naturality} ${item.feasibility}`.toLowerCase());
+    return {key:"payoff", label:lab ? "Verified lab payoff" : "Verified payoff", tone:"good"};
+  }
   if (/consumer_verified|wrong_warp_consumer_verified/.test(text)) return {key:"consumer", label:"Consumer verified", tone:"warn"};
   if (/load_blocker|stalled|crash|emulator_artifact/.test(text)) return {key:"blocked", label:/crash/.test(text) ? "Crash" : "Load blocker", tone:"bad"};
   if (/no_reward|no_progression|no_advantage|negative_closure/.test(text)) return {key:"no-payoff", label:"Verified no payoff", tone:"neutral"};
   if (/visible_effect|state_corruption|controlled_confirmation/.test(text)) return {key:"effect", label:"Verified effect", tone:"warn"};
   if (/verified/.test(text)) return {key:"verified", label:"Runtime verified", tone:"neutral"};
   return {key:"candidate", label:"Candidate", tone:"neutral"};
+}
+
+function routeability(item) {
+  const text = `${item.naturality || ""} ${item.feasibility || ""} ${item.classification || ""}`.toLowerCase();
+  if (/consumer_only|missing_producer/.test(text)) return {
+    label: "Producer missing", tone: "warn",
+    explanation: "The useful end state works, but no gameplay action is known to write it."
+  };
+  if (/diagnostic|synthetic|artificial|layout_alignment_only/.test(text)) return {
+    label: "Lab-only setup", tone: "warn",
+    explanation: "The harness forced combo/HUD state or scene transport. This verifies the result, not a controller-ready route."
+  };
+  if (/blocked|invalid_followup|load_blocker/.test(text)) return {
+    label: "Not recoverable", tone: "bad",
+    explanation: "The tested sequence does not return to usable gameplay."
+  };
+  if (/natural_source_available|natural/.test(text)) return {
+    label: "Natural source", tone: "good",
+    explanation: "The source action exists in normal gameplay; timing and route practicality may still need work."
+  };
+  return {
+    label: "Route unknown", tone: "neutral",
+    explanation: "The catalog has not established a controller-ready setup for this result."
+  };
+}
+
+function recipeFor(item) {
+  const producer = item.producers?.[0] || {};
+  const outer = producer.recipe || {};
+  return outer.recipe && typeof outer.recipe === "object" ? outer.recipe : outer;
+}
+
+function plainSetup(item) {
+  const status = routeability(item);
+  const recipe = recipeFor(item);
+  const source = sceneName(item.source_scene);
+  const destination = sceneName(item.destination_scene);
+  const target = item.writes?.[0]?.owner_name || item.consumers?.[0]?.kind || "the affected object";
+  const warmups = Number(recipe.warmups ?? recipe.source_combo_warmups ?? 0);
+  const hud = recipe.hud_precondition || recipe.hud_action;
+  const delay = Number(recipe.hud_precondition_delay ?? recipe.hud_delay ?? 0);
+  const isDiagnostic = status.label === "Lab-only setup";
+
+  if (/wrong_warp_consumer_verified/.test(item.result || "")) return {
+    status,
+    playable: "No — the wrong warp works only after the lab supplies the task value.",
+    scope: "This verifies the game's response to a corrupted task counter. It does not verify a combo-storage setup that creates that counter.",
+    missing: "A gameplay action that writes a positive value to Chum Bucket Lab task 1 without breaking the menu.",
+    summary: "TAKE BUS enters the Robo-SpongeBob phase when Chum Bucket Lab task 1 is positive, but no natural write producer is known.",
+    steps: [
+      "Use the lab to set Chum Bucket Lab task 1 to a positive value.",
+      "Open the spatula screen and select TAKE BUS for that task.",
+      "The game loads B302, the Robo-SpongeBob phase."
+    ]
+  };
+
+  if (item.transition === "title_round_trip" && item.primitive === "stale_motive_allocator") {
+    const steps = [`Load ${source}.`];
+    if (warmups) steps.push(isDiagnostic
+      ? `The harness creates ${warmups} completed five-hit combo cycle${warmups === 1 ? "" : "s"} to prepare the recorded allocation history.`
+      : `Complete ${warmups} five-hit combo cycle${warmups === 1 ? "" : "s"}.`);
+    if (hud) steps.push(isDiagnostic
+      ? `The harness starts the ${titleCase(hud)} HUD animation${delay ? ` and advances ${delay} game frame${delay === 1 ? "" : "s"}` : ""}.`
+      : `Trigger the ${titleCase(hud)} HUD animation${delay ? `, then wait ${delay} game frame${delay === 1 ? "" : "s"}` : ""}.`);
+    steps.push(isDiagnostic
+      ? "The harness starts another five-hit combo reward and moves to the title screen while its HUD timer is pending, causing the delayed reward animation to allocate there."
+      : "Start another five-hit combo reward, pause and quit while its HUD timer is pending, and let the delayed reward animation begin on the title screen.");
+    steps.push(isDiagnostic
+      ? `The harness loads ${destination}; the test then approaches ${target}.`
+      : `Load ${destination}, then approach ${target}.`);
+    return {
+      status,
+      playable: isDiagnostic
+        ? "No — there is no known controller setup for this address."
+        : "Yes — the source action exists in normal play, although its route may still be impractical.",
+      scope: isDiagnostic
+        ? "The harness directly prepared the combo and HUD allocation history, then used lab scene transport. A normal stored combo does not select this address."
+        : "This row uses the ordinary pause, quit, title-screen, and file-load path.",
+      missing: isDiagnostic
+        ? "A natural way to make the title-screen allocator retain this exact address. Frame-perfect timing on an ordinary combo is not currently enough."
+        : "A practical route and timing demonstration on controller input.",
+      summary: isDiagnostic
+        ? "The payoff is real, but the address was selected by the harness. This is not an RTA input sequence."
+        : `Carry a pending combo reward through the title screen, load ${destination}, then interact with ${target}.`,
+      steps
+    };
+  }
+
+  const consumer = item.consumers?.[0];
+  return {
+    status,
+    playable: status.label === "Natural source"
+      ? "Partly — the source action is available in normal gameplay, but no useful route is proved here."
+      : "No complete controller setup is known for this result.",
+    scope: status.explanation,
+    missing: status.label === "Not recoverable"
+      ? "A continuation that reaches controllable gameplay after the write."
+      : "A controller-reproducible producer and a surviving transition.",
+    summary: consumer?.action || "The lab delivered the recorded write, then checked the affected object or transition.",
+    steps: [consumer?.action || "Reproduce the recorded source and transition timing.", consumer?.result || "Observe the recorded result."]
+  };
+}
+
+function plainOutcome(item) {
+  const outcome = item.outcomes?.[0] || {};
+  if (outcome.category === "progression_award" && outcome.shiny_delta) {
+    return `The corrupted pickup produced ${outcome.shiny_delta > 0 ? "+" : ""}${outcome.shiny_delta} shinies versus the matched clean run, and the total survived the follow-up transition.`;
+  }
+  if (outcome.category === "progression_award" && outcome.spatula_delta) {
+    return `The run gained ${outcome.spatula_delta} spatula${Math.abs(outcome.spatula_delta) === 1 ? "" : "s"}; the collected state survived reload.`;
+  }
+  return outcome.description || item.summary || titleCase(item.result);
 }
 
 function outcomeKey(item) {
@@ -55,7 +171,12 @@ function dedupeFindings(items) {
 }
 
 function searchable(item) {
-  return JSON.stringify(item).toLowerCase();
+  const sourceScenes = Array.isArray(item.source_scenes) ? item.source_scenes : [];
+  const sceneTerms = [item.source_scene, item.destination_scene, item.destination, ...sourceScenes]
+    .filter(Boolean)
+    .map(sceneName)
+    .join(" ");
+  return `${sceneTerms} ${JSON.stringify(item)}`.toLowerCase();
 }
 
 function filtered(items) {
@@ -87,12 +208,12 @@ function renderStats() {
 
 function renderFindingCard(item) {
   const status = classify(item);
-  const outcome = item.outcomes?.[0] || {};
-  const headline = outcome.description || item.summary || titleCase(item.result);
+  const setup = plainSetup(item);
+  const headline = plainOutcome(item);
   return `<button class="result-card" data-id="${esc(item.id)}">
-    <span class="route">${esc(platformName(item.platform))}<strong>${esc(item.source_scene || "—")} → ${esc(item.destination_scene || "—")}</strong></span>
-    <span><h3>${esc(headline)}</h3><p>${esc(item.summary || titleCase(item.classification))}${item.reruns > 1 ? ` · reproduced in ${item.reruns} catalog runs` : ""}</p></span>
-    <span class="badge ${status.tone}">${status.label}</span>
+    <span class="route">${esc(platformName(item.platform))}<strong>${esc(sceneName(item.source_scene))} → ${esc(sceneName(item.destination_scene))}</strong></span>
+    <span><h3>${esc(headline)}</h3><p>${esc(setup.summary)}${item.reruns > 1 ? ` · reproduced in ${item.reruns} catalog runs` : ""}</p></span>
+    <span class="badge-stack"><span class="badge ${status.tone}">${status.label}</span><span class="badge ${setup.status.tone}">${setup.status.label}</span></span>
   </button>`;
 }
 
@@ -129,15 +250,23 @@ function openDetail(item) {
   state.selected = item.id || item.experiment_id || item.write_id;
   setParams();
   const status = classify(item);
+  const setup = plainSetup(item);
   const outcomes = item.outcomes || [];
   const consumers = item.consumers || [];
   const evidence = item.evidence_refs || item.evidence || (item.evidence_path ? [item.evidence_path] : []);
   $("#detail-content").innerHTML = `<div class="detail-header">
-    <span class="badge ${status.tone}">${status.label}</span>
-    <h2>${esc(item.source_scene || "—")} → ${esc(item.destination_scene || "—")}</h2>
-    <p>${esc(item.summary || item.outcome_description || titleCase(item.result || item.classification))}</p>
+    <span class="badge ${status.tone}">${status.label}</span> <span class="badge ${setup.status.tone}">${setup.status.label}</span>
+    <h2>${esc(sceneName(item.source_scene))} → ${esc(sceneName(item.destination_scene))}</h2>
+    <p>${esc(setup.summary)}</p>
   </div>
-  <section class="detail-section"><h3>What happened</h3>${outcomes.length ? outcomes.map(o => `<p>${esc(o.description || titleCase(o.category))}</p>`).join("") : `<p>${esc(item.outcome_description || "No runtime outcome has been recorded yet.")}</p>`}</section>
+  <section class="playability-panel">
+    <h3>Can a player do this now?</h3>
+    <p><strong>${esc(setup.playable)}</strong></p>
+    <p>${esc(setup.scope)}</p>
+    <p><span>Still missing:</span> ${esc(setup.missing)}</p>
+  </section>
+  <section class="detail-section action-section"><h3>Exact test that produced this result</h3><ol>${setup.steps.map(step => `<li>${esc(step)}</li>`).join("")}</ol></section>
+  <section class="detail-section"><h3>What happened</h3><p>${esc(plainOutcome(item))}</p>${outcomes.slice(1).map(o => `<p>${esc(o.description || titleCase(o.category))}</p>`).join("")}</section>
   ${consumers.length ? `<section class="detail-section"><h3>How the result is consumed</h3>${consumers.map(c => `<p><strong>${esc(c.action)}</strong><br>${esc(c.result)}</p>`).join("")}</section>` : ""}
   <section class="detail-section"><h3>Technical record</h3><dl class="detail-grid">${detailRows(item).map(([k,v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl></section>
   <section class="detail-section"><h3>Evidence</h3>${evidence.length ? `<ul class="evidence-list">${evidence.map(e => `<li>${esc(e)}</li>`).join("")}</ul>` : `<p>No evidence path exported.</p>`}</section>`;
@@ -169,7 +298,7 @@ function renderBrowse() {
     const s = genericStatus(item);
     return `<button class="compact-row" data-id="${esc(item.experiment_id)}">
       <strong>${esc(platformName(item.platform))}</strong>
-      <span>${esc(item.source_scene || "—")} → ${esc(item.destination_scene || "—")}</span>
+      <span>${esc(sceneName(item.source_scene))} → ${esc(sceneName(item.destination_scene))}</span>
       <span>${esc(item.owner_name || "Unidentified destination")}</span>
       <span class="technical">${esc(item.member || item.outcome_description || item.result)}</span>
       <span class="badge ${s.tone}">${s.label}</span>
@@ -212,7 +341,7 @@ function renderQueue() {
     ? "No automated catalog cycle has been recorded yet."
     : `<strong>Last automation cycle: ${esc(titleCase(auto.status))}</strong>${auto.finished_at ? ` · ${esc(new Date(auto.finished_at).toLocaleString())}` : ""}${Number.isFinite(before) && Number.isFinite(after) ? ` · runnable GameCube recipes ${before} → ${after}` : ""}`;
   const items = filtered(state.queue.actionable || []).slice(0, 200);
-  $("#queue-list").innerHTML = items.length ? items.map(item => `<button class="compact-row" data-id="${esc(item.write_id)}"><strong>#${item.rank}</strong><span>${esc(item.source_scene || "—")} → ${esc(item.destination_scene || "—")}</span><span>${esc(item.owner_name || "Unknown target")}</span><span class="technical">${esc(item.suggested_action || item.summary)}</span><span class="badge warn">${esc(titleCase(item.status))}</span></button>`).join("") : `<div class="empty">No queued tests match these filters.</div>`;
+  $("#queue-list").innerHTML = items.length ? items.map(item => `<button class="compact-row" data-id="${esc(item.write_id)}"><strong>#${item.rank}</strong><span>${esc(sceneName(item.source_scene))} → ${esc(sceneName(item.destination_scene))}</span><span>${esc(item.owner_name || "Unknown target")}</span><span class="technical">${esc(item.suggested_action || item.summary)}</span><span class="badge warn">${esc(titleCase(item.status))}</span></button>`).join("") : `<div class="empty">No queued tests match these filters.</div>`;
   $$("#queue-list [data-id]").forEach(el => el.addEventListener("click", () => openDetail(findById(el.dataset.id))));
 }
 

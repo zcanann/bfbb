@@ -12,7 +12,7 @@
     <div class="header-copy">
       <p class="eyebrow">Battle for Bikini Bottom research</p>
       <h1>Combo Transition Catalog</h1>
-      <p class="lede">Pick a version, map, or result. See what action was tested, what changed, whether it survived, and what still blocks a useful route.</p>
+      <p class="lede">A combo reward can follow you through the title screen and write into the next level's memory. This catalog separates effects players can reproduce from address tests that only work in the lab.</p>
     </div>
     <div id="catalog-stats" class="catalog-stats" aria-label="Catalog totals"></div>
   </header>
@@ -46,7 +46,11 @@
           <p class="eyebrow">Start here</p>
           <h2 id="findings-heading">Known results</h2>
         </div>
-        <p>Verified payoffs, confirmed dead ends, load blockers, and useful effects. Duplicate reruns are combined.</p>
+        <p>Open a result to see whether it has a real controller setup, the exact lab test, and what is still missing.</p>
+      </div>
+      <div class="player-path">
+        <strong>Known player trigger</strong>
+        <span>Earn a combo large enough to show a reward, pause and quit during its one-second delay, let the delayed reward appear on the title screen, then load a file. This reaches the normal fixed address; cards marked <em>Lab-only setup</em> use addresses this sequence cannot currently reach.</span>
       </div>
       <div id="finding-summary" class="status-summary"></div>
       <div id="findings-list" class="card-list"></div>
@@ -92,14 +96,16 @@
       <p class="eyebrow">Reading the catalog</p>
       <h2 id="about-heading">What the labels mean</h2>
       <dl class="definitions">
-        <div><dt>Verified payoff</dt><dd>A corrupt run beat a matched clean control in a measurable way.</dd></div>
+        <div><dt>Verified lab payoff</dt><dd>The effect is real after the correct address is forced. It is not a playable exploit unless the result also says a controller setup is known.</dd></div>
         <div><dt>Consumer verified</dt><dd>The desired game state does something useful, but no natural setup is known to create it.</dd></div>
         <div><dt>Verified effect</dt><dd>The write visibly changes the game, without a demonstrated progression or time payoff.</dd></div>
         <div><dt>Verified no payoff</dt><dd>The state changed, but a matched control showed no reward or progression advantage.</dd></div>
         <div><dt>Load blocker / crash</dt><dd>The sequence does not reach controllable play under the tested conditions.</dd></div>
         <div><dt>Candidate</dt><dd>Addresses and bytes intersect something interesting. Runtime behavior is not yet proven.</dd></div>
       </dl>
-      <h3>What is being varied?</h3>
+      <h3>Are these all the same setup?</h3>
+      <p>No. The basic player action is: build a combo, pause and quit before its reward appears, let that delayed HUD animation begin on the title screen, then load a file. That real path writes from a small, fixed group of addresses.</p>
+      <p>Lab-only rows deliberately force extra HUD history, combo state, or scene loading so the same write lands at addresses the real path cannot currently reach. A result such as “+49 shinies” proves what happens at that address; it is not instructions for getting there in an unmodified run.</p>
       <p>A combo HUD animation can survive a title transition with a stale allocator pointer. Different source scenes and timing histories select different retained addresses. The destination then loads a new object or resource over that address, and a later HUD animation writes a fixed motive structure into it.</p>
       <p>The catalog records the producer action, retained address, destination owner, overwritten C++ member, continuation safety, observed result, comparison control, and evidence path. GameCube has the deepest automation today; PS2 and Xbox use the same public result model while their runners catch up.</p>
     </section>

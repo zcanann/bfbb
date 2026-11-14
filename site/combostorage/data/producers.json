@@ -1638,6 +1638,19 @@
     "holder_hex": "0x805B5648"
   },
   {
+    "id": "prod_dc5fe917f392360fe81243ba",
+    "platform": "gamecube",
+    "source_scene": "BC04",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "0 warmups",
+    "feasibility": "runtime_holder_mismatch",
+    "naturality": "diagnostic_delivery",
+    "state_hash": "c35188b0b8b45cd9a86da2252900223fc4e25a7c5542357aee14d8e153d2d6c3",
+    "payload_hash": null,
+    "holder_hex": "0x805B5648"
+  },
+  {
     "id": "prod_fa849934c52dde7b48e838fc",
     "platform": "gamecube",
     "source_scene": "BC04",
@@ -1699,6 +1712,19 @@
     "feasibility": "runtime_reproduced",
     "naturality": "diagnostic_delivery",
     "state_hash": "897134bc130b0fad063997999b0f9fe2df656dbf26311f20bdf3b63b0be9e6f1",
+    "payload_hash": null,
+    "holder_hex": "0x805B5674"
+  },
+  {
+    "id": "prod_c8e8a3f26de0754f64821e7d",
+    "platform": "gamecube",
+    "source_scene": "BC04",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "source_show_expire_menu_show",
+    "feasibility": "diagnostic",
+    "naturality": "synthetic_globals",
+    "state_hash": "38f9a5c2315a730aed6776d6017623efdfbf542175d84472d410418700a417f8",
     "payload_hash": null,
     "holder_hex": "0x805B5674"
   },
@@ -1963,6 +1989,19 @@
     "holder_hex": "0x805A6E08"
   },
   {
+    "id": "prod_7b685012612f13e8e77048be",
+    "platform": "gamecube",
+    "source_scene": "BC05",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "0 warmups",
+    "feasibility": "runtime_holder_mismatch",
+    "naturality": "diagnostic_delivery",
+    "state_hash": "2b0efb9a9424faf8b6585f3400eed27e5c17c3b72a37cd6b033e8ad31f93ebb0",
+    "payload_hash": null,
+    "holder_hex": "0x805A6E08"
+  },
+  {
     "id": "prod_b643c3cffea9ca724c79752b",
     "platform": "gamecube",
     "source_scene": "BC05",
@@ -2089,6 +2128,19 @@
     "feasibility": "runtime_reproduced",
     "naturality": "diagnostic_delivery",
     "state_hash": "82a7802694ddf173df09528ce10e46f6ba79826921abfce17c72ee987ab117b4",
+    "payload_hash": null,
+    "holder_hex": "0x805A6E34"
+  },
+  {
+    "id": "prod_7bdd5d05b1c26a6a7a00698c",
+    "platform": "gamecube",
+    "source_scene": "BC05",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "source_show_expire_menu_show",
+    "feasibility": "diagnostic",
+    "naturality": "synthetic_globals",
+    "state_hash": "ded2c1ff7f32ad6cab41c0197b7e0e49161ff73bced3e942918f856bee050587",
     "payload_hash": null,
     "holder_hex": "0x805A6E34"
   },
@@ -2730,6 +2782,19 @@
     "holder_hex": "0x806FB2A4"
   },
   {
+    "id": "prod_ac1383d3a3fde7f7ae85ba80",
+    "platform": "gamecube",
+    "source_scene": "GL03",
+    "transition": "title_round_trip",
+    "primitive": "control",
+    "action_summary": "none",
+    "feasibility": "diagnostic",
+    "naturality": "synthetic_globals",
+    "state_hash": "55b510828addefc5a8a0299b58bec79c08100ec3d86dc4415b5f86d8aafc4c01",
+    "payload_hash": null,
+    "holder_hex": null
+  },
+  {
     "id": "prod_29a562a8e8d7cd2d08600231",
     "platform": "gamecube",
     "source_scene": "GY01",
@@ -3094,6 +3159,19 @@
     "holder_hex": null
   },
   {
+    "id": "prod_e71b3f0cd135ed1507f81ebb",
+    "platform": "gamecube",
+    "source_scene": "HB05",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "source_show_expire_menu_show",
+    "feasibility": "diagnostic",
+    "naturality": "synthetic_globals",
+    "state_hash": "d958fedfd13990b83adb03a5945c56ca26918e72bc84d0ee3588d61256f12384",
+    "payload_hash": null,
+    "holder_hex": "0x805B66E0"
+  },
+  {
     "id": "prod_1781dada75eaf1cebfcc3cc6",
     "platform": "gamecube",
     "source_scene": "HB05",
@@ -3142,6 +3220,19 @@
     "feasibility": "unproduced_candidate",
     "naturality": "diagnostic_delivery",
     "state_hash": "47ccb662d2920d5e99ecd94c3f5cc09a5376af301ddc81aa2be003e2e23ab559",
+    "payload_hash": null,
+    "holder_hex": "0x805B6738"
+  },
+  {
+    "id": "prod_0e83a2b10528b1d48f544f11",
+    "platform": "gamecube",
+    "source_scene": "HB05",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "4 warmups",
+    "feasibility": "runtime_holder_mismatch",
+    "naturality": "diagnostic_delivery",
+    "state_hash": "08229533b8afd7612dddcf240321dba70dd1c833bc37ed5cb4d17f0b1c0bb5dc",
     "payload_hash": null,
     "holder_hex": "0x805B6738"
   },
@@ -5239,6 +5330,19 @@
     "holder_hex": "0x80582AC4"
   },
   {
+    "id": "prod_2defb48a17a240a63935221b",
+    "platform": "gamecube",
+    "source_scene": "JF01",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "0 warmups",
+    "feasibility": "runtime_holder_mismatch",
+    "naturality": "diagnostic_delivery",
+    "state_hash": "c9f865ee56842c31d8efcd4d1d03e934bc8e64f813e0473a462c4d5a82b8a6b7",
+    "payload_hash": null,
+    "holder_hex": "0x80582AC4"
+  },
+  {
     "id": "prod_f507be0d03fcd91259731aec",
     "platform": "gamecube",
     "source_scene": "JF01",
@@ -5939,6 +6043,19 @@
     "state_hash": "9be059e3017441d3f8542e77b9f82dd1369c0a9ed5020f3b7553861edb0586df",
     "payload_hash": null,
     "holder_hex": "0x806DFDFC"
+  },
+  {
+    "id": "prod_ee68540e9eb6c1ecd772e655",
+    "platform": "gamecube",
+    "source_scene": "JF01",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "source_show_expire_menu_show",
+    "feasibility": "diagnostic",
+    "naturality": "synthetic_globals",
+    "state_hash": "f4edaef7f78b827464df5438a9e4e654f44e9e5763ef05ecde17938d0d0a2322",
+    "payload_hash": null,
+    "holder_hex": "0x806DFE28"
   },
   {
     "id": "prod_2405d814c3b2ca82fdcb08b2",
