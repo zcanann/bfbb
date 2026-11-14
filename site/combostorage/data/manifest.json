@@ -1,0 +1,48 @@
+{
+  "schema": "bfbb.combo.site/v1",
+  "generated_at": "2026-11-14T22:01:45.575612+00:00",
+  "stats": {
+    "schema_version": 1,
+    "counts": {
+      "evidence_files": 339,
+      "experiments": 5801,
+      "producers": 748,
+      "writes": 5671,
+      "write_members": 601,
+      "outcomes": 5803,
+      "consumer_tests": 214,
+      "experiment_evidence": 510,
+      "import_issues": 0
+    },
+    "platforms": [
+      {
+        "platform": "gamecube",
+        "experiments": 747,
+        "holders": 137
+      },
+      {
+        "platform": "ps2",
+        "experiments": 4998,
+        "holders": 91
+      },
+      {
+        "platform": "xbox",
+        "experiments": 56,
+        "holders": 11
+      }
+    ]
+  },
+  "files": {
+    "producers": "producers.json",
+    "results": "results.json",
+    "members": "members.json",
+    "coverage": "coverage.json",
+    "evidence": "evidence.json",
+    "references": "references.json",
+    "findings": "findings.json",
+    "experiment_queue": "experiment-queue.json",
+    "experiment_queue_markdown": "experiment-queue.md",
+    "runner_jobs": "runner-jobs.json",
+    "regression_jobs": "regression-jobs.json"
+  }
+}

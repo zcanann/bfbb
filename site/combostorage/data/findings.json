@@ -1,0 +1,949 @@
+[
+  {
+    "id": "exp_ce72158c5a08e31248915a67",
+    "platform": "gamecube",
+    "source_scene": "HB00",
+    "destination_scene": "MNU3",
+    "transition": "pause_quit_to_title",
+    "primitive": "stale_combo_widget_text",
+    "feasibility": "blocked_on_hardware",
+    "naturality": "natural_overlap_but_invalid_followup_free",
+    "classification": "emulator_artifact",
+    "result": "crash",
+    "reaches_play": 0,
+    "summary": "The text really writes a positive Dream task counter, but the following free stores through 0x870CFF15 and raises a guest exception under accurate MMU/console behavior.",
+    "holder_hex": null,
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "DB_TASK_COUNTER_01",
+        "owner_type": "Counter",
+        "asset_type": "CNTR",
+        "member": "_xCounter.count",
+        "member_size": 2,
+        "semantic_category": "task_progression",
+        "before_hex": null,
+        "after_hex": "7472",
+        "holder_hex": null,
+        "write_start_hex": null,
+        "write_end_hex": null,
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "emulator_artifact",
+        "description": "Fast-MMU Dolphin can appear to continue and save; accurate MMU and console semantics crash on the invalid free-list store.",
+        "severity": "crash",
+        "reaches_play": 0,
+        "crash_stage": "menu_widget_show_free",
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "none_on_hardware",
+        "confidence": "accurate_mmu_verified",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [],
+    "evidence_refs": [
+      "docs/combo-transition-study.md#direct-stale-widget-update",
+      "tmp/bfbb-hb00-counter-saved-slot-verify/",
+      "tmp/bfbb-hb00-direct-widget-tier6-mmu/"
+    ]
+  },
+  {
+    "id": "exp_b20b28ca9e99ad6c74b32861",
+    "platform": "gamecube",
+    "source_scene": "HB04",
+    "destination_scene": "MNU3",
+    "transition": "pause_quit_to_title",
+    "primitive": "stale_combo_widget_text",
+    "feasibility": "consumer_only",
+    "naturality": "requires_artificial_0x64b0_menu_heap_displacement",
+    "classification": "verified_consumer_missing_producer",
+    "result": "wrong_warp_consumer_verified",
+    "reaches_play": 1,
+    "summary": "A positive B3 task-1 counter survives and makes TAKE BUS enter B302, but no natural action is known to create the required menu layout.",
+    "holder_hex": null,
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "B3_TASK_COUNTER_01",
+        "owner_type": "Counter",
+        "asset_type": "CNTR",
+        "member": "_xCounter.count",
+        "member_size": 2,
+        "semantic_category": "task_progression",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": null,
+        "write_start_hex": null,
+        "write_end_hex": null,
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "consumer_verified",
+        "description": "Positive task 1 enables TAKE BUS and enters B302. The target effect is real; the address-producing setup is not currently runner-feasible.",
+        "severity": "theoretical_payoff",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "session_and_save_oracle",
+        "confidence": "runtime_verified_consumer",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [
+      {
+        "kind": "pause_take_bus",
+        "action": "Open the spatula screen and choose TAKE BUS for B3 task 1.",
+        "result": "Loads B302, the Robo-SpongeBob phase.",
+        "persistence": "session"
+      }
+    ],
+    "evidence_refs": [
+      "docs/combo-transition-study.md#direct-stale-widget-update",
+      "tmp/bfbb-db01-warp-counter-oracle-v2/",
+      "tmp/bfbb-hb04-b3t1-shift-64b0-stable/"
+    ]
+  },
+  {
+    "id": "exp_d88025d56b031cbf835db1d9",
+    "platform": "gamecube",
+    "source_scene": "HB05",
+    "destination_scene": "GL01",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "runtime_reproduced",
+    "naturality": "diagnostic_delivery",
+    "classification": "controlled_confirmation",
+    "result": "stable",
+    "reaches_play": 1,
+    "summary": "HB05 -> GL01 SHINY_RED_013: stable; control advantage {'shinies': 49, 'spatulas': 0, 'socks_current_level': 0, 'socks_total': 0}",
+    "holder_hex": "0x805B6898",
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "SHINY_RED_013",
+        "owner_type": "Pickup",
+        "asset_type": null,
+        "member": null,
+        "member_size": null,
+        "semantic_category": "pickup_runtime",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x805B6898",
+        "write_start_hex": null,
+        "write_end_hex": null,
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "progression_award",
+        "description": "Controlled probe exceeded the matched control: shinies +49",
+        "severity": "payoff",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": 49,
+        "spatula_delta": 0,
+        "sock_delta": 0,
+        "persistence": "post_transition",
+        "confidence": "matched_control_runtime",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [
+      {
+        "kind": "near_entity",
+        "action": "Probe SHINY_RED_013 and compare with an uncorrupted control.",
+        "result": "pickup_reward_increased",
+        "persistence": "post_transition"
+      }
+    ],
+    "evidence_refs": [
+      "C:\\Projects\\bfbb\\tmp\\bfbb-hub-hud-pickup-confirm\\confirm-setups\\confirmations.json",
+      "tmp\\bfbb-combo-regressions\\confirm-setups\\runs\\01-HB05-w1-s0-GL01-805B6898\\attempt-01\\summary.json",
+      "tmp\\bfbb-hub-hud-pickup-confirm\\confirm-setups\\runs\\02-HB05-w1-s0-GL01-805B6898\\attempt-01\\summary.json"
+    ]
+  },
+  {
+    "id": "exp_6895558ba28f062848a57393",
+    "platform": "gamecube",
+    "source_scene": "HB05",
+    "destination_scene": "GL01",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "runtime_reproduced",
+    "naturality": "diagnostic_delivery",
+    "classification": "controlled_confirmation",
+    "result": "stable",
+    "reaches_play": 1,
+    "summary": "HB05 -> GL01 SHINY_RED_013: stable; control advantage {'shinies': 49, 'spatulas': 0, 'socks_current_level': 0, 'socks_total': 0}",
+    "holder_hex": "0x805B6898",
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "SHINY_RED_013",
+        "owner_type": "Pickup",
+        "asset_type": null,
+        "member": null,
+        "member_size": null,
+        "semantic_category": "pickup_runtime",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x805B6898",
+        "write_start_hex": null,
+        "write_end_hex": null,
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "progression_award",
+        "description": "Controlled probe exceeded the matched control: shinies +49",
+        "severity": "payoff",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": 49,
+        "spatula_delta": 0,
+        "sock_delta": 0,
+        "persistence": "post_transition",
+        "confidence": "matched_control_runtime",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [
+      {
+        "kind": "near_entity",
+        "action": "Probe SHINY_RED_013 and compare with an uncorrupted control.",
+        "result": "pickup_reward_increased",
+        "persistence": "post_transition"
+      }
+    ],
+    "evidence_refs": [
+      "tmp\\bfbb-hub-hud-pickup-confirm\\confirm-setups\\runs\\02-HB05-w1-s0-GL01-805B6898\\attempt-01\\summary.json"
+    ]
+  },
+  {
+    "id": "exp_38b75e9722f86fdf71c47fdf",
+    "platform": "gamecube",
+    "source_scene": "HB07",
+    "destination_scene": "JF02",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "runtime_reproduced",
+    "naturality": "diagnostic_delivery",
+    "classification": "controlled_confirmation",
+    "result": "stable",
+    "reaches_play": 1,
+    "summary": "HB07 -> JF02 SHINY_YELL0W_026: stable; control advantage {'shinies': 48, 'spatulas': 0, 'socks_current_level': 0, 'socks_total': 0}",
+    "holder_hex": "0x805BB2F8",
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "SHINY_YELL0W_026",
+        "owner_type": "Pickup",
+        "asset_type": null,
+        "member": "zEntPickup.simpShadow_embedded",
+        "member_size": null,
+        "semantic_category": "pickup_runtime",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x805BB2F8",
+        "write_start_hex": null,
+        "write_end_hex": null,
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "progression_award",
+        "description": "Controlled probe exceeded the matched control: shinies +48",
+        "severity": "payoff",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": 48,
+        "spatula_delta": 0,
+        "sock_delta": 0,
+        "persistence": "post_transition",
+        "confidence": "matched_control_runtime",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [
+      {
+        "kind": "near_entity",
+        "action": "Probe SHINY_YELL0W_026 and compare with an uncorrupted control.",
+        "result": "pickup_reward_changed",
+        "persistence": "post_transition"
+      }
+    ],
+    "evidence_refs": [
+      "tmp\\bfbb-hb07-d120-confirm\\confirm-setups\\runs\\01-HB07-w0-s0-JF02-805BB2F8\\summary.json"
+    ]
+  },
+  {
+    "id": "exp_628f8960320d3f86f802e7c7",
+    "platform": "gamecube",
+    "source_scene": "HB07",
+    "destination_scene": "JF02",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "runtime_reproduced",
+    "naturality": "diagnostic_delivery",
+    "classification": "controlled_confirmation",
+    "result": "stable",
+    "reaches_play": 1,
+    "summary": "HB07 -> JF02 SHINY_YELL0W_026: stable; control advantage {'shinies': 48, 'spatulas': 0, 'socks_current_level': 0, 'socks_total': 0}",
+    "holder_hex": "0x805BB2F8",
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "SHINY_YELL0W_026",
+        "owner_type": "Pickup",
+        "asset_type": null,
+        "member": "zEntPickup.simpShadow_embedded",
+        "member_size": null,
+        "semantic_category": "pickup_runtime",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x805BB2F8",
+        "write_start_hex": null,
+        "write_end_hex": null,
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "progression_award",
+        "description": "Controlled probe exceeded the matched control: shinies +48",
+        "severity": "payoff",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": 48,
+        "spatula_delta": 0,
+        "sock_delta": 0,
+        "persistence": "post_transition",
+        "confidence": "matched_control_runtime",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [
+      {
+        "kind": "near_entity",
+        "action": "Probe SHINY_YELL0W_026 and compare with an uncorrupted control.",
+        "result": "pickup_reward_increased",
+        "persistence": "post_transition"
+      }
+    ],
+    "evidence_refs": [
+      "C:\\Projects\\bfbb\\tmp\\bfbb-hb07-d120-confirm\\confirm-setups\\confirmations.json",
+      "tmp\\bfbb-combo-regressions\\confirm-setups\\runs\\02-HB07-w0-s0-JF02-805BB2F8\\attempt-01\\summary.json",
+      "tmp\\bfbb-hb07-d120-confirm\\confirm-setups\\runs\\01-HB07-w0-s0-JF02-805BB2F8\\summary.json"
+    ]
+  },
+  {
+    "id": "exp_e02807e044fae218c4802c45",
+    "platform": "gamecube",
+    "source_scene": "JF01",
+    "destination_scene": "BC02",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "diagnostic_only",
+    "naturality": "461_menu_motives_not_routeable",
+    "classification": "runtime_verified_payoff",
+    "result": "progression_award",
+    "reaches_play": 1,
+    "summary": "Menu motive 461 writes the collectible bit into GOLDENSPATULA_03 without destroying its live state.",
+    "holder_hex": "0x805877F8",
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "GOLDENSPATULA_03",
+        "owner_type": "Pickup",
+        "asset_type": "PKUP",
+        "member": "zEntPickup.pickupFlags",
+        "member_size": 2,
+        "semantic_category": "pickup_progression",
+        "before_hex": "0002",
+        "after_hex": "8002",
+        "holder_hex": "0x805877F8",
+        "write_start_hex": null,
+        "write_end_hex": null,
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "progression_award",
+        "description": "The spatula collects normally, count increases by one, and reload reconstructs it as collected. It is an early award, not a duplication loop.",
+        "severity": "payoff",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": 1,
+        "sock_delta": null,
+        "persistence": "saved",
+        "confidence": "runtime_verified",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [
+      {
+        "kind": "pickup_collect",
+        "action": "Approach GOLDENSPATULA_03, collect it, leave BC02, then reload.",
+        "result": "Awarded exactly one spatula and saved the collected state.",
+        "persistence": "saved"
+      }
+    ],
+    "evidence_refs": [
+      "docs/combo-transition-study.md#exact-candidate-outcomes",
+      "tmp/bfbb-menu-motive461-bc02/",
+      "tmp/menu-chunks-0-511-payoffs.json"
+    ]
+  },
+  {
+    "id": "exp_1545e26284fe5e3b3d68be22",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": null,
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "tested_candidate_family",
+    "naturality": "mixed",
+    "classification": "negative_closure",
+    "result": "no_progression_payoff",
+    "reaches_play": null,
+    "summary": "The portal overlap destroys dispatch, counter overlaps destroy their callbacks, and pickup-state overlaps do not rearm collectibles.",
+    "holder_hex": null,
+    "writes": [],
+    "outcomes": [
+      {
+        "category": "negative_result",
+        "description": "No tested PS2 portal, task-counter, trigger, or pickup overlap produced a wrong warp, award, or repeatable farm.",
+        "severity": "closed_family",
+        "reaches_play": null,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "not_applicable",
+        "confidence": "runtime_and_source_verified",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [],
+    "evidence_refs": [
+      "docs/combo-transition-study.md#exact-candidate-outcomes",
+      "tmp/bfbb-ps2-natural-target-catalog.json"
+    ]
+  },
+  {
+    "id": "exp_63711a0d08257ef34b615257",
+    "platform": "ps2",
+    "source_scene": "B101",
+    "destination_scene": "BB01",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "runtime_and_source_tested",
+    "naturality": "synthetic_combo_state",
+    "classification": "runtime_verified_no_progression",
+    "result": "stable",
+    "reaches_play": 1,
+    "summary": "The entered byte changes, but a nonzero value suppresses the useful entry event or emits an unlinked exit; it cannot complete the steering-wheel task.",
+    "holder_hex": null,
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "STEERING_WHEEL_CHECK_TRIG",
+        "owner_type": "Trigger",
+        "asset_type": null,
+        "member": null,
+        "member_size": null,
+        "semantic_category": "trigger",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x00CD0B84",
+        "write_start_hex": null,
+        "write_end_hex": null,
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      },
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "STEERING_WHEEL_CHECK_TRIG",
+        "owner_type": "Trigger",
+        "asset_type": null,
+        "member": null,
+        "member_size": null,
+        "semantic_category": "trigger",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x00CD0B58",
+        "write_start_hex": null,
+        "write_end_hex": null,
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "negative_result",
+        "description": "Trigger state changes, but no task completion or reward event can be synthesized from this alignment.",
+        "severity": "stable_no_payoff",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "scene_runtime",
+        "confidence": "runtime_and_source_verified",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [],
+    "evidence_refs": [
+      "docs/combo-transition-study.md#exact-candidate-outcomes",
+      "tmp/bfbb-ps2-natural-target-catalog.json"
+    ]
+  },
+  {
+    "id": "exp_3c7b6b3f74d873575a30e09f",
+    "platform": "ps2",
+    "source_scene": "BB02",
+    "destination_scene": "JF01",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "runtime_tested",
+    "naturality": "synthetic_combo_state",
+    "classification": "runtime_verified_load_blocker",
+    "result": "stalled",
+    "reaches_play": 0,
+    "summary": "Both portal alignments destroy dispatch or portal pointers; neither selects a different destination and both stall during scene setup.",
+    "holder_hex": null,
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "TOJF02",
+        "owner_type": "Portal",
+        "asset_type": null,
+        "member": null,
+        "member_size": null,
+        "semantic_category": "transition",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x00DC3C24",
+        "write_start_hex": null,
+        "write_end_hex": null,
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      },
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "EXIT LEVEL PORTAL",
+        "owner_type": "Portal",
+        "asset_type": null,
+        "member": null,
+        "member_size": null,
+        "semantic_category": "transition",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x00DC3BF8",
+        "write_start_hex": null,
+        "write_end_hex": null,
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "load_blocker",
+        "description": "The write deletes event dispatch or replaces the portal asset pointer; JF01 does not reach playable state.",
+        "severity": "stalled",
+        "reaches_play": 0,
+        "crash_stage": "scene_setup",
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "none",
+        "confidence": "runtime_verified",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [],
+    "evidence_refs": [
+      "docs/combo-transition-study.md#exact-candidate-outcomes",
+      "tmp/bfbb-ps2-natural-target-catalog.json"
+    ]
+  },
+  {
+    "id": "exp_4a6a6e4b94931b4a19386b2f",
+    "platform": "ps2",
+    "source_scene": "BB04",
+    "destination_scene": "RB02",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "runtime_tested",
+    "naturality": "synthetic_combo_state",
+    "classification": "runtime_verified_load_blocker",
+    "result": "stalled",
+    "reaches_play": 0,
+    "summary": "The candidate reaches adjacent task counters, but the same node destroys their xBase callback/header before any count can be consumed.",
+    "holder_hex": null,
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "JF_TASK_COUNTER_06",
+        "owner_type": "Counter",
+        "asset_type": null,
+        "member": null,
+        "member_size": null,
+        "semantic_category": "task_progression",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x00D24B78",
+        "write_start_hex": null,
+        "write_end_hex": null,
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      },
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "JF_TASK_COUNTER_08",
+        "owner_type": "Counter",
+        "asset_type": null,
+        "member": null,
+        "member_size": null,
+        "semantic_category": "task_progression",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x00D24BA4",
+        "write_start_hex": null,
+        "write_end_hex": null,
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "load_blocker",
+        "description": "Counter callback/header damage prevents the apparent task-count write from becoming a usable taxi unlock.",
+        "severity": "stalled",
+        "reaches_play": 0,
+        "crash_stage": "scene_setup_or_counter_update",
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "none",
+        "confidence": "runtime_verified",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [],
+    "evidence_refs": [
+      "docs/combo-transition-study.md#exact-candidate-outcomes",
+      "tmp/bfbb-ps2-natural-target-catalog.json"
+    ]
+  },
+  {
+    "id": "exp_7ad97113f8fd56e68a8e4d25",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "GL01",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "natural_source_available",
+    "naturality": "four_wood_tikis_in_source",
+    "classification": "runtime_verified_visible_effect",
+    "result": "stable",
+    "reaches_play": 1,
+    "summary": "The write visibly relocates and shrinks FLOAT_A_PLAT_04 after reset, but the player cannot exploit the reset while riding it.",
+    "holder_hex": null,
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "FLOAT_A_PLAT_04",
+        "owner_type": "Platform",
+        "asset_type": "PLAT",
+        "member": "xEntMotionAsset",
+        "member_size": null,
+        "semantic_category": "geometry_motion",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": null,
+        "write_start_hex": null,
+        "write_end_hex": null,
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "geometry_corruption",
+        "description": "LoseChance/reset reconstructs the platform near the origin at roughly one-tenth scale; no access or movement skip was found.",
+        "severity": "visible_no_payoff",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "until_scene_reload",
+        "confidence": "runtime_verified",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [],
+    "evidence_refs": [
+      "docs/combo-transition-study.md#geometry-controls",
+      "tmp/bfbb-ps2-natural-target-catalog.json"
+    ]
+  },
+  {
+    "id": "exp_11d4e1cd3e13a8c54ba11d96",
+    "platform": "ps2",
+    "source_scene": "KF02",
+    "destination_scene": "JF03",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "runtime_tested",
+    "naturality": "synthetic_combo_state",
+    "classification": "runtime_verified_load_blocker",
+    "result": "stalled",
+    "reaches_play": 0,
+    "summary": "The candidate reaches adjacent task counters, but the same node destroys their xBase callback/header before any count can be consumed.",
+    "holder_hex": null,
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "JF_TASK_COUNTER_06",
+        "owner_type": "Counter",
+        "asset_type": null,
+        "member": null,
+        "member_size": null,
+        "semantic_category": "task_progression",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x00DBA714",
+        "write_start_hex": null,
+        "write_end_hex": null,
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      },
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "JF_TASK_COUNTER_04",
+        "owner_type": "Counter",
+        "asset_type": null,
+        "member": null,
+        "member_size": null,
+        "semantic_category": "task_progression",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x00DBA6E8",
+        "write_start_hex": null,
+        "write_end_hex": null,
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "load_blocker",
+        "description": "Counter callback/header damage prevents the apparent task-count write from becoming a usable taxi unlock.",
+        "severity": "stalled",
+        "reaches_play": 0,
+        "crash_stage": "scene_setup_or_counter_update",
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "none",
+        "confidence": "runtime_verified",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [],
+    "evidence_refs": [
+      "docs/combo-transition-study.md#exact-candidate-outcomes",
+      "tmp/bfbb-ps2-natural-target-catalog.json"
+    ]
+  },
+  {
+    "id": "exp_3ef0677db35ee364f7341557",
+    "platform": "xbox",
+    "source_scene": null,
+    "destination_scene": "GY01",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator_shifted",
+    "feasibility": "layout_alignment_only",
+    "naturality": "shift_minus_2",
+    "classification": "runtime_verified_load_blocker",
+    "result": "stalled",
+    "reaches_play": 0,
+    "summary": "The final-boss task-counter alignment exists, but its continuation poisons the allocator before GY01 reaches Play.",
+    "holder_hex": null,
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": "invalid_followup",
+        "owner_name": "Final boss task counter",
+        "owner_type": "Counter",
+        "asset_type": null,
+        "member": "_xCounter.count",
+        "member_size": 2,
+        "semantic_category": "task_progression",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": null,
+        "write_start_hex": null,
+        "write_end_hex": null,
+        "continuation_before_hex": "0x00129850",
+        "continuation_after_hex": "0x0C244C8B",
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "load_blocker",
+        "description": "The archive loads but the allocator follows a damaged continuation and Play never begins.",
+        "severity": "stalled",
+        "reaches_play": 0,
+        "crash_stage": "scene_setup",
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "none",
+        "confidence": "runtime_verified",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [],
+    "evidence_refs": [
+      "docs/combo-transition-study.md#runtime-candidate-outcomes",
+      "tmp/bfbb-xbox-lab/GY01-task-counter-shift-alignments.json",
+      "tmp/bfbb-xbox-lab/probe-SM01-GY01-shift-m2-finalboss-counters.json"
+    ]
+  },
+  {
+    "id": "exp_c4a1658cdbe7e70b7bcec163",
+    "platform": "xbox",
+    "source_scene": "BC05",
+    "destination_scene": "RB01",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "timing_selected_diagnostic",
+    "naturality": "later_source_holder_seen_after_four_second_dwell",
+    "classification": "runtime_verified_no_reward",
+    "result": "stable",
+    "reaches_play": 1,
+    "summary": "The later BC05 holder reaches BOOT_REWARD_PICKUP42.pickupFlags and changes it from 0x0002 to 0x0E60, but proximity awards nothing.",
+    "holder_hex": "0x0069A7B8",
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "BOOT_REWARD_PICKUP42",
+        "owner_type": "Pickup",
+        "asset_type": "PKUP",
+        "member": "zEntPickup.pickupFlags",
+        "member_size": 2,
+        "semantic_category": "pickup_progression",
+        "before_hex": "0002",
+        "after_hex": "0E60",
+        "holder_hex": "0x0069A7B8",
+        "write_start_hex": null,
+        "write_end_hex": null,
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "state_corruption_no_reward",
+        "description": "RB01 reaches Play, but six seconds of direct proximity awards zero shinies and zero spatulas.",
+        "severity": "stable_no_payoff",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": 0,
+        "spatula_delta": 0,
+        "sock_delta": null,
+        "persistence": "scene_runtime",
+        "confidence": "runtime_verified",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [
+      {
+        "kind": "pickup_proximity",
+        "action": "Place the player directly on BOOT_REWARD_PICKUP42 for six seconds.",
+        "result": "No reward.",
+        "persistence": "scene_runtime"
+      }
+    ],
+    "evidence_refs": [
+      "docs/combo-transition-study.md#runtime-candidate-outcomes",
+      "tmp/bfbb-xbox-lab/oracle-A7B8-RB01-boot-reward42-v2.json",
+      "tmp/bfbb-xbox-lab/probe-BC05-dwell4-RB01-boot-reward42.json"
+    ]
+  }
+]

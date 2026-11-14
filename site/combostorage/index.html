@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Verified and experimental BFBB combo-transition results across GameCube, PlayStation 2, and Xbox.">
+  <title>BFBB Combo Transition Catalog</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-copy">
+      <p class="eyebrow">Battle for Bikini Bottom research</p>
+      <h1>Combo Transition Catalog</h1>
+      <p class="lede">Pick a version, map, or result. See what action was tested, what changed, whether it survived, and what still blocks a useful route.</p>
+    </div>
+    <div id="catalog-stats" class="catalog-stats" aria-label="Catalog totals"></div>
+  </header>
+
+  <main>
+    <nav class="tabs" aria-label="Catalog views">
+      <button class="tab is-active" data-view="findings">Findings</button>
+      <button class="tab" data-view="browse">Map browser</button>
+      <button class="tab" data-view="coverage">Coverage</button>
+      <button class="tab" data-view="queue">Test queue</button>
+      <button class="tab" data-view="about">How this works</button>
+    </nav>
+
+    <section class="controls" aria-label="Catalog filters">
+      <div class="segmented" id="platform-filter">
+        <button class="is-active" data-platform="all">All versions</button>
+        <button data-platform="gamecube">GameCube</button>
+        <button data-platform="ps2">PS2</button>
+        <button data-platform="xbox">Xbox</button>
+      </div>
+      <label class="search">
+        <span>Search</span>
+        <input id="search-input" type="search" placeholder="Map, object, result, or transition">
+      </label>
+      <button id="copy-view" class="copy-button" type="button">Copy this view</button>
+    </section>
+
+    <section id="view-findings" class="view is-active" aria-labelledby="findings-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Start here</p>
+          <h2 id="findings-heading">Known results</h2>
+        </div>
+        <p>Verified payoffs, confirmed dead ends, load blockers, and useful effects. Duplicate reruns are combined.</p>
+      </div>
+      <div id="finding-summary" class="status-summary"></div>
+      <div id="findings-list" class="card-list"></div>
+    </section>
+
+    <section id="view-browse" class="view" aria-labelledby="browse-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Full catalog</p>
+          <h2 id="browse-heading">Source → destination</h2>
+        </div>
+        <p>Includes benign results and static candidates. Use the status labels to separate observed behavior from predictions.</p>
+      </div>
+      <div id="browse-loading" class="notice">The full result index loads when this view opens.</div>
+      <div id="browse-list" class="compact-list"></div>
+    </section>
+
+    <section id="view-coverage" class="view" aria-labelledby="coverage-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">What has been checked</p>
+          <h2 id="coverage-heading">Coverage</h2>
+        </div>
+        <p>Experiment counts by version and destination. High coverage means “many layouts observed,” not “every useful outcome exhausted.”</p>
+      </div>
+      <div id="coverage-list" class="coverage-grid"></div>
+    </section>
+
+    <section id="view-queue" class="view" aria-labelledby="queue-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Automation</p>
+          <h2 id="queue-heading">Next tests</h2>
+        </div>
+        <p>Ranked candidates produced by the catalog. “Needs runtime test” is a lead, not a claimed exploit.</p>
+      </div>
+      <div id="queue-summary" class="status-summary"></div>
+      <div id="automation-status" class="notice automation-status"></div>
+      <div id="queue-list" class="compact-list"></div>
+    </section>
+
+    <section id="view-about" class="view prose" aria-labelledby="about-heading">
+      <p class="eyebrow">Reading the catalog</p>
+      <h2 id="about-heading">What the labels mean</h2>
+      <dl class="definitions">
+        <div><dt>Verified payoff</dt><dd>A corrupt run beat a matched clean control in a measurable way.</dd></div>
+        <div><dt>Consumer verified</dt><dd>The desired game state does something useful, but no natural setup is known to create it.</dd></div>
+        <div><dt>Verified effect</dt><dd>The write visibly changes the game, without a demonstrated progression or time payoff.</dd></div>
+        <div><dt>Verified no payoff</dt><dd>The state changed, but a matched control showed no reward or progression advantage.</dd></div>
+        <div><dt>Load blocker / crash</dt><dd>The sequence does not reach controllable play under the tested conditions.</dd></div>
+        <div><dt>Candidate</dt><dd>Addresses and bytes intersect something interesting. Runtime behavior is not yet proven.</dd></div>
+      </dl>
+      <h3>What is being varied?</h3>
+      <p>A combo HUD animation can survive a title transition with a stale allocator pointer. Different source scenes and timing histories select different retained addresses. The destination then loads a new object or resource over that address, and a later HUD animation writes a fixed motive structure into it.</p>
+      <p>The catalog records the producer action, retained address, destination owner, overwritten C++ member, continuation safety, observed result, comparison control, and evidence path. GameCube has the deepest automation today; PS2 and Xbox use the same public result model while their runners catch up.</p>
+    </section>
+  </main>
+
+  <dialog id="detail-dialog">
+    <button id="close-detail" class="dialog-close" aria-label="Close">×</button>
+    <div id="detail-content"></div>
+  </dialog>
+
+  <footer>
+    <p>Generated from the BFBB decomp research catalog. Technical names are preserved in the detail view so results remain auditable.</p>
+    <p id="generated-at"></p>
+  </footer>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
