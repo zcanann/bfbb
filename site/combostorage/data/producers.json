@@ -8567,6 +8567,19 @@
     "holder_hex": "0x00CEB258"
   },
   {
+    "id": "prod_729a65e1e9190f272570fda5",
+    "platform": "ps2",
+    "source_scene": "BC04",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "combo expires in menu",
+    "feasibility": "runtime_holder_mismatch",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "da2094d123b346508963e07017299d7ec60e9c8f3418141128eca3972a867843",
+    "payload_hash": null,
+    "holder_hex": "0x00CEB258"
+  },
+  {
     "id": "prod_093d249409b88c0a1d3dce81",
     "platform": "ps2",
     "source_scene": "BC04",
@@ -8576,6 +8589,32 @@
     "feasibility": "natural_sequence_available",
     "naturality": "synthetic_combo_state",
     "state_hash": "65ce8ddb1b958f3b319d7b890d6152d3c53cfb1492437297b839755996435069",
+    "payload_hash": null,
+    "holder_hex": "0x00CEB284"
+  },
+  {
+    "id": "prod_e5f53c22ee3a7b4581782969",
+    "platform": "ps2",
+    "source_scene": "BC04",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "after show",
+    "feasibility": "runtime_holder_mismatch",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "97051b29c29d3c8b6eedd36b1dcb87268e0c4a7d6f3cf7643a69ca1f0186e9ae",
+    "payload_hash": null,
+    "holder_hex": "0x00CEB284"
+  },
+  {
+    "id": "prod_abcb17c1c9751c20f30335e7",
+    "platform": "ps2",
+    "source_scene": "BC04",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "after show",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "97051b29c29d3c8b6eedd36b1dcb87268e0c4a7d6f3cf7643a69ca1f0186e9ae",
     "payload_hash": null,
     "holder_hex": "0x00CEB284"
   },
@@ -8593,6 +8632,19 @@
     "holder_hex": "0x00CE5DD8"
   },
   {
+    "id": "prod_b9a2306088866cd4abce1c6c",
+    "platform": "ps2",
+    "source_scene": "BC05",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "combo expires in menu",
+    "feasibility": "runtime_holder_mismatch",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "e71bb5d6493ae200393192b29fe18f6426e2cde5cab822467ba7b8fa8e75949a",
+    "payload_hash": null,
+    "holder_hex": "0x00CE5DD8"
+  },
+  {
     "id": "prod_4f82ca5619d481509a4e9121",
     "platform": "ps2",
     "source_scene": "BC05",
@@ -8602,6 +8654,19 @@
     "feasibility": "natural_sequence_available",
     "naturality": "synthetic_combo_state",
     "state_hash": "224d43d758359cbf3a41febfe0037be3058c1ad3e9923633009ed8cebcdfb5a5",
+    "payload_hash": null,
+    "holder_hex": "0x00CE5E04"
+  },
+  {
+    "id": "prod_7551ec0b45cb59eea66025b3",
+    "platform": "ps2",
+    "source_scene": "BC05",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "after show",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "750c5f4e6a463cd83351f5544f338995d09d4c620e415ff8dbbc6898b135cf85",
     "payload_hash": null,
     "holder_hex": "0x00CE5E04"
   },
@@ -8931,6 +8996,19 @@
     "holder_hex": "0x00CB5DAC"
   },
   {
+    "id": "prod_c927b6c44f168bd78e7e2ce4",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "after show",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "0ac648e8e88715233bac8881127c0cef1b1cffbd4dcc3bcd259157bfdd44f7db",
+    "payload_hash": null,
+    "holder_hex": "0x00CB5DAC"
+  },
+  {
     "id": "prod_294644623fa9d87173dc4beb",
     "platform": "ps2",
     "source_scene": "HB01",
@@ -9035,6 +9113,19 @@
     "holder_hex": "0x00C7822C"
   },
   {
+    "id": "prod_30881ca2e20df7ccd62523b2",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "combo expires in menu",
+    "feasibility": "runtime_holder_mismatch",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "87930e94371f5b80c32ecf42f781c530b379146c6f400a498ecb5fa5b407e65a",
+    "payload_hash": null,
+    "holder_hex": "0x00C7822C"
+  },
+  {
     "id": "prod_d3b48c8a10a1eec80ac2248a",
     "platform": "ps2",
     "source_scene": "HB05",
@@ -9044,6 +9135,19 @@
     "feasibility": "natural_sequence_available",
     "naturality": "synthetic_combo_state",
     "state_hash": "f4fa63be69eb8b2c8a98cb543669ad897aab3e772f00fad16ea6d43935b50f29",
+    "payload_hash": null,
+    "holder_hex": "0x00CEBAD8"
+  },
+  {
+    "id": "prod_19512d7fea3d68f406a91ccd",
+    "platform": "ps2",
+    "source_scene": "HB05",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "combo expires in menu",
+    "feasibility": "runtime_holder_mismatch",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "bb5de64b3ce156fd2c5043f9a98c988f86a8fdf6309723cf7e6dd062207db267",
     "payload_hash": null,
     "holder_hex": "0x00CEBAD8"
   },
@@ -9148,6 +9252,19 @@
     "feasibility": "natural_sequence_available",
     "naturality": "synthetic_combo_state",
     "state_hash": "620fb7c5d6d13924fdd397e5386055a5d74b3f51057dc2ce87369affcb493e81",
+    "payload_hash": null,
+    "holder_hex": "0x00CB5DAC"
+  },
+  {
+    "id": "prod_cb092e1d85d355fff679ec89",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "after show",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "a57b354f9a585a1f0972d275ea45e3e57e2461daf7a7ba3adb4ec899e501faa0",
     "payload_hash": null,
     "holder_hex": "0x00CB5DAC"
   },
