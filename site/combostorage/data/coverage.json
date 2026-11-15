@@ -948,7 +948,7 @@
     "platform": "ps2",
     "source_scene": "",
     "destination_scene": "",
-    "experiments": 1,
+    "experiments": 2,
     "failures": 0,
     "reaches_play": 0,
     "holders": 0
@@ -2262,9 +2262,9 @@
     "platform": "ps2",
     "source_scene": "B302",
     "destination_scene": "KF02",
-    "experiments": 1,
+    "experiments": 5,
     "failures": 0,
-    "reaches_play": 0,
+    "reaches_play": 4,
     "holders": 1
   },
   {
@@ -6906,9 +6906,9 @@
     "platform": "ps2",
     "source_scene": "BC05",
     "destination_scene": "JF02",
-    "experiments": 9,
+    "experiments": 10,
     "failures": 0,
-    "reaches_play": 5,
+    "reaches_play": 6,
     "holders": 2
   },
   {
@@ -13332,8 +13332,8 @@
     "platform": "ps2",
     "source_scene": "HB02",
     "destination_scene": "GY03",
-    "experiments": 2,
-    "failures": 0,
+    "experiments": 5,
+    "failures": 3,
     "reaches_play": 0,
     "holders": 2
   },
@@ -16383,9 +16383,9 @@
     "platform": "ps2",
     "source_scene": "HB09",
     "destination_scene": "SM03",
-    "experiments": 2,
+    "experiments": 8,
     "failures": 0,
-    "reaches_play": 0,
+    "reaches_play": 4,
     "holders": 2
   },
   {
@@ -22952,6 +22952,15 @@
   {
     "platform": "ps2",
     "source_scene": "SM02",
+    "destination_scene": "",
+    "experiments": 1,
+    "failures": 0,
+    "reaches_play": 0,
+    "holders": 0
+  },
+  {
+    "platform": "ps2",
+    "source_scene": "SM02",
     "destination_scene": "B101",
     "experiments": 2,
     "failures": 0,
@@ -23115,9 +23124,9 @@
     "platform": "ps2",
     "source_scene": "SM02",
     "destination_scene": "GL01",
-    "experiments": 2,
-    "failures": 0,
-    "reaches_play": 0,
+    "experiments": 14,
+    "failures": 6,
+    "reaches_play": 1,
     "holders": 2
   },
   {

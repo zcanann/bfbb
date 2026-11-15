@@ -752,6 +752,62 @@
     ]
   },
   {
+    "id": "exp_8d6390637c0786c835b62614",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": null,
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "lab_verified_player_action_shape",
+    "naturality": "synthetic_combo_updates_model_ordinary_combo_extension",
+    "classification": "verified_producer_lever_missing_payoff",
+    "result": "deterministic_retained_address_switch",
+    "reaches_play": null,
+    "summary": "Across JF01-03, DB01-04, and SM02, one source-side combo text update preserves a map-specific dangling head; a second update deterministically switches every tested source to the generic menu head 0x00CB5DD8.",
+    "holder_hex": null,
+    "writes": [],
+    "outcomes": [
+      {
+        "category": "address_control",
+        "description": "The second source update collapses eight distinct map-specific heads to one repeatable zero-terminated holder. SM02 to GL01 then remains live instead of taking the task-counter allocator crash, but no progression effect was observed there.",
+        "severity": "control_lever",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "through_title_to_destination_load",
+        "confidence": "runtime_verified_lab_topology",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [],
+    "producers": [
+      {
+        "id": "prod_09c1ba15edd2c856e1108a94",
+        "source_scene": null,
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "Extend the live combo far enough to produce a second combo-text update before quitting to the title screen.",
+        "feasibility": "memory_topology_runtime_verified_controller_replication_pending",
+        "naturality": "ordinary_combo_extension",
+        "holder_hex": "0x00CB5DD8",
+        "recipe": {
+          "action_summary": "Extend the live combo far enough to produce a second combo-text update before quitting to the title screen.",
+          "feasibility": "memory_topology_runtime_verified_controller_replication_pending",
+          "holder": "0x00CB5DD8",
+          "naturality": "ordinary_combo_extension"
+        }
+      }
+    ],
+    "evidence_refs": [
+      "tmp/bfbb-combo-autopilot/ps2-live-cycle-22/sm02-two-increments-gl01.json",
+      "tmp/bfbb-ps2-source-hud-timing-sm02.json",
+      "tmp/bfbb-ps2-source-topology-catalog.json"
+    ]
+  },
+  {
     "id": "exp_63711a0d08257ef34b615257",
     "platform": "ps2",
     "source_scene": "B101",
@@ -913,7 +969,7 @@
     "classification": "runtime_verified_load_blocker",
     "result": "stalled",
     "reaches_play": 0,
-    "summary": "The candidate reaches adjacent task counters, but the same node destroys their xBase callback/header before any count can be consumed.",
+    "summary": "The write reaches adjacent task counters, but JF_TASK_COUNTER_06.eventFunc becomes the HUD-data pointer 0x00D50464 and scene initialization invokes it before Play.",
     "holder_hex": null,
     "writes": [
       {
@@ -956,10 +1012,10 @@
     "outcomes": [
       {
         "category": "load_blocker",
-        "description": "Counter callback/header damage prevents the apparent task-count write from becoming a usable taxi unlock.",
+        "description": "The zero-terminated allocator chain itself survives, but the first overwritten counter callback is invoked during initialization before input is accepted.",
         "severity": "stalled",
         "reaches_play": 0,
-        "crash_stage": "scene_setup_or_counter_update",
+        "crash_stage": "scene_setup_counter_callback",
         "progression_delta": null,
         "shiny_delta": null,
         "spatula_delta": null,
@@ -973,6 +1029,7 @@
     "producers": [],
     "evidence_refs": [
       "docs/combo-transition-study.md#exact-candidate-outcomes",
+      "tmp/bfbb-combo-autopilot/ps2-live-cycle-21/bb04-rb02-counter-callback.json",
       "tmp/bfbb-ps2-natural-target-catalog.json"
     ]
   },
@@ -1071,7 +1128,7 @@
     "classification": "runtime_verified_load_blocker",
     "result": "stalled",
     "reaches_play": 0,
-    "summary": "The candidate reaches adjacent task counters, but the same node destroys their xBase callback/header before any count can be consumed.",
+    "summary": "The write reaches adjacent task counters, but JF_TASK_COUNTER_04.eventFunc becomes the HUD-data pointer 0x00DE4E94 and scene initialization jumps into it before Play.",
     "holder_hex": null,
     "writes": [
       {
@@ -1114,10 +1171,10 @@
     "outcomes": [
       {
         "category": "load_blocker",
-        "description": "Counter callback/header damage prevents the apparent task-count write from becoming a usable taxi unlock.",
+        "description": "The zero-terminated allocator chain itself survives, but the first overwritten counter callback is invoked during initialization and traps at 0x00DE5000 before input is accepted.",
         "severity": "stalled",
         "reaches_play": 0,
-        "crash_stage": "scene_setup_or_counter_update",
+        "crash_stage": "scene_setup_counter_callback",
         "progression_delta": null,
         "shiny_delta": null,
         "spatula_delta": null,
@@ -1131,6 +1188,207 @@
     "producers": [],
     "evidence_refs": [
       "docs/combo-transition-study.md#exact-candidate-outcomes",
+      "tmp/bfbb-combo-autopilot/ps2-live-cycle-21/kf02-jf03-counter-callback.json",
+      "tmp/bfbb-ps2-natural-target-catalog.json"
+    ]
+  },
+  {
+    "id": "exp_144dce886984fa715eb17752",
+    "platform": "ps2",
+    "source_scene": "SM02",
+    "destination_scene": null,
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "lab_consumer_verified",
+    "naturality": "synthetic_two_update_source_topology",
+    "classification": "runtime_verified_mixed_consumers",
+    "result": "stable_hidden_reward_and_interaction_crash",
+    "reaches_play": null,
+    "summary": "The two-update 0x00CB5DD8 topology survives seven high-value destination loads. GL03 only clears a hidden reward pickup's fly flag; RB02 remains live until the directly overlapped red shiny is touched, then jumps to unmapped address 0xBFB78904.",
+    "holder_hex": null,
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "RED_SHINY_PU_51",
+        "owner_type": "Pickup",
+        "asset_type": null,
+        "member": "zEntPickup effect/grab fields",
+        "member_size": null,
+        "semantic_category": "pickup_runtime",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x00CB5DD8",
+        "write_start_hex": null,
+        "write_end_hex": null,
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      },
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "BOOT_REWARD_PICKUP11",
+        "owner_type": "Pickup",
+        "asset_type": null,
+        "member": "zEntPickup.flyflags",
+        "member_size": null,
+        "semantic_category": "pickup_runtime",
+        "before_hex": "01000000",
+        "after_hex": "00000000",
+        "holder_hex": "0x00CB5DD8",
+        "write_start_hex": null,
+        "write_end_hex": null,
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "interaction_crash",
+        "description": "RB02 RED_SHINY_PU_51 enters its pickup flight state in both runs, but only the corrupt run freezes on the next frame and PCSX2 reports an unmapped jump to 0xBFB78904.",
+        "severity": "crash",
+        "reaches_play": 1,
+        "crash_stage": "pickup_interaction",
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "none",
+        "confidence": "paired_runtime_verified_twice",
+        "crash_pc_hex": null
+      },
+      {
+        "category": "no_award",
+        "description": "GL03 BOOT_REWARD_PICKUP11 remains in hidden state 72. Clean and corrupt proximity both award zero shinies and zero spatulas.",
+        "severity": "no_progression_payoff",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "until_reload",
+        "confidence": "paired_runtime_verified",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [
+      {
+        "kind": "pickup_proximity",
+        "action": "Touch the directly overlapped pickup after the destination reaches Play.",
+        "result": "Hidden boot reward: no award. Ordinary red shiny: interaction crash.",
+        "persistence": "not_applicable"
+      }
+    ],
+    "producers": [
+      {
+        "id": "prod_0eee592d5aaffc2932608a62",
+        "source_scene": "SM02",
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "Produce two source-side combo text updates, let the delayed menu combo show and expire, then load the destination.",
+        "feasibility": "lab_topology_verified",
+        "naturality": "ordinary_combo_extension_shape",
+        "holder_hex": "0x00CB5DD8",
+        "recipe": {
+          "action_summary": "Produce two source-side combo text updates, let the delayed menu combo show and expire, then load the destination.",
+          "feasibility": "lab_topology_verified",
+          "holder": "0x00CB5DD8",
+          "naturality": "ordinary_combo_extension_shape",
+          "source_scene": "SM02",
+          "transition": "title_round_trip"
+        }
+      }
+    ],
+    "evidence_refs": [
+      "tmp/bfbb-combo-autopilot/ps2-live-cycle-22/sm02-src2-gl03-pickup11.json",
+      "tmp/bfbb-combo-autopilot/ps2-live-cycle-22/sm02-src2-rb02-red51-v2.json",
+      "tmp/bfbb-ps2-combo-motive-sweep-sm02-src2-show-expiry.json"
+    ]
+  },
+  {
+    "id": "exp_a8179a3f3a3d66b6df7c14d8",
+    "platform": "ps2",
+    "source_scene": "SM02",
+    "destination_scene": "GL01",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "lab_only_missing_safe_continuation",
+    "naturality": "controller_route_plus_diagnostic_chain_repair",
+    "classification": "lab_consumer_verified_producer_blocked",
+    "result": "stable_with_diagnostic_chain_repair",
+    "reaches_play": 1,
+    "summary": "The real payload sets KF task 7 to 10148; skipping the Goo Lagoon flythrough and pausing at frame 90 preserves the positive count, but the unmodified allocator crashes on its third allocation.",
+    "holder_hex": null,
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": "third_allocation_invalid",
+        "owner_name": "KF_TASK_COUNTER_07",
+        "owner_type": "Counter",
+        "asset_type": null,
+        "member": "_xCounter.count",
+        "member_size": 2,
+        "semantic_category": "task_progression",
+        "before_hex": "0000",
+        "after_hex": "A427",
+        "holder_hex": "0x00DD7A28",
+        "write_start_hex": null,
+        "write_end_hex": null,
+        "continuation_before_hex": "0x00B8DCA0",
+        "continuation_after_hex": "0xD2B8FFF8",
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "lab_consumer_effect",
+        "description": "With only the second allocator link changed from the counter asset ID to null, GL01 reaches Play, its normal flythrough skip works, and the genuine pause menu opens while the task count is 10148.",
+        "severity": "promising_lab_oracle",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "until the motive node is freed around frame 432",
+        "confidence": "runtime_verified_lab_only",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [
+      {
+        "kind": "pause_before_motive_retirement",
+        "action": "Skip the opening flythrough with X/Square, then press Start as soon as control returns.",
+        "result": "Pause opens at frame 90 while KF_TASK_COUNTER_07 still reads 10148.",
+        "persistence": "temporary"
+      }
+    ],
+    "producers": [
+      {
+        "id": "prod_575e055006ceb4a15bf57e34",
+        "source_scene": "SM02",
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "Let the delayed combo display and expire on the title screen, then load Goo Lagoon.",
+        "feasibility": "natural_source_phase_reproduced",
+        "naturality": "controller_actions",
+        "holder_hex": "0x00DD7A28",
+        "recipe": {
+          "action_summary": "Let the delayed combo display and expire on the title screen, then load Goo Lagoon.",
+          "feasibility": "natural_source_phase_reproduced",
+          "holder": "0x00DD7A28",
+          "naturality": "controller_actions",
+          "source_scene": "SM02",
+          "transition": "title_round_trip"
+        }
+      }
+    ],
+    "evidence_refs": [
+      "tmp/bfbb-combo-autopilot/ps2-live-cycle-20/counter-early-v2.json",
+      "tmp/bfbb-combo-autopilot/ps2-live-cycle-21/sm02-gl01-chain-repair-pause.json",
       "tmp/bfbb-ps2-natural-target-catalog.json"
     ]
   },
