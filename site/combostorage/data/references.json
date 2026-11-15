@@ -3724,6 +3724,104 @@
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-08\\ps2-discovery-01\\0061-B101-JF01-00CD0B84-after_show\\attempt-02\\stdout.txt"
   },
   {
+    "experiment_id": "exp_848b68d15742f780428b8984",
+    "platform": "ps2",
+    "source_scene": "B201",
+    "destination_scene": "JF02",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-10\\ps2-consumer-01\\0051-B201-JF02-00CE1D64-after_show\\attempt-01\\consumer.json"
+  },
+  {
+    "experiment_id": "exp_848b68d15742f780428b8984",
+    "platform": "ps2",
+    "source_scene": "B201",
+    "destination_scene": "JF02",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-10\\ps2-consumer-01\\0051-B201-JF02-00CE1D64-after_show\\attempt-01\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_848b68d15742f780428b8984",
+    "platform": "ps2",
+    "source_scene": "B201",
+    "destination_scene": "JF02",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-10\\ps2-consumer-01\\0051-B201-JF02-00CE1D64-after_show\\attempt-01\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_66b4ebe320f420c95aa8493e",
+    "platform": "ps2",
+    "source_scene": "B201",
+    "destination_scene": "JF02",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-10\\ps2-consumer-01\\0051-B201-JF02-00CE1D64-after_show\\attempt-02\\consumer.json"
+  },
+  {
+    "experiment_id": "exp_66b4ebe320f420c95aa8493e",
+    "platform": "ps2",
+    "source_scene": "B201",
+    "destination_scene": "JF02",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-10\\ps2-consumer-01\\0051-B201-JF02-00CE1D64-after_show\\attempt-02\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_66b4ebe320f420c95aa8493e",
+    "platform": "ps2",
+    "source_scene": "B201",
+    "destination_scene": "JF02",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-10\\ps2-consumer-01\\0051-B201-JF02-00CE1D64-after_show\\attempt-02\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_2f6db45079acdcd6b5e015ac",
+    "platform": "ps2",
+    "source_scene": "B201",
+    "destination_scene": "JF02",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-10\\ps2-discovery-01\\0064-B201-JF02-00CE1D38-expiry\\attempt-01\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_2f6db45079acdcd6b5e015ac",
+    "platform": "ps2",
+    "source_scene": "B201",
+    "destination_scene": "JF02",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-10\\ps2-discovery-01\\0064-B201-JF02-00CE1D38-expiry\\attempt-01\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_8cb218a847ac59c99815ad5f",
+    "platform": "ps2",
+    "source_scene": "B201",
+    "destination_scene": "JF02",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-10\\ps2-discovery-01\\0064-B201-JF02-00CE1D38-expiry\\attempt-02\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_8cb218a847ac59c99815ad5f",
+    "platform": "ps2",
+    "source_scene": "B201",
+    "destination_scene": "JF02",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-10\\ps2-discovery-01\\0064-B201-JF02-00CE1D38-expiry\\attempt-02\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_362618c9ba30eb7f485e4afb",
+    "platform": "ps2",
+    "source_scene": "B201",
+    "destination_scene": "JF02",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-10\\ps2-discovery-01\\0065-B201-JF02-00CE1D64-after_show\\attempt-01\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_362618c9ba30eb7f485e4afb",
+    "platform": "ps2",
+    "source_scene": "B201",
+    "destination_scene": "JF02",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-10\\ps2-discovery-01\\0065-B201-JF02-00CE1D64-after_show\\attempt-01\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_1764fdb96a573828d8585f17",
+    "platform": "ps2",
+    "source_scene": "B201",
+    "destination_scene": "JF02",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-10\\ps2-discovery-01\\0065-B201-JF02-00CE1D64-after_show\\attempt-02\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_1764fdb96a573828d8585f17",
+    "platform": "ps2",
+    "source_scene": "B201",
+    "destination_scene": "JF02",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-10\\ps2-discovery-01\\0065-B201-JF02-00CE1D64-after_show\\attempt-02\\stdout.txt"
+  },
+  {
     "experiment_id": "exp_3c7b6b3f74d873575a30e09f",
     "platform": "ps2",
     "source_scene": "BB02",
@@ -4123,6 +4221,34 @@
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-03\\ps2-discovery-01\\0053-HB00-BB02-00CB5DAC-after_show\\attempt-02\\stdout.txt"
   },
   {
+    "experiment_id": "exp_2508933969283010ffefaebe",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "KF02",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-12\\ps2-discovery-01\\0070-HB03-KF02-00CB5D80-after_show\\attempt-01\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_2508933969283010ffefaebe",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "KF02",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-12\\ps2-discovery-01\\0070-HB03-KF02-00CB5D80-after_show\\attempt-01\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_8b0015673aaeac70f12d6d3d",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "KF02",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-12\\ps2-discovery-01\\0070-HB03-KF02-00CB5D80-after_show\\attempt-02\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_8b0015673aaeac70f12d6d3d",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "KF02",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-12\\ps2-discovery-01\\0070-HB03-KF02-00CB5D80-after_show\\attempt-02\\stdout.txt"
+  },
+  {
     "experiment_id": "exp_53d038dee77a030d356c6ae3",
     "platform": "ps2",
     "source_scene": "HB04",
@@ -4163,6 +4289,34 @@
     "source_scene": "HB04",
     "destination_scene": "GL01",
     "ref": "tmp/bfbb-ps2-natural-target-catalog.json"
+  },
+  {
+    "experiment_id": "exp_73b8e6c1fe216d2e9760de42",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-12\\ps2-discovery-01\\0068-HB04-JF04-00C7822C-expiry\\attempt-01\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_73b8e6c1fe216d2e9760de42",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-12\\ps2-discovery-01\\0068-HB04-JF04-00C7822C-expiry\\attempt-01\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_7e7fb5dea72bca37d6febfac",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-12\\ps2-discovery-01\\0068-HB04-JF04-00C7822C-expiry\\attempt-02\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_7e7fb5dea72bca37d6febfac",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-12\\ps2-discovery-01\\0068-HB04-JF04-00C7822C-expiry\\attempt-02\\stdout.txt"
   },
   {
     "experiment_id": "exp_38e2ca3262bd897adef962f8",
@@ -4291,6 +4445,132 @@
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-07\\ps2-discovery-01\\0059-HB09-HB01-00CC99E4-after_show\\attempt-02\\stdout.txt"
   },
   {
+    "experiment_id": "exp_6ab2a9fca40f40688fda0b67",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "destination_scene": "JF03",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-11\\ps2-consumer-01\\0052-HB09-JF03-00CC99E4-after_show\\attempt-01\\consumer.json"
+  },
+  {
+    "experiment_id": "exp_6ab2a9fca40f40688fda0b67",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "destination_scene": "JF03",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-11\\ps2-consumer-01\\0052-HB09-JF03-00CC99E4-after_show\\attempt-01\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_6ab2a9fca40f40688fda0b67",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "destination_scene": "JF03",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-11\\ps2-consumer-01\\0052-HB09-JF03-00CC99E4-after_show\\attempt-01\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_8ec40ecc4c3c88f533cf1128",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "destination_scene": "JF03",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-11\\ps2-consumer-01\\0052-HB09-JF03-00CC99E4-after_show\\attempt-02\\consumer.json"
+  },
+  {
+    "experiment_id": "exp_8ec40ecc4c3c88f533cf1128",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "destination_scene": "JF03",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-11\\ps2-consumer-01\\0052-HB09-JF03-00CC99E4-after_show\\attempt-02\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_8ec40ecc4c3c88f533cf1128",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "destination_scene": "JF03",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-11\\ps2-consumer-01\\0052-HB09-JF03-00CC99E4-after_show\\attempt-02\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_a33195e66569cbfe0dab8ab6",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "destination_scene": "JF03",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-11\\ps2-discovery-01\\0066-HB09-JF03-00CC99B8-expiry\\attempt-01\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_a33195e66569cbfe0dab8ab6",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "destination_scene": "JF03",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-11\\ps2-discovery-01\\0066-HB09-JF03-00CC99B8-expiry\\attempt-01\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_f9ec7429193903829e00f2cd",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "destination_scene": "JF03",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-11\\ps2-discovery-01\\0066-HB09-JF03-00CC99B8-expiry\\attempt-02\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_f9ec7429193903829e00f2cd",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "destination_scene": "JF03",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-11\\ps2-discovery-01\\0066-HB09-JF03-00CC99B8-expiry\\attempt-02\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_3f86d931546f525d25432326",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "destination_scene": "JF03",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-11\\ps2-discovery-01\\0067-HB09-JF03-00CC99E4-after_show\\attempt-01\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_3f86d931546f525d25432326",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "destination_scene": "JF03",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-11\\ps2-discovery-01\\0067-HB09-JF03-00CC99E4-after_show\\attempt-01\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_63649d101aeb3f1e1acaf3da",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "destination_scene": "JF03",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-11\\ps2-discovery-01\\0067-HB09-JF03-00CC99E4-after_show\\attempt-02\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_63649d101aeb3f1e1acaf3da",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "destination_scene": "JF03",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-11\\ps2-discovery-01\\0067-HB09-JF03-00CC99E4-after_show\\attempt-02\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_c6e998834513cbcb7a8e368c",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "destination_scene": "KF01",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-12\\ps2-discovery-01\\0069-HB09-KF01-00CC99B8-expiry\\attempt-01\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_c6e998834513cbcb7a8e368c",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "destination_scene": "KF01",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-12\\ps2-discovery-01\\0069-HB09-KF01-00CC99B8-expiry\\attempt-01\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_95bd94d3d501d2275c8a72ed",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "destination_scene": "KF01",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-12\\ps2-discovery-01\\0069-HB09-KF01-00CC99B8-expiry\\attempt-02\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_95bd94d3d501d2275c8a72ed",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "destination_scene": "KF01",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-12\\ps2-discovery-01\\0069-HB09-KF01-00CC99B8-expiry\\attempt-02\\stdout.txt"
+  },
+  {
     "experiment_id": "exp_958d5489e10f31b9cb89642a",
     "platform": "ps2",
     "source_scene": "HB10",
@@ -4317,6 +4597,34 @@
     "source_scene": "HB10",
     "destination_scene": "BB02",
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-03\\ps2-discovery-01\\0053-HB10-BB02-00CB5DAC-after_show\\attempt-02\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_573e553b28688ee4861db979",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "KF02",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-13\\ps2-discovery-01\\0071-HB10-KF02-00CB5DAC-after_show\\attempt-01\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_573e553b28688ee4861db979",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "KF02",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-13\\ps2-discovery-01\\0071-HB10-KF02-00CB5DAC-after_show\\attempt-01\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_614fc3d048c7af0a85e97d6d",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "KF02",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-13\\ps2-discovery-01\\0071-HB10-KF02-00CB5DAC-after_show\\attempt-02\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_614fc3d048c7af0a85e97d6d",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "KF02",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-13\\ps2-discovery-01\\0071-HB10-KF02-00CB5DAC-after_show\\attempt-02\\stdout.txt"
   },
   {
     "experiment_id": "exp_11d4e1cd3e13a8c54ba11d96",
