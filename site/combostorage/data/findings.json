@@ -1317,10 +1317,10 @@
     "primitive": "stale_motive_allocator",
     "feasibility": "lab_only_missing_safe_continuation",
     "naturality": "controller_route_plus_diagnostic_chain_repair",
-    "classification": "lab_consumer_verified_producer_blocked",
-    "result": "stable_with_diagnostic_chain_repair",
+    "classification": "lab_wrong_warp_verified_producer_blocked",
+    "result": "saved_counter_wrong_warp_verified",
     "reaches_play": 1,
-    "summary": "The corruption makes Kelp Forest task 7 look unlocked while Goo Lagoon is loading. The normal game crashes before the pause menu can use it. With one lab-only safety repair, the game reaches pause with that task still unlocked; selecting TAKE BUS has not yet been tested.",
+    "summary": "The stale write changes Kelp Forest task 7 to 10148 during Goo Lagoon's load. After one lab-only allocator-chain repair, completing a manual save before later HUD writes preserves 10148 in the save file. A clean restart and ordinary slot load removes the stale allocator state but restores that task value; the normal pause menu then accepts TAKE BUS and loads KF05.",
     "holder_hex": null,
     "writes": [
       {
@@ -1344,26 +1344,32 @@
     ],
     "outcomes": [
       {
-        "category": "lab_consumer_effect",
-        "description": "A lab-only safety repair lets Goo Lagoon finish loading and the real pause menu open while Kelp Forest task 7 still appears unlocked. This proves the unlock survives long enough to reach the menu, but not yet that TAKE BUS completes the wrong warp.",
-        "severity": "promising_lab_oracle",
+        "category": "saved_progression_wrong_warp",
+        "description": "A manual save made while Kelp Forest task 7 reads 10148 serializes that value. After a clean emulator restart and normal slot load, the value is still 10148 and TAKE BUS loads KF05.",
+        "severity": "lab_assisted_result",
         "reaches_play": 1,
         "crash_stage": null,
         "progression_delta": null,
         "shiny_delta": null,
         "spatula_delta": null,
         "sock_delta": null,
-        "persistence": "until the motive node is freed around frame 432",
-        "confidence": "runtime_verified_lab_only",
+        "persistence": "save_file_across_power_cycle",
+        "confidence": "runtime_verified_clean_restart",
         "crash_pc_hex": null
       }
     ],
     "consumers": [
       {
-        "kind": "pause_before_motive_retirement",
-        "action": "After the lab-only safety repair, skip Goo Lagoon's opening camera tour and press Start as soon as control returns.",
-        "result": "The pause menu opens while Kelp Forest task 7 still appears unlocked. TAKE BUS has not yet been selected in this test.",
-        "persistence": "temporary"
+        "kind": "normal_pause_taxi",
+        "action": "After the clean reload, clear the Goo Lagoon flythrough, open pause, select Kelp Forest task 7, and confirm TAKE BUS twice.",
+        "result": "The game changes scene from GL01 to KF05.",
+        "persistence": "clean_scene_transition"
+      },
+      {
+        "kind": "manual_save_before_later_hud_write",
+        "action": "After the lab-only chain repair, skip Goo Lagoon's opening camera tour, pause as soon as control returns, and complete a manual save while Kelp Forest task 7 still reads 10148.",
+        "result": "Power-cycle the emulator and load slot 0 normally. Kelp Forest task 7 is restored as 10148 with no stale allocator state remaining.",
+        "persistence": "save_file_across_power_cycle"
       }
     ],
     "producers": [
@@ -1389,6 +1395,8 @@
     "evidence_refs": [
       "tmp/bfbb-combo-autopilot/ps2-live-cycle-20/counter-early-v2.json",
       "tmp/bfbb-combo-autopilot/ps2-live-cycle-21/sm02-gl01-chain-repair-pause.json",
+      "tmp/bfbb-combo-autopilot/ps2-live-cycle-23/persisted-kf7-take-bus.json",
+      "tmp/bfbb-combo-autopilot/ps2-live-cycle-23/sm02-gl01-repair-pause-v2.json",
       "tmp/bfbb-ps2-natural-target-catalog.json"
     ]
   },

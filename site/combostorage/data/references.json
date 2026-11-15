@@ -4960,6 +4960,20 @@
     "platform": "ps2",
     "source_scene": "SM02",
     "destination_scene": "GL01",
+    "ref": "tmp/bfbb-combo-autopilot/ps2-live-cycle-23/persisted-kf7-take-bus.json"
+  },
+  {
+    "experiment_id": "exp_a8179a3f3a3d66b6df7c14d8",
+    "platform": "ps2",
+    "source_scene": "SM02",
+    "destination_scene": "GL01",
+    "ref": "tmp/bfbb-combo-autopilot/ps2-live-cycle-23/sm02-gl01-repair-pause-v2.json"
+  },
+  {
+    "experiment_id": "exp_a8179a3f3a3d66b6df7c14d8",
+    "platform": "ps2",
+    "source_scene": "SM02",
+    "destination_scene": "GL01",
     "ref": "tmp/bfbb-ps2-natural-target-catalog.json"
   },
   {

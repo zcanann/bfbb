@@ -26,9 +26,9 @@ const sceneName = (code) => {
 function classify(item) {
   const categories = (item.outcomes || []).map(x => x.category);
   const text = [item.classification, item.result, item.feasibility, ...categories].join(" ").toLowerCase();
-  if (/progression_award|pickup_reward_increased|runtime_verified_payoff/.test(text)) {
+  if (/progression_award|pickup_reward_increased|runtime_verified_payoff|saved_progression_wrong_warp/.test(text)) {
     const lab = /diagnostic|synthetic|artificial/.test(`${item.naturality} ${item.feasibility}`.toLowerCase());
-    return {key:"payoff", label:lab ? "Lab-only result" : "Progression effect", tone:"good"};
+    return {key:"payoff", label:lab ? "Lab-assisted result" : "Progression effect", tone:"good"};
   }
   if (/consumer_verified|wrong_warp_consumer_verified/.test(text)) return {key:"consumer", label:"End result verified", tone:"warn"};
   if (/load_blocker|stalled|crash|emulator_artifact/.test(text)) return {key:"blocked", label:/crash/.test(text) ? "Crash" : "Load blocker", tone:"bad"};
@@ -45,7 +45,7 @@ function routeability(item) {
     explanation: "The useful end state works, but no normal gameplay setup is known to create it."
   };
   if (/diagnostic|synthetic|artificial|layout_alignment_only/.test(text)) return {
-    label: "Lab test only", tone: "warn",
+    label: "Lab-assisted setup", tone: "warn",
     explanation: "The test tools forced part of the setup. The result is real, but there is not yet a controller-ready route."
   };
   if (/blocked|invalid_followup|load_blocker/.test(text)) return {
@@ -96,20 +96,21 @@ function plainSetup(item) {
   const warmups = Number(recipe.warmups ?? recipe.source_combo_warmups ?? 0);
   const hud = recipe.hud_precondition || recipe.hud_action;
   const delay = Number(recipe.hud_precondition_delay ?? recipe.hud_delay ?? 0);
-  const isDiagnostic = status.label === "Lab test only";
+  const isDiagnostic = status.label.startsWith("Lab-") || status.label === "Lab test only";
 
-  if (item.result === "stable_with_diagnostic_chain_repair" && item.source_scene === "SM02" && item.destination_scene === "GL01") return {
-    status: {label: "Wrong-warp lead", tone: "warn", explanation: "The task unlock is real, but the unmodified game crashes before it can be selected."},
-    playable: "Not yet. The corruption makes Kelp Forest task 7 available, but the normal game crashes before you can use TAKE BUS.",
-    scope: "A lab-only safety repair lets Goo Lagoon finish loading and the pause menu open with Kelp Forest task 7 still available. Nobody has selected TAKE BUS in that repaired state yet, so the wrong warp itself is not verified.",
-    missing: "First, a normal-game way to survive Goo Lagoon's first three HUD animations. Then select TAKE BUS for Kelp Forest task 7 and confirm where it loads.",
-    summary: "Potential wrong warp to Kelp Forest task 7. The unlock is written successfully, but the unmodified game crashes before the menu can use it.",
+  if (item.result === "saved_counter_wrong_warp_verified" && item.source_scene === "SM02" && item.destination_scene === "GL01") return {
+    status: {label: "Saved wrong warp verified", tone: "good", explanation: "The task value survives a power cycle and the normal taxi menu uses it."},
+    playable: "Verified: saving while Kelp Forest task 7 reads 10148 preserves that value, and TAKE BUS loads KF05 after a clean restart.",
+    scope: "The save, restart, slot load, pause navigation, taxi confirmation, and KF05 transition all used the game's normal UI. A lab-only pointer repair was still used earlier to keep Goo Lagoon alive long enough to make the save.",
+    missing: "A normal-game way to survive the extra HUD allocations before making the manual save. The write itself and the saved taxi result are already observed.",
+    summary: "A temporary Kelp Forest task unlock can be saved, reloaded without the stale allocator, and used to TAKE BUS from Goo Lagoon to KF05.",
     steps: [
       "Carry the delayed combo display from Sand Mountain through the title screen, then load Goo Lagoon.",
-      "During the load, the stale write makes Kelp Forest task 7 appear unlocked.",
-      "Unmodified result: the game crashes during Goo Lagoon's first HUD animations, before player control.",
-      "Lab-only result: repairing the broken follow-up pointer lets the camera tour skip and pause menu work while the task remains unlocked.",
-      "Still untested: selecting TAKE BUS for that task."
+      "During the load, the stale write changes Kelp Forest task 7 from 0 to 10148.",
+      "The unmodified allocator chain crashes; the recorded test used one lab-only repair to prevent that follow-up crash.",
+      "Skip Goo Lagoon's opening camera tour, wait for normal control, pause immediately, and complete a manual save while the task still reads 10148.",
+      "Power-cycle, load that save normally, and verify the task still reads 10148 with the stale allocator state gone.",
+      "Pause, select Kelp Forest task 7, choose TAKE BUS, and confirm. The game loads KF05."
     ]
   };
 
@@ -193,8 +194,8 @@ function plainSetup(item) {
 
 function plainOutcome(item) {
   const outcome = item.outcomes?.[0] || {};
-  if (item.result === "stable_with_diagnostic_chain_repair" && item.source_scene === "SM02" && item.destination_scene === "GL01") {
-    return "Kelp Forest task 7 appears unlocked, but the normal game crashes before TAKE BUS can be used.";
+  if (item.result === "saved_counter_wrong_warp_verified" && item.source_scene === "SM02" && item.destination_scene === "GL01") {
+    return "The manual save preserves Kelp Forest task 7 as 10148 across a power cycle; after loading the slot normally, TAKE BUS changes GL01 to KF05.";
   }
   if (outcome.category === "interaction_crash") {
     const target = item.writes?.find(write => /RED_SHINY/i.test(write.owner_name || ""))?.owner_name || "the corrupted pickup";
@@ -321,7 +322,7 @@ function friendlyMechanism(value) {
 
 function friendlyFeasibility(value) {
   const key = String(value || "").toLowerCase();
-  if (/lab_only_missing_safe_continuation/.test(key)) return "The write works in the lab; normal gameplay still crashes";
+  if (/lab_only_missing_safe_continuation/.test(key)) return "The write and saved result are verified; the original chain still needs a lab repair";
   if (/consumer_only/.test(key)) return "The end result works; no gameplay setup is known";
   if (/diagnostic|synthetic|artificial/.test(key)) return "Lab test only";
   if (/natural|controller/.test(key)) return "Uses normal controller actions";
@@ -359,7 +360,7 @@ function openDetail(item) {
     <p>${esc(setup.summary)}</p>
   </div>
   <section class="playability-panel">
-    <h3>Can a player do this now?</h3>
+    <h3>What is verified?</h3>
     <p><strong>${esc(setup.playable)}</strong></p>
     <p>${esc(setup.scope)}</p>
     <p><span>Not established:</span> ${esc(setup.missing)}</p>
