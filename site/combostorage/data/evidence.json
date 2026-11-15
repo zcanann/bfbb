@@ -4037,6 +4037,28 @@
     "issue_count": 0
   },
   {
+    "path": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-08\\ps2-consumer-01\\ps2-consumer-probes.json",
+    "sha256": "9356397924aac26bffd7f2cb111a050e0fad19c457a9f6774d63169204724745",
+    "size": 72016,
+    "modified_ns": 1794700868226630500,
+    "platform": "ps2",
+    "adapter": "ps2_consumer_confirmation_index",
+    "imported_at": "2026-11-15T00:01:27.570955+00:00",
+    "record_count": 2,
+    "issue_count": 0
+  },
+  {
+    "path": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-08\\ps2-discovery-01\\platform-confirmations.json",
+    "sha256": "df14bdb36698c4f09ef79d964e6155941fe3ac63755a0c9e994bc6534580608c",
+    "size": 41070,
+    "modified_ns": 1794700740707946000,
+    "platform": "ps2",
+    "adapter": "platform_confirmation_index",
+    "imported_at": "2026-11-14T23:59:11.681033+00:00",
+    "record_count": 4,
+    "issue_count": 0
+  },
+  {
     "path": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-natural-target-catalog.json",
     "sha256": "7bbbcfe7d96fbf9212cba7aac575d4fabc4f461f7eeb88cb81487dc3f45f7d56",
     "size": 8446258,

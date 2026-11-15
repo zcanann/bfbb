@@ -3626,6 +3626,104 @@
     "ref": "tmp/bfbb-ps2-natural-target-catalog.json"
   },
   {
+    "experiment_id": "exp_1e4e03531895ebebe5d0dd84",
+    "platform": "ps2",
+    "source_scene": "B101",
+    "destination_scene": "JF01",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-08\\ps2-consumer-01\\0048-B101-JF01-00CD0B84-after_show\\attempt-01\\consumer.json"
+  },
+  {
+    "experiment_id": "exp_1e4e03531895ebebe5d0dd84",
+    "platform": "ps2",
+    "source_scene": "B101",
+    "destination_scene": "JF01",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-08\\ps2-consumer-01\\0048-B101-JF01-00CD0B84-after_show\\attempt-01\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_1e4e03531895ebebe5d0dd84",
+    "platform": "ps2",
+    "source_scene": "B101",
+    "destination_scene": "JF01",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-08\\ps2-consumer-01\\0048-B101-JF01-00CD0B84-after_show\\attempt-01\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_f876b7f853966b83b601ca85",
+    "platform": "ps2",
+    "source_scene": "B101",
+    "destination_scene": "JF01",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-08\\ps2-consumer-01\\0048-B101-JF01-00CD0B84-after_show\\attempt-02\\consumer.json"
+  },
+  {
+    "experiment_id": "exp_f876b7f853966b83b601ca85",
+    "platform": "ps2",
+    "source_scene": "B101",
+    "destination_scene": "JF01",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-08\\ps2-consumer-01\\0048-B101-JF01-00CD0B84-after_show\\attempt-02\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_f876b7f853966b83b601ca85",
+    "platform": "ps2",
+    "source_scene": "B101",
+    "destination_scene": "JF01",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-08\\ps2-consumer-01\\0048-B101-JF01-00CD0B84-after_show\\attempt-02\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_3947900f8e394da03807c33b",
+    "platform": "ps2",
+    "source_scene": "B101",
+    "destination_scene": "JF01",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-08\\ps2-discovery-01\\0060-B101-JF01-00CD0B58-expiry\\attempt-01\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_3947900f8e394da03807c33b",
+    "platform": "ps2",
+    "source_scene": "B101",
+    "destination_scene": "JF01",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-08\\ps2-discovery-01\\0060-B101-JF01-00CD0B58-expiry\\attempt-01\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_f5f245b9facac0c66d2bbbf9",
+    "platform": "ps2",
+    "source_scene": "B101",
+    "destination_scene": "JF01",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-08\\ps2-discovery-01\\0060-B101-JF01-00CD0B58-expiry\\attempt-02\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_f5f245b9facac0c66d2bbbf9",
+    "platform": "ps2",
+    "source_scene": "B101",
+    "destination_scene": "JF01",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-08\\ps2-discovery-01\\0060-B101-JF01-00CD0B58-expiry\\attempt-02\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_f67a293404fc1323bb3e1c4c",
+    "platform": "ps2",
+    "source_scene": "B101",
+    "destination_scene": "JF01",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-08\\ps2-discovery-01\\0061-B101-JF01-00CD0B84-after_show\\attempt-01\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_f67a293404fc1323bb3e1c4c",
+    "platform": "ps2",
+    "source_scene": "B101",
+    "destination_scene": "JF01",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-08\\ps2-discovery-01\\0061-B101-JF01-00CD0B84-after_show\\attempt-01\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_3c1911d3d4af96d70980b913",
+    "platform": "ps2",
+    "source_scene": "B101",
+    "destination_scene": "JF01",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-08\\ps2-discovery-01\\0061-B101-JF01-00CD0B84-after_show\\attempt-02\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_3c1911d3d4af96d70980b913",
+    "platform": "ps2",
+    "source_scene": "B101",
+    "destination_scene": "JF01",
+    "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-08\\ps2-discovery-01\\0061-B101-JF01-00CD0B84-after_show\\attempt-02\\stdout.txt"
+  },
+  {
     "experiment_id": "exp_3c7b6b3f74d873575a30e09f",
     "platform": "ps2",
     "source_scene": "BB02",

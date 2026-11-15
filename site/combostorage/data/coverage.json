@@ -1281,9 +1281,9 @@
     "platform": "ps2",
     "source_scene": "B101",
     "destination_scene": "JF01",
-    "experiments": 2,
+    "experiments": 8,
     "failures": 0,
-    "reaches_play": 0,
+    "reaches_play": 4,
     "holders": 2
   },
   {

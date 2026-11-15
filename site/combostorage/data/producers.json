@@ -8294,6 +8294,19 @@
     "holder_hex": "0x00CD0B58"
   },
   {
+    "id": "prod_e2dc598937f1d11b7c987036",
+    "platform": "ps2",
+    "source_scene": "B101",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "combo expires in menu",
+    "feasibility": "runtime_holder_mismatch",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "e3d39371197b68268103b725b3de0b9e4d4cf4f9ee8b940996ccd35a82f4278f",
+    "payload_hash": null,
+    "holder_hex": "0x00CD0B58"
+  },
+  {
     "id": "prod_a58488663e950e00cdf8a911",
     "platform": "ps2",
     "source_scene": "B101",
@@ -8303,6 +8316,45 @@
     "feasibility": "natural_sequence_available",
     "naturality": "synthetic_combo_state",
     "state_hash": "ebbb4cddb14a8534abecdf9b2511473d2a8daca668edc31d8b1fb045091b2328",
+    "payload_hash": null,
+    "holder_hex": "0x00CD0B84"
+  },
+  {
+    "id": "prod_37607b52336e31fb7788f636",
+    "platform": "ps2",
+    "source_scene": "B101",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "after show",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "72e986af9d189e73f41b24c33f347001944fd0ef705d87b2a73f0d476aedac7b",
+    "payload_hash": null,
+    "holder_hex": "0x00CD0B84"
+  },
+  {
+    "id": "prod_4ed33e35183ce2383510f100",
+    "platform": "ps2",
+    "source_scene": "B101",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "after show",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "a3aabbf6886e1ff5c2c1b215b706dc17fb2493866590e87833768138d83499a9",
+    "payload_hash": null,
+    "holder_hex": "0x00CD0B84"
+  },
+  {
+    "id": "prod_7ed80228e8fc26360c043b6b",
+    "platform": "ps2",
+    "source_scene": "B101",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "after show",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "f6cad8ca4ed392a0ee9a776dd6e416eb6f8ce7f59624513c07f6fe706d9cfe5a",
     "payload_hash": null,
     "holder_hex": "0x00CD0B84"
   },
