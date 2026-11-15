@@ -1,5 +1,77 @@
 [
   {
+    "id": "natural_gc_gl01_pause_quit_load0_20261114",
+    "platform": "gamecube",
+    "source_scene": "GL01",
+    "destination_scene": "GL01",
+    "transition": "pause_quit_real_slot_load",
+    "primitive": "stale_menu_motive_allocator",
+    "feasibility": "player_replay_verified",
+    "naturality": "natural_end_to_end_verified",
+    "classification": "player_replay_verified",
+    "result": "benign_resource_buffer_write",
+    "reaches_play": 1,
+    "summary": "A natural Goo Lagoon combo survives pause/Quit, expires in MNU3, and the real slot-0 load reaches playable Goo Lagoon. The inherited motive overwrites an anonymous scene resource buffer at 0x80582B48; no visible gameplay change is known.",
+    "holder_hex": "0x80582B48",
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": "survives_to_play",
+        "owner_name": "anonymous 10 KB scene resource buffer",
+        "owner_type": "non-xBase resource",
+        "asset_type": null,
+        "member": "unknown resource bytes",
+        "member_size": 40,
+        "semantic_category": "non_entity_resource",
+        "before_hex": null,
+        "after_hex": "806BEDD40000000000000000B200000000000000B0CCCCC98002EA48000000000000000000000000",
+        "holder_hex": "0x80582B48",
+        "write_start_hex": "0x80582B4C",
+        "write_end_hex": "0x80582B74",
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": "0x238C"
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "controlled_confirmation",
+        "description": "The real save-slot load reaches Play and remains controllable for the observed 30-frame settle period. The first inherited write lands in a non-entity resource buffer; no visible effect is known.",
+        "severity": "benign_observed",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": 0,
+        "shiny_delta": 0,
+        "spatula_delta": 0,
+        "sock_delta": 0,
+        "persistence": "not_observed",
+        "confidence": "natural_controller_replay",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [],
+    "producers": [
+      {
+        "id": "natural_gl01_tiki_cluster_pause_quit",
+        "feasibility": "player_replay_verified",
+        "naturality": "natural_end_to_end_verified",
+        "action_summary": "Load the Goo Lagoon save normally, destroy the nearby wooden-tiki cluster until combo count 2 appears, pause before its one-second timer expires, quit to the title screen, let the combo expire there, then load slot 0 normally.",
+        "recipe": {
+          "source": "GL01",
+          "combo_count": 2,
+          "exit": "pause_quit_controller",
+          "menu_event": "natural_combo_expiry",
+          "destination": "real_slot_0_load"
+        }
+      }
+    ],
+    "evidence_refs": [
+      "tmp/natural-gl01-load0-v2/natural-seed-probe/natural-seed-result.json",
+      "tmp/natural-pause-window-fast/pause-window-sweep/pause-window.json",
+      "docs/combo-transition-study.md#current-scope-correction-2026-11-14"
+    ]
+  },
+  {
     "id": "exp_ce72158c5a08e31248915a67",
     "platform": "gamecube",
     "source_scene": "HB00",
