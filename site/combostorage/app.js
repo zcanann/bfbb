@@ -28,36 +28,36 @@ function classify(item) {
   const text = [item.classification, item.result, item.feasibility, ...categories].join(" ").toLowerCase();
   if (/progression_award|pickup_reward_increased|runtime_verified_payoff/.test(text)) {
     const lab = /diagnostic|synthetic|artificial/.test(`${item.naturality} ${item.feasibility}`.toLowerCase());
-    return {key:"payoff", label:lab ? "Lab oracle" : "Verified payoff", tone:"good"};
+    return {key:"payoff", label:lab ? "Lab-only result" : "Progression effect", tone:"good"};
   }
-  if (/consumer_verified|wrong_warp_consumer_verified/.test(text)) return {key:"consumer", label:"Consumer verified", tone:"warn"};
+  if (/consumer_verified|wrong_warp_consumer_verified/.test(text)) return {key:"consumer", label:"End result verified", tone:"warn"};
   if (/load_blocker|stalled|crash|emulator_artifact/.test(text)) return {key:"blocked", label:/crash/.test(text) ? "Crash" : "Load blocker", tone:"bad"};
-  if (/no_reward|no_progression|no_advantage|negative_closure/.test(text)) return {key:"no-payoff", label:"Verified no payoff", tone:"neutral"};
+  if (/no_reward|no_progression|no_advantage|negative_closure/.test(text)) return {key:"no-payoff", label:"No reward or access change", tone:"neutral"};
   if (/visible_effect|state_corruption|controlled_confirmation/.test(text)) return {key:"effect", label:"Verified effect", tone:"warn"};
-  if (/verified/.test(text)) return {key:"verified", label:"Runtime verified", tone:"neutral"};
+  if (/verified/.test(text)) return {key:"verified", label:"Effect verified", tone:"neutral"};
   return {key:"candidate", label:"Candidate", tone:"neutral"};
 }
 
 function routeability(item) {
   const text = `${item.naturality || ""} ${item.feasibility || ""} ${item.classification || ""}`.toLowerCase();
   if (/consumer_only|missing_producer/.test(text)) return {
-    label: "Producer missing", tone: "warn",
-    explanation: "The useful end state works, but no gameplay action is known to write it."
+    label: "Setup not found", tone: "warn",
+    explanation: "The useful end state works, but no normal gameplay setup is known to create it."
   };
   if (/diagnostic|synthetic|artificial|layout_alignment_only/.test(text)) return {
-    label: "Lab-only setup", tone: "warn",
-    explanation: "The harness forced combo/HUD state or scene transport. This verifies the result, not a controller-ready route."
+    label: "Lab test only", tone: "warn",
+    explanation: "The test tools forced part of the setup. The result is real, but there is not yet a controller-ready route."
   };
   if (/blocked|invalid_followup|load_blocker/.test(text)) return {
     label: "Not recoverable", tone: "bad",
     explanation: "The tested sequence does not return to usable gameplay."
   };
   if (/natural_source_available|natural/.test(text)) return {
-    label: "Natural source", tone: "good",
-    explanation: "The source action exists in normal gameplay; timing and route practicality may still need work."
+    label: "Controller setup exists", tone: "good",
+    explanation: "The recorded source action can be performed with normal controller input."
   };
   return {
-    label: "Route unknown", tone: "neutral",
+    label: "Setup unproven", tone: "neutral",
     explanation: "The catalog has not established a controller-ready setup for this result."
   };
 }
@@ -96,12 +96,27 @@ function plainSetup(item) {
   const warmups = Number(recipe.warmups ?? recipe.source_combo_warmups ?? 0);
   const hud = recipe.hud_precondition || recipe.hud_action;
   const delay = Number(recipe.hud_precondition_delay ?? recipe.hud_delay ?? 0);
-  const isDiagnostic = status.label === "Lab-only setup";
+  const isDiagnostic = status.label === "Lab test only";
+
+  if (item.result === "stable_with_diagnostic_chain_repair" && item.source_scene === "SM02" && item.destination_scene === "GL01") return {
+    status: {label: "Wrong-warp lead", tone: "warn", explanation: "The task unlock is real, but the unmodified game crashes before it can be selected."},
+    playable: "Not yet. The corruption makes Kelp Forest task 7 available, but the normal game crashes before you can use TAKE BUS.",
+    scope: "A lab-only safety repair lets Goo Lagoon finish loading and the pause menu open with Kelp Forest task 7 still available. Nobody has selected TAKE BUS in that repaired state yet, so the wrong warp itself is not verified.",
+    missing: "First, a normal-game way to survive Goo Lagoon's first three HUD animations. Then select TAKE BUS for Kelp Forest task 7 and confirm where it loads.",
+    summary: "Potential wrong warp to Kelp Forest task 7. The unlock is written successfully, but the unmodified game crashes before the menu can use it.",
+    steps: [
+      "Carry the delayed combo display from Sand Mountain through the title screen, then load Goo Lagoon.",
+      "During the load, the stale write makes Kelp Forest task 7 appear unlocked.",
+      "Unmodified result: the game crashes during Goo Lagoon's first HUD animations, before player control.",
+      "Lab-only result: repairing the broken follow-up pointer lets the camera tour skip and pause menu work while the task remains unlocked.",
+      "Still untested: selecting TAKE BUS for that task."
+    ]
+  };
 
   if (/wrong_warp_consumer_verified/.test(item.result || "")) return {
     status,
     playable: "No — the wrong warp works only after the lab supplies the task value.",
-    scope: "This verifies the game's response to a corrupted task counter. It does not verify a combo-storage setup that creates that counter.",
+    scope: "This verifies what the menu does when that task is marked available. It does not verify a combo-storage setup that creates the unlock.",
     missing: "A gameplay action that writes a positive value to Chum Bucket Lab task 1 without breaking the menu.",
     summary: "TAKE BUS enters the Robo-SpongeBob phase when Chum Bucket Lab task 1 is positive, but no natural write producer is known.",
     steps: [
@@ -116,10 +131,10 @@ function plainSetup(item) {
     return {
       status: {label: "Player input known", tone: "good", explanation: "The catalog records a concrete controller sequence for this result."},
       playable: "Yes — the required input is made from ordinary controller actions.",
-      scope: "The input and resulting corruption are both recorded. This does not imply that the effect saves time.",
+      scope: "The controller input and resulting effect are both recorded.",
       missing: /no access|no .*skip|no payoff/i.test(plainOutcome(item))
-        ? "A useful consequence; the observed effect currently has no demonstrated speedrun payoff."
-        : "Route timing and category legality still need separate evaluation.",
+        ? "No reward, unlock, or access change has been observed beyond the listed effect."
+        : "Only the listed effect is claimed; unrelated follow-up behavior has not been inferred.",
       summary: `${playerInput(item)} Result: ${plainOutcome(item)}`,
       steps: [
         playerInput(item),
@@ -132,30 +147,30 @@ function plainSetup(item) {
   if (item.transition === "title_round_trip" && item.primitive === "stale_motive_allocator") {
     const steps = [`Load ${source}.`];
     if (warmups) steps.push(isDiagnostic
-      ? `The harness creates ${warmups} completed five-hit combo cycle${warmups === 1 ? "" : "s"} to prepare the recorded allocation history.`
+      ? `The test tools create ${warmups} completed five-hit combo cycle${warmups === 1 ? "" : "s"} to reproduce the recorded setup.`
       : `Complete ${warmups} five-hit combo cycle${warmups === 1 ? "" : "s"}.`);
     if (hud) steps.push(isDiagnostic
-      ? `The harness starts the ${titleCase(hud)} HUD animation${delay ? ` and advances ${delay} game frame${delay === 1 ? "" : "s"}` : ""}.`
+      ? `The test tools start the ${titleCase(hud)} screen animation${delay ? ` and advance ${delay} game frame${delay === 1 ? "" : "s"}` : ""}.`
       : `Trigger the ${titleCase(hud)} HUD animation${delay ? `, then wait ${delay} game frame${delay === 1 ? "" : "s"}` : ""}.`);
     steps.push(isDiagnostic
-      ? "The harness starts another five-hit combo reward and moves to the title screen while its HUD timer is pending, causing the delayed reward animation to allocate there."
+      ? "The test tools start another five-hit combo reward and move to the title screen before it appears, so the reward animation begins on the title screen."
       : "Start another five-hit combo reward, pause and quit while its HUD timer is pending, and let the delayed reward animation begin on the title screen.");
     steps.push(isDiagnostic
-      ? `The harness loads ${destination}; the test then approaches ${target}.`
+      ? `The test tools load ${destination}, then check ${target}.`
       : `Load ${destination}, then approach ${target}.`);
     return {
       status,
       playable: isDiagnostic
-        ? "No — there is no known controller setup for this address."
-        : "Yes — the source action exists in normal play, although its route may still be impractical.",
+        ? "No — the test tools had to force where the delayed animation wrote."
+        : "Yes — the recorded source action exists in normal play.",
       scope: isDiagnostic
-        ? "The harness directly prepared the combo and HUD allocation history, then used lab scene transport. A normal stored combo does not select this address."
+        ? "This shows what the game does after that write. It does not show how a runner can create the same write with controller input."
         : "This row uses the ordinary pause, quit, title-screen, and file-load path.",
       missing: isDiagnostic
-        ? "A natural way to make the title-screen allocator retain this exact address. Frame-perfect timing on an ordinary combo is not currently enough."
-        : "A practical route and timing demonstration on controller input.",
+        ? "A normal gameplay setup that makes the delayed title-screen animation overwrite the same object."
+        : "A complete controller recording of the exact timing, if one is not already attached.",
       summary: isDiagnostic
-        ? "Forced-address oracle: the harness selected this address and observed the effect. This is not a player input sequence."
+        ? "Lab-only test: the tools forced this write and measured the result. This is not a player input sequence."
         : `Carry a pending combo reward through the title screen, load ${destination}, then interact with ${target}.`,
       steps
     };
@@ -164,20 +179,33 @@ function plainSetup(item) {
   const consumer = item.consumers?.[0];
   return {
     status,
-    playable: status.label === "Natural source"
+    playable: status.label === "Controller setup exists"
       ? "Partly — the source action is available in normal gameplay, but no useful route is proved here."
       : "No complete controller setup is known for this result.",
     scope: status.explanation,
     missing: status.label === "Not recoverable"
       ? "A continuation that reaches controllable gameplay after the write."
-      : "A controller-reproducible producer and a surviving transition.",
-    summary: consumer?.action || "The lab delivered the recorded write, then checked the affected object or transition.",
+      : "A controller setup that creates the same write and leaves the game playable.",
+    summary: consumer?.action || "The test tools created the write, then checked what changed in the game.",
     steps: [consumer?.action || "Reproduce the recorded source and transition timing.", consumer?.result || "Observe the recorded result."]
   };
 }
 
 function plainOutcome(item) {
   const outcome = item.outcomes?.[0] || {};
+  if (item.result === "stable_with_diagnostic_chain_repair" && item.source_scene === "SM02" && item.destination_scene === "GL01") {
+    return "Kelp Forest task 7 appears unlocked, but the normal game crashes before TAKE BUS can be used.";
+  }
+  if (outcome.category === "interaction_crash") {
+    const target = item.writes?.find(write => /RED_SHINY/i.test(write.owner_name || ""))?.owner_name || "the corrupted pickup";
+    return `Touching ${target} crashes the game; the matched clean run stays playable.`;
+  }
+  if (outcome.category === "no_award") {
+    return outcome.description || "The changed object gives no reward or progression in the matched test.";
+  }
+  if (outcome.category === "address_control") {
+    return "Adding one more object to the live combo changes which destination memory the delayed title-screen animation will overwrite.";
+  }
   if (outcome.category === "progression_award" && outcome.shiny_delta) {
     return `The corrupted pickup produced ${outcome.shiny_delta > 0 ? "+" : ""}${outcome.shiny_delta} shinies versus the matched clean run, and the total survived the follow-up transition.`;
   }
@@ -267,7 +295,7 @@ function renderFindings() {
       <p>${esc(plainOutcome(item))}</p>
       <span class="badge ${status.tone}">${esc(status.label)}</span>
     </button>`;
-  }).join("") : `<div class="empty">No controller-complete results match these filters. Lab-only address tests are listed under Research leads.</div>`;
+  }).join("") : `<div class="empty">No complete controller results match these filters. Tests that required forced memory state are listed under Research leads.</div>`;
   $$("#findings-list [data-id]").forEach(el => el.addEventListener("click", () => openDetail(findById(el.dataset.id))));
 }
 
@@ -284,14 +312,31 @@ function findById(id) {
   return state.findings.find(x => x.id === id) || state.results?.find(x => x.experiment_id === id) || state.queue?.actionable?.find(x => x.write_id === id);
 }
 
+function friendlyMechanism(value) {
+  const key = String(value || "").toLowerCase();
+  if (key === "stale_motive_allocator") return "Delayed combo animation writes into memory reused by the next level";
+  if (key === "stale_combo_widget_text") return "Delayed combo text writes into reused menu memory";
+  return titleCase(value) || "Not recorded";
+}
+
+function friendlyFeasibility(value) {
+  const key = String(value || "").toLowerCase();
+  if (/lab_only_missing_safe_continuation/.test(key)) return "The write works in the lab; normal gameplay still crashes";
+  if (/consumer_only/.test(key)) return "The end result works; no gameplay setup is known";
+  if (/diagnostic|synthetic|artificial/.test(key)) return "Lab test only";
+  if (/natural|controller/.test(key)) return "Uses normal controller actions";
+  if (/runtime/.test(key)) return "Tested in the running game";
+  return titleCase(value) || "Not recorded";
+}
+
 function detailRows(item) {
   const write = item.writes?.[0] || item.write_raw || item;
   const producer = item.producers?.[0] || {};
   return [
     ["Version", platformName(item.platform)], ["Source", sceneName(item.source_scene)],
     ["Destination", sceneName(item.destination_scene)], ["Transition", titleCase(item.transition)],
-    ["Primitive", titleCase(item.primitive)], ["Feasibility", titleCase(item.feasibility)],
-    ["Producer", producer.action_summary || producer.recipe || "Not recorded"],
+    ["Bug mechanism", friendlyMechanism(item.primitive)], ["Current setup status", friendlyFeasibility(item.feasibility)],
+    ["Input / source action", producer.action_summary || producer.recipe || "Not recorded"],
     ["Retained address", producer.holder_hex || item.holder_hex || write.holder_hex || "Not recorded"],
     ["Destination owner", write.owner_name || item.owner_name || "Not identified"],
     ["C++ member", write.member || item.member || "Not narrowed to one member"],
@@ -317,13 +362,13 @@ function openDetail(item) {
     <h3>Can a player do this now?</h3>
     <p><strong>${esc(setup.playable)}</strong></p>
     <p>${esc(setup.scope)}</p>
-    <p><span>Still missing:</span> ${esc(setup.missing)}</p>
+    <p><span>Not established:</span> ${esc(setup.missing)}</p>
   </section>
   <section class="detail-section action-section"><h3>Exact test that produced this result</h3><ol>${setup.steps.map(step => `<li>${esc(step)}</li>`).join("")}</ol></section>
   <section class="detail-section"><h3>What happened</h3><p>${esc(plainOutcome(item))}</p>${outcomes.slice(1).map(o => `<p>${esc(o.description || titleCase(o.category))}</p>`).join("")}</section>
-  ${consumers.length ? `<section class="detail-section"><h3>How the result is consumed</h3>${consumers.map(c => `<p><strong>${esc(c.action)}</strong><br>${esc(c.result)}</p>`).join("")}</section>` : ""}
-  <section class="detail-section"><h3>Technical record</h3><dl class="detail-grid">${detailRows(item).map(([k,v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl></section>
-  <section class="detail-section"><h3>Evidence</h3>${evidence.length ? `<ul class="evidence-list">${evidence.map(e => `<li>${esc(e)}</li>`).join("")}</ul>` : `<p>No evidence path exported.</p>`}</section>`;
+  ${consumers.length ? `<section class="detail-section"><h3>What to try after the write</h3>${consumers.map(c => `<p><strong>${esc(c.action)}</strong><br>${esc(c.result)}</p>`).join("")}</section>` : ""}
+  <details class="detail-section technical-details"><summary>Technical record</summary><dl class="detail-grid">${detailRows(item).map(([k,v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl></details>
+  <details class="detail-section technical-details"><summary>Evidence files</summary>${evidence.length ? `<ul class="evidence-list">${evidence.map(e => `<li>${esc(e)}</li>`).join("")}</ul>` : `<p>No evidence path exported.</p>`}</details>`;
   $("#detail-dialog").showModal();
 }
 
@@ -338,9 +383,9 @@ async function ensureResults() {
 
 function genericStatus(item) {
   const text = [item.classification, item.outcome_category, item.result].join(" ").toLowerCase();
-  if (/progression|award|increased/.test(text) && !/no_|candidate/.test(text)) return {label:"Observed payoff", tone:"good"};
+  if (/progression|award|increased/.test(text) && !/no_|candidate/.test(text)) return {label:"Progression effect", tone:"good"};
   if (/crash|stalled|blocker/.test(text)) return {label:"Blocked", tone:"bad"};
-  if (/no_reward|no_advantage|no_progression/.test(text)) return {label:"No payoff", tone:"neutral"};
+  if (/no_reward|no_advantage|no_progression/.test(text)) return {label:"No reward/access change", tone:"neutral"};
   if (/planned|candidate|layout/.test(text)) return {label:"Candidate", tone:"warn"};
   return {label:"Observed", tone:"neutral"};
 }
@@ -373,7 +418,7 @@ function renderCoverage() {
     grouped.set(key, value);
   }
   const rows = [...grouped.values()].sort((a,b) => b.experiments - a.experiments);
-  $("#coverage-list").innerHTML = rows.length ? rows.map(x => `<article class="coverage-card"><p class="eyebrow">${esc(platformName(x.platform))}</p><h3>${esc(sceneName(x.scene))}</h3><dl><dt>Experiments</dt><dd>${x.experiments}</dd><dt>Distinct holders</dt><dd>${x.holders}</dd><dt>Source routes</dt><dd>${x.routes}</dd><dt>Recorded failures</dt><dd>${x.failures}</dd></dl></article>`).join("") : `<div class="empty">No coverage rows match these filters.</div>`;
+  $("#coverage-list").innerHTML = rows.length ? rows.map(x => `<article class="coverage-card"><p class="eyebrow">${esc(platformName(x.platform))}</p><h3>${esc(sceneName(x.scene))}</h3><dl><dt>Experiments</dt><dd>${x.experiments}</dd><dt>Write locations</dt><dd>${x.holders}</dd><dt>Source routes</dt><dd>${x.routes}</dd><dt>Recorded failures</dt><dd>${x.failures}</dd></dl></article>`).join("") : `<div class="empty">No coverage rows match these filters.</div>`;
 }
 
 async function ensureQueue() {

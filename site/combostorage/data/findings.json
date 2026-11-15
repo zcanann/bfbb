@@ -1257,7 +1257,7 @@
         "sock_delta": null,
         "persistence": "none",
         "confidence": "paired_runtime_verified_twice",
-        "crash_pc_hex": null
+        "crash_pc_hex": "0xBFB78904"
       },
       {
         "category": "no_award",
@@ -1304,7 +1304,7 @@
     ],
     "evidence_refs": [
       "tmp/bfbb-combo-autopilot/ps2-live-cycle-22/sm02-src2-gl03-pickup11.json",
-      "tmp/bfbb-combo-autopilot/ps2-live-cycle-22/sm02-src2-rb02-red51-v2.json",
+      "tmp/bfbb-combo-autopilot/ps2-live-cycle-22/sm02-src2-rb02-red51-v3.json",
       "tmp/bfbb-ps2-combo-motive-sweep-sm02-src2-show-expiry.json"
     ]
   },
@@ -1320,7 +1320,7 @@
     "classification": "lab_consumer_verified_producer_blocked",
     "result": "stable_with_diagnostic_chain_repair",
     "reaches_play": 1,
-    "summary": "The real payload sets KF task 7 to 10148; skipping the Goo Lagoon flythrough and pausing at frame 90 preserves the positive count, but the unmodified allocator crashes on its third allocation.",
+    "summary": "The corruption makes Kelp Forest task 7 look unlocked while Goo Lagoon is loading. The normal game crashes before the pause menu can use it. With one lab-only safety repair, the game reaches pause with that task still unlocked; selecting TAKE BUS has not yet been tested.",
     "holder_hex": null,
     "writes": [
       {
@@ -1345,7 +1345,7 @@
     "outcomes": [
       {
         "category": "lab_consumer_effect",
-        "description": "With only the second allocator link changed from the counter asset ID to null, GL01 reaches Play, its normal flythrough skip works, and the genuine pause menu opens while the task count is 10148.",
+        "description": "A lab-only safety repair lets Goo Lagoon finish loading and the real pause menu open while Kelp Forest task 7 still appears unlocked. This proves the unlock survives long enough to reach the menu, but not yet that TAKE BUS completes the wrong warp.",
         "severity": "promising_lab_oracle",
         "reaches_play": 1,
         "crash_stage": null,
@@ -1361,8 +1361,8 @@
     "consumers": [
       {
         "kind": "pause_before_motive_retirement",
-        "action": "Skip the opening flythrough with X/Square, then press Start as soon as control returns.",
-        "result": "Pause opens at frame 90 while KF_TASK_COUNTER_07 still reads 10148.",
+        "action": "After the lab-only safety repair, skip Goo Lagoon's opening camera tour and press Start as soon as control returns.",
+        "result": "The pause menu opens while Kelp Forest task 7 still appears unlocked. TAKE BUS has not yet been selected in this test.",
         "persistence": "temporary"
       }
     ],

@@ -12,7 +12,7 @@
     <div class="header-copy">
       <p class="eyebrow">Battle for Bikini Bottom research</p>
       <h1>Combo Transition Catalog</h1>
-      <p class="lede">A combo reward can follow you through the title screen and write into the next level's memory. This catalog separates effects players can reproduce from address tests that only work in the lab.</p>
+      <p class="lede">A combo reward can follow you through the title screen and overwrite part of the next level. This catalog separates effects players can reproduce from tests that required lab tools.</p>
     </div>
     <div id="catalog-stats" class="catalog-stats" aria-label="Catalog totals"></div>
   </header>
@@ -47,11 +47,11 @@
           <p class="eyebrow">Start here</p>
           <h2 id="findings-heading">Doable input → observed output</h2>
         </div>
-        <p>Only rows with a concrete player input and a runtime-observed result belong here.</p>
+        <p>Only rows with a concrete player input and a result observed in the running game belong here.</p>
       </div>
       <div class="player-path">
         <strong>Known player trigger</strong>
-        <span>Earn a combo large enough to show a reward, pause and quit during its one-second delay, let the delayed reward appear on the title screen, then load a file. This reaches the normal fixed address; cards marked <em>Lab-only setup</em> use addresses this sequence cannot currently reach.</span>
+        <span>Earn a combo large enough to show a reward, pause and quit during its one-second delay, let the delayed reward appear on the title screen, then load a file. Cards marked <em>Lab test only</em> required the test tools to force some part of that setup.</span>
       </div>
       <div id="finding-summary" class="status-summary"></div>
       <div class="result-matrix-labels" aria-hidden="true"><span>Version / destination</span><span>Do this</span><span>What happens</span><span>Status</span></div>
@@ -64,9 +64,9 @@
           <p class="eyebrow">Not a route yet</p>
           <h2 id="leads-heading">Research leads</h2>
         </div>
-        <p>Useful end states, forced-address tests, crashes, and dead ends. These are hunting information—not player instructions.</p>
+        <p>Useful end states, forced-memory tests, crashes, and dead ends. These are hunting information—not player instructions.</p>
       </div>
-      <div class="lead-note"><strong>Why keep these?</strong><span>A lead is useful when it identifies a desirable output or a real control lever. Static address coincidences stay in the full Map browser instead of being promoted here.</span></div>
+      <div class="lead-note"><strong>Why keep these?</strong><span>A lead is useful when it identifies a desirable result or a real way to steer the bug. Untested memory overlaps stay in the full Map browser instead of being promoted here.</span></div>
       <div id="lead-summary" class="status-summary"></div>
       <div id="leads-list" class="card-list"></div>
     </section>
@@ -100,7 +100,7 @@
           <p class="eyebrow">Automation</p>
           <h2 id="queue-heading">Next tests</h2>
         </div>
-        <p>Ranked candidates produced by the catalog. “Needs runtime test” is a lead, not a claimed exploit.</p>
+        <p>Ranked candidates produced by the catalog. “Needs game test” is a lead, not a claimed exploit.</p>
       </div>
       <div id="queue-summary" class="status-summary"></div>
       <div id="automation-status" class="notice automation-status"></div>
@@ -111,19 +111,20 @@
       <p class="eyebrow">Reading the catalog</p>
       <h2 id="about-heading">What the labels mean</h2>
       <dl class="definitions">
-        <div><dt>Player result</dt><dd>A concrete controller input has an observed runtime output. These populate the front-page matrix.</dd></div>
-        <div><dt>Lab oracle</dt><dd>The harness forces an address to answer “what would happen?” No player route to that address is implied. These stay under Research leads.</dd></div>
-        <div><dt>Consumer verified</dt><dd>The desired game state does something useful, but no natural setup is known to create it.</dd></div>
-        <div><dt>Verified effect</dt><dd>The write visibly changes the game, without a demonstrated progression or time payoff.</dd></div>
-        <div><dt>Verified no payoff</dt><dd>The state changed, but a matched control showed no reward or progression advantage.</dd></div>
+        <div><dt>Player result</dt><dd>A concrete controller input produced an observed result in the running game. These populate the front-page matrix.</dd></div>
+        <div><dt>Lab-only result</dt><dd>The test tools forced part of the setup to answer “what would happen?” The effect is real, but a player cannot necessarily create it yet. These stay under Research leads.</dd></div>
+        <div><dt>End result verified</dt><dd>The game does something useful once the target value is present, but no normal gameplay setup is known to create that value.</dd></div>
+        <div><dt>Verified effect</dt><dd>The write changes the running game in a repeatable way.</dd></div>
+        <div><dt>No reward or access change</dt><dd>The state changed, but a matched control showed no different reward, unlock, warp, or area access.</dd></div>
         <div><dt>Load blocker / crash</dt><dd>The sequence does not reach controllable play under the tested conditions.</dd></div>
-        <div><dt>Candidate</dt><dd>Addresses and bytes intersect something interesting. Runtime behavior is not yet proven.</dd></div>
+        <div><dt>Candidate</dt><dd>The predicted write overlaps something interesting, but its behavior has not been tested in the running game.</dd></div>
       </dl>
       <h3>Are these all the same setup?</h3>
-      <p>No. The basic player action is: build a combo, pause and quit before its reward appears, let that delayed HUD animation begin on the title screen, then load a file. That real path writes from a small, fixed group of addresses.</p>
-      <p>Lab-only rows deliberately force extra HUD history, combo state, or scene loading so the same write lands at addresses the real path cannot currently reach. A result such as “+49 shinies” proves what happens at that address; it is not instructions for getting there in an unmodified run.</p>
-      <p>A combo HUD animation can survive a title transition with a stale allocator pointer. Different source scenes and timing histories select different retained addresses. The destination then loads a new object or resource over that address, and a later HUD animation writes a fixed motive structure into it.</p>
-      <p>The catalog records the producer action, retained address, destination owner, overwritten C++ member, continuation safety, observed result, comparison control, and evidence path. GameCube has the deepest automation today; PS2 and Xbox use the same public result model while their runners catch up.</p>
+      <p>No. The basic player action is: build a combo, pause and quit before its reward appears, let that delayed screen animation begin on the title screen, then load a file. Different source maps and timings make it overwrite different parts of the next level.</p>
+      <p>Lab-only rows deliberately force part of that setup. A result such as “+49 shinies” proves what the game does after the write; it does not mean an unmodified run can reach that write.</p>
+      <h3>What is the bug doing?</h3>
+      <p>The combo reward animation starts late on the title screen. When the next level loads, the game accidentally keeps using memory from that old animation. Its next update can therefore overwrite an object in the newly loaded level.</p>
+      <p>The source map and exact combo timing decide what gets overwritten. Public summaries focus on the player action and result. Addresses, C++ fields, and memory-chain details remain available under each result’s collapsed Technical record.</p>
     </section>
   </main>
 

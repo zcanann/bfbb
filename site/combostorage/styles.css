@@ -115,6 +115,9 @@ dialog::backdrop { background: rgba(28,31,29,.52); }
 .detail-section { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line); }
 .detail-section h3 { font-size: 1rem; }
 .detail-section p, .detail-section li { color: var(--muted); line-height: 1.55; }
+.technical-details { padding-top: 14px; }
+.technical-details summary { cursor: pointer; font-weight: 800; }
+.technical-details[open] summary { margin-bottom: 16px; }
 .playability-panel { margin-top: 20px; padding: 16px 18px; border-left: 5px solid var(--warn); background: var(--warn-soft); }
 .playability-panel h3 { margin-bottom: 7px; font-size: 1rem; }
 .playability-panel p { margin-bottom: 7px; line-height: 1.5; }
