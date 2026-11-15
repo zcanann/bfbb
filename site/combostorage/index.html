@@ -12,7 +12,7 @@
     <div class="header-copy">
       <p class="eyebrow">Battle for Bikini Bottom research</p>
       <h1>Combo Transition Catalog</h1>
-      <p class="lede">A combo reward can follow you through the title screen and overwrite part of the next level. This catalog separates effects players can reproduce from tests that required lab tools.</p>
+      <p class="lede">A displayed combo can be paused, carried to the title screen, and allowed to expire there. This catalog separates complete player replays from lab-only write and target tests.</p>
     </div>
     <div id="catalog-stats" class="catalog-stats" aria-label="Catalog totals"></div>
   </header>
@@ -51,7 +51,7 @@
       </div>
       <div class="player-path">
         <strong>Known player trigger</strong>
-        <span>Earn a combo large enough to show a reward, pause and quit during its one-second delay, let the delayed reward appear on the title screen, then load a file. Cards marked <em>Lab test only</em> required the test tools to force some part of that setup.</span>
+        <span>Earn a reward-bearing combo, let its message appear, pause before its one-second timer expires, quit, let the timer expire on the title screen, then use New Game or load a real save slot. This section requires that entire sequence and its result to have been replayed without memory writes.</span>
       </div>
       <div id="finding-summary" class="status-summary"></div>
       <div class="result-matrix-labels" aria-hidden="true"><span>Version / destination</span><span>Do this</span><span>What happens</span><span>Status</span></div>
@@ -120,11 +120,11 @@
         <div><dt>Candidate</dt><dd>The predicted write overlaps something interesting, but its behavior has not been tested in the running game.</dd></div>
       </dl>
       <h3>Are these all the same setup?</h3>
-      <p>No. The basic player action is: build a combo, pause and quit before its reward appears, let that delayed screen animation begin on the title screen, then load a file. Different source maps and timings make it overwrite different parts of the next level.</p>
+      <p>The verified natural producer is specific: build a reward-bearing combo, let the message appear, pause before its timer expires, quit, and let the timer expire in the main menu. Gameplay HUD motives are flushed during the quit; they do not survive from the source map.</p>
       <p>Lab-only rows deliberately force part of that setup. A result such as “+49 shinies” proves what the game does after the write; it does not mean an unmodified run can reach that write.</p>
       <h3>What is the bug doing?</h3>
-      <p>The combo reward animation starts late on the title screen. When the next level loads, the game accidentally keeps using memory from that old animation. Its next update can therefore overwrite an object in the newly loaded level.</p>
-      <p>The source map and exact combo timing decide what gets overwritten. Public summaries focus on the player action and result. Addresses, C++ fields, and memory-chain details remain available under each result’s collapsed Technical record.</p>
+      <p>The combo timer survives the quit while its HUD pointer does not. When the timer expires in the main menu, the game allocates a new delay animation through that stale pointer. The main menu then exits without flushing that allocator, so the next scene can inherit its state.</p>
+      <p>Source-map stale-pointer overlaps and destination memory overlaps are useful research targets, but they remain lab leads until the same source, menu path, real save or New Game exit, and observed result are replayed with controller and card inputs only.</p>
     </section>
   </main>
 

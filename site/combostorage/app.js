@@ -52,7 +52,7 @@ function routeability(item) {
     label: "Not recoverable", tone: "bad",
     explanation: "The tested sequence does not return to usable gameplay."
   };
-  if (/natural_source_available|natural/.test(text)) return {
+  if (/natural_end_to_end_verified|player_replay_verified/.test(text)) return {
     label: "Controller setup exists", tone: "good",
     explanation: "The recorded source action can be performed with normal controller input."
   };
@@ -69,19 +69,16 @@ function recipeFor(item) {
 }
 
 function isPlayerResult(item) {
-  const producers = item.producers || [];
-  return producers.some(producer => {
-    const text = `${producer.feasibility || ""} ${producer.naturality || ""}`.toLowerCase();
-    const positive = /controller_actions|controller_reproduced|natural_source_available|natural_route_verified|runner_feasible/.test(text);
-    const disqualifier = /diagnostic|synthetic|artificial|missing|not_routeable|layout_only/.test(text);
-    return positive && !disqualifier && Boolean(producer.action_summary);
-  });
+  const text = `${item.classification || ""} ${item.feasibility || ""} ${item.naturality || ""}`.toLowerCase();
+  return /natural_end_to_end_verified|player_replay_verified/.test(text)
+    && !/diagnostic|synthetic|artificial|missing|not_routeable|layout_only/.test(text)
+    && (item.producers || []).some(producer => Boolean(producer.action_summary));
 }
 
 function playerInput(item) {
   const producer = (item.producers || []).find(producer => {
     const text = `${producer.feasibility || ""} ${producer.naturality || ""}`.toLowerCase();
-    return /controller_actions|controller_reproduced|natural_source_available|natural_route_verified|runner_feasible/.test(text)
+    return /natural_end_to_end_verified|player_replay_verified/.test(text)
       && !/diagnostic|synthetic|artificial|missing|not_routeable|layout_only/.test(text);
   });
   return producer?.action_summary || "No controller-ready input recorded.";
