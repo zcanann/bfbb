@@ -8697,6 +8697,19 @@
     "holder_hex": "0x00CE5DD8"
   },
   {
+    "id": "prod_501b7dbc72b3e488eae7262d",
+    "platform": "ps2",
+    "source_scene": "BC05",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "combo expires in menu",
+    "feasibility": "runtime_holder_mismatch",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "025f9d7d225633e8c4a3afa9027cfd901f58f679eca6d7d157b654521cf3c9ee",
+    "payload_hash": null,
+    "holder_hex": "0x00CE5DD8"
+  },
+  {
     "id": "prod_4f82ca5619d481509a4e9121",
     "platform": "ps2",
     "source_scene": "BC05",
@@ -8745,6 +8758,58 @@
     "feasibility": "runtime_reproduced",
     "naturality": "synthetic_combo_state",
     "state_hash": "e3ce2cf5d446cd319b305451514181a1cb4bfd9e897c52003b61cf4809f49d9c",
+    "payload_hash": null,
+    "holder_hex": "0x00CE5E04"
+  },
+  {
+    "id": "prod_00afc52d883faaa03ed058c0",
+    "platform": "ps2",
+    "source_scene": "BC05",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "after show",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "5c7161037886ec1221d2baf361fbe75d70f331bb29d2531bc7eb8a95357c5d90",
+    "payload_hash": null,
+    "holder_hex": "0x00CE5E04"
+  },
+  {
+    "id": "prod_e1713b0d067fe1aabe8e2fd1",
+    "platform": "ps2",
+    "source_scene": "BC05",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "after show",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "8d505f0af7cb89bb5d0e4bff3f18ce8fabc16f5dfdf65a0d4fac305047a025e5",
+    "payload_hash": null,
+    "holder_hex": "0x00CE5E04"
+  },
+  {
+    "id": "prod_c97c77f55454a235bac1fd42",
+    "platform": "ps2",
+    "source_scene": "BC05",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "after show",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "dfdb8015259f2fcbc21e26efa4277f3b11fcd35e4aa0ee941399955de2c35f2d",
+    "payload_hash": null,
+    "holder_hex": "0x00CE5E04"
+  },
+  {
+    "id": "prod_15d8f2a4d74bed47e4f9922e",
+    "platform": "ps2",
+    "source_scene": "BC05",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "after show",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "fba0109e23651828ef939c73f4ae4571b4b0370c0df72522656a0fda19da3c7d",
     "payload_hash": null,
     "holder_hex": "0x00CE5E04"
   },
