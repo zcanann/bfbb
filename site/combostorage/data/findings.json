@@ -880,6 +880,131 @@
     ]
   },
   {
+    "id": "exp_7956789e237a7c3b1d4d7898",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "BC02",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "target_verified_producer_not_matched",
+    "naturality": "forced_first_holder_oracle",
+    "classification": "runtime_verified_mechanism_candidate",
+    "result": "play_live",
+    "reaches_play": 1,
+    "summary": "A motive write at 0x00CF8314 reaches live play after corrupting the drive/mount state of RING_2_MECH, a direct physical candidate for the reported Towers of Power lockout.",
+    "holder_hex": "0x00CF8314",
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": "zero_terminated",
+        "owner_name": "RING_2_MECH",
+        "owner_type": "Platform",
+        "asset_type": "PLAT",
+        "member": "zPlatform.drv",
+        "member_size": null,
+        "semantic_category": "geometry_motion",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x00CF8314",
+        "write_start_hex": "0x00CF8318",
+        "write_end_hex": "0x00CF8340",
+        "continuation_before_hex": "0x00000000",
+        "continuation_after_hex": "0x00000000",
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "mechanism_corruption_candidate",
+        "description": "BC02 reaches controllable play with RING_2_MECH's stored drive position, basis, yaw, displacement, and collision-triangle attachment data overwritten. This fits the reported Towers lockout, but the reported frame-perfect producer has not yet been matched to this holder.",
+        "severity": "stable_mechanism_damage",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "scene_runtime",
+        "confidence": "forced_holder_runtime_plus_community_correlation",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [
+      {
+        "kind": "towers_of_power_completion",
+        "action": "Attempt the complete Towers of Power sequence with this exact holder, comparing every ring/platform state against a clean load.",
+        "result": "Not yet replayed by the lab; community observation reports that completion becomes impossible.",
+        "persistence": "unknown_until_tested"
+      }
+    ],
+    "producers": [],
+    "evidence_refs": [
+      "docs/combo-transition-study.md#community-observed-results-awaiting-lab-replay",
+      "tmp/bfbb-ps2-bc02-ring2-forced-holder.json",
+      "tmp/bfbb-ps2-bc02-ring2-inbound.json"
+    ]
+  },
+  {
+    "id": "exp_7cdda04490714e1e19cc7263",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "BC02",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "reported_controller_setup_needs_lab_replay",
+    "naturality": "community_observation",
+    "classification": "community_observed_result",
+    "result": "towers_of_power_unlock_broken",
+    "reaches_play": 1,
+    "summary": "A frame-perfect combo-storage entry into Mermalair 2 leaves play running but prevents the Towers of Power completion mechanism from awarding its spatula.",
+    "holder_hex": null,
+    "writes": [],
+    "outcomes": [
+      {
+        "category": "mechanism_lockout",
+        "description": "The level remains playable, but completing Towers of Power no longer triggers the mechanism that makes its spatula available. This is an unlock-chain failure, not corruption of the spatula pickup itself.",
+        "severity": "progression_blocker",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "not_yet_measured",
+        "confidence": "community_observed_needs_lab_replay",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [
+      {
+        "kind": "towers_of_power_completion",
+        "action": "Complete the Towers of Power objective after entering Mermalair 2 with frame-perfect combo storage.",
+        "result": "The completion/unlock mechanism fails, so the spatula cannot be earned.",
+        "persistence": "not_yet_measured"
+      }
+    ],
+    "producers": [
+      {
+        "id": "prod_98562bf45ad1e20725fe8c00",
+        "source_scene": null,
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "Perform the frame-perfect combo-storage transition into Mermalair 2.",
+        "feasibility": "community_reported",
+        "naturality": "controller_input_reported_not_yet_replayed_by_lab",
+        "holder_hex": null,
+        "recipe": {
+          "action_summary": "Perform the frame-perfect combo-storage transition into Mermalair 2.",
+          "feasibility": "community_reported",
+          "naturality": "controller_input_reported_not_yet_replayed_by_lab"
+        }
+      }
+    ],
+    "evidence_refs": [
+      "docs/combo-transition-study.md#community-observed-results-awaiting-lab-replay"
+    ]
+  },
+  {
     "id": "exp_63711a0d08257ef34b615257",
     "platform": "ps2",
     "source_scene": "B101",
@@ -1106,6 +1231,548 @@
     ]
   },
   {
+    "id": "exp_37ccc0d6837b7ba9200b82ee",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "B201",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_construction_exact_reachable_head",
+    "classification": "runtime_verified_stable_consumer",
+    "result": "arrow_ui_transform_basis_collapses_without_fault",
+    "reaches_play": 1,
+    "summary": "The HB03 alignment overwrites part of ARROW DOWN UI's transform. Enabling and showing the arrow leaves the game live, but its orientation/scale basis becomes tiny or negative while its position remains intact.",
+    "holder_hex": "0x00CB5D54",
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "ARROW DOWN UI",
+        "owner_type": "UI model matrix",
+        "asset_type": null,
+        "member": "matrix 2 basis at +0x8..+0x30",
+        "member_size": null,
+        "semantic_category": "ui_transform",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x00CB5D54",
+        "write_start_hex": "0x00CB5D58",
+        "write_end_hex": "0x00CB5D80",
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "stable_transform_corruption",
+        "description": "Enable and Visible remain live for 120 frames with no logged fault. Memory confirms a collapsed transform basis; the precise on-screen shape has not yet been captured.",
+        "severity": "stable_visual_effect",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "scene_runtime",
+        "confidence": "paired_runtime_control",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [
+      {
+        "kind": "ui_enable_and_show",
+        "action": "Enable ARROW DOWN UI, then make it visible.",
+        "result": "The arrow uses the damaged transform and play continues.",
+        "persistence": "scene_runtime"
+      }
+    ],
+    "producers": [
+      {
+        "id": "prod_d4e84dc01e367bf7d8392acd",
+        "source_scene": "HB03",
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "Create the measured HB03 post-expiry menu state, then load the Poseidome.",
+        "feasibility": "runtime_reproduced",
+        "naturality": "exact retained head reproduced; controller-only combo construction still needs confirmation",
+        "holder_hex": "0x00CB5D54",
+        "recipe": {
+          "action_summary": "Create the measured HB03 post-expiry menu state, then load the Poseidome.",
+          "feasibility": "runtime_reproduced",
+          "naturality": "exact retained head reproduced; controller-only combo construction still needs confirmation"
+        }
+      }
+    ],
+    "evidence_refs": [
+      "tmp/bfbb-ps2-b201-arrow-down-ui-visible-clean-v2.json",
+      "tmp/bfbb-ps2-b201-arrow-down-ui-visible-corrupt-5d54-v2.json"
+    ]
+  },
+  {
+    "id": "exp_4609572ccbc61ff84ad75c95",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_construction_exact_reachable_head",
+    "classification": "runtime_verified_write_erased",
+    "result": "fodder_model_initialization_erases_overlap",
+    "reaches_play": 1,
+    "summary": "The predicted overlap lands in FODDER_05_01's model-matrix allocation, but model initialization replaces those bytes before gameplay. Enabling, waking, and hitting the enemy produces no corruption-specific fault or behavior in the paired run.",
+    "holder_hex": "0x00CB5D54",
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "FODDER_05_01",
+        "owner_type": "enemy model matrix allocation",
+        "asset_type": null,
+        "member": "matrix 1 tail and matrix 2 start",
+        "member_size": null,
+        "semantic_category": "enemy_model_transform",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x00CB5D54",
+        "write_start_hex": "0x00CB5D58",
+        "write_end_hex": "0x00CB5D80",
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "write_erased_before_play",
+        "description": "Clean and corrupt target bytes are identical once the object is initialized. Wake and Hit both remain live for 180 frames without a corrupt-only fault.",
+        "severity": "no_runtime_effect",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "none",
+        "confidence": "paired_runtime_control",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [
+      {
+        "kind": "enemy_enable_wake_and_hit",
+        "action": "Enable FODDER_05_01, wake it, then hit it.",
+        "result": "Normal model setup has already erased the stale write; behavior matches the clean control.",
+        "persistence": "none"
+      }
+    ],
+    "producers": [
+      {
+        "id": "prod_f3901fd533d7a1fffb0e6eda",
+        "source_scene": "HB03",
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "Create the measured HB03 post-expiry menu state, then load Bikini Bottom Downtown Sea Needle.",
+        "feasibility": "runtime_reproduced",
+        "naturality": "exact retained head reproduced; controller-only combo construction still needs confirmation",
+        "holder_hex": "0x00CB5D54",
+        "recipe": {
+          "action_summary": "Create the measured HB03 post-expiry menu state, then load Bikini Bottom Downtown Sea Needle.",
+          "feasibility": "runtime_reproduced",
+          "naturality": "exact retained head reproduced; controller-only combo construction still needs confirmation"
+        }
+      }
+    ],
+    "evidence_refs": [
+      "tmp/bfbb-ps2-bb03-fodder05-wake-hit-clean-v2.json",
+      "tmp/bfbb-ps2-bb03-fodder05-wake-hit-corrupt-5d54-v2.json"
+    ]
+  },
+  {
+    "id": "exp_7c1c38a4e98b63e5fb4ff580",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "DB01",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_construction_exact_reachable_head",
+    "classification": "runtime_verified_stable_consumer",
+    "result": "damaged_background_plant_remains_live_near_player",
+    "reaches_play": 1,
+    "summary": "The HB03 alignment overlaps plant_background22's shared model/collision model. Moving SpongeBob next to the plant and observing it for 180 frames produces no fault; any visual or collision change remains unresolved.",
+    "holder_hex": "0x00CB5D54",
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "plant_background22",
+        "owner_type": "static object model",
+        "asset_type": null,
+        "member": "shared model/collision-model runtime fields",
+        "member_size": null,
+        "semantic_category": "geometry_collision",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x00CB5D54",
+        "write_start_hex": "0x00CB5D58",
+        "write_end_hex": "0x00CB5D80",
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "stable_nearby_observation",
+        "description": "The clean and corrupt nearby observations both remain live for 180 frames with no logged fault. Visual and collision consequences have not been confirmed.",
+        "severity": "latent_or_visual_corruption",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "scene_runtime",
+        "confidence": "paired_runtime_control",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [
+      {
+        "kind": "nearby_update_render_collision",
+        "action": "Move SpongeBob beside plant_background22 and allow ordinary update, render, and collision checks.",
+        "result": "No crash or logged memory fault in the observed window.",
+        "persistence": "scene_runtime"
+      }
+    ],
+    "producers": [
+      {
+        "id": "prod_a825f4667bb2b1a31be2300b",
+        "source_scene": "HB03",
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "Create the measured HB03 post-expiry menu state, then load Downtown Streets.",
+        "feasibility": "runtime_reproduced",
+        "naturality": "exact retained head reproduced; controller-only combo construction still needs confirmation",
+        "holder_hex": "0x00CB5D54",
+        "recipe": {
+          "action_summary": "Create the measured HB03 post-expiry menu state, then load Downtown Streets.",
+          "feasibility": "runtime_reproduced",
+          "naturality": "exact retained head reproduced; controller-only combo construction still needs confirmation"
+        }
+      }
+    ],
+    "evidence_refs": [
+      "tmp/bfbb-ps2-db01-plant-background22-nearby-clean.json",
+      "tmp/bfbb-ps2-db01-plant-background22-nearby-corrupt-5d54.json"
+    ]
+  },
+  {
+    "id": "exp_3e49145b550294890cd459bb",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "GY01",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_construction_exact_reachable_head",
+    "classification": "runtime_verified_visual_effect",
+    "result": "yellow_reward_matrix_basis_corrupted",
+    "reaches_play": 1,
+    "summary": "The HB03 post-expiry alignment overwrites the first yellow reward pickup's transform basis. Requesting a yellow shiny activates a severely collapsed/skewed reward model, but its position and pointers remain valid and play continues.",
+    "holder_hex": "0x00CB5D54",
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "BOOT_REWARD_PICKUP30 matrix",
+        "owner_type": "RwMatrix",
+        "asset_type": null,
+        "member": "right/up/at transform basis",
+        "member_size": null,
+        "semantic_category": "reward_model_transform",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x00CB5D54",
+        "write_start_hex": "0x00CB5D58",
+        "write_end_hex": "0x00CB5D80",
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "visual_corruption",
+        "description": "The reward remains at its intended position, but most basis values become tiny or negative motive-derived floats. The 180-frame activation replay remained live with no logged fault.",
+        "severity": "stable_visual_artifact",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "scene_runtime",
+        "confidence": "runtime_verified",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [
+      {
+        "kind": "yellow_shiny_reward_request",
+        "action": "Earn a yellow shiny reward after entering GY01 in the corrupt state.",
+        "result": "The first yellow reward uses the damaged transform basis and renders malformed without crashing.",
+        "persistence": "scene_runtime"
+      }
+    ],
+    "producers": [
+      {
+        "id": "prod_24d69d45681ceebe51add1a9",
+        "source_scene": "HB03",
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "Create the measured HB03 menu-show combo state, let its menu motive expire, then load the Flying Dutchman's Graveyard entrance.",
+        "feasibility": "runtime_reproduced",
+        "naturality": "exact retained head reproduced; controller-only combo construction still needs confirmation",
+        "holder_hex": "0x00CB5D54",
+        "recipe": {
+          "action_summary": "Create the measured HB03 menu-show combo state, let its menu motive expire, then load the Flying Dutchman's Graveyard entrance.",
+          "feasibility": "runtime_reproduced",
+          "naturality": "exact retained head reproduced; controller-only combo construction still needs confirmation"
+        }
+      },
+      {
+        "id": "prod_8ae2f992b1157501794543de",
+        "source_scene": "HB03",
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "Cause an ordinary yellow shiny reward while the corrupted reward pickup is available.",
+        "feasibility": "retail_consumer_path_verified",
+        "naturality": "ordinary reward action; lab directly queued the request to isolate its consumer",
+        "holder_hex": "0x00CB5D54",
+        "recipe": {
+          "action_summary": "Cause an ordinary yellow shiny reward while the corrupted reward pickup is available.",
+          "feasibility": "retail_consumer_path_verified",
+          "naturality": "ordinary reward action; lab directly queued the request to isolate its consumer"
+        }
+      }
+    ],
+    "evidence_refs": [
+      "docs/combo-transition-study.md#ps2-retained-head-heap-sweep",
+      "tmp/bfbb-ps2-gy01-reward30-activate-clean.json",
+      "tmp/bfbb-ps2-gy01-reward30-activate-corrupt-5d54.json"
+    ]
+  },
+  {
+    "id": "exp_7164b8cc9ff4d46258a2275a",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "diagnostic_timing_only",
+    "naturality": "pre_expiry_window_not_controller_verified",
+    "classification": "runtime_verified_consumer",
+    "result": "missing_summoned_enemy",
+    "reaches_play": 1,
+    "summary": "The HB03 pre-expiry alignment removes one of King Jellyfish's nine round-one summons; the exact fast menu timing is not controller-verified.",
+    "holder_hex": "0x00CB5D80",
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "KINGJ_NPC_01",
+        "owner_type": "NPC",
+        "asset_type": null,
+        "member": "zNPCKingJelly.children[3].wave and adjacent callbacks",
+        "member_size": null,
+        "semantic_category": "boss_minion_bookkeeping",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x00CB5D80",
+        "write_start_hex": "0x00CB5D84",
+        "write_end_hex": "0x00CB5DAC",
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "boss_mechanism_changed",
+        "description": "After the first hit, clean play activates nine round-one jellyfish; the corrupt run activates eight. The overwritten fourth record is excluded by its damaged wave byte.",
+        "severity": "stable_gameplay_change",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "scene_runtime",
+        "confidence": "runtime_verified_consumer",
+        "crash_pc_hex": null
+      },
+      {
+        "category": "scene_reset_fault",
+        "description": "Killing SpongeBob after the corruption reaches zNPCKingJelly::Reset at 0x00348F50 and produces two TLB misses through the damaged child pointer; the clean death control has no fault.",
+        "severity": "reset_crash",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "until_scene_reset",
+        "confidence": "runtime_verified_consumer",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [
+      {
+        "kind": "king_jellyfish_spawn_round_one",
+        "action": "Enter the boss through its normal intro and damage King Jellyfish once.",
+        "result": "Eight round-one jellyfish spawn instead of nine.",
+        "persistence": "scene_runtime"
+      },
+      {
+        "kind": "player_death_scene_reset",
+        "action": "Die or otherwise reset the King Jellyfish scene after the corrupt fight begins.",
+        "result": "King Jellyfish reset dereferences the corrupted minion pointer and faults.",
+        "persistence": "reset_boundary"
+      }
+    ],
+    "producers": [
+      {
+        "id": "prod_cd61c3f96d425b93d8dfad86",
+        "source_scene": "HB03",
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "Load JF04 while the HB03-created menu motive is still before expiry.",
+        "feasibility": "diagnostic_timing_only",
+        "naturality": "consumer verified; a controller-speed producer is not established",
+        "holder_hex": "0x00CB5D80",
+        "recipe": {
+          "action_summary": "Load JF04 while the HB03-created menu motive is still before expiry.",
+          "feasibility": "diagnostic_timing_only",
+          "naturality": "consumer verified; a controller-speed producer is not established"
+        }
+      }
+    ],
+    "evidence_refs": [
+      "docs/combo-transition-study.md#ps2-retained-head-heap-sweep",
+      "tmp/bfbb-ps2-jf04-kingj-cb5d80-player-kill.json",
+      "tmp/bfbb-ps2-jf04-kingj-clean-player-kill.json",
+      "tmp/bfbb-ps2-jf04-natural-boss-damage-cb5d80.json",
+      "tmp/bfbb-ps2-jf04-natural-boss-damage-clean.json"
+    ]
+  },
+  {
+    "id": "exp_141acddfcf3c09c32113b4fa",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_construction_exact_reachable_head",
+    "classification": "runtime_verified_gameplay_effect",
+    "result": "missing_summoned_enemy",
+    "reaches_play": 1,
+    "summary": "The HB03 post-expiry alignment removes one of King Jellyfish's three round-two summons while the fight remains playable.",
+    "holder_hex": "0x00CB5D54",
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "KINGJ_NPC_01",
+        "owner_type": "NPC",
+        "asset_type": null,
+        "member": "zNPCKingJelly.children[2].wave and adjacent callbacks",
+        "member_size": null,
+        "semantic_category": "boss_minion_bookkeeping",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x00CB5D54",
+        "write_start_hex": "0x00CB5D58",
+        "write_end_hex": "0x00CB5D80",
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "scene_reset_fault",
+        "description": "Killing SpongeBob after the corruption reaches zNPCKingJelly::Reset at 0x00348F50 and produces two TLB misses through the damaged child pointer; the clean death control has no fault.",
+        "severity": "reset_crash",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "until_scene_reset",
+        "confidence": "runtime_verified",
+        "crash_pc_hex": null
+      },
+      {
+        "category": "boss_mechanism_changed",
+        "description": "After the second hit, clean play activates three round-two jellyfish; the corrupt run activates two. The overwritten third record has a nonsense wave number and is skipped before its bad pointer is used.",
+        "severity": "stable_gameplay_change",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "scene_runtime",
+        "confidence": "runtime_verified",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [
+      {
+        "kind": "player_death_scene_reset",
+        "action": "Die or otherwise reset the King Jellyfish scene after the corrupt fight begins.",
+        "result": "King Jellyfish reset dereferences the corrupted minion pointer and faults.",
+        "persistence": "reset_boundary"
+      },
+      {
+        "kind": "king_jellyfish_spawn_round_two",
+        "action": "Enter the boss through its normal intro and damage King Jellyfish twice.",
+        "result": "Two round-two jellyfish spawn instead of three.",
+        "persistence": "scene_runtime"
+      }
+    ],
+    "producers": [
+      {
+        "id": "prod_a414b6bfa3b6819aaba2fc1c",
+        "source_scene": "HB03",
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "Create the measured HB03 menu-show combo state, let its menu motive expire, then load the King Jellyfish arena.",
+        "feasibility": "runtime_reproduced",
+        "naturality": "exact retained head reproduced; controller-only combo construction still needs confirmation",
+        "holder_hex": "0x00CB5D54",
+        "recipe": {
+          "action_summary": "Create the measured HB03 menu-show combo state, let its menu motive expire, then load the King Jellyfish arena.",
+          "feasibility": "runtime_reproduced",
+          "naturality": "exact retained head reproduced; controller-only combo construction still needs confirmation"
+        }
+      }
+    ],
+    "evidence_refs": [
+      "docs/combo-transition-study.md#ps2-retained-head-heap-sweep",
+      "tmp/bfbb-ps2-jf04-kingj-cb5d54-player-kill.json",
+      "tmp/bfbb-ps2-jf04-kingj-clean-player-kill.json",
+      "tmp/bfbb-ps2-jf04-natural-boss-two-damage-cb5d54.json",
+      "tmp/bfbb-ps2-jf04-natural-boss-two-damage-clean.json"
+    ]
+  },
+  {
     "id": "exp_7ad97113f8fd56e68a8e4d25",
     "platform": "ps2",
     "source_scene": "HB04",
@@ -1186,6 +1853,542 @@
     "evidence_refs": [
       "docs/combo-transition-study.md#geometry-controls",
       "tmp/bfbb-ps2-natural-target-catalog.json"
+    ]
+  },
+  {
+    "id": "exp_7c5360319c1e5df4258b3349",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "GY04",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_construction_exact_reachable_head",
+    "classification": "runtime_verified_action_dependent_crash",
+    "result": "second_yellow_reward_pickup_faults_when_left_active",
+    "reaches_play": 1,
+    "summary": "The HB04 alignment corrupts GY04's second yellow-reward model. Two yellow rewards created in the same update activate both pickup slots; if the damaged second pickup remains away from SpongeBob, its normal update and render paths fault immediately.",
+    "holder_hex": "0x00C7822C",
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "BOOT_REWARD_PICKUP31 model",
+        "owner_type": "xModelInstance",
+        "asset_type": null,
+        "member": "Next, Parent, Pool, Anim, Data, PipeFlags, color and alpha",
+        "member_size": null,
+        "semantic_category": "reward_model_runtime",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x00C7822C",
+        "write_start_hex": "0x00C78230",
+        "write_end_hex": "0x00C78258",
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "immediate_collection_bypass",
+        "description": "When both rewards spawn directly on SpongeBob, the damaged second pickup is collected and disabled within the same frame; the 240-frame run remains live without a fault.",
+        "severity": "stable_if_immediately_collected",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "scene_runtime",
+        "confidence": "runtime_verified",
+        "crash_pc_hex": null
+      },
+      {
+        "category": "conditional_crash",
+        "description": "Two same-frame yellow requests activate the corrupted second pickup. Eight units from SpongeBob, its first active frame faults in zEntPickup_UpdateFlyToInterface and zEntPickup_RenderList and stalls the guest.",
+        "severity": "consumer_crash",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "until_consumer_activation",
+        "confidence": "runtime_verified",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [
+      {
+        "kind": "two_simultaneous_yellow_shiny_rewards",
+        "action": "Generate two yellow shiny rewards in one update after entering GY04 in the corrupt state.",
+        "result": "The second reward uses the damaged model; it crashes if left active, but immediate collection avoids the fault.",
+        "persistence": "scene_runtime"
+      }
+    ],
+    "producers": [
+      {
+        "id": "prod_089ac21a41e413229f76fceb",
+        "source_scene": "HB04",
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "Create the measured HB04 menu-show combo state, let its menu motive expire, then load the Graveyard of Ships.",
+        "feasibility": "runtime_reproduced",
+        "naturality": "exact retained head reproduced; controller-only combo construction still needs confirmation",
+        "holder_hex": "0x00C7822C",
+        "recipe": {
+          "action_summary": "Create the measured HB04 menu-show combo state, let its menu motive expire, then load the Graveyard of Ships.",
+          "feasibility": "runtime_reproduced",
+          "naturality": "exact retained head reproduced; controller-only combo construction still needs confirmation"
+        }
+      },
+      {
+        "id": "prod_4ebe3e082b96ae96234e1cda",
+        "source_scene": "HB04",
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "Cause two yellow shiny rewards in the same game update while they are far enough away not to be collected immediately.",
+        "feasibility": "retail_consumer_path_verified",
+        "naturality": "the lab queued two ordinary requests together; a natural simultaneous-drop producer still needs routing",
+        "holder_hex": "0x00C7822C",
+        "recipe": {
+          "action_summary": "Cause two yellow shiny rewards in the same game update while they are far enough away not to be collected immediately.",
+          "feasibility": "retail_consumer_path_verified",
+          "naturality": "the lab queued two ordinary requests together; a natural simultaneous-drop producer still needs routing"
+        }
+      }
+    ],
+    "evidence_refs": [
+      "docs/combo-transition-study.md#ps2-retained-head-heap-sweep",
+      "tmp/bfbb-ps2-gy04-reward31-model-distant-yellow-corrupt-c7822c.json",
+      "tmp/bfbb-ps2-gy04-reward31-model-simultaneous-yellow-clean.json",
+      "tmp/bfbb-ps2-gy04-reward31-object-simultaneous-yellow-corrupt-c7822c.json"
+    ]
+  },
+  {
+    "id": "exp_e628e2bb29faa7cd92c3ac25",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "HB08",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_construction_exact_reachable_head",
+    "classification": "runtime_verified_action_dependent_crash",
+    "result": "showing_damaged_bamboo_ui_jumps_to_float_bits",
+    "reaches_play": 1,
+    "summary": "The HB04 alignment damages the BLUE ALPHA 2 BAMBOO UI model in SpongeBob's Dream. The level initially runs, but enabling and showing that UI makes the game jump to 0x3F800000 and stall; the clean control stays live.",
+    "holder_hex": "0x00C7822C",
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "BLUE ALPHA 2 BAMBOO UI",
+        "owner_type": "UI model",
+        "asset_type": null,
+        "member": "model runtime fields",
+        "member_size": null,
+        "semantic_category": "ui_runtime",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x00C7822C",
+        "write_start_hex": "0x00C78230",
+        "write_end_hex": "0x00C78258",
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "consumer_crash",
+        "description": "Enable followed by Visible stalls after 35 frames with a jump to unmapped address 0x3F800000. The matched clean run remains live for 120 frames with no fault.",
+        "severity": "consumer_crash",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "until_ui_activation",
+        "confidence": "paired_runtime_control",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [
+      {
+        "kind": "ui_enable_and_show",
+        "action": "Enable BLUE ALPHA 2 BAMBOO UI, then make it visible.",
+        "result": "The damaged UI model follows an invalid pointer and stalls the game.",
+        "persistence": "scene_runtime"
+      }
+    ],
+    "producers": [
+      {
+        "id": "prod_c43b58e3a334a6260a6ce9b3",
+        "source_scene": "HB04",
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "Create the measured HB04 post-expiry menu state, then load SpongeBob's Dream.",
+        "feasibility": "runtime_reproduced",
+        "naturality": "exact retained head reproduced; controller-only combo construction still needs confirmation",
+        "holder_hex": "0x00C7822C",
+        "recipe": {
+          "action_summary": "Create the measured HB04 post-expiry menu state, then load SpongeBob's Dream.",
+          "feasibility": "runtime_reproduced",
+          "naturality": "exact retained head reproduced; controller-only combo construction still needs confirmation"
+        }
+      }
+    ],
+    "evidence_refs": [
+      "tmp/bfbb-ps2-hb08-blue-alpha2-visible-clean-v2.json",
+      "tmp/bfbb-ps2-hb08-blue-alpha2-visible-corrupt-c7822c-v2.json"
+    ]
+  },
+  {
+    "id": "exp_a394773794ae2b091616073f",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "GY01",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_construction_exact_reachable_head",
+    "classification": "runtime_verified_indirect_write",
+    "result": "reward_model_redirects_position_write_into_hud",
+    "reaches_play": 1,
+    "summary": "The HB06 post-expiry alignment corrupts GY01's first yellow reward model. When a yellow shiny reward is requested, retail pickup logic copies three position floats through the damaged matrix pointer into live HUD render state; the malformed pickup also produces severe geometry artifacts while play continues.",
+    "holder_hex": "0x00CB5DD8",
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "HUD_TEXT_COMBOMESSAGE",
+        "owner_type": "HUD text widget",
+        "asset_type": null,
+        "member": "current alpha and stored starting X/Y",
+        "member_size": null,
+        "semantic_category": "indirect_position_write",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x00CB5DD8",
+        "write_start_hex": "0x00D5CCF4",
+        "write_end_hex": "0x00D5CD00",
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      },
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "BOOT_REWARD_PICKUP30 model",
+        "owner_type": "xModelInstance",
+        "asset_type": null,
+        "member": "BoneRemap, Mat, Scale, model/shadow IDs and animation-collision pointer",
+        "member_size": null,
+        "semantic_category": "reward_model_runtime",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x00CB5DD8",
+        "write_start_hex": "0x00CB5DDC",
+        "write_end_hex": "0x00CB5E04",
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "repeated_position_write",
+        "description": "While the reward remains active, its changing world X/Y/Z are written to the same indirect target every frame. Moving its spawn eight units on X changed the resulting float sequence; the destination address remained fixed.",
+        "severity": "position_controlled_float_stream",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "while_reward_active",
+        "confidence": "runtime_verified",
+        "crash_pc_hex": null
+      },
+      {
+        "category": "indirect_write",
+        "description": "Before the corrupted motive changes phase, the reward model's Mat pointer is 0x00D5CCC4. Retail reward placement writes three position floats at Mat+0x30, landing on HUD_TEXT_COMBOMESSAGE alpha and start_rc.loc.x/y.",
+        "severity": "live_controlled_float_write",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "hud_runtime",
+        "confidence": "runtime_verified",
+        "crash_pc_hex": null
+      },
+      {
+        "category": "visual_corruption",
+        "description": "The pickup renderer treats HUD memory as its transform while its scale and model metadata are also damaged, producing severe geometry artifacts. The 600-frame corrupt control remained live with no logged memory fault.",
+        "severity": "stable_visual_artifact",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "scene_runtime",
+        "confidence": "runtime_verified",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [
+      {
+        "kind": "yellow_shiny_reward_request",
+        "action": "Earn a yellow shiny reward after entering GY01 in the corrupt state.",
+        "result": "Reward placement and subsequent movement repeatedly write its XYZ through the damaged matrix pointer into HUD state and render malformed geometry.",
+        "persistence": "scene_runtime"
+      }
+    ],
+    "producers": [
+      {
+        "id": "prod_25f32495a78ec95eb9254eb8",
+        "source_scene": "HB06",
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "Cause an ordinary yellow shiny reward while the corrupted reward pickup is available.",
+        "feasibility": "retail_consumer_path_verified",
+        "naturality": "ordinary reward action; lab directly queued the request to isolate its consumer",
+        "holder_hex": "0x00CB5DD8",
+        "recipe": {
+          "action_summary": "Cause an ordinary yellow shiny reward while the corrupted reward pickup is available.",
+          "feasibility": "retail_consumer_path_verified",
+          "naturality": "ordinary reward action; lab directly queued the request to isolate its consumer"
+        }
+      },
+      {
+        "id": "prod_3a039b22826651d0e21be1d4",
+        "source_scene": "HB06",
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "Create the measured HB06 menu-show combo state, let its menu motive expire, then load the Flying Dutchman's Graveyard entrance.",
+        "feasibility": "runtime_reproduced",
+        "naturality": "exact retained head reproduced; controller-only combo construction still needs confirmation",
+        "holder_hex": "0x00CB5DD8",
+        "recipe": {
+          "action_summary": "Create the measured HB06 menu-show combo state, let its menu motive expire, then load the Flying Dutchman's Graveyard entrance.",
+          "feasibility": "runtime_reproduced",
+          "naturality": "exact retained head reproduced; controller-only combo construction still needs confirmation"
+        }
+      }
+    ],
+    "evidence_refs": [
+      "docs/combo-transition-study.md#ps2-retained-head-heap-sweep",
+      "tmp/bfbb-ps2-gy01-combohud-yellow-reward-clean.json",
+      "tmp/bfbb-ps2-gy01-combohud-yellow-reward-corrupt-5dd8.json",
+      "tmp/bfbb-ps2-gy01-reward30-activate-clean.json",
+      "tmp/bfbb-ps2-gy01-reward30-activate-corrupt-5dd8.json",
+      "tmp/bfbb-ps2-gy01-reward30-indirect-watch-5dd8-offset8.json",
+      "tmp/bfbb-ps2-gy01-reward30-indirect-watch-5dd8.json"
+    ]
+  },
+  {
+    "id": "exp_50cca6278f355d7a6c64d57f",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "JF04",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_construction_exact_reachable_head",
+    "classification": "runtime_verified_gameplay_effect",
+    "result": "missing_summoned_enemy",
+    "reaches_play": 1,
+    "summary": "The HB06 post-expiry alignment removes one of King Jellyfish's nine round-one summons while the fight remains playable.",
+    "holder_hex": "0x00CB5DD8",
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "KINGJ_NPC_01",
+        "owner_type": "NPC",
+        "asset_type": null,
+        "member": "zNPCKingJelly.children[5].wave and adjacent callbacks",
+        "member_size": null,
+        "semantic_category": "boss_minion_bookkeeping",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x00CB5DD8",
+        "write_start_hex": "0x00CB5DDC",
+        "write_end_hex": "0x00CB5E04",
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "boss_mechanism_changed",
+        "description": "After the first hit, clean play activates nine round-one jellyfish; the corrupt run activates eight. The overwritten sixth record is excluded by its damaged wave byte.",
+        "severity": "stable_gameplay_change",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "scene_runtime",
+        "confidence": "runtime_verified",
+        "crash_pc_hex": null
+      },
+      {
+        "category": "scene_reset_fault",
+        "description": "Killing SpongeBob after the corruption reaches zNPCKingJelly::Reset at 0x00348F50 and produces two TLB misses through the damaged child pointer; the clean death control has no fault.",
+        "severity": "reset_crash",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "until_scene_reset",
+        "confidence": "runtime_verified",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [
+      {
+        "kind": "king_jellyfish_spawn_round_one",
+        "action": "Enter the boss through its normal intro and damage King Jellyfish once.",
+        "result": "Eight round-one jellyfish spawn instead of nine.",
+        "persistence": "scene_runtime"
+      },
+      {
+        "kind": "player_death_scene_reset",
+        "action": "Die or otherwise reset the King Jellyfish scene after the corrupt fight begins.",
+        "result": "King Jellyfish reset dereferences the corrupted minion pointer and faults.",
+        "persistence": "reset_boundary"
+      }
+    ],
+    "producers": [
+      {
+        "id": "prod_73c8b95e3a1e7aea50c6aa7b",
+        "source_scene": "HB06",
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "Create the measured HB06 menu-show combo state, let its menu motive expire, then load the King Jellyfish arena.",
+        "feasibility": "runtime_reproduced",
+        "naturality": "exact retained head reproduced; controller-only combo construction still needs confirmation",
+        "holder_hex": "0x00CB5DD8",
+        "recipe": {
+          "action_summary": "Create the measured HB06 menu-show combo state, let its menu motive expire, then load the King Jellyfish arena.",
+          "feasibility": "runtime_reproduced",
+          "naturality": "exact retained head reproduced; controller-only combo construction still needs confirmation"
+        }
+      }
+    ],
+    "evidence_refs": [
+      "docs/combo-transition-study.md#ps2-retained-head-heap-sweep",
+      "tmp/bfbb-ps2-jf04-kingj-cb5dd8-player-kill.json",
+      "tmp/bfbb-ps2-jf04-kingj-clean-player-kill.json",
+      "tmp/bfbb-ps2-jf04-natural-boss-damage-cb5dd8.json",
+      "tmp/bfbb-ps2-jf04-natural-boss-damage-clean.json"
+    ]
+  },
+  {
+    "id": "exp_ff9b3b645cf8f05bfcee8eb5",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "KF05",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_construction_exact_reachable_head",
+    "classification": "runtime_verified_live_memory_faults",
+    "result": "cave_vine_lod_faults_while_play_continues",
+    "reaches_play": 1,
+    "summary": "The HB06 payload corrupts a cave-vine model's matrix and metadata in Kelp Forest Caves. Ordinary LOD updates repeatedly read invalid addresses, but PCSX2 continues advancing; equal-address GY04 and B302 payloads do not fault.",
+    "holder_hex": "0x00CB5DD8",
+    "writes": [
+      {
+        "allocation_index": 1,
+        "continuation_class": null,
+        "owner_name": "kf04_cavevine_0132 model",
+        "owner_type": "xModelInstance",
+        "asset_type": null,
+        "member": "LightKit, Object, flags/bone fields, BoneRemap, Mat, Scale and model/shadow metadata",
+        "member_size": null,
+        "semantic_category": "geometry_motion",
+        "before_hex": null,
+        "after_hex": null,
+        "holder_hex": "0x00CB5DD8",
+        "write_start_hex": "0x00CB5DDC",
+        "write_end_hex": "0x00CB5E04",
+        "continuation_before_hex": null,
+        "continuation_after_hex": null,
+        "member_offset_hex": null
+      }
+    ],
+    "outcomes": [
+      {
+        "category": "memory_faults_during_play",
+        "description": "The clean control logs no memory fault. The HB06 replay logs 24 zLOD_Update TLB misses over 120 frames and 44 over 300 frames while PCSX2 remains in Play.",
+        "severity": "live_memory_faults",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "scene_runtime",
+        "confidence": "runtime_verified",
+        "crash_pc_hex": null
+      },
+      {
+        "category": "source_payload_difference",
+        "description": "GY04 and B302 reproduce the same retained address in KF05 but their different motive bytes produce no fault during the same idle observation.",
+        "severity": "source_dependent",
+        "reaches_play": 1,
+        "crash_stage": null,
+        "progression_delta": null,
+        "shiny_delta": null,
+        "spatula_delta": null,
+        "sock_delta": null,
+        "persistence": "scene_runtime",
+        "confidence": "paired_runtime_control",
+        "crash_pc_hex": null
+      }
+    ],
+    "consumers": [
+      {
+        "kind": "ordinary_lod_update",
+        "action": "Remain in Kelp Forest Caves while the corrupted vine is processed by the normal LOD update.",
+        "result": "The LOD code repeatedly follows damaged model data and generates memory faults without immediately stopping PCSX2.",
+        "persistence": "scene_runtime"
+      }
+    ],
+    "producers": [
+      {
+        "id": "prod_50cc87cbe61804cd4e4c514c",
+        "source_scene": "HB06",
+        "transition": "title_round_trip",
+        "primitive": "stale_motive_allocator",
+        "action_summary": "Create the measured HB06 post-expiry menu state, then load Kelp Forest Caves.",
+        "feasibility": "runtime_reproduced",
+        "naturality": "exact retained head reproduced; controller-only combo construction still needs confirmation",
+        "holder_hex": "0x00CB5DD8",
+        "recipe": {
+          "action_summary": "Create the measured HB06 post-expiry menu state, then load Kelp Forest Caves.",
+          "feasibility": "runtime_reproduced",
+          "naturality": "exact retained head reproduced; controller-only combo construction still needs confirmation"
+        }
+      }
+    ],
+    "evidence_refs": [
+      "docs/combo-transition-study.md#ps2-retained-head-heap-sweep",
+      "tmp/bfbb-ps2-field-hit-sweep/ps2-field-hit-probes.json",
+      "tmp/bfbb-ps2-kf05-cavevine0132-model-clean.json",
+      "tmp/bfbb-ps2-kf05-cavevine0132-model-corrupt-cb5dd8.json"
     ]
   },
   {

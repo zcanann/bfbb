@@ -3,140 +3,51 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Verified and experimental BFBB combo-transition results across GameCube, PlayStation 2, and Xbox.">
-  <title>BFBB Combo Transition Catalog</title>
+  <meta name="description" content="Exhaustive BFBB combo-storage results across GameCube, PlayStation 2, and Xbox.">
+  <title>BFBB Combo Storage Catalog</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="header-copy">
-      <p class="eyebrow">Battle for Bikini Bottom research</p>
-      <h1>Combo Transition Catalog</h1>
-      <p class="lede">A displayed combo can be paused, carried to the title screen, and allowed to expire there. This catalog separates complete player replays from lab-only write and target tests.</p>
-    </div>
-    <div id="catalog-stats" class="catalog-stats" aria-label="Catalog totals"></div>
-  </header>
-
   <main>
-    <nav class="tabs" aria-label="Catalog views">
-      <button class="tab is-active" data-view="findings">Player results</button>
-      <button class="tab" data-view="leads">Research leads</button>
-      <button class="tab" data-view="browse">Map browser</button>
-      <button class="tab" data-view="coverage">Coverage</button>
-      <button class="tab" data-view="queue">Test queue</button>
-      <button class="tab" data-view="about">How this works</button>
-    </nav>
+    <header>
+      <h1>Combo Storage Catalog</h1>
+      <p>Setup → effect → what remains unknown. Player-observed results are shown by default; the filters expose the full research catalog.</p>
+    </header>
 
-    <section class="controls" aria-label="Catalog filters">
-      <div class="segmented" id="platform-filter">
-        <button class="is-active" data-platform="all">All versions</button>
-        <button data-platform="gamecube">GameCube</button>
-        <button data-platform="ps2">PS2</button>
-        <button data-platform="xbox">Xbox</button>
-      </div>
-      <label class="search">
-        <span>Search</span>
-        <input id="search-input" type="search" placeholder="Map, object, result, or transition">
+    <section class="filters" aria-label="Filter results">
+      <label>Setup confidence
+        <select id="confidence-filter">
+          <option value="player">Player-observed</option>
+          <option value="observed">All runtime-observed</option>
+          <option value="lab">Lab-assisted only</option>
+          <option value="candidate">Untested candidates</option>
+          <option value="all">Everything</option>
+        </select>
       </label>
-      <button id="copy-view" class="copy-button" type="button">Copy this view</button>
+      <label>Version<select id="platform-filter"><option value="all">All versions</option></select></label>
+      <label>Source level<select id="source-filter"><option value="all">All sources</option></select></label>
+      <label>Destination<select id="destination-filter"><option value="all">All destinations</option></select></label>
+      <label>Outcome<select id="outcome-filter"><option value="all">All outcomes</option></select></label>
+      <label class="search">Search<input id="search-input" type="search" placeholder="Map, object, effect…"></label>
+      <button id="copy-view" type="button">Copy filtered link</button>
     </section>
 
-    <section id="view-findings" class="view is-active" aria-labelledby="findings-heading">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Start here</p>
-          <h2 id="findings-heading">Doable input → observed output</h2>
-        </div>
-        <p>Only rows with a concrete player input and a result observed in the running game belong here.</p>
-      </div>
-      <div class="player-path">
-        <strong>Known player trigger</strong>
-        <span>Earn a reward-bearing combo, let its message appear, pause before its one-second timer expires, quit, let the timer expire on the title screen, then use New Game or load a real save slot. This section requires that entire sequence and its result to have been replayed without memory writes.</span>
-      </div>
-      <div id="finding-summary" class="status-summary"></div>
-      <div class="result-matrix-labels" aria-hidden="true"><span>Version / destination</span><span>Do this</span><span>What happens</span><span>Status</span></div>
-      <div id="findings-list" class="result-matrix"></div>
-    </section>
+    <div class="result-bar">
+      <p id="result-count" aria-live="polite">Loading results…</p>
+      <button id="reset-filters" type="button">Reset filters</button>
+    </div>
 
-    <section id="view-leads" class="view" aria-labelledby="leads-heading">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Not a route yet</p>
-          <h2 id="leads-heading">Research leads</h2>
-        </div>
-        <p>Useful end states, forced-memory tests, crashes, and dead ends. These are hunting information—not player instructions.</p>
-      </div>
-      <div class="lead-note"><strong>Why keep these?</strong><span>A lead is useful when it identifies a desirable result or a real way to steer the bug. Untested memory overlaps stay in the full Map browser instead of being promoted here.</span></div>
-      <div id="lead-summary" class="status-summary"></div>
-      <div id="leads-list" class="card-list"></div>
+    <section class="column-headings" aria-hidden="true">
+      <span>Version / route</span><span>Do this</span><span>What happens</span><span>What remains</span><span>Status</span>
     </section>
+    <section id="results" class="results" aria-label="Combo-storage results"></section>
+    <button id="show-more" class="show-more" type="button" hidden>Show more</button>
 
-    <section id="view-browse" class="view" aria-labelledby="browse-heading">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Full catalog</p>
-          <h2 id="browse-heading">Source → destination</h2>
-        </div>
-        <p>Includes benign results and static candidates. Use the status labels to separate observed behavior from predictions.</p>
-      </div>
-      <div id="browse-loading" class="notice">The full result index loads when this view opens.</div>
-      <div id="browse-list" class="compact-list"></div>
-    </section>
-
-    <section id="view-coverage" class="view" aria-labelledby="coverage-heading">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">What has been checked</p>
-          <h2 id="coverage-heading">Coverage</h2>
-        </div>
-        <p>Experiment counts by version and destination. High coverage means “many layouts observed,” not “every useful outcome exhausted.”</p>
-      </div>
-      <div id="coverage-list" class="coverage-grid"></div>
-    </section>
-
-    <section id="view-queue" class="view" aria-labelledby="queue-heading">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Automation</p>
-          <h2 id="queue-heading">Next tests</h2>
-        </div>
-        <p>Ranked candidates produced by the catalog. “Needs game test” is a lead, not a claimed exploit.</p>
-      </div>
-      <div id="queue-summary" class="status-summary"></div>
-      <div id="automation-status" class="notice automation-status"></div>
-      <div id="queue-list" class="compact-list"></div>
-    </section>
-
-    <section id="view-about" class="view prose" aria-labelledby="about-heading">
-      <p class="eyebrow">Reading the catalog</p>
-      <h2 id="about-heading">What the labels mean</h2>
-      <dl class="definitions">
-        <div><dt>Player result</dt><dd>A concrete controller input produced an observed result in the running game. These populate the front-page matrix.</dd></div>
-        <div><dt>Lab-only result</dt><dd>The test tools forced part of the setup to answer “what would happen?” The effect is real, but a player cannot necessarily create it yet. These stay under Research leads.</dd></div>
-        <div><dt>End result verified</dt><dd>The game does something useful once the target value is present, but no normal gameplay setup is known to create that value.</dd></div>
-        <div><dt>Verified effect</dt><dd>The write changes the running game in a repeatable way.</dd></div>
-        <div><dt>No reward or access change</dt><dd>The state changed, but a matched control showed no different reward, unlock, warp, or area access.</dd></div>
-        <div><dt>Load blocker / crash</dt><dd>The sequence does not reach controllable play under the tested conditions.</dd></div>
-        <div><dt>Candidate</dt><dd>The predicted write overlaps something interesting, but its behavior has not been tested in the running game.</dd></div>
-      </dl>
-      <h3>Are these all the same setup?</h3>
-      <p>The verified natural producer is specific: build a reward-bearing combo, let the message appear, pause before its timer expires, quit, and let the timer expire in the main menu. Gameplay HUD motives are flushed during the quit; they do not survive from the source map.</p>
-      <p>Lab-only rows deliberately force part of that setup. A result such as “+49 shinies” proves what the game does after the write; it does not mean an unmodified run can reach that write.</p>
-      <h3>What is the bug doing?</h3>
-      <p>The combo timer survives the quit while its HUD pointer does not. When the timer expires in the main menu, the game allocates a new delay animation through that stale pointer. The main menu then exits without flushing that allocator, so the next scene can inherit its state.</p>
-      <p>Source-map stale-pointer overlaps and destination memory overlaps are useful research targets, but they remain lab leads until the same source, menu path, real save or New Game exit, and observed result are replayed with controller and card inputs only.</p>
-    </section>
+    <footer>
+      <p>Technical addresses and evidence stay inside each row. They are not used as the public-facing explanation.</p>
+      <p id="updated-at"></p>
+    </footer>
   </main>
-
-  <dialog id="detail-dialog">
-    <button id="close-detail" class="dialog-close" aria-label="Close">×</button>
-    <div id="detail-content"></div>
-  </dialog>
-
-  <footer>
-    <p>Generated from the BFBB decomp research catalog. Technical names are preserved in the detail view so results remain auditable.</p>
-    <p id="generated-at"></p>
-  </footer>
-  <script type="module" src="app.js"></script>
+  <script src="app.js" type="module"></script>
 </body>
 </html>

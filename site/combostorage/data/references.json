@@ -1799,6 +1799,13 @@
     "ref": "tmp\\bfbb-all-cycle-catalog\\source-cycle-catalog\\source-cycle-catalog.json"
   },
   {
+    "experiment_id": "exp_84fc32a19ba0a3ccbec98b19",
+    "platform": "gamecube",
+    "source_scene": "B101",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
     "experiment_id": "exp_897a6539c4821bb0b6d42adf",
     "platform": "gamecube",
     "source_scene": "B101",
@@ -1946,6 +1953,13 @@
     "ref": "tmp\\bfbb-priority-deliveries\\source-delivery-catalog\\source-deliveries.json"
   },
   {
+    "experiment_id": "exp_3310b1db806d38c602b479f4",
+    "platform": "gamecube",
+    "source_scene": "B201",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
     "experiment_id": "exp_327fe98e162fb4cfeb3ffefb",
     "platform": "gamecube",
     "source_scene": "B201",
@@ -1953,11 +1967,81 @@
     "ref": "tmp\\bfbb-priority-deliveries\\source-delivery-catalog\\source-deliveries.json"
   },
   {
+    "experiment_id": "exp_5fda49eedac2a0005b9c2ca5",
+    "platform": "gamecube",
+    "source_scene": "B301",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_2ca4268291dc00e114627105",
+    "platform": "gamecube",
+    "source_scene": "B302",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_14730086121c38e5b316d85a",
+    "platform": "gamecube",
+    "source_scene": "B303",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_50fe79b2450112288d74729e",
+    "platform": "gamecube",
+    "source_scene": "BB01",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_54364e2502765c70e5fe93a8",
+    "platform": "gamecube",
+    "source_scene": "BB02",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_3c8762ce9ec870981aa8d959",
+    "platform": "gamecube",
+    "source_scene": "BB03",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_30be823a7bc372c23d7b2b6c",
+    "platform": "gamecube",
+    "source_scene": "BB04",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
     "experiment_id": "exp_cf22dac3b0bcbcfb11528139",
     "platform": "gamecube",
     "source_scene": "BC01",
     "destination_scene": "GL01",
     "ref": "tmp\\bfbb-bc01-castlebreak\\confirm-setups\\runs\\01-BC01-w0-s0-GL01-80604F24\\attempt-01\\summary.json"
+  },
+  {
+    "experiment_id": "exp_3745699fa7a8469183238ea4",
+    "platform": "gamecube",
+    "source_scene": "BC01",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_b3dcf392e1b5143954b73e2c",
+    "platform": "gamecube",
+    "source_scene": "BC02",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_c5a1a3b57cb85ab6845829bd",
+    "platform": "gamecube",
+    "source_scene": "BC03",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
   },
   {
     "experiment_id": "exp_c459f998a2fdae8a2f0b5fe0",
@@ -2028,6 +2112,13 @@
     "source_scene": "BC04",
     "destination_scene": "GL01",
     "ref": "tmp\\bfbb-confirm-gl01-golden\\confirm-setups\\runs\\01-BC04-w1-s0-GL01-805B5598\\summary.json"
+  },
+  {
+    "experiment_id": "exp_b7cc35c046f745e88b165daa",
+    "platform": "gamecube",
+    "source_scene": "BC04",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
   },
   {
     "experiment_id": "exp_ae31bb07231ee648ee736231",
@@ -2226,6 +2317,13 @@
     "ref": "tmp\\bfbb-bc05-jf02-reward-repeat\\confirm-setups\\runs\\01-BC05-w0-s0-JF02-805A6E34\\summary.json"
   },
   {
+    "experiment_id": "exp_bb5c26b232a3646f677508e6",
+    "platform": "gamecube",
+    "source_scene": "BC05",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
     "experiment_id": "exp_554d448524f64c922a9c6a52",
     "platform": "gamecube",
     "source_scene": "BC05",
@@ -2282,6 +2380,34 @@
     "ref": "tmp\\bfbb-priority-deliveries\\source-delivery-catalog\\source-deliveries.json"
   },
   {
+    "experiment_id": "exp_171479b545e800dce062c5e3",
+    "platform": "gamecube",
+    "source_scene": "DB01",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_e9d88c754e6525c07b05aac6",
+    "platform": "gamecube",
+    "source_scene": "DB02",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_c7ead38aeb7dfe2914c06375",
+    "platform": "gamecube",
+    "source_scene": "DB03",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_625be920e1b2202c5e2d8ec1",
+    "platform": "gamecube",
+    "source_scene": "DB04",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
     "experiment_id": "exp_184ae932fba15738f9d0480c",
     "platform": "gamecube",
     "source_scene": "DB05",
@@ -2310,6 +2436,48 @@
     "ref": "tmp\\bfbb-clean-confirmations\\confirm-setups\\runs\\08-DB05-w0-s0-JF02-805AEDC4\\summary.json"
   },
   {
+    "experiment_id": "exp_e9e366bbb4e32f64df416820",
+    "platform": "gamecube",
+    "source_scene": "DB05",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_2baedcc5ba5b8efde5919a42",
+    "platform": "gamecube",
+    "source_scene": "DB06",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_5558ba43acfbeb9d43534844",
+    "platform": "gamecube",
+    "source_scene": "GL01",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_7c45228d11e362ec4b4bdc50",
+    "platform": "gamecube",
+    "source_scene": "GL02",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_fb6741fe03935b9e18dbd5b1",
+    "platform": "gamecube",
+    "source_scene": "GL03",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_d9e00bd6232b5d4cc7d13815",
+    "platform": "gamecube",
+    "source_scene": "GY01",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
     "experiment_id": "exp_19a84b3aa336f59f35aa8d89",
     "platform": "gamecube",
     "source_scene": "GY02",
@@ -2324,6 +2492,13 @@
     "ref": "tmp\\bfbb-all-cycle-catalog\\source-cycle-catalog\\source-cycle-catalog.json"
   },
   {
+    "experiment_id": "exp_192898aca0c9aff5530ab7f5",
+    "platform": "gamecube",
+    "source_scene": "GY02",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
     "experiment_id": "exp_a91da299d4ff4fb984042ad4",
     "platform": "gamecube",
     "source_scene": "GY03",
@@ -2336,6 +2511,27 @@
     "source_scene": "GY03",
     "destination_scene": "HB01",
     "ref": "tmp\\bfbb-clean-platform-confirmations\\confirm-setups\\runs\\02-GY03-w1-s0-HB01-80602148\\summary.json"
+  },
+  {
+    "experiment_id": "exp_28ea46a988ae0ff900ffe3dc",
+    "platform": "gamecube",
+    "source_scene": "GY03",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_e01a235b603ee2a93512eeac",
+    "platform": "gamecube",
+    "source_scene": "GY04",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_6b1c9ead998c825d8daf4e6e",
+    "platform": "gamecube",
+    "source_scene": "HB00",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
   },
   {
     "experiment_id": "exp_ce72158c5a08e31248915a67",
@@ -2357,6 +2553,13 @@
     "source_scene": "HB00",
     "destination_scene": "MNU3",
     "ref": "tmp/bfbb-hb00-direct-widget-tier6-mmu/"
+  },
+  {
+    "experiment_id": "exp_0112e9e1c2ff670483d1f495",
+    "platform": "gamecube",
+    "source_scene": "HB01",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
   },
   {
     "experiment_id": "exp_a963c4a489e41b8b1a936bb1",
@@ -2392,6 +2595,27 @@
     "source_scene": "HB02",
     "destination_scene": "GY03",
     "ref": "tmp\\bfbb-hub-hud-delivery-d5\\source-delivery-catalog\\source-deliveries-hud-shinies-d5.json"
+  },
+  {
+    "experiment_id": "exp_cdada5a87eecf1609559145f",
+    "platform": "gamecube",
+    "source_scene": "HB02",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_8400bcea18905653cb6dd186",
+    "platform": "gamecube",
+    "source_scene": "HB03",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_7cf1cb47b6302c620abb1afd",
+    "platform": "gamecube",
+    "source_scene": "HB04",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
   },
   {
     "experiment_id": "exp_b20b28ca9e99ad6c74b32861",
@@ -2527,6 +2751,13 @@
     "ref": "tmp\\bfbb-hub-hud-pickup-confirm\\confirm-setups\\runs\\01-HB05-w0-s0-JF02-805B6974\\attempt-01\\summary.json"
   },
   {
+    "experiment_id": "exp_d7cb43168d565e1fb3b0cd03",
+    "platform": "gamecube",
+    "source_scene": "HB05",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
     "experiment_id": "exp_de5cebcb4a84d6b91eee85b9",
     "platform": "gamecube",
     "source_scene": "HB05",
@@ -2546,6 +2777,13 @@
     "source_scene": "HB05",
     "destination_scene": "RB01",
     "ref": "tmp\\bfbb-hub-hud-pickup-rb-flags-confirm\\confirm-setups\\runs\\01-HB05-w11-s0-RB01-805B6840\\attempt-03\\summary.json"
+  },
+  {
+    "experiment_id": "exp_f90916db82b6791e5e024b35",
+    "platform": "gamecube",
+    "source_scene": "HB06",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
   },
   {
     "experiment_id": "exp_60c5f3bce9f956b2b1262aea",
@@ -2653,6 +2891,13 @@
     "ref": "tmp\\bfbb-hb07-w0-d120-repeat\\delivery-repeat\\HB07-w0-hud-shinies-d120-repeat.json"
   },
   {
+    "experiment_id": "exp_5866c37b46948eff3f5d9ef1",
+    "platform": "gamecube",
+    "source_scene": "HB07",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
     "experiment_id": "exp_912b15c82723980dc856ef93",
     "platform": "gamecube",
     "source_scene": "HB07",
@@ -2665,6 +2910,755 @@
     "source_scene": "HB07",
     "destination_scene": "RB01",
     "ref": "tmp\\bfbb-hb07-w0-d120-repeat\\delivery-repeat\\HB07-w0-hud-shinies-d120-repeat.json"
+  },
+  {
+    "experiment_id": "exp_28bdc710f5c1e2bbf915a639",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "B101",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_28bdc710f5c1e2bbf915a639",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "B101",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\B101\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_5654f2e744955811e5a41120",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "B201",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_5654f2e744955811e5a41120",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "B201",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\B201\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_19461916147ef784a1444919",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "B302",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_19461916147ef784a1444919",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "B302",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\B302\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_22fe3e87bc642e3a58dfe00e",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "B303",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_22fe3e87bc642e3a58dfe00e",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "B303",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\B303\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_a96c0b61ef9b4f9f759d44dd",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "BB01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_a96c0b61ef9b4f9f759d44dd",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "BB01",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\BB01\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_3bd30d8bffda53f49db66055",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "BB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_3bd30d8bffda53f49db66055",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "BB02",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\BB02\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_c564d1eecf12953d589bcb19",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "BB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_c564d1eecf12953d589bcb19",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "BB03",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\BB03\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_26682027edb7a688c1939d93",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "BB04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_26682027edb7a688c1939d93",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "BB04",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\BB04\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_ff7ba29811c5d0a306ce9e6c",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "BC01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_ff7ba29811c5d0a306ce9e6c",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "BC01",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\BC01\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_654acfd8e7b263d9a468f08e",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "BC02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_654acfd8e7b263d9a468f08e",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "BC02",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\BC02\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_aecb8372722ca34fb604245c",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "BC03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_aecb8372722ca34fb604245c",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "BC03",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\BC03\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_432d1a7fb072e8b804936044",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "BC04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_432d1a7fb072e8b804936044",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "BC04",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\BC04\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_492dfdea9d1dcb40552577dd",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "BC05",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_492dfdea9d1dcb40552577dd",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "BC05",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\BC05\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_461d475cd9629d1a41ddd860",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "DB01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_461d475cd9629d1a41ddd860",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "DB01",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\DB01\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_b0a10ba7beeac6bdc9ec2bc2",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "DB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_b0a10ba7beeac6bdc9ec2bc2",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "DB02",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\DB02\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_808eb5a7b5c786f2e8a7535d",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "DB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_808eb5a7b5c786f2e8a7535d",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "DB03",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\DB03\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_b2ec23cfba302de51bc1dc8a",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "DB04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_b2ec23cfba302de51bc1dc8a",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "DB04",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\DB04\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_e7a4de3e1a9bc4865539cc35",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "DB05",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_e7a4de3e1a9bc4865539cc35",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "DB05",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\DB05\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_e80eb43a11bcc31432b05593",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "DB06",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_e80eb43a11bcc31432b05593",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "DB06",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\DB06\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_a141e74092ad73c3676726df",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "GL01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_a141e74092ad73c3676726df",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "GL01",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\GL01\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_3c2f2293226fb815257f1d90",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "GL02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_3c2f2293226fb815257f1d90",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "GL02",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\GL02\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_34b2280a90e1095b923796b7",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "GL03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_34b2280a90e1095b923796b7",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "GL03",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\GL03\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_bd24b237796e1362e94860e7",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "GY01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_bd24b237796e1362e94860e7",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "GY01",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\GY01\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_c806c833525b57c1f892df67",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "GY02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_c806c833525b57c1f892df67",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "GY02",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\GY02\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_3d455338f6c58598ed503ba0",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "GY03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_3d455338f6c58598ed503ba0",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "GY03",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\GY03\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_1470556896a5cad420dab8cf",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "GY04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_1470556896a5cad420dab8cf",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "GY04",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\GY04\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_c607dec577c0477c54963dc3",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "HB00",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_c607dec577c0477c54963dc3",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "HB00",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\HB00\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_ea825927ddbd78c2c93d3346",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "HB01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_ea825927ddbd78c2c93d3346",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "HB01",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\HB01\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_f46db59a7554652f507bdf64",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "HB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_f46db59a7554652f507bdf64",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "HB02",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\HB02\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_6562210b46c84fa620242510",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "HB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_6562210b46c84fa620242510",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "HB03",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\HB03\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_4d227eed5c82562a97edff54",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "HB04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_4d227eed5c82562a97edff54",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "HB04",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\HB04\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_1ead0e93b504144f2e488888",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "HB05",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_1ead0e93b504144f2e488888",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "HB05",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\HB05\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_b42fcc71ef71991787d4d573",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "HB06",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_b42fcc71ef71991787d4d573",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "HB06",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\HB06\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_4bdd77320f1644c748d894b1",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "HB07",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_4bdd77320f1644c748d894b1",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "HB07",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\HB07\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_c54c3294ad6cc72ade6f8866",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "HB08",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_c54c3294ad6cc72ade6f8866",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "HB08",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\HB08\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_945e4160b8e88dfa9f111147",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "HB09",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_945e4160b8e88dfa9f111147",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "HB09",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\HB09\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_16d214d22e0ecb89f6ed8cee",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "HB10",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_16d214d22e0ecb89f6ed8cee",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "HB10",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\HB10\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_56a1b813f63dd8ca62e8febf",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "JF01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_56a1b813f63dd8ca62e8febf",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "JF01",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\JF01\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_c92406f8536758b61aea6693",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "JF02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_c92406f8536758b61aea6693",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "JF02",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\JF02\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_a530dafcc9c488018c4176d9",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "JF03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_a530dafcc9c488018c4176d9",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "JF03",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\JF03\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_fd3af4e22b351fabafa0a547",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_fd3af4e22b351fabafa0a547",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "JF04",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\JF04\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_7eff178c9fe3f1cfa736ec13",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "KF01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_7eff178c9fe3f1cfa736ec13",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "KF01",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\KF01\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_04e430ed7bbd6a9fbdce4292",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "KF02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_04e430ed7bbd6a9fbdce4292",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "KF02",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\KF02\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_b2272da9431c5d42d4051ea8",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "KF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_b2272da9431c5d42d4051ea8",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "KF04",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\KF04\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_5b64bb616f8e2676e6177784",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "KF05",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_5b64bb616f8e2676e6177784",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "KF05",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\KF05\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_93df1390372268bcdbd2ce2b",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_dbeb2318767ffa73606a3dcc",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "PG12",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_dbeb2318767ffa73606a3dcc",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "PG12",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\PG12\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_6a1692d0af8d9715791924b2",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "RB01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_6a1692d0af8d9715791924b2",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "RB01",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\RB01\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_4e0638b1e6c1e4c2be2d3932",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "RB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_4e0638b1e6c1e4c2be2d3932",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "RB02",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\RB02\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_b4d1063c221f4d0a633b876c",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "RB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_b4d1063c221f4d0a633b876c",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "RB03",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\RB03\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_4e2c0499fb86bb002ff1aa6a",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "SM01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_4e2c0499fb86bb002ff1aa6a",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "SM01",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\SM01\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_896ec95d66f1ea1b3aa87b94",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "SM02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_896ec95d66f1ea1b3aa87b94",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "SM02",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\SM02\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_6bb7ba360b5d080a51a33c6a",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "SM03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_6bb7ba360b5d080a51a33c6a",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "SM03",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\SM03\\probe\\allocator-trace.json"
+  },
+  {
+    "experiment_id": "exp_42d679db25db820609e95833",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "SM04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\natural-destination-sweep.json"
+  },
+  {
+    "experiment_id": "exp_42d679db25db820609e95833",
+    "platform": "gamecube",
+    "source_scene": "HB08",
+    "destination_scene": "SM04",
+    "ref": "tmp\\hb08-natural-destination-atlas-v1\\natural-destination-sweep\\SM04\\probe\\allocator-trace.json"
   },
   {
     "experiment_id": "exp_9e231399eb2f1db677619ea5",
@@ -2695,11 +3689,25 @@
     "ref": "tmp\\bfbb-hb09-tollgatearm\\confirm-setups\\runs\\01-HB09-w9-s0-KF04-80596938\\attempt-01\\summary.json"
   },
   {
+    "experiment_id": "exp_4be9431d8a68ce5711b95b76",
+    "platform": "gamecube",
+    "source_scene": "HB09",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
     "experiment_id": "exp_1d886b1244537405f4149dd7",
     "platform": "gamecube",
     "source_scene": "HB09",
     "destination_scene": "SM04",
     "ref": "tmp\\bfbb-repeat-hb09-w9\\delivery-repeat\\HB09-w9-repeat.json"
+  },
+  {
+    "experiment_id": "exp_bd2087cabfe591eea245ee25",
+    "platform": "gamecube",
+    "source_scene": "HB10",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
   },
   {
     "experiment_id": "exp_e02807e044fae218c4802c45",
@@ -2742,6 +3750,27 @@
     "source_scene": "JF01",
     "destination_scene": "GL03",
     "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-probe-gl03-sock\\runs\\JF01-title_round_trip-menu_show_then_expire-d8-o-4-s180-GL03\\summary.json"
+  },
+  {
+    "experiment_id": "exp_bc0c955d3af97c36be1e9557",
+    "platform": "gamecube",
+    "source_scene": "JF01",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_d789028d73f6e6625782b056",
+    "platform": "gamecube",
+    "source_scene": "JF02",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_12a179e301565c6e6c9e5d3e",
+    "platform": "gamecube",
+    "source_scene": "JF03",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
   },
   {
     "experiment_id": "exp_bf852a89a6f5bc297822cd85",
@@ -2849,6 +3878,20 @@
     "ref": "tmp\\bfbb-all-cycle-catalog\\source-cycle-catalog\\source-cycle-catalog.json"
   },
   {
+    "experiment_id": "exp_cf5e2d1f8baef252da26676e",
+    "platform": "gamecube",
+    "source_scene": "JF04",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_739c2a74d7d7b3782eecb6e9",
+    "platform": "gamecube",
+    "source_scene": "KF01",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
     "experiment_id": "exp_bfa665c07db9a74fa9442a8a",
     "platform": "gamecube",
     "source_scene": "KF02",
@@ -2875,6 +3918,13 @@
     "source_scene": "KF02",
     "destination_scene": "BB01",
     "ref": "tmp\\bfbb-all-cycle-catalog\\source-cycle-catalog\\source-cycle-catalog.json"
+  },
+  {
+    "experiment_id": "exp_706c7bf9e1425493b7a2f2e6",
+    "platform": "gamecube",
+    "source_scene": "KF02",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
   },
   {
     "experiment_id": "exp_efccf5b389c8c7de656e9ce9",
@@ -2931,6 +3981,27 @@
     "source_scene": "KF04",
     "destination_scene": "HB01",
     "ref": "tmp\\bfbb-priority-deliveries\\source-delivery-catalog\\source-deliveries.json"
+  },
+  {
+    "experiment_id": "exp_a1353048626adf02127913be",
+    "platform": "gamecube",
+    "source_scene": "KF04",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_ee7a31ba124ab437d4ab25b6",
+    "platform": "gamecube",
+    "source_scene": "KF05",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_53432498a98e1494d80f0d66",
+    "platform": "gamecube",
+    "source_scene": "MNU3",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
   },
   {
     "experiment_id": "exp_a6f849758b6024a574a90481",
@@ -3542,11 +4613,25 @@
     "ref": "tmp\\bfbb-repeat-pg12-hud120\\delivery-repeat\\PG12-w0-hud-shinies-d120-repeat.json"
   },
   {
+    "experiment_id": "exp_5f8b4a67cf470ec3850254bd",
+    "platform": "gamecube",
+    "source_scene": "PG12",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
     "experiment_id": "exp_bae932e2cb7f0795d63a5074",
     "platform": "gamecube",
     "source_scene": "PG12",
     "destination_scene": "RB01",
     "ref": "tmp\\bfbb-priority-deliveries\\source-delivery-catalog\\source-deliveries.json"
+  },
+  {
+    "experiment_id": "exp_63e79615676b11d2649bf2cd",
+    "platform": "gamecube",
+    "source_scene": "RB01",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
   },
   {
     "experiment_id": "exp_390c2fd45afb24e8f0f69a07",
@@ -3598,6 +4683,48 @@
     "ref": "tmp\\bfbb-repeat-rb02-w1\\delivery-repeat\\RB02-w1-repeat.json"
   },
   {
+    "experiment_id": "exp_eccaf1ee0920f95787a49254",
+    "platform": "gamecube",
+    "source_scene": "RB02",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_f9eee808cd5ae0c8e6b0ca1d",
+    "platform": "gamecube",
+    "source_scene": "RB03",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_a18c9e8ef190c1294afbfca4",
+    "platform": "gamecube",
+    "source_scene": "SM01",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_43171912a44ca1517c322f5b",
+    "platform": "gamecube",
+    "source_scene": "SM02",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_60ed2d1d32afc26fa9b57b5c",
+    "platform": "gamecube",
+    "source_scene": "SM03",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
+    "experiment_id": "exp_9159451046246b391905f162",
+    "platform": "gamecube",
+    "source_scene": "SM04",
+    "destination_scene": "MNU3",
+    "ref": "C:\\Projects\\bfbb\\tmp\\gc-natural-source-title-targets-exact2\\source-title-targets\\source-title-targets.json"
+  },
+  {
     "experiment_id": "exp_1545e26284fe5e3b3d68be22",
     "platform": "ps2",
     "source_scene": null,
@@ -3631,6 +4758,34 @@
     "source_scene": null,
     "destination_scene": null,
     "ref": "tmp/bfbb-ps2-source-topology-catalog.json"
+  },
+  {
+    "experiment_id": "exp_7cdda04490714e1e19cc7263",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "BC02",
+    "ref": "docs/combo-transition-study.md#community-observed-results-awaiting-lab-replay"
+  },
+  {
+    "experiment_id": "exp_7956789e237a7c3b1d4d7898",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "BC02",
+    "ref": "docs/combo-transition-study.md#community-observed-results-awaiting-lab-replay"
+  },
+  {
+    "experiment_id": "exp_7956789e237a7c3b1d4d7898",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "BC02",
+    "ref": "tmp/bfbb-ps2-bc02-ring2-forced-holder.json"
+  },
+  {
+    "experiment_id": "exp_7956789e237a7c3b1d4d7898",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "BC02",
+    "ref": "tmp/bfbb-ps2-bc02-ring2-inbound.json"
   },
   {
     "experiment_id": "exp_63711a0d08257ef34b615257",
@@ -3843,6 +4998,146 @@
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-10\\ps2-discovery-01\\0065-B201-JF02-00CE1D64-after_show\\attempt-02\\stdout.txt"
   },
   {
+    "experiment_id": "exp_8b12c66f0132ee75d7b7e4b6",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "DB04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-DB04-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_8b12c66f0132ee75d7b7e4b6",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "DB04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-DB04-00CB5DD8-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_8b12c66f0132ee75d7b7e4b6",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "DB04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-DB04-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_8b12c66f0132ee75d7b7e4b6",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "DB04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-DB04-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_469f46a7fe842b29d156b20e",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "GY01",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-GY01-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_469f46a7fe842b29d156b20e",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "GY01",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-GY01-00CB5DD8-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_469f46a7fe842b29d156b20e",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "GY01",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-GY01-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_469f46a7fe842b29d156b20e",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "GY01",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-GY01-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_349473c76d34b2767269da4b",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-B302-HB02-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_349473c76d34b2767269da4b",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-B302-HB02-00CB5DD8-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_349473c76d34b2767269da4b",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-B302-HB02-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_349473c76d34b2767269da4b",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-B302-HB02-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_b6e0d4d9d25e3fe7b909a197",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-HB02-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_b6e0d4d9d25e3fe7b909a197",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-HB02-00CB5DD8-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_b6e0d4d9d25e3fe7b909a197",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-HB02-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_b6e0d4d9d25e3fe7b909a197",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-HB02-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_43249865a6927d96c34bda21",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-JF04-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_43249865a6927d96c34bda21",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-JF04-00CB5DD8-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_43249865a6927d96c34bda21",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-JF04-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_43249865a6927d96c34bda21",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-JF04-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
     "experiment_id": "exp_6fa1acc826bf17bc4b4aeae3",
     "platform": "ps2",
     "source_scene": "B302",
@@ -3911,6 +5206,90 @@
     "source_scene": "B302",
     "destination_scene": "KF02",
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-14\\ps2-discovery-01\\0072-B302-KF02-00CB5DD8-expiry\\attempt-02\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_9d67b1fe216ee1c2b02c5af7",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "KF05",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-B302-KF05-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_9d67b1fe216ee1c2b02c5af7",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "KF05",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-B302-KF05-00CB5DD8-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_9d67b1fe216ee1c2b02c5af7",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "KF05",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-B302-KF05-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_9d67b1fe216ee1c2b02c5af7",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "KF05",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-B302-KF05-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_c658376c4170f8daa7fd0f1d",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "KF05",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-KF05-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_c658376c4170f8daa7fd0f1d",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "KF05",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-KF05-00CB5DD8-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_c658376c4170f8daa7fd0f1d",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "KF05",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-KF05-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_c658376c4170f8daa7fd0f1d",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "KF05",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-KF05-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_08be1aa25d4f5fb7ed0c47ca",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-SM03-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_08be1aa25d4f5fb7ed0c47ca",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-SM03-00CB5DD8-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_08be1aa25d4f5fb7ed0c47ca",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-SM03-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_08be1aa25d4f5fb7ed0c47ca",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-SM03-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
   },
   {
     "experiment_id": "exp_3c7b6b3f74d873575a30e09f",
@@ -4298,6 +5677,230 @@
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-01\\ps2-discovery-01\\0033-GY03-HB01-00D3BE74-after_show\\attempt-02\\stdout.txt"
   },
   {
+    "experiment_id": "exp_d7ad18c74f6ac87b29580b11",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "DB04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-DB04-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_d7ad18c74f6ac87b29580b11",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "DB04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-DB04-00CB5DD8-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_d7ad18c74f6ac87b29580b11",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "DB04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-DB04-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_d7ad18c74f6ac87b29580b11",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "DB04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-DB04-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_0c13b3d50afca1722b903b88",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "GY01",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-GY01-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_0c13b3d50afca1722b903b88",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "GY01",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-GY01-00CB5DD8-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_0c13b3d50afca1722b903b88",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "GY01",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-GY01-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_0c13b3d50afca1722b903b88",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "GY01",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-GY01-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_50fa94205341246e730f0f86",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-GY04-HB02-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_50fa94205341246e730f0f86",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-GY04-HB02-00CB5DD8-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_50fa94205341246e730f0f86",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-GY04-HB02-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_50fa94205341246e730f0f86",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-GY04-HB02-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_41bdbb53c11b2769b97ce9f0",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-HB02-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_41bdbb53c11b2769b97ce9f0",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-HB02-00CB5DD8-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_41bdbb53c11b2769b97ce9f0",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-HB02-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_41bdbb53c11b2769b97ce9f0",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-HB02-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_a2293811da33d30ea5c4b58d",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-JF04-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_a2293811da33d30ea5c4b58d",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-JF04-00CB5DD8-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_a2293811da33d30ea5c4b58d",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-JF04-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_a2293811da33d30ea5c4b58d",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-JF04-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_a4e0a23d4f427271f3cf1d85",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "KF05",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-GY04-KF05-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_a4e0a23d4f427271f3cf1d85",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "KF05",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-GY04-KF05-00CB5DD8-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_a4e0a23d4f427271f3cf1d85",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "KF05",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-GY04-KF05-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_a4e0a23d4f427271f3cf1d85",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "KF05",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-GY04-KF05-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_532ebbf67e192314db5388d8",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "KF05",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-KF05-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_532ebbf67e192314db5388d8",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "KF05",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-KF05-00CB5DD8-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_532ebbf67e192314db5388d8",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "KF05",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-KF05-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_532ebbf67e192314db5388d8",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "KF05",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-KF05-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_237c7e931fd50e515a91fe11",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-SM03-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_237c7e931fd50e515a91fe11",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-SM03-00CB5DD8-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_237c7e931fd50e515a91fe11",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-SM03-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_237c7e931fd50e515a91fe11",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-SM03-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
     "experiment_id": "exp_654e0fa2b465761462f2e526",
     "platform": "ps2",
     "source_scene": "HB00",
@@ -4324,6 +5927,146 @@
     "source_scene": "HB00",
     "destination_scene": "BB02",
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-03\\ps2-discovery-01\\0053-HB00-BB02-00CB5DAC-after_show\\attempt-02\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_6dad61fa8b673a66bf47a9c7",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB00-BB03-00CB5D80-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_6dad61fa8b673a66bf47a9c7",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB00-BB03-00CB5D80-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_6dad61fa8b673a66bf47a9c7",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB00-BB03-00CB5D80-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_6dad61fa8b673a66bf47a9c7",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB00-BB03-00CB5D80-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_04d3dde8de5ac36b83ce6cb4",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-BB03-00CB5D80-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_04d3dde8de5ac36b83ce6cb4",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-BB03-00CB5D80-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_04d3dde8de5ac36b83ce6cb4",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-BB03-00CB5D80-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_04d3dde8de5ac36b83ce6cb4",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-BB03-00CB5D80-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_77e4be7a7c0501af01ceaa37",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "DB04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-DB04-00CB5D80-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_77e4be7a7c0501af01ceaa37",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "DB04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-DB04-00CB5D80-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_77e4be7a7c0501af01ceaa37",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "DB04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-DB04-00CB5D80-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_77e4be7a7c0501af01ceaa37",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "DB04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-DB04-00CB5D80-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_0b12c5b2e2da3630e5b2bc64",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-JF04-00CB5D80-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_0b12c5b2e2da3630e5b2bc64",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-JF04-00CB5D80-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_0b12c5b2e2da3630e5b2bc64",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-JF04-00CB5D80-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_0b12c5b2e2da3630e5b2bc64",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-JF04-00CB5D80-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_b8b2b0b0c506300f5d92c3e2",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-SM03-00CB5D80-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_b8b2b0b0c506300f5d92c3e2",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-SM03-00CB5D80-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_b8b2b0b0c506300f5d92c3e2",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-SM03-00CB5D80-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_b8b2b0b0c506300f5d92c3e2",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-SM03-00CB5D80-after_show_expiry\\corrupt.stdout.txt"
   },
   {
     "experiment_id": "exp_ae4d0ef1ade22e71fcda4c4c",
@@ -4361,6 +6104,517 @@
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-18\\ps2-discovery-01\\0103-HB02-GY03-00CF7F84-after_show\\attempt-02\\stdout.txt"
   },
   {
+    "experiment_id": "exp_37ccc0d6837b7ba9200b82ee",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "B201",
+    "ref": "tmp/bfbb-ps2-b201-arrow-down-ui-visible-clean-v2.json"
+  },
+  {
+    "experiment_id": "exp_37ccc0d6837b7ba9200b82ee",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "B201",
+    "ref": "tmp/bfbb-ps2-b201-arrow-down-ui-visible-corrupt-5d54-v2.json"
+  },
+  {
+    "experiment_id": "exp_f4ec24053eaf4e546bd0d146",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "B201",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-B201-00CB5D54-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_f4ec24053eaf4e546bd0d146",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "B201",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-B201-00CB5D54-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_f4ec24053eaf4e546bd0d146",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "B201",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-B201-00CB5D54-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_f4ec24053eaf4e546bd0d146",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "B201",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-B201-00CB5D54-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_db36b932be56954842882792",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "B201",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-B201-00CB5D54-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_db36b932be56954842882792",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "B201",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-B201-00CB5D54-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_db36b932be56954842882792",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "B201",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-B201-00CB5D54-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_db36b932be56954842882792",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "B201",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-B201-00CB5D54-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_4609572ccbc61ff84ad75c95",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "tmp/bfbb-ps2-bb03-fodder05-wake-hit-clean-v2.json"
+  },
+  {
+    "experiment_id": "exp_4609572ccbc61ff84ad75c95",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "tmp/bfbb-ps2-bb03-fodder05-wake-hit-corrupt-5d54-v2.json"
+  },
+  {
+    "experiment_id": "exp_57428d2b2beca8fff99722b3",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-BB03-00CB5D54-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_57428d2b2beca8fff99722b3",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-BB03-00CB5D54-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_57428d2b2beca8fff99722b3",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-BB03-00CB5D54-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_57428d2b2beca8fff99722b3",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-BB03-00CB5D54-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_a7ab18783c3b317365600b05",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-BB03-00CB5D80-after_show\\clean.json"
+  },
+  {
+    "experiment_id": "exp_a7ab18783c3b317365600b05",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-BB03-00CB5D80-after_show\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_a7ab18783c3b317365600b05",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-BB03-00CB5D80-after_show\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_a7ab18783c3b317365600b05",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-BB03-00CB5D80-after_show\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_62997b3626975199aa2ef8a0",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-BB03-00CB5D54-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_62997b3626975199aa2ef8a0",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-BB03-00CB5D54-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_62997b3626975199aa2ef8a0",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-BB03-00CB5D54-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_62997b3626975199aa2ef8a0",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-BB03-00CB5D54-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_5a83424d265eedc4a8c65053",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-BB03-00CB5D80-after_show\\clean.json"
+  },
+  {
+    "experiment_id": "exp_5a83424d265eedc4a8c65053",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-BB03-00CB5D80-after_show\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_5a83424d265eedc4a8c65053",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-BB03-00CB5D80-after_show\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_5a83424d265eedc4a8c65053",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-BB03-00CB5D80-after_show\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_7c1c38a4e98b63e5fb4ff580",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "DB01",
+    "ref": "tmp/bfbb-ps2-db01-plant-background22-nearby-clean.json"
+  },
+  {
+    "experiment_id": "exp_7c1c38a4e98b63e5fb4ff580",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "DB01",
+    "ref": "tmp/bfbb-ps2-db01-plant-background22-nearby-corrupt-5d54.json"
+  },
+  {
+    "experiment_id": "exp_66a8fca5a8d1c59b026bd2d8",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "DB01",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-DB01-00CB5D54-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_66a8fca5a8d1c59b026bd2d8",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "DB01",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-DB01-00CB5D54-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_66a8fca5a8d1c59b026bd2d8",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "DB01",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-DB01-00CB5D54-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_66a8fca5a8d1c59b026bd2d8",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "DB01",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-DB01-00CB5D54-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_e90b0e64d96f28957c797347",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "DB01",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-DB01-00CB5D54-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_e90b0e64d96f28957c797347",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "DB01",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-DB01-00CB5D54-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_e90b0e64d96f28957c797347",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "DB01",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-DB01-00CB5D54-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_e90b0e64d96f28957c797347",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "DB01",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-DB01-00CB5D54-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_c4fdd12d83c53b0991145e83",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "DB04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-DB04-00CB5D80-after_show\\clean.json"
+  },
+  {
+    "experiment_id": "exp_c4fdd12d83c53b0991145e83",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "DB04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-DB04-00CB5D80-after_show\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_c4fdd12d83c53b0991145e83",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "DB04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-DB04-00CB5D80-after_show\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_c4fdd12d83c53b0991145e83",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "DB04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-DB04-00CB5D80-after_show\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_3e49145b550294890cd459bb",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "GY01",
+    "ref": "docs/combo-transition-study.md#ps2-retained-head-heap-sweep"
+  },
+  {
+    "experiment_id": "exp_3e49145b550294890cd459bb",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "GY01",
+    "ref": "tmp/bfbb-ps2-gy01-reward30-activate-clean.json"
+  },
+  {
+    "experiment_id": "exp_3e49145b550294890cd459bb",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "GY01",
+    "ref": "tmp/bfbb-ps2-gy01-reward30-activate-corrupt-5d54.json"
+  },
+  {
+    "experiment_id": "exp_58a194d481ca5fce23a5137f",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "GY01",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-GY01-00CB5D54-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_58a194d481ca5fce23a5137f",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "GY01",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-GY01-00CB5D54-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_58a194d481ca5fce23a5137f",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "GY01",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-GY01-00CB5D54-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_58a194d481ca5fce23a5137f",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "GY01",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-GY01-00CB5D54-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_c33253ebe4511f48f16bff52",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-HB02-00CB5D54-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_c33253ebe4511f48f16bff52",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-HB02-00CB5D54-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_c33253ebe4511f48f16bff52",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-HB02-00CB5D54-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_ecbf0494940320e9adc2a1fa",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-HB02-00CB5D54-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_ecbf0494940320e9adc2a1fa",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-HB02-00CB5D54-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_ecbf0494940320e9adc2a1fa",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-HB02-00CB5D54-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_141acddfcf3c09c32113b4fa",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "docs/combo-transition-study.md#ps2-retained-head-heap-sweep"
+  },
+  {
+    "experiment_id": "exp_7164b8cc9ff4d46258a2275a",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "docs/combo-transition-study.md#ps2-retained-head-heap-sweep"
+  },
+  {
+    "experiment_id": "exp_141acddfcf3c09c32113b4fa",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "tmp/bfbb-ps2-jf04-kingj-cb5d54-player-kill.json"
+  },
+  {
+    "experiment_id": "exp_7164b8cc9ff4d46258a2275a",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "tmp/bfbb-ps2-jf04-kingj-cb5d80-player-kill.json"
+  },
+  {
+    "experiment_id": "exp_141acddfcf3c09c32113b4fa",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "tmp/bfbb-ps2-jf04-kingj-clean-player-kill.json"
+  },
+  {
+    "experiment_id": "exp_7164b8cc9ff4d46258a2275a",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "tmp/bfbb-ps2-jf04-kingj-clean-player-kill.json"
+  },
+  {
+    "experiment_id": "exp_7164b8cc9ff4d46258a2275a",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "tmp/bfbb-ps2-jf04-natural-boss-damage-cb5d80.json"
+  },
+  {
+    "experiment_id": "exp_7164b8cc9ff4d46258a2275a",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "tmp/bfbb-ps2-jf04-natural-boss-damage-clean.json"
+  },
+  {
+    "experiment_id": "exp_141acddfcf3c09c32113b4fa",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "tmp/bfbb-ps2-jf04-natural-boss-two-damage-cb5d54.json"
+  },
+  {
+    "experiment_id": "exp_141acddfcf3c09c32113b4fa",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "tmp/bfbb-ps2-jf04-natural-boss-two-damage-clean.json"
+  },
+  {
+    "experiment_id": "exp_60028ee50bfc7b6c792a59d5",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-JF04-00CB5D54-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_60028ee50bfc7b6c792a59d5",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-JF04-00CB5D54-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_60028ee50bfc7b6c792a59d5",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-JF04-00CB5D54-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_60028ee50bfc7b6c792a59d5",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-JF04-00CB5D54-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_70e5c382bdb4068f8f6f54b7",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-JF04-00CB5D80-after_show\\clean.json"
+  },
+  {
+    "experiment_id": "exp_70e5c382bdb4068f8f6f54b7",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-JF04-00CB5D80-after_show\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_70e5c382bdb4068f8f6f54b7",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-JF04-00CB5D80-after_show\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_70e5c382bdb4068f8f6f54b7",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-JF04-00CB5D80-after_show\\corrupt.stdout.txt"
+  },
+  {
     "experiment_id": "exp_2508933969283010ffefaebe",
     "platform": "ps2",
     "source_scene": "HB03",
@@ -4387,6 +6641,62 @@
     "source_scene": "HB03",
     "destination_scene": "KF02",
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-12\\ps2-discovery-01\\0070-HB03-KF02-00CB5D80-after_show\\attempt-02\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_d04b99d5462b9a1db2ba7038",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-SM03-00CB5D54-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_d04b99d5462b9a1db2ba7038",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-SM03-00CB5D54-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_d04b99d5462b9a1db2ba7038",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-SM03-00CB5D54-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_d04b99d5462b9a1db2ba7038",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-SM03-00CB5D54-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_9932f0338ca5a595426d9d7a",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-SM03-00CB5D80-after_show\\clean.json"
+  },
+  {
+    "experiment_id": "exp_9932f0338ca5a595426d9d7a",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-SM03-00CB5D80-after_show\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_9932f0338ca5a595426d9d7a",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-SM03-00CB5D80-after_show\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_9932f0338ca5a595426d9d7a",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-SM03-00CB5D80-after_show\\corrupt.stdout.txt"
   },
   {
     "experiment_id": "exp_53d038dee77a030d356c6ae3",
@@ -4429,6 +6739,160 @@
     "source_scene": "HB04",
     "destination_scene": "GL01",
     "ref": "tmp/bfbb-ps2-natural-target-catalog.json"
+  },
+  {
+    "experiment_id": "exp_7c5360319c1e5df4258b3349",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "GY04",
+    "ref": "docs/combo-transition-study.md#ps2-retained-head-heap-sweep"
+  },
+  {
+    "experiment_id": "exp_7c5360319c1e5df4258b3349",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "GY04",
+    "ref": "tmp/bfbb-ps2-gy04-reward31-model-distant-yellow-corrupt-c7822c.json"
+  },
+  {
+    "experiment_id": "exp_7c5360319c1e5df4258b3349",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "GY04",
+    "ref": "tmp/bfbb-ps2-gy04-reward31-model-simultaneous-yellow-clean.json"
+  },
+  {
+    "experiment_id": "exp_7c5360319c1e5df4258b3349",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "GY04",
+    "ref": "tmp/bfbb-ps2-gy04-reward31-object-simultaneous-yellow-corrupt-c7822c.json"
+  },
+  {
+    "experiment_id": "exp_e94b44eec7250147682ae873",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "GY04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB04-GY04-00C7822C-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_e94b44eec7250147682ae873",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "GY04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB04-GY04-00C7822C-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_e94b44eec7250147682ae873",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "GY04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB04-GY04-00C7822C-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_e94b44eec7250147682ae873",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "GY04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB04-GY04-00C7822C-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_e628e2bb29faa7cd92c3ac25",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "HB08",
+    "ref": "tmp/bfbb-ps2-hb08-blue-alpha2-visible-clean-v2.json"
+  },
+  {
+    "experiment_id": "exp_e628e2bb29faa7cd92c3ac25",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "HB08",
+    "ref": "tmp/bfbb-ps2-hb08-blue-alpha2-visible-corrupt-c7822c-v2.json"
+  },
+  {
+    "experiment_id": "exp_32c8646866dd396649a48f6b",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "HB08",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB04-HB08-00C7822C-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_32c8646866dd396649a48f6b",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "HB08",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB04-HB08-00C7822C-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_32c8646866dd396649a48f6b",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "HB08",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB04-HB08-00C7822C-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_32c8646866dd396649a48f6b",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "HB08",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB04-HB08-00C7822C-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_5dddc47fd0dc5e476271be38",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "HB08",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB04-HB08-00C7822C-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_5dddc47fd0dc5e476271be38",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "HB08",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB04-HB08-00C7822C-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_5dddc47fd0dc5e476271be38",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "HB08",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB04-HB08-00C7822C-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_5dddc47fd0dc5e476271be38",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "HB08",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB04-HB08-00C7822C-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_fdc7f43e932789a727d7c986",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "HB09",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB04-HB09-00C7822C-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_fdc7f43e932789a727d7c986",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "HB09",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB04-HB09-00C7822C-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_fdc7f43e932789a727d7c986",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "HB09",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB04-HB09-00C7822C-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_fdc7f43e932789a727d7c986",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "HB09",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB04-HB09-00C7822C-after_show_expiry\\corrupt.stdout.txt"
   },
   {
     "experiment_id": "exp_73b8e6c1fe216d2e9760de42",
@@ -4485,6 +6949,342 @@
     "source_scene": "HB05",
     "destination_scene": "GL01",
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-04\\ps2-discovery-01\\0055-HB05-GL01-00CEBAD8-expiry\\attempt-02\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_fbcb8736a4d0e9e83e4d3808",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "DB04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-DB04-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_fbcb8736a4d0e9e83e4d3808",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "DB04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-DB04-00CB5DD8-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_fbcb8736a4d0e9e83e4d3808",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "DB04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-DB04-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_fbcb8736a4d0e9e83e4d3808",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "DB04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-DB04-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_a394773794ae2b091616073f",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "GY01",
+    "ref": "docs/combo-transition-study.md#ps2-retained-head-heap-sweep"
+  },
+  {
+    "experiment_id": "exp_a394773794ae2b091616073f",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "GY01",
+    "ref": "tmp/bfbb-ps2-gy01-combohud-yellow-reward-clean.json"
+  },
+  {
+    "experiment_id": "exp_a394773794ae2b091616073f",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "GY01",
+    "ref": "tmp/bfbb-ps2-gy01-combohud-yellow-reward-corrupt-5dd8.json"
+  },
+  {
+    "experiment_id": "exp_a394773794ae2b091616073f",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "GY01",
+    "ref": "tmp/bfbb-ps2-gy01-reward30-activate-clean.json"
+  },
+  {
+    "experiment_id": "exp_a394773794ae2b091616073f",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "GY01",
+    "ref": "tmp/bfbb-ps2-gy01-reward30-activate-corrupt-5dd8.json"
+  },
+  {
+    "experiment_id": "exp_a394773794ae2b091616073f",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "GY01",
+    "ref": "tmp/bfbb-ps2-gy01-reward30-indirect-watch-5dd8-offset8.json"
+  },
+  {
+    "experiment_id": "exp_a394773794ae2b091616073f",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "GY01",
+    "ref": "tmp/bfbb-ps2-gy01-reward30-indirect-watch-5dd8.json"
+  },
+  {
+    "experiment_id": "exp_e08bc65451088563f1683e19",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "GY01",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-GY01-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_e08bc65451088563f1683e19",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "GY01",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-GY01-00CB5DD8-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_e08bc65451088563f1683e19",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "GY01",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-GY01-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_e08bc65451088563f1683e19",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "GY01",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-GY01-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_04044280e205696f3fe8851f",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB06-HB02-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_04044280e205696f3fe8851f",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB06-HB02-00CB5DD8-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_04044280e205696f3fe8851f",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB06-HB02-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_04044280e205696f3fe8851f",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB06-HB02-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_4d65b32c88b47dad78b250d4",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-HB02-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_4d65b32c88b47dad78b250d4",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-HB02-00CB5DD8-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_4d65b32c88b47dad78b250d4",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-HB02-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_4d65b32c88b47dad78b250d4",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "HB02",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-HB02-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_50cca6278f355d7a6c64d57f",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "JF04",
+    "ref": "docs/combo-transition-study.md#ps2-retained-head-heap-sweep"
+  },
+  {
+    "experiment_id": "exp_50cca6278f355d7a6c64d57f",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "JF04",
+    "ref": "tmp/bfbb-ps2-jf04-kingj-cb5dd8-player-kill.json"
+  },
+  {
+    "experiment_id": "exp_50cca6278f355d7a6c64d57f",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "JF04",
+    "ref": "tmp/bfbb-ps2-jf04-kingj-clean-player-kill.json"
+  },
+  {
+    "experiment_id": "exp_50cca6278f355d7a6c64d57f",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "JF04",
+    "ref": "tmp/bfbb-ps2-jf04-natural-boss-damage-cb5dd8.json"
+  },
+  {
+    "experiment_id": "exp_50cca6278f355d7a6c64d57f",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "JF04",
+    "ref": "tmp/bfbb-ps2-jf04-natural-boss-damage-clean.json"
+  },
+  {
+    "experiment_id": "exp_52881294551d74d930ca2300",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-JF04-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_52881294551d74d930ca2300",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-JF04-00CB5DD8-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_52881294551d74d930ca2300",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-JF04-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_52881294551d74d930ca2300",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-JF04-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_ff9b3b645cf8f05bfcee8eb5",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "KF05",
+    "ref": "docs/combo-transition-study.md#ps2-retained-head-heap-sweep"
+  },
+  {
+    "experiment_id": "exp_ff9b3b645cf8f05bfcee8eb5",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "KF05",
+    "ref": "tmp/bfbb-ps2-field-hit-sweep/ps2-field-hit-probes.json"
+  },
+  {
+    "experiment_id": "exp_ff9b3b645cf8f05bfcee8eb5",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "KF05",
+    "ref": "tmp/bfbb-ps2-kf05-cavevine0132-model-clean.json"
+  },
+  {
+    "experiment_id": "exp_ff9b3b645cf8f05bfcee8eb5",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "KF05",
+    "ref": "tmp/bfbb-ps2-kf05-cavevine0132-model-corrupt-cb5dd8.json"
+  },
+  {
+    "experiment_id": "exp_623d49d5dc680d897a494379",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "KF05",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB06-KF05-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_623d49d5dc680d897a494379",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "KF05",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB06-KF05-00CB5DD8-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_623d49d5dc680d897a494379",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "KF05",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB06-KF05-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_623d49d5dc680d897a494379",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "KF05",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB06-KF05-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_b9c33e9c193aa63908bdb587",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "KF05",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-KF05-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_b9c33e9c193aa63908bdb587",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "KF05",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-KF05-00CB5DD8-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_b9c33e9c193aa63908bdb587",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "KF05",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-KF05-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_b9c33e9c193aa63908bdb587",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "KF05",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-KF05-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_67cd58f88c37f6a6ee136014",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-SM03-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_67cd58f88c37f6a6ee136014",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-SM03-00CB5DD8-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_67cd58f88c37f6a6ee136014",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-SM03-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_67cd58f88c37f6a6ee136014",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-SM03-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
   },
   {
     "experiment_id": "exp_7e293390514e4fe2bb0fcf13",
@@ -4837,6 +7637,118 @@
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-03\\ps2-discovery-01\\0053-HB10-BB02-00CB5DAC-after_show\\attempt-02\\stdout.txt"
   },
   {
+    "experiment_id": "exp_8ee18df4f41a74f97bdfbd7a",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB10-BB03-00CB5D80-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_8ee18df4f41a74f97bdfbd7a",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB10-BB03-00CB5D80-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_8ee18df4f41a74f97bdfbd7a",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB10-BB03-00CB5D80-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_8ee18df4f41a74f97bdfbd7a",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB10-BB03-00CB5D80-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_eac08e26f27ccbd251b95e1c",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-BB03-00CB5D80-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_eac08e26f27ccbd251b95e1c",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-BB03-00CB5D80-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_eac08e26f27ccbd251b95e1c",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-BB03-00CB5D80-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_eac08e26f27ccbd251b95e1c",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "BB03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-BB03-00CB5D80-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_1284035d0ad3cb5cd2026a9e",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "DB04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-DB04-00CB5D80-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_1284035d0ad3cb5cd2026a9e",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "DB04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-DB04-00CB5D80-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_1284035d0ad3cb5cd2026a9e",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "DB04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-DB04-00CB5D80-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_1284035d0ad3cb5cd2026a9e",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "DB04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-DB04-00CB5D80-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_f0e06ae3b8d2c13b6cf5b6e9",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-JF04-00CB5D80-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_f0e06ae3b8d2c13b6cf5b6e9",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-JF04-00CB5D80-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_f0e06ae3b8d2c13b6cf5b6e9",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-JF04-00CB5D80-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_f0e06ae3b8d2c13b6cf5b6e9",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "JF04",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-JF04-00CB5D80-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
     "experiment_id": "exp_573e553b28688ee4861db979",
     "platform": "ps2",
     "source_scene": "HB10",
@@ -4863,6 +7775,34 @@
     "source_scene": "HB10",
     "destination_scene": "KF02",
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-13\\ps2-discovery-01\\0071-HB10-KF02-00CB5DAC-after_show\\attempt-02\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_12e21ed301b4dbc0a922d409",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-SM03-00CB5D80-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_12e21ed301b4dbc0a922d409",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-SM03-00CB5D80-after_show_expiry\\clean.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_12e21ed301b4dbc0a922d409",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-SM03-00CB5D80-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_12e21ed301b4dbc0a922d409",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "SM03",
+    "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-SM03-00CB5D80-after_show_expiry\\corrupt.stdout.txt"
   },
   {
     "experiment_id": "exp_11d4e1cd3e13a8c54ba11d96",
