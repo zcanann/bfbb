@@ -4760,6 +4760,104 @@
     "ref": "tmp/bfbb-ps2-source-topology-catalog.json"
   },
   {
+    "experiment_id": "exp_1d2e5095981b790dfad40e31",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "B201",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-b201-arrow-down-ui-visible-clean-v2.json"
+  },
+  {
+    "experiment_id": "exp_1505fa950d91aa94cc6d15dc",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "B201",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-b201-arrow-down-ui-visible-clean.json"
+  },
+  {
+    "experiment_id": "exp_3ea66338e40efa046c828742",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "B201",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-B201-00CB5D54-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_19183ef4d559b667963b7a7b",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "B201",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-B201-00CB5D54-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_19872da7e59541eede6d8aec",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "BB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-bb03-fodder05-wake-hit-clean-v2.json"
+  },
+  {
+    "experiment_id": "exp_0a377b21232e2ee94df15b59",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "BB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-bb03-fodder05-wake-hit-clean.json"
+  },
+  {
+    "experiment_id": "exp_1fdd62c26be48338b74cd2a3",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "BB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB00-BB03-00CB5D80-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_d3123bcb677f0ec8c19f87c2",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "BB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-BB03-00CB5D54-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_7fe36ff15d55785ef27903b5",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "BB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-BB03-00CB5D80-after_show\\clean.json"
+  },
+  {
+    "experiment_id": "exp_b0ac14fdfe770f1124afebd2",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "BB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB10-BB03-00CB5D80-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_f77a3a11eb464de56eca9cf0",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "BB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-BB03-00CB5D80-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_7000cb60709a46133ff5ce81",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "BB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-BB03-00CB5D54-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_cc53ac1d5f6995a7c45b834a",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "BB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-BB03-00CB5D80-after_show\\clean.json"
+  },
+  {
+    "experiment_id": "exp_7e990afa0cc6d655e007eebd",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "BB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-BB03-00CB5D80-after_show_expiry\\clean.json"
+  },
+  {
     "experiment_id": "exp_7cdda04490714e1e19cc7263",
     "platform": "ps2",
     "source_scene": null,
@@ -4788,6 +4886,545 @@
     "ref": "tmp/bfbb-ps2-bc02-ring2-inbound.json"
   },
   {
+    "experiment_id": "exp_2aa42f0ff741d6cb07db1951",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "DB01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-db01-plant-background22-nearby-clean.json"
+  },
+  {
+    "experiment_id": "exp_ecaebdaa8a64e76bfe520e4b",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "DB01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-DB01-00CB5D54-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_2bd5d71623f94ea316fd6fcc",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "DB01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-DB01-00CB5D54-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_39f7b43e062431a2b4ad74c5",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "DB04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-DB04-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_35062c63b23845a7b7de149b",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "DB04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-DB04-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_ff966e5422222b4c3f16a49a",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "DB04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-DB04-00CB5D80-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_7b6781c8593d2b110589f17f",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "DB04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-DB04-00CB5D80-after_show\\clean.json"
+  },
+  {
+    "experiment_id": "exp_68caacbfca24e53b1800433e",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "DB04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-DB04-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_4f3b31b7e528fc597f75703f",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "DB04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-DB04-00CB5D80-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_9b830d642b2b8214f48153a1",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "GY01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-GY01-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_fd7d1de19c8e93fa312d2a37",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "GY01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-GY01-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_bae5eef06e54bdc3c401c2f0",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "GY01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-GY01-00CB5D54-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_98fca35addaf6a89ae01aba0",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "GY01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-GY01-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_facd3002e5b0f970aaab307f",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "GY01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-gy01-combohud-yellow-reward-clean.json"
+  },
+  {
+    "experiment_id": "exp_8defc2b0686481bd667f251c",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "GY01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-gy01-reward-pickup-table.json"
+  },
+  {
+    "experiment_id": "exp_732354718be77dcebfa29538",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "GY01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-gy01-reward30-activate-clean.json"
+  },
+  {
+    "experiment_id": "exp_e3848f7135fb2dfbb3334ca1",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "GY04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB04-GY04-00C7822C-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_be0de485143087882f59a47f",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "GY04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-gy04-reward-pickup-table.json"
+  },
+  {
+    "experiment_id": "exp_7b09c78d8f13384c5801e9d4",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "GY04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-gy04-reward-queue-consumption-clean.json"
+  },
+  {
+    "experiment_id": "exp_ed97f0341a191522860de62e",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "GY04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-gy04-reward31-model-simultaneous-yellow-clean.json"
+  },
+  {
+    "experiment_id": "exp_4701455937ce6c60d4485cb0",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "GY04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-gy04-reward31-two-yellow-clean.json"
+  },
+  {
+    "experiment_id": "exp_57bb68a9e0b121131312bcc7",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "GY04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-gy04-yellow-slots-state-clean.json"
+  },
+  {
+    "experiment_id": "exp_9be8d32c0f9ce18e77b4cca2",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "HB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-B302-HB02-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_92db77541e1a60dbec916b49",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "HB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-GY04-HB02-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_719d1c258b8f95d75470d2dc",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "HB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-HB02-00CB5D54-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_604b02eab1491c1187d40715",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "HB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB06-HB02-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_e772a4464c7ec91b40a79de4",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "HB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-HB02-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_c56826cc0abe3ac50d5b8120",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "HB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-HB02-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_006c4f8a550f98df3bc11467",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "HB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-HB02-00CB5D54-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_df6f960e791d99fc3eeb3b33",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "HB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-HB02-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_8a8ee72a363e4e09e738d3b4",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "HB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-hb02-clothes22-near-visible-run-clean.json"
+  },
+  {
+    "experiment_id": "exp_3c35ba891f8edbbbab74ea38",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "HB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-hb02-clothes22-object-run-clean.json"
+  },
+  {
+    "experiment_id": "exp_f90391f7bea2e22ee0dda670",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "HB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-hb02-clothes22-run-clean.json"
+  },
+  {
+    "experiment_id": "exp_ecb160e2547d8aac991ec302",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "HB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-hb02-clothes22-visible-run-clean.json"
+  },
+  {
+    "experiment_id": "exp_c978622a7b17907ee04da134",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "HB08",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB04-HB08-00C7822C-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_a3c7eddb0e81ef76c3696b51",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "HB08",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB04-HB08-00C7822C-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_8ff1a3dcf923fdb63ae8dcd3",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "HB08",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-hb08-blue-alpha2-bamboo-ui-model-clean.json"
+  },
+  {
+    "experiment_id": "exp_222d0bcc4be811f47afd1f1e",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "HB08",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-hb08-blue-alpha2-visible-clean-v2.json"
+  },
+  {
+    "experiment_id": "exp_3a8acb3637c8370e3c8c9071",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "HB08",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-hb08-blue-alpha2-visible-clean.json"
+  },
+  {
+    "experiment_id": "exp_c3617d229f9e63f3e7e29d14",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "HB09",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB04-HB09-00C7822C-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_97b02ee41e52abc01b7ecb3d",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-JF04-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_e6defa1a3efc87019982fc7f",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-JF04-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_bbfa75bc821a6d3fed412dd4",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-JF04-00CB5D80-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_28e867e29d645d5b80b91915",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-JF04-00CB5D54-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_328cc347a64ecbb546b071a2",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-JF04-00CB5D80-after_show\\clean.json"
+  },
+  {
+    "experiment_id": "exp_172da80137b26e47efcad35b",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-JF04-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_7fef9e7b09954106f442e856",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-JF04-00CB5D80-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_07ce0153fc3a7dff2b35e462",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-kingj-clean-player-kill.json"
+  },
+  {
+    "experiment_id": "exp_3d540bcc42a18365181dfcf1",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-kingj-fight-clean-v2.json"
+  },
+  {
+    "experiment_id": "exp_a6bcf718169dcb0109be729f",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-kingj-fight-clean-v3.json"
+  },
+  {
+    "experiment_id": "exp_50caa622e56ae1dee10c19b1",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-kingj-fight-clean-v4.json"
+  },
+  {
+    "experiment_id": "exp_ce1539881f8c7bd4e8a064af",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-kingj-fight-clean-v5.json"
+  },
+  {
+    "experiment_id": "exp_e4f64ddeb05025e438997272",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-kingj-fight-clean-v6.json"
+  },
+  {
+    "experiment_id": "exp_91b449c0569771b30567313d",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-kingj-fight-clean.json"
+  },
+  {
+    "experiment_id": "exp_0bbb353dec62575e7ba61503",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-natural-boss-clean-v2.json"
+  },
+  {
+    "experiment_id": "exp_7d11684a03d5e4adcc066521",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-natural-boss-clean.json"
+  },
+  {
+    "experiment_id": "exp_a085e3f05f15770ee1658e14",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-natural-boss-damage-clean.json"
+  },
+  {
+    "experiment_id": "exp_5a9be1026cb74b095d4603a8",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-natural-boss-two-damage-clean.json"
+  },
+  {
+    "experiment_id": "exp_47013e2138c43f588221d9ca",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-real-entry-fight-trigger.json"
+  },
+  {
+    "experiment_id": "exp_9bc487e0513f6f66292686e0",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-real-intro-fight-clean-v2.json"
+  },
+  {
+    "experiment_id": "exp_7d730e6e6222b8ebc70eeb2b",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-real-intro-fight-clean.json"
+  },
+  {
+    "experiment_id": "exp_79813e39dc45b5095585474f",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "KF05",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-B302-KF05-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_c7e77d2a07cefaf2753ea5df",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "KF05",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-GY04-KF05-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_d2315526043a49838d9c3ddf",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "KF05",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB06-KF05-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_15f86af8d2223de994e680b7",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "KF05",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-KF05-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_1d4fc67ef9089663c9eb42f1",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "KF05",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-KF05-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_89841e4ac1bac5e502d0ecb6",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "KF05",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-KF05-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_15e18d1edfee1446e7cfe053",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "KF05",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-kf05-cavevine0132-model-clean.json"
+  },
+  {
+    "experiment_id": "exp_0fe3bedccf03ef06e38685f4",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "SM03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-SM03-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_d0eba721a238bc00c14bdd31",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "SM03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-SM03-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_61f8d0cd448bbb7948f46922",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "SM03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-SM03-00CB5D80-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_28d78b75667a6a17b656117a",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "SM03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-SM03-00CB5D54-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_b8a3033a3b2d838eaae5240c",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "SM03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-SM03-00CB5D80-after_show\\clean.json"
+  },
+  {
+    "experiment_id": "exp_7f332f7bcaf0ba250b305e34",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "SM03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-SM03-00CB5DD8-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_d224971a5620074026137805",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "SM03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-SM03-00CB5D80-after_show_expiry\\clean.json"
+  },
+  {
+    "experiment_id": "exp_750cc5125c5b27402fe3fe3e",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "SM03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-sm03-spawner-pool-clean.json"
+  },
+  {
+    "experiment_id": "exp_132d94a4802cb96c70ed722c",
+    "platform": "ps2",
+    "source_scene": null,
+    "destination_scene": "SM03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-sm03-spawner0-clean.json"
+  },
+  {
     "experiment_id": "exp_63711a0d08257ef34b615257",
     "platform": "ps2",
     "source_scene": "B101",
@@ -4800,6 +5437,20 @@
     "source_scene": "B101",
     "destination_scene": "BB01",
     "ref": "tmp/bfbb-ps2-natural-target-catalog.json"
+  },
+  {
+    "experiment_id": "exp_b0b099d771349e2f4740462b",
+    "platform": "ps2",
+    "source_scene": "B101",
+    "destination_scene": "JF01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-08\\ps2-consumer-01\\0048-B101-JF01-00CD0B84-after_show\\attempt-01\\consumer.json"
+  },
+  {
+    "experiment_id": "exp_a03a63f74a746686ff5aab17",
+    "platform": "ps2",
+    "source_scene": "B101",
+    "destination_scene": "JF01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-08\\ps2-consumer-01\\0048-B101-JF01-00CD0B84-after_show\\attempt-02\\consumer.json"
   },
   {
     "experiment_id": "exp_1e4e03531895ebebe5d0dd84",
@@ -4900,6 +5551,20 @@
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-08\\ps2-discovery-01\\0061-B101-JF01-00CD0B84-after_show\\attempt-02\\stdout.txt"
   },
   {
+    "experiment_id": "exp_56f038e5146c3239c35f0881",
+    "platform": "ps2",
+    "source_scene": "B201",
+    "destination_scene": "JF02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-10\\ps2-consumer-01\\0051-B201-JF02-00CE1D64-after_show\\attempt-01\\consumer.json"
+  },
+  {
+    "experiment_id": "exp_1be9c45c608a51ce0a179f3c",
+    "platform": "ps2",
+    "source_scene": "B201",
+    "destination_scene": "JF02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-10\\ps2-consumer-01\\0051-B201-JF02-00CE1D64-after_show\\attempt-02\\consumer.json"
+  },
+  {
     "experiment_id": "exp_848b68d15742f780428b8984",
     "platform": "ps2",
     "source_scene": "B201",
@@ -4998,6 +5663,13 @@
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-10\\ps2-discovery-01\\0065-B201-JF02-00CE1D64-after_show\\attempt-02\\stdout.txt"
   },
   {
+    "experiment_id": "exp_762a1aa56c1fcb9f31abb377",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "DB04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-DB04-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
     "experiment_id": "exp_8b12c66f0132ee75d7b7e4b6",
     "platform": "ps2",
     "source_scene": "B302",
@@ -5026,6 +5698,13 @@
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-DB04-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
   },
   {
+    "experiment_id": "exp_5a67847658c1e7b0db5ae9a4",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "GY01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-GY01-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
     "experiment_id": "exp_469f46a7fe842b29d156b20e",
     "platform": "ps2",
     "source_scene": "B302",
@@ -5052,6 +5731,20 @@
     "source_scene": "B302",
     "destination_scene": "GY01",
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-GY01-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_6ffa8c0b957f48d4e16d3fd9",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "HB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-B302-HB02-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_71164cd41e4ddf586f8c8281",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "HB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-HB02-00CB5DD8-after_show_expiry\\corrupt.json"
   },
   {
     "experiment_id": "exp_349473c76d34b2767269da4b",
@@ -5110,6 +5803,13 @@
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-HB02-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
   },
   {
+    "experiment_id": "exp_9b69339ed81dfbb4c4c67c03",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-JF04-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
     "experiment_id": "exp_43249865a6927d96c34bda21",
     "platform": "ps2",
     "source_scene": "B302",
@@ -5136,6 +5836,20 @@
     "source_scene": "B302",
     "destination_scene": "JF04",
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-JF04-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_cb021104278b396b8c4c9e41",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "KF02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-14\\ps2-consumer-01\\0053-B302-KF02-00CB5DD8-expiry\\attempt-01\\consumer.json"
+  },
+  {
+    "experiment_id": "exp_de7a6357897d72d7e1580aa0",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "KF02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-14\\ps2-consumer-01\\0053-B302-KF02-00CB5DD8-expiry\\attempt-02\\consumer.json"
   },
   {
     "experiment_id": "exp_6fa1acc826bf17bc4b4aeae3",
@@ -5208,6 +5922,20 @@
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-14\\ps2-discovery-01\\0072-B302-KF02-00CB5DD8-expiry\\attempt-02\\stdout.txt"
   },
   {
+    "experiment_id": "exp_c043f2ce7db80c778e8269cf",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "KF05",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-B302-KF05-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_141be7d528fba7cbc938bae1",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "KF05",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-KF05-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
     "experiment_id": "exp_9d67b1fe216ee1c2b02c5af7",
     "platform": "ps2",
     "source_scene": "B302",
@@ -5262,6 +5990,13 @@
     "source_scene": "B302",
     "destination_scene": "KF05",
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-KF05-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_269d6e085157b0fe7f161239",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "destination_scene": "SM03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-B302-SM03-00CB5DD8-after_show_expiry\\corrupt.json"
   },
   {
     "experiment_id": "exp_08be1aa25d4f5fb7ed0c47ca",
@@ -5411,6 +6146,62 @@
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-02\\ps2-rerun-after-show\\0042-BC04-RB01-00CEB284-after_show\\attempt-02\\stdout.txt"
   },
   {
+    "experiment_id": "exp_4baa6602aca621b6cfccfdf9",
+    "platform": "ps2",
+    "source_scene": "BC05",
+    "destination_scene": "GL01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-05\\gl11ch05-consumer-bound-v2.json"
+  },
+  {
+    "experiment_id": "exp_3dc5014bc03e0c0159c67ac1",
+    "platform": "ps2",
+    "source_scene": "BC05",
+    "destination_scene": "GL01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-05\\gl11ch05-consumer-bound.json"
+  },
+  {
+    "experiment_id": "exp_7c551dc7a2da0e8d9a38de04",
+    "platform": "ps2",
+    "source_scene": "BC05",
+    "destination_scene": "GL01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-05\\gl11ch05-consumer-drive.json"
+  },
+  {
+    "experiment_id": "exp_67f6c1eaf42e596935e06510",
+    "platform": "ps2",
+    "source_scene": "BC05",
+    "destination_scene": "GL01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-05\\gl11ch05-consumer-exercised-v2.json"
+  },
+  {
+    "experiment_id": "exp_481b3b720f74b44714af9ceb",
+    "platform": "ps2",
+    "source_scene": "BC05",
+    "destination_scene": "GL01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-05\\gl11ch05-consumer-exercised.json"
+  },
+  {
+    "experiment_id": "exp_6a2d15ec12ab7bc304dc8ab3",
+    "platform": "ps2",
+    "source_scene": "BC05",
+    "destination_scene": "GL01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-05\\gl11ch05-consumer.json"
+  },
+  {
+    "experiment_id": "exp_82d8a054a48bd98d0f6280fc",
+    "platform": "ps2",
+    "source_scene": "BC05",
+    "destination_scene": "GL01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-06\\ps2-consumer-01\\0046-BC05-GL01-00CE5E04-after_show\\attempt-01\\consumer.json"
+  },
+  {
+    "experiment_id": "exp_5c1ff5577439fecf712aeda7",
+    "platform": "ps2",
+    "source_scene": "BC05",
+    "destination_scene": "GL01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-06\\ps2-consumer-01\\0046-BC05-GL01-00CE5E04-after_show\\attempt-02\\consumer.json"
+  },
+  {
     "experiment_id": "exp_8e95d7cf4a8940bed6eb514d",
     "platform": "ps2",
     "source_scene": "BC05",
@@ -5507,6 +6298,20 @@
     "source_scene": "BC05",
     "destination_scene": "GL01",
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-06\\ps2-consumer-01\\0046-BC05-GL01-00CE5E04-after_show\\attempt-02\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_49d6d86cf7aa64ec4d9ab255",
+    "platform": "ps2",
+    "source_scene": "BC05",
+    "destination_scene": "JF02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-09\\ps2-consumer-01\\0050-BC05-JF02-00CE5E04-after_show\\attempt-01\\consumer.json"
+  },
+  {
+    "experiment_id": "exp_1f7116653154f11f36bbe621",
+    "platform": "ps2",
+    "source_scene": "BC05",
+    "destination_scene": "JF02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-09\\ps2-consumer-01\\0050-BC05-JF02-00CE5E04-after_show\\attempt-02\\consumer.json"
   },
   {
     "experiment_id": "exp_7dc6694710ce97bf4b2ea4aa",
@@ -5677,6 +6482,13 @@
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-01\\ps2-discovery-01\\0033-GY03-HB01-00D3BE74-after_show\\attempt-02\\stdout.txt"
   },
   {
+    "experiment_id": "exp_4c4823ddbe12bc0957999ae7",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "DB04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-DB04-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
     "experiment_id": "exp_d7ad18c74f6ac87b29580b11",
     "platform": "ps2",
     "source_scene": "GY04",
@@ -5705,6 +6517,13 @@
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-DB04-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
   },
   {
+    "experiment_id": "exp_75a9841cb9b05934aa9f2ad6",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "GY01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-GY01-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
     "experiment_id": "exp_0c13b3d50afca1722b903b88",
     "platform": "ps2",
     "source_scene": "GY04",
@@ -5731,6 +6550,20 @@
     "source_scene": "GY04",
     "destination_scene": "GY01",
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-GY01-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_49017582e412fd661a031a1a",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "HB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-GY04-HB02-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_610b3b10074b8dc475773c97",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "HB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-HB02-00CB5DD8-after_show_expiry\\corrupt.json"
   },
   {
     "experiment_id": "exp_50fa94205341246e730f0f86",
@@ -5789,6 +6622,13 @@
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-HB02-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
   },
   {
+    "experiment_id": "exp_d79095f0c6bf54c91d62a3c6",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-JF04-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
     "experiment_id": "exp_a2293811da33d30ea5c4b58d",
     "platform": "ps2",
     "source_scene": "GY04",
@@ -5815,6 +6655,20 @@
     "source_scene": "GY04",
     "destination_scene": "JF04",
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-JF04-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_593b9e93375f983c0b23291b",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "KF05",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-GY04-KF05-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_6a822a0e9f5efab0b9825139",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "KF05",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-KF05-00CB5DD8-after_show_expiry\\corrupt.json"
   },
   {
     "experiment_id": "exp_a4e0a23d4f427271f3cf1d85",
@@ -5873,6 +6727,13 @@
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-KF05-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
   },
   {
+    "experiment_id": "exp_fe23f64f2020c82c6939643c",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "destination_scene": "SM03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-GY04-SM03-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
     "experiment_id": "exp_237c7e931fd50e515a91fe11",
     "platform": "ps2",
     "source_scene": "GY04",
@@ -5927,6 +6788,20 @@
     "source_scene": "HB00",
     "destination_scene": "BB02",
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-03\\ps2-discovery-01\\0053-HB00-BB02-00CB5DAC-after_show\\attempt-02\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_ca1e0f390410cfdfffd0edec",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "BB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB00-BB03-00CB5D80-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_c229cc4695ab69b879429f3f",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "BB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-BB03-00CB5D80-after_show_expiry\\corrupt.json"
   },
   {
     "experiment_id": "exp_6dad61fa8b673a66bf47a9c7",
@@ -5985,6 +6860,13 @@
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-BB03-00CB5D80-after_show_expiry\\corrupt.stdout.txt"
   },
   {
+    "experiment_id": "exp_aa17200a70af6e90f1b6f607",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "DB04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-DB04-00CB5D80-after_show_expiry\\corrupt.json"
+  },
+  {
     "experiment_id": "exp_77e4be7a7c0501af01ceaa37",
     "platform": "ps2",
     "source_scene": "HB00",
@@ -6013,6 +6895,13 @@
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-DB04-00CB5D80-after_show_expiry\\corrupt.stdout.txt"
   },
   {
+    "experiment_id": "exp_cbdb2b3799a9b3e039d1a2c5",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-JF04-00CB5D80-after_show_expiry\\corrupt.json"
+  },
+  {
     "experiment_id": "exp_0b12c5b2e2da3630e5b2bc64",
     "platform": "ps2",
     "source_scene": "HB00",
@@ -6039,6 +6928,20 @@
     "source_scene": "HB00",
     "destination_scene": "JF04",
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-JF04-00CB5D80-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_a2ab88c9066f865fbf16d572",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "SM03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB00-SM03-00CB5D80-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_4a2c706746972564d4c5f952",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "destination_scene": "SM03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-sm03-spawner0-corrupt-5d80.json"
   },
   {
     "experiment_id": "exp_b8b2b0b0c506300f5d92c3e2",
@@ -6102,6 +7005,34 @@
     "source_scene": "HB02",
     "destination_scene": "GY03",
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-18\\ps2-discovery-01\\0103-HB02-GY03-00CF7F84-after_show\\attempt-02\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_7d953d3cf4e1a3e9b076d2a0",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "B201",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-b201-arrow-down-ui-visible-corrupt-5d54-v2.json"
+  },
+  {
+    "experiment_id": "exp_6e7b92da02e456889b26cd14",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "B201",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-b201-arrow-down-ui-visible-corrupt-5d54.json"
+  },
+  {
+    "experiment_id": "exp_b860b55bc806eb514bfc3c27",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "B201",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-B201-00CB5D54-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_31a523d529aa81642e736129",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "B201",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-B201-00CB5D54-after_show_expiry\\corrupt.json"
   },
   {
     "experiment_id": "exp_37ccc0d6837b7ba9200b82ee",
@@ -6172,6 +7103,55 @@
     "source_scene": "HB03",
     "destination_scene": "B201",
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-B201-00CB5D54-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_e44dfa61a3b0b6ab6813d0e1",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-bb03-fodder05-model-corrupt-5d54.json"
+  },
+  {
+    "experiment_id": "exp_3bf53b1d3fc3180688968f91",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-bb03-fodder05-wake-hit-corrupt-5d54-v2.json"
+  },
+  {
+    "experiment_id": "exp_2477f0cdf8db8d582e38a8ee",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-bb03-fodder05-wake-hit-corrupt-5d54.json"
+  },
+  {
+    "experiment_id": "exp_115654da445e406dc2aff711",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-BB03-00CB5D54-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_0b9ffed2c2eba158de2f4451",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-BB03-00CB5D80-after_show\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_e137a00c041f044443141109",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-BB03-00CB5D54-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_23fa61c70942ccab2279e476",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "BB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-BB03-00CB5D80-after_show\\corrupt.json"
   },
   {
     "experiment_id": "exp_4609572ccbc61ff84ad75c95",
@@ -6300,6 +7280,34 @@
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-BB03-00CB5D80-after_show\\corrupt.stdout.txt"
   },
   {
+    "experiment_id": "exp_db4142a6268ee8c2336b2126",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "DB01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-db01-plant-background22-model-corrupt-5d54.json"
+  },
+  {
+    "experiment_id": "exp_048f097fd3814b19c2f6e205",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "DB01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-db01-plant-background22-nearby-corrupt-5d54.json"
+  },
+  {
+    "experiment_id": "exp_2609feb88438bb42a34551e6",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "DB01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB03-DB01-00CB5D54-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_b336612ee29dca0888ab1554",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "DB01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-DB01-00CB5D54-after_show_expiry\\corrupt.json"
+  },
+  {
     "experiment_id": "exp_7c1c38a4e98b63e5fb4ff580",
     "platform": "ps2",
     "source_scene": "HB03",
@@ -6370,6 +7378,13 @@
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-DB01-00CB5D54-after_show_expiry\\corrupt.stdout.txt"
   },
   {
+    "experiment_id": "exp_6acad8a5a2c92c015ab2cf6d",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "DB04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-DB04-00CB5D80-after_show\\corrupt.json"
+  },
+  {
     "experiment_id": "exp_c4fdd12d83c53b0991145e83",
     "platform": "ps2",
     "source_scene": "HB03",
@@ -6396,6 +7411,20 @@
     "source_scene": "HB03",
     "destination_scene": "DB04",
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-DB04-00CB5D80-after_show\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_1805a32fb1afc385343706c1",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "GY01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-GY01-00CB5D54-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_56f50672556b6205c9c8f07a",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "GY01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-gy01-reward30-activate-corrupt-5d54.json"
   },
   {
     "experiment_id": "exp_3e49145b550294890cd459bb",
@@ -6487,6 +7516,76 @@
     "source_scene": "HB03",
     "destination_scene": "HB02",
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-HB02-00CB5D54-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_3849afa9ac41bcfe6d4ba1e1",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-JF04-00CB5D54-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_f08e1e070b3c145dd34ae246",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-JF04-00CB5D80-after_show\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_36b26fe4c3be302ba37e9d44",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-kingj-cb5d54-player-kill.json"
+  },
+  {
+    "experiment_id": "exp_63a4928d99635acac9655acf",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-kingj-cb5d80-player-kill.json"
+  },
+  {
+    "experiment_id": "exp_4f4c97402f364b68e5472d77",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-kingj-cb5d80-reset-consumer.json"
+  },
+  {
+    "experiment_id": "exp_529c929ffe2754a6b1642c5e",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-kingj-fight-cb5d54-v2.json"
+  },
+  {
+    "experiment_id": "exp_797122fe132f3cd804b45ef0",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-natural-boss-cb5d54.json"
+  },
+  {
+    "experiment_id": "exp_ac89234ef762659ff16d05f1",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-natural-boss-cb5d80.json"
+  },
+  {
+    "experiment_id": "exp_aea1b9a24994ed7c4c803993",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-natural-boss-damage-cb5d80.json"
+  },
+  {
+    "experiment_id": "exp_29c8c44362538c5ff3ed0ac3",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-natural-boss-two-damage-cb5d54.json"
   },
   {
     "experiment_id": "exp_141acddfcf3c09c32113b4fa",
@@ -6643,6 +7742,20 @@
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-12\\ps2-discovery-01\\0070-HB03-KF02-00CB5D80-after_show\\attempt-02\\stdout.txt"
   },
   {
+    "experiment_id": "exp_4d0765525e89cbd5925c3509",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "SM03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-SM03-00CB5D54-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_6f5eba488115e4d21c57a959",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "destination_scene": "SM03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB03-SM03-00CB5D80-after_show\\corrupt.json"
+  },
+  {
     "experiment_id": "exp_d04b99d5462b9a1db2ba7038",
     "platform": "ps2",
     "source_scene": "HB03",
@@ -6741,6 +7854,62 @@
     "ref": "tmp/bfbb-ps2-natural-target-catalog.json"
   },
   {
+    "experiment_id": "exp_d50eef2ecb9e02717c54cf98",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "GY04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB04-GY04-00C7822C-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_269b30af8cfe120626c05b9d",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "GY04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-gy04-reward31-consecutive-yellow-corrupt-c7822c.json"
+  },
+  {
+    "experiment_id": "exp_0b76edc60c23af7d0558bd4f",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "GY04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-gy04-reward31-model-distant-yellow-corrupt-c7822c.json"
+  },
+  {
+    "experiment_id": "exp_e19e606e32b6e5d057c53f38",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "GY04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-gy04-reward31-model-simultaneous-yellow-corrupt-c7822c.json"
+  },
+  {
+    "experiment_id": "exp_4879987a57ebcc62ccde8ede",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "GY04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-gy04-reward31-object-consecutive-yellow-corrupt-c7822c.json"
+  },
+  {
+    "experiment_id": "exp_735eb0696f972845ca6e452e",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "GY04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-gy04-reward31-object-simultaneous-yellow-corrupt-c7822c.json"
+  },
+  {
+    "experiment_id": "exp_bdd367b59830abfabe19b86f",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "GY04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-gy04-reward31-object-two-yellow-corrupt-c7822c.json"
+  },
+  {
+    "experiment_id": "exp_4444bb88e84519f7a9be878c",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "GY04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-gy04-reward31-two-yellow-corrupt-c7822c.json"
+  },
+  {
     "experiment_id": "exp_7c5360319c1e5df4258b3349",
     "platform": "ps2",
     "source_scene": "HB04",
@@ -6795,6 +7964,41 @@
     "source_scene": "HB04",
     "destination_scene": "GY04",
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB04-GY04-00C7822C-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_6057d40ba8b5de13a31cbfaf",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "HB08",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB04-HB08-00C7822C-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_002609d9e25c7bfa3b69c23d",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "HB08",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB04-HB08-00C7822C-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_74b78de85b46aadbc950ddbd",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "HB08",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-hb08-blue-alpha2-bamboo-ui-model-corrupt-c7822c.json"
+  },
+  {
+    "experiment_id": "exp_ea9d139d561466886605f369",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "HB08",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-hb08-blue-alpha2-visible-corrupt-c7822c-v2.json"
+  },
+  {
+    "experiment_id": "exp_8dfda68cb12a162d1aee8485",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "HB08",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-hb08-blue-alpha2-visible-corrupt-c7822c.json"
   },
   {
     "experiment_id": "exp_e628e2bb29faa7cd92c3ac25",
@@ -6865,6 +8069,13 @@
     "source_scene": "HB04",
     "destination_scene": "HB08",
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB04-HB08-00C7822C-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_c69f17128a16b0f15e078ba2",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "destination_scene": "HB09",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB04-HB09-00C7822C-after_show_expiry\\corrupt.json"
   },
   {
     "experiment_id": "exp_fdc7f43e932789a727d7c986",
@@ -6951,6 +8162,13 @@
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-04\\ps2-discovery-01\\0055-HB05-GL01-00CEBAD8-expiry\\attempt-02\\stdout.txt"
   },
   {
+    "experiment_id": "exp_7badd702f849799662d96693",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "DB04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-DB04-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
     "experiment_id": "exp_fbcb8736a4d0e9e83e4d3808",
     "platform": "ps2",
     "source_scene": "HB06",
@@ -6977,6 +8195,55 @@
     "source_scene": "HB06",
     "destination_scene": "DB04",
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-DB04-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_4a67bc5898d79e51d587cc23",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "GY01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-GY01-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_fc10e7853ca92ad91ac55970",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "GY01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-gy01-combohud-yellow-reward-corrupt-5dd8.json"
+  },
+  {
+    "experiment_id": "exp_c9be967ad3cf6b1541db9e3f",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "GY01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-gy01-reward30-activate-corrupt-5dd8.json"
+  },
+  {
+    "experiment_id": "exp_69a678c33a0adc307d0f5040",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "GY01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-gy01-reward30-indirect-watch-5dd8-offset8.json"
+  },
+  {
+    "experiment_id": "exp_cfd6472ff2719df61d342e9f",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "GY01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-gy01-reward30-indirect-watch-5dd8.json"
+  },
+  {
+    "experiment_id": "exp_de11b0653ed109a2554c7743",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "GY01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-gy01-reward30-model-lifetime-5dd8.json"
+  },
+  {
+    "experiment_id": "exp_e7de02f58a40cdda5dae7927",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "GY01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-hb06-gy01-boot-reward30-pickup.json"
   },
   {
     "experiment_id": "exp_a394773794ae2b091616073f",
@@ -7056,6 +8323,41 @@
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-GY01-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
   },
   {
+    "experiment_id": "exp_ca9397d8b955643b40619ab2",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "HB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB06-HB02-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_90ebc4605b9a3d88ec331cdf",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "HB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-HB02-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_78ed4ac4ab171e97c9e46606",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "HB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-hb02-clothes22-near-visible-run-corrupt-5dd8.json"
+  },
+  {
+    "experiment_id": "exp_c16d64dcc3f3a842befb896a",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "HB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-hb02-clothes22-run-corrupt-5dd8.json"
+  },
+  {
+    "experiment_id": "exp_90be0b5b2bd5ab0876c46e95",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "HB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-hb02-clothes22-visible-run-corrupt-5dd8.json"
+  },
+  {
     "experiment_id": "exp_04044280e205696f3fe8851f",
     "platform": "ps2",
     "source_scene": "HB06",
@@ -7110,6 +8412,34 @@
     "source_scene": "HB06",
     "destination_scene": "HB02",
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-HB02-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_33638c32cd03e99d2ddd8ed3",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-JF04-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_10265cf14d9273fb8b883a19",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-kingj-cb5dd8-player-kill.json"
+  },
+  {
+    "experiment_id": "exp_186595d9e2fcd02a58244b0f",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-natural-boss-cb5dd8.json"
+  },
+  {
+    "experiment_id": "exp_edd03be1057805ee3fc3f6fb",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-jf04-natural-boss-damage-cb5dd8.json"
   },
   {
     "experiment_id": "exp_50cca6278f355d7a6c64d57f",
@@ -7173,6 +8503,27 @@
     "source_scene": "HB06",
     "destination_scene": "JF04",
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-JF04-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_4dfe81a0991546ec39526715",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "KF05",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB06-KF05-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_c909c924c899f23410252f9b",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "KF05",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-KF05-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_eb02b96c4def72bd6515ecc7",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "KF05",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-kf05-cavevine0132-model-corrupt-cb5dd8.json"
   },
   {
     "experiment_id": "exp_ff9b3b645cf8f05bfcee8eb5",
@@ -7259,6 +8610,13 @@
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-KF05-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
   },
   {
+    "experiment_id": "exp_a15cf50b597c266e1a760de1",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "destination_scene": "SM03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-SM03-00CB5DD8-after_show_expiry\\corrupt.json"
+  },
+  {
     "experiment_id": "exp_67cd58f88c37f6a6ee136014",
     "platform": "ps2",
     "source_scene": "HB06",
@@ -7285,6 +8643,20 @@
     "source_scene": "HB06",
     "destination_scene": "SM03",
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB06-SM03-00CB5DD8-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_49ecca788d50417bd5d2d6fe",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "destination_scene": "HB01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-07\\ps2-consumer-01\\0047-HB09-HB01-00CC99E4-after_show\\attempt-01\\consumer.json"
+  },
+  {
+    "experiment_id": "exp_99132dd48d9904971415e6b6",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "destination_scene": "HB01",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-07\\ps2-consumer-01\\0047-HB09-HB01-00CC99E4-after_show\\attempt-02\\consumer.json"
   },
   {
     "experiment_id": "exp_7e293390514e4fe2bb0fcf13",
@@ -7383,6 +8755,20 @@
     "source_scene": "HB09",
     "destination_scene": "HB01",
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-07\\ps2-discovery-01\\0059-HB09-HB01-00CC99E4-after_show\\attempt-02\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_6768ba093fe863117ea3f97b",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "destination_scene": "JF03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-11\\ps2-consumer-01\\0052-HB09-JF03-00CC99E4-after_show\\attempt-01\\consumer.json"
+  },
+  {
+    "experiment_id": "exp_b10ad5a2aba79cdafd835744",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "destination_scene": "JF03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-11\\ps2-consumer-01\\0052-HB09-JF03-00CC99E4-after_show\\attempt-02\\consumer.json"
   },
   {
     "experiment_id": "exp_6ab2a9fca40f40688fda0b67",
@@ -7511,6 +8897,20 @@
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-12\\ps2-discovery-01\\0069-HB09-KF01-00CC99B8-expiry\\attempt-02\\stdout.txt"
   },
   {
+    "experiment_id": "exp_440b1c293faafdc06113c239",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "destination_scene": "SM03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-16\\ps2-consumer-01\\0054-HB09-SM03-00CC99E4-after_show\\attempt-01\\consumer.json"
+  },
+  {
+    "experiment_id": "exp_8e817167b6a0cf0050202d32",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "destination_scene": "SM03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-16\\ps2-consumer-01\\0054-HB09-SM03-00CC99E4-after_show\\attempt-02\\consumer.json"
+  },
+  {
     "experiment_id": "exp_3c1ef1ef831a87bd5404b184",
     "platform": "ps2",
     "source_scene": "HB09",
@@ -7637,6 +9037,20 @@
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-03\\ps2-discovery-01\\0053-HB10-BB02-00CB5DAC-after_show\\attempt-02\\stdout.txt"
   },
   {
+    "experiment_id": "exp_bd20a042fe5b95e853bbaa18",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "BB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-consumer-sweep\\0000-HB10-BB03-00CB5D80-after_show_expiry\\corrupt.json"
+  },
+  {
+    "experiment_id": "exp_0f870e94c5fc52831e4ffaba",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "BB03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-BB03-00CB5D80-after_show_expiry\\corrupt.json"
+  },
+  {
     "experiment_id": "exp_8ee18df4f41a74f97bdfbd7a",
     "platform": "ps2",
     "source_scene": "HB10",
@@ -7693,6 +9107,13 @@
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-BB03-00CB5D80-after_show_expiry\\corrupt.stdout.txt"
   },
   {
+    "experiment_id": "exp_34efebb7865bb8fc225e57a5",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "DB04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-DB04-00CB5D80-after_show_expiry\\corrupt.json"
+  },
+  {
     "experiment_id": "exp_1284035d0ad3cb5cd2026a9e",
     "platform": "ps2",
     "source_scene": "HB10",
@@ -7719,6 +9140,13 @@
     "source_scene": "HB10",
     "destination_scene": "DB04",
     "ref": "tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-DB04-00CB5D80-after_show_expiry\\corrupt.stdout.txt"
+  },
+  {
+    "experiment_id": "exp_c081e14832d0d9fa95f03d5e",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "JF04",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-JF04-00CB5D80-after_show_expiry\\corrupt.json"
   },
   {
     "experiment_id": "exp_f0e06ae3b8d2c13b6cf5b6e9",
@@ -7775,6 +9203,13 @@
     "source_scene": "HB10",
     "destination_scene": "KF02",
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-13\\ps2-discovery-01\\0071-HB10-KF02-00CB5DAC-after_show\\attempt-02\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_910e1433a89fd8af8cea3f1a",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "destination_scene": "SM03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-ps2-field-hit-sweep\\0000-HB10-SM03-00CB5D80-after_show_expiry\\corrupt.json"
   },
   {
     "experiment_id": "exp_12e21ed301b4dbc0a922d409",
@@ -7999,6 +9434,34 @@
     "source_scene": "SM02",
     "destination_scene": "GL01",
     "ref": "tmp\\bfbb-combo-autopilot\\ps2-live-cycle-20\\ps2-discovery-01\\0101-SM02-GL01-00DD7A28-after_show_expiry\\attempt-02\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_1e3b86b6af34466fd6be3911",
+    "platform": "ps2",
+    "source_scene": "SM02",
+    "destination_scene": "GL03",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-22\\sm02-src2-gl03-pickup11.json"
+  },
+  {
+    "experiment_id": "exp_92722200dd303b56f58b0af1",
+    "platform": "ps2",
+    "source_scene": "SM02",
+    "destination_scene": "RB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-22\\sm02-src2-rb02-red51-v2.json"
+  },
+  {
+    "experiment_id": "exp_03cdf26dfc4cb62493170954",
+    "platform": "ps2",
+    "source_scene": "SM02",
+    "destination_scene": "RB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-22\\sm02-src2-rb02-red51-v3.json"
+  },
+  {
+    "experiment_id": "exp_a8385364662330f58ddd3ace",
+    "platform": "ps2",
+    "source_scene": "SM02",
+    "destination_scene": "RB02",
+    "ref": "C:\\Projects\\bfbb\\tmp\\bfbb-combo-autopilot\\ps2-live-cycle-22\\sm02-src2-rb02-red51.json"
   },
   {
     "experiment_id": "exp_3ef0677db35ee364f7341557",

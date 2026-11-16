@@ -9698,6 +9698,19 @@
     "holder_hex": null
   },
   {
+    "id": "prod_92017bd39e341fe1b5198084",
+    "platform": "ps2",
+    "source_scene": null,
+    "transition": "title_round_trip",
+    "primitive": "control",
+    "action_summary": "Load the destination without combo storage as a clean control.",
+    "feasibility": "clean_control",
+    "naturality": "control",
+    "state_hash": "905f88f13e531c4ffb2afba5578fbfbe3c802a7aad0dadbcc760e84298d5e085",
+    "payload_hash": null,
+    "holder_hex": null
+  },
+  {
     "id": "prod_09c1ba15edd2c856e1108a94",
     "platform": "ps2",
     "source_scene": null,
@@ -9763,6 +9776,19 @@
     "holder_hex": "0x00CD0B84"
   },
   {
+    "id": "prod_c33624a731b2e83a0f22adf2",
+    "platform": "ps2",
+    "source_scene": "B101",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "after show",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "31f4ce511f0112450c6c093417d72483b6da491ca95046b2f7d24428943c2588",
+    "payload_hash": null,
+    "holder_hex": "0x00CD0B84"
+  },
+  {
     "id": "prod_583d1c1b96fe640cf62ebd62",
     "platform": "ps2",
     "source_scene": "B201",
@@ -9811,6 +9837,19 @@
     "feasibility": "runtime_reproduced",
     "naturality": "synthetic_combo_state",
     "state_hash": "c71e993e73259b0e20994a9ae8a93005a01351db408f046cd8ac2d122ea91109",
+    "payload_hash": null,
+    "holder_hex": "0x00CE1D64"
+  },
+  {
+    "id": "prod_4f1f50e145c59fd08e4f2b9f",
+    "platform": "ps2",
+    "source_scene": "B201",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "after show",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "144d50202972a0b0ea6229d3fa5dd63023ffbfd2e0f28f057a2231d9f7f59e8e",
     "payload_hash": null,
     "holder_hex": "0x00CE1D64"
   },
@@ -9967,6 +10006,32 @@
     "feasibility": "runtime_reproduced",
     "naturality": "synthetic_combo_state",
     "state_hash": "429e5e1f0e349843e833ee554ebfb5ff8aa248e1daeb03bc743c96d5fbe0745a",
+    "payload_hash": null,
+    "holder_hex": "0x00CB5DD8"
+  },
+  {
+    "id": "prod_e8171aa0c204d559d689261d",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "Reproduce the B302 after show expiry combo-storage state.",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "160adef8f3c786217c5bdb6c7d3dadd06acd393e1b7a0026dbb7ddee0233762c",
+    "payload_hash": null,
+    "holder_hex": "0x00CB5DD8"
+  },
+  {
+    "id": "prod_579a6070592e7ff762cc0800",
+    "platform": "ps2",
+    "source_scene": "B302",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "combo expires in menu",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "c6d06764f89cb236938483f743d089c4387a16ccfc758a50b0b50cbd69180802",
     "payload_hash": null,
     "holder_hex": "0x00CB5DD8"
   },
@@ -10283,6 +10348,19 @@
     "holder_hex": "0x00CB5DD8"
   },
   {
+    "id": "prod_c066994126cbd08c075e5a3b",
+    "platform": "ps2",
+    "source_scene": "GY04",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "Reproduce the GY04 after show expiry combo-storage state.",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "fab2996ce219cb5c1f7d1c194a6e639967214db498e6d73434a260c8f293f952",
+    "payload_hash": null,
+    "holder_hex": "0x00CB5DD8"
+  },
+  {
     "id": "prod_ff832a13e78b45e7e240bfe1",
     "platform": "ps2",
     "source_scene": "HB00",
@@ -10361,6 +10439,19 @@
     "holder_hex": "0x00CB5D80"
   },
   {
+    "id": "prod_dfc8ddce015009047f6438b4",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "Reproduce the HB00 after show expiry combo-storage state.",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "c0d0204bef43e8aef596b1095ed96ba2839c239ac8d616e13c80755eaceae72c",
+    "payload_hash": null,
+    "holder_hex": "0x00CB5D80"
+  },
+  {
     "id": "prod_c927b6c44f168bd78e7e2ce4",
     "platform": "ps2",
     "source_scene": "HB00",
@@ -10372,6 +10463,19 @@
     "state_hash": "0ac648e8e88715233bac8881127c0cef1b1cffbd4dcc3bcd259157bfdd44f7db",
     "payload_hash": null,
     "holder_hex": "0x00CB5DAC"
+  },
+  {
+    "id": "prod_b9d5a722e8ade7157cd5c800",
+    "platform": "ps2",
+    "source_scene": "HB00",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "Reproduce the HB00 after expiry combo-storage state.",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "23be32bfee246355e1a3b883b65146e1903ccefe8a0c7dd4b3db702ccae844c8",
+    "payload_hash": null,
+    "holder_hex": "0x00CB5DD8"
   },
   {
     "id": "prod_1f8ff65c8942ad98f0b2823c",
@@ -10634,6 +10738,19 @@
     "holder_hex": "0x00CB5D54"
   },
   {
+    "id": "prod_2f4bdc53b9e66840bdf8424c",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "Reproduce the HB03 after show expiry combo-storage state.",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "2e016edeecb0ec891c98aa13a87bdb688b289821a84fb0203dadc404ab9dbed2",
+    "payload_hash": null,
+    "holder_hex": "0x00CB5D54"
+  },
+  {
     "id": "prod_14814ac6969e6bd44d1e7c88",
     "platform": "ps2",
     "source_scene": "HB03",
@@ -10734,6 +10851,19 @@
     "feasibility": "runtime_reproduced",
     "naturality": "synthetic_combo_state",
     "state_hash": "d1d89b985a8475f95ac420504b4ac714988b7caa6c2054ca75a1d4e0067418ca",
+    "payload_hash": null,
+    "holder_hex": "0x00CB5D80"
+  },
+  {
+    "id": "prod_f646627c509a7e4502dbddfe",
+    "platform": "ps2",
+    "source_scene": "HB03",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "Reproduce the HB03 after show combo-storage state.",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "7eb29332422166d9b8cd01b6940ca135f9ee408af5e8e647329818ffda63a577",
     "payload_hash": null,
     "holder_hex": "0x00CB5D80"
   },
@@ -10877,6 +11007,19 @@
     "feasibility": "runtime_reproduced",
     "naturality": "exact retained head reproduced; controller-only combo construction still needs confirmation",
     "state_hash": null,
+    "payload_hash": null,
+    "holder_hex": "0x00C7822C"
+  },
+  {
+    "id": "prod_d21a1532ef2edfca7682587a",
+    "platform": "ps2",
+    "source_scene": "HB04",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "Reproduce the HB04 after show expiry combo-storage state.",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "efa90c88e82a55f50b39895453c924c943c97fd4cebc3dafe15a4dcd9caef8ef",
     "payload_hash": null,
     "holder_hex": "0x00C7822C"
   },
@@ -11063,6 +11206,45 @@
     "holder_hex": "0x00CB5DD8"
   },
   {
+    "id": "prod_c1e34d15bd530c449ea3bfe6",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "Reproduce the HB06 after show expiry combo-storage state.",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "cd8a5faf7fdf664cc610e3b48ca59587ded0210d34d4f2a50f0fd168de3c449c",
+    "payload_hash": null,
+    "holder_hex": "0x00CB5DD8"
+  },
+  {
+    "id": "prod_658c664ff2d820e2442c396f",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "Reproduce the HB06 after expiry combo-storage state.",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "743182c04641d73a34d7b4743bacc0f9858266c18417ecf75905725588738dee",
+    "payload_hash": null,
+    "holder_hex": "0x00CB5DD8"
+  },
+  {
+    "id": "prod_d8a8905405bdf3cb9e2790d8",
+    "platform": "ps2",
+    "source_scene": "HB06",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "Reproduce the measured HB06 combo-storage state, then load GY01.",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "3c7aedd18b93e364278117ae7693ac07185dfa1cd064e059978ed7df48d5945d",
+    "payload_hash": null,
+    "holder_hex": "0x00CB5DD8"
+  },
+  {
     "id": "prod_e43470821462f0992f12e67e",
     "platform": "ps2",
     "source_scene": "HB09",
@@ -11232,6 +11414,32 @@
     "holder_hex": "0x00CC99E4"
   },
   {
+    "id": "prod_b01977aa4bbbf7b35b64f8f9",
+    "platform": "ps2",
+    "source_scene": "HB09",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "after show",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "b3501b9c6da1444cd581f5ade7e7ad5d1d24c0ff24869f3c2f08c3db85fe3c77",
+    "payload_hash": null,
+    "holder_hex": "0x00CC99E4"
+  },
+  {
+    "id": "prod_1c1a39f04824fb4c0cda85e8",
+    "platform": "ps2",
+    "source_scene": "HB10",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "Reproduce the HB10 after expiry combo-storage state.",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "49a8a1346a8c0e6c6680891785a91206f1738ec3ebe51c6693facaa4e002f316",
+    "payload_hash": null,
+    "holder_hex": null
+  },
+  {
     "id": "prod_36f5ca78b21029d243c341f6",
     "platform": "ps2",
     "source_scene": "HB10",
@@ -11362,6 +11570,19 @@
     "holder_hex": null
   },
   {
+    "id": "prod_1ca001fef0c2c7d57ff392fc",
+    "platform": "ps2",
+    "source_scene": "SM02",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "Reproduce the measured SM02 combo-storage state, then load RB02.",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "707efcb36ec2ccf7c895c5f363be30fa4d21a0511515a109ddb0c962c2b40aa7",
+    "payload_hash": null,
+    "holder_hex": null
+  },
+  {
     "id": "prod_0eee592d5aaffc2932608a62",
     "platform": "ps2",
     "source_scene": "SM02",
@@ -11371,6 +11592,32 @@
     "feasibility": "lab_topology_verified",
     "naturality": "ordinary_combo_extension_shape",
     "state_hash": null,
+    "payload_hash": null,
+    "holder_hex": "0x00CB5DD8"
+  },
+  {
+    "id": "prod_4e6f0d294ffa94f51ed6122c",
+    "platform": "ps2",
+    "source_scene": "SM02",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "Reproduce the measured SM02 combo-storage state, then load GL03.",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "fe64a701d27dc762d62aecddb2f755b3a63688e03f66a86d7cc5373086441624",
+    "payload_hash": null,
+    "holder_hex": "0x00CB5DD8"
+  },
+  {
+    "id": "prod_f4745179ac3828fbb4ea43ae",
+    "platform": "ps2",
+    "source_scene": "SM02",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "Reproduce the measured SM02 combo-storage state, then load RB02.",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "fe64a701d27dc762d62aecddb2f755b3a63688e03f66a86d7cc5373086441624",
     "payload_hash": null,
     "holder_hex": "0x00CB5DD8"
   },
