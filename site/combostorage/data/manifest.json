@@ -1,17 +1,17 @@
 {
   "schema": "bfbb.combo.site/v1",
-  "generated_at": "2026-11-16T17:08:50.661273+00:00",
+  "generated_at": "2026-11-16T17:15:17.321207+00:00",
   "stats": {
     "schema_version": 1,
     "counts": {
-      "evidence_files": 855,
-      "experiments": 4820,
-      "producers": 1386,
-      "writes": 4640,
+      "evidence_files": 857,
+      "experiments": 4828,
+      "producers": 1392,
+      "writes": 4648,
       "write_members": 708,
-      "outcomes": 4835,
+      "outcomes": 4843,
       "consumer_tests": 859,
-      "experiment_evidence": 2568,
+      "experiment_evidence": 2588,
       "import_issues": 0
     },
     "platforms": [
@@ -22,7 +22,7 @@
       },
       {
         "platform": "ps2",
-        "experiments": 3842,
+        "experiments": 3850,
         "holders": 70
       },
       {
