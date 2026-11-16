@@ -1,28 +1,28 @@
 {
   "schema": "bfbb.combo.site/v1",
-  "generated_at": "2026-11-16T16:26:33.004192+00:00",
+  "generated_at": "2026-11-16T16:45:24.004496+00:00",
   "stats": {
     "schema_version": 1,
     "counts": {
-      "evidence_files": 845,
-      "experiments": 4785,
-      "producers": 1361,
-      "writes": 4605,
+      "evidence_files": 851,
+      "experiments": 4804,
+      "producers": 1374,
+      "writes": 4624,
       "write_members": 708,
-      "outcomes": 4800,
-      "consumer_tests": 844,
-      "experiment_evidence": 2460,
+      "outcomes": 4819,
+      "consumer_tests": 855,
+      "experiment_evidence": 2528,
       "import_issues": 0
     },
     "platforms": [
       {
         "platform": "gamecube",
-        "experiments": 891,
+        "experiments": 894,
         "holders": 193
       },
       {
         "platform": "ps2",
-        "experiments": 3810,
+        "experiments": 3826,
         "holders": 70
       },
       {
