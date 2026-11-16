@@ -11,7 +11,7 @@ header { max-width: 860px; margin-bottom: 26px; }
 h1 { margin: 0 0 7px; font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: -.045em; }
 header p, footer p { margin: 0; color: var(--muted); line-height: 1.5; }
 
-.filters { display: grid; grid-template-columns: repeat(5, minmax(135px, 1fr)) minmax(210px, 1.4fr) auto; gap: 10px; align-items: end; padding: 15px; border: 1px solid var(--line); background: var(--panel); }
+.filters { display: grid; grid-template-columns: repeat(4, minmax(135px, 1fr)) minmax(210px, 1.4fr) auto; gap: 10px; align-items: end; padding: 15px; border: 1px solid var(--line); background: var(--panel); }
 label { display: grid; gap: 5px; color: var(--muted); font-size: .74rem; font-weight: 800; letter-spacing: .035em; text-transform: uppercase; }
 select, input, button { min-height: 40px; padding: 8px 10px; color: var(--ink); border: 1px solid var(--line); border-radius: 4px; background: #fff; }
 button { cursor: pointer; }

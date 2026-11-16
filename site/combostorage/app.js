@@ -14,10 +14,11 @@ const effectLabels = {
   "gameplay-corruption": "Gameplay corruption",
   visual: "Visual glitch",
   crash: "Crash / softlock",
-  "no-effect": "No visible effect"
+  "no-effect": "No visible effect",
+  unresolved: "Effect not tested"
 };
 const state = {
-  rows: [], effect: "changed", evidence: "all", platform: "all", source: "all",
+  rows: [], effect: "changed", platform: "all", source: "all",
   destination: "all", query: "", shown: PAGE_SIZE
 };
 const $ = selector => document.querySelector(selector);
@@ -32,7 +33,6 @@ const sceneName = code => {
   return prefix ? `${sceneNames[prefix]} (${code})` : code;
 };
 const effect = item => item.effect_category;
-const evidence = item => item.evidence_kind;
 const setupText = item => item.setup_description;
 const effectText = item => item.effect_description;
 const notesText = item => item.notes_description;
@@ -43,9 +43,8 @@ function filteredRows() {
     if (state.platform !== "all" && item.platform !== state.platform) return false;
     if (state.source !== "all" && (item.source_scene || "unknown") !== state.source) return false;
     if (state.destination !== "all" && (item.destination_scene || "unknown") !== state.destination) return false;
-    if (state.effect === "changed" && effect(item) === "no-effect") return false;
+    if (state.effect === "changed" && ["no-effect", "unresolved"].includes(effect(item))) return false;
     if (state.effect !== "all" && state.effect !== "changed" && effect(item) !== state.effect) return false;
-    if (state.evidence !== "all" && evidence(item) !== state.evidence) return false;
     if (!query) return true;
     return [
       item.source_scene, item.destination_scene, item.owner_name, item.member,
@@ -64,7 +63,7 @@ function technicalDetails(item) {
     : (item.writes?.[0]?.owner_name || item.owner_name);
   const entries = [
     ["Observed effect", item.effect_label],
-    ["Evidence", words(evidence(item))],
+    ["Evidence", words(item.evidence_kind)],
     ["Technical classification", item.classification],
     ["Recorded results", item.recorded_results?.join(", ") || item.result],
     ["Targets", targets],
@@ -109,7 +108,7 @@ function addOptions(selector, values, label) {
 
 function paramsToState() {
   const params = new URLSearchParams(location.search);
-  for (const key of ["effect", "evidence", "platform", "source", "destination"]) {
+  for (const key of ["effect", "platform", "source", "destination"]) {
     if (params.has(key)) state[key] = params.get(key);
   }
   state.query = params.get("q") || "";
@@ -117,7 +116,7 @@ function paramsToState() {
 
 function stateToParams() {
   const params = new URLSearchParams();
-  for (const key of ["effect", "evidence", "platform", "source", "destination"]) {
+  for (const key of ["effect", "platform", "source", "destination"]) {
     const defaultValue = key === "effect" ? "changed" : "all";
     if (state[key] !== defaultValue) params.set(key, state[key]);
   }
@@ -150,7 +149,6 @@ async function boot() {
   addOptions("#source-filter", state.rows.map(item => item.source_scene || "unknown"), sceneName);
   addOptions("#destination-filter", state.rows.map(item => item.destination_scene || "unknown"), sceneName);
   bindSelect("#effect-filter", "effect");
-  bindSelect("#evidence-filter", "evidence");
   bindSelect("#platform-filter", "platform");
   bindSelect("#source-filter", "source");
   bindSelect("#destination-filter", "destination");
@@ -180,4 +178,4 @@ if (typeof document !== "undefined") {
   });
 }
 
-export { effect, evidence, setupText };
+export { effect, setupText };
