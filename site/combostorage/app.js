@@ -59,13 +59,15 @@ function technicalDetails(item) {
   const refs = Array.isArray(references)
     ? references
     : String(references).split(/\s*\|\s*|;/).filter(Boolean);
+  const targets = item.overlap_targets?.length
+    ? item.overlap_targets.join("; ")
+    : (item.writes?.[0]?.owner_name || item.owner_name);
   const entries = [
     ["Observed effect", item.effect_label],
     ["Evidence", words(evidence(item))],
     ["Technical classification", item.classification],
-    ["Recorded result", item.result],
-    ["Target", item.writes?.[0]?.owner_name || item.owner_name],
-    ["Member", item.writes?.[0]?.member || item.member],
+    ["Recorded results", item.recorded_results?.join(", ") || item.result],
+    ["Targets", targets],
     ["Address", item.holder_hex],
     ["Timing", words(item.timing_phase)]
   ].filter(([, value]) => value != null && value !== "");
