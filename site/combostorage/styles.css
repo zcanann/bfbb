@@ -30,9 +30,11 @@ button:hover { border-color: var(--accent); }
 .route span { display: block; color: var(--muted); font-size: .76rem; font-weight: 800; text-transform: uppercase; letter-spacing: .045em; }
 .route strong { display: block; margin-top: 4px; font-size: .93rem; line-height: 1.35; }
 .badge { justify-self: start; padding: 5px 8px; border-radius: 999px; font-size: .72rem; font-weight: 850; white-space: nowrap; }
-.badge.player { color: var(--player); background: #e5f2e9; }
-.badge.lab { color: var(--lab); background: #f7edd6; }
-.badge.candidate { color: var(--candidate); background: #eceef1; }
+.badge.wrong-warp, .badge.reward, .badge.progression { color: #215a38; background: #e3f2e8; }
+.badge.crash { color: #8a2929; background: #f8e5e5; }
+.badge.visual { color: #6d4384; background: #f0e7f5; }
+.badge.gameplay-corruption { color: #7b5112; background: #f7edd6; }
+.badge.no-effect { color: #5f6874; background: #eceef1; }
 details { grid-column: 2 / -1; margin-top: -2px; color: var(--muted); font-size: .82rem; }
 summary { cursor: pointer; font-weight: 750; }
 .technical { display: grid; grid-template-columns: repeat(3, minmax(180px, 1fr)); gap: 8px 18px; margin: 10px 0; }

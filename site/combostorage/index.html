@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Exhaustive BFBB combo-storage results across GameCube, PlayStation 2, and Xbox.">
+  <meta name="description" content="Player-performable BFBB combo-storage results across GameCube, PlayStation 2, and Xbox.">
   <title>BFBB Combo Storage Catalog</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -11,42 +11,22 @@
   <main>
     <header>
       <h1>Combo Storage Catalog</h1>
-      <p>Setup → effect → what remains unknown. Player-observed results are shown by default; the filters expose the full research catalog.</p>
+      <p>Player-performable setup &rarr; observed result. Speculative targets and lab-only memory manipulation are not listed as results.</p>
     </header>
-
     <section class="filters" aria-label="Filter results">
-      <label>Setup confidence
-        <select id="confidence-filter">
-          <option value="player">Player-observed</option>
-          <option value="observed">All runtime-observed</option>
-          <option value="lab">Lab-assisted only</option>
-          <option value="candidate">Untested candidates</option>
-          <option value="all">Everything</option>
-        </select>
-      </label>
+      <label>What happens<select id="effect-filter"><option value="all">All observed results</option></select></label>
       <label>Version<select id="platform-filter"><option value="all">All versions</option></select></label>
       <label>Source level<select id="source-filter"><option value="all">All sources</option></select></label>
       <label>Destination<select id="destination-filter"><option value="all">All destinations</option></select></label>
-      <label>Outcome<select id="outcome-filter"><option value="all">All outcomes</option></select></label>
-      <label class="search">Search<input id="search-input" type="search" placeholder="Map, object, effect…"></label>
+      <label>Evidence<select id="evidence-filter"><option value="all">All evidence</option><option value="community">Community observed</option><option value="replayed">Replayed in runtime</option><option value="reported">Reported, not replayed</option></select></label>
+      <label class="search">Search<input id="search-input" type="search" placeholder="Map, setup, effect..."></label>
       <button id="copy-view" type="button">Copy filtered link</button>
     </section>
-
-    <div class="result-bar">
-      <p id="result-count" aria-live="polite">Loading results…</p>
-      <button id="reset-filters" type="button">Reset filters</button>
-    </div>
-
-    <section class="column-headings" aria-hidden="true">
-      <span>Version / route</span><span>Do this</span><span>What happens</span><span>What remains</span><span>Status</span>
-    </section>
+    <div class="result-bar"><p id="result-count" aria-live="polite">Loading results...</p><button id="reset-filters" type="button">Reset filters</button></div>
+    <section class="column-headings" aria-hidden="true"><span>Version / route</span><span>Do this</span><span>What happens</span><span>Notes</span><span>Effect</span></section>
     <section id="results" class="results" aria-label="Combo-storage results"></section>
     <button id="show-more" class="show-more" type="button" hidden>Show more</button>
-
-    <footer>
-      <p>Technical addresses and evidence stay inside each row. They are not used as the public-facing explanation.</p>
-      <p id="updated-at"></p>
-    </footer>
+    <footer><p>The matrix includes only concrete player inputs. Evidence and addresses remain secondary details.</p><p id="updated-at"></p></footer>
   </main>
   <script src="app.js" type="module"></script>
 </body>
