@@ -5970,7 +5970,7 @@
     "platform": "xbox",
     "source_scene": "B101",
     "destination_scene": "JF03",
-    "experiments": 1,
+    "experiments": 2,
     "failures": 0,
     "reaches_play": 0,
     "holders": 1
@@ -6141,9 +6141,9 @@
     "platform": "xbox",
     "source_scene": "HB09",
     "destination_scene": "JF01",
-    "experiments": 1,
+    "experiments": 3,
     "failures": 0,
-    "reaches_play": 0,
+    "reaches_play": 2,
     "holders": 1
   },
   {

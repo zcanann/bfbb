@@ -9821,6 +9821,20 @@
     "ref": "tmp/bfbb-xbox-lab/probe-SM01-GY01-shift-m2-finalboss-counters.json"
   },
   {
+    "experiment_id": "exp_414c2391492a9e0edbabe56e",
+    "platform": "xbox",
+    "source_scene": "B101",
+    "destination_scene": "JF03",
+    "ref": "tmp\\bfbb-combo-xbox-queue-runs\\0380-B101-JF03-0068F80C-expiry\\attempt-01\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_414c2391492a9e0edbabe56e",
+    "platform": "xbox",
+    "source_scene": "B101",
+    "destination_scene": "JF03",
+    "ref": "tmp\\bfbb-combo-xbox-queue-runs\\0380-B101-JF03-0068F80C-expiry\\attempt-01\\stdout.txt"
+  },
+  {
     "experiment_id": "exp_0b0a1c39e599469e7e21a967",
     "platform": "xbox",
     "source_scene": "B101",
@@ -9889,5 +9903,40 @@
     "source_scene": "HB09",
     "destination_scene": "HB01",
     "ref": "tmp\\bfbb-combo-xbox-queue-runs\\0378-HB09-HB01-0068B3F0-expiry\\attempt-01\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_432fb89084a8827531e4ba9b",
+    "platform": "xbox",
+    "source_scene": "HB09",
+    "destination_scene": "JF01",
+    "ref": "tmp\\bfbb-combo-xbox-consumers\\0092-HB09-JF01-0068B3F0-expiry\\attempt-01\\runtime.json"
+  },
+  {
+    "experiment_id": "exp_432fb89084a8827531e4ba9b",
+    "platform": "xbox",
+    "source_scene": "HB09",
+    "destination_scene": "JF01",
+    "ref": "tmp\\bfbb-combo-xbox-consumers\\0092-HB09-JF01-0068B3F0-expiry\\attempt-01\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_432fb89084a8827531e4ba9b",
+    "platform": "xbox",
+    "source_scene": "HB09",
+    "destination_scene": "JF01",
+    "ref": "tmp\\bfbb-combo-xbox-consumers\\0092-HB09-JF01-0068B3F0-expiry\\attempt-01\\stdout.txt"
+  },
+  {
+    "experiment_id": "exp_7f044319ab4bc045fb6b17a4",
+    "platform": "xbox",
+    "source_scene": "HB09",
+    "destination_scene": "JF01",
+    "ref": "tmp\\bfbb-combo-xbox-queue-runs\\0379-HB09-JF01-0068B3F0-expiry\\attempt-01\\stderr.txt"
+  },
+  {
+    "experiment_id": "exp_7f044319ab4bc045fb6b17a4",
+    "platform": "xbox",
+    "source_scene": "HB09",
+    "destination_scene": "JF01",
+    "ref": "tmp\\bfbb-combo-xbox-queue-runs\\0379-HB09-JF01-0068B3F0-expiry\\attempt-01\\stdout.txt"
   }
 ]

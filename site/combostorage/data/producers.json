@@ -12428,6 +12428,19 @@
     "holder_hex": "0x0068F80C"
   },
   {
+    "id": "prod_2c0ccdeef4babd9e82b2b80a",
+    "platform": "xbox",
+    "source_scene": "B101",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "combo expires in menu",
+    "feasibility": "runtime_holder_mismatch",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "bf81182d8d6548f6cc7cf005554479db9aaaccc89d2587f97a6742e460784886",
+    "payload_hash": null,
+    "holder_hex": "0x0068F80C"
+  },
+  {
     "id": "prod_07bbd1bdc8c6e9142eb75316",
     "platform": "xbox",
     "source_scene": "B101",
@@ -12645,6 +12658,19 @@
     "feasibility": "runtime_reproduced",
     "naturality": "synthetic_combo_state",
     "state_hash": "84c80838b40f1e6bc9a8a2e92a77d6b9bbde67168e0967f0f75cbb32ccb78c73",
+    "payload_hash": null,
+    "holder_hex": "0x0068B3F0"
+  },
+  {
+    "id": "prod_c68090def52d916d00dd4e11",
+    "platform": "xbox",
+    "source_scene": "HB09",
+    "transition": "title_round_trip",
+    "primitive": "stale_motive_allocator",
+    "action_summary": "combo expires in menu",
+    "feasibility": "runtime_reproduced",
+    "naturality": "synthetic_combo_state",
+    "state_hash": "f6fc299f503d222dd5a7510d4160f524db7f2c96613a67b8debcfc2b99ceafcc",
     "payload_hash": null,
     "holder_hex": "0x0068B3F0"
   },
