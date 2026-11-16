@@ -1,1 +1,1 @@
-{"total":370,"summary":{"total":370,"by_effect":{"crash":107,"gameplay-corruption":13,"no-effect":185,"unresolved":58,"visual":7},"hidden_by_default":243},"chunks":[{"file":"results-01.json","rows":370}]}
+{"total":336,"summary":{"total":336,"by_effect":{"crash":106,"gameplay-corruption":12,"no-effect":165,"unresolved":47,"visual":6},"hidden_by_default":212},"chunks":[{"file":"results-01.json","rows":336}]}
