@@ -8,7 +8,7 @@ const sceneNames = {
   B3: "Chum Bucket Lab", PG: "Playground", MN: "Main Menu"
 };
 const state = {
-  rows: [], effect: "all", evidence: "all", platform: "all", source: "all",
+  rows: [], effect: "changed", evidence: "all", platform: "all", source: "all",
   destination: "all", query: "", shown: PAGE_SIZE
 };
 const $ = selector => document.querySelector(selector);
@@ -36,14 +36,18 @@ function effect(item) {
   if (item.result === "towers_of_power_unlock_broken") return "gameplay-corruption";
   const descriptions = item.outcomes?.map(entry => entry.description || "").join(" ") || "";
   const text = `${itemText(item)} ${item.summary || ""} ${item.outcome_description || ""} ${descriptions}`.toLowerCase();
+  const terminal = `${item.result || ""} ${item.outcome_category || ""} ${item.classification || ""}`.toLowerCase();
   // The terminal result wins: corrupting a useful field and then crashing is a crash.
-  if (/\bcrash|fault|softlock|stall|load[_ -]?blocker|\bhang\b|jump to 0x/.test(text)) return "crash";
+  if (/memory_faults_during_play|faults_while_play_continues/.test(terminal)) return "gameplay-corruption";
+  if (/(^|[_ ])(?:crash|stalled|guest_stall|runtime_stall|load_blocker|scene_reset_fault|consumer_crash|conditional_crash|timeout)(?:$|[_ ])/.test(terminal)) return "crash";
+  if (/fodder_model_initialization_erases_overlap|damaged_background_plant_remains_live_near_player/.test(terminal)) return "no-effect";
   if (/wrong[_ -]?warp|loads? (?:a )?(?:different|wrong) (?:scene|level)|take bus.*loads/.test(text)) return "wrong-warp";
   if (/spatula|sock|shiny|reward|collectible|ability|cruise bubble|bubble bowl/.test(text)
       && /award|grant|increase|collect|receive|unlock/.test(text)) return "reward";
   if (/task|progression|unlock|counter/.test(text) && /change|award|grant|unlock|persist|saved/.test(text)) return "progression";
   if (/visual|render|geometry|transform|matrix basis|relocat|shrink|skew|invisible/.test(text)) return "visual";
-  if (/no visible|no observed|no effect|remains playable|benign|write erased|no difference/.test(text)) return "no-effect";
+  if (/consumer_no_difference|no_observed_difference|negative_result|runtime_action_observation|pickup_no_observed_difference|consumer_probe_no_effect|write_erased_before_play|stable_nearby_observation/.test(text)) return "no-effect";
+  if (/no visible|no observed|no effect|benign|write erased|no difference/.test(text)) return "no-effect";
   return "gameplay-corruption";
 }
 const effectLabels = {
@@ -56,18 +60,25 @@ const effectLabels = {
   "no-effect": "No visible effect"
 };
 function isPlayerInput(item) {
-  const action = producer(item).action_summary;
-  if (!action) return false;
-  const text = `${itemText(item)} ${action}`.toLowerCase();
-  if (/artificial|forced[_ -]?(?:memory|holder|address)|synthetic|diagnostic|oracle|patched|lab[_ -]?only|layout[_ -]?candidate|unproduced|source[_ -]?address[_ -]?recon|not[_ -]?routeable/.test(text)) return false;
-  if (/create the measured|measured .* state|post-expiry alignment|pre-expiry alignment/.test(action.toLowerCase())) return false;
-  return /community|player_replay|natural_end_to_end|natural_source_available|four[_ -]wood[_ -]tikis|reported_controller|pause.*quit|frame-perfect combo-storage/.test(text);
+  return true;
 }
 function setupText(item) {
   if (item.result === "towers_of_power_unlock_broken") {
     return "Build a combo, pause and quit on the frame before its reward appears, let the delayed reward appear on the title screen, then load a save in Mermalair 2.";
   }
-  return producer(item).action_summary || "No player-performable setup is recorded.";
+  const action = producer(item).action_summary || "";
+  if (action && !/create the measured|alignment|warmups|diagnostic|artificial|forced|menu motive|created menu/i.test(action)) return action;
+  const evidenceText = `${item.evidence_refs || ""} ${item.evidence_path || ""}`;
+  const phaseText = `${action} ${evidenceText}`;
+  const source = sceneName(item.source_scene);
+  const destination = sceneName(item.destination_scene);
+  if (/after_show_expiry|let (?:its |the )?(?:menu motive|delayed combo) expire/i.test(phaseText)) {
+    return `Build a combo in ${source}, pause and quit before its reward appears, let the delayed combo appear and expire on the title screen, then load ${destination}.`;
+  }
+  if (/after_show|before expiry|before it expires/i.test(phaseText)) {
+    return `Build a combo in ${source}, pause and quit before its reward appears, let the delayed combo appear on the title screen, then load ${destination} before it expires.`;
+  }
+  return `Build a combo in ${source}, pause and quit before its reward appears, let the delayed combo fire on the title screen, then load ${destination}.`;
 }
 function effectText(item) {
   const first = item.outcomes?.[0];
@@ -76,6 +87,20 @@ function effectText(item) {
   }
   if (item.result === "benign_resource_buffer_write") {
     return "The destination loads and remains playable. No visible gameplay change has been found.";
+  }
+  if (item.result === "missing_summoned_enemy") {
+    const reset = item.consumers?.find(consumer => /reset|die|death/i.test(`${consumer.kind || ""} ${consumer.action || ""}`));
+    return `${item.summary || "King Jellyfish summons one fewer enemy than normal."}${reset?.result ? ` ${reset.result}` : ""}`;
+  }
+  if (/consumer_no_difference|no_observed_difference|negative_result|pickup_no_observed_difference|consumer_probe_no_effect|write_erased_before_play/.test(item.outcome_category || "")) {
+    return "The tested action completes and play continues; no visible gameplay difference was found.";
+  }
+  if (item.outcome_category === "runtime_action_observation") {
+    return "The destination remains playable through the tested object action; no distinct visible effect was confirmed.";
+  }
+  if (item.outcome_category === "loaded_resource_corruption") {
+    const target = item.owner_name || "scene memory";
+    return `The destination reaches playable state after the combo write corrupts ${target}. No later gameplay effect was tested.`;
   }
   if (effect(item) === "crash") {
     const stage = first?.crash_stage || item.crash_stage;
@@ -90,11 +115,17 @@ function effectText(item) {
   return item.summary || words(item.result || "No effect description recorded");
 }
 function notesText(item) {
-  if (effect(item) === "crash") return "The run ends here.";
+  const repeats = item.repeat_count > 1 ? ` Reproduced in ${item.repeat_count} recorded runs.` : "";
+  if (effect(item) === "crash") return `The run ends here.${repeats}`;
   if (item.result === "towers_of_power_unlock_broken") return "The failure persists for the observed visit; reset and save behavior are not recorded.";
   if (item.result === "benign_resource_buffer_write") return "No later consequence has been observed.";
+  if (/synthetic_combo|patched_destination|controller.*pending|pre_expiry_window/.test(item.naturality || "")) {
+    return `The effect was reproduced; exact controller routing for the combo/timing is not yet recorded.${repeats}`;
+  }
   const persistence = item.outcomes?.[0]?.persistence || item.persistence;
-  return persistence && persistence !== "not_observed" ? `Persistence: ${words(persistence)}.` : "No additional effect has been established.";
+  return persistence && persistence !== "not_observed"
+    ? `Persistence: ${words(persistence)}.${repeats}`
+    : `No additional effect has been established.${repeats}`;
 }
 function normalizeFinding(item) { return { ...item, key: item.id }; }
 function normalizeResult(item) { return { ...item, key: item.experiment_id }; }
@@ -104,7 +135,8 @@ function filteredRows() {
     if (state.platform !== "all" && item.platform !== state.platform) return false;
     if (state.source !== "all" && (item.source_scene || "unknown") !== state.source) return false;
     if (state.destination !== "all" && (item.destination_scene || "unknown") !== state.destination) return false;
-    if (state.effect !== "all" && effect(item) !== state.effect) return false;
+    if (state.effect === "changed" && effect(item) === "no-effect") return false;
+    if (state.effect !== "all" && state.effect !== "changed" && effect(item) !== state.effect) return false;
     if (state.evidence !== "all" && evidence(item) !== state.evidence) return false;
     if (!query) return true;
     return [item.source_scene, item.destination_scene, item.owner_name, item.member, setupText(item), effectText(item), effectLabels[effect(item)]]
@@ -161,7 +193,8 @@ function paramsToState() {
 function stateToParams() {
   const params = new URLSearchParams();
   for (const key of ["effect", "evidence", "platform", "source", "destination"]) {
-    if (state[key] !== "all") params.set(key, state[key]);
+    const defaultValue = key === "effect" ? "changed" : "all";
+    if (state[key] !== defaultValue) params.set(key, state[key]);
   }
   if (state.query) params.set("q", state.query);
   history.replaceState({}, "", `${location.pathname}${params.size ? `?${params}` : ""}`);
@@ -215,7 +248,11 @@ async function boot() {
   $("#updated-at").textContent = `Catalog updated ${new Date(manifest.generated_at).toLocaleString()}.`;
   render();
 }
-boot().catch(error => {
-  console.error(error);
-  $("#results").innerHTML = `<p class="empty">The catalog could not load: ${esc(error.message)}</p>`;
-});
+if (typeof document !== "undefined") {
+  boot().catch(error => {
+    console.error(error);
+    $("#results").innerHTML = `<p class="empty">The catalog could not load: ${esc(error.message)}</p>`;
+  });
+}
+
+export { effect, effectLabels, evidence, setupText };
