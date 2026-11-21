@@ -19,7 +19,7 @@ const effectLabels = {
 };
 const state = {
   rows: [], effect: "changed", platform: "all", source: "all",
-  destination: "all", query: "", shown: PAGE_SIZE
+  destination: "all", query: "", result: "", shown: PAGE_SIZE
 };
 const $ = selector => document.querySelector(selector);
 const esc = value => String(value ?? "").replace(/[&<>'"]/g, character => ({
@@ -40,6 +40,10 @@ const notesText = item => item.notes_description;
 function filteredRows() {
   const query = state.query.trim().toLowerCase();
   return state.rows.filter(item => {
+    if (state.result) {
+      const ids = [item.public_id, item.id, ...(item.legacy_public_ids || [])];
+      return ids.includes(state.result);
+    }
     if (state.platform !== "all" && item.platform !== state.platform) return false;
     if (state.source !== "all" && (item.source_scene || "unknown") !== state.source) return false;
     if (state.destination !== "all" && (item.destination_scene || "unknown") !== state.destination) return false;
@@ -78,13 +82,14 @@ function technicalDetails(item) {
 
 function renderRow(item) {
   const kind = effect(item);
-  return `<article class="result-row">
+  return `<article class="result-row" id="${esc(item.public_id)}">
     <div class="route"><span>${esc(platformName(item.platform))}</span><strong>${esc(sceneName(item.source_scene))} &rarr; ${esc(sceneName(item.destination_scene))}</strong></div>
     <p>${esc(setupText(item))}</p>
     <p>${esc(effectText(item))}</p>
     <p class="remaining">${esc(notesText(item))}</p>
     <span class="badge ${esc(kind)}">${esc(item.effect_label || effectLabels[kind])}</span>
     ${technicalDetails(item)}
+    <button class="copy-result" type="button" data-result="${esc(item.public_id)}">Copy this result</button>
   </article>`;
 }
 
@@ -112,10 +117,16 @@ function paramsToState() {
     if (params.has(key)) state[key] = params.get(key);
   }
   state.query = params.get("q") || "";
+  state.result = params.get("result") || "";
 }
 
 function stateToParams() {
   const params = new URLSearchParams();
+  if (state.result) {
+    params.set("result", state.result);
+    history.replaceState({}, "", `${location.pathname}?${params}`);
+    return;
+  }
   for (const key of ["effect", "platform", "source", "destination"]) {
     const defaultValue = key === "effect" ? "changed" : "all";
     if (state[key] !== defaultValue) params.set(key, state[key]);
@@ -127,6 +138,7 @@ function stateToParams() {
 function bindSelect(id, key) {
   $(id).value = state[key];
   $(id).addEventListener("change", event => {
+    state.result = "";
     state[key] = event.target.value;
     state.shown = PAGE_SIZE;
     stateToParams();
@@ -154,12 +166,23 @@ async function boot() {
   bindSelect("#destination-filter", "destination");
   $("#search-input").value = state.query;
   $("#search-input").addEventListener("input", event => {
+    state.result = "";
     state.query = event.target.value;
     state.shown = PAGE_SIZE;
     stateToParams();
     render();
   });
   $("#show-more").addEventListener("click", () => { state.shown += PAGE_SIZE; render(); });
+  $("#results").addEventListener("click", async event => {
+    const button = event.target.closest(".copy-result");
+    if (!button) return;
+    const url = new URL(location.href);
+    url.search = "";
+    url.searchParams.set("result", button.dataset.result);
+    await navigator.clipboard.writeText(url.href);
+    button.textContent = "Link copied";
+    setTimeout(() => button.textContent = "Copy this result", 1200);
+  });
   $("#reset-filters").addEventListener("click", () => { location.href = location.pathname; });
   $("#copy-view").addEventListener("click", async () => {
     stateToParams();

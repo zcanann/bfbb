@@ -36,6 +36,7 @@ button:hover { border-color: var(--accent); }
 .badge.gameplay-corruption { color: #7b5112; background: #f7edd6; }
 .badge.no-effect { color: #5f6874; background: #eceef1; }
 details { grid-column: 2 / -1; margin-top: -2px; color: var(--muted); font-size: .82rem; }
+.copy-result { grid-column: 2; justify-self: start; min-height: 30px; padding: 4px 8px; font-size: .78rem; }
 summary { cursor: pointer; font-weight: 750; }
 .technical { display: grid; grid-template-columns: repeat(3, minmax(180px, 1fr)); gap: 8px 18px; margin: 10px 0; }
 .technical div { min-width: 0; }
@@ -53,6 +54,7 @@ footer { max-width: 820px; margin-top: 28px; font-size: .86rem; }
   .result-row { grid-template-columns: 150px 1fr; }
   .result-row > p, .result-row > .badge { grid-column: 2; }
   details { grid-column: 2; }
+  .copy-result { grid-column: 2; }
 }
 @media (max-width: 680px) {
   main { width: min(100% - 20px, 1400px); padding-top: 25px; }
