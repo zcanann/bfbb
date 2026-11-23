@@ -1,1 +1,1 @@
-{"total":327,"summary":{"total":327,"by_effect":{"crash":52,"freeze":67,"gameplay-corruption":11,"no-effect":59,"reward":3,"unresolved":135},"hidden_by_default":194,"scope":"verified_real_producer_results"},"chunks":[{"file":"results-01.json","rows":327}]}
+{"total":398,"summary":{"total":398,"by_effect":{"crash":59,"freeze":67,"gameplay-corruption":11,"no-effect":59,"reward":3,"unresolved":199},"hidden_by_default":258,"scope":"verified_real_producer_results"},"chunks":[{"file":"results-01.json","rows":398}]}
