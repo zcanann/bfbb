@@ -1,1 +1,1 @@
-{"total":1709,"summary":{"total":1709,"by_effect":{"crash":585,"gameplay-corruption":243,"no-effect":243,"reward":4,"unresolved":607,"visual":27},"hidden_by_default":850},"chunks":[{"file":"results-01.json","rows":1000},{"file":"results-02.json","rows":709}]}
+{"total":4,"summary":{"total":4,"by_effect":{"no-effect":4},"hidden_by_default":0,"scope":"end_to_end_player_replay_only"},"chunks":[{"file":"results-01.json","rows":4}]}

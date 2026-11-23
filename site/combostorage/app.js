@@ -18,7 +18,7 @@ const effectLabels = {
   unresolved: "Effect not tested"
 };
 const state = {
-  rows: [], effect: "changed", platform: "all", source: "all",
+  rows: [], effect: "all", platform: "all", source: "all",
   destination: "all", query: "", result: "", shown: PAGE_SIZE
 };
 const $ = selector => document.querySelector(selector);
@@ -128,7 +128,7 @@ function stateToParams() {
     return;
   }
   for (const key of ["effect", "platform", "source", "destination"]) {
-    const defaultValue = key === "effect" ? "changed" : "all";
+    const defaultValue = "all";
     if (state[key] !== defaultValue) params.set(key, state[key]);
   }
   if (state.query) params.set("q", state.query);
