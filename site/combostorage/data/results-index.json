@@ -1,1 +1,1 @@
-{"total":57,"summary":{"total":57,"by_effect":{"crash":15,"freeze":2,"no-effect":4,"unresolved":36},"hidden_by_default":0,"scope":"verified_real_producer_results"},"chunks":[{"file":"results-01.json","rows":57}]}
+{"total":27,"summary":{"total":27,"by_effect":{"crash":8,"freeze":2,"no-effect":4,"unresolved":13},"hidden_by_default":0,"scope":"verified_real_producer_results"},"chunks":[{"file":"results-01.json","rows":27}]}
