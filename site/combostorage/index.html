@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Player-performable BFBB combo-storage results across GameCube, PlayStation 2, and Xbox.">
+  <meta name="description" content="Verified BFBB combo-storage input-to-output results.">
   <title>BFBB Combo Storage Catalog</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -11,10 +11,10 @@
   <main>
     <header>
       <h1>Combo Storage Catalog</h1>
-      <p>Only end-to-end player-reproduced combo-storage results are shown here. Lab-seeded states, forced addresses, patched rooms, and static predictions are excluded.</p>
+      <p>What happens when the real combo-storage setup is followed by a save load into each level. Invented source states, forced addresses, and static predictions are excluded.</p>
     </header>
     <section class="filters" aria-label="Filter results">
-      <label>What happens<select id="effect-filter"><option value="all">All verified results</option><option value="changed">Changes and crashes</option></select></label>
+      <label>What happens<select id="effect-filter"><option value="changed">Crashes and changes</option><option value="all">All verified results</option></select></label>
       <label>Version<select id="platform-filter"><option value="all">All versions</option></select></label>
       <label>Source level<select id="source-filter"><option value="all">All sources</option></select></label>
       <label>Destination<select id="destination-filter"><option value="all">All destinations</option></select></label>
@@ -25,7 +25,7 @@
     <section class="column-headings" aria-hidden="true"><span>Version / route</span><span>Do this</span><span>What happens</span><span>Notes</span><span>Effect</span></section>
     <section id="results" class="results" aria-label="Combo-storage results"></section>
     <button id="show-more" class="show-more" type="button" hidden>Show more</button>
-    <footer><p>Every published row has an end-to-end player replay. Technical symbols and addresses remain available inside each result.</p><p id="updated-at"></p></footer>
+    <footer><p>Each destination is compared with the same save loaded without combo storage. Technical symbols and addresses remain available inside each result.</p><p id="updated-at"></p></footer>
   </main>
   <script src="app.js" type="module"></script>
 </body>

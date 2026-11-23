@@ -1,1 +1,1 @@
-{"total":4,"summary":{"total":4,"by_effect":{"no-effect":4},"hidden_by_default":0,"scope":"end_to_end_player_replay_only"},"chunks":[{"file":"results-01.json","rows":4}]}
+{"total":57,"summary":{"total":57,"by_effect":{"crash":15,"freeze":2,"no-effect":4,"unresolved":36},"hidden_by_default":0,"scope":"verified_real_producer_results"},"chunks":[{"file":"results-01.json","rows":57}]}
