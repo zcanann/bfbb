@@ -59,10 +59,6 @@ function filteredRows() {
 }
 
 function technicalDetails(item) {
-  const references = item.evidence_refs || (item.evidence_path ? [item.evidence_path] : []);
-  const refs = Array.isArray(references)
-    ? references
-    : String(references).split(/\s*\|\s*|;/).filter(Boolean);
   const targets = item.overlap_targets?.length
     ? item.overlap_targets.join("; ")
     : (item.writes?.[0]?.owner_name || item.owner_name);
@@ -70,6 +66,8 @@ function technicalDetails(item) {
     ["Observed effect", item.effect_label],
     ["Evidence", words(item.evidence_kind)],
     ["Technical classification", item.classification],
+    ["Verification", item.verification],
+    ["Matched replays", item.repeat_count],
     ["Recorded results", item.recorded_results?.join(", ") || item.result],
     ["Targets", targets],
     ["Address", item.holder_hex],
@@ -77,7 +75,6 @@ function technicalDetails(item) {
   ].filter(([, value]) => value != null && value !== "");
   return `<details><summary>Technical record</summary>
     <dl class="technical">${entries.map(([name, value]) => `<div><dt>${esc(name)}</dt><dd>${esc(value)}</dd></div>`).join("")}</dl>
-    ${refs.length ? `<p class="evidence"><strong>Evidence:</strong> ${refs.map(esc).join(" · ")}</p>` : ""}
   </details>`;
 }
 

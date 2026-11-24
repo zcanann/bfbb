@@ -214,6 +214,7 @@ jobs:
           python tools/ci_progress.py build/progress-site/GQPE78 --version GQPE78 --output build/progress-site
           cp -a site/throwverflow build/progress-site/throwverflow
           cp -a site/combostorage build/progress-site/combostorage
+          python tools/bfbb_combo_site_verify.py site/combostorage
 
       - name: Upload combined progress site
         uses: actions/upload-pages-artifact@v4
