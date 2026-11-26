@@ -221,6 +221,12 @@ jobs:
         with:
           path: build/progress-site
 
+      # deploy-pages occasionally queries the run before the freshly uploaded
+      # artifact is visible through the Actions API (especially on this
+      # artifact-heavy matrix). Give indexing a short, deterministic window.
+      - name: Wait for Pages artifact indexing
+        run: sleep 15
+
       - name: Deploy progress page
         id: deployment
         uses: actions/deploy-pages@v4
